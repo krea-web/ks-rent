@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, Variants } from "framer-motion";
-import { CalendarIcon, Send, User, CreditCard, MapPin, Car, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { CalendarIcon, User, CreditCard, MapPin, Car, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -324,10 +324,10 @@ const PrenotaOra = () => {
                     {loading ? (
                       "Invio in corso..."
                     ) : (
-                      <>
+                      <span className="flex items-center">
                         Conferma Prenotazione
                         <ArrowRight size={20} className="ml-3 group-hover:translate-x-1 transition-transform" />
-                      </>
+                      </span>
                     )}
                   </Button>
 
