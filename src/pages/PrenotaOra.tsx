@@ -1,6 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
-import { CalendarIcon, User, CreditCard, MapPin, Car, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
+import {
+  CalendarIcon,
+  User,
+  CreditCard,
+  MapPin,
+  Car,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  Zap,
+  Bike,
+} from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -12,9 +23,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
-const DAILY_RATE = 45;
+const DAILY_RATE = 45; // Tariffa base fissa per ora
 
 const PrenotaOra = () => {
+  // Stati per i veicoli da Supabase
+  const [vehicles, setVehicles] = useState<any[]>([]);
+  const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
+
+  // Stati del form
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [form, setForm] = useState({
@@ -25,11 +41,30 @@ const PrenotaOra = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  // Fetch veicoli all'avvio
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      const { data, error } = await supabase
+        .from("vehicles")
+        .select("*")
+        .eq("is_available", true)
+        .order("category", { ascending: true });
+
+      if (data) setVehicles(data);
+      if (error) console.error("Errore recupero veicoli:", error);
+    };
+    fetchVehicles();
+  }, []);
+
   const days = startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0;
   const total = days * DAILY_RATE;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!selectedVehicle) {
+      toast.error("Seleziona prima un veicolo dalla flotta.");
+      return;
+    }
     if (!startDate || !endDate) {
       toast.error("Seleziona le date di inizio e fine noleggio.");
       return;
@@ -37,6 +72,7 @@ const PrenotaOra = () => {
 
     setLoading(true);
     const { error } = await supabase.from("bookings").insert({
+      vehicle_id: selectedVehicle.id,
       start_date: format(startDate, "yyyy-MM-dd"),
       end_date: format(endDate, "yyyy-MM-dd"),
       customer_fullname: form.fullname.trim(),
@@ -54,6 +90,7 @@ const PrenotaOra = () => {
       setForm({ fullname: "", cf: "", license: "", residence: "" });
       setStartDate(undefined);
       setEndDate(undefined);
+      setSelectedVehicle(null);
     }
   };
 
@@ -62,16 +99,23 @@ const PrenotaOra = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
+  // Helper per le icone in base alla categoria
+  const getCategoryIcon = (category: string) => {
+    if (category === "Scooter/Moto" || category === "Quad")
+      return <Bike className="w-5 h-5 mb-2 text-white/50 group-hover:text-gold transition-colors" />;
+    if (category === "Supercar/Premium")
+      return <Zap className="w-5 h-5 mb-2 text-white/50 group-hover:text-gold transition-colors" />;
+    return <Car className="w-5 h-5 mb-2 text-white/50 group-hover:text-gold transition-colors" />;
+  };
+
   return (
     <div className="bg-[#050505] min-h-screen text-white pt-24 pb-16 selection:bg-gold selection:text-black">
-      {/* Background Decor */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-gold/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px]" />
       </div>
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        {/* Header */}
         <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-[2px] bg-gold"></div>
@@ -86,7 +130,7 @@ const PrenotaOra = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             {/* LEFT COLUMN: FORM SECTIONS */}
             <div className="lg:col-span-7 space-y-8">
-              {/* Step 1: Dates */}
+              {/* Step 1: Vehicle Selection */}
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -98,11 +142,61 @@ const PrenotaOra = () => {
                   <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
                     1
                   </span>
+                  Scegli il Veicolo
+                </h2>
+
+                {vehicles.length === 0 ? (
+                  <div className="h-32 flex items-center justify-center text-white/40 border border-white/5 rounded-2xl bg-[#111]">
+                    Caricamento flotta in corso...
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    {vehicles.map((v) => {
+                      const isSelected = selectedVehicle?.id === v.id;
+                      return (
+                        <div
+                          key={v.id}
+                          onClick={() => setSelectedVehicle(v)}
+                          className={cn(
+                            "p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group",
+                            isSelected
+                              ? "bg-gradient-to-br from-gold/20 to-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                              : "bg-[#111] border-white/10 hover:border-white/30 hover:bg-[#151515]",
+                          )}
+                        >
+                          {getCategoryIcon(v.category)}
+                          <span
+                            className={cn(
+                              "text-xs uppercase tracking-wider mb-1",
+                              isSelected ? "text-gold" : "text-white/40",
+                            )}
+                          >
+                            {v.category}
+                          </span>
+                          <span className="font-bold text-sm md:text-base leading-tight">{v.model}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </motion.div>
+
+              {/* Step 2: Dates */}
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+                className="bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 md:p-10 relative overflow-hidden group hover:border-white/20 transition-colors"
+              >
+                <div className="absolute top-0 left-0 w-2 h-full bg-gold/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
+                    2
+                  </span>
                   Periodo di Noleggio
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Start Date */}
                   <div className="space-y-3">
                     <Label className="text-xs uppercase tracking-widest text-white/50">Ritiro</Label>
                     <Popover>
@@ -137,7 +231,6 @@ const PrenotaOra = () => {
                     </Popover>
                   </div>
 
-                  {/* End Date */}
                   <div className="space-y-3">
                     <Label className="text-xs uppercase tracking-widest text-white/50">Riconsegna</Label>
                     <Popover>
@@ -174,7 +267,7 @@ const PrenotaOra = () => {
                 </div>
               </motion.div>
 
-              {/* Step 2: Customer Details */}
+              {/* Step 3: Customer Details */}
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -184,14 +277,13 @@ const PrenotaOra = () => {
                 <div className="absolute top-0 left-0 w-2 h-full bg-gold/50 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
                   <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                    2
+                    3
                   </span>
                   I Tuoi Dati
                 </h2>
 
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Nome */}
                     <div className="space-y-3">
                       <Label className="text-xs uppercase tracking-widest text-white/50">Nome Completo</Label>
                       <div className="relative">
@@ -206,7 +298,6 @@ const PrenotaOra = () => {
                         />
                       </div>
                     </div>
-                    {/* CF */}
                     <div className="space-y-3">
                       <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale</Label>
                       <div className="relative">
@@ -224,7 +315,6 @@ const PrenotaOra = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Patente */}
                     <div className="space-y-3">
                       <Label className="text-xs uppercase tracking-widest text-white/50">N. Patente</Label>
                       <div className="relative">
@@ -239,7 +329,6 @@ const PrenotaOra = () => {
                         />
                       </div>
                     </div>
-                    {/* Residenza */}
                     <div className="space-y-3">
                       <Label className="text-xs uppercase tracking-widest text-white/50">Residenza</Label>
                       <div className="relative">
@@ -262,18 +351,22 @@ const PrenotaOra = () => {
             {/* RIGHT COLUMN: STICKY LIVE SUMMARY WIDGET */}
             <div className="lg:col-span-5 relative">
               <div className="sticky top-28 w-full bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-[2rem] overflow-hidden">
-                {/* Header Widget */}
                 <div className="p-8 border-b border-white/5 bg-white/5">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-white/50 text-sm font-semibold uppercase tracking-wider">Riepilogo Live</span>
                     <Car className="text-gold" size={24} />
                   </div>
-                  <h3 className="text-2xl font-display font-bold">La tua selezione</h3>
+                  <h3 className="text-2xl font-display font-bold">
+                    {selectedVehicle ? selectedVehicle.model : "In attesa di selezione..."}
+                  </h3>
+                  {selectedVehicle && (
+                    <span className="inline-block mt-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-white/70">
+                      {selectedVehicle.category}
+                    </span>
+                  )}
                 </div>
 
-                {/* Body Widget */}
                 <div className="p-8 space-y-6">
-                  {/* Dynamic Pricing Info */}
                   <div className="flex justify-between items-end pb-6 border-b border-white/5">
                     <div>
                       <p className="text-white/50 text-sm mb-1">Tariffa Base</p>
@@ -289,7 +382,6 @@ const PrenotaOra = () => {
                     </div>
                   </div>
 
-                  {/* Trust Badges */}
                   <div className="space-y-3 py-2">
                     <div className="flex items-center gap-3 text-sm text-white/70">
                       <CheckCircle2 className="text-gold/80" size={16} /> Nessuna carta di credito richiesta
@@ -302,7 +394,6 @@ const PrenotaOra = () => {
                     </div>
                   </div>
 
-                  {/* Total Container with animation */}
                   <div className="pt-6 border-t border-white/5 flex justify-between items-center">
                     <span className="text-lg text-white/70">Totale stimato</span>
                     <motion.span
@@ -315,7 +406,6 @@ const PrenotaOra = () => {
                     </motion.span>
                   </div>
 
-                  {/* Submit Button */}
                   <Button
                     type="submit"
                     disabled={loading}
