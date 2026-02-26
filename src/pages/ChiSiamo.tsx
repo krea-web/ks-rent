@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, Instagram, ShieldCheck, Key, MapPin } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const ChiSiamo = () => {
   const fadeUp: Variants = {
@@ -32,6 +33,7 @@ const ChiSiamo = () => {
         <div className="relative z-10 max-w-5xl">
           <motion.div initial="hidden" animate="visible" variants={fadeUp}>
             <div className="flex items-center gap-4 mb-8">
+              <img src={logo} alt="KS Rent" className="h-10 w-auto" />
               <div className="h-[1px] w-12 bg-gold"></div>
               <span className="text-gold text-sm uppercase tracking-[0.4em] font-semibold">KS Rent S.R.L.</span>
             </div>
