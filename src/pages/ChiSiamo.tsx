@@ -3,7 +3,6 @@ import { motion, Variants } from "framer-motion";
 import { ArrowRight, Instagram, ShieldCheck, Key, MapPin } from "lucide-react";
 
 const ChiSiamo = () => {
-  // Aggiunto il tipo : Variants per risolvere l'errore TypeScript
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
@@ -47,14 +46,60 @@ const ChiSiamo = () => {
         </div>
       </section>
 
+      {/* 1.5 LA NOSTRA STORIA (NEW SECTION) */}
+      <section className="py-32 px-4 md:px-12 lg:px-24 bg-[#050505] relative">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24"
+          >
+            {/* Sinistra: Grande Titolo */}
+            <motion.div variants={fadeUp} className="lg:col-span-5">
+              <h2 className="text-3xl md:text-5xl font-display font-bold leading-[1.2]">
+                Siamo nati <br />
+                dall'asfalto sardo e dalla voglia di <span className="text-gold">cambiare le regole.</span>
+              </h2>
+            </motion.div>
+
+            {/* Destra: Racconto Emozionale */}
+            <motion.div
+              variants={fadeUp}
+              className="lg:col-span-7 space-y-8 text-lg font-light text-white/70 leading-relaxed"
+            >
+              <p>
+                KS Rent non è solo un’agenzia di noleggio auto. È la risposta a un problema che noi stessi, da
+                viaggiatori e da sardi, abbiamo vissuto troppe volte. File interminabili agli sportelli, depositi
+                cauzionali bloccati per settimane sulle carte di credito, e contratti pieni di clausole nascoste.
+              </p>
+              <p>
+                Abbiamo fondato KS Rent a Olbia con una promessa scolpita nella pietra:{" "}
+                <strong>trasparenza totale.</strong>
+                Volevamo creare il servizio che avremmo sempre voluto utilizzare. Un'esperienza dove atterri, prendi le
+                chiavi e inizi a respirare l'aria della Costa Smeralda senza pensieri.
+              </p>
+              <div className="pl-6 border-l-2 border-gold py-2 mt-8">
+                <p className="text-white text-xl font-display font-medium italic">
+                  "Non affittiamo semplicemente veicoli, ma ti consegniamo la chiave per vivere l'isola esattamente come
+                  va vissuta: in totale libertà."
+                </p>
+                <span className="block mt-4 text-sm font-bold tracking-widest uppercase text-gold">I Fondatori</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* 2. I PILASTRI (Minimalist Line Grid) */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 border-t border-white/10 pt-16"
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 border-t border-white/5 pt-16"
         >
           {/* Feature 1 */}
           <motion.div variants={fadeUp} className="group">
@@ -89,7 +134,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 3. IL MANIFESTO (Asymmetrical Typography) */}
-      <section className="py-32 bg-[#0a0a0a] relative overflow-hidden">
+      <section className="py-32 bg-[#050505] relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="container mx-auto px-4 md:px-12 lg:px-24">
@@ -109,7 +154,7 @@ const ChiSiamo = () => {
                 />
               </div>
               {/* Box decorativo sovrapposto */}
-              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#050505] border border-white/10 rounded-3xl flex items-center justify-center p-6 hidden md:flex shadow-2xl">
+              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#0a0a0a] border border-white/10 rounded-3xl flex items-center justify-center p-6 hidden md:flex shadow-2xl">
                 <p className="text-xs text-gold uppercase tracking-widest font-semibold text-center leading-loose">
                   Dal 2024
                   <br />
@@ -145,7 +190,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 4. INSTAGRAM (Asymmetric Editorial Grid) */}
-      <section className="py-32 bg-[#050505] border-t border-white/5 relative">
+      <section className="py-32 bg-[#0a0a0a] border-t border-white/5 relative">
         <div className="container mx-auto px-4 md:px-12 lg:px-24">
           {/* Header Social */}
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mb-16">
@@ -245,7 +290,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 5. CTA MINIMALE ED ELEGANTE */}
-      <section className="py-32 bg-[#0a0a0a] border-t border-white/5 text-center px-4">
+      <section className="py-32 bg-[#050505] border-t border-white/5 text-center px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
