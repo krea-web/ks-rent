@@ -11,15 +11,17 @@ const usps = [
   { text: "Flotta Premium", icon: Sparkles },
 ];
 
-// Loghi Ufficiali (tramite SimpleIcons CDN - vettoriali bianchi per Dark Mode)
+// Loghi Ufficiali Originali (Vettoriali a colori tramite Wikimedia)
 const brands = [
-  { name: "Audi", url: "https://cdn.simpleicons.org/audi/white" },
-  { name: "BMW", url: "https://cdn.simpleicons.org/bmw/white" },
-  { name: "Mercedes-Benz", url: "https://cdn.simpleicons.org/mercedes/white" },
-  { name: "Jeep", url: "https://cdn.simpleicons.org/jeep/white" },
-  { name: "Fiat", url: "https://cdn.simpleicons.org/fiat/white" },
-  { name: "Honda", url: "https://cdn.simpleicons.org/honda/white" },
-  { name: "Yamaha", url: "https://cdn.simpleicons.org/yamahamotorcorporation/white" },
+  { name: "Audi", url: "https://upload.wikimedia.org/wikipedia/commons/9/92/Audi-Logo_2016.svg" },
+  { name: "BMW", url: "https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" },
+  { name: "Mercedes", url: "https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" },
+  { name: "Jeep", url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Jeep_logo.svg" },
+  // Logo Fiat 2006 (Quello rosso classico 3D)
+  { name: "Fiat", url: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Fiat_Logo_2006.svg" },
+  { name: "Honda", url: "https://upload.wikimedia.org/wikipedia/commons/3/38/Honda.svg" },
+  // Logo Yamaha Rosso ufficiale
+  { name: "Yamaha", url: "https://upload.wikimedia.org/wikipedia/commons/0/01/Yamaha_Motor_Logo.svg" },
 ];
 
 // Duplichiamo gli array per creare l'effetto infinito fluido (Seamless Loop)
@@ -28,12 +30,12 @@ const duplicatedBrands = [...brands, ...brands, ...brands, ...brands, ...brands]
 
 const TrustMarquee = () => {
   return (
-    <section className="relative py-12 bg-background border-y border-white/5 overflow-hidden flex flex-col gap-8">
-      {/* Sfumature laterali per fondere il testo con lo sfondo */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent" />
+    <section className="relative py-12 bg-[#050505] border-y border-white/5 overflow-hidden flex flex-col gap-10">
+      {/* Sfumature laterali per fondere il contenuto con lo sfondo */}
+      <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-[#050505] to-transparent pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-[#050505] to-transparent pointer-events-none" />
 
-      {/* Stili per l'animazione personalizzata senza toccare tailwind.config */}
+      {/* Stili per l'animazione personalizzata */}
       <style>
         {`
           @keyframes marquee-left {
@@ -47,14 +49,13 @@ const TrustMarquee = () => {
           .animate-marquee-left {
             display: flex;
             width: fit-content;
-            animation: marquee-left 40s linear infinite;
+            animation: marquee-left 35s linear infinite;
           }
           .animate-marquee-right {
             display: flex;
             width: fit-content;
-            animation: marquee-right 40s linear infinite;
+            animation: marquee-right 45s linear infinite;
           }
-          /* Pausa all'hover */
           .pause-on-hover:hover {
             animation-play-state: paused;
           }
@@ -63,30 +64,33 @@ const TrustMarquee = () => {
 
       {/* RIGA 1: Punti di Forza (Scorre verso Sinistra) */}
       <div className="relative flex overflow-hidden group">
-        <div className="animate-marquee-left pause-on-hover flex items-center gap-12 pl-12">
+        <div className="animate-marquee-left pause-on-hover flex items-center gap-8 pl-8">
           {duplicatedUsps.map((usp, i) => (
             <div
               key={`usp-${i}`}
-              className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 transition-colors duration-300 cursor-default whitespace-nowrap"
+              className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-gold hover:bg-gold/5 transition-all duration-300 cursor-default whitespace-nowrap shadow-lg"
             >
               <usp.icon size={20} className="text-gold" />
-              <span className="text-sm font-semibold tracking-wide text-white/90 uppercase">{usp.text}</span>
+              <span className="text-sm font-bold tracking-wider text-white uppercase">{usp.text}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* RIGA 2: Loghi Flotta (Scorre verso Destra) */}
-      <div className="relative flex overflow-hidden mt-4">
-        <div className="animate-marquee-right flex items-center gap-24 pl-24 opacity-60 hover:opacity-100 transition-opacity duration-500">
+      {/* RIGA 2: Loghi Flotta Originali (Scorre verso Destra) */}
+      <div className="relative flex overflow-hidden group mt-2">
+        <div className="animate-marquee-right pause-on-hover flex items-center gap-8 pl-8">
           {duplicatedBrands.map((brand, i) => (
-            <img
+            <div
               key={`brand-${i}`}
-              src={brand.url}
-              alt={`${brand.name} logo`}
-              className="h-10 md:h-14 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-lg filter hover:brightness-125 hover:drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]"
-              style={{ filter: "brightness(0) invert(1)" }} // Forza il bianco in caso di CDN non stilizzata
-            />
+              className="flex items-center justify-center bg-white rounded-xl w-40 h-20 px-6 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-white/20"
+            >
+              <img
+                src={brand.url}
+                alt={`${brand.name} logo ufficiale`}
+                className="w-full h-full object-contain filter-none"
+              />
+            </div>
           ))}
         </div>
       </div>
