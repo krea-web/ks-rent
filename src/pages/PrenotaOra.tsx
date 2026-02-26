@@ -16,6 +16,7 @@ import {
 import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -146,7 +147,8 @@ const PrenotaOra = () => {
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-4 mb-4">
+            <img src={logo} alt="KS Rent" className="h-10 w-auto" />
             <div className="w-8 h-[2px] bg-gold"></div>
             <span className="text-gold text-sm uppercase tracking-[0.3em] font-semibold">Fast Booking</span>
           </div>
