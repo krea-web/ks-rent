@@ -1,17 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
-import {
-  CalendarIcon,
-  User,
-  CreditCard,
-  MapPin,
-  Car,
-  ShieldCheck,
-  CheckCircle2,
-  ArrowRight,
-  Zap,
-  Bike,
-} from "lucide-react";
+import { CalendarIcon, User, CreditCard, MapPin, Car, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -25,12 +14,28 @@ import { supabase } from "@/lib/supabase";
 
 const DAILY_RATE = 45; // Tariffa base fissa per ora
 
+// Funzione Helper per immagini di fallback super-premium
+const getVehicleImage = (vehicle: any) => {
+  if (vehicle.image_url) return vehicle.image_url;
+
+  switch (vehicle.category) {
+    case "City Car":
+      return "https://images.unsplash.com/photo-1620021319088-307998244923?auto=format&fit=crop&q=80";
+    case "Supercar/Premium":
+      return "https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?auto=format&fit=crop&q=80";
+    case "Scooter/Moto":
+      return "https://images.unsplash.com/photo-1599818817478-f60ae05bcbe4?auto=format&fit=crop&q=80";
+    case "Quad":
+      return "https://images.unsplash.com/photo-1596483569476-6cb0df2a492f?auto=format&fit=crop&q=80";
+    default:
+      return "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80";
+  }
+};
+
 const PrenotaOra = () => {
-  // Stati per i veicoli da Supabase
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
 
-  // Stati del form
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [form, setForm] = useState({
@@ -41,7 +46,6 @@ const PrenotaOra = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  // Fetch veicoli all'avvio
   useEffect(() => {
     const fetchVehicles = async () => {
       const { data, error } = await supabase
@@ -99,15 +103,6 @@ const PrenotaOra = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
-  // Helper per le icone in base alla categoria
-  const getCategoryIcon = (category: string) => {
-    if (category === "Scooter/Moto" || category === "Quad")
-      return <Bike className="w-5 h-5 mb-2 text-white/50 group-hover:text-gold transition-colors" />;
-    if (category === "Supercar/Premium")
-      return <Zap className="w-5 h-5 mb-2 text-white/50 group-hover:text-gold transition-colors" />;
-    return <Car className="w-5 h-5 mb-2 text-white/50 group-hover:text-gold transition-colors" />;
-  };
-
   return (
     <div className="bg-[#050505] min-h-screen text-white pt-24 pb-16 selection:bg-gold selection:text-black">
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
@@ -128,9 +123,9 @@ const PrenotaOra = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            {/* LEFT COLUMN: FORM SECTIONS */}
+            {/* LEFT COLUMN */}
             <div className="lg:col-span-7 space-y-8">
-              {/* Step 1: Vehicle Selection */}
+              {/* Step 1: Vehicle Selection with Photos */}
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -150,24 +145,40 @@ const PrenotaOra = () => {
                     Caricamento flotta in corso...
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                     {vehicles.map((v) => {
                       const isSelected = selectedVehicle?.id === v.id;
+                      const imageUrl = getVehicleImage(v);
+
                       return (
                         <div
                           key={v.id}
                           onClick={() => setSelectedVehicle(v)}
                           className={cn(
-                            "p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group",
+                            "p-3 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group relative overflow-hidden",
                             isSelected
                               ? "bg-gradient-to-br from-gold/20 to-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
                               : "bg-[#111] border-white/10 hover:border-white/30 hover:bg-[#151515]",
                           )}
                         >
-                          {getCategoryIcon(v.category)}
+                          {/* Vehicle Photo */}
+                          <div className="relative w-full h-24 md:h-28 mb-3 rounded-xl overflow-hidden bg-black/50">
+                            <img
+                              src={imageUrl}
+                              alt={v.model}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
+                            {isSelected && (
+                              <div className="absolute top-2 right-2 bg-gold text-black rounded-full p-1 shadow-lg">
+                                <CheckCircle2 size={14} />
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Vehicle Info */}
                           <span
                             className={cn(
-                              "text-xs uppercase tracking-wider mb-1",
+                              "text-[10px] md:text-xs uppercase tracking-wider mb-1",
                               isSelected ? "text-gold" : "text-white/40",
                             )}
                           >
@@ -351,18 +362,39 @@ const PrenotaOra = () => {
             {/* RIGHT COLUMN: STICKY LIVE SUMMARY WIDGET */}
             <div className="lg:col-span-5 relative">
               <div className="sticky top-28 w-full bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-[2rem] overflow-hidden">
-                <div className="p-8 border-b border-white/5 bg-white/5">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-white/50 text-sm font-semibold uppercase tracking-wider">Riepilogo Live</span>
-                    <Car className="text-gold" size={24} />
-                  </div>
-                  <h3 className="text-2xl font-display font-bold">
-                    {selectedVehicle ? selectedVehicle.model : "In attesa di selezione..."}
-                  </h3>
-                  {selectedVehicle && (
-                    <span className="inline-block mt-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-white/70">
-                      {selectedVehicle.category}
-                    </span>
+                {/* Visual Header with Car Image Background */}
+                <div className="p-8 border-b border-white/5 bg-[#151515] relative overflow-hidden min-h-[160px] flex flex-col justify-end">
+                  {selectedVehicle ? (
+                    <>
+                      <div className="absolute inset-0 z-0">
+                        <img
+                          src={getVehicleImage(selectedVehicle)}
+                          alt="Selected"
+                          className="w-full h-full object-cover opacity-30"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent" />
+                      </div>
+                      <div className="relative z-10">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-gold text-xs font-semibold uppercase tracking-wider">
+                            {selectedVehicle.category}
+                          </span>
+                        </div>
+                        <h3 className="text-3xl font-display font-bold text-white shadow-sm">
+                          {selectedVehicle.model}
+                        </h3>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="relative z-10 h-full flex flex-col justify-center">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-white/50 text-sm font-semibold uppercase tracking-wider">
+                          Riepilogo Live
+                        </span>
+                        <Car className="text-gold" size={24} />
+                      </div>
+                      <h3 className="text-2xl font-display font-bold text-white/30">Nessun veicolo</h3>
+                    </div>
                   )}
                 </div>
 
