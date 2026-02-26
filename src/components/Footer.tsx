@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Map, FileText } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Footer = () => (
   <footer className="relative bg-[#050505] pt-24 pb-8 border-t border-white/5 overflow-hidden">
@@ -13,9 +14,7 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
         {/* Brand Info */}
         <div className="flex flex-col">
-          <span className="text-3xl font-black tracking-wider font-display mb-4 text-white">
-            KS <span className="text-gold">RENT</span>
-          </span>
+          <img src={logo} alt="KS Rent" className="h-12 w-auto mb-4" />
           <p className="text-sm text-muted-foreground leading-relaxed mb-6">
             Non noleggiamo solo veicoli, consegniamo la libertà di esplorare la Costa Smeralda senza stress, senza carte
             di credito e senza burocrazia.

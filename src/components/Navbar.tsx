@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -44,10 +45,8 @@ const Navbar = () => {
       >
         <div className="container mx-auto flex items-center justify-between px-4 md:px-8 max-w-7xl">
           {/* LOGO */}
-          <Link to="/" className="flex items-center gap-2 group relative z-50">
-            <span className="text-3xl font-black tracking-widest font-display text-white transition-transform group-hover:scale-105">
-              KS <span className="text-gold">RENT</span>
-            </span>
+          <Link to="/" className="flex items-center group relative z-50">
+            <img src={logo} alt="KS Rent" className="h-10 md:h-12 w-auto transition-transform group-hover:scale-105" />
           </Link>
 
           {/* DESKTOP NAV */}
@@ -115,8 +114,9 @@ const Navbar = () => {
             <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="flex flex-col gap-8 items-start">
-              {[...navLinks, { label: "Prenota Ora", to: "/prenotaora", special: true }].map((l, i) => {
+              {[...navLinks, { label: "Prenota Ora", to: "/prenotaora", special: true as const }].map((l, i) => {
                 const isActive = location.pathname === l.to;
+                const isSpecial = "special" in l && l.special;
                 return (
                   <motion.div
                     key={l.to}
@@ -131,7 +131,7 @@ const Navbar = () => {
                       className={cn(
                         "text-4xl sm:text-5xl font-display font-black tracking-tighter transition-colors flex items-center gap-4",
                         isActive ? "text-gold" : "text-white/60 hover:text-white",
-                        l.special ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-500 mt-8" : "",
+                        isSpecial ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-500 mt-8" : "",
                       )}
                     >
                       {isActive && (
