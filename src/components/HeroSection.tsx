@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/sign/asset/VIDEOHERO.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9hM2Y5NDE5YS0zZmRhLTQ1YzQtOThkMS03N2E3NDE1MmEzY2UiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhc3NldC9WSURFT0hFUk8ubXA0IiwiaWF0IjoxNzcyMTQyMTg2LCJleHAiOjE4MDM2NzgxODZ9.GYcs2tbRi4HjwhUs8pmxTOSt54grQkMFVPTJssflx9Q";
 
 const HeroSection = () => (
   <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div
-      className="absolute inset-0 bg-cover bg-center"
-      style={{ backgroundImage: `url(${heroBg})` }}
+    <video
+      autoPlay
+      muted
+      loop
+      playsInline
+      className="absolute inset-0 w-full h-full object-cover"
+      src={HERO_VIDEO_URL}
     />
     <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
 
