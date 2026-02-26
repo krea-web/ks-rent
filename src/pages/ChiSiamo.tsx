@@ -240,7 +240,7 @@ const ChiSiamo = () => {
               className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-[2rem] bg-[#111] border border-white/5 block"
             >
               <img
-                src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80"
+                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW%20M2.avif"
                 alt="KS Rent Supercar"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
               />
@@ -259,7 +259,7 @@ const ChiSiamo = () => {
               className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-[2rem] bg-[#111] border border-white/5 block"
             >
               <img
-                src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80"
+                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT%20PANDA.jpg"
                 alt="Dettaglio Auto"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
               />
@@ -277,7 +277,7 @@ const ChiSiamo = () => {
               className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-[2rem] bg-[#111] border border-white/5 block"
             >
               <img
-                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80"
+                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI%20RS3%20VERDE1.jpg"
                 alt="Panorama Sardegna"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
               />
