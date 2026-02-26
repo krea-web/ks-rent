@@ -101,7 +101,7 @@ const ChiSiamo = () => {
               variants={fadeUp}
               className="lg:col-span-5 relative"
             >
-              <div className="aspect-[3/4] overflow-hidden rounded-sm">
+              <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-white/5">
                 <img
                   src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80"
                   alt="Strada Sarda"
@@ -109,8 +109,8 @@ const ChiSiamo = () => {
                 />
               </div>
               {/* Box decorativo sovrapposto */}
-              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#111] border border-white/10 flex items-center justify-center p-6 hidden md:flex">
-                <p className="text-xs text-gold uppercase tracking-widest font-semibold text-center">
+              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#050505] border border-white/10 rounded-3xl flex items-center justify-center p-6 hidden md:flex shadow-2xl">
+                <p className="text-xs text-gold uppercase tracking-widest font-semibold text-center leading-loose">
                   Dal 2024
                   <br />
                   In Sardegna
@@ -144,53 +144,104 @@ const ChiSiamo = () => {
         </div>
       </section>
 
-      {/* 4. INSTAGRAM (Editorial Gallery pulita) */}
-      <section className="py-32 bg-[#050505]">
-        <div className="px-4 md:px-12 lg:px-24 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Dietro le Quinte</h2>
-            <p className="text-white/50 font-light max-w-md">
-              Esplora la nostra flotta e i nostri clienti felici direttamente dal nostro feed ufficiale.
-            </p>
-          </motion.div>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            <a
+      {/* 4. INSTAGRAM (Asymmetric Editorial Grid) */}
+      <section className="py-32 bg-[#050505] border-t border-white/5 relative">
+        <div className="container mx-auto px-4 md:px-12 lg:px-24">
+          {/* Header Social */}
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mb-16">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="max-w-2xl"
+            >
+              <div className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6 border border-white/10">
+                <Instagram className="text-gold w-6 h-6" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Vivi l'Esperienza.</h2>
+              <p className="text-white/50 font-light text-lg">
+                Unisciti alla nostra community. Esplora le bellezze della Sardegna e scopri il dietro le quinte della
+                nostra flotta esclusiva.
+              </p>
+            </motion.div>
+
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              <a
+                href="https://instagram.com/ksrent_srl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group"
+              >
+                Segui @ksrent_srl <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Griglia Asimmetrica */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[300px]"
+          >
+            {/* Foto Principale (Grande) */}
+            <motion.a
               href="https://instagram.com/ksrent_srl"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 pb-2 border-b border-gold text-gold hover:text-white hover:border-white transition-colors uppercase tracking-widest text-sm font-semibold"
+              variants={fadeUp}
+              className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-[2rem] bg-[#111] border border-white/5 block"
             >
-              <Instagram size={18} /> @ksrent_srl
-            </a>
+              <img
+                src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80"
+                alt="KS Rent Supercar"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-10">
+                <Instagram className="text-gold mb-3" size={32} />
+                <p className="text-white font-medium">Esplora la Costa Smeralda con stile.</p>
+              </div>
+            </motion.a>
+
+            {/* Foto Secondaria Alto */}
+            <motion.a
+              href="https://instagram.com/ksrent_srl"
+              target="_blank"
+              rel="noopener noreferrer"
+              variants={fadeUp}
+              className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-[2rem] bg-[#111] border border-white/5 block"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80"
+                alt="Dettaglio Auto"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm">
+                <Instagram className="text-white" size={28} />
+              </div>
+            </motion.a>
+
+            {/* Foto Secondaria Basso */}
+            <motion.a
+              href="https://instagram.com/ksrent_srl"
+              target="_blank"
+              rel="noopener noreferrer"
+              variants={fadeUp}
+              className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-[2rem] bg-[#111] border border-white/5 block"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80"
+                alt="Panorama Sardegna"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm">
+                <Instagram className="text-white" size={28} />
+              </div>
+            </motion.a>
           </motion.div>
         </div>
-
-        {/* Griglia Immagini Stile Editoriale */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-4 px-4 md:px-12 lg:px-24"
-        >
-          {[
-            "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1599818817478-f60ae05bcbe4?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80",
-          ].map((src, idx) => (
-            <motion.div key={idx} variants={fadeUp} className="group relative aspect-square overflow-hidden bg-[#111]">
-              <img
-                src={src}
-                alt={`Instagram Post ${idx + 1}`}
-                className="w-full h-full object-cover filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-              />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/40">
-                <Instagram className="text-white" size={32} />
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
       </section>
 
       {/* 5. CTA MINIMALE ED ELEGANTE */}
@@ -209,7 +260,7 @@ const ChiSiamo = () => {
           </p>
           <Link
             to="/prenotaora"
-            className="inline-flex items-center justify-center gap-3 bg-white text-black px-12 py-5 font-bold uppercase tracking-widest hover:bg-gold transition-colors duration-300 group"
+            className="inline-flex items-center justify-center gap-3 bg-white text-black px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-gold transition-colors duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(212,175,55,0.3)] group"
           >
             Noleggia Ora
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
