@@ -185,7 +185,7 @@ const FAQSection = () => {
         {/* Immagine di Sfondo Scura */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI%20RS3%20VERDE1.jpg"
             alt="Costa Smeralda"
             className="w-full h-full object-cover opacity-30"
           />
