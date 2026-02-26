@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { MessageSquare, Star, ShieldCheck } from "lucide-react";
+import { MessageSquare, Star, ShieldCheck, ArrowRight } from "lucide-react";
 
 // Lista FAQ potenziata e strategica
 const faqs = [
@@ -55,13 +56,14 @@ const FAQSection = () => (
     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
     <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
+    {/* PARTE 1: FAQ ACCORDION */}
     <div className="container mx-auto px-4 max-w-4xl relative z-10">
       <div className="text-center mb-16">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6 border border-white/10"
+          className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6 border border-white/10 shadow-lg"
         >
           <MessageSquare className="text-gold w-6 h-6" />
         </motion.div>
@@ -80,7 +82,7 @@ const FAQSection = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl font-display font-black mb-6"
+          className="text-4xl md:text-5xl font-display font-black mb-6 text-white"
         >
           Domande{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">Frequenti</span>
@@ -143,6 +145,52 @@ const FAQSection = () => (
             );
           })}
         </Accordion>
+      </motion.div>
+    </div>
+
+    {/* PARTE 2: BANNER EMOZIONALE INTEGRATO */}
+    <div className="container mx-auto px-4 max-w-6xl relative z-10 mt-32">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="relative rounded-[2rem] overflow-hidden bg-[#0a0a0a] border border-white/10 group shadow-2xl"
+      >
+        {/* Immagine di Sfondo & Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80"
+            alt="Costa Smeralda Road"
+            className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-1000 ease-out"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-transparent" />
+        </div>
+
+        {/* Contenuto del Banner */}
+        <div className="relative z-10 p-10 md:p-16 lg:p-20 flex flex-col items-start max-w-2xl">
+          <span className="text-gold text-sm uppercase tracking-[0.3em] font-semibold mb-4 drop-shadow-md">
+            Dietro le Quinte
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black mb-6 leading-tight text-white">
+            Non noleggiamo solo auto. <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">
+              Consegniamo Libertà.
+            </span>
+          </h2>
+          <p className="text-white/80 text-lg md:text-xl mb-10 max-w-lg leading-relaxed">
+            Scopri la filosofia di KS Rent S.R.L. e perché siamo diventati il punto di riferimento per il noleggio
+            premium, trasparente e senza stress a Olbia e in Costa Smeralda.
+          </p>
+
+          <Link
+            to="/chisiamo"
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] transition-all duration-300 group/btn"
+          >
+            La Nostra Filosofia
+            <ArrowRight size={20} className="group-hover/btn:translate-x-1 transition-transform" />
+          </Link>
+        </div>
       </motion.div>
     </div>
   </section>
