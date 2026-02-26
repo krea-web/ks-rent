@@ -7,7 +7,7 @@ const fleet = [
   {
     model: "Audi RS3",
     category: "Supercar/Premium",
-    image: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80", // Placeholder Audi
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI%20RS3%20VERDE.jpg", // Placeholder Audi
     specs: { seats: "5 Posti", gear: "Automatico", power: "400 CV" },
     icon: Zap,
     description: "Adrenalina pura e design aggressivo. L'emozione di guida definitiva per le coste sarde.",
@@ -15,7 +15,7 @@ const fleet = [
   {
     model: "Jeep Avenger",
     category: "SUV Premium",
-    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80", // Placeholder SUV
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AVENGER.jpg", // Placeholder SUV
     specs: { seats: "5 Posti", gear: "Automatico", power: "Ibrida" },
     icon: Settings2,
     description: "Versatile, compatta e dal design inconfondibile. Perfetta per ogni terreno.",
@@ -23,7 +23,7 @@ const fleet = [
   {
     model: "BMW M2",
     category: "Supercar/Premium",
-    image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80", // Placeholder BMW
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW%20M2.avif", // Placeholder BMW
     specs: { seats: "4 Posti", gear: "Automatico", power: "460 CV" },
     icon: Zap,
     description: "Trazione posteriore e pura potenza bavarese per chi non accetta compromessi.",
@@ -31,7 +31,7 @@ const fleet = [
   {
     model: "Fiat Panda Hybrid",
     category: "City Car",
-    image: "https://images.unsplash.com/photo-1620021319088-307998244923?auto=format&fit=crop&q=80", // Placeholder compatta
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT%20PANDA.jpg", // Placeholder compatta
     specs: { seats: "4 Posti", gear: "Manuale", power: "Ibrida" },
     icon: Fuel,
     description: "La compagna ideale per muoversi con agilità e stile nelle vie di Olbia.",
@@ -39,7 +39,7 @@ const fleet = [
   {
     model: "Honda SH 125/350",
     category: "Scooter",
-    image: "https://images.unsplash.com/photo-1599818817478-f60ae05bcbe4?auto=format&fit=crop&q=80", // Placeholder Scooter
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Honda%20SH.png", // Placeholder Scooter
     specs: { seats: "2 Posti", gear: "Automatico", power: "Benzina" },
     icon: Zap,
     description: "Lo scooter per eccellenza per godersi il vento e saltare il traffico estivo.",
@@ -47,7 +47,7 @@ const fleet = [
   {
     model: "Yamaha Quad",
     category: "Quad",
-    image: "https://images.unsplash.com/photo-1596483569476-6cb0df2a492f?auto=format&fit=crop&q=80", // Placeholder Quad
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/YAMAHA%20QUAD.jpg", // Placeholder Quad
     specs: { seats: "2 Posti", gear: "Automatico", power: "4x4" },
     icon: Settings2,
     description: "Vivi l'avventura off-road esplorando gli angoli più nascosti della Sardegna.",
