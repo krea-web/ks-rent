@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/sign/asset/VIDEOHERO.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9hM2Y5NDE5YS0zZmRhLTQ1YzQtOThkMS03N2E3NDE1MmEzY2UiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhc3NldC9WSURFT0hFUk8ubXA0IiwiaWF0IjoxNzcyMTQyMTg2LCJleHAiOjE4MDM2NzgxODZ9.GYcs2tbRi4HjwhUs8pmxTOSt54grQkMFVPTJssflx9Q";
+const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/sign/asset/HERO.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9hM2Y5NDE5YS0zZmRhLTQ1YzQtOThkMS03N2E3NDE1MmEzY2UiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhc3NldC9IRVJPLm1wNCIsImlhdCI6MTc3MjE4OTI5MSwiZXhwIjoxODAzNzI1MjkxfQ.tSRk8KI4ZNcXzAd6oBePhVgHAOeamE2I4PrblVQdRQg";
 
 const HeroSection = () =>
 <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
