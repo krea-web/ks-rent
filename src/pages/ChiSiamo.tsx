@@ -309,67 +309,41 @@ const ChiSiamo = () => {
         </div>
       </section>
 
-      {/* 5. CTA TOTAL GOLD (High Conversion) */}
-      <section className="relative overflow-hidden py-32 px-4">
-        {/* Background Overlay Oro e Nero per fondersi col sito */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37] via-[#e5c558] to-[#D4AF37] z-0" />
+      {/* 5. CTA ESPLOSIVA IN ORO */}
+      <section className="py-32 bg-gradient-to-br from-gold to-yellow-500 text-black text-center px-4 relative overflow-hidden">
+        {/* Sfondo decorativo per dare profondità */}
+        <div className="absolute inset-0 bg-black/5 pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.2)_0%,transparent_70%)] pointer-events-none" />
 
-        {/* Effetto texture e profondità */}
-        <div className="absolute inset-0 bg-black/5 opacity-40 z-0 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,white_1px,transparent_1px)] bg-[size:24px_24px] opacity-20 z-0" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="max-w-3xl mx-auto relative z-10"
+        >
+          {/* Badge Decorativo */}
+          <span className="inline-block py-1.5 px-4 rounded-full bg-black/10 border border-black/20 text-black text-xs uppercase tracking-[0.3em] font-bold mb-6">
+            Il tuo viaggio inizia qui
+          </span>
 
-        <div className="container relative z-10 mx-auto max-w-4xl text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={staggerContainer}
-            className="flex flex-col items-center"
+          <h2 className="text-5xl md:text-7xl font-display font-black mb-6 tracking-tighter text-black">
+            Pronto a Partire?
+          </h2>
+
+          <p className="text-black/80 mb-12 font-medium text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            Scegli il tuo veicolo, seleziona le date e prenota in meno di due minuti. Nessun pagamento anticipato
+            richiesto. L'asfalto sardo ti aspetta.
+          </p>
+
+          <Link
+            to="/prenotaora"
+            className="inline-flex items-center justify-center gap-4 bg-[#050505] text-white px-14 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.3)] group"
           >
-            <motion.div variants={fadeUp} className="mb-6 flex items-center justify-center gap-3">
-              <span className="h-[1px] w-8 bg-black/40"></span>
-              <p className="text-sm font-bold tracking-[0.3em] text-black/60 uppercase">Il Tuo Viaggio Inizia Ora</p>
-              <span className="h-[1px] w-8 bg-black/40"></span>
-            </motion.div>
-
-            <motion.h2
-              variants={fadeUp}
-              className="mb-8 text-5xl font-display font-black tracking-tight text-[#050505] md:text-7xl lg:text-8xl drop-shadow-sm"
-            >
-              Pronto a <br className="md:hidden" /> Partire?
-            </motion.h2>
-
-            <motion.p
-              variants={fadeUp}
-              className="mb-12 max-w-2xl text-lg font-medium leading-relaxed text-[#050505]/80 md:text-xl"
-            >
-              Scegli il tuo veicolo, seleziona le date e prenota in meno di due minuti.{" "}
-              <strong className="text-black font-bold">Nessun pagamento anticipato richiesto.</strong>
-            </motion.p>
-
-            <motion.div variants={fadeUp}>
-              <Link
-                to="/prenotaora"
-                className="group relative inline-flex items-center justify-center gap-4 overflow-hidden rounded-full bg-[#050505] px-12 py-6 font-bold uppercase tracking-widest text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
-              >
-                {/* Effetto luce al passaggio del mouse */}
-                <span className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-13deg)_translateX(100%)]">
-                  <span className="relative h-full w-8 bg-white/20" />
-                </span>
-
-                <span className="relative flex items-center gap-3 text-lg">
-                  Noleggia Ora
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 transition-transform duration-300 group-hover:bg-[#D4AF37] group-hover:text-black">
-                    <ArrowRight size={18} className="group-hover:translate-x-0.5" />
-                  </div>
-                </span>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Bordo inferiore sfumato per raccordarsi col footer scuro */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050505] to-transparent z-10" />
+            Noleggia Ora
+            <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform text-gold" />
+          </Link>
+        </motion.div>
       </section>
     </div>
   );
