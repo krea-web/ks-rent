@@ -46,7 +46,7 @@ const ChiSiamo = () => {
         </div>
       </section>
 
-      {/* 1.5 LA NOSTRA STORIA (NEW SECTION) */}
+      {/* 1.5 LA NOSTRA STORIA */}
       <section className="py-32 px-4 md:px-12 lg:px-24 bg-[#050505] relative">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -92,45 +92,65 @@ const ChiSiamo = () => {
         </div>
       </section>
 
-      {/* 2. I PILASTRI (Minimalist Line Grid) */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 border-t border-white/5 pt-16"
-        >
-          {/* Feature 1 */}
-          <motion.div variants={fadeUp} className="group">
-            <ShieldCheck size={32} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500" />
-            <h3 className="text-2xl font-display font-bold mb-4">Fiducia Vera</h3>
-            <p className="text-white/50 leading-relaxed font-light">
-              Abbiamo eliminato le barriere. Non richiediamo carte di credito o score bancari. Il nostro rapporto con il
-              cliente si basa su trasparenza e stretta di mano.
-            </p>
-          </motion.div>
+      {/* 2. I PILASTRI (ANIMATED GOLD BANNER) */}
+      <section className="py-32 px-4 md:px-12 lg:px-24 bg-gradient-to-br from-gold to-yellow-500 text-black relative overflow-hidden">
+        {/* Overlay leggero per profondità */}
+        <div className="absolute inset-0 bg-black/5 pointer-events-none" />
 
-          {/* Feature 2 */}
-          <motion.div variants={fadeUp} className="group">
-            <Key size={32} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500" />
-            <h3 className="text-2xl font-display font-bold mb-4">Flotta Premium</h3>
-            <p className="text-white/50 leading-relaxed font-light">
-              Dai SUV per le avventure fuoristrada, alle supercar per le notti in Costa Smeralda, fino agli scooter
-              agili per la città. Ogni veicolo è perfetto.
-            </p>
-          </motion.div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+          >
+            {/* Feature 1 */}
+            <motion.div
+              variants={fadeUp}
+              className="group flex flex-col p-10 md:p-12 rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
+            >
+              <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
+                <ShieldCheck size={28} className="text-gold" />
+              </div>
+              <h3 className="text-3xl font-display font-black mb-5 tracking-tight text-black">Fiducia Vera</h3>
+              <p className="text-black/70 leading-relaxed font-medium text-lg">
+                Abbiamo eliminato le barriere. Non richiediamo carte di credito o score bancari. Il nostro rapporto con
+                il cliente si basa su trasparenza e stretta di mano.
+              </p>
+            </motion.div>
 
-          {/* Feature 3 */}
-          <motion.div variants={fadeUp} className="group">
-            <MapPin size={32} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500" />
-            <h3 className="text-2xl font-display font-bold mb-4">Sedi Strategiche</h3>
-            <p className="text-white/50 leading-relaxed font-light">
-              Presenti a Olbia con Sede Legale e Operativa. Vicinissimi all'aeroporto e al porto, per garantirti una
-              consegna rapida e senza stress.
-            </p>
+            {/* Feature 2 */}
+            <motion.div
+              variants={fadeUp}
+              className="group flex flex-col p-10 md:p-12 rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
+            >
+              <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
+                <Key size={28} className="text-gold" />
+              </div>
+              <h3 className="text-3xl font-display font-black mb-5 tracking-tight text-black">Flotta Premium</h3>
+              <p className="text-black/70 leading-relaxed font-medium text-lg">
+                Dai SUV per le avventure fuoristrada, alle supercar per le notti in Costa Smeralda, fino agli scooter
+                agili per la città. Ogni veicolo è perfetto.
+              </p>
+            </motion.div>
+
+            {/* Feature 3 */}
+            <motion.div
+              variants={fadeUp}
+              className="group flex flex-col p-10 md:p-12 rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
+            >
+              <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
+                <MapPin size={28} className="text-gold" />
+              </div>
+              <h3 className="text-3xl font-display font-black mb-5 tracking-tight text-black">Sedi Strategiche</h3>
+              <p className="text-black/70 leading-relaxed font-medium text-lg">
+                Presenti a Olbia con Sede Legale e Operativa. Vicinissimi all'aeroporto e al porto, per garantirti una
+                consegna rapida e senza stress.
+              </p>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* 3. IL MANIFESTO (Asymmetrical Typography) */}
