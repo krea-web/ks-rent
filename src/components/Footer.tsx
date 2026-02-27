@@ -3,15 +3,15 @@ import { Phone, Mail, MapPin, Map, FileText } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const Footer = () => (
-  <footer className="relative bg-[#050505] pt-24 pb-8 border-t border-white/5 overflow-hidden">
+  <footer className="relative bg-[#050505] pt-16 md:pt-24 pb-8 border-t border-white/5 overflow-hidden">
     {/* Linea luminosa superiore */}
     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
 
     {/* Bagliore di sfondo */}
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[300px] bg-gold/5 blur-[150px] pointer-events-none" />
 
-    <div className="container mx-auto px-4 relative z-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-20">
         {/* Brand Info */}
         <div className="flex flex-col">
           <img src={logo} alt="KS Rent" className="h-12 w-auto mb-4" />
@@ -105,7 +105,7 @@ const Footer = () => (
 
     {/* HUGE BOLT TEXT */}
     <div className="w-full flex justify-center items-end px-4 mt-10 select-none pointer-events-none overflow-hidden">
-      <h1 className="text-[18vw] leading-[0.75] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-gold/80 via-gold/20 to-transparent opacity-80">
+      <h1 className="text-[15vw] md:text-[18vw] leading-[0.75] font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-gold/80 via-gold/20 to-transparent opacity-80">
         KS RENT
       </h1>
     </div>

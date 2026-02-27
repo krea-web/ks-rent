@@ -67,9 +67,9 @@ const FAQSection = () => {
       {/* =========================================
           PARTE 1: FAQ ACCORDION
       ========================================= */}
-      <div className="relative py-32 z-10">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="relative py-16 md:py-32 z-10">
+        <div className="absolute top-0 right-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
           <div className="text-center mb-16">
@@ -166,7 +166,7 @@ const FAQSection = () => {
       {/* =========================================
           PARTE 2: FULL-WIDTH ROLL BANNER
       ========================================= */}
-      <div className="relative w-full py-24 md:py-32 bg-[#0a0a0a] border-y border-white/10 overflow-hidden flex items-center justify-center">
+      <div className="relative w-full py-16 md:py-32 bg-[#0a0a0a] border-y border-white/10 overflow-hidden flex items-center justify-center">
         {/* CSS per scorrimento infinito */}
         <style>
           {`
@@ -232,7 +232,7 @@ const FAQSection = () => {
 
             <Link
               to="/chisiamo"
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 group/btn"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-6 md:px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 group/btn min-h-[48px] relative z-10"
             >
               La Nostra Filosofia
               <ArrowRight size={20} className="group-hover/btn:translate-x-1 transition-transform" />

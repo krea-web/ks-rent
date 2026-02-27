@@ -55,14 +55,14 @@ const fleet = [
 ];
 
 const FleetShowcase = () => (
-  <section className="py-32 bg-background relative overflow-hidden">
+  <section className="py-16 md:py-32 bg-background relative overflow-hidden">
     {/* Decorazione sfondo */}
     <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
       <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-gold/5 blur-[120px]" />
     </div>
 
     <div className="container mx-auto px-4 relative z-10">
-      <div className="text-center max-w-3xl mx-auto mb-20">
+      <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20 px-2">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +76,7 @@ const FleetShowcase = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-6xl font-display font-black mb-6 leading-tight"
+          className="text-3xl md:text-6xl font-display font-black mb-6 leading-tight break-words"
         >
           Scegli la tua <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold">
@@ -121,8 +121,8 @@ const FleetShowcase = () => (
             </div>
 
             {/* Content Container */}
-            <div className="p-8 flex-1 flex flex-col">
-              <h3 className="text-3xl font-black font-display mb-3 group-hover:text-gold transition-colors duration-300">
+            <div className="p-5 md:p-8 flex-1 flex flex-col">
+              <h3 className="text-2xl md:text-3xl font-black font-display mb-3 group-hover:text-gold transition-colors duration-300">
                 {v.model}
               </h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">{v.description}</p>
@@ -146,7 +146,7 @@ const FleetShowcase = () => (
               {/* Call to Action */}
               <Link
                 to="/prenotaora"
-                className="flex items-center justify-center gap-3 w-full bg-gold/10 hover:bg-gold text-gold hover:text-black py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 group/btn"
+                className="flex items-center justify-center gap-3 w-full bg-gold/10 hover:bg-gold text-gold hover:text-black py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 group/btn min-h-[48px] relative z-10"
               >
                 Noleggia Ora
                 <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
