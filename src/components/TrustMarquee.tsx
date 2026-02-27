@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { ShieldCheck, CreditCard, MapPin, BadgeEuro, Sparkles, Clock } from "lucide-react";
 
 // Punti di forza (Unique Selling Propositions)
@@ -11,19 +10,11 @@ const usps = [
   { text: "Flotta Premium", icon: Sparkles },
 ];
 
-// Loghi Ufficiali Originali (Trasparenza pura)
-const brands = [
-  { name: "Audi", url: "https://upload.wikimedia.org/wikipedia/commons/9/92/Audi-Logo_2016.svg" },
-  { name: "BMW", url: "https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" },
-  { name: "Mercedes", url: "https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg" },
-  { name: "Jeep", url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Jeep_logo.svg" },
-  { name: "Fiat", url: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Fiat_Logo_2006.svg" },
-  { name: "Honda", url: "https://upload.wikimedia.org/wikipedia/commons/3/38/Honda.svg" },
-  { name: "Yamaha", url: "https://upload.wikimedia.org/wikipedia/commons/0/01/Yamaha_Motor_Logo.svg" },
-];
+// Brand names rendered as styled text (no external images)
+const brands = ["AUDI", "BMW", "MERCEDES", "JEEP", "FIAT", "HONDA", "YAMAHA"];
 
 const duplicatedUsps = [...usps, ...usps, ...usps, ...usps];
-const duplicatedBrands = [...brands, ...brands, ...brands, ...brands, ...brands];
+const duplicatedBrands = [...brands, ...brands, ...brands, ...brands, ...brands, ...brands];
 
 const TrustMarquee = () => {
   return (
@@ -78,13 +69,10 @@ const TrustMarquee = () => {
       <div className="relative flex overflow-hidden group mt-2">
         <div className="animate-marquee-right pause-on-hover flex items-center gap-16 pl-16">
           {duplicatedBrands.map((brand, i) => (
-            <div key={`brand-${i}`} className="flex items-center justify-center w-32 h-16 cursor-pointer">
-              <img
-                src={brand.url}
-                alt={`${brand.name} logo ufficiale`}
-                /* drop-shadow leggero bianco/grigio per far leggere le scritte scure (es. Jeep) sul nero, senza creare riquadri */
-                className="w-full h-full object-contain opacity-80 hover:opacity-100 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.4)] transition-all duration-300"
-              />
+            <div key={`brand-${i}`} className="flex items-center justify-center px-8 h-16 cursor-pointer">
+              <span className="text-2xl font-black tracking-[0.3em] text-white/70 hover:text-gold uppercase transition-all duration-300 whitespace-nowrap" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                {brand}
+              </span>
             </div>
           ))}
         </div>
