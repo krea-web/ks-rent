@@ -15,22 +15,14 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Gestione dello sfondo dinamico allo scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Blocca lo scroll della pagina quando il menu mobile è aperto
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = open ? "hidden" : "unset";
   }, [open]);
 
   return (
@@ -39,14 +31,13 @@ const Navbar = () => {
         className={cn(
           "fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out",
           scrolled
-            ? "bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
-            : "bg-transparent py-6 md:py-8",
+            ? "bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 py-3 md:py-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            : "bg-transparent py-4 md:py-6 lg:py-8",
         )}
       >
-        <div className="container mx-auto flex items-center justify-between px-4 md:px-8 max-w-7xl">
-          {/* LOGO */}
+        <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
           <Link to="/" className="flex items-center group relative z-50">
-            <img src={logo} alt="KS Rent" className="h-10 md:h-12 w-auto transition-transform group-hover:scale-105" />
+            <img src={logo} alt="KS Rent" className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" />
           </Link>
 
           {/* DESKTOP NAV */}
@@ -54,25 +45,14 @@ const Navbar = () => {
             {navLinks.map((l) => {
               const isActive = location.pathname === l.to;
               return (
-                <Link
-                  key={l.to}
-                  to={l.to}
-                  className="relative px-6 py-2.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full transition-colors group"
-                >
-                  <span
-                    className={cn(
-                      "relative z-10 transition-colors duration-300",
-                      isActive ? "text-black" : "text-white/70 group-hover:text-white",
-                    )}
-                  >
+                <Link key={l.to} to={l.to}
+                  className="relative px-5 lg:px-6 py-2.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full transition-colors group">
+                  <span className={cn("relative z-10 transition-colors duration-300", isActive ? "text-black" : "text-white/70 group-hover:text-white")}>
                     {l.label}
                   </span>
                   {isActive && (
-                    <motion.div
-                      layoutId="nav-indicator"
-                      className="absolute inset-0 bg-gold rounded-full z-0 shadow-[0_0_15px_rgba(212,175,55,0.4)]"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
+                    <motion.div layoutId="nav-indicator" className="absolute inset-0 bg-gold rounded-full z-0 shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }} />
                   )}
                 </Link>
               );
@@ -81,18 +61,16 @@ const Navbar = () => {
 
           {/* DESKTOP CTA */}
           <div className="hidden md:block">
-            <Link
-              to="/prenotaora"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-xs font-black uppercase tracking-widest hover:bg-gold transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] group"
-            >
+            <Link to="/prenotaora"
+              className="inline-flex items-center gap-2 px-5 lg:px-6 py-3 rounded-full bg-white text-black text-xs font-black uppercase tracking-widest hover:bg-gold transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] group min-h-[44px]">
               Prenota Ora
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
-          {/* MOBILE TOGGLE BUTTON */}
+          {/* MOBILE TOGGLE */}
           <button
-            className="md:hidden relative z-50 text-white p-2 bg-white/5 border border-white/10 rounded-full"
+            className="md:hidden relative z-50 text-white p-2.5 bg-white/5 border border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setOpen(!open)}
           >
             {open ? <X size={20} className="text-gold" /> : <Menu size={20} />}
@@ -107,13 +85,12 @@ const Navbar = () => {
             initial={{ opacity: 0, y: "-100%" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
-            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }} // Curva molto morbida stile Apple
-            className="fixed inset-0 z-[90] bg-[#050505] flex flex-col justify-center px-8"
+            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[90] bg-[#050505] flex flex-col justify-center px-6 sm:px-8 overflow-hidden"
           >
-            {/* Elementi Decorativi */}
-            <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-[-10%] right-[-10%] w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="flex flex-col gap-8 items-start">
+            <div className="flex flex-col gap-6 sm:gap-8 items-start">
               {[...navLinks, { label: "Prenota Ora", to: "/prenotaora", special: true as const }].map((l, i) => {
                 const isActive = location.pathname === l.to;
                 const isSpecial = "special" in l && l.special;
@@ -129,14 +106,12 @@ const Navbar = () => {
                       to={l.to}
                       onClick={() => setOpen(false)}
                       className={cn(
-                        "text-4xl sm:text-5xl font-display font-black tracking-tighter transition-colors flex items-center gap-4",
+                        "text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-tight transition-colors flex items-center gap-3 sm:gap-4 min-h-[48px] relative z-20",
                         isActive ? "text-gold" : "text-white/60 hover:text-white",
-                        isSpecial ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-500 mt-8" : "",
+                        isSpecial ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-500 mt-6 sm:mt-8" : "",
                       )}
                     >
-                      {isActive && (
-                        <span className="w-3 h-3 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)]" />
-                      )}
+                      {isActive && <span className="w-3 h-3 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)]" />}
                       {l.label}
                     </Link>
                   </motion.div>
@@ -144,16 +119,13 @@ const Navbar = () => {
               })}
             </div>
 
-            {/* Mobile Footer Info */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="absolute bottom-12 left-8 right-8 flex justify-between items-end border-t border-white/10 pt-8"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+              className="absolute bottom-8 sm:bottom-12 left-6 right-6 sm:left-8 sm:right-8 flex justify-between items-end border-t border-white/10 pt-6 sm:pt-8"
             >
               <div>
                 <p className="text-white/40 text-xs uppercase tracking-widest mb-2">Assistenza</p>
-                <p className="text-gold font-bold">+39 344 610 7071</p>
+                <a href="tel:+393446107071" className="text-gold font-bold relative z-20">+39 344 610 7071</a>
               </div>
               <div className="text-right">
                 <p className="text-white/40 text-xs uppercase tracking-widest mb-2">Olbia, IT</p>
