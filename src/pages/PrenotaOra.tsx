@@ -32,16 +32,20 @@ const DAILY_RATE = 45; // Tariffa base fissa per ora
 // Cambia questi link con le tue foto reali!
 // ==========================================
 const VEHICLE_IMAGES: Record<string, string> = {
-  "Fiat Panda": "https://images.unsplash.com/photo-1620021319088-307998244923?auto=format&fit=crop&q=80",
-  "Jeep Avenger": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
-  "Audi RS3 (Grigio)": "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80",
-  "Audi RS3 (Verde)": "https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?auto=format&fit=crop&q=80",
-  "BMW M2": "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80",
-  "Mercedes Classe A180d": "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80",
-  "Mercedes Classe A45s": "https://images.unsplash.com/photo-1605515298946-d062f2e9da53?auto=format&fit=crop&q=80",
-  "Honda SH 125": "https://images.unsplash.com/photo-1599818817478-f60ae05bcbe4?auto=format&fit=crop&q=80",
-  "Honda SH 350": "https://images.unsplash.com/photo-1591378603223-e15b45a81640?auto=format&fit=crop&q=80",
-  "Yamaha Quad": "https://images.unsplash.com/photo-1596483569476-6cb0df2a492f?auto=format&fit=crop&q=80",
+  "Fiat Panda": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT%20PANDA.jpg",
+  "Jeep Avenger": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AVENGER.jpg",
+  "Audi RS3 (Grigio)":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI%20RS3%20GRIGIA.jpg",
+  "Audi RS3 (Verde)":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI%20RS3%20VERDE.jpg",
+  "BMW M2": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW%20M2.avif",
+  "Mercedes Classe A180d":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/mercedes-classe-a.180d.webp",
+  "Mercedes Classe A45s":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Mercedes-classea45s.webp",
+  "Honda SH 125": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/HONDA%20SH125.jpg",
+  "Honda SH 350": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/HONDA%20SH350.webp",
+  "Yamaha Quad": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/YAMAHA%20QUAD.jpg",
 };
 
 // Immagine di fallback se il nome non fa match
@@ -139,10 +143,10 @@ const PrenotaOra = () => {
   };
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-16 selection:bg-gold selection:text-black">
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-5%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-gold/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[-5%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-white/5 rounded-full blur-[150px]" />
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-gold/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px]" />
       </div>
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
@@ -152,7 +156,7 @@ const PrenotaOra = () => {
             <div className="w-8 h-[2px] bg-gold"></div>
             <span className="text-gold text-sm uppercase tracking-[0.3em] font-semibold">Fast Booking</span>
           </div>
-          <h1 className="text-4xl md:text-7xl font-display font-black tracking-tight break-words">
+          <h1 className="text-5xl md:text-7xl font-display font-black tracking-tighter">
             Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Ora.</span>
           </h1>
         </motion.div>
@@ -166,7 +170,7 @@ const PrenotaOra = () => {
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-10 relative overflow-hidden group hover:border-white/20 transition-colors"
+                className="bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 md:p-10 relative overflow-hidden group hover:border-white/20 transition-colors"
               >
                 <div className="absolute top-0 left-0 w-2 h-full bg-gold/50 opacity-0 group-hover:opacity-100 transition-opacity" />
 
@@ -204,7 +208,7 @@ const PrenotaOra = () => {
                     Caricamento flotta in corso...
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 gap-3 md:gap-4 max-h-[400px] md:max-h-[500px] overflow-y-auto pr-1 md:pr-2 custom-scrollbar pb-4">
+                  <div className="grid grid-cols-2 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar pb-4">
                     {filteredVehicles.map((v) => {
                       const isSelected = selectedVehicle?.id === v.id;
                       const imageUrl = getVehicleImage(v);
@@ -254,10 +258,10 @@ const PrenotaOra = () => {
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-10 relative overflow-hidden group hover:border-white/20 transition-colors"
+                className="bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 md:p-10 relative overflow-hidden group hover:border-white/20 transition-colors"
               >
-                <div className="absolute top-0 left-0 w-2 h-full bg-gold/50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-6 flex items-center gap-3">
+                <div className="absolute top-0 left-0 w-2 h-full bg-gold/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
                   <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
                     2
                   </span>
@@ -340,10 +344,10 @@ const PrenotaOra = () => {
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-10 relative overflow-hidden group hover:border-white/20 transition-colors"
+                className="bg-[#0a0a0a] border border-white/10 rounded-[2rem] p-8 md:p-10 relative overflow-hidden group hover:border-white/20 transition-colors"
               >
-                <div className="absolute top-0 left-0 w-2 h-full bg-gold/50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-6 flex items-center gap-3">
+                <div className="absolute top-0 left-0 w-2 h-full bg-gold/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-3">
                   <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
                     3
                   </span>
@@ -418,9 +422,9 @@ const PrenotaOra = () => {
 
             {/* RIGHT COLUMN: STICKY LIVE SUMMARY WIDGET */}
             <div className="lg:col-span-5 relative">
-              <div className="lg:sticky top-28 w-full bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
+              <div className="sticky top-28 w-full bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-[2rem] overflow-hidden">
                 {/* Visual Header with Car Image Background */}
-                <div className="p-5 md:p-8 border-b border-white/5 bg-[#151515] relative overflow-hidden min-h-[120px] md:min-h-[160px] flex flex-col justify-end">
+                <div className="p-8 border-b border-white/5 bg-[#151515] relative overflow-hidden min-h-[160px] flex flex-col justify-end">
                   {selectedVehicle ? (
                     <>
                       <div className="absolute inset-0 z-0">
@@ -455,7 +459,7 @@ const PrenotaOra = () => {
                   )}
                 </div>
 
-                <div className="p-5 md:p-8 space-y-6">
+                <div className="p-8 space-y-6">
                   <div className="flex justify-between items-end pb-6 border-b border-white/5">
                     <div>
                       <p className="text-white/50 text-sm mb-1">Tariffa Base</p>
