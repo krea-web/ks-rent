@@ -17,9 +17,9 @@ const ChiSiamo = () => {
   };
 
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20">
+    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20 overflow-x-hidden">
       {/* 1. HERO EDITORIALE */}
-      <section className="relative h-[85vh] flex flex-col justify-end pb-24 px-4 md:px-12 lg:px-24">
+      <section className="relative h-[70vh] md:h-[85vh] flex flex-col justify-end pb-12 md:pb-24 px-4 md:px-12 lg:px-24">
         <div className="absolute inset-0 z-0">
           <img
             src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW%20M2%201.jpg"
@@ -35,7 +35,7 @@ const ChiSiamo = () => {
               <div className="h-[1px] w-12 bg-gold"></div>
               <span className="text-gold text-sm uppercase tracking-[0.4em] font-semibold">KS Rent S.R.L.</span>
             </div>
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-display font-black leading-[1.05] md:leading-[0.95] tracking-tight mb-8">
+            <h1 className="text-3xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[0.95] tracking-tight mb-6 md:mb-8 break-words">
               Redefiniamo <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">la Libertà.</span>
             </h1>
@@ -47,14 +47,14 @@ const ChiSiamo = () => {
       </section>
 
       {/* 1.5 LA NOSTRA STORIA */}
-      <section className="py-32 px-4 md:px-12 lg:px-24 bg-[#050505] relative">
+      <section className="py-16 md:py-32 px-4 md:px-12 lg:px-24 bg-[#050505] relative">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-24"
           >
             {/* Sinistra: Grande Titolo */}
             <motion.div variants={fadeUp} className="lg:col-span-5">
@@ -93,7 +93,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 2. I PILASTRI (ANIMATED GOLD BANNER) */}
-      <section className="py-32 px-4 md:px-12 lg:px-24 bg-gradient-to-br from-gold to-yellow-500 text-black relative overflow-hidden">
+      <section className="py-16 md:py-32 px-4 md:px-12 lg:px-24 bg-gradient-to-br from-gold to-yellow-500 text-black relative overflow-hidden">
         {/* Overlay leggero per profondità */}
         <div className="absolute inset-0 bg-black/5 pointer-events-none" />
 
@@ -108,12 +108,12 @@ const ChiSiamo = () => {
             {/* Feature 1 */}
             <motion.div
               variants={fadeUp}
-              className="group flex flex-col p-10 md:p-12 rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
+              className="group flex flex-col p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
             >
-              <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                <ShieldCheck size={28} className="text-gold" />
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-black flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
+                <ShieldCheck size={24} className="text-gold" />
               </div>
-              <h3 className="text-3xl font-display font-black mb-5 tracking-tight text-black">Fiducia Vera</h3>
+              <h3 className="text-2xl md:text-3xl font-display font-black mb-4 md:mb-5 tracking-tight text-black">Fiducia Vera</h3>
               <p className="text-black/70 leading-relaxed font-medium text-lg">
                 Abbiamo eliminato le barriere. Non richiediamo carte di credito o score bancari. Il nostro rapporto con
                 il cliente si basa su trasparenza e stretta di mano.
@@ -123,12 +123,12 @@ const ChiSiamo = () => {
             {/* Feature 2 */}
             <motion.div
               variants={fadeUp}
-              className="group flex flex-col p-10 md:p-12 rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
+              className="group flex flex-col p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
             >
-              <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                <Key size={28} className="text-gold" />
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-black flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
+                <Key size={24} className="text-gold" />
               </div>
-              <h3 className="text-3xl font-display font-black mb-5 tracking-tight text-black">Flotta Premium</h3>
+              <h3 className="text-2xl md:text-3xl font-display font-black mb-4 md:mb-5 tracking-tight text-black">Flotta Premium</h3>
               <p className="text-black/70 leading-relaxed font-medium text-lg">
                 Dai SUV per le avventure fuoristrada, alle supercar per le notti in Costa Smeralda, fino agli scooter
                 agili per la città. Ogni veicolo è perfetto.
@@ -138,12 +138,12 @@ const ChiSiamo = () => {
             {/* Feature 3 */}
             <motion.div
               variants={fadeUp}
-              className="group flex flex-col p-10 md:p-12 rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
+              className="group flex flex-col p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] bg-black/5 hover:bg-black/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] cursor-default"
             >
-              <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                <MapPin size={28} className="text-gold" />
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-black flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-500 shadow-xl">
+                <MapPin size={24} className="text-gold" />
               </div>
-              <h3 className="text-3xl font-display font-black mb-5 tracking-tight text-black">Sedi Strategiche</h3>
+              <h3 className="text-2xl md:text-3xl font-display font-black mb-4 md:mb-5 tracking-tight text-black">Sedi Strategiche</h3>
               <p className="text-black/70 leading-relaxed font-medium text-lg">
                 Presenti a Olbia con Sede Legale e Operativa. Vicinissimi all'aeroporto e al porto, per garantirti una
                 consegna rapida e senza stress.
@@ -154,11 +154,11 @@ const ChiSiamo = () => {
       </section>
 
       {/* 3. IL MANIFESTO (Asymmetrical Typography) */}
-      <section className="py-32 bg-[#050505] relative overflow-hidden">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
+      <section className="py-16 md:py-32 bg-[#050505] relative overflow-hidden">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="container mx-auto px-4 md:px-12 lg:px-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -174,7 +174,7 @@ const ChiSiamo = () => {
                 />
               </div>
               {/* Box decorativo sovrapposto */}
-              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#0a0a0a] border border-white/10 rounded-3xl flex items-center justify-center p-6 hidden md:flex shadow-2xl">
+              <div className="absolute -bottom-8 -right-4 md:-right-8 w-36 md:w-48 h-36 md:h-48 bg-[#0a0a0a] border border-white/10 rounded-3xl hidden md:flex items-center justify-center p-6 shadow-2xl">
                 <p className="text-xs text-gold uppercase tracking-widest font-semibold text-center leading-loose">
                   Dal 2024
                   <br />
@@ -191,7 +191,7 @@ const ChiSiamo = () => {
               className="lg:col-span-7"
             >
               <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-8">La Nostra Visione</h2>
-              <h3 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.1] mb-8">
+              <h3 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight md:leading-[1.1] mb-6 md:mb-8 break-words">
                 Non siamo nati per essere l'ennesima agenzia.
               </h3>
               <div className="space-y-6 text-white/60 font-light text-lg">
@@ -210,7 +210,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 4. INSTAGRAM (Asymmetric Editorial Grid) */}
-      <section className="py-32 bg-[#0a0a0a] border-t border-white/5 relative">
+      <section className="py-16 md:py-32 bg-[#0a0a0a] border-t border-white/5 relative">
         <div className="container mx-auto px-4 md:px-12 lg:px-24">
           {/* Header Social */}
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mb-16">
@@ -249,7 +249,7 @@ const ChiSiamo = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[300px]"
+            className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[300px]"
           >
             {/* Foto Principale (Grande) */}
             <motion.a
@@ -310,7 +310,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 5. CTA ESPLOSIVA IN ORO */}
-      <section className="py-32 bg-gradient-to-br from-gold to-yellow-500 text-black text-center px-4 relative overflow-hidden">
+      <section className="py-16 md:py-32 bg-gradient-to-br from-gold to-yellow-500 text-black text-center px-4 relative overflow-hidden">
         {/* Sfondo decorativo per dare profondità */}
         <div className="absolute inset-0 bg-black/5 pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.2)_0%,transparent_70%)] pointer-events-none" />
@@ -327,7 +327,7 @@ const ChiSiamo = () => {
             Il tuo viaggio inizia qui
           </span>
 
-          <h2 className="text-5xl md:text-7xl font-display font-black mb-6 tracking-tighter text-black">
+          <h2 className="text-4xl md:text-7xl font-display font-black mb-6 tracking-tight text-black">
             Pronto a Partire?
           </h2>
 
@@ -338,7 +338,7 @@ const ChiSiamo = () => {
 
           <Link
             to="/prenotaora"
-            className="inline-flex items-center justify-center gap-4 bg-[#050505] text-white px-14 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.3)] group"
+            className="inline-flex items-center justify-center gap-3 md:gap-4 bg-[#050505] text-white px-8 md:px-14 py-4 md:py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.3)] group relative z-10 min-h-[48px]"
           >
             Noleggia Ora
             <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform text-gold" />
