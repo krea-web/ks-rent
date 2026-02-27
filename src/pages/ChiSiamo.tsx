@@ -93,7 +93,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 2. I PILASTRI (ANIMATED GOLD BANNER) */}
-      <section className="absolute inset-0 bg-gradient-to-br from-[#D4AF37] via-[#e5c558] to-[#D4AF37] z-0" />
+      <section className="py-32 px-4 md:px-12 lg:px-24 bg-gradient-to-br from-gold to-yellow-500 text-black relative overflow-hidden">
         {/* Overlay leggero per profondità */}
         <div className="absolute inset-0 bg-black/5 pointer-events-none" />
 
