@@ -35,7 +35,7 @@ const ChiSiamo = () => {
               <div className="h-[1px] w-12 bg-gold"></div>
               <span className="text-gold text-sm uppercase tracking-[0.4em] font-semibold">KS Rent S.R.L.</span>
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-display font-black leading-[1.05] md:leading-[0.95] tracking-tight mb-8">
               Redefiniamo <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">la Libertà.</span>
             </h1>
