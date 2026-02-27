@@ -33,25 +33,6 @@ const HeroSection = () =>
       className="text-gold text-sm uppercase tracking-[0.3em] font-semibold mb-4">AUTONOLEGGIO IN COSTA SMERALDA
     </motion.p>
 
-      <motion.h1
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4 }}
-      className="text-4xl md:text-7xl lg:text-8xl font-black font-display leading-tight break-words">
-
-        Guida il tuo <br />
-        <span className="text-gradient-gold">stile di vita</span>
-      </motion.h1>
-
-      <motion.p
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 }}
-      className="mt-6 text-lg text-muted-foreground max-w-xl mx-auto">
-
-        Noleggia auto, moto e quad con la sicurezza e l'eleganza che meriti.
-      </motion.p>
-
       <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
