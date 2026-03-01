@@ -51,7 +51,7 @@ const PrenotaOra = () => {
       const { data, error } = await supabase
         .from("vehicles")
         .select("*")
-        .eq("is_available", true)
+        .eq("available", true)
         .order("category", { ascending: true });
       if (data) setVehicles(data);
       if (error) console.error("Errore recupero veicoli:", error);
