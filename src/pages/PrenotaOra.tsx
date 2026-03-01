@@ -52,7 +52,7 @@ const PrenotaOra = () => {
         .from("vehicles")
         .select("*")
         .eq("is_available", true)
-        .order("model", { ascending: true });
+        .order("category", { ascending: true });
       if (data) setVehicles(data);
       if (error) console.error("Errore recupero veicoli:", error);
     };
@@ -70,7 +70,7 @@ const PrenotaOra = () => {
   }, [vehicles, selectedCategory]);
 
   const days = startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0;
-  const dailyRate = selectedVehicle?.daily_price ?? 0;
+  const dailyRate = selectedVehicle?.daily_rate ?? 0;
   const total = days * dailyRate;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -199,10 +199,10 @@ const PrenotaOra = () => {
                             </div>
                           </div>
                           <span className="font-bold text-sm sm:text-base md:text-lg leading-tight px-1 group-hover/card:text-gold transition-colors break-words">
-                            {v.model}
+                            {v.make ? `${v.make} ${v.model}` : v.model}
                           </span>
                           <span className="text-xs text-gold/80 font-semibold px-1 mt-1">
-                            {v.daily_price ? `da €${v.daily_price}/giorno` : FALLBACK_LABEL}
+                            {v.daily_rate ? `da €${v.daily_rate}/giorno` : FALLBACK_LABEL}
                           </span>
                         </div>
                       );
@@ -335,7 +335,7 @@ const PrenotaOra = () => {
                       </div>
                       <div className="relative z-10">
                         <span className="text-gold text-xs font-semibold uppercase tracking-wider">{selectedVehicle.category}</span>
-                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white">{selectedVehicle.model}</h3>
+                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white">{selectedVehicle.make ? `${selectedVehicle.make} ${selectedVehicle.model}` : selectedVehicle.model}</h3>
                       </div>
                     </>
                   ) : (
