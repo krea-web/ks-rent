@@ -32,7 +32,7 @@ const FleetShowcase = () => {
       const { data, error } = await supabase
         .from("vehicles")
         .select("*")
-        .eq("is_available", true)
+        .eq("available", true)
         .order("category");
       if (data) setFleet(data);
       if (error) console.error("Errore recupero flotta:", error);
