@@ -29,12 +29,13 @@ const FleetShowcase = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("vehicles")
-        .select("id, model, category, daily_price, image_url, is_available")
+        .select("*")
         .eq("is_available", true)
-        .order("category");
+        .order("model");
       if (data) setFleet(data);
+      if (error) console.error("Errore recupero flotta:", error);
     };
     fetch();
   }, []);
