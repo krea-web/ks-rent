@@ -33,7 +33,7 @@ const FleetShowcase = () => {
         .from("vehicles")
         .select("*")
         .eq("is_available", true)
-        .order("model");
+        .order("category");
       if (data) setFleet(data);
       if (error) console.error("Errore recupero flotta:", error);
     };
@@ -113,12 +113,11 @@ const FleetShowcase = () => {
 
                   <div className="p-5 md:p-8 flex-1 flex flex-col">
                     <h3 className="text-2xl md:text-3xl font-black font-display mb-2 group-hover:text-gold transition-colors duration-300">
-                      {v.model}
+                      {v.make ? `${v.make} ${v.model}` : v.model}
                     </h3>
-                    {/* Prezzo dinamico */}
                     <p className="text-gold font-bold text-lg mb-6">
-                      {v.daily_price && v.daily_price > 0
-                        ? `A partire da €${v.daily_price}/giorno`
+                      {v.daily_rate && v.daily_rate > 0
+                        ? `A partire da €${v.daily_rate}/giorno`
                         : "Prezzo su richiesta"}
                     </p>
 
