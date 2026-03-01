@@ -15,7 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
-const DAILY_RATE = 45;
+const FALLBACK_LABEL = "Prezzo su richiesta";
 
 const VEHICLE_IMAGES: Record<string, string> = {
   "Fiat Panda": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT%20PANDA.jpg",
@@ -70,7 +70,8 @@ const PrenotaOra = () => {
   }, [vehicles, selectedCategory]);
 
   const days = startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0;
-  const total = days * DAILY_RATE;
+  const dailyRate = selectedVehicle?.daily_price ?? 0;
+  const total = days * dailyRate;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -199,6 +200,9 @@ const PrenotaOra = () => {
                           </div>
                           <span className="font-bold text-sm sm:text-base md:text-lg leading-tight px-1 group-hover/card:text-gold transition-colors break-words">
                             {v.model}
+                          </span>
+                          <span className="text-xs text-gold/80 font-semibold px-1 mt-1">
+                            {v.daily_price ? `da €${v.daily_price}/giorno` : FALLBACK_LABEL}
                           </span>
                         </div>
                       );
@@ -349,7 +353,12 @@ const PrenotaOra = () => {
                   <div className="flex justify-between items-end pb-5 md:pb-6 border-b border-white/5">
                     <div>
                       <p className="text-white/50 text-sm mb-1">Tariffa Base</p>
-                      <p className="text-white text-lg">€{DAILY_RATE} <span className="text-white/40 text-sm">/giorno</span></p>
+                      <p className="text-white text-lg">
+                        {selectedVehicle && dailyRate > 0
+                          ? <>€{dailyRate} <span className="text-white/40 text-sm">/giorno</span></>
+                          : <span className="text-white/40 text-sm">{selectedVehicle ? FALLBACK_LABEL : "Seleziona veicolo"}</span>
+                        }
+                      </p>
                     </div>
                     <div className="text-right">
                       <p className="text-white/50 text-sm mb-1">Durata</p>
