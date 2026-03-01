@@ -52,7 +52,7 @@ const PrenotaOra = () => {
         .from("vehicles")
         .select("*")
         .eq("is_available", true)
-        .order("category", { ascending: true });
+        .order("model", { ascending: true });
       if (data) setVehicles(data);
       if (error) console.error("Errore recupero veicoli:", error);
     };
