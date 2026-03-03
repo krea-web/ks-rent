@@ -33,6 +33,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import SignatureModal from "@/components/SignatureModal";
+import SEOHead from "@/components/SEOHead";
+import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
 
 const FALLBACK_LABEL = "Prezzo su richiesta";
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
@@ -500,6 +502,20 @@ const PrenotaOra = () => {
 
   return (
     <div className="bg-[#050505] min-h-screen text-white pt-24 pb-32 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
+      <SEOHead
+        title={
+          selectedVehicle
+            ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} a Olbia — KS Rent`
+            : "Prenota Ora — Noleggio Auto Olbia | KS Rent Costa Smeralda"
+        }
+        description={
+          selectedVehicle
+            ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} in Costa Smeralda senza carta di credito. Da €${selectedVehicle.daily_rate}/giorno con KS Rent Olbia.`
+            : "Prenota la tua auto o moto in Costa Smeralda senza carta di credito. Noleggio premium con consegna aeroporto Olbia. KS Rent S.R.L."
+        }
+        canonical="https://ksrent.it/prenotaora"
+        jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
+      />
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 rounded-full blur-[150px]" />
@@ -572,7 +588,7 @@ const PrenotaOra = () => {
                         <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
                           <img
                             src={v.image_url}
-                            alt={v.model}
+                            alt={`Noleggio ${v.make} ${v.model} Olbia — KS Rent Costa Smeralda`}
                             className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
