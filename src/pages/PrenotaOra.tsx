@@ -511,7 +511,7 @@ const PrenotaOra = () => {
           </h1>
         </motion.div>
 
-        <form id="booking-form" onSubmit={handleSubmit}>
+        <form id="booking-form" onSubmit={handleSubmit} noValidate>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             {/* LEFT COLUMN */}
             <div className="lg:col-span-8 space-y-6 md:space-y-8">
