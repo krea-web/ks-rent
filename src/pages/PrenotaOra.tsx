@@ -200,6 +200,10 @@ const PrenotaOra = () => {
         body: JSON.stringify(bookingPayload),
       });
 
+      if (res.status === 409) {
+        toast.error("Veicolo già prenotato per queste date. Scegli date diverse.", { id: toastId });
+        return;
+      }
       if (!res.ok) throw new Error();
       const result = await res.json();
 

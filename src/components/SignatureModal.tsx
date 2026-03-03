@@ -38,7 +38,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
 
       if (!res.ok) throw new Error("Errore firma");
 
-      toast.success("Contratto firmato e inviato!");
+      toast.success("Contratto firmato! Controlla la tua email per la copia del contratto.");
       onSuccess();
     } catch {
       toast.error("Errore durante l'invio della firma. Riprova.");
@@ -119,7 +119,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
                 {signing ? (
                   <Loader2 size={16} className="animate-spin mr-2" />
                 ) : null}
-                {signing ? "Invio..." : "Conferma Firma"}
+                {signing ? "Generazione contratto..." : "Firma e Finalizza"}
               </Button>
             </div>
           </motion.div>
