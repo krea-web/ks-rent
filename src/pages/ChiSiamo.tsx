@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight, Instagram, ShieldCheck, Key, MapPin } from "lucide-react";
 import { useRef } from "react";
 
@@ -13,6 +13,7 @@ const ChiSiamo = () => {
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.666%"]);
 
+  // Removed explicit ': Variants' to fix TypeScript compatibility errors
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
@@ -29,7 +30,7 @@ const ChiSiamo = () => {
   return (
     <div
       ref={containerRef}
-      className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20 overflow-x-hidden"
+      className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20 overflow-x-hidden font-sans"
     >
       {/* 1. HERO EDITORIALE */}
       <section className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
@@ -164,7 +165,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 3. IL MANIFESTO */}
-      <section className="py-16 md:py-32 bg-[#050505] relative overflow-hidden">
+      <section className="py-16 md:py-32 bg-[#050505] relative overflow-hidden border-t border-white/5">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">
@@ -330,7 +331,7 @@ const ChiSiamo = () => {
           variants={fadeUp}
           className="max-w-4xl mx-auto relative z-10 flex flex-col items-center"
         >
-          <span className="inline-block py-2 px-6 rounded-full bg-black/10 border border-black/20 text-black text-xs md:text-sm uppercase tracking-[0.3em] font-bold mb-8">
+          <span className="inline-block py-2 px-6 rounded-full bg-black/10 border border-black/20 text-black text-xs md:text-sm uppercase tracking-[0.3em] font-bold mb-8 shadow-sm">
             Il tuo viaggio inizia qui
           </span>
 
