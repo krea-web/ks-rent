@@ -173,6 +173,9 @@ const PrenotaOra = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("handleSubmit triggered");
+    console.log("Stato disponibilità:", isAvailable, availabilityResult);
+
     if (!selectedVehicle) {
       toast.error("Seleziona prima un veicolo.");
       return;
@@ -185,13 +188,24 @@ const PrenotaOra = () => {
       toast.error("Veicolo non disponibile per queste date.");
       return;
     }
-    if (!mainDriver.licenseFront || !mainDriver.licenseBack) {
-      toast.error("Inserisci le foto della patente del guidatore principale.");
+    // Validate main driver fields
+    if (!mainDriver.name || !mainDriver.surname || !mainDriver.email || !mainDriver.phone || !mainDriver.cf || !mainDriver.birthDate || !mainDriver.birthPlace || !mainDriver.residence || !mainDriver.city) {
+      toast.error("Compila tutti i dati del guidatore principale.");
       return;
     }
-    if (hasSecondDriver && (!secondDriver.licenseFront || !secondDriver.licenseBack)) {
-      toast.error("Inserisci le foto della patente del secondo guidatore.");
+    if (!mainDriver.licenseFront || !mainDriver.licenseBack) {
+      toast.error("Carica la foto della patente (fronte e retro) del guidatore principale.");
       return;
+    }
+    if (hasSecondDriver) {
+      if (!secondDriver.name || !secondDriver.surname || !secondDriver.email || !secondDriver.phone || !secondDriver.cf) {
+        toast.error("Compila tutti i dati del secondo guidatore.");
+        return;
+      }
+      if (!secondDriver.licenseFront || !secondDriver.licenseBack) {
+        toast.error("Carica la foto della patente del secondo guidatore.");
+        return;
+      }
     }
 
     setLoading(true);
@@ -314,7 +328,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               value={driver.name}
               onChange={(e) => setDriver({ ...driver, name: e.target.value })}
               className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
@@ -326,7 +339,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               value={driver.surname}
               onChange={(e) => setDriver({ ...driver, surname: e.target.value })}
               className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
@@ -341,7 +353,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               type="date"
               value={driver.birthDate}
               onChange={(e) => setDriver({ ...driver, birthDate: e.target.value })}
@@ -354,7 +365,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               value={driver.birthPlace}
               onChange={(e) => setDriver({ ...driver, birthPlace: e.target.value })}
               className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
@@ -369,7 +379,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <Map className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               value={driver.residence}
               onChange={(e) => setDriver({ ...driver, residence: e.target.value })}
               placeholder="Via Roma 1"
@@ -382,7 +391,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               value={driver.city}
               onChange={(e) => setDriver({ ...driver, city: e.target.value })}
               placeholder="Roma"
@@ -398,7 +406,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               maxLength={16}
               value={driver.cf}
               onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
@@ -411,7 +418,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               type="email"
               value={driver.email}
               onChange={(e) => setDriver({ ...driver, email: e.target.value })}
@@ -424,7 +430,6 @@ const PrenotaOra = () => {
           <div className="relative">
             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               type="tel"
               value={driver.phone}
               onChange={(e) => setDriver({ ...driver, phone: e.target.value })}
@@ -446,7 +451,6 @@ const PrenotaOra = () => {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                required
                 onChange={(e) => setDriver({ ...driver, licenseFront: e.target.files?.[0] || null })}
               />
               {driver.licenseFront ? (
@@ -469,7 +473,6 @@ const PrenotaOra = () => {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                required
                 onChange={(e) => setDriver({ ...driver, licenseBack: e.target.files?.[0] || null })}
               />
               {driver.licenseBack ? (
