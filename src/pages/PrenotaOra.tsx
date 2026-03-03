@@ -441,7 +441,11 @@ const PrenotaOra = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Fronte</Label>
-            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden">
+            <label
+              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
+              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              onDrop={(e) => { e.preventDefault(); e.stopPropagation(); const file = e.dataTransfer.files?.[0]; if (file) setDriver({ ...driver, licenseFront: file }); }}
+            >
               <input
                 type="file"
                 accept="image/*"
@@ -464,7 +468,11 @@ const PrenotaOra = () => {
           </div>
           <div>
             <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Retro</Label>
-            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden">
+            <label
+              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
+              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              onDrop={(e) => { e.preventDefault(); e.stopPropagation(); const file = e.dataTransfer.files?.[0]; if (file) setDriver({ ...driver, licenseBack: file }); }}
+            >
               <input
                 type="file"
                 accept="image/*"
