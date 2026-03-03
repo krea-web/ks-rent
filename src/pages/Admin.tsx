@@ -33,20 +33,37 @@ const Admin = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Auth guard
+  // Auth guard with admin check
   useEffect(() => {
+    const checkAdmin = async (userId: string) => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("is_admin")
+        .eq("id", userId)
+        .single();
+      if (!data?.is_admin) {
+        toast.error("Accesso non autorizzato");
+        await supabase.auth.signOut();
+        navigate("/login", { replace: true });
+        return;
+      }
+      setAuthChecked(true);
+    };
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
         navigate("/login", { replace: true });
+        return;
       }
-      setAuthChecked(true);
+      checkAdmin(session.user.id);
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
         navigate("/login", { replace: true });
+        return;
       }
-      setAuthChecked(true);
+      checkAdmin(session.user.id);
     });
 
     return () => subscription.unsubscribe();
