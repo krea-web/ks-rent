@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   CalendarIcon,
@@ -18,6 +18,8 @@ import {
   CalendarDays,
   UploadCloud,
   Users,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
@@ -30,8 +32,10 @@ import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
+import SignatureModal from "@/components/SignatureModal";
 
 const FALLBACK_LABEL = "Prezzo su richiesta";
+const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
 
 // Struttura dati guidatore
 const initialDriverState = {
@@ -61,6 +65,19 @@ const PrenotaOra = () => {
   const [secondDriver, setSecondDriver] = useState({ ...initialDriverState });
   const [loading, setLoading] = useState(false);
 
+  // n8n availability state
+  const [checkingAvailability, setCheckingAvailability] = useState(false);
+  const [availabilityResult, setAvailabilityResult] = useState<{
+    available: boolean;
+    estimated_price?: number;
+    days?: number;
+    price_per_day?: number;
+  } | null>(null);
+
+  // Signature modal state
+  const [signatureOpen, setSignatureOpen] = useState(false);
+  const [bookingId, setBookingId] = useState<string>("");
+
   // Mobile Sticky Bar
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
@@ -89,6 +106,44 @@ const PrenotaOra = () => {
     fetchVehicles();
   }, []);
 
+  // WF1: Check availability when vehicle + dates are selected
+  const checkAvailability = useCallback(async () => {
+    if (!selectedVehicle || !startDate || !endDate) {
+      setAvailabilityResult(null);
+      return;
+    }
+
+    setCheckingAvailability(true);
+    try {
+      const params = new URLSearchParams({
+        vehicle_id: selectedVehicle.id,
+        start_date: format(startDate, "yyyy-MM-dd"),
+        end_date: format(endDate, "yyyy-MM-dd"),
+      });
+
+      const res = await fetch(`${N8N_BASE}/check-availability?${params}`);
+      if (!res.ok) throw new Error("Errore verifica disponibilità");
+
+      const data = await res.json();
+      setAvailabilityResult(data);
+
+      if (!data.available) {
+        toast.error("Veicolo non disponibile per queste date.");
+      }
+    } catch (err) {
+      console.error("Availability check failed:", err);
+      // Fallback to local calculation
+      setAvailabilityResult(null);
+      toast.error("Impossibile verificare la disponibilità. Calcolo locale attivo.");
+    } finally {
+      setCheckingAvailability(false);
+    }
+  }, [selectedVehicle, startDate, endDate]);
+
+  useEffect(() => {
+    checkAvailability();
+  }, [checkAvailability]);
+
   const categories = useMemo(() => {
     const cats = new Set(vehicles.map((v) => v.category));
     return ["Tutti", ...Array.from(cats)];
@@ -99,9 +154,11 @@ const PrenotaOra = () => {
     return vehicles.filter((v) => v.category === selectedCategory);
   }, [vehicles, selectedCategory]);
 
-  const days = startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0;
-  const dailyRate = selectedVehicle?.daily_rate ?? 0;
-  const total = days * dailyRate;
+  // Use n8n data if available, fallback to local
+  const days = availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
+  const dailyRate = availabilityResult?.price_per_day ?? (selectedVehicle?.daily_rate ?? 0);
+  const total = availabilityResult?.estimated_price ?? (days * dailyRate);
+  const isAvailable = availabilityResult === null ? true : availabilityResult.available;
 
   // Funzione helper per l'upload file
   const uploadFile = async (file: File | null, path: string) => {
@@ -124,6 +181,10 @@ const PrenotaOra = () => {
       toast.error("Seleziona le date di noleggio.");
       return;
     }
+    if (!isAvailable) {
+      toast.error("Veicolo non disponibile per queste date.");
+      return;
+    }
     if (!mainDriver.licenseFront || !mainDriver.licenseBack) {
       toast.error("Inserisci le foto della patente del guidatore principale.");
       return;
@@ -135,7 +196,7 @@ const PrenotaOra = () => {
 
     setLoading(true);
     try {
-      // 1. Upload File
+      // 1. Upload license photos to Supabase Storage
       const mainFrontUrl = await uploadFile(mainDriver.licenseFront, `front-${mainDriver.cf}`);
       const mainBackUrl = await uploadFile(mainDriver.licenseBack, `back-${mainDriver.cf}`);
 
@@ -146,57 +207,90 @@ const PrenotaOra = () => {
         secondBackUrl = await uploadFile(secondDriver.licenseBack, `back-${secondDriver.cf}`);
       }
 
-      // 2. Insert into Database
-      const { error } = await supabase.from("bookings").insert({
+      // 2. WF2: Create booking via n8n
+      const bookingPayload = {
+        customer: {
+          name: mainDriver.name,
+          surname: mainDriver.surname,
+          email: mainDriver.email,
+          phone: mainDriver.phone,
+          tax_code: mainDriver.cf,
+          birth_date: mainDriver.birthDate,
+          birth_place: mainDriver.birthPlace,
+          residence_address: mainDriver.residence,
+          city: mainDriver.city,
+        },
         vehicle_id: selectedVehicle.id,
-        start_date: format(startDate, "yyyy-MM-dd"),
-        end_date: format(endDate, "yyyy-MM-dd"),
+        dates: {
+          start_date: format(startDate, "yyyy-MM-dd"),
+          end_date: format(endDate, "yyyy-MM-dd"),
+        },
+        license_urls: {
+          front: mainFrontUrl,
+          back: mainBackUrl,
+        },
         total_price: total,
-
-        // Main Driver
-        customer_name: mainDriver.name,
-        customer_surname: mainDriver.surname,
-        email: mainDriver.email,
-        phone: mainDriver.phone,
-        tax_code: mainDriver.cf,
-        birth_date: mainDriver.birthDate,
-        birth_place: mainDriver.birthPlace,
-        residence_address: mainDriver.residence,
-        city: mainDriver.city,
-        license_front_url: mainFrontUrl,
-        license_back_url: mainBackUrl,
-
-        // Second Driver
         has_second_driver: hasSecondDriver,
-        second_driver_name: hasSecondDriver ? secondDriver.name : null,
-        second_driver_surname: hasSecondDriver ? secondDriver.surname : null,
-        second_driver_email: hasSecondDriver ? secondDriver.email : null,
-        second_driver_phone: hasSecondDriver ? secondDriver.phone : null,
-        second_driver_cf: hasSecondDriver ? secondDriver.cf : null,
-        second_driver_birth_date: hasSecondDriver ? secondDriver.birthDate : null,
-        second_driver_birth_place: hasSecondDriver ? secondDriver.birthPlace : null,
-        second_driver_residence: hasSecondDriver ? secondDriver.residence : null,
-        second_driver_city: hasSecondDriver ? secondDriver.city : null,
-        second_driver_license_front_url: secondFrontUrl,
-        second_driver_license_back_url: secondBackUrl,
+        second_driver: hasSecondDriver
+          ? {
+              name: secondDriver.name,
+              surname: secondDriver.surname,
+              email: secondDriver.email,
+              phone: secondDriver.phone,
+              tax_code: secondDriver.cf,
+              birth_date: secondDriver.birthDate,
+              birth_place: secondDriver.birthPlace,
+              residence_address: secondDriver.residence,
+              city: secondDriver.city,
+              license_urls: {
+                front: secondFrontUrl,
+                back: secondBackUrl,
+              },
+            }
+          : null,
+      };
+
+      const res = await fetch(`${N8N_BASE}/create-booking`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingPayload),
       });
 
-      if (error) throw error;
+      if (!res.ok) throw new Error("Errore creazione prenotazione");
 
-      toast.success("Prenotazione confermata! Ti contatteremo per la firma del contratto.");
-      // Reset Form
-      setMainDriver({ ...initialDriverState });
-      setSecondDriver({ ...initialDriverState });
-      setHasSecondDriver(false);
-      setStartDate(undefined);
-      setEndDate(undefined);
-      setSelectedVehicle(null);
+      const result = await res.json();
+      const newBookingId = result.booking_id;
+
+      if (newBookingId) {
+        setBookingId(newBookingId);
+        setSignatureOpen(true);
+        toast.success("Prenotazione creata! Firma il contratto per completare.");
+      } else {
+        toast.success("Prenotazione confermata! Ti contatteremo per la firma del contratto.");
+        resetForm();
+      }
     } catch (error) {
       toast.error("Errore durante la prenotazione. Riprova.");
       console.error(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    setMainDriver({ ...initialDriverState });
+    setSecondDriver({ ...initialDriverState });
+    setHasSecondDriver(false);
+    setStartDate(undefined);
+    setEndDate(undefined);
+    setSelectedVehicle(null);
+    setAvailabilityResult(null);
+    setBookingId("");
+  };
+
+  const handleSignatureSuccess = () => {
+    setSignatureOpen(false);
+    resetForm();
   };
 
   const fadeUp: Variants = {
@@ -559,6 +653,28 @@ const PrenotaOra = () => {
                     </Popover>
                   </div>
                 </div>
+
+                {/* Availability status indicator */}
+                {selectedVehicle && startDate && endDate && (
+                  <div className="mt-4">
+                    {checkingAvailability ? (
+                      <div className="flex items-center gap-2 text-white/50 text-sm">
+                        <Loader2 size={14} className="animate-spin" />
+                        Verifica disponibilità...
+                      </div>
+                    ) : availabilityResult && !availabilityResult.available ? (
+                      <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                        <AlertCircle size={16} />
+                        Veicolo non disponibile per queste date. Prova con date diverse.
+                      </div>
+                    ) : availabilityResult?.available ? (
+                      <div className="flex items-center gap-2 text-green-400 text-sm bg-green-500/10 border border-green-500/20 rounded-xl p-3">
+                        <CheckCircle2 size={16} />
+                        Disponibile! Prezzo confermato dal sistema.
+                      </div>
+                    ) : null}
+                  </div>
+                )}
               </motion.div>
 
               {/* STEP 3: DATI PRINCIPALI */}
@@ -669,6 +785,12 @@ const PrenotaOra = () => {
                     </div>
                   </div>
 
+                  {checkingAvailability && (
+                    <div className="flex items-center justify-center gap-2 py-2 text-white/40 text-sm">
+                      <Loader2 size={14} className="animate-spin" /> Aggiornamento prezzo...
+                    </div>
+                  )}
+
                   <div className="space-y-3 py-2">
                     <div className="flex items-center gap-3 text-sm text-white/70">
                       <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
@@ -687,11 +809,15 @@ const PrenotaOra = () => {
 
                   <Button
                     type="submit"
-                    disabled={loading}
-                    className="w-full h-16 mt-4 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group text-sm relative z-20"
+                    disabled={loading || !isAvailable || checkingAvailability}
+                    className="w-full h-16 mt-4 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group text-sm relative z-20 disabled:opacity-40"
                   >
                     {loading ? (
-                      "Caricamento dati..."
+                      <span className="flex items-center gap-2">
+                        <Loader2 size={16} className="animate-spin" /> Caricamento dati...
+                      </span>
+                    ) : !isAvailable ? (
+                      "Non Disponibile"
                     ) : (
                       <span className="flex items-center">
                         Conferma Prenotazione{" "}
@@ -730,10 +856,14 @@ const PrenotaOra = () => {
                 <Button
                   form="booking-form"
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || !isAvailable || checkingAvailability}
                   className="h-12 px-6 bg-black text-white border border-gold/40 hover:bg-gold hover:text-black font-bold uppercase tracking-wider rounded-xl transition-all duration-300 text-xs shrink-0"
                 >
-                  {loading ? "..." : (
+                  {loading ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : !isAvailable ? (
+                    "N/D"
+                  ) : (
                     <span className="flex items-center gap-2">
                       Conferma <ArrowRight size={14} />
                     </span>
@@ -744,6 +874,14 @@ const PrenotaOra = () => {
           )}
         </AnimatePresence>
       </div>
+
+      {/* SIGNATURE MODAL */}
+      <SignatureModal
+        open={signatureOpen}
+        bookingId={bookingId}
+        onClose={() => setSignatureOpen(false)}
+        onSuccess={handleSignatureSuccess}
+      />
     </div>
   );
 };
