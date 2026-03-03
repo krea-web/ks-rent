@@ -34,17 +34,15 @@ import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import SignatureModal from "@/components/SignatureModal";
 
-const FALLBACK_LABEL = "Prezzo su richiesta";
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
 
-// Struttura dati guidatore
 const initialDriverState = {
   name: "",
   surname: "",
   email: "",
   phone: "",
   cf: "",
-  birthDate: "",
+  birthDate: "", // YYYY-MM-DD
   birthPlace: "",
   residence: "",
   city: "",
@@ -59,13 +57,11 @@ const PrenotaOra = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
 
-  // Dati Form
   const [mainDriver, setMainDriver] = useState({ ...initialDriverState });
   const [hasSecondDriver, setHasSecondDriver] = useState(false);
   const [secondDriver, setSecondDriver] = useState({ ...initialDriverState });
   const [loading, setLoading] = useState(false);
 
-  // n8n availability state
   const [checkingAvailability, setCheckingAvailability] = useState(false);
   const [availabilityResult, setAvailabilityResult] = useState<{
     available: boolean;
@@ -74,21 +70,16 @@ const PrenotaOra = () => {
     price_per_day?: number;
   } | null>(null);
 
-  // Signature modal state
   const [signatureOpen, setSignatureOpen] = useState(false);
   const [bookingId, setBookingId] = useState<string>("");
 
-  // Mobile Sticky Bar
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
 
   useEffect(() => {
     const el = summaryRef.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setShowStickyBar(!entry.isIntersecting),
-      { threshold: 0.1 }
-    );
+    const observer = new IntersectionObserver(([entry]) => setShowStickyBar(!entry.isIntersecting), { threshold: 0.1 });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -101,12 +92,10 @@ const PrenotaOra = () => {
         .eq("available", true)
         .order("category", { ascending: true });
       if (data) setVehicles(data);
-      if (error) console.error("Errore recupero veicoli:", error);
     };
     fetchVehicles();
   }, []);
 
-  // WF1: Check availability when vehicle + dates are selected
   const checkAvailability = useCallback(async () => {
     if (!selectedVehicle || !startDate || !endDate) {
       setAvailabilityResult(null);
@@ -122,19 +111,11 @@ const PrenotaOra = () => {
       });
 
       const res = await fetch(`${N8N_BASE}/check-availability?${params}`);
-      if (!res.ok) throw new Error("Errore verifica disponibilità");
-
       const data = await res.json();
       setAvailabilityResult(data);
-
-      if (!data.available) {
-        toast.error("Veicolo non disponibile per queste date.");
-      }
+      if (!data.available) toast.error("Veicolo non disponibile in queste date");
     } catch (err) {
-      console.error("Availability check failed:", err);
-      // Fallback to local calculation
       setAvailabilityResult(null);
-      toast.error("Impossibile verificare la disponibilità. Calcolo locale attivo.");
     } finally {
       setCheckingAvailability(false);
     }
@@ -154,17 +135,15 @@ const PrenotaOra = () => {
     return vehicles.filter((v) => v.category === selectedCategory);
   }, [vehicles, selectedCategory]);
 
-  // Use n8n data if available, fallback to local
-  const days = availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
-  const dailyRate = availabilityResult?.price_per_day ?? (selectedVehicle?.daily_rate ?? 0);
-  const total = availabilityResult?.estimated_price ?? (days * dailyRate);
+  const days =
+    availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
+  const total = availabilityResult?.estimated_price ?? days * (selectedVehicle?.daily_rate ?? 0);
   const isAvailable = availabilityResult === null ? true : availabilityResult.available;
 
-  // Funzione helper per l'upload file
   const uploadFile = async (file: File | null, path: string) => {
     if (!file) return null;
     const fileExt = file.name.split(".").pop();
-    const fileName = `${path}-${Math.random()}.${fileExt}`;
+    const fileName = `${path}-${Date.now()}.${fileExt}`;
     const { data, error } = await supabase.storage.from("licenses").upload(fileName, file);
     if (error) throw error;
     const { data: publicUrl } = supabase.storage.from("licenses").getPublicUrl(fileName);
@@ -173,56 +152,31 @@ const PrenotaOra = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("handleSubmit triggered");
-    console.log("Stato disponibilità:", isAvailable, availabilityResult);
 
-    if (!selectedVehicle) {
-      toast.error("Seleziona prima un veicolo.");
-      return;
-    }
-    if (!startDate || !endDate) {
-      toast.error("Seleziona le date di noleggio.");
-      return;
-    }
-    if (!isAvailable) {
-      toast.error("Veicolo non disponibile per queste date.");
-      return;
-    }
-    // Validate main driver fields
-    if (!mainDriver.name || !mainDriver.surname || !mainDriver.email || !mainDriver.phone || !mainDriver.cf || !mainDriver.birthDate || !mainDriver.birthPlace || !mainDriver.residence || !mainDriver.city) {
-      toast.error("Compila tutti i dati del guidatore principale.");
-      return;
+    // VALIDAZIONE BLOCCANTE CON FEEDBACK
+    if (!selectedVehicle) return toast.error("Seleziona un veicolo");
+    if (!startDate || !endDate) return toast.error("Seleziona le date");
+    if (!isAvailable) return toast.error("Veicolo non disponibile");
+    if (!mainDriver.name || !mainDriver.surname || !mainDriver.cf || !mainDriver.birthDate) {
+      return toast.error("Completa i dati del guidatore (Data di nascita inclusa)");
     }
     if (!mainDriver.licenseFront || !mainDriver.licenseBack) {
-      toast.error("Carica la foto della patente (fronte e retro) del guidatore principale.");
-      return;
-    }
-    if (hasSecondDriver) {
-      if (!secondDriver.name || !secondDriver.surname || !secondDriver.email || !secondDriver.phone || !secondDriver.cf) {
-        toast.error("Compila tutti i dati del secondo guidatore.");
-        return;
-      }
-      if (!secondDriver.licenseFront || !secondDriver.licenseBack) {
-        toast.error("Carica la foto della patente del secondo guidatore.");
-        return;
-      }
+      return toast.error("Carica le foto della patente");
     }
 
     setLoading(true);
+    const toastId = toast.loading("Creazione prenotazione in corso...");
+
     try {
-      // 1. Upload license photos to Supabase Storage
-      const mainFrontUrl = await uploadFile(mainDriver.licenseFront, `front-${mainDriver.cf}`);
-      const mainBackUrl = await uploadFile(mainDriver.licenseBack, `back-${mainDriver.cf}`);
+      const [mainFront, mainBack] = await Promise.all([
+        uploadFile(mainDriver.licenseFront, `main-front-${mainDriver.cf}`),
+        uploadFile(mainDriver.licenseBack, `main-back-${mainDriver.cf}`),
+      ]);
 
-      let secondFrontUrl = null;
-      let secondBackUrl = null;
-      if (hasSecondDriver) {
-        secondFrontUrl = await uploadFile(secondDriver.licenseFront, `front-${secondDriver.cf}`);
-        secondBackUrl = await uploadFile(secondDriver.licenseBack, `back-${secondDriver.cf}`);
-      }
-
-      // 2. WF2: Create booking via n8n
       const bookingPayload = {
+        vehicle_id: selectedVehicle.id,
+        start_date: format(startDate, "yyyy-MM-dd"),
+        end_date: format(endDate, "yyyy-MM-dd"),
         customer: {
           name: mainDriver.name,
           surname: mainDriver.surname,
@@ -234,34 +188,10 @@ const PrenotaOra = () => {
           residence_address: mainDriver.residence,
           city: mainDriver.city,
         },
-        vehicle_id: selectedVehicle.id,
-        dates: {
-          start_date: format(startDate, "yyyy-MM-dd"),
-          end_date: format(endDate, "yyyy-MM-dd"),
-        },
-        license_urls: {
-          front: mainFrontUrl,
-          back: mainBackUrl,
-        },
+        license_front_url: mainFront,
+        license_back_url: mainBack,
         total_price: total,
         has_second_driver: hasSecondDriver,
-        second_driver: hasSecondDriver
-          ? {
-              name: secondDriver.name,
-              surname: secondDriver.surname,
-              email: secondDriver.email,
-              phone: secondDriver.phone,
-              tax_code: secondDriver.cf,
-              birth_date: secondDriver.birthDate,
-              birth_place: secondDriver.birthPlace,
-              residence_address: secondDriver.residence,
-              city: secondDriver.city,
-              license_urls: {
-                front: secondFrontUrl,
-                back: secondBackUrl,
-              },
-            }
-          : null,
       };
 
       const res = await fetch(`${N8N_BASE}/create-booking`, {
@@ -270,713 +200,243 @@ const PrenotaOra = () => {
         body: JSON.stringify(bookingPayload),
       });
 
-      if (!res.ok) throw new Error("Errore creazione prenotazione");
-
+      if (!res.ok) throw new Error();
       const result = await res.json();
-      const newBookingId = result.booking_id;
 
-      if (newBookingId) {
-        setBookingId(newBookingId);
+      if (result.booking_id) {
+        setBookingId(result.booking_id);
         setSignatureOpen(true);
-        toast.success("Prenotazione creata! Firma il contratto per completare.");
-      } else {
-        toast.success("Prenotazione confermata! Ti contatteremo per la firma del contratto.");
-        resetForm();
+        toast.success("Prenotazione creata! Procedi con la firma.", { id: toastId });
       }
     } catch (error) {
-      toast.error("Errore durante la prenotazione. Riprova.");
-      console.error(error);
+      toast.error("Errore di connessione. Riprova.", { id: toastId });
     } finally {
       setLoading(false);
     }
   };
 
-  const resetForm = () => {
-    setMainDriver({ ...initialDriverState });
-    setSecondDriver({ ...initialDriverState });
-    setHasSecondDriver(false);
-    setStartDate(undefined);
-    setEndDate(undefined);
-    setSelectedVehicle(null);
-    setAvailabilityResult(null);
-    setBookingId("");
-  };
-
-  const handleSignatureSuccess = () => {
-    setSignatureOpen(false);
-    resetForm();
-  };
-
-  const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  };
-
-  const getCategoryIcon = (category: string) => {
-    if (category === "Scooter/Moto") return <Bike className="w-4 h-4" />;
-    if (category === "Quad") return <Settings2 className="w-4 h-4" />;
-    if (category === "Supercar/Premium") return <Zap className="w-4 h-4" />;
-    return <Car className="w-4 h-4" />;
-  };
-
-  // Birth date smart input component
-  const BirthDateInput = ({ value, onChange }: { value: string; onChange: (isoDate: string) => void }) => {
-    // value is YYYY-MM-DD, display is GG/MM/AAAA
+  // SMART BIRTH DATE COMPONENT
+  const BirthDateInput = ({ value, onChange }: { value: string; onChange: (iso: string) => void }) => {
     const toDisplay = (iso: string) => {
       if (!iso) return "";
       const [y, m, d] = iso.split("-");
       return `${d}/${m}/${y}`;
     };
 
-    const toISO = (display: string) => {
-      const clean = display.replace(/\//g, "");
-      if (clean.length === 8) {
-        const d = clean.slice(0, 2), m = clean.slice(2, 4), y = clean.slice(4, 8);
-        return `${y}-${m}-${d}`;
-      }
-      return "";
-    };
-
-    const [displayVal, setDisplayVal] = useState(toDisplay(value));
-    const [error, setError] = useState("");
+    const [display, setDisplay] = useState(toDisplay(value));
     const nativeRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-      setDisplayVal(toDisplay(value));
-    }, [value]);
-
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-      let raw = e.target.value.replace(/[^\d]/g, "").slice(0, 8);
-      let formatted = "";
-      for (let i = 0; i < raw.length; i++) {
-        if (i === 2 || i === 4) formatted += "/";
-        formatted += raw[i];
-      }
-      setDisplayVal(formatted);
+      let v = e.target.value.replace(/\D/g, "").slice(0, 8);
+      let fmt = v;
+      if (v.length > 2) fmt = v.slice(0, 2) + "/" + v.slice(2);
+      if (v.length > 4) fmt = fmt.slice(0, 5) + "/" + fmt.slice(5);
+      setDisplay(fmt);
 
-      if (raw.length === 8) {
-        const iso = toISO(formatted);
-        const d = parseInt(raw.slice(0, 2)), m = parseInt(raw.slice(2, 4)), y = parseInt(raw.slice(4, 8));
-        const date = new Date(y, m - 1, d);
-        const isValid = date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
-        const age = Math.floor((Date.now() - date.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
-
-        if (!isValid) {
-          setError("Data non valida");
-          onChange("");
-        } else if (age < 18) {
-          setError("Età insufficiente (min. 18 anni)");
-          onChange("");
-        } else if (age > 120) {
-          setError("Data non valida");
-          onChange("");
-        } else {
-          setError("");
-          onChange(iso);
-        }
-      } else {
-        setError("");
-        if (raw.length === 0) onChange("");
+      if (v.length === 8) {
+        const d = v.slice(0, 2),
+          m = v.slice(2, 4),
+          y = v.slice(4);
+        onChange(`${y}-${m}-${d}`);
       }
     };
 
     return (
-      <div className="space-y-1">
-        <div className="relative flex items-center">
-          <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30 pointer-events-none z-10" />
-          <Input
-            inputMode="numeric"
-            placeholder="GG/MM/AAAA"
-            value={displayVal}
-            onChange={handleInput}
-            maxLength={10}
-            className="pl-12 pr-20 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white font-mono tracking-wider"
-          />
-          <input
-            ref={nativeRef}
-            type="date"
-            className="sr-only"
-            tabIndex={-1}
-            onChange={(e) => {
-              if (e.target.value) {
-                onChange(e.target.value);
-                setError("");
-              }
-            }}
-          />
-          <button
-            type="button"
-            onClick={() => nativeRef.current?.showPicker?.()}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-widest text-white/40 hover:text-gold transition-colors font-semibold px-2 py-1 rounded-md hover:bg-white/5"
-          >
-            Scegli
-          </button>
-        </div>
-        {error && <p className="text-red-400/80 text-xs pl-1">{error}</p>}
+      <div className="relative group/birth">
+        <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30 group-focus-within/birth:text-gold transition-colors z-10" />
+        <Input
+          inputMode="numeric"
+          placeholder="GG/MM/AAAA"
+          value={display}
+          onChange={handleInput}
+          className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold rounded-xl font-mono"
+        />
+        <input
+          type="date"
+          ref={nativeRef}
+          className="sr-only"
+          onChange={(e) => {
+            onChange(e.target.value);
+            setDisplay(toDisplay(e.target.value));
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => nativeRef.current?.showPicker()}
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-white/40 hover:text-gold uppercase font-bold"
+        >
+          Calendario
+        </button>
       </div>
     );
   };
 
-  // Helper component for Driver Form
-  const DriverFormFields = ({ driver, setDriver, prefix }: { driver: any; setDriver: any; prefix: string }) => (
+  const DriverFields = ({ driver, setDriver }: any) => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Nome</Label>
-          <div className="relative">
-            <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              value={driver.name}
-              onChange={(e) => setDriver({ ...driver, name: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Cognome</Label>
-          <div className="relative">
-            <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              value={driver.surname}
-              onChange={(e) => setDriver({ ...driver, surname: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Data di Nascita</Label>
-          <BirthDateInput
-            value={driver.birthDate}
-            onChange={(val) => setDriver({ ...driver, birthDate: val })}
+          <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Nome</Label>
+          <Input
+            value={driver.name}
+            onChange={(e) => setDriver({ ...driver, name: e.target.value })}
+            className="h-14 bg-[#111] border-white/10 rounded-xl"
           />
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Luogo di Nascita</Label>
-          <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              value={driver.birthPlace}
-              onChange={(e) => setDriver({ ...driver, birthPlace: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-          </div>
+          <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Cognome</Label>
+          <Input
+            value={driver.surname}
+            onChange={(e) => setDriver({ ...driver, surname: e.target.value })}
+            className="h-14 bg-[#111] border-white/10 rounded-xl"
+          />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Data di Nascita</Label>
+          <BirthDateInput value={driver.birthDate} onChange={(val) => setDriver({ ...driver, birthDate: val })} />
+        </div>
+        <div className="space-y-2">
+          <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Codice Fiscale</Label>
+          <Input
+            value={driver.cf}
+            onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
+            className="h-14 bg-[#111] border-white/10 rounded-xl uppercase font-mono"
+          />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      {/* SEZIONE DOCUMENTI */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Indirizzo Residenza</Label>
-          <div className="relative">
-            <Map className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              value={driver.residence}
-              onChange={(e) => setDriver({ ...driver, residence: e.target.value })}
-              placeholder="Via Roma 1"
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+          <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Patente Fronte</Label>
+          <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-white/10 rounded-xl hover:bg-gold/5 cursor-pointer transition-all">
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => setDriver({ ...driver, licenseFront: e.target.files?.[0] })}
             />
-          </div>
+            {driver.licenseFront ? <CheckCircle2 className="text-gold" /> : <UploadCloud className="text-white/20" />}
+            <span className="text-[10px] mt-2 text-white/40">{driver.licenseFront?.name || "CARICA FILE"}</span>
+          </label>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Città</Label>
-          <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              value={driver.city}
-              onChange={(e) => setDriver({ ...driver, city: e.target.value })}
-              placeholder="Roma"
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+          <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Patente Retro</Label>
+          <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-white/10 rounded-xl hover:bg-gold/5 cursor-pointer transition-all">
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => setDriver({ ...driver, licenseBack: e.target.files?.[0] })}
             />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale</Label>
-          <div className="relative">
-            <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              maxLength={16}
-              value={driver.cf}
-              onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white uppercase"
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Email</Label>
-          <div className="relative">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              type="email"
-              value={driver.email}
-              onChange={(e) => setDriver({ ...driver, email: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Telefono</Label>
-          <div className="relative">
-            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              type="tel"
-              value={driver.phone}
-              onChange={(e) => setDriver({ ...driver, phone: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="pt-4 border-t border-white/5">
-        <h3 className="text-sm font-bold text-gold mb-4 flex items-center gap-2">
-          <ShieldCheck size={16} /> Documenti (Patente)
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Fronte</Label>
-            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden">
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => setDriver({ ...driver, licenseFront: e.target.files?.[0] || null })}
-              />
-              {driver.licenseFront ? (
-                <div className="text-center text-gold">
-                  <CheckCircle2 className="mx-auto mb-2" size={24} />{" "}
-                  <span className="text-xs font-bold">{driver.licenseFront.name}</span>
-                </div>
-              ) : (
-                <div className="text-center text-white/40">
-                  <UploadCloud className="mx-auto mb-2" size={24} />{" "}
-                  <span className="text-xs uppercase font-semibold tracking-wider">Carica Fronte</span>
-                </div>
-              )}
-            </label>
-          </div>
-          <div>
-            <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Retro</Label>
-            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden">
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => setDriver({ ...driver, licenseBack: e.target.files?.[0] || null })}
-              />
-              {driver.licenseBack ? (
-                <div className="text-center text-gold">
-                  <CheckCircle2 className="mx-auto mb-2" size={24} />{" "}
-                  <span className="text-xs font-bold">{driver.licenseBack.name}</span>
-                </div>
-              ) : (
-                <div className="text-center text-white/40">
-                  <UploadCloud className="mx-auto mb-2" size={24} />{" "}
-                  <span className="text-xs uppercase font-semibold tracking-wider">Carica Retro</span>
-                </div>
-              )}
-            </label>
-          </div>
+            {driver.licenseBack ? <CheckCircle2 className="text-gold" /> : <UploadCloud className="text-white/20" />}
+            <span className="text-[10px] mt-2 text-white/40">{driver.licenseBack?.name || "CARICA FILE"}</span>
+          </label>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-32 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
-      <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 rounded-full blur-[150px]" />
-      </div>
+    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-32 selection:bg-gold selection:text-black">
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <form id="booking-form" onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* COLONNA SINISTRA */}
+          <div className="lg:col-span-8 space-y-8">
+            <section className="bg-[#0a0a0a] p-8 rounded-[2rem] border border-white/5">
+              <h2 className="text-2xl font-display font-bold mb-8 text-gold">1. Veicolo & Date</h2>
 
-      <div className="w-full max-w-7xl mx-auto px-4 relative z-10">
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-10 md:mb-12">
-          <div className="flex items-center gap-3 md:gap-4 mb-4">
-            <img src={logo} alt="KS Rent" className="h-8 md:h-10 w-auto" />
-            <div className="w-6 md:w-8 h-[2px] bg-gold"></div>
-            <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold">
-              Fast Booking
-            </span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight break-words">
-            Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Ora.</span>
-          </h1>
-        </motion.div>
-
-        <form id="booking-form" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            {/* LEFT COLUMN */}
-            <div className="lg:col-span-8 space-y-6 md:space-y-8">
-              {/* STEP 1: VEICOLO */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden group"
-              >
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                    1
-                  </span>
-                  Scegli il Veicolo
-                </h2>
-                {vehicles.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat}
-                        type="button"
-                        onClick={() => setSelectedCategory(cat)}
-                        className={cn(
-                          "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 relative z-20",
-                          selectedCategory === cat
-                            ? "bg-gold text-black"
-                            : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white",
-                        )}
-                      >
-                        {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                <div className="grid grid-cols-2 gap-3 md:gap-4 max-h-[500px] overflow-y-auto pr-2 pb-4">
-                  {filteredVehicles.map((v) => {
-                    const isSelected = selectedVehicle?.id === v.id;
-                    return (
-                      <div
-                        key={v.id}
-                        onClick={() => setSelectedVehicle(v)}
-                        className={cn(
-                          "p-3 rounded-xl md:rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group/card relative z-20",
-                          isSelected
-                            ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
-                            : "bg-[#111] border-white/10 hover:border-white/30",
-                        )}
-                      >
-                        <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
-                          <img
-                            src={v.image_url}
-                            alt={v.model}
-                            className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
-                          {isSelected && (
-                            <div className="absolute top-2 right-2 bg-gold text-black rounded-full p-1">
-                              <CheckCircle2 size={14} />
-                            </div>
-                          )}
-                        </div>
-                        <span className="font-bold text-sm sm:text-base leading-tight px-1 group-hover/card:text-gold transition-colors">
-                          {v.make} {v.model}
-                        </span>
-                        <span className="text-xs text-gold/80 font-semibold px-1 mt-1">€{v.daily_rate}/giorno</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </motion.div>
-
-              {/* STEP 2: DATE */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden group"
-              >
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                    2
-                  </span>
-                  Periodo di Noleggio
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div className="space-y-3">
-                    <Label className="text-xs uppercase tracking-widest text-white/50">Ritiro</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base relative z-20",
-                            !startDate && "text-white/40",
-                          )}
-                        >
-                          <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                          {startDate ? format(startDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                        <Calendar
-                          mode="single"
-                          selected={startDate}
-                          onSelect={setStartDate}
-                          disabled={(d) => d < new Date()}
-                          className="p-4"
-                          classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <div className="space-y-3">
-                    <Label className="text-xs uppercase tracking-widest text-white/50">Riconsegna</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base relative z-20",
-                            !endDate && "text-white/40",
-                          )}
-                        >
-                          <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                          {endDate ? format(endDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                        <Calendar
-                          mode="single"
-                          selected={endDate}
-                          onSelect={setEndDate}
-                          disabled={(d) => d < (startDate || new Date())}
-                          className="p-4"
-                          classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-
-                {/* Availability status indicator */}
-                {selectedVehicle && startDate && endDate && (
-                  <div className="mt-4">
-                    {checkingAvailability ? (
-                      <div className="flex items-center gap-2 text-white/50 text-sm">
-                        <Loader2 size={14} className="animate-spin" />
-                        Verifica disponibilità...
-                      </div>
-                    ) : availabilityResult && !availabilityResult.available ? (
-                      <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl p-3">
-                        <AlertCircle size={16} />
-                        Veicolo non disponibile per queste date. Prova con date diverse.
-                      </div>
-                    ) : availabilityResult?.available ? (
-                      <div className="flex items-center gap-2 text-green-400 text-sm bg-green-500/10 border border-green-500/20 rounded-xl p-3">
-                        <CheckCircle2 size={16} />
-                        Disponibile! Prezzo confermato dal sistema.
-                      </div>
-                    ) : null}
-                  </div>
-                )}
-              </motion.div>
-
-              {/* STEP 3: DATI PRINCIPALI */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden group"
-              >
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                    3
-                  </span>
-                  Dati Guidatore Principale
-                </h2>
-                <DriverFormFields driver={mainDriver} setDriver={setMainDriver} prefix="main" />
-              </motion.div>
-
-              {/* STEP 4: SECONDO GUIDATORE */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className={cn(
-                  "bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden transition-all duration-500",
-                  hasSecondDriver ? "ring-1 ring-gold/30" : "",
-                )}
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                  <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                      4
-                    </span>
-                    Secondo Guidatore <span className="text-white/40 text-sm font-normal">(Opzionale)</span>
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={() => setHasSecondDriver(!hasSecondDriver)}
+              {/* Selezione Veicoli Rapida */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                {vehicles.slice(0, 6).map((v) => (
+                  <div
+                    key={v.id}
+                    onClick={() => setSelectedVehicle(v)}
                     className={cn(
-                      "px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all",
-                      hasSecondDriver
-                        ? "bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20"
-                        : "bg-gold text-black shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:bg-yellow-400",
+                      "p-4 rounded-2xl border transition-all cursor-pointer",
+                      selectedVehicle?.id === v.id ? "border-gold bg-gold/5" : "border-white/5 bg-[#111]",
                     )}
                   >
-                    {hasSecondDriver ? "Rimuovi" : "+ Aggiungi"}
-                  </button>
+                    <img src={v.image_url} className="w-full h-20 object-contain mb-2" />
+                    <p className="text-xs font-bold text-center">
+                      {v.make} {v.model}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Inizio Noleggio</Label>
+                  <Input
+                    type="date"
+                    className="h-14 bg-[#111] border-white/10"
+                    onChange={(e) => setStartDate(new Date(e.target.value))}
+                  />
                 </div>
-
-                {hasSecondDriver && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    className="pt-4 border-t border-white/5 mt-4"
-                  >
-                    <DriverFormFields driver={secondDriver} setDriver={setSecondDriver} prefix="second" />
-                  </motion.div>
-                )}
-              </motion.div>
-            </div>
-
-            {/* RIGHT COLUMN: WIDGET RIEPILOGO */}
-            <div className="lg:col-span-4 relative" ref={summaryRef}>
-              <div className="lg:sticky lg:top-28 w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden">
-                <div className="p-6 md:p-8 border-b border-white/5 bg-[#111] relative min-h-[140px] flex flex-col justify-end">
-                  {selectedVehicle ? (
-                    <>
-                      <div className="absolute inset-0 z-0 pointer-events-none">
-                        <img
-                          src={selectedVehicle.image_url}
-                          alt="Selected"
-                          className="w-full h-full object-cover opacity-40"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent" />
-                      </div>
-                      <div className="relative z-10">
-                        <span className="text-gold text-xs font-semibold uppercase tracking-wider">
-                          {selectedVehicle.category}
-                        </span>
-                        <h3 className="text-2xl font-display font-bold text-white">
-                          {selectedVehicle.make} {selectedVehicle.model}
-                        </h3>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="relative z-10 flex flex-col justify-center h-full">
-                      <span className="text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
-                        Riepilogo Live
-                      </span>
-                      <h3 className="text-xl font-display font-bold text-white/30">Nessun veicolo</h3>
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-6 md:p-8 space-y-6">
-                  <div className="flex justify-between items-end pb-6 border-b border-white/5">
-                    <div>
-                      <p className="text-white/50 text-sm mb-1">Tariffa</p>
-                      <p className="text-white text-lg">
-                        {dailyRate > 0 ? `€${dailyRate}/gg` : <span className="text-white/40 text-sm">Seleziona</span>}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-white/50 text-sm mb-1">Durata</p>
-                      <p className="text-gold font-bold text-xl">
-                        {days} Giorn{days !== 1 ? "i" : "o"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {checkingAvailability && (
-                    <div className="flex items-center justify-center gap-2 py-2 text-white/40 text-sm">
-                      <Loader2 size={14} className="animate-spin" /> Aggiornamento prezzo...
-                    </div>
-                  )}
-
-                  <div className="space-y-3 py-2">
-                    <div className="flex items-center gap-3 text-sm text-white/70">
-                      <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
-                    </div>
-                    {hasSecondDriver && (
-                      <div className="flex items-center gap-3 text-sm text-white/70">
-                        <Users className="text-gold shrink-0" size={16} /> Secondo guidatore incluso
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-6 border-t border-white/5 flex justify-between items-center">
-                    <span className="text-lg text-white/70">Totale stimato</span>
-                    <span className="text-4xl font-black font-display text-gold">€{total}</span>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={loading || !isAvailable || checkingAvailability}
-                    className="w-full h-16 mt-4 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group text-sm relative z-20 disabled:opacity-40"
-                  >
-                    {loading ? (
-                      <span className="flex items-center gap-2">
-                        <Loader2 size={16} className="animate-spin" /> Caricamento dati...
-                      </span>
-                    ) : !isAvailable ? (
-                      "Non Disponibile"
-                    ) : (
-                      <span className="flex items-center">
-                        Conferma Prenotazione{" "}
-                        <ArrowRight size={18} className="ml-3 group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    )}
-                  </Button>
+                <div className="space-y-2">
+                  <Label className="text-[10px] uppercase tracking-[0.2em] text-white/40">Fine Noleggio</Label>
+                  <Input
+                    type="date"
+                    className="h-14 bg-[#111] border-white/10"
+                    onChange={(e) => setEndDate(new Date(e.target.value))}
+                  />
                 </div>
               </div>
+            </section>
+
+            <section className="bg-[#0a0a0a] p-8 rounded-[2rem] border border-white/5">
+              <h2 className="text-2xl font-display font-bold mb-8 text-gold">2. Dati Anagrafici</h2>
+              <DriverFields driver={mainDriver} setDriver={setMainDriver} />
+            </section>
+          </div>
+
+          {/* COLONNA DESTRA (Sticky) */}
+          <div className="lg:col-span-4" ref={summaryRef}>
+            <div className="sticky top-28 bg-[#0a0a0a] border border-gold/20 rounded-[2rem] p-8">
+              <h3 className="text-xl font-display font-bold mb-6 italic">Il Tuo Viaggio</h3>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/40">Veicolo</span>
+                  <span className="text-gold">
+                    {selectedVehicle ? `${selectedVehicle.make} ${selectedVehicle.model}` : "---"}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/40">Durata</span>
+                  <span>{days} Giorni</span>
+                </div>
+                <div className="pt-4 border-t border-white/5 flex justify-between items-center">
+                  <span className="text-lg">Totale</span>
+                  <span className="text-3xl font-black text-gold">€{total}</span>
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={loading || checkingAvailability}
+                className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl shadow-xl transition-all"
+              >
+                {loading ? <Loader2 className="animate-spin" /> : "Conferma Prenotazione"}
+              </Button>
+
+              <p className="text-[9px] text-center text-white/20 mt-4 uppercase tracking-widest">
+                Nessun pagamento anticipato richiesto
+              </p>
             </div>
           </div>
         </form>
-
-        {/* MOBILE STICKY BOTTOM BAR */}
-        <AnimatePresence>
-          {showStickyBar && (
-            <motion.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed bottom-0 left-0 w-full z-[100] bg-[#0a0a0a]/90 backdrop-blur-xl border-t border-gold/20 p-4 pb-[env(safe-area-inset-bottom,16px)] shadow-[0_-10px_40px_rgba(0,0,0,0.5)] lg:hidden"
-            >
-              <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
-                <div className="flex flex-col">
-                  <span className="text-[11px] uppercase tracking-widest text-white/50">Totale stimato</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-black font-display text-gold">€{total}</span>
-                    {days > 0 && (
-                      <span className="text-xs text-white/40">
-                        / {days} giorn{days !== 1 ? "i" : "o"}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <Button
-                  form="booking-form"
-                  type="submit"
-                  disabled={loading || !isAvailable || checkingAvailability}
-                  className="h-12 px-6 bg-black text-white border border-gold/40 hover:bg-gold hover:text-black font-bold uppercase tracking-wider rounded-xl transition-all duration-300 text-xs shrink-0"
-                >
-                  {loading ? (
-                    <Loader2 size={14} className="animate-spin" />
-                  ) : !isAvailable ? (
-                    "N/D"
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      Conferma <ArrowRight size={14} />
-                    </span>
-                  )}
-                </Button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
 
-      {/* SIGNATURE MODAL */}
+      {/* MODALE FIRMA */}
       <SignatureModal
         open={signatureOpen}
         bookingId={bookingId}
         onClose={() => setSignatureOpen(false)}
-        onSuccess={handleSignatureSuccess}
+        onSuccess={() => {
+          setSignatureOpen(false);
+          toast.success("Tutto pronto! Ti aspettiamo.");
+        }}
       />
     </div>
   );
