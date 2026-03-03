@@ -1,62 +1,39 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Car, Wrench, FileText, RefreshCw, LogOut, Loader2 } from "lucide-react";
+import { Car, Wrench, FileText, RefreshCw, LogOut, Loader2, Plus, Edit, AlertCircle, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { Vehicle, Booking } from "@/types/database";
-import {
-  SidebarProvider,
-  SidebarTrigger,
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-} from "@/components/ui/sidebar";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 type Section = "flotta" | "manutenzione" | "contratti";
 
 const sidebarItems: { title: string; icon: typeof Car; section: Section }[] = [
-  { title: "Flotta", icon: Car, section: "flotta" },
+  { title: "Flotta & Prezzi", icon: Car, section: "flotta" },
   { title: "Manutenzione", icon: Wrench, section: "manutenzione" },
-  { title: "Contratti", icon: FileText, section: "contratti" },
+  { title: "Noleggi & Contratti", icon: FileText, section: "contratti" },
 ];
 
 const Admin = () => {
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
   const [section, setSection] = useState<Section>("flotta");
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [vehicles, setVehicles] = useState<any[]>([]);
+  const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Auth guard with admin check
   useEffect(() => {
     const checkAdmin = async (userId: string) => {
-      const { data } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", userId)
-        .single();
+      const { data } = await supabase.from("profiles").select("is_admin").eq("id", userId).single();
+
       if (!data?.is_admin) {
-        toast.error("Accesso non autorizzato");
+        toast.error("Accesso non autorizzato. Area riservata.");
         await supabase.auth.signOut();
         navigate("/login", { replace: true });
         return;
       }
       setAuthChecked(true);
     };
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        navigate("/login", { replace: true });
-        return;
-      }
-      checkAdmin(session.user.id);
-    });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
@@ -66,14 +43,23 @@ const Admin = () => {
       checkAdmin(session.user.id);
     });
 
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) navigate("/login", { replace: true });
+    });
+
     return () => subscription.unsubscribe();
   }, [navigate]);
 
   const fetchData = async () => {
     setLoading(true);
     const [vRes, bRes] = await Promise.all([
-      supabase.from("vehicles").select("*"),
-      supabase.from("bookings").select("*"),
+      supabase.from("vehicles").select("*").order("make", { ascending: true }),
+      supabase
+        .from("bookings")
+        .select("*, vehicles(make, model, license_plate)")
+        .order("created_at", { ascending: false }),
     ]);
     if (vRes.data) setVehicles(vRes.data);
     if (bRes.data) setBookings(bRes.data);
@@ -90,164 +76,229 @@ const Admin = () => {
     navigate("/login", { replace: true });
   };
 
-  const isRevisionSoon = (dateStr?: string | null) => {
-    if (!dateStr) return false;
-    const diff = new Date(dateStr).getTime() - Date.now();
-    return diff < 30 * 24 * 60 * 60 * 1000;
-  };
-
   if (!authChecked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen bg-[#050505] flex items-center justify-center">
         <Loader2 className="h-10 w-10 animate-spin text-gold" />
       </div>
     );
   }
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full pt-16">
-        <Sidebar collapsible="icon">
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-gold">Admin Panel</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {sidebarItems.map((item) => (
-                    <SidebarMenuItem key={item.section}>
-                      <SidebarMenuButton
-                        onClick={() => setSection(item.section)}
-                        className={section === item.section ? "bg-muted text-gold" : ""}
-                      >
-                        <item.icon className="mr-2 h-4 w-4" />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-        </Sidebar>
+    // Isolamento totale: fixed inset-0 copre tutto il sito (navbar/footer inclusi)
+    <div className="fixed inset-0 z-[999] bg-[#050505] text-white flex overflow-hidden font-sans">
+      {/* SIDEBAR */}
+      <aside className="w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col">
+        <div className="p-6 border-b border-white/10">
+          <h1 className="text-2xl font-black font-display tracking-widest">
+            KS <span className="text-gold">ADMIN</span>
+          </h1>
+          <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Control Room</p>
+        </div>
 
-        <div className="flex-1 flex flex-col">
-          <header className="h-12 flex items-center border-b border-border px-4">
-            <SidebarTrigger className="mr-4" />
-            <h2 className="text-sm font-bold uppercase tracking-wider text-gold">
-              {sidebarItems.find((s) => s.section === section)?.title}
-            </h2>
-            <div className="ml-auto flex items-center gap-3">
-              <button onClick={fetchData} className="text-muted-foreground hover:text-foreground">
-                <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-              </button>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors"
-              >
-                <LogOut size={14} />
-                <span className="hidden sm:inline">Logout</span>
-              </button>
-            </div>
-          </header>
+        <nav className="flex-1 p-4 space-y-2">
+          {sidebarItems.map((item) => (
+            <button
+              key={item.section}
+              onClick={() => setSection(item.section)}
+              className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold tracking-wide",
+                section === item.section
+                  ? "bg-gold/10 text-gold border border-gold/20"
+                  : "text-white/60 hover:bg-white/5 hover:text-white",
+              )}
+            >
+              <item.icon size={18} />
+              {item.title}
+            </button>
+          ))}
+        </nav>
 
-          <main className="flex-1 p-6 overflow-auto">
-            {section === "flotta" && (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border text-left text-muted-foreground">
-                      <th className="pb-3 pr-4">Modello</th>
-                      <th className="pb-3 pr-4">Categoria</th>
-                      <th className="pb-3 pr-4">KM</th>
-                      <th className="pb-3 pr-4">Prossima Revisione</th>
-                      <th className="pb-3">Disponibile</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {vehicles.map((v) => (
-                      <tr key={v.id} className="border-b border-border/50">
-                        <td className="py-3 pr-4 font-medium">{v.make} {v.model}</td>
-                        <td className="py-3 pr-4 text-muted-foreground">{v.category ?? "—"}</td>
-                        <td className="py-3 pr-4">{(v.km_current ?? 0).toLocaleString()} km</td>
-                        <td className="py-3 pr-4">{v.next_revision_date ?? "—"}</td>
-                        <td className="py-3">
-                          <span className={`text-xs font-bold uppercase ${v.available ? "text-green-400" : "text-destructive"}`}>
-                            {v.available ? "Sì" : "No"}
+        <div className="p-4 border-t border-white/10">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl transition-colors text-sm font-bold"
+          >
+            <LogOut size={16} /> Logout
+          </button>
+        </div>
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <main className="flex-1 flex flex-col h-full bg-[#050505] overflow-hidden">
+        {/* HEADER TOPBAR */}
+        <header className="h-20 border-b border-white/10 flex items-center justify-between px-8 bg-[#0a0a0a]/50 backdrop-blur-md">
+          <h2 className="text-2xl font-bold font-display text-white">
+            {sidebarItems.find((s) => s.section === section)?.title}
+          </h2>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={fetchData}
+              className="p-2 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors"
+            >
+              <RefreshCw size={18} className={cn("text-gold", loading && "animate-spin")} />
+            </button>
+            <button className="flex items-center gap-2 bg-gold text-black px-4 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-yellow-400 transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+              <Plus size={16} /> Aggiungi
+            </button>
+          </div>
+        </header>
+
+        {/* CONTENUTO SEZIONI */}
+        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+          {/* SEZIONE 1: FLOTTA E PREZZI */}
+          {section === "flotta" && (
+            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-white/5 text-white/50 text-xs uppercase tracking-widest border-b border-white/10">
+                  <tr>
+                    <th className="p-4">Veicolo</th>
+                    <th className="p-4">Targa</th>
+                    <th className="p-4">Categoria</th>
+                    <th className="p-4">Tariffa Giornaliera</th>
+                    <th className="p-4">Stato</th>
+                    <th className="p-4 text-right">Azioni</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {vehicles.map((v) => (
+                    <tr key={v.id} className="hover:bg-white/[0.02] transition-colors">
+                      <td className="p-4 font-bold">
+                        {v.make} {v.model}
+                      </td>
+                      <td className="p-4 text-white/60">{v.license_plate || "Da assegnare"}</td>
+                      <td className="p-4 text-white/60">{v.category}</td>
+                      <td className="p-4 text-gold font-bold">€{(v.daily_rate || 0).toLocaleString("it-IT")}</td>
+                      <td className="p-4">
+                        {v.available ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-bold border border-green-500/20">
+                            <CheckCircle2 size={12} /> Disponibile
                           </span>
-                        </td>
-                      </tr>
-                    ))}
-                    {vehicles.length === 0 && (
-                      <tr><td colSpan={5} className="py-8 text-center text-muted-foreground">Nessun veicolo trovato.</td></tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-
-            {section === "manutenzione" && (
-              <div className="space-y-4">
-                {vehicles.map((v) => (
-                  <div
-                    key={v.id}
-                    className={`p-4 rounded-lg border ${
-                      isRevisionSoon(v.next_revision_date) ? "border-gold bg-gold/5" : "border-border bg-card"
-                    }`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-bold">{v.make} {v.model}</p>
-                        <p className="text-sm text-muted-foreground">{(v.km_current ?? 0).toLocaleString()} km</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs text-muted-foreground uppercase">Revisione</p>
-                        <p className={`font-bold text-sm ${isRevisionSoon(v.next_revision_date) ? "text-gold" : ""}`}>
-                          {v.next_revision_date ?? "—"}
-                        </p>
-                        {isRevisionSoon(v.next_revision_date) && (
-                          <span className="text-xs text-gold font-semibold">⚠ Prossima</span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 text-xs font-bold border border-red-500/20">
+                            <AlertCircle size={12} /> In uso
+                          </span>
                         )}
-                      </div>
+                      </td>
+                      <td className="p-4 text-right">
+                        <button className="p-2 text-white/40 hover:text-gold transition-colors">
+                          <Edit size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {vehicles.length === 0 && (
+                    <tr>
+                      <td colSpan={6} className="p-8 text-center text-white/40">
+                        Nessun veicolo nel database.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* SEZIONE 2: CONTRATTI E NOLEGGI */}
+          {section === "contratti" && (
+            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-white/5 text-white/50 text-xs uppercase tracking-widest border-b border-white/10">
+                  <tr>
+                    <th className="p-4">Cliente</th>
+                    <th className="p-4">Veicolo</th>
+                    <th className="p-4">Date</th>
+                    <th className="p-4">Totale</th>
+                    <th className="p-4">Stato</th>
+                    <th className="p-4 text-right">Gestisci</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {bookings.map((b) => (
+                    <tr key={b.id} className="hover:bg-white/[0.02] transition-colors">
+                      <td className="p-4">
+                        <p className="font-bold">
+                          {b.customer_name} {b.customer_surname}
+                        </p>
+                        <p className="text-xs text-white/40">{b.tax_code || b.email}</p>
+                      </td>
+                      <td className="p-4 text-white/80">
+                        {b.vehicles ? `${b.vehicles.make} ${b.vehicles.model}` : "Veicolo Eliminato"}
+                      </td>
+                      <td className="p-4 text-white/60">
+                        {b.start_date ? new Date(b.start_date).toLocaleDateString("it-IT") : "N/A"} <br />
+                        {b.end_date ? new Date(b.end_date).toLocaleDateString("it-IT") : "N/A"}
+                      </td>
+                      <td className="p-4 text-gold font-bold">€{(b.total_price || 0).toLocaleString("it-IT")}</td>
+                      <td className="p-4">
+                        <span
+                          className={cn(
+                            "inline-flex px-2.5 py-1 rounded-full text-xs font-bold border uppercase tracking-wider",
+                            b.status === "pending_signature"
+                              ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
+                              : b.status === "active"
+                                ? "bg-green-500/10 text-green-500 border-green-500/20"
+                                : "bg-white/5 text-white/50 border-white/10",
+                          )}
+                        >
+                          {b.status?.replace("_", " ")}
+                        </span>
+                      </td>
+                      <td className="p-4 text-right">
+                        <button className="text-xs border border-white/10 hover:border-gold hover:text-gold px-3 py-1.5 rounded-lg transition-colors">
+                          Apri Pratica
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {bookings.length === 0 && (
+                    <tr>
+                      <td colSpan={6} className="p-8 text-center text-white/40">
+                        Nessun contratto presente.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* SEZIONE 3: MANUTENZIONE E KM */}
+          {section === "manutenzione" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {vehicles.map((v) => (
+                <div key={v.id} className="bg-[#0a0a0a] border border-white/10 p-6 rounded-2xl flex flex-col">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="font-bold text-lg">
+                        {v.make} {v.model}
+                      </h3>
+                      <p className="text-white/40 text-xs uppercase tracking-wider">
+                        {v.license_plate || "Nessuna targa"}
+                      </p>
+                    </div>
+                    <Wrench className="text-white/20" />
+                  </div>
+                  <div className="space-y-3 mt-auto">
+                    <div className="flex justify-between items-end border-b border-white/5 pb-2">
+                      <span className="text-sm text-white/50">Chilometraggio</span>
+                      <span className="font-bold text-gold">-- km</span>
+                    </div>
+                    <div className="flex justify-between items-end">
+                      <span className="text-sm text-white/50">Revisione/Tagliando</span>
+                      <span className="font-bold">--/--/----</span>
                     </div>
                   </div>
-                ))}
-                {vehicles.length === 0 && (
-                  <p className="text-center text-muted-foreground py-8">Nessun veicolo trovato.</p>
-                )}
-              </div>
-            )}
-
-            {section === "contratti" && (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border text-left text-muted-foreground">
-                      <th className="pb-3 pr-4">Cliente</th>
-                      <th className="pb-3 pr-4">CF</th>
-                      <th className="pb-3 pr-4">Inizio</th>
-                      <th className="pb-3 pr-4">Fine</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {bookings.map((b) => (
-                      <tr key={b.id} className="border-b border-border/50">
-                        <td className="py-3 pr-4 font-medium">{b.customer_fullname ?? "—"}</td>
-                        <td className="py-3 pr-4 text-muted-foreground">{b.customer_cf ?? "—"}</td>
-                        <td className="py-3 pr-4">{b.start_date ?? "—"}</td>
-                        <td className="py-3 pr-4">{b.end_date ?? "—"}</td>
-                      </tr>
-                    ))}
-                    {bookings.length === 0 && (
-                      <tr><td colSpan={4} className="py-8 text-center text-muted-foreground">Nessuna prenotazione trovata.</td></tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </main>
+                  <button className="w-full mt-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs uppercase tracking-widest font-bold transition-colors">
+                    Aggiorna Dati
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
-    </SidebarProvider>
+      </main>
+    </div>
   );
 };
 
