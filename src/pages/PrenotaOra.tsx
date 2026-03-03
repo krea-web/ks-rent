@@ -319,6 +319,104 @@ const PrenotaOra = () => {
     return <Car className="w-4 h-4" />;
   };
 
+  // Birth date smart input component
+  const BirthDateInput = ({ value, onChange }: { value: string; onChange: (isoDate: string) => void }) => {
+    // value is YYYY-MM-DD, display is GG/MM/AAAA
+    const toDisplay = (iso: string) => {
+      if (!iso) return "";
+      const [y, m, d] = iso.split("-");
+      return `${d}/${m}/${y}`;
+    };
+
+    const toISO = (display: string) => {
+      const clean = display.replace(/\//g, "");
+      if (clean.length === 8) {
+        const d = clean.slice(0, 2), m = clean.slice(2, 4), y = clean.slice(4, 8);
+        return `${y}-${m}-${d}`;
+      }
+      return "";
+    };
+
+    const [displayVal, setDisplayVal] = useState(toDisplay(value));
+    const [error, setError] = useState("");
+    const nativeRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      setDisplayVal(toDisplay(value));
+    }, [value]);
+
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+      let raw = e.target.value.replace(/[^\d]/g, "").slice(0, 8);
+      let formatted = "";
+      for (let i = 0; i < raw.length; i++) {
+        if (i === 2 || i === 4) formatted += "/";
+        formatted += raw[i];
+      }
+      setDisplayVal(formatted);
+
+      if (raw.length === 8) {
+        const iso = toISO(formatted);
+        const d = parseInt(raw.slice(0, 2)), m = parseInt(raw.slice(2, 4)), y = parseInt(raw.slice(4, 8));
+        const date = new Date(y, m - 1, d);
+        const isValid = date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
+        const age = Math.floor((Date.now() - date.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+
+        if (!isValid) {
+          setError("Data non valida");
+          onChange("");
+        } else if (age < 18) {
+          setError("Età insufficiente (min. 18 anni)");
+          onChange("");
+        } else if (age > 120) {
+          setError("Data non valida");
+          onChange("");
+        } else {
+          setError("");
+          onChange(iso);
+        }
+      } else {
+        setError("");
+        if (raw.length === 0) onChange("");
+      }
+    };
+
+    return (
+      <div className="space-y-1">
+        <div className="relative flex items-center">
+          <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30 pointer-events-none z-10" />
+          <Input
+            inputMode="numeric"
+            placeholder="GG/MM/AAAA"
+            value={displayVal}
+            onChange={handleInput}
+            maxLength={10}
+            className="pl-12 pr-20 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white font-mono tracking-wider"
+          />
+          <input
+            ref={nativeRef}
+            type="date"
+            className="sr-only"
+            tabIndex={-1}
+            onChange={(e) => {
+              if (e.target.value) {
+                onChange(e.target.value);
+                setError("");
+              }
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => nativeRef.current?.showPicker?.()}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-widest text-white/40 hover:text-gold transition-colors font-semibold px-2 py-1 rounded-md hover:bg-white/5"
+          >
+            Scegli
+          </button>
+        </div>
+        {error && <p className="text-red-400/80 text-xs pl-1">{error}</p>}
+      </div>
+    );
+  };
+
   // Helper component for Driver Form
   const DriverFormFields = ({ driver, setDriver, prefix }: { driver: any; setDriver: any; prefix: string }) => (
     <div className="space-y-6">
@@ -350,15 +448,10 @@ const PrenotaOra = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="space-y-2">
           <Label className="text-xs uppercase tracking-widest text-white/50">Data di Nascita</Label>
-          <div className="relative">
-            <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              type="date"
-              value={driver.birthDate}
-              onChange={(e) => setDriver({ ...driver, birthDate: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white appearance-none color-scheme-dark"
-            />
-          </div>
+          <BirthDateInput
+            value={driver.birthDate}
+            onChange={(val) => setDriver({ ...driver, birthDate: val })}
+          />
         </div>
         <div className="space-y-2">
           <Label className="text-xs uppercase tracking-widest text-white/50">Luogo di Nascita</Label>
