@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { motion, Variants } from "framer-motion";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   CalendarIcon,
   User,
@@ -60,6 +60,21 @@ const PrenotaOra = () => {
   const [hasSecondDriver, setHasSecondDriver] = useState(false);
   const [secondDriver, setSecondDriver] = useState({ ...initialDriverState });
   const [loading, setLoading] = useState(false);
+
+  // Mobile Sticky Bar
+  const summaryRef = useRef<HTMLDivElement>(null);
+  const [showStickyBar, setShowStickyBar] = useState(true);
+
+  useEffect(() => {
+    const el = summaryRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const fetchVehicles = async () => {
@@ -382,7 +397,7 @@ const PrenotaOra = () => {
   );
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-32 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 rounded-full blur-[150px]" />
@@ -402,7 +417,7 @@ const PrenotaOra = () => {
           </h1>
         </motion.div>
 
-        <form onSubmit={handleSubmit}>
+        <form id="booking-form" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             {/* LEFT COLUMN */}
             <div className="lg:col-span-8 space-y-6 md:space-y-8">
@@ -606,7 +621,7 @@ const PrenotaOra = () => {
             </div>
 
             {/* RIGHT COLUMN: WIDGET RIEPILOGO */}
-            <div className="lg:col-span-4 relative">
+            <div className="lg:col-span-4 relative" ref={summaryRef}>
               <div className="lg:sticky lg:top-28 w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden">
                 <div className="p-6 md:p-8 border-b border-white/5 bg-[#111] relative min-h-[140px] flex flex-col justify-end">
                   {selectedVehicle ? (
@@ -689,6 +704,45 @@ const PrenotaOra = () => {
             </div>
           </div>
         </form>
+
+        {/* MOBILE STICKY BOTTOM BAR */}
+        <AnimatePresence>
+          {showStickyBar && (
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="fixed bottom-0 left-0 w-full z-[100] bg-[#0a0a0a]/90 backdrop-blur-xl border-t border-gold/20 p-4 pb-[env(safe-area-inset-bottom,16px)] shadow-[0_-10px_40px_rgba(0,0,0,0.5)] lg:hidden"
+            >
+              <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
+                <div className="flex flex-col">
+                  <span className="text-[11px] uppercase tracking-widest text-white/50">Totale stimato</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-black font-display text-gold">€{total}</span>
+                    {days > 0 && (
+                      <span className="text-xs text-white/40">
+                        / {days} giorn{days !== 1 ? "i" : "o"}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <Button
+                  form="booking-form"
+                  type="submit"
+                  disabled={loading}
+                  className="h-12 px-6 bg-black text-white border border-gold/40 hover:bg-gold hover:text-black font-bold uppercase tracking-wider rounded-xl transition-all duration-300 text-xs shrink-0"
+                >
+                  {loading ? "..." : (
+                    <span className="flex items-center gap-2">
+                      Conferma <ArrowRight size={14} />
+                    </span>
+                  )}
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
