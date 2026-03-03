@@ -26,7 +26,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
       return;
     }
 
-    const base64 = sigRef.current.getTrimmedCanvas().toDataURL("image/png");
+    const base64 = sigRef.current.getCanvas().toDataURL("image/png");
     setSigning(true);
 
     try {
