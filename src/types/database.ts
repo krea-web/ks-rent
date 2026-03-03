@@ -1,10 +1,14 @@
 export interface Vehicle {
   id: string;
-  category: string;
+  make: string;
   model: string;
+  category: string;
+  daily_rate: number;
   km_current: number;
   next_revision_date: string;
-  is_available: boolean;
+  available: boolean;
+  license_plate: string;
+  image_url?: string;
 }
 
 export interface Booking {
@@ -16,6 +20,8 @@ export interface Booking {
   customer_cf: string;
   customer_license: string;
   customer_residence: string;
+  total_price?: number;
+  created_at?: string;
 }
 
 export interface PricingPeriod {

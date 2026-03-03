@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import ChiSiamo from "./pages/ChiSiamo";
 import PrenotaOra from "./pages/PrenotaOra";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/chisiamo" element={<ChiSiamo />} />
           <Route path="/prenotaora" element={<PrenotaOra />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

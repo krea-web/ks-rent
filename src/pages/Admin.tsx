@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Car, Wrench, FileText, RefreshCw } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Car, Wrench, FileText, RefreshCw, LogOut, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { Vehicle, Booking } from "@/types/database";
-import { format } from "date-fns";
 import {
   SidebarProvider,
   SidebarTrigger,
@@ -15,6 +15,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
+import { toast } from "sonner";
 
 type Section = "flotta" | "manutenzione" | "contratti";
 
@@ -25,10 +26,31 @@ const sidebarItems: { title: string; icon: typeof Car; section: Section }[] = [
 ];
 
 const Admin = () => {
+  const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
   const [section, setSection] = useState<Section>("flotta");
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
+
+  // Auth guard
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        navigate("/login", { replace: true });
+      }
+      setAuthChecked(true);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        navigate("/login", { replace: true });
+      }
+      setAuthChecked(true);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -42,13 +64,28 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (authChecked) fetchData();
+  }, [authChecked]);
 
-  const isRevisionSoon = (dateStr: string) => {
-    const diff = new Date(dateStr).getTime() - Date.now();
-    return diff < 30 * 24 * 60 * 60 * 1000; // < 30 days
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast.success("Disconnesso con successo");
+    navigate("/login", { replace: true });
   };
+
+  const isRevisionSoon = (dateStr?: string | null) => {
+    if (!dateStr) return false;
+    const diff = new Date(dateStr).getTime() - Date.now();
+    return diff < 30 * 24 * 60 * 60 * 1000;
+  };
+
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-10 w-10 animate-spin text-gold" />
+      </div>
+    );
+  }
 
   return (
     <SidebarProvider>
@@ -82,9 +119,18 @@ const Admin = () => {
             <h2 className="text-sm font-bold uppercase tracking-wider text-gold">
               {sidebarItems.find((s) => s.section === section)?.title}
             </h2>
-            <button onClick={fetchData} className="ml-auto text-muted-foreground hover:text-foreground">
-              <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-            </button>
+            <div className="ml-auto flex items-center gap-3">
+              <button onClick={fetchData} className="text-muted-foreground hover:text-foreground">
+                <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors"
+              >
+                <LogOut size={14} />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
+            </div>
           </header>
 
           <main className="flex-1 p-6 overflow-auto">
@@ -103,19 +149,19 @@ const Admin = () => {
                   <tbody>
                     {vehicles.map((v) => (
                       <tr key={v.id} className="border-b border-border/50">
-                        <td className="py-3 pr-4 font-medium">{v.model}</td>
-                        <td className="py-3 pr-4 text-muted-foreground">{v.category}</td>
-                        <td className="py-3 pr-4">{v.km_current.toLocaleString()} km</td>
-                        <td className="py-3 pr-4">{v.next_revision_date}</td>
+                        <td className="py-3 pr-4 font-medium">{v.make} {v.model}</td>
+                        <td className="py-3 pr-4 text-muted-foreground">{v.category ?? "—"}</td>
+                        <td className="py-3 pr-4">{(v.km_current ?? 0).toLocaleString()} km</td>
+                        <td className="py-3 pr-4">{v.next_revision_date ?? "—"}</td>
                         <td className="py-3">
-                          <span className={`text-xs font-bold uppercase ${v.is_available ? "text-green-400" : "text-destructive"}`}>
-                            {v.is_available ? "Sì" : "No"}
+                          <span className={`text-xs font-bold uppercase ${v.available ? "text-green-400" : "text-destructive"}`}>
+                            {v.available ? "Sì" : "No"}
                           </span>
                         </td>
                       </tr>
                     ))}
                     {vehicles.length === 0 && (
-                      <tr><td colSpan={5} className="py-8 text-center text-muted-foreground">Nessun veicolo trovato. Collega Supabase per caricare i dati.</td></tr>
+                      <tr><td colSpan={5} className="py-8 text-center text-muted-foreground">Nessun veicolo trovato.</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -133,13 +179,13 @@ const Admin = () => {
                   >
                     <div className="flex justify-between items-center">
                       <div>
-                        <p className="font-bold">{v.model}</p>
-                        <p className="text-sm text-muted-foreground">{v.km_current.toLocaleString()} km</p>
+                        <p className="font-bold">{v.make} {v.model}</p>
+                        <p className="text-sm text-muted-foreground">{(v.km_current ?? 0).toLocaleString()} km</p>
                       </div>
                       <div className="text-right">
                         <p className="text-xs text-muted-foreground uppercase">Revisione</p>
                         <p className={`font-bold text-sm ${isRevisionSoon(v.next_revision_date) ? "text-gold" : ""}`}>
-                          {v.next_revision_date}
+                          {v.next_revision_date ?? "—"}
                         </p>
                         {isRevisionSoon(v.next_revision_date) && (
                           <span className="text-xs text-gold font-semibold">⚠ Prossima</span>
@@ -168,10 +214,10 @@ const Admin = () => {
                   <tbody>
                     {bookings.map((b) => (
                       <tr key={b.id} className="border-b border-border/50">
-                        <td className="py-3 pr-4 font-medium">{b.customer_fullname}</td>
-                        <td className="py-3 pr-4 text-muted-foreground">{b.customer_cf}</td>
-                        <td className="py-3 pr-4">{b.start_date}</td>
-                        <td className="py-3 pr-4">{b.end_date}</td>
+                        <td className="py-3 pr-4 font-medium">{b.customer_fullname ?? "—"}</td>
+                        <td className="py-3 pr-4 text-muted-foreground">{b.customer_cf ?? "—"}</td>
+                        <td className="py-3 pr-4">{b.start_date ?? "—"}</td>
+                        <td className="py-3 pr-4">{b.end_date ?? "—"}</td>
                       </tr>
                     ))}
                     {bookings.length === 0 && (
