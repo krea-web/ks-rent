@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Instagram } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
+import { localBusinessJsonLd } from "@/lib/jsonLd";
 
 const ChiSiamo = () => {
   return (
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20 overflow-x-hidden font-sans">
+      <SEOHead
+        title="Chi Siamo — KS Rent | Noleggio Auto Olbia Costa Smeralda"
+        description="Scopri KS Rent S.R.L.: noleggio auto e moto senza carta di credito in Sardegna. Nati dalla passione per la Costa Smeralda, offriamo fiducia totale e zero burocrazia."
+        canonical="https://ksrent.it/chisiamo"
+        jsonLd={localBusinessJsonLd}
+      />
       {/* 1. HERO EDITORIALE */}
       <section className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
         <div className="absolute inset-0 z-0">
