@@ -305,8 +305,8 @@ const PrenotaOra = () => {
     return <Car className="w-4 h-4" />;
   };
 
-  // Helper component for Driver Form
-  const DriverFormFields = ({ driver, setDriver, prefix }: { driver: any; setDriver: any; prefix: string }) => (
+  // Driver form fields rendered inline via helper function (not a component to avoid remount)
+  const renderDriverFormFields = (driver: any, setDriver: any, prefix: string) => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="space-y-2">
@@ -690,7 +690,7 @@ const PrenotaOra = () => {
                   </span>
                   Dati Guidatore Principale
                 </h2>
-                <DriverFormFields driver={mainDriver} setDriver={setMainDriver} prefix="main" />
+                {renderDriverFormFields(mainDriver, setMainDriver, "main")}
               </motion.div>
 
               {/* STEP 4: SECONDO GUIDATORE */}
@@ -730,7 +730,7 @@ const PrenotaOra = () => {
                     animate={{ opacity: 1, height: "auto" }}
                     className="pt-4 border-t border-white/5 mt-4"
                   >
-                    <DriverFormFields driver={secondDriver} setDriver={setSecondDriver} prefix="second" />
+                    {renderDriverFormFields(secondDriver, setSecondDriver, "second")}
                   </motion.div>
                 )}
               </motion.div>
