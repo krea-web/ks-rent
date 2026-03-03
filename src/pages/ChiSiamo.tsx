@@ -1,22 +1,10 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Instagram, ShieldCheck, Key, MapPin } from "lucide-react";
 import { useRef } from "react";
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-};
-
-const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 },
-  },
-};
-
 const ChiSiamo = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -26,7 +14,10 @@ const ChiSiamo = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.666%"]);
 
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20 overflow-x-hidden font-sans">
+    <div
+      ref={containerRef}
+      className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20 overflow-x-hidden font-sans"
+    >
       {/* 1. HERO EDITORIALE */}
       <section className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
         <div className="absolute inset-0 z-0">
@@ -39,7 +30,10 @@ const ChiSiamo = () => {
         </div>
 
         <div className="relative z-10 max-w-full md:max-w-5xl">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
+          >
             <div className="flex items-center gap-4 mb-6 md:mb-8">
               <div className="h-[1px] w-12 bg-gold"></div>
               <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] font-semibold">
@@ -61,20 +55,18 @@ const ChiSiamo = () => {
       <section className="py-24 md:py-40 px-4 md:px-12 lg:px-24 bg-[#050505] relative flex flex-col items-center justify-center text-center">
         <div className="max-w-4xl mx-auto space-y-12 md:space-y-16">
           <motion.h2
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
             viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUp}
             className="text-3xl sm:text-4xl md:text-6xl font-display font-bold leading-tight"
           >
             Siamo nati dall'asfalto sardo e dalla voglia di <span className="text-gold">cambiare le regole.</span>
           </motion.h2>
 
           <motion.p
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
             viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUp}
             className="text-lg md:text-2xl font-light text-white/70 leading-relaxed"
           >
             Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, depositi bloccati
@@ -82,10 +74,9 @@ const ChiSiamo = () => {
           </motion.p>
 
           <motion.p
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
             viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUp}
             className="text-lg md:text-2xl font-light text-white/70 leading-relaxed"
           >
             KS Rent è la nostra risposta: un servizio basato sulla fiducia totale e sulla qualità assoluta. Atterri,
@@ -93,10 +84,9 @@ const ChiSiamo = () => {
           </motion.p>
 
           <motion.div
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.6 } }}
             viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUp}
             className="pt-12 md:pt-16"
           >
             <p className="text-2xl md:text-4xl font-display font-medium italic text-white leading-snug">
@@ -166,10 +156,9 @@ const ChiSiamo = () => {
         <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-center">
             <motion.div
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
               viewport={{ once: true }}
-              variants={fadeUp}
               className="lg:col-span-5 relative"
             >
               <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-white/5">
@@ -189,10 +178,9 @@ const ChiSiamo = () => {
             </motion.div>
 
             <motion.div
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
               viewport={{ once: true }}
-              variants={fadeUp}
               className="lg:col-span-7"
             >
               <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-6 md:mb-8">
@@ -221,10 +209,9 @@ const ChiSiamo = () => {
         <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-8 mb-10 md:mb-16">
             <motion.div
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
               viewport={{ once: true }}
-              variants={fadeUp}
               className="max-w-2xl"
             >
               <div className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6 border border-white/10">
@@ -239,7 +226,11 @@ const ChiSiamo = () => {
               </p>
             </motion.div>
 
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
+              viewport={{ once: true }}
+            >
               <a
                 href="https://instagram.com/ksrent_srl"
                 target="_blank"
@@ -252,18 +243,14 @@ const ChiSiamo = () => {
           </div>
 
           {/* Griglia Asimmetrica */}
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[220px] sm:auto-rows-[250px] md:auto-rows-[300px]"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 auto-rows-[220px] sm:auto-rows-[250px] md:auto-rows-[300px]">
             <motion.a
               href="https://instagram.com/ksrent_srl"
               target="_blank"
               rel="noopener noreferrer"
-              variants={fadeUp}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
+              viewport={{ once: true }}
               className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
             >
               <img
@@ -281,7 +268,9 @@ const ChiSiamo = () => {
               href="https://instagram.com/ksrent_srl"
               target="_blank"
               rel="noopener noreferrer"
-              variants={fadeUp}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
+              viewport={{ once: true }}
               className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
             >
               <img
@@ -298,7 +287,9 @@ const ChiSiamo = () => {
               href="https://instagram.com/ksrent_srl"
               target="_blank"
               rel="noopener noreferrer"
-              variants={fadeUp}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
+              viewport={{ once: true }}
               className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
             >
               <img
@@ -310,7 +301,7 @@ const ChiSiamo = () => {
                 <Instagram className="text-white" size={28} />
               </div>
             </motion.a>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -320,10 +311,9 @@ const ChiSiamo = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.2)_0%,transparent_70%)] pointer-events-none" />
 
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
           viewport={{ once: true }}
-          variants={fadeUp}
           className="max-w-4xl mx-auto relative z-10 flex flex-col items-center"
         >
           <span className="inline-block py-2 px-6 rounded-full bg-black/10 border border-black/20 text-black text-xs md:text-sm uppercase tracking-[0.3em] font-bold mb-8 shadow-sm">
