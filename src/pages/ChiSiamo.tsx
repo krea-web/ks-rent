@@ -18,7 +18,7 @@ const ChiSiamo = () => {
       <section className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW%20M2%201.jpg"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW%20M2.avif"
             alt="Supercar posteriore"
             className="w-full h-full object-cover opacity-40"
           />
@@ -94,8 +94,8 @@ const ChiSiamo = () => {
             >
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
               <p className="text-lg md:text-2xl font-light text-white/70 leading-relaxed">
-                Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, depositi bloccati
-                e clausole nascoste.
+                Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, depositi
+                bloccati e clausole nascoste.
               </p>
             </motion.div>
 
@@ -123,8 +123,8 @@ const ChiSiamo = () => {
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-6 w-4 h-4 rounded-full bg-[#D4AF37] shadow-[0_0_14px_#D4AF37,0_0_30px_#D4AF37aa] border-2 border-[#D4AF37]" />
               <blockquote className="border-l-0 pl-0">
                 <p className="text-2xl md:text-4xl font-display font-medium italic text-white leading-snug">
-                  "Non affittiamo semplicemente veicoli, ma ti consegniamo la chiave per vivere l'isola esattamente come va
-                  vissuta: in totale libertà."
+                  "Non affittiamo semplicemente veicoli, ma ti consegniamo la chiave per vivere l'isola esattamente come
+                  va vissuta: in totale libertà."
                 </p>
                 <span className="block mt-8 text-sm md:text-base font-bold tracking-[0.2em] uppercase text-gold">
                   I Fondatori
