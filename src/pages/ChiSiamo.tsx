@@ -56,52 +56,82 @@ const ChiSiamo = () => {
         </div>
       </section>
 
-      {/* 2. MISSION (La Nostra Storia) */}
-      <section className="py-24 md:py-40 px-4 md:px-12 lg:px-24 bg-[#050505] relative flex flex-col items-center justify-center text-center">
-        <div className="max-w-4xl mx-auto space-y-12 md:space-y-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-3xl sm:text-4xl md:text-6xl font-display font-bold leading-tight"
-          >
-            Siamo nati dall'asfalto sardo e dalla voglia di <span className="text-gold">cambiare le regole.</span>
-          </motion.h2>
+      {/* 2. MISSION — Neon Gold Timeline */}
+      <section className="py-24 md:py-40 px-4 md:px-12 lg:px-24 bg-[#050505] relative">
+        <div className="max-w-4xl mx-auto relative">
+          {/* Neon gold vertical bar */}
+          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-[2px] bg-white/5 rounded-full">
+            <motion.div
+              className="absolute top-0 left-0 w-full rounded-full bg-gradient-to-b from-[#D4AF37] via-[#D4AF37] to-transparent shadow-[0_0_12px_#D4AF37,0_0_30px_#D4AF37aa,0_0_60px_#D4AF3755]"
+              initial={{ height: "0%" }}
+              whileInView={{ height: "100%" }}
+              transition={{ duration: 2, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            />
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-lg md:text-2xl font-light text-white/70 leading-relaxed"
-          >
-            Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, depositi bloccati
-            e clausole nascoste.
-          </motion.p>
+          {/* Timeline items */}
+          <div className="space-y-16 md:space-y-20 pl-16 md:pl-20">
+            {/* Node 1 — Title */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.2 } }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative"
+            >
+              <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37,0_0_20px_#D4AF37aa] border-2 border-[#D4AF37]" />
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold leading-tight">
+                Siamo nati dall'asfalto sardo e dalla voglia di <span className="text-gold">cambiare le regole.</span>
+              </h2>
+            </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-lg md:text-2xl font-light text-white/70 leading-relaxed"
-          >
-            KS Rent è la nostra risposta: un servizio basato sulla fiducia totale e sulla qualità assoluta. Atterri,
-            prendi le chiavi, parti.
-          </motion.p>
+            {/* Node 2 — Frustrazione */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.3 } }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative"
+            >
+              <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
+              <p className="text-lg md:text-2xl font-light text-white/70 leading-relaxed">
+                Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, depositi bloccati
+                e clausole nascoste.
+              </p>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.6 } }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="pt-12 md:pt-16"
-          >
-            <p className="text-2xl md:text-4xl font-display font-medium italic text-white leading-snug">
-              "Non affittiamo semplicemente veicoli, ma ti consegniamo la chiave per vivere l'isola esattamente come va
-              vissuta: in totale libertà."
-            </p>
-            <span className="block mt-8 text-sm md:text-base font-bold tracking-[0.2em] uppercase text-gold">
-              I Fondatori
-            </span>
-          </motion.div>
+            {/* Node 3 — La risposta */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.4 } }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative"
+            >
+              <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
+              <p className="text-lg md:text-2xl font-light text-white/70 leading-relaxed">
+                KS Rent è la nostra risposta: un servizio basato sulla fiducia totale e sulla qualità assoluta. Atterri,
+                prendi le chiavi, parti.
+              </p>
+            </motion.div>
+
+            {/* Node 4 — Citazione */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.5 } }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative pt-4"
+            >
+              <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-6 w-4 h-4 rounded-full bg-[#D4AF37] shadow-[0_0_14px_#D4AF37,0_0_30px_#D4AF37aa] border-2 border-[#D4AF37]" />
+              <blockquote className="border-l-0 pl-0">
+                <p className="text-2xl md:text-4xl font-display font-medium italic text-white leading-snug">
+                  "Non affittiamo semplicemente veicoli, ma ti consegniamo la chiave per vivere l'isola esattamente come va
+                  vissuta: in totale libertà."
+                </p>
+                <span className="block mt-8 text-sm md:text-base font-bold tracking-[0.2em] uppercase text-gold">
+                  I Fondatori
+                </span>
+              </blockquote>
+            </motion.div>
+          </div>
         </div>
       </section>
 
