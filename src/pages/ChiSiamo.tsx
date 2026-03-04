@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Instagram } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd } from "@/lib/jsonLd";
+import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
 
 const ChiSiamo = () => {
   return (
@@ -42,6 +43,15 @@ const ChiSiamo = () => {
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl font-light leading-relaxed">
               Oltre il semplice noleggio. Un'esperienza di pura libertà, disegnata per la Costa Smeralda.
             </p>
+            {/* Gold racing light trail */}
+            <div className="mt-8 w-full max-w-2xl h-[2px] relative overflow-hidden rounded-full">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
+              <motion.div
+                className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent rounded-full shadow-[0_0_20px_#D4AF37,0_0_40px_#D4AF37aa]"
+                animate={{ x: ["-6rem", "calc(100% + 6rem)"] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+              />
+            </div>
           </motion.div>
         </div>
       </section>
@@ -149,6 +159,9 @@ const ChiSiamo = () => {
           </div>
         </div>
       </section>
+
+      {/* GOLD KEYWORDS MARQUEE */}
+      <GoldKeywordsMarquee />
 
       {/* 4. SOCIAL (Instagram) */}
       <section className="py-16 md:py-32 bg-[#0a0a0a] border-t border-white/5 relative">
