@@ -7,7 +7,7 @@ import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
 
 const ChiSiamo = () => {
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black pt-20 overflow-x-hidden font-sans">
+    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
         title="Chi Siamo — KS Rent | Noleggio Auto Olbia Costa Smeralda"
         description="Scopri KS Rent S.R.L.: noleggio auto e moto senza carta di credito in Sardegna. Nati dalla passione per la Costa Smeralda, offriamo fiducia totale e zero burocrazia."
