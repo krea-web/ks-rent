@@ -761,7 +761,13 @@ const PrenotaOra = () => {
 
             {/* RIGHT COLUMN: WIDGET RIEPILOGO */}
             <div className="lg:col-span-4 relative" ref={summaryRef}>
-              <div className="lg:sticky lg:top-28 w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true }}
+                className="lg:sticky lg:top-28 w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden"
+              >
                 <div className="p-6 md:p-8 border-b border-white/5 bg-[#111] relative min-h-[140px] flex flex-col justify-end">
                   {selectedVehicle ? (
                     <>
@@ -849,7 +855,7 @@ const PrenotaOra = () => {
                     )}
                   </Button>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </form>
