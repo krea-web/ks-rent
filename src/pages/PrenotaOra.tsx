@@ -524,7 +524,6 @@ const PrenotaOra = () => {
       <div className="w-full max-w-7xl mx-auto px-4 relative z-10">
         <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-10 md:mb-12">
           <div className="flex items-center gap-3 md:gap-4 mb-4">
-            <img src={logo} alt="KS Rent" className="h-8 md:h-10 w-auto" />
             <div className="w-6 md:w-8 h-[2px] bg-gold"></div>
             <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold">
               Fast Booking
