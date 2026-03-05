@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
@@ -9,6 +9,12 @@ const navLinks = [
   { label: "Home", to: "/" },
   { label: "Chi Siamo", to: "/chisiamo" },
 ];
+
+const routeLabels: Record<string, string> = {
+  "/": "Home",
+  "/chisiamo": "Chi Siamo",
+  "/prenotaora": "Prenota Ora",
+};
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -39,6 +45,42 @@ const Navbar = () => {
           <Link to="/" className="flex items-center group relative z-50">
             <img src={logo} alt="KS Rent" className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" />
           </Link>
+
+          {/* INLINE BREADCRUMB (SEO + GEO) */}
+          {location.pathname !== "/" && (
+            <nav
+              aria-label="Breadcrumb"
+              className="hidden sm:flex items-center gap-1.5 ml-3 md:ml-5"
+              itemScope
+              itemType="https://schema.org/BreadcrumbList"
+            >
+              <span
+                className="flex items-center"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
+              >
+                <Link
+                  to="/"
+                  className="text-[10px] md:text-xs uppercase tracking-widest text-white/40 hover:text-gold transition-colors"
+                  itemProp="item"
+                >
+                  <span itemProp="name">Home</span>
+                </Link>
+                <meta itemProp="position" content="1" />
+              </span>
+              <ChevronRight size={10} className="text-white/20" />
+              <span
+                className="text-[10px] md:text-xs uppercase tracking-widest text-gold font-semibold"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
+              >
+                <span itemProp="name">{routeLabels[location.pathname] || "Pagina"}</span>
+                <meta itemProp="position" content="2" />
+              </span>
+            </nav>
+          )}
 
           {/* DESKTOP NAV */}
           <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-full backdrop-blur-md">

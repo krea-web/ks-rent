@@ -8,7 +8,7 @@ import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import Index from "./pages/Index";
 import ChiSiamo from "./pages/ChiSiamo";
 import PrenotaOra from "./pages/PrenotaOra";
@@ -28,7 +28,7 @@ const AppLayout = () => {
     <>
       <ScrollToTop />
       {!isIsolated && <Navbar />}
-      {!isIsolated && <Breadcrumbs />}
+      
       <main>
         <Routes>
           <Route path="/" element={<Index />} />
