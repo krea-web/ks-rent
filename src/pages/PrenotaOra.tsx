@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   CalendarIcon,
   User,
@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   CheckCircle2,
   ArrowRight,
+  ArrowLeft,
   Zap,
   Bike,
   Settings2,
@@ -20,11 +21,11 @@ import {
   Users,
   Loader2,
   AlertCircle,
+  Check,
 } from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
-import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -36,10 +37,8 @@ import SignatureModal from "@/components/SignatureModal";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
 
-const FALLBACK_LABEL = "Prezzo su richiesta";
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
 
-// Struttura dati guidatore
 const initialDriverState = {
   name: "",
   surname: "",
@@ -54,20 +53,54 @@ const initialDriverState = {
   licenseBack: null as File | null,
 };
 
+const STEP_LABELS = ["Veicolo", "Date", "Guidatore", "Secondo Guidatore"];
+
+// Animated check mark for validated fields
+const FieldCheck = ({ show }: { show: boolean }) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0, opacity: 0 }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center"
+      >
+        <Check size={12} className="text-white" />
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// Step transition variants
+const stepVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 80 : -80,
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -80 : 80,
+    opacity: 0,
+  }),
+};
+
 const PrenotaOra = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [direction, setDirection] = useState(1);
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Tutti");
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
 
-  // Dati Form
   const [mainDriver, setMainDriver] = useState({ ...initialDriverState });
-  const [hasSecondDriver, setHasSecondDriver] = useState(false);
+  const [hasSecondDriver, setHasSecondDriver] = useState<boolean | null>(null);
   const [secondDriver, setSecondDriver] = useState({ ...initialDriverState });
   const [loading, setLoading] = useState(false);
 
-  // n8n availability state
   const [checkingAvailability, setCheckingAvailability] = useState(false);
   const [availabilityResult, setAvailabilityResult] = useState<{
     available: boolean;
@@ -76,11 +109,9 @@ const PrenotaOra = () => {
     price_per_day?: number;
   } | null>(null);
 
-  // Signature modal state
   const [signatureOpen, setSignatureOpen] = useState(false);
   const [bookingId, setBookingId] = useState<string>("");
 
-  // Mobile Sticky Bar
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
 
@@ -108,13 +139,12 @@ const PrenotaOra = () => {
     fetchVehicles();
   }, []);
 
-  // WF1: Check availability when vehicle + dates are selected
+  // Check availability when dates are confirmed
   const checkAvailability = useCallback(async () => {
     if (!selectedVehicle || !startDate || !endDate) {
       setAvailabilityResult(null);
       return;
     }
-
     setCheckingAvailability(true);
     try {
       const params = new URLSearchParams({
@@ -122,29 +152,21 @@ const PrenotaOra = () => {
         start_date: format(startDate, "yyyy-MM-dd"),
         end_date: format(endDate, "yyyy-MM-dd"),
       });
-
       const res = await fetch(`${N8N_BASE}/check-availability?${params}`);
       if (!res.ok) throw new Error("Errore verifica disponibilità");
-
       const data = await res.json();
       setAvailabilityResult(data);
-
       if (!data.available) {
         toast.error("Veicolo non disponibile per queste date.");
       }
     } catch (err) {
       console.error("Availability check failed:", err);
-      // Fallback to local calculation
       setAvailabilityResult(null);
       toast.error("Impossibile verificare la disponibilità. Calcolo locale attivo.");
     } finally {
       setCheckingAvailability(false);
     }
   }, [selectedVehicle, startDate, endDate]);
-
-  useEffect(() => {
-    checkAvailability();
-  }, [checkAvailability]);
 
   const categories = useMemo(() => {
     const cats = new Set(vehicles.map((v) => v.category));
@@ -156,33 +178,48 @@ const PrenotaOra = () => {
     return vehicles.filter((v) => v.category === selectedCategory);
   }, [vehicles, selectedCategory]);
 
-  // Use n8n data if available, fallback to local
   const days = availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
   const dailyRate = availabilityResult?.price_per_day ?? (selectedVehicle?.daily_rate ?? 0);
   const total = availabilityResult?.estimated_price ?? (days * dailyRate);
   const isAvailable = availabilityResult === null ? true : availabilityResult.available;
 
-  // Funzione helper per l'upload file
   const uploadFile = async (file: File | null, path: string) => {
     if (!file) return null;
     const fileExt = file.name.split(".").pop();
     const fileName = `${path}-${Math.random()}.${fileExt}`;
-    const { data, error } = await supabase.storage.from("licenses").upload(fileName, file);
+    const { error } = await supabase.storage.from("licenses").upload(fileName, file);
     if (error) throw error;
     const { data: publicUrl } = supabase.storage.from("licenses").getPublicUrl(fileName);
     return publicUrl.publicUrl;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedVehicle) {
-      toast.error("Seleziona prima un veicolo.");
-      return;
-    }
+  const goToStep = (step: number) => {
+    setDirection(step > currentStep ? 1 : -1);
+    setCurrentStep(step);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleVehicleSelect = (v: any) => {
+    setSelectedVehicle(v);
+    // Auto-advance to step 2
+    setTimeout(() => goToStep(2), 300);
+  };
+
+  const handleDatesConfirm = async () => {
     if (!startDate || !endDate) {
-      toast.error("Seleziona le date di noleggio.");
+      toast.error("Seleziona entrambe le date.");
       return;
     }
+    await checkAvailability();
+  };
+
+  // After availability check, allow user to continue
+  useEffect(() => {
+    // This effect handles the UI state after availability check completes
+  }, [availabilityResult]);
+
+  const handleSubmit = async () => {
+    if (!selectedVehicle || !startDate || !endDate) return;
     if (!isAvailable) {
       toast.error("Veicolo non disponibile per queste date.");
       return;
@@ -198,7 +235,6 @@ const PrenotaOra = () => {
 
     setLoading(true);
     try {
-      // 1. Upload license photos to Supabase Storage
       const mainFrontUrl = await uploadFile(mainDriver.licenseFront, `front-${mainDriver.cf}`);
       const mainBackUrl = await uploadFile(mainDriver.licenseBack, `back-${mainDriver.cf}`);
 
@@ -209,7 +245,6 @@ const PrenotaOra = () => {
         secondBackUrl = await uploadFile(secondDriver.licenseBack, `back-${secondDriver.cf}`);
       }
 
-      // 2. WF2: Create booking via n8n
       const bookingPayload = {
         customer: {
           name: mainDriver.name,
@@ -227,12 +262,9 @@ const PrenotaOra = () => {
           start_date: format(startDate, "yyyy-MM-dd"),
           end_date: format(endDate, "yyyy-MM-dd"),
         },
-        license_urls: {
-          front: mainFrontUrl,
-          back: mainBackUrl,
-        },
+        license_urls: { front: mainFrontUrl, back: mainBackUrl },
         total_price: total,
-        has_second_driver: hasSecondDriver,
+        has_second_driver: !!hasSecondDriver,
         second_driver: hasSecondDriver
           ? {
               name: secondDriver.name,
@@ -244,10 +276,7 @@ const PrenotaOra = () => {
               birth_place: secondDriver.birthPlace,
               residence_address: secondDriver.residence,
               city: secondDriver.city,
-              license_urls: {
-                front: secondFrontUrl,
-                back: secondBackUrl,
-              },
+              license_urls: { front: secondFrontUrl, back: secondBackUrl },
             }
           : null,
       };
@@ -259,7 +288,6 @@ const PrenotaOra = () => {
       });
 
       if (!res.ok) throw new Error("Errore creazione prenotazione");
-
       const result = await res.json();
       const newBookingId = result.booking_id;
 
@@ -268,7 +296,7 @@ const PrenotaOra = () => {
         setSignatureOpen(true);
         toast.success("Prenotazione creata! Firma il contratto per completare.");
       } else {
-        toast.success("Prenotazione confermata! Ti contatteremo per la firma del contratto.");
+        toast.success("Prenotazione confermata!");
         resetForm();
       }
     } catch (error) {
@@ -282,22 +310,18 @@ const PrenotaOra = () => {
   const resetForm = () => {
     setMainDriver({ ...initialDriverState });
     setSecondDriver({ ...initialDriverState });
-    setHasSecondDriver(false);
+    setHasSecondDriver(null);
     setStartDate(undefined);
     setEndDate(undefined);
     setSelectedVehicle(null);
     setAvailabilityResult(null);
     setBookingId("");
+    setCurrentStep(1);
   };
 
   const handleSignatureSuccess = () => {
     setSignatureOpen(false);
     resetForm();
-  };
-
-  const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   const getCategoryIcon = (category: string) => {
@@ -307,8 +331,11 @@ const PrenotaOra = () => {
     return <Car className="w-4 h-4" />;
   };
 
-  // Driver form fields rendered inline via helper function (not a component to avoid remount)
-  const renderDriverFormFields = (driver: any, setDriver: any, prefix: string) => (
+  // Progress percentage
+  const progress = currentStep === 1 ? 0 : currentStep === 2 ? 33 : currentStep === 3 ? 66 : 100;
+
+  // Driver form fields helper
+  const renderDriverFormFields = (driver: typeof initialDriverState, setDriver: (d: typeof initialDriverState) => void) => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="space-y-2">
@@ -319,8 +346,9 @@ const PrenotaOra = () => {
               required
               value={driver.name}
               onChange={(e) => setDriver({ ...driver, name: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
             />
+            <FieldCheck show={driver.name.length > 1} />
           </div>
         </div>
         <div className="space-y-2">
@@ -331,8 +359,9 @@ const PrenotaOra = () => {
               required
               value={driver.surname}
               onChange={(e) => setDriver({ ...driver, surname: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
             />
+            <FieldCheck show={driver.surname.length > 1} />
           </div>
         </div>
       </div>
@@ -347,8 +376,9 @@ const PrenotaOra = () => {
               type="date"
               value={driver.birthDate}
               onChange={(e) => setDriver({ ...driver, birthDate: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white appearance-none color-scheme-dark"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white appearance-none color-scheme-dark"
             />
+            <FieldCheck show={!!driver.birthDate} />
           </div>
         </div>
         <div className="space-y-2">
@@ -359,8 +389,9 @@ const PrenotaOra = () => {
               required
               value={driver.birthPlace}
               onChange={(e) => setDriver({ ...driver, birthPlace: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
             />
+            <FieldCheck show={driver.birthPlace.length > 1} />
           </div>
         </div>
       </div>
@@ -375,8 +406,9 @@ const PrenotaOra = () => {
               value={driver.residence}
               onChange={(e) => setDriver({ ...driver, residence: e.target.value })}
               placeholder="Via Roma 1"
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
             />
+            <FieldCheck show={driver.residence.length > 3} />
           </div>
         </div>
         <div className="space-y-2">
@@ -388,8 +420,9 @@ const PrenotaOra = () => {
               value={driver.city}
               onChange={(e) => setDriver({ ...driver, city: e.target.value })}
               placeholder="Roma"
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
             />
+            <FieldCheck show={driver.city.length > 1} />
           </div>
         </div>
       </div>
@@ -404,8 +437,9 @@ const PrenotaOra = () => {
               maxLength={16}
               value={driver.cf}
               onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white uppercase"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white uppercase"
             />
+            <FieldCheck show={driver.cf.length === 16} />
           </div>
         </div>
         <div className="space-y-2">
@@ -417,8 +451,9 @@ const PrenotaOra = () => {
               type="email"
               value={driver.email}
               onChange={(e) => setDriver({ ...driver, email: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
             />
+            <FieldCheck show={driver.email.includes("@") && driver.email.includes(".")} />
           </div>
         </div>
         <div className="space-y-2">
@@ -430,8 +465,9 @@ const PrenotaOra = () => {
               type="tel"
               value={driver.phone}
               onChange={(e) => setDriver({ ...driver, phone: e.target.value })}
-              className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
             />
+            <FieldCheck show={driver.phone.length >= 8} />
           </div>
         </div>
       </div>
@@ -452,17 +488,16 @@ const PrenotaOra = () => {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                required
                 onChange={(e) => setDriver({ ...driver, licenseFront: e.target.files?.[0] || null })}
               />
               {driver.licenseFront ? (
                 <div className="text-center text-gold">
-                  <CheckCircle2 className="mx-auto mb-2" size={24} />{" "}
+                  <CheckCircle2 className="mx-auto mb-2" size={24} />
                   <span className="text-xs font-bold">{driver.licenseFront.name}</span>
                 </div>
               ) : (
                 <div className="text-center text-white/40">
-                  <UploadCloud className="mx-auto mb-2" size={24} />{" "}
+                  <UploadCloud className="mx-auto mb-2" size={24} />
                   <span className="text-xs uppercase font-semibold tracking-wider">Carica Fronte</span>
                 </div>
               )}
@@ -479,17 +514,16 @@ const PrenotaOra = () => {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                required
                 onChange={(e) => setDriver({ ...driver, licenseBack: e.target.files?.[0] || null })}
               />
               {driver.licenseBack ? (
                 <div className="text-center text-gold">
-                  <CheckCircle2 className="mx-auto mb-2" size={24} />{" "}
+                  <CheckCircle2 className="mx-auto mb-2" size={24} />
                   <span className="text-xs font-bold">{driver.licenseBack.name}</span>
                 </div>
               ) : (
                 <div className="text-center text-white/40">
-                  <UploadCloud className="mx-auto mb-2" size={24} />{" "}
+                  <UploadCloud className="mx-auto mb-2" size={24} />
                   <span className="text-xs uppercase font-semibold tracking-wider">Carica Retro</span>
                 </div>
               )}
@@ -499,6 +533,29 @@ const PrenotaOra = () => {
       </div>
     </div>
   );
+
+  // Mobile sticky bar action text
+  const mobileActionLabel = () => {
+    if (currentStep === 1) return "Scegli Veicolo";
+    if (currentStep === 2) return startDate && endDate ? "Verifica Date" : "Scegli Date";
+    if (currentStep === 3) return "Continua";
+    if (currentStep === 4 && hasSecondDriver === null) return "Scegli";
+    return "Conferma";
+  };
+
+  const handleMobileAction = () => {
+    if (currentStep === 2 && startDate && endDate && !availabilityResult) {
+      handleDatesConfirm();
+    } else if (currentStep === 2 && availabilityResult?.available) {
+      goToStep(3);
+    } else if (currentStep === 3) {
+      goToStep(4);
+    } else if (currentStep === 4) {
+      if (hasSecondDriver === false || (hasSecondDriver === true && secondDriver.name)) {
+        handleSubmit();
+      }
+    }
+  };
 
   return (
     <div className="bg-[#050505] min-h-screen text-white pt-24 pb-32 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
@@ -516,15 +573,31 @@ const PrenotaOra = () => {
         canonical="https://ksrent.it/prenotaora"
         jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
       />
+
+      {/* PROGRESS BAR */}
+      <div className="fixed top-0 left-0 w-full z-[110] h-1 bg-white/5">
+        <motion.div
+          className="h-full bg-gradient-to-r from-gold via-yellow-300 to-gold"
+          initial={{ width: "0%" }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        />
+      </div>
+
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 rounded-full blur-[150px]" />
       </div>
 
       <div className="w-full max-w-7xl mx-auto px-4 relative z-10">
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="mb-10 md:mb-12">
+        {/* HEADER */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 md:mb-10"
+        >
           <div className="flex items-center gap-3 md:gap-4 mb-4">
-            <div className="w-6 md:w-8 h-[2px] bg-gold"></div>
+            <div className="w-6 md:w-8 h-[2px] bg-gold" />
             <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold">
               Fast Booking
             </span>
@@ -532,267 +605,467 @@ const PrenotaOra = () => {
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight break-words">
             Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Ora.</span>
           </h1>
-        </motion.div>
 
-        <form id="booking-form" onSubmit={handleSubmit} noValidate>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-            {/* LEFT COLUMN */}
-            <div className="lg:col-span-8 space-y-6 md:space-y-8">
-              {/* STEP 1: VEICOLO */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden group"
-              >
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                    1
-                  </span>
-                  Scegli il Veicolo
-                </h2>
-                {vehicles.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat}
-                        type="button"
-                        onClick={() => setSelectedCategory(cat)}
-                        className={cn(
-                          "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 relative z-20",
-                          selectedCategory === cat
-                            ? "bg-gold text-black"
-                            : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white",
-                        )}
-                      >
-                        {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                <div className="grid grid-cols-2 gap-3 md:gap-4 max-h-[500px] overflow-y-auto pr-2 pb-4">
-                  {filteredVehicles.map((v) => {
-                    const isSelected = selectedVehicle?.id === v.id;
-                    return (
-                      <div
-                        key={v.id}
-                        onClick={() => setSelectedVehicle(v)}
-                        className={cn(
-                          "p-3 rounded-xl md:rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group/card relative z-20",
-                          isSelected
-                            ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
-                            : "bg-[#111] border-white/10 hover:border-white/30",
-                        )}
-                      >
-                        <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
-                          <img
-                            src={v.image_url}
-                            alt={`Noleggio ${v.make} ${v.model} Olbia — KS Rent Costa Smeralda`}
-                            className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
-                          {isSelected && (
-                            <div className="absolute top-2 right-2 bg-gold text-black rounded-full p-1">
-                              <CheckCircle2 size={14} />
-                            </div>
-                          )}
-                        </div>
-                        <span className="font-bold text-sm sm:text-base leading-tight px-1 group-hover/card:text-gold transition-colors">
-                          {v.make} {v.model}
-                        </span>
-                        <span className="text-xs text-gold/80 font-semibold px-1 mt-1">€{v.daily_rate}/giorno</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </motion.div>
-
-              {/* STEP 2: DATE */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden group"
-              >
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                    2
-                  </span>
-                  Periodo di Noleggio
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div className="space-y-3">
-                    <Label className="text-xs uppercase tracking-widest text-white/50">Ritiro</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base relative z-20",
-                            !startDate && "text-white/40",
-                          )}
-                        >
-                          <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                          {startDate ? format(startDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                        <Calendar
-                          mode="single"
-                          selected={startDate}
-                          onSelect={setStartDate}
-                          disabled={(d) => d < new Date()}
-                          className="p-4"
-                          classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <div className="space-y-3">
-                    <Label className="text-xs uppercase tracking-widest text-white/50">Riconsegna</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base relative z-20",
-                            !endDate && "text-white/40",
-                          )}
-                        >
-                          <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                          {endDate ? format(endDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                        <Calendar
-                          mode="single"
-                          selected={endDate}
-                          onSelect={setEndDate}
-                          disabled={(d) => d < (startDate || new Date())}
-                          className="p-4"
-                          classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-
-                {/* Availability status indicator */}
-                {selectedVehicle && startDate && endDate && (
-                  <div className="mt-4">
-                    {checkingAvailability ? (
-                      <div className="flex items-center gap-2 text-white/50 text-sm">
-                        <Loader2 size={14} className="animate-spin" />
-                        Verifica disponibilità...
-                      </div>
-                    ) : availabilityResult && !availabilityResult.available ? (
-                      <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl p-3">
-                        <AlertCircle size={16} />
-                        Veicolo non disponibile per queste date. Prova con date diverse.
-                      </div>
-                    ) : availabilityResult?.available ? (
-                      <div className="flex items-center gap-2 text-green-400 text-sm bg-green-500/10 border border-green-500/20 rounded-xl p-3">
-                        <CheckCircle2 size={16} />
-                        Disponibile! Prezzo confermato dal sistema.
-                      </div>
-                    ) : null}
-                  </div>
-                )}
-              </motion.div>
-
-              {/* STEP 3: DATI PRINCIPALI */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden group"
-              >
-                <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                    3
-                  </span>
-                  Dati Guidatore Principale
-                </h2>
-                {renderDriverFormFields(mainDriver, setMainDriver, "main")}
-              </motion.div>
-
-              {/* STEP 4: SECONDO GUIDATORE */}
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                className={cn(
-                  "bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden transition-all duration-500",
-                  hasSecondDriver ? "ring-1 ring-gold/30" : "",
-                )}
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                  <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-sm border border-white/10 text-gold">
-                      4
-                    </span>
-                    Secondo Guidatore <span className="text-white/40 text-sm font-normal">(Opzionale)</span>
-                  </h2>
+          {/* Step indicator */}
+          <div className="flex items-center gap-2 mt-6">
+            {STEP_LABELS.map((label, i) => {
+              const stepNum = i + 1;
+              const isActive = currentStep === stepNum;
+              const isDone = currentStep > stepNum;
+              return (
+                <div key={label} className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => setHasSecondDriver(!hasSecondDriver)}
+                    onClick={() => isDone && goToStep(stepNum)}
                     className={cn(
-                      "px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all",
-                      hasSecondDriver
-                        ? "bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20"
-                        : "bg-gold text-black shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:bg-yellow-400",
+                      "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all",
+                      isActive
+                        ? "bg-gold text-black"
+                        : isDone
+                        ? "bg-gold/20 text-gold cursor-pointer hover:bg-gold/30"
+                        : "bg-white/5 text-white/30 cursor-default"
                     )}
                   >
-                    {hasSecondDriver ? "Rimuovi" : "+ Aggiungi"}
+                    {isDone ? <Check size={12} /> : <span>{stepNum}</span>}
+                    <span className="hidden sm:inline">{label}</span>
                   </button>
+                  {i < STEP_LABELS.length - 1 && (
+                    <div className={cn("w-6 h-px", isDone ? "bg-gold/40" : "bg-white/10")} />
+                  )}
                 </div>
+              );
+            })}
+          </div>
+        </motion.div>
 
-                {hasSecondDriver && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    className="pt-4 border-t border-white/5 mt-4"
-                  >
-                    {renderDriverFormFields(secondDriver, setSecondDriver, "second")}
-                  </motion.div>
-                )}
-              </motion.div>
-            </div>
+        {/* BACK BUTTON */}
+        {currentStep > 1 && (
+          <motion.button
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            type="button"
+            onClick={() => goToStep(currentStep - 1)}
+            className="flex items-center gap-2 text-white/50 hover:text-gold text-sm mb-6 transition-colors"
+          >
+            <ArrowLeft size={16} /> Indietro
+          </motion.button>
+        )}
 
-            {/* RIGHT COLUMN: WIDGET RIEPILOGO */}
-            <div className="lg:col-span-4" ref={summaryRef}>
-              <div className="lg:sticky lg:top-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* LEFT COLUMN: STEP CONTENT */}
+          <div className="lg:col-span-8">
+            <AnimatePresence mode="wait" custom={direction}>
+              {/* STEP 1: VEICOLO */}
+              {currentStep === 1 && (
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden"
+                  key="step1"
+                  custom={direction}
+                  variants={stepVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
                 >
+                  <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">1</span>
+                    Scegli il Veicolo
+                  </h2>
+                  {vehicles.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {categories.map((cat) => (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => setSelectedCategory(cat)}
+                          className={cn(
+                            "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300",
+                            selectedCategory === cat
+                              ? "bg-gold text-black"
+                              : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white"
+                          )}
+                        >
+                          {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <div className="grid grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
+                    {filteredVehicles.map((v) => {
+                      const isSelected = selectedVehicle?.id === v.id;
+                      return (
+                        <motion.div
+                          key={v.id}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => handleVehicleSelect(v)}
+                          className={cn(
+                            "p-3 rounded-xl md:rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group/card",
+                            isSelected
+                              ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                              : "bg-[#111] border-white/10 hover:border-white/30"
+                          )}
+                        >
+                          <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
+                            <img
+                              src={v.image_url}
+                              alt={`Noleggio ${v.make} ${v.model} Olbia — KS Rent Costa Smeralda`}
+                              className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
+                            {isSelected && (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="absolute top-2 right-2 bg-gold text-black rounded-full p-1"
+                              >
+                                <CheckCircle2 size={14} />
+                              </motion.div>
+                            )}
+                          </div>
+                          <span className="font-bold text-sm sm:text-base leading-tight px-1 group-hover/card:text-gold transition-colors">
+                            {v.make} {v.model}
+                          </span>
+                          <span className="text-xs text-gold/80 font-semibold px-1 mt-1">€{v.daily_rate}/giorno</span>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 2: DATE */}
+              {currentStep === 2 && (
+                <motion.div
+                  key="step2"
+                  custom={direction}
+                  variants={stepVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                >
+                  <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">2</span>
+                    Periodo di Noleggio
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-xs uppercase tracking-widest text-white/50">Ritiro</Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base",
+                              !startDate && "text-white/40"
+                            )}
+                          >
+                            <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
+                            {startDate ? format(startDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
+                          <Calendar
+                            mode="single"
+                            selected={startDate}
+                            onSelect={setStartDate}
+                            disabled={(d) => d < new Date()}
+                            className="p-4 pointer-events-auto"
+                            classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-xs uppercase tracking-widest text-white/50">Riconsegna</Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base",
+                              !endDate && "text-white/40"
+                            )}
+                          >
+                            <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
+                            {endDate ? format(endDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
+                          <Calendar
+                            mode="single"
+                            selected={endDate}
+                            onSelect={setEndDate}
+                            disabled={(d) => d < (startDate || new Date())}
+                            className="p-4 pointer-events-auto"
+                            classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </div>
+
+                  {/* Availability result */}
+                  {startDate && endDate && (
+                    <div className="mt-6 space-y-4">
+                      {!availabilityResult && !checkingAvailability && (
+                        <Button
+                          type="button"
+                          onClick={handleDatesConfirm}
+                          className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                        >
+                          Verifica Disponibilità <ArrowRight size={16} className="ml-2" />
+                        </Button>
+                      )}
+
+                      {checkingAvailability && (
+                        <div className="flex items-center justify-center gap-3 py-6 text-white/50">
+                          <Loader2 size={20} className="animate-spin text-gold" />
+                          <span>Verifica disponibilità in tempo reale...</span>
+                        </div>
+                      )}
+
+                      {availabilityResult && !availabilityResult.available && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="bg-red-500/5 border border-red-500/20 rounded-2xl p-6 text-center space-y-4"
+                        >
+                          <AlertCircle size={32} className="text-red-400 mx-auto" />
+                          <p className="text-white/80">
+                            Questa vettura è già impegnata per queste date, ma abbiamo altre soluzioni per te.
+                          </p>
+                          <div className="flex gap-3 justify-center">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={() => { setAvailabilityResult(null); goToStep(1); }}
+                              className="border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl"
+                            >
+                              <Car size={14} className="mr-2" /> Cambia Auto
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={() => { setAvailabilityResult(null); setStartDate(undefined); setEndDate(undefined); }}
+                              className="border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl"
+                            >
+                              <CalendarIcon size={14} className="mr-2" /> Cambia Date
+                            </Button>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {availabilityResult?.available && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="bg-green-500/5 border border-green-500/20 rounded-2xl p-6 space-y-4"
+                        >
+                          <div className="flex items-center gap-3">
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                              className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center"
+                            >
+                              <CheckCircle2 size={20} className="text-green-400" />
+                            </motion.div>
+                            <div>
+                              <p className="text-green-400 font-bold">Disponibile!</p>
+                              <p className="text-white/50 text-xs">Tariffa calcolata in tempo reale</p>
+                            </div>
+                          </div>
+                          <div className="flex items-end justify-between pt-2 border-t border-white/5">
+                            <div>
+                              <p className="text-white/50 text-xs">Prezzo totale</p>
+                              <p className="text-3xl font-black font-display text-gold">€{total}</p>
+                            </div>
+                            <p className="text-white/40 text-sm">{days} giorn{days !== 1 ? "i" : "o"} × €{dailyRate}/gg</p>
+                          </div>
+                          <Button
+                            type="button"
+                            onClick={() => goToStep(3)}
+                            className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                          >
+                            Continua <ArrowRight size={16} className="ml-2" />
+                          </Button>
+                        </motion.div>
+                      )}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+
+              {/* STEP 3: GUIDATORE PRINCIPALE */}
+              {currentStep === 3 && (
+                <motion.div
+                  key="step3"
+                  custom={direction}
+                  variants={stepVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                >
+                  <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">3</span>
+                    Dati Guidatore Principale
+                  </h2>
+                  {renderDriverFormFields(mainDriver, setMainDriver)}
+
+                  <div className="mt-8">
+                    <Button
+                      type="button"
+                      onClick={() => goToStep(4)}
+                      className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                    >
+                      Continua <ArrowRight size={16} className="ml-2" />
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 4: SECONDO GUIDATORE + CONFERMA */}
+              {currentStep === 4 && (
+                <motion.div
+                  key="step4"
+                  custom={direction}
+                  variants={stepVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="space-y-6"
+                >
+                  {/* Ask about second driver */}
+                  {hasSecondDriver === null && (
+                    <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 text-center space-y-6">
+                      <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto">
+                        <Users size={28} className="text-gold" />
+                      </div>
+                      <h2 className="text-xl md:text-2xl font-display font-bold">Viaggerai con un secondo guidatore?</h2>
+                      <p className="text-white/50 max-w-md mx-auto">
+                        Se prevedi di condividere la guida, aggiungi i dati del secondo guidatore.
+                      </p>
+                      <div className="flex gap-4 justify-center">
+                        <Button
+                          type="button"
+                          onClick={() => setHasSecondDriver(true)}
+                          className="h-14 px-8 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                        >
+                          Sì, Aggiungi
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setHasSecondDriver(false)}
+                          className="h-14 px-8 border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
+                        >
+                          No, Procedi
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Second driver form */}
+                  {hasSecondDriver === true && (
+                    <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10">
+                      <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
+                        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">4</span>
+                        Dati Secondo Guidatore
+                      </h2>
+                      {renderDriverFormFields(secondDriver, setSecondDriver)}
+
+                      <div className="mt-8">
+                        <Button
+                          type="button"
+                          onClick={handleSubmit}
+                          disabled={loading}
+                          className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                        >
+                          {loading ? (
+                            <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
+                          ) : (
+                            <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* No second driver — final summary + confirm */}
+                  {hasSecondDriver === false && (
+                    <div className="bg-[#0a0a0a] border border-gold/20 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 space-y-6">
+                      <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
+                        <CheckCircle2 className="text-gold" size={24} />
+                        Riepilogo Finale
+                      </h2>
+
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="bg-white/5 rounded-xl p-4">
+                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
+                          <p className="font-bold">{selectedVehicle?.make} {selectedVehicle?.model}</p>
+                        </div>
+                        <div className="bg-white/5 rounded-xl p-4">
+                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
+                          <p className="font-bold">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
+                        </div>
+                        <div className="bg-white/5 rounded-xl p-4">
+                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Guidatore</p>
+                          <p className="font-bold">{mainDriver.name} {mainDriver.surname}</p>
+                        </div>
+                        <div className="bg-white/5 rounded-xl p-4">
+                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
+                          <p className="font-bold text-gold text-xl">€{total}</p>
+                        </div>
+                      </div>
+
+                      <Button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                        className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                      >
+                        {loading ? (
+                          <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
+                        ) : (
+                          <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
+                        )}
+                      </Button>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* RIGHT COLUMN: RIEPILOGO STICKY */}
+          <div className="lg:col-span-4" ref={summaryRef}>
+            <div className="lg:sticky lg:top-28">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden"
+              >
                 <div className="p-6 md:p-8 border-b border-white/5 bg-[#111] relative min-h-[140px] flex flex-col justify-end">
                   {selectedVehicle ? (
                     <>
                       <div className="absolute inset-0 z-0 pointer-events-none">
-                        <img
-                          src={selectedVehicle.image_url}
-                          alt="Selected"
-                          className="w-full h-full object-cover opacity-40"
-                        />
+                        <img src={selectedVehicle.image_url} alt="Selected" className="w-full h-full object-cover opacity-40" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent" />
                       </div>
                       <div className="relative z-10">
-                        <span className="text-gold text-xs font-semibold uppercase tracking-wider">
-                          {selectedVehicle.category}
-                        </span>
-                        <h3 className="text-2xl font-display font-bold text-white">
-                          {selectedVehicle.make} {selectedVehicle.model}
-                        </h3>
+                        <span className="text-gold text-xs font-semibold uppercase tracking-wider">{selectedVehicle.category}</span>
+                        <h3 className="text-2xl font-display font-bold text-white">{selectedVehicle.make} {selectedVehicle.model}</h3>
                       </div>
                     </>
                   ) : (
                     <div className="relative z-10 flex flex-col justify-center h-full">
-                      <span className="text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
-                        Riepilogo Live
-                      </span>
+                      <span className="text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">Riepilogo Live</span>
                       <h3 className="text-xl font-display font-bold text-white/30">Nessun veicolo</h3>
                     </div>
                   )}
@@ -808,9 +1081,7 @@ const PrenotaOra = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-white/50 text-sm mb-1">Durata</p>
-                      <p className="text-gold font-bold text-xl">
-                        {days} Giorn{days !== 1 ? "i" : "o"}
-                      </p>
+                      <p className="text-gold font-bold text-xl">{days} Giorn{days !== 1 ? "i" : "o"}</p>
                     </div>
                   </div>
 
@@ -820,9 +1091,16 @@ const PrenotaOra = () => {
                     </div>
                   )}
 
+                  {availabilityResult?.available && (
+                    <div className="flex items-center gap-2 text-xs text-green-400/70 bg-green-500/5 rounded-lg px-3 py-2">
+                      <Zap size={12} /> Tariffa calcolata in tempo reale
+                    </div>
+                  )}
+
                   <div className="space-y-3 py-2">
                     <div className="flex items-center gap-3 text-sm text-white/70">
                       <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
+                      {mainDriver.name && <span className="text-white/40 text-xs ml-auto">{mainDriver.name} {mainDriver.surname}</span>}
                     </div>
                     {hasSecondDriver && (
                       <div className="flex items-center gap-3 text-sm text-white/70">
@@ -836,30 +1114,18 @@ const PrenotaOra = () => {
                     <span className="text-4xl font-black font-display text-gold">€{total}</span>
                   </div>
 
-                  <Button
-                    type="submit"
-                    disabled={loading || !isAvailable || checkingAvailability}
-                    className="w-full h-16 mt-4 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] group text-sm relative z-20 disabled:opacity-40"
-                  >
-                    {loading ? (
-                      <span className="flex items-center gap-2">
-                        <Loader2 size={16} className="animate-spin" /> Caricamento dati...
-                      </span>
-                    ) : !isAvailable ? (
-                      "Non Disponibile"
-                    ) : (
-                      <span className="flex items-center">
-                        Conferma Prenotazione{" "}
-                        <ArrowRight size={18} className="ml-3 group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    )}
-                  </Button>
+                  {/* Step indicator in summary */}
+                  <div className="pt-4 border-t border-white/5">
+                    <div className="flex items-center justify-between text-xs text-white/40">
+                      <span>Step {currentStep} di 4</span>
+                      <span className="text-gold">{STEP_LABELS[currentStep - 1]}</span>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
-              </div>
             </div>
           </div>
-        </form>
+        </div>
 
         {/* MOBILE STICKY BOTTOM BAR */}
         <AnimatePresence>
@@ -877,25 +1143,21 @@ const PrenotaOra = () => {
                   <div className="flex items-baseline gap-2">
                     <span className="text-2xl font-black font-display text-gold">€{total}</span>
                     {days > 0 && (
-                      <span className="text-xs text-white/40">
-                        / {days} giorn{days !== 1 ? "i" : "o"}
-                      </span>
+                      <span className="text-xs text-white/40">/ {days} giorn{days !== 1 ? "i" : "o"}</span>
                     )}
                   </div>
                 </div>
                 <Button
-                  form="booking-form"
-                  type="submit"
-                  disabled={loading || !isAvailable || checkingAvailability}
+                  type="button"
+                  onClick={handleMobileAction}
+                  disabled={loading || (currentStep === 2 && checkingAvailability)}
                   className="h-12 px-6 bg-black text-white border border-gold/40 hover:bg-gold hover:text-black font-bold uppercase tracking-wider rounded-xl transition-all duration-300 text-xs shrink-0"
                 >
                   {loading ? (
                     <Loader2 size={14} className="animate-spin" />
-                  ) : !isAvailable ? (
-                    "N/D"
                   ) : (
                     <span className="flex items-center gap-2">
-                      Conferma <ArrowRight size={14} />
+                      {mobileActionLabel()} <ArrowRight size={14} />
                     </span>
                   )}
                 </Button>
