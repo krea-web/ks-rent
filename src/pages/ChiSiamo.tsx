@@ -9,8 +9,8 @@ const ChiSiamo = () => {
   return (
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
-        title="Chi Siamo — KS Rent | Noleggio Auto Olbia Costa Smeralda"
-        description="Scopri KS Rent S.R.L.: noleggio auto e moto senza carta di credito in Sardegna. Nati dalla passione per la Costa Smeralda, offriamo fiducia totale e zero burocrazia."
+        title="La Nostra Flotta | Noleggio Auto Lusso Porto Cervo - KS Rent"
+        description="Scopri KS Rent: la nostra flotta premium a Olbia e Costa Smeralda. Noleggia auto sportive, SUV e scooter per il tuo hotel o villa senza carta di credito."
         canonical="https://ksrent.it/chisiamo"
         jsonLd={localBusinessJsonLd} />
       
