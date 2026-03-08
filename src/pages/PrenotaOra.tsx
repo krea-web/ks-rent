@@ -563,12 +563,12 @@ const PrenotaOra = () => {
         title={
           selectedVehicle
             ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} a Olbia — KS Rent`
-            : "Prenota Ora — Noleggio Auto Olbia | KS Rent Costa Smeralda"
+            : "Prenota Noleggio Auto Olbia Aeroporto | KS Rent Costa Smeralda"
         }
         description={
           selectedVehicle
             ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} in Costa Smeralda senza carta di credito. Da €${selectedVehicle.daily_rate}/giorno con KS Rent Olbia.`
-            : "Prenota la tua auto o moto in Costa Smeralda senza carta di credito. Noleggio premium con consegna aeroporto Olbia. KS Rent S.R.L."
+            : "Prenota in 2 minuti il tuo veicolo a Olbia. Consegna in aeroporto o hotel. Scegli tra Audi, BMW, Mercedes senza deposito su carta di credito."
         }
         canonical="https://ksrent.it/prenotaora"
         jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
