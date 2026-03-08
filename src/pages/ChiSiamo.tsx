@@ -321,34 +321,42 @@ const ChiSiamo = () => {
       {/* 6. BEST CAR LINK EROICO ALLA PRENOTAZIONE */}
       <Link
         to="/prenotaora"
-        className="relative block w-full h-[60vh] md:h-[80vh] group overflow-hidden cursor-pointer"
+        className="relative block w-full group overflow-hidden cursor-pointer bg-gradient-to-br from-gold via-yellow-500 to-gold"
       >
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.jpg"
-            alt="Noleggia la tua auto"
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
-          />
-          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors duration-700" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent pointer-events-none" />
-        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.25)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-black/5 pointer-events-none" />
 
-        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24 py-16 md:py-24 flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
+          {/* Testo a sinistra */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.8 } }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }}
             viewport={{ once: true }}
-            className="text-center flex flex-col items-center"
+            className="flex-1 text-center lg:text-left"
           >
-            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-8 group-hover:bg-gold group-hover:border-gold group-hover:text-black transition-all duration-500 shadow-2xl">
-              <ArrowRight size={40} className="transform group-hover:translate-x-2 transition-transform duration-500" />
-            </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black text-white mb-4 drop-shadow-lg">
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black text-black mb-4 leading-tight">
               Scegli la tua Auto
             </h2>
-            <p className="text-white/80 uppercase tracking-[0.3em] text-sm md:text-base font-bold">
+            <p className="text-black/70 uppercase tracking-[0.3em] text-sm md:text-base font-bold mb-8">
               Prenota in meno di 2 minuti
             </p>
+            <span className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-black text-gold uppercase tracking-widest text-xs font-bold group-hover:bg-black/80 transition-all duration-300">
+              Scopri la Flotta <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-500" />
+            </span>
+          </motion.div>
+
+          {/* Auto isolata a destra */}
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0, transition: { duration: 0.9, ease: "easeOut", delay: 0.2 } }}
+            viewport={{ once: true }}
+            className="flex-1 flex justify-center lg:justify-end"
+          >
+            <img
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.jpg"
+              alt="BMW M2 — KS Rent Noleggio"
+              className="w-full max-w-lg xl:max-w-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-700 ease-out"
+            />
           </motion.div>
         </div>
       </Link>
