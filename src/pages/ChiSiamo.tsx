@@ -325,7 +325,7 @@ const ChiSiamo = () => {
       >
         <div className="absolute inset-0 z-0">
           <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/AUDI%20RS3%20VERDE1.jpg"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.jpg"
             alt="Noleggia la tua auto"
             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
           />
