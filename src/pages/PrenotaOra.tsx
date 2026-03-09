@@ -711,9 +711,12 @@ const PrenotaOra = () => {
                           )}
                         >
                           <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
-                            <img
+                            <OptimizedImage
                               src={v.image_url}
-                              alt={`Noleggio ${v.make} ${v.model} Olbia — KS Rent Costa Smeralda`}
+                              alt={getVehicleAlt(v.make, v.model)}
+                              width={400}
+                              showSkeleton
+                              skeletonClassName="rounded-none"
                               className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />

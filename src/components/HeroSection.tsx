@@ -20,11 +20,14 @@ const HeroSection = () => (
     <div className="relative z-10 w-full max-w-full px-4 md:px-8 text-center">
       <motion.img
         src={logo}
-        alt="KS Rent"
+        alt="KS Rent — Noleggio Auto Lusso Olbia Costa Smeralda"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}
         className="h-16 sm:h-20 md:h-28 w-auto mx-auto mb-6"
+        fetchPriority="high"
+        loading="eager"
+        decoding="sync"
       />
 
       <motion.p
