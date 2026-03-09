@@ -575,7 +575,7 @@ const PrenotaOra = () => {
             ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} in Costa Smeralda senza carta di credito. Da €${selectedVehicle.daily_rate}/giorno con KS Rent Olbia.`
             : "Prenota in 2 minuti il tuo veicolo a Olbia. Consegna in aeroporto o hotel. Scegli tra Audi, BMW, Mercedes senza deposito su carta di credito."
         }
-        canonical="https://ksrent.it/prenotaora"
+        canonical="https://ksrentsardinia.com/prenotaora"
         jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
       />
 

@@ -113,6 +113,8 @@ const FleetShowcase = () => {
                       src={getImage(v)}
                       alt={getVehicleAlt(v.make, v.model)}
                       width={800}
+                      imgWidth={800}
+                      imgHeight={500}
                       responsive
                       showSkeleton
                       skeletonClassName="rounded-none"

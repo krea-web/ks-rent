@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Map, FileText } from "lucide-react";
-import logo from "@/assets/logo.png";
+const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
 const Footer = () => (
   <footer className="relative bg-[#050505] pt-12 md:pt-24 pb-8 border-t border-white/5 overflow-hidden">
@@ -9,14 +9,14 @@ const Footer = () => (
 
     <div className="container mx-auto px-4 relative z-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-20">
-        {/* Brand Info */}
+   width={120} height={48}      {/* Brand Info */}
         <div className="flex flex-col">
-          <img src={logo} alt="KS Rent Noleggio Auto Lusso Olbia" className="h-12 w-auto mb-4" loading="lazy" />
+ width={120} height={48}          <img src={logo} alt="KS Rent Noleggio Auto Lusso Olbia" className="h-12 w-auto mb-4" loading="lazy" />
           <p className="text-sm text-muted-foreground leading-relaxed mb-6">
             Non noleggiamo solo veicoli, consegniamo la libertà di esplorare la Costa Smeralda senza stress, senza carte
             di credito e senza burocrazia.
           </p>
-          <div className="text-xs text-white/40 space-y-1">
+          <div className="text-xs text-white/80 space-y-1">
             <p className="flex items-center gap-2">
               <FileText size={12} /> P. IVA: 03028900904
             </p>

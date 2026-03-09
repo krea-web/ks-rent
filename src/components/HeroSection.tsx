@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import logo from "@/assets/logo.png";
+
 const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/HERO%20GIUSTA.mp4";
+const LOGO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
 const HeroSection = () => (
   <section className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
@@ -13,14 +14,18 @@ const HeroSection = () => (
       playsInline
       className="absolute inset-0 w-full h-full object-cover"
       src={HERO_VIDEO_URL}
-    />
+    >
+      <track kind="captions" srcLang="it" label="Italiano" />
+    </video>
 
     <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background pointer-events-none" />
 
     <div className="relative z-10 w-full max-w-full px-4 md:px-8 text-center">
       <motion.img
-        src={logo}
+        src={LOGO_URL}
         alt="KS Rent — Noleggio Auto Lusso Olbia Costa Smeralda"
+        width={280}
+        height={112}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}

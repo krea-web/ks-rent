@@ -1,16 +1,31 @@
 /**
- * Ottimizza URL immagini Supabase Storage con trasformazione server-side.
- * Aggiunge width, quality e format=webp per performance ottimali.
+ * Ottimizza URL immagini Supabase Storage con trasformazione server-side (Piano Pro).
+ * Aggiunge width, quality e format=webp. Fallback automatico su errore.
  */
 const SUPABASE_STORAGE_HOST = "zgytnkimjpoosvshfopz.supabase.co";
 
 export const getOptimizedImageUrl = (
   url: string | undefined | null,
-  _width: number = 800,
-  _quality: number = 75
+  width: number = 800,
+  quality: number = 75
 ): string => {
   if (!url) return "";
-  return url;
+  if (!url.includes(SUPABASE_STORAGE_HOST)) return url;
+  if (!url.includes("/storage/v1/object/public/")) return url;
+
+  const renderUrl = url.replace(
+    "/storage/v1/object/public/",
+    "/storage/v1/render/image/public/"
+  );
+  return `${renderUrl}?width=${width}&quality=${quality}&format=webp`;
+};
+
+/**
+ * Restituisce l'URL pubblico originale (senza trasformazioni) come fallback.
+ */
+export const getOriginalImageUrl = (url: string | undefined | null): string => {
+  if (!url) return "";
+  return url.replace("/storage/v1/render/image/public/", "/storage/v1/object/public/").split("?")[0];
 };
 
 /**
