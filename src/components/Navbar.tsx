@@ -114,6 +114,7 @@ const Navbar = () => {
           <button
             className="md:hidden relative z-50 text-white p-2.5 bg-white/5 border border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setOpen(!open)}
+            aria-label={open ? "Chiudi menu" : "Apri menu"}
           >
             {open ? <X size={20} className="text-gold" /> : <Menu size={20} />}
           </button>
