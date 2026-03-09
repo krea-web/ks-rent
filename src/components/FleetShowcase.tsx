@@ -8,20 +8,25 @@ import { getVehicleAlt } from "@/lib/imageUtils";
 
 // Immagini di fallback per modello
 const VEHICLE_IMAGES: Record<string, string> = {
-  "Audi RS3": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI%20RS3%20VERDE.jpg",
-  "Jeep Avenger": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AVENGER.jpg",
-  "BMW M2": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW%20M2.avif",
-  "Fiat Panda": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT%20PANDA.jpg",
-  "Honda SH 125": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Honda%20SH.png",
-  "Yamaha Quad": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/YAMAHA%20QUAD.jpg",
+  "Audi RS3":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3verde.webp",
+  "Jeep Avenger":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepavenger.webp",
+  "BMW M2": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2.webp",
+  "Fiat Panda":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpanda.webp",
+  "Honda SH 125":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/HONDA/ksrent-hondash125.webp",
+  "Yamaha Quad":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/YAMAHA/ksrent-quadyamaharaptor.webp",
 };
 
 const CATEGORY_ICONS: Record<string, any> = {
   "Supercar/Premium": Zap,
   "SUV Premium": Settings2,
   "City Car": Fuel,
-  "Scooter": Zap,
-  "Quad": Settings2,
+  Scooter: Zap,
+  Quad: Settings2,
 };
 
 const getIcon = (cat: string) => CATEGORY_ICONS[cat] || Zap;
@@ -31,18 +36,17 @@ const FleetShowcase = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data, error } = await supabase
-        .from("vehicles")
-        .select("*")
-        .eq("available", true)
-        .order("category");
+      const { data, error } = await supabase.from("vehicles").select("*").eq("available", true).order("category");
       if (data) setFleet(data);
       if (error) console.error("Errore recupero flotta:", error);
     };
     fetch();
   }, []);
 
-  const getImage = (v: any) => v.image_url || VEHICLE_IMAGES[v.model] || "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80";
+  const getImage = (v: any) =>
+    v.image_url ||
+    VEHICLE_IMAGES[v.model] ||
+    "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80";
 
   return (
     <section className="py-16 md:py-32 bg-background relative overflow-hidden">
@@ -79,8 +83,8 @@ const FleetShowcase = () => {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-lg"
           >
-            Dalle city car perfette per le vie di Olbia alle supercar più esclusive. Ogni veicolo KS Rent è preparato per
-            offrirti un'esperienza impeccabile.
+            Dalle city car perfette per le vie di Olbia alle supercar più esclusive. Ogni veicolo KS Rent è preparato
+            per offrirti un'esperienza impeccabile.
           </motion.p>
         </div>
 
