@@ -11,7 +11,7 @@ const Footer = () => (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-20">
         {/* Brand Info */}
         <div className="flex flex-col">
-          <img src={logo} alt="KS Rent" className="h-12 w-auto mb-4" />
+          <img src={logo} alt="KS Rent Noleggio Auto Lusso Olbia" className="h-12 w-auto mb-4" loading="lazy" />
           <p className="text-sm text-muted-foreground leading-relaxed mb-6">
             Non noleggiamo solo veicoli, consegniamo la libertà di esplorare la Costa Smeralda senza stress, senza carte
             di credito e senza burocrazia.
