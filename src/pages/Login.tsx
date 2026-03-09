@@ -32,7 +32,7 @@ const Login = () => {
         <div className="text-center">
           {/* Logo sostituito con URL Supabase, aggiunti width e height per Lighthouse CLS Fix */}
           <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/logo.png"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png"
             alt="KS Rent"
             width="250"
             height="50"
