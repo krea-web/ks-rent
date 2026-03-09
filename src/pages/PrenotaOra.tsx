@@ -774,14 +774,16 @@ const PrenotaOra = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                          <Calendar
-                            mode="single"
-                            selected={startDate}
-                            onSelect={setStartDate}
-                            disabled={(d) => d < new Date()}
-                            className="p-4 pointer-events-auto"
-                            classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
-                          />
+                          <Suspense fallback={<div className="p-4"><Skeleton className="w-[280px] h-[280px]" /></div>}>
+                            <Calendar
+                              mode="single"
+                              selected={startDate}
+                              onSelect={setStartDate}
+                              disabled={(d) => d < new Date()}
+                              className="p-4 pointer-events-auto"
+                              classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                            />
+                          </Suspense>
                         </PopoverContent>
                       </Popover>
                     </div>
