@@ -1180,12 +1180,14 @@ const PrenotaOra = () => {
       </div>
 
       {/* SIGNATURE MODAL */}
-      <SignatureModal
-        open={signatureOpen}
-        bookingId={bookingId}
-        onClose={() => setSignatureOpen(false)}
-        onSuccess={handleSignatureSuccess}
-      />
+      <Suspense fallback={null}>
+        <SignatureModal
+          open={signatureOpen}
+          bookingId={bookingId}
+          onClose={() => setSignatureOpen(false)}
+          onSuccess={handleSignatureSuccess}
+        />
+      </Suspense>
     </div>
   );
 };
