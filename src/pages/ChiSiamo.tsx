@@ -360,7 +360,8 @@ const ChiSiamo = () => {
             
             <img
               src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.jpg"
-              alt="BMW M2 — KS Rent Noleggio"
+              alt="BMW M2 noleggio premium Olbia — KS Rent"
+              loading="lazy"
               className="w-full max-w-lg xl:max-w-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-700 ease-out" />
             
           </motion.div>
