@@ -131,7 +131,7 @@ const FAQSection = () => {
 
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI%20RS3%20VERDE1.jpg"
+            src=
             alt="Costa Smeralda"
             className="w-full h-full object-cover opacity-30"
           />
