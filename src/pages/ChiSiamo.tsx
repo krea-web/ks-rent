@@ -267,7 +267,8 @@ const ChiSiamo = () => {
               
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/AUDI%20RS3%20VERDE.jpg"
-                alt="Dettaglio Auto"
+                alt="Audi RS3 verde noleggio Costa Smeralda KS Rent"
+                loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
               
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm pointer-events-none">
