@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import logo from "@/assets/logo.png";
+// RIMOSSA: import logo from "@/assets/logo.png"; -> Causa del crash
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +30,15 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-[#050505] px-4">
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
-          <img src={logo} alt="KS Rent" className="h-14 mx-auto mb-6" />
+          {/* Logo sostituito con URL Supabase, aggiunti width e height per Lighthouse CLS Fix */}
+          <img
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/logo.png"
+            alt="KS Rent"
+            width="250"
+            height="50"
+            className="h-14 w-auto mx-auto mb-6 object-contain"
+            fetchpriority="high"
+          />
           <p className="text-gold/60 text-xs uppercase tracking-[0.3em]">Area Riservata</p>
         </div>
 
