@@ -152,8 +152,9 @@ const ChiSiamo = () => {
               <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-white/5">
                 <img
                   src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80"
-                  alt="Strada Sarda"
-                  className="w-full h-full object-cover" />
+                  alt="Strada panoramica Sardegna noleggio auto KS Rent"
+                  className="w-full h-full object-cover"
+                  loading="lazy" />
                 
               </div>
               <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-8 w-36 h-36 md:w-48 md:h-48 bg-[#0a0a0a] border border-white/10 rounded-3xl flex items-center justify-center p-4 md:p-6 hidden md:flex shadow-2xl">
