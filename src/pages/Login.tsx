@@ -37,7 +37,7 @@ const Login = () => {
             width="250"
             height="50"
             className="h-14 w-auto mx-auto mb-6 object-contain"
-            fetchpriority="high"
+            fetchPriority="high"
           />
           <p className="text-gold/60 text-xs uppercase tracking-[0.3em]">Area Riservata</p>
         </div>
