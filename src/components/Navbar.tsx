@@ -43,7 +43,7 @@ const Navbar = () => {
       >
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
           <Link to="/" className="flex items-center group relative z-50">
-            width={120} height={48} className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" loading="eager" fetchPriority="highw-auto transition-transform group-hover:scale-105" loading="eager" />
+            <img src={logo} alt="KS Rent Noleggio Auto Olbia Costa Smeralda" width={120} height={48} className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" loading="eager" fetchPriority="high" />
           </Link>
 
           {/* INLINE BREADCRUMB (SEO + GEO) */}

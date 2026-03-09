@@ -16,7 +16,7 @@ const Footer = () => (
             Non noleggiamo solo veicoli, consegniamo la libertà di esplorare la Costa Smeralda senza stress, senza carte
             di credito e senza burocrazia.
           </p>
-          <div className="text-xs text-white/40 space-y-1">
+          <div className="text-xs text-white/80 space-y-1">
             <p className="flex items-center gap-2">
               <FileText size={12} /> P. IVA: 03028900904
             </p>
