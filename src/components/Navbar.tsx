@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ArrowRight, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
+const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -43,7 +43,7 @@ const Navbar = () => {
       >
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
           <Link to="/" className="flex items-center group relative z-50">
-            <img src={logo} alt="KS Rent Noleggio Auto Olbia Costa Smeralda" className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" loading="eager" />
+            width={120} height={48} className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" loading="eager" fetchPriority="highw-auto transition-transform group-hover:scale-105" loading="eager" />
           </Link>
 
           {/* INLINE BREADCRUMB (SEO + GEO) */}
