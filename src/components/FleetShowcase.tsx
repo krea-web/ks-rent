@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Users, Settings2, Zap, Fuel } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import OptimizedImage from "@/components/OptimizedImage";
+import { getVehicleAlt } from "@/lib/imageUtils";
 
 // Immagini di fallback per modello
 const VEHICLE_IMAGES: Record<string, string> = {
@@ -103,9 +105,13 @@ const FleetShowcase = () => {
                         {v.category}
                       </span>
                     </div>
-                    <img
+                    <OptimizedImage
                       src={getImage(v)}
-                      alt={v.model}
+                      alt={getVehicleAlt(v.make, v.model)}
+                      width={800}
+                      responsive
+                      showSkeleton
+                      skeletonClassName="rounded-none"
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700 ease-in-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80 pointer-events-none" />

@@ -19,8 +19,10 @@ const ChiSiamo = () => {
         <div className="absolute inset-0 z-0">
           <img
             src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/AUDI%20RS3%20VERDE1.jpg"
-            alt="Supercar posteriore"
-            className="w-full h-full object-cover opacity-40" />
+            alt="Supercar Audi RS3 noleggio Costa Smeralda - KS Rent"
+            className="w-full h-full object-cover opacity-40"
+            loading="eager"
+            fetchPriority="high" />
           
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
         </div>
@@ -150,8 +152,9 @@ const ChiSiamo = () => {
               <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-white/5">
                 <img
                   src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80"
-                  alt="Strada Sarda"
-                  className="w-full h-full object-cover" />
+                  alt="Strada panoramica Sardegna noleggio auto KS Rent"
+                  className="w-full h-full object-cover"
+                  loading="lazy" />
                 
               </div>
               <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-8 w-36 h-36 md:w-48 md:h-48 bg-[#0a0a0a] border border-white/10 rounded-3xl flex items-center justify-center p-4 md:p-6 hidden md:flex shadow-2xl">
@@ -243,7 +246,8 @@ const ChiSiamo = () => {
               
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3grigia.jpg"
-                alt="KS Rent Supercar"
+                alt="KS Rent Audi RS3 noleggio supercar Olbia"
+                loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
               
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 md:p-10 pointer-events-none">
@@ -263,7 +267,8 @@ const ChiSiamo = () => {
               
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/AUDI%20RS3%20VERDE.jpg"
-                alt="Dettaglio Auto"
+                alt="Audi RS3 verde noleggio Costa Smeralda KS Rent"
+                loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
               
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm pointer-events-none">
@@ -282,7 +287,8 @@ const ChiSiamo = () => {
               
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/BMW%20M2%201.jpg"
-                alt="Panorama Sardegna"
+                alt="BMW M2 noleggio Olbia Sardegna KS Rent"
+                loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
               
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm pointer-events-none">
@@ -354,7 +360,8 @@ const ChiSiamo = () => {
             
             <img
               src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.jpg"
-              alt="BMW M2 — KS Rent Noleggio"
+              alt="BMW M2 noleggio premium Olbia — KS Rent"
+              loading="lazy"
               className="w-full max-w-lg xl:max-w-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-700 ease-out" />
             
           </motion.div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   CalendarIcon,
@@ -27,15 +27,20 @@ import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
-import SignatureModal from "@/components/SignatureModal";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
+import OptimizedImage from "@/components/OptimizedImage";
+import { getVehicleAlt } from "@/lib/imageUtils";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Code splitting: lazy load heavy components
+const Calendar = lazy(() => import("@/components/ui/calendar").then(m => ({ default: m.Calendar })));
+const SignatureModal = lazy(() => import("@/components/SignatureModal"));
 
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
 
@@ -706,9 +711,12 @@ const PrenotaOra = () => {
                           )}
                         >
                           <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
-                            <img
+                            <OptimizedImage
                               src={v.image_url}
-                              alt={`Noleggio ${v.make} ${v.model} Olbia — KS Rent Costa Smeralda`}
+                              alt={getVehicleAlt(v.make, v.model)}
+                              width={400}
+                              showSkeleton
+                              skeletonClassName="rounded-none"
                               className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
@@ -766,14 +774,16 @@ const PrenotaOra = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                          <Calendar
-                            mode="single"
-                            selected={startDate}
-                            onSelect={setStartDate}
-                            disabled={(d) => d < new Date()}
-                            className="p-4 pointer-events-auto"
-                            classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
-                          />
+                          <Suspense fallback={<div className="p-4"><Skeleton className="w-[280px] h-[280px]" /></div>}>
+                            <Calendar
+                              mode="single"
+                              selected={startDate}
+                              onSelect={setStartDate}
+                              disabled={(d) => d < new Date()}
+                              className="p-4 pointer-events-auto"
+                              classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                            />
+                          </Suspense>
                         </PopoverContent>
                       </Popover>
                     </div>
@@ -793,14 +803,16 @@ const PrenotaOra = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                          <Calendar
-                            mode="single"
-                            selected={endDate}
-                            onSelect={setEndDate}
-                            disabled={(d) => d < (startDate || new Date())}
-                            className="p-4 pointer-events-auto"
-                            classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
-                          />
+                          <Suspense fallback={<div className="p-4"><Skeleton className="w-[280px] h-[280px]" /></div>}>
+                            <Calendar
+                              mode="single"
+                              selected={endDate}
+                              onSelect={setEndDate}
+                              disabled={(d) => d < (startDate || new Date())}
+                              className="p-4 pointer-events-auto"
+                              classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                            />
+                          </Suspense>
                         </PopoverContent>
                       </Popover>
                     </div>
@@ -1168,12 +1180,14 @@ const PrenotaOra = () => {
       </div>
 
       {/* SIGNATURE MODAL */}
-      <SignatureModal
-        open={signatureOpen}
-        bookingId={bookingId}
-        onClose={() => setSignatureOpen(false)}
-        onSuccess={handleSignatureSuccess}
-      />
+      <Suspense fallback={null}>
+        <SignatureModal
+          open={signatureOpen}
+          bookingId={bookingId}
+          onClose={() => setSignatureOpen(false)}
+          onSuccess={handleSignatureSuccess}
+        />
+      </Suspense>
     </div>
   );
 };

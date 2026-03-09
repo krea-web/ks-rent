@@ -43,7 +43,7 @@ const Navbar = () => {
       >
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
           <Link to="/" className="flex items-center group relative z-50">
-            <img src={logo} alt="KS Rent" className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" />
+            <img src={logo} alt="KS Rent Noleggio Auto Olbia Costa Smeralda" className="h-8 sm:h-10 md:h-12 w-auto transition-transform group-hover:scale-105" loading="eager" />
           </Link>
 
           {/* INLINE BREADCRUMB (SEO + GEO) */}

@@ -83,7 +83,8 @@ const TrustMarquee = () => {
             <div key={`brand-${i}`} className="flex items-center justify-center w-28 h-14 cursor-pointer">
               <img
                 src={brand.logo}
-                alt={`${brand.name} logo`}
+                alt={`${brand.name} noleggio auto Olbia KS Rent`}
+                loading="lazy"
                 className="max-w-full max-h-full object-contain opacity-90 hover:opacity-100 hover:scale-110 transition-all duration-300 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)]"
               />
             </div>
