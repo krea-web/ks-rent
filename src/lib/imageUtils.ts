@@ -6,25 +6,11 @@ const SUPABASE_STORAGE_HOST = "zgytnkimjpoosvshfopz.supabase.co";
 
 export const getOptimizedImageUrl = (
   url: string | undefined | null,
-  width: number = 800,
-  quality: number = 75
+  _width: number = 800,
+  _quality: number = 75
 ): string => {
   if (!url) return "";
-
-  // Solo per immagini Supabase Storage
-  if (!url.includes(SUPABASE_STORAGE_HOST)) return url;
-
-  // Evita doppia trasformazione
-  if (url.includes("/render/image")) return url;
-
-  // Converti URL object/public in render/image con trasformazioni
-  const renderUrl = url.replace(
-    "/storage/v1/object/public/",
-    "/storage/v1/render/image/public/"
-  );
-
-  const separator = renderUrl.includes("?") ? "&" : "?";
-  return `${renderUrl}${separator}width=${width}&quality=${quality}&format=webp`;
+  return url;
 };
 
 /**
