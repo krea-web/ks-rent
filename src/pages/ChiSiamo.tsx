@@ -19,8 +19,10 @@ const ChiSiamo = () => {
         <div className="absolute inset-0 z-0">
           <img
             src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/AUDI%20RS3%20VERDE1.jpg"
-            alt="Supercar posteriore"
-            className="w-full h-full object-cover opacity-40" />
+            alt="Supercar Audi RS3 noleggio Costa Smeralda - KS Rent"
+            className="w-full h-full object-cover opacity-40"
+            loading="eager"
+            fetchPriority="high" />
           
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
         </div>
