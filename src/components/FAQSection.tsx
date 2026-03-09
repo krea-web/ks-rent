@@ -5,14 +5,49 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { MessageSquare, Star, ShieldCheck, ArrowRight } from "lucide-react";
 
 const faqs = [
-  { q: "Serve la carta di credito per noleggiare?", a: "Assolutamente no. Questo è il nostro punto di forza. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Vogliamo renderti il noleggio più semplice possibile.", isHighlighted: true, icon: Star },
-  { q: "Fate controlli o richiedete uno Score Bancario?", a: "Nessuno Score Bancario e nessuna burocrazia infinita. Il nostro servizio si basa sulla fiducia e sulla trasparenza verso il cliente.", isHighlighted: true, icon: ShieldCheck },
-  { q: "Ci sono depositi cauzionali nascosti?", a: "No, le nostre condizioni sono chiare fin dal primo momento. Nessuna sorpresa o trattenuta ingiustificata a fine noleggio.", isHighlighted: true, icon: Star },
-  { q: "Dove posso ritirare il veicolo?", a: "Abbiamo due sedi strategiche a Olbia: la Sede Legale in Viale Aldo Moro 367 e la Sede Operativa in Viale Isola Bianca 38, perfette per chi arriva dal porto o dall'aeroporto. Operiamo in tutta la Costa Smeralda.", isHighlighted: false },
-  { q: "Quali documenti mi servono al momento del ritiro?", a: "Ti basterà presentare una Patente di guida valida, il tuo Codice Fiscale e un documento d'identità in corso di validità (Carta d'Identità o Passaporto).", isHighlighted: false },
-  { q: "È previsto il chilometraggio illimitato?", a: "I pacchetti chilometrici variano in base alla categoria del veicolo (City Car, Premium, Scooter o Quad). Contattaci per trovare la soluzione perfetta per il tuo itinerario in Sardegna.", isHighlighted: false },
-  { q: "Cosa succede in caso di guasto o incidente?", a: "Niente panico. Offriamo un'assistenza attiva 24 ore su 24, 7 giorni su 7. Ti basterà chiamare il nostro numero dedicato per ricevere supporto immediato.", isHighlighted: false },
-  { q: "Posso cancellare o modificare la mia prenotazione?", a: "Sì, offriamo opzioni di cancellazione flessibili. Contatta il nostro team su WhatsApp per gestire o modificare le date della tua prenotazione.", isHighlighted: false },
+  {
+    q: "Serve la carta di credito per noleggiare?",
+    a: "Assolutamente no. Questo è il nostro punto di forza. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Vogliamo renderti il noleggio più semplice possibile.",
+    isHighlighted: true,
+    icon: Star,
+  },
+  {
+    q: "Fate controlli o richiedete uno Score Bancario?",
+    a: "Nessuno Score Bancario e nessuna burocrazia infinita. Il nostro servizio si basa sulla fiducia e sulla trasparenza verso il cliente.",
+    isHighlighted: true,
+    icon: ShieldCheck,
+  },
+  {
+    q: "Ci sono depositi cauzionali nascosti?",
+    a: "No, le nostre condizioni sono chiare fin dal primo momento. Nessuna sorpresa o trattenuta ingiustificata a fine noleggio.",
+    isHighlighted: true,
+    icon: Star,
+  },
+  {
+    q: "Dove posso ritirare il veicolo?",
+    a: "Abbiamo due sedi strategiche a Olbia: la Sede Legale in Viale Aldo Moro 367 e la Sede Operativa in Viale Isola Bianca 38, perfette per chi arriva dal porto o dall'aeroporto. Operiamo in tutta la Costa Smeralda.",
+    isHighlighted: false,
+  },
+  {
+    q: "Quali documenti mi servono al momento del ritiro?",
+    a: "Ti basterà presentare una Patente di guida valida, il tuo Codice Fiscale e un documento d'identità in corso di validità (Carta d'Identità o Passaporto).",
+    isHighlighted: false,
+  },
+  {
+    q: "È previsto il chilometraggio illimitato?",
+    a: "I pacchetti chilometrici variano in base alla categoria del veicolo (City Car, Premium, Scooter o Quad). Contattaci per trovare la soluzione perfetta per il tuo itinerario in Sardegna.",
+    isHighlighted: false,
+  },
+  {
+    q: "Cosa succede in caso di guasto o incidente?",
+    a: "Niente panico. Offriamo un'assistenza attiva 24 ore su 24, 7 giorni su 7. Ti basterà chiamare il nostro numero dedicato per ricevere supporto immediato.",
+    isHighlighted: false,
+  },
+  {
+    q: "Posso cancellare o modificare la mia prenotazione?",
+    a: "Sì, offriamo opzioni di cancellazione flessibili. Contatta il nostro team su WhatsApp per gestire o modificare le date della tua prenotazione.",
+    isHighlighted: false,
+  },
 ];
 
 const FAQSection = () => {
@@ -43,29 +78,44 @@ const FAQSection = () => {
               <MessageSquare className="text-gold w-6 h-6" />
             </motion.div>
 
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4"
+            >
               Trasparenza Totale
             </motion.p>
 
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-display font-black mb-6 text-white leading-tight">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl sm:text-4xl md:text-5xl font-display font-black mb-6 text-white leading-tight"
+            >
               Domande{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">Frequenti</span>
             </motion.h2>
 
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-              className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-              Abbiamo eliminato la burocrazia inutile. Leggi come abbiamo reso il noleggio in Sardegna rapido, sicuro e senza stress.
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
+            >
+              Abbiamo eliminato la burocrazia inutile. Leggi come abbiamo reso il noleggio in Sardegna rapido, sicuro e
+              senza stress.
             </motion.p>
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            itemScope 
+            itemScope
             itemType="https://schema.org/FAQPage"
           >
             <Accordion type="single" collapsible className="space-y-3 md:space-y-4">
@@ -73,7 +123,7 @@ const FAQSection = () => {
                 const isGold = f.isHighlighted;
                 return (
                   <AccordionItem
-                    key={i} 
+                    key={i}
                     value={`faq-${i}`}
                     itemScope
                     itemProp="mainEntity"
@@ -84,14 +134,16 @@ const FAQSection = () => {
                         : "bg-white/5 border-white/10 hover:border-white/20"
                     }`}
                   >
-                    <AccordionTrigger className={`text-left py-4 md:py-6 hover:no-underline group ${isGold ? "text-gold" : "text-white"}`}>
+                    <AccordionTrigger
+                      className={`text-left py-4 md:py-6 hover:no-underline group ${isGold ? "text-gold" : "text-white"}`}
+                    >
                       <div className="flex items-center gap-3 md:gap-4">
                         {isGold && f.icon && (
                           <span className="flex-shrink-0 p-1.5 md:p-2 bg-gold/20 rounded-lg">
                             <f.icon className="w-4 h-4 md:w-5 md:h-5 text-gold" />
                           </span>
                         )}
-                        <span 
+                        <span
                           itemProp="name"
                           className={`text-sm sm:text-base md:text-lg font-bold tracking-wide ${isGold ? "" : "group-hover:text-gold transition-colors"}`}
                         >
@@ -99,7 +151,7 @@ const FAQSection = () => {
                         </span>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent 
+                    <AccordionContent
                       itemScope
                       itemProp="acceptedAnswer"
                       itemType="https://schema.org/Answer"
@@ -130,11 +182,7 @@ const FAQSection = () => {
         `}</style>
 
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <img
-            src=
-            alt="Costa Smeralda"
-            className="w-full h-full object-cover opacity-30"
-          />
+          <img alt="Costa Smeralda" className="w-full h-full object-cover opacity-30" />
         </div>
 
         {/* Rolling text */}
@@ -153,7 +201,10 @@ const FAQSection = () => {
 
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
             <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-gold text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold mb-4 md:mb-6 backdrop-blur-md">
@@ -161,7 +212,9 @@ const FAQSection = () => {
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black mb-5 md:mb-6 leading-tight text-white drop-shadow-xl break-words">
               Non noleggiamo solo auto. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">Consegniamo Libertà.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">
+                Consegniamo Libertà.
+              </span>
             </h2>
             <p className="text-white/80 text-base md:text-xl mb-8 md:mb-10 max-w-lg leading-relaxed drop-shadow-md">
               Scopri la filosofia di KS Rent S.R.L. e perché siamo diventati il punto di riferimento per il noleggio
