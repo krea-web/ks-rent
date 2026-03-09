@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Map, FileText } from "lucide-react";
-import logo from "@/assets/logo.png";
+const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
 const Footer = () => (
   <footer className="relative bg-[#050505] pt-12 md:pt-24 pb-8 border-t border-white/5 overflow-hidden">
