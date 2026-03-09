@@ -9,10 +9,17 @@ const Footer = () => (
 
     <div className="container mx-auto px-4 relative z-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-20">
-        width={120} height={48} {/* Brand Info */}
+        {/* Brand Info */}
         <div className="flex flex-col">
-          width={120} height={48}{" "}
-          <img src={logo} alt="KS Rent Noleggio Auto Lusso Olbia" className="h-12 w-auto mb-4" loading="lazy" />
+          {/* Tag Immagine Corretto con width e height ALL'INTERNO del tag */}
+          <img
+            src={logo}
+            alt="KS Rent Noleggio Auto Lusso Olbia"
+            width={120}
+            height={48}
+            className="h-12 w-auto mb-4 object-contain"
+            loading="lazy"
+          />
           <p className="text-sm text-muted-foreground leading-relaxed mb-6">
             Non noleggiamo solo veicoli, consegniamo la libertà di esplorare la Costa Smeralda senza stress, senza carte
             di credito e senza burocrazia.
@@ -26,11 +33,13 @@ const Footer = () => (
             </p>
           </div>
         </div>
+
         {/* Link Rapidi */}
         <div>
-          <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6 flex items-center gap-2">
+          {/* Cambiato da h4 a h3 per risolvere il problema di accessibilità (Lighthouse) */}
+          <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-6 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-gold"></span> Navigazione
-          </h4>
+          </h3>
           <div className="flex flex-col gap-4">
             <Link
               to="/"
@@ -58,11 +67,13 @@ const Footer = () => (
             </Link>
           </div>
         </div>
+
         {/* Sedi */}
         <div>
-          <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6 flex items-center gap-2">
+          {/* Cambiato da h4 a h3 */}
+          <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-6 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-gold"></span> Le Nostre Sedi
-          </h4>
+          </h3>
           <div className="flex flex-col gap-5 text-sm text-muted-foreground">
             <div className="flex items-start gap-3">
               <MapPin size={18} className="text-gold shrink-0 mt-0.5" />
@@ -84,11 +95,13 @@ const Footer = () => (
             </div>
           </div>
         </div>
+
         {/* Contatti */}
         <div>
-          <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6 flex items-center gap-2">
+          {/* Cambiato da h4 a h3 */}
+          <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-6 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-gold"></span> Contatti
-          </h4>
+          </h3>
           <div className="flex flex-col gap-4 text-sm text-muted-foreground">
             <a
               href="tel:+393446107071"
