@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   CalendarIcon,
@@ -27,15 +27,20 @@ import { format, differenceInDays } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
-import SignatureModal from "@/components/SignatureModal";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
+import OptimizedImage from "@/components/OptimizedImage";
+import { getVehicleAlt } from "@/lib/imageUtils";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Code splitting: lazy load heavy components
+const Calendar = lazy(() => import("@/components/ui/calendar").then(m => ({ default: m.Calendar })));
+const SignatureModal = lazy(() => import("@/components/SignatureModal"));
 
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
 
