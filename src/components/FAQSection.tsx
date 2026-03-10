@@ -115,8 +115,6 @@ const FAQSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            itemScope
-            itemType="https://schema.org/FAQPage"
           >
             <Accordion type="single" collapsible className="space-y-3 md:space-y-4">
               {shuffledFaqs.map((f, i) => {
