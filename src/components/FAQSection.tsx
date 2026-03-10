@@ -140,7 +140,7 @@ const FAQSection = () => {
                           </span>
                         )}
                         <span
-                          itemProp="name"
+                          className
                           className={`text-sm sm:text-base md:text-lg font-bold tracking-wide ${isGold ? "" : "group-hover:text-gold transition-colors"}`}
                         >
                           {f.q}
