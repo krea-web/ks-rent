@@ -5,11 +5,25 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
-import { Skeleton } from "@/components/ui/skeleton";
+
+const FAVICON_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp";
+
+const GlobalLoader = () => (
+  <div className="min-h-screen bg-black flex items-center justify-center">
+    <motion.img
+      src={FAVICON_URL}
+      alt="Caricamento KS Rent..."
+      className="w-14 h-14 object-contain"
+      animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.1, 0.9] }}
+      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+    />
+  </div>
+);
 
 // Eager: homepage
 import Index from "./pages/Index";
