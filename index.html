@@ -9,7 +9,6 @@
       type="image/svg+xml"
     />
 
-    <!-- Critical CSS: above-the-fold Hero + Navbar + layout -->
     <style>
       *,*::before,*::after{box-sizing:border-box}
       body{margin:0;background:#000;color:#fff;font-family:'Montserrat',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -22,36 +21,56 @@
       @media(min-width:768px){nav{padding:1.5rem 2rem}nav img{height:3rem}.hero-cr{min-height:100vh}}
     </style>
 
-    <!-- Preconnect hints -->
     <link rel="preconnect" href="https://zgytnkimjpoosvshfopz.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Preload LCP logo -->
-    <link rel="preload" as="image" href="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png" fetchpriority="high" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png"
+      fetchpriority="high"
+    />
 
-    <!-- Non-blocking font loading -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" /></noscript>
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap"
+    /></noscript>
 
-    <title>KS Rent | Noleggio Auto Lusso Olbia Aeroporto e Costa Smeralda</title>
+    <title>KS Rent | Noleggio Auto Lusso e Rent a Car Olbia Costa Smeralda</title>
     <meta
       name="description"
-      content="Noleggio auto premium, SUV e supercar in Costa Smeralda. Consegna VIP in Aeroporto a Olbia, Porto Cervo e Hotel. Nessun blocco su carta di credito. Prenota KS Rent."
+      content="Servizio premium di noleggio auto (rent a car), SUV e supercar. Sedi a Olbia con consegna in tutta la Gallura: Costa Smeralda, San Teodoro, Palau e aeroporto."
     />
     <meta
       name="keywords"
-      content="noleggio auto olbia aeroporto, rent a car costa smeralda, noleggio auto lusso porto cervo, noleggio senza carta di credito sardegna, ks rent olbia, noleggio supercar sardegna, autonoleggio olbia porto"
+      content="rent a car olbia, noleggio auto lusso costa smeralda, car rental san teodoro, autonoleggio porto san paolo, noleggio auto santa teresa gallura, luxury rent baja sardinia, noleggio supercar palau, rent auto puntaldia, ks rent sardinia"
     />
     <meta name="author" content="KS Rent S.R.L." />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://ksrentsardinia.com" />
 
-    <meta property="og:title" content="KS Rent — Noleggio Auto Lusso Olbia e Costa Smeralda" />
+    <meta name="geo.region" content="IT-SS" />
+    <meta name="geo.placename" content="Olbia" />
+    <meta name="geo.position" content="40.9230;9.4980" />
+    <meta name="ICBM" content="40.9230, 9.4980" />
+
+    <meta property="og:title" content="KS Rent — Luxury Rent a Car & Noleggio Olbia" />
     <meta
       property="og:description"
-      content="Noleggio premium senza blocco su carta di credito. Consegna diretta in Aeroporto Olbia, Porto Cervo e ville private."
+      content="Noleggio auto premium con tutela e sicurezza. Consegna in tutta la Gallura, da San Teodoro a Santa Teresa."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ksrentsardinia.com" />
@@ -65,10 +84,10 @@
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="KS Rent — Luxury Car Rental Olbia" />
+    <meta name="twitter:title" content="KS Rent — Luxury Car Rental Costa Smeralda" />
     <meta
       name="twitter:description"
-      content="Il noleggio auto che ridefinisce la libertà in Sardegna. Premium fleet, zero burocrazia."
+      content="Esplora la Sardegna con la nostra flotta premium. Rent a car da Olbia a Palau."
     />
     <meta
       name="twitter:image"
@@ -78,55 +97,53 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": ["AutoRental", "LocalBusiness"],
-        "name": "KS Rent",
+        "@type": "AutoRental",
+        "name": "KS Rent S.R.L.",
         "url": "https://ksrentsardinia.com",
         "logo": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
         "image": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-        "description": "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna VIP in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
-        "telephone": "+393446107071",
+        "description": "Noleggio auto di lusso, supercar, SUV e noleggio scooter (car rental and scooter rent). Consegna VIP e assistenza dedicata in tutto il nord Sardegna.",
+        "telephone": "+39 344 610 7071",
         "email": "ksrentsrl@gmail.com",
-        "currenciesAccepted": "EUR",
-        "paymentAccepted": "Cash, Credit Card, Debit Card, Bonifico",
         "priceRange": "€€€",
-        "address": [
+        "location": [
           {
-            "@type": "PostalAddress",
-            "streetAddress": "Viale Isola Bianca 38",
-            "addressLocality": "Olbia",
-            "postalCode": "07026",
-            "addressRegion": "SS",
-            "addressCountry": "IT"
+            "@type": "Place",
+            "name": "Sede Operativa KS Rent",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Viale Isola Bianca 38",
+              "addressLocality": "Olbia",
+              "postalCode": "07026",
+              "addressRegion": "SS",
+              "addressCountry": "IT"
+            }
           },
           {
-            "@type": "PostalAddress",
-            "streetAddress": "Viale Aldo Moro 367",
-            "addressLocality": "Olbia",
-            "postalCode": "07026",
-            "addressRegion": "SS",
-            "addressCountry": "IT"
+            "@type": "Place",
+            "name": "Sede Legale KS Rent",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Viale Aldo Moro 367",
+              "addressLocality": "Olbia",
+              "postalCode": "07026",
+              "addressRegion": "SS",
+              "addressCountry": "IT"
+            }
           }
         ],
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 40.9225,
-          "longitude": 9.5
-        },
         "areaServed": [
-          { "@type": "City", "name": "Olbia" },
-          { "@type": "Place", "name": "Costa Smeralda" },
-          { "@type": "AdministrativeArea", "name": "Sardegna" }
+          "Olbia", "Aeroporto Olbia Costa Smeralda", "Porto Cervo", "Costa Smeralda",
+          "San Teodoro", "Santa Teresa Gallura", "Murta Maria", "Porto San Paolo",
+          "Puntaldia", "Monte Contros", "Baja Sardinia", "Cannigione", "Palau", "San Pantaleo"
         ],
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-          "opens": "08:00",
-          "closes": "20:00"
-        },
-        "sameAs": ["https://instagram.com/ksrent_srl"]
+        "paymentAccepted": "Credit Card, Debit Card, Cash, Bonifico",
+        "knowsAbout": [
+          "Luxury Car Rental", "Rent a Car Olbia", "Noleggio Auto Olbia",
+          "Premium Auto Noleggio", "Supercar Rent"
+        ]
       }
     </script>
-
   </head>
 
   <body>
