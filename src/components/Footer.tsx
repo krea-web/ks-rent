@@ -127,7 +127,8 @@ const Footer = () => (
     </div>
 
       {/* Zone di Consegna Rapida — SEO Gallura */}
-        <div className="mt-12 md:mt-16 pt-8 border-t border-white/5">
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5">
           <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-gold"></span> Zone di Consegna Rapida
           </h3>
