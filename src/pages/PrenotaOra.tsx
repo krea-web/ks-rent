@@ -1000,7 +1000,7 @@ const PrenotaOra = () => {
                         <Button
                           type="button"
                           variant="outline"
-                          onClick={() => setHasSecondDriver(false)}
+                          onClick={() => { setHasSecondDriver(false); goToStep(5); }}
                           className="h-14 px-8 border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
                         >
                           No, Procedi
