@@ -568,6 +568,8 @@ const PrenotaOra = () => {
     if (currentStep === 2) return startDate && endDate ? "Verifica Date" : "Scegli Date";
     if (currentStep === 3) return "Continua";
     if (currentStep === 4 && hasSecondDriver === null) return "Scegli";
+    if (currentStep === 4) return "Continua";
+    if (currentStep === 5) return "Conferma";
     return "Conferma";
   };
 
@@ -580,8 +582,10 @@ const PrenotaOra = () => {
       goToStep(4);
     } else if (currentStep === 4) {
       if (hasSecondDriver === false || (hasSecondDriver === true && secondDriver.name)) {
-        handleSubmit();
+        goToStep(5);
       }
+    } else if (currentStep === 5) {
+      handleSubmit();
     }
   };
 
