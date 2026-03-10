@@ -118,6 +118,7 @@ const PrenotaOra = () => {
 
   const [signatureOpen, setSignatureOpen] = useState(false);
   const [bookingId, setBookingId] = useState<string>("");
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
