@@ -1,43 +1,52 @@
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
-  "@type": ["CarRental", "LocalBusiness"],
-  name: "KS Rent S.R.L.",
+  "@type": ["AutoRental", "LocalBusiness"],
+  name: "KS Rent",
   description:
-    "Noleggio auto luxury in Costa Smeralda. Deposito cauzionale trasparente, copertura assicurativa completa e consegna in aeroporto a Olbia. Professionalità garantita.",
+    "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna VIP in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
   url: "https://ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
-  priceRange: "€€",
+  priceRange: "€€€",
   currenciesAccepted: "EUR",
-  paymentAccepted: "Cash, Credit Card, Debit Card",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Viale Isola Bianca 38",
-    addressLocality: "Olbia",
-    addressRegion: "SS",
-    postalCode: "07026",
-    addressCountry: "IT",
-  },
+  paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
+  logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
+  image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+  address: [
+    {
+      "@type": "PostalAddress",
+      streetAddress: "Viale Isola Bianca 38",
+      addressLocality: "Olbia",
+      postalCode: "07026",
+      addressRegion: "SS",
+      addressCountry: "IT",
+    },
+    {
+      "@type": "PostalAddress",
+      streetAddress: "Viale Aldo Moro 367",
+      addressLocality: "Olbia",
+      postalCode: "07026",
+      addressRegion: "SS",
+      addressCountry: "IT",
+    },
+  ],
   geo: {
     "@type": "GeoCoordinates",
     latitude: 40.9225,
     longitude: 9.5,
   },
-  areaServed: {
-    "@type": "Place",
-    name: "Costa Smeralda, Sardegna",
-  },
+  areaServed: [
+    { "@type": "City", name: "Olbia" },
+    { "@type": "Place", name: "Costa Smeralda" },
+    { "@type": "AdministrativeArea", name: "Sardegna" },
+  ],
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
-    dayOfWeek: [
-      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",
-    ],
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
     opens: "08:00",
     closes: "20:00",
   },
   sameAs: ["https://instagram.com/ksrent_srl"],
-  image:
-    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
 };
 
 export const faqPageJsonLd = {

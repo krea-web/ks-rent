@@ -79,31 +79,51 @@
       {
         "@context": "https://schema.org",
         "@type": ["AutoRental", "LocalBusiness"],
-        "name": "KS Rent S.R.L.",
+        "name": "KS Rent",
         "url": "https://ksrentsardinia.com",
-        "logo": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/favicon.ksrent.svg",
+        "logo": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
         "image": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-        "description": "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Offriamo consegna VIP direttamente all'Aeroporto di Olbia Costa Smeralda, al Porto, a Porto Cervo e nei principali Hotel e Ville. Noleggio flessibile: pagamenti accettati anche senza carta di credito.",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Olbia",
-          "addressRegion": "Sardegna",
-          "addressCountry": "IT"
+        "description": "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna VIP in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
+        "telephone": "+393446107071",
+        "email": "ksrentsrl@gmail.com",
+        "currenciesAccepted": "EUR",
+        "paymentAccepted": "Cash, Credit Card, Debit Card, Bonifico",
+        "priceRange": "€€€",
+        "address": [
+          {
+            "@type": "PostalAddress",
+            "streetAddress": "Viale Isola Bianca 38",
+            "addressLocality": "Olbia",
+            "postalCode": "07026",
+            "addressRegion": "SS",
+            "addressCountry": "IT"
+          },
+          {
+            "@type": "PostalAddress",
+            "streetAddress": "Viale Aldo Moro 367",
+            "addressLocality": "Olbia",
+            "postalCode": "07026",
+            "addressRegion": "SS",
+            "addressCountry": "IT"
+          }
+        ],
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 40.9225,
+          "longitude": 9.5
         },
         "areaServed": [
-          { "@type": "Place", "name": "Aeroporto Olbia Costa Smeralda" },
-          { "@type": "Place", "name": "Porto Cervo" },
+          { "@type": "City", "name": "Olbia" },
           { "@type": "Place", "name": "Costa Smeralda" },
-          { "@type": "Place", "name": "San Teodoro" }
+          { "@type": "AdministrativeArea", "name": "Sardegna" }
         ],
-        "priceRange": "$$$",
-        "paymentAccepted": "Credit Card, Debit Card, Cash, Bonifico",
-        "knowsAbout": [
-          "Luxury Car Rental Sardinia",
-          "Noleggio Auto Senza Carta di Credito",
-          "Olbia Airport Transfer",
-          "Supercar Rental Costa Smeralda"
-        ]
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "08:00",
+          "closes": "20:00"
+        },
+        "sameAs": ["https://instagram.com/ksrent_srl"]
       }
     </script>
 
