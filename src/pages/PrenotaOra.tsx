@@ -1065,7 +1065,33 @@ const PrenotaOra = () => {
                     setDropoffTime={setDropoffTime}
                   />
 
-                  <div className="mt-8">
+                  {/* Riepilogo Finale */}
+                  <div className="mt-8 bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
+                    <h3 className="text-lg font-display font-bold flex items-center gap-3">
+                      <CheckCircle2 className="text-gold" size={20} />
+                      Riepilogo Finale
+                    </h3>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="bg-white/5 rounded-xl p-4">
+                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
+                        <p className="font-bold">{selectedVehicle?.make} {selectedVehicle?.model}</p>
+                      </div>
+                      <div className="bg-white/5 rounded-xl p-4">
+                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
+                        <p className="font-bold">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
+                      </div>
+                      <div className="bg-white/5 rounded-xl p-4">
+                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Guidatore</p>
+                        <p className="font-bold">{mainDriver.name} {mainDriver.surname}</p>
+                      </div>
+                      <div className="bg-white/5 rounded-xl p-4">
+                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
+                        <p className="font-bold text-gold text-xl">€{total}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6">
                     <Button
                       type="button"
                       onClick={handleSubmit}
