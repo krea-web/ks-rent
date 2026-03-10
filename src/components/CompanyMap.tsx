@@ -11,10 +11,11 @@ const CompanyMap = () => {
     libraries: LIBRARIES,
   });
 
-  if (loadError) {
+  if (loadError || !GOOGLE_MAPS_API_KEY) {
     return (
-      <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 flex items-center justify-center">
-        <p className="text-white/40 text-sm">Errore nel caricamento della mappa</p>
+      <div className="w-full min-h-[400px] rounded-[1.5rem] bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-3">
+        <MapPin className="text-white/30" size={32} />
+        <p className="text-white/50 text-sm text-center px-4">Mappa interattiva attiva sul dominio live</p>
       </div>
     );
   }
