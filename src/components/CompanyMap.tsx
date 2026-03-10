@@ -1,4 +1,4 @@
-import { useLoadScript, GoogleMap, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { GOOGLE_MAPS_API_KEY, LIBRARIES, OLBIA_CENTER, SEDE_OPERATIVA, SEDE_LEGALE, DARK_MAP_STYLE } from "@/lib/googleMaps";
@@ -6,7 +6,18 @@ import { GOOGLE_MAPS_API_KEY, LIBRARIES, OLBIA_CENTER, SEDE_OPERATIVA, SEDE_LEGA
 const containerStyle = { width: "100%", height: "400px", borderRadius: "1.5rem" };
 
 const CompanyMap = () => {
-  const { isLoaded } = useLoadScript({ googleMapsApiKey: GOOGLE_MAPS_API_KEY, libraries: LIBRARIES });
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries: LIBRARIES,
+  });
+
+  if (loadError) {
+    return (
+      <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 flex items-center justify-center">
+        <p className="text-white/40 text-sm">Errore nel caricamento della mappa</p>
+      </div>
+    );
+  }
 
   if (!isLoaded) {
     return (

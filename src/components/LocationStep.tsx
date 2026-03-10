@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Building2, Navigation, CheckCircle2 } from "lucide-react";
-import { useLoadScript, GoogleMap, MarkerF, Autocomplete } from "@react-google-maps/api";
+import { useJsApiLoader, GoogleMap, MarkerF, Autocomplete } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -36,7 +36,10 @@ const LocationStep = ({
   pickupType, setPickupType, pickupLocation, setPickupLocation, pickupTime, setPickupTime,
   dropoffType, setDropoffType, dropoffLocation, setDropoffLocation, dropoffTime, setDropoffTime,
 }: LocationStepProps) => {
-  const { isLoaded } = useLoadScript({ googleMapsApiKey: GOOGLE_MAPS_API_KEY, libraries: LIBRARIES });
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries: LIBRARIES,
+  });
 
   const [pickupMapCenter, setPickupMapCenter] = useState<{ lat: number; lng: number } | null>(null);
   const [dropoffMapCenter, setDropoffMapCenter] = useState<{ lat: number; lng: number } | null>(null);
@@ -201,6 +204,19 @@ const LocationStep = ({
             </motion.div>
           )}
         </motion.div>
+      )}
+
+      {/* Loading state for custom when API not ready */}
+      {locationType === "custom" && !isLoaded && !loadError && (
+        <div className="flex items-center gap-2 text-xs text-white/40 bg-[#111] rounded-lg px-3 py-4">
+          Caricamento mappa...
+        </div>
+      )}
+
+      {locationType === "custom" && loadError && (
+        <div className="flex items-center gap-2 text-xs text-red-400/80 bg-red-500/5 rounded-lg px-3 py-4">
+          Errore nel caricamento della mappa
+        </div>
       )}
 
       {/* Time picker */}
