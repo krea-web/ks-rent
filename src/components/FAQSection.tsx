@@ -218,7 +218,7 @@ const FAQSection = () => {
             </h2>
             <p className="text-white/80 text-base md:text-xl mb-8 md:mb-10 max-w-lg leading-relaxed drop-shadow-md">
               Scopri la filosofia di KS Rent S.R.L. e perché siamo diventati il punto di riferimento per il noleggio
-              premium, trasparente e senza stress a Olbia.
+              luxury con coperture assicurative complete e termini chiari a Olbia.
             </p>
 
             <Link
