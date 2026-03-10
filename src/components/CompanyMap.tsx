@@ -1,9 +1,10 @@
-import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { GOOGLE_MAPS_API_KEY, LIBRARIES, OLBIA_CENTER, SEDE_OPERATIVA, SEDE_LEGALE, DARK_MAP_STYLE } from "@/lib/googleMaps";
+import { GOOGLE_MAPS_API_KEY, OLBIA_CENTER, SEDE_OPERATIVA, SEDE_LEGALE } from "@/lib/googleMaps";
 
 const FAVICON_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp";
+const MAP_ID = "ee2520e4d399bf4fdb360162";
 
 const MapLoader = () => (
   <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 flex items-center justify-center">
@@ -17,16 +18,95 @@ const MapLoader = () => (
   </div>
 );
 
-const containerStyle = { width: "100%", height: "400px", borderRadius: "1.5rem" };
+function loadGoogleMapsScript(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (window.google?.maps?.marker?.AdvancedMarkerElement) {
+      resolve();
+      return;
+    }
+    if (document.querySelector('script[src*="maps.googleapis.com"]')) {
+      const check = setInterval(() => {
+        if (window.google?.maps?.marker?.AdvancedMarkerElement) {
+          clearInterval(check);
+          resolve();
+        }
+      }, 100);
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=marker&v=weekly`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      const check = setInterval(() => {
+        if (window.google?.maps?.marker?.AdvancedMarkerElement) {
+          clearInterval(check);
+          resolve();
+        }
+      }, 100);
+    };
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
 
 const CompanyMap = () => {
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    libraries: LIBRARIES,
-  });
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
 
-  if (loadError) return <MapLoader />;
-  if (!isLoaded) return <MapLoader />;
+  useEffect(() => {
+    let cancelled = false;
+
+    loadGoogleMapsScript()
+      .then(() => {
+        if (cancelled || !mapRef.current) return;
+
+        const map = new google.maps.Map(mapRef.current, {
+          center: OLBIA_CENTER,
+          zoom: 14,
+          mapId: MAP_ID,
+          disableDefaultUI: true,
+          zoomControl: true,
+          gestureHandling: "cooperative",
+        });
+
+        // Sede Operativa marker
+        const pinOperativa = new google.maps.marker.PinElement({
+          background: "#d4af37",
+          borderColor: "#b8941e",
+          glyphColor: "#000",
+        });
+        new google.maps.marker.AdvancedMarkerElement({
+          map,
+          position: { lat: SEDE_OPERATIVA.lat, lng: SEDE_OPERATIVA.lng },
+          title: `${SEDE_OPERATIVA.label} — ${SEDE_OPERATIVA.address}`,
+          content: pinOperativa.element,
+        });
+
+        // Sede Legale marker
+        const pinLegale = new google.maps.marker.PinElement({
+          background: "#888",
+          borderColor: "#666",
+          glyphColor: "#fff",
+        });
+        new google.maps.marker.AdvancedMarkerElement({
+          map,
+          position: { lat: SEDE_LEGALE.lat, lng: SEDE_LEGALE.lng },
+          title: `${SEDE_LEGALE.label} — ${SEDE_LEGALE.address}`,
+          content: pinLegale.element,
+        });
+
+        setLoaded(true);
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      });
+
+    return () => { cancelled = true; };
+  }, []);
+
+  if (error) return <MapLoader />;
 
   return (
     <motion.div
@@ -35,31 +115,15 @@ const CompanyMap = () => {
       viewport={{ once: true }}
       className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]"
     >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={OLBIA_CENTER}
-        zoom={14}
-        onLoad={() => console.log("Google Maps caricata con API Key e Map ID corretti")}
-        options={{
-          mapId: "ee2520e4d399bf4fdb360162",
-          styles: DARK_MAP_STYLE as google.maps.MapTypeStyle[],
-          disableDefaultUI: true,
-          zoomControl: true,
-          gestureHandling: "cooperative",
-        }}
-      >
-        <MarkerF
-          position={{ lat: SEDE_OPERATIVA.lat, lng: SEDE_OPERATIVA.lng }}
-          title={`${SEDE_OPERATIVA.label} — ${SEDE_OPERATIVA.address}`}
-        />
-        <MarkerF
-          position={{ lat: SEDE_LEGALE.lat, lng: SEDE_LEGALE.lng }}
-          title={`${SEDE_LEGALE.label} — ${SEDE_LEGALE.address}`}
-        />
-      </GoogleMap>
+      {!loaded && (
+        <div className="absolute inset-0 z-10">
+          <MapLoader />
+        </div>
+      )}
+      <div ref={mapRef} style={{ width: "100%", height: "400px", borderRadius: "1.5rem" }} />
 
       {/* Legend overlay */}
-      <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2">
+      <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
         <div className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3">
           <MapPin size={14} className="text-gold shrink-0" />
           <div>
