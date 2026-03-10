@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,13 +9,17 @@ import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import { Skeleton } from "@/components/ui/skeleton";
 
+// Eager: homepage
 import Index from "./pages/Index";
-import ChiSiamo from "./pages/ChiSiamo";
-import PrenotaOra from "./pages/PrenotaOra";
-import Admin from "./pages/Admin";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
+
+// Lazy: secondary routes
+const ChiSiamo = lazy(() => import("./pages/ChiSiamo"));
+const PrenotaOra = lazy(() => import("./pages/PrenotaOra"));
+const Admin = lazy(() => import("./pages/Admin"));
+const Login = lazy(() => import("./pages/Login"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 

@@ -9,10 +9,17 @@
       type="image/svg+xml"
     />
 
-    <!-- Critical CSS: Hero + Navbar above-the-fold -->
+    <!-- Critical CSS: above-the-fold Hero + Navbar + layout -->
     <style>
-      body{margin:0;background:#000;color:#fff;font-family:'Montserrat',sans-serif;overflow-x:hidden}
+      *,*::before,*::after{box-sizing:border-box}
+      body{margin:0;background:#000;color:#fff;font-family:'Montserrat',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
       #root{overflow-x:hidden;max-width:100vw}
+      nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem}
+      nav img{height:2rem;width:auto;object-fit:contain}
+      .hero-cr{position:relative;min-height:85vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+      .hero-cr video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+      .hero-cr .overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.7),rgba(0,0,0,.5),#000);pointer-events:none}
+      @media(min-width:768px){nav{padding:1.5rem 2rem}nav img{height:3rem}.hero-cr{min-height:100vh}}
     </style>
 
     <!-- Preconnect hints -->
