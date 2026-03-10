@@ -1196,6 +1196,8 @@ const PrenotaOra = () => {
           onSuccess={handleSignatureSuccess}
         />
       </Suspense>
+
+      <SuccessModal open={isSuccessOpen} onClose={() => setIsSuccessOpen(false)} />
     </div>
   );
 };
