@@ -40,21 +40,23 @@ const TrustMarquee = () => {
       <style>
         {`
           @keyframes marquee-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% { transform: translate3d(0,0,0); }
+            100% { transform: translate3d(-50%,0,0); }
           }
           @keyframes marquee-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
+            0% { transform: translate3d(-50%,0,0); }
+            100% { transform: translate3d(0,0,0); }
           }
           .animate-marquee-left {
             display: flex;
             width: fit-content;
+            will-change: transform;
             animation: marquee-left 35s linear infinite;
           }
           .animate-marquee-right {
             display: flex;
             width: fit-content;
+            will-change: transform;
             animation: marquee-right 45s linear infinite;
           }
           .pause-on-hover:hover {
