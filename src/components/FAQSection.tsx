@@ -6,8 +6,8 @@ import { MessageSquare, Star, ShieldCheck, ArrowRight } from "lucide-react";
 
 const faqs = [
   {
-    q: "Serve la carta di credito per noleggiare?",
-    a: "Assolutamente no. Questo è il nostro punto di forza. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Vogliamo renderti il noleggio più semplice possibile.",
+    q: "Quali metodi di pagamento accettate?",
+    a: "Offriamo massima flessibilità: accettiamo carte di credito, carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale viene gestito in base al veicolo scelto.",
     isHighlighted: true,
     icon: Star,
   },

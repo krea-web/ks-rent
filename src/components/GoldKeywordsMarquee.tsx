@@ -1,12 +1,12 @@
 const keywords = [
-  "Noleggio Senza Carta di Credito",
-  "Costa Smeralda",
+  "Noleggio Luxury Costa Smeralda",
+  "Protezione Totale del Veicolo",
   "Flotta Premium",
-  "Zero Burocrazia",
+  "Termini Chiari e Trasparenti",
   "Olbia Sardegna",
   "Fiducia Totale",
   "Assistenza 24/7",
-  "Nessun Deposito",
+  "Deposito Cauzionale Trasparente",
   "Auto & Moto",
   "Consegna in Aeroporto",
 ];

@@ -49,7 +49,7 @@ export const buildVehicleJsonLd = (vehicle: {
   "@context": "https://schema.org",
   "@type": "Product",
   name: `Noleggio ${vehicle.make} ${vehicle.model} Olbia`,
-  description: `Noleggia ${vehicle.make} ${vehicle.model} in Costa Smeralda senza carta di credito. KS Rent Olbia.`,
+  description: `Noleggia ${vehicle.make} ${vehicle.model} in Costa Smeralda con protezione completa e deposito trasparente. KS Rent Olbia.`,
   image: vehicle.image_url,
   brand: {
     "@type": "Brand",

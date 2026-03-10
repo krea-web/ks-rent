@@ -8,10 +8,10 @@ import hondaLogo from "@/assets/brands/honda.png";
 import yamahaLogo from "@/assets/brands/yamaha.png";
 
 const usps = [
-  { text: "Nessuna Carta di Credito", icon: CreditCard },
-  { text: "No Score Bancario", icon: ShieldCheck },
+  { text: "Pagamenti Flessibili", icon: CreditCard },
+  { text: "Deposito Cauzionale Trasparente", icon: ShieldCheck },
   { text: "Olbia & Costa Smeralda", icon: MapPin },
-  { text: "Nessun Deposito Nascosto", icon: BadgeEuro },
+  { text: "Copertura Assicurativa Completa", icon: BadgeEuro },
   { text: "Assistenza 24/7", icon: Clock },
   { text: "Flotta Premium", icon: Sparkles },
 ];
