@@ -19,12 +19,13 @@ const GoldKeywordsMarquee = () => {
       <style>
         {`
           @keyframes gold-marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% { transform: translate3d(0,0,0); }
+            100% { transform: translate3d(-50%,0,0); }
           }
           .animate-gold-marquee {
             display: flex;
             width: fit-content;
+            will-change: transform;
             animation: gold-marquee 30s linear infinite;
           }
         `}

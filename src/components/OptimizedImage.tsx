@@ -16,6 +16,16 @@ interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> 
   priority?: boolean;
 }
 
+/**
+ * Build a simple srcset with 400w and 800w variants.
+ * If the URL already contains query params or is not a Supabase storage URL we skip srcset.
+ */
+const buildSrcSet = (url: string): string | undefined => {
+  // Only apply srcset to Supabase public storage URLs without existing params
+  if (!url.includes("supabase.co/storage/v1/object/public/") || url.includes("?")) return undefined;
+  return `${url}?width=400 400w, ${url}?width=800 800w, ${url} 1200w`;
+};
+
 const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
   (
     {
@@ -24,7 +34,7 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
       width,
       imgWidth,
       imgHeight,
-      sizes,
+      sizes = "(max-width: 640px) 400px, 800px",
       showSkeleton = false,
       skeletonClassName,
       responsive = false,
@@ -36,8 +46,9 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
   ) => {
     const [loaded, setLoaded] = useState(false);
 
-    // Always use direct public URL — no transformation endpoint
+    // Always use direct public URL
     const directSrc = getOriginalImageUrl(src);
+    const srcSet = !priority ? buildSrcSet(directSrc) : undefined;
 
     return (
       <div className="relative w-full h-full">
@@ -47,6 +58,8 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
         <img
           ref={ref}
           src={directSrc}
+          srcSet={srcSet}
+          sizes={srcSet ? sizes : undefined}
           alt={alt}
           width={imgWidth}
           height={imgHeight}
