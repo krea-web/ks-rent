@@ -1030,42 +1030,6 @@ const PrenotaOra = () => {
                     </div>
                   )}
 
-                  {/* No second driver — final summary + confirm */}
-                  {hasSecondDriver === false && (
-                    <div className="bg-[#0a0a0a] border border-gold/20 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 space-y-6">
-                      <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
-                        <CheckCircle2 className="text-gold" size={24} />
-                        Riepilogo Finale
-                      </h2>
-
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div className="bg-white/5 rounded-xl p-4">
-                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
-                          <p className="font-bold">{selectedVehicle?.make} {selectedVehicle?.model}</p>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-4">
-                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
-                          <p className="font-bold">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-4">
-                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Guidatore</p>
-                          <p className="font-bold">{mainDriver.name} {mainDriver.surname}</p>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-4">
-                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
-                          <p className="font-bold text-gold text-xl">€{total}</p>
-                        </div>
-                      </div>
-
-                      <Button
-                        type="button"
-                        onClick={() => goToStep(5)}
-                        className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
-                      >
-                        Continua <ArrowRight size={16} className="ml-2" />
-                      </Button>
-                    </div>
-                  )}
                 </motion.div>
               )}
 
