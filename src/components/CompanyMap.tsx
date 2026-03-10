@@ -64,18 +64,19 @@ const CompanyMap = () => {
 
         const map = new google.maps.Map(mapRef.current, {
           center: OLBIA_CENTER,
-          zoom: 14,
+          zoom: 13,
           mapId: MAP_ID,
           disableDefaultUI: true,
           zoomControl: true,
           gestureHandling: "cooperative",
         });
 
-        // Sede Operativa marker
+        // Sede Operativa marker (Porto)
         const pinOperativa = new google.maps.marker.PinElement({
           background: "#d4af37",
           borderColor: "#b8941e",
           glyphColor: "#000",
+          scale: 1.2,
         });
         new google.maps.marker.AdvancedMarkerElement({
           map,
@@ -89,6 +90,7 @@ const CompanyMap = () => {
           background: "#888",
           borderColor: "#666",
           glyphColor: "#fff",
+          scale: 1.0,
         });
         new google.maps.marker.AdvancedMarkerElement({
           map,
@@ -124,20 +126,30 @@ const CompanyMap = () => {
 
       {/* Legend overlay */}
       <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
-        <div className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3">
+        <a
+          href={`https://www.google.com/maps/dir/?api=1&destination=${SEDE_OPERATIVA.lat},${SEDE_OPERATIVA.lng}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors"
+        >
           <MapPin size={14} className="text-gold shrink-0" />
           <div>
-            <p className="text-xs font-bold text-white">Sede Operativa</p>
+            <p className="text-xs font-bold text-white">Sede Operativa (Porto)</p>
             <p className="text-[10px] text-white/50">Viale Isola Bianca 38</p>
           </div>
-        </div>
-        <div className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3">
+        </a>
+        <a
+          href={`https://www.google.com/maps/dir/?api=1&destination=${SEDE_LEGALE.lat},${SEDE_LEGALE.lng}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3 hover:border-white/30 transition-colors"
+        >
           <MapPin size={14} className="text-white/50 shrink-0" />
           <div>
             <p className="text-xs font-bold text-white/80">Sede Legale</p>
             <p className="text-[10px] text-white/50">Viale Aldo Moro 367</p>
           </div>
-        </div>
+        </a>
       </div>
     </motion.div>
   );

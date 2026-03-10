@@ -126,6 +126,38 @@ const Footer = () => (
       </div>
     </div>
 
+      {/* Zone di Consegna Rapida — SEO Gallura */}
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5">
+          <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-gold"></span> Zone di Consegna Rapida
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {[
+              "Olbia Aeroporto",
+              "Porto Cervo",
+              "Baja Sardinia",
+              "San Teodoro",
+              "Puntaldia",
+              "Palau",
+              "Santa Teresa di Gallura",
+              "La Maddalena",
+              "Arzachena",
+              "Cannigione",
+              "Golfo Aranci",
+              "Porto Rotondo",
+            ].map((zona) => (
+              <span
+                key={zona}
+                className="text-xs text-white/50 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 hover:text-gold hover:border-gold/30 transition-colors"
+              >
+                {zona}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
     {/* HUGE BOLT TEXT */}
     <div className="w-full flex justify-center items-end px-4 mt-6 md:mt-10 select-none pointer-events-none overflow-hidden">
       <h1 className="text-[13vw] sm:text-[15vw] md:text-[18vw] leading-[0.75] font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-gold/80 via-gold/20 to-transparent opacity-80">

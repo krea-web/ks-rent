@@ -38,6 +38,16 @@ export const localBusinessJsonLd = {
   areaServed: [
     { "@type": "City", name: "Olbia" },
     { "@type": "Place", name: "Costa Smeralda" },
+    { "@type": "Place", name: "Porto Cervo" },
+    { "@type": "Place", name: "Baja Sardinia" },
+    { "@type": "City", name: "San Teodoro" },
+    { "@type": "City", name: "Palau" },
+    { "@type": "City", name: "Santa Teresa di Gallura" },
+    { "@type": "City", name: "Arzachena" },
+    { "@type": "Place", name: "Puntaldia" },
+    { "@type": "Place", name: "Porto Rotondo" },
+    { "@type": "Place", name: "Golfo Aranci" },
+    { "@type": "AdministrativeArea", name: "Gallura" },
     { "@type": "AdministrativeArea", name: "Sardegna" },
   ],
   openingHoursSpecification: {
