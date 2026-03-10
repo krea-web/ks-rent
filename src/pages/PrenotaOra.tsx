@@ -329,6 +329,8 @@ const PrenotaOra = () => {
 
   const handleSignatureSuccess = () => {
     setSignatureOpen(false);
+    setIsSuccessOpen(true);
+    trackBookingLead();
     resetForm();
   };
 
