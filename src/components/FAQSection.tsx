@@ -18,10 +18,10 @@ const faqs = [
     icon: ShieldCheck,
   },
   {
-    q: "Ci sono depositi cauzionali nascosti?",
-    a: "No, le nostre condizioni sono chiare fin dal primo momento. Nessuna sorpresa o trattenuta ingiustificata a fine noleggio.",
+    q: "Come funziona il deposito cauzionale?",
+    a: "Per garantire la massima cura della nostra flotta luxury, è previsto un deposito cauzionale e una franchigia assicurativa. L'importo varia in base alla categoria del veicolo scelto e viene gestito in modo chiaro e veloce al momento del contratto.",
     isHighlighted: true,
-    icon: Star,
+    icon: ShieldCheck,
   },
   {
     q: "Dove posso ritirare il veicolo?",
