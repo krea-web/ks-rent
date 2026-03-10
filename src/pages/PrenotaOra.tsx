@@ -572,8 +572,8 @@ const PrenotaOra = () => {
         }
         description={
           selectedVehicle
-            ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} in Costa Smeralda senza carta di credito. Da €${selectedVehicle.daily_rate}/giorno con KS Rent Olbia.`
-            : "Prenota in 2 minuti il tuo veicolo a Olbia. Consegna in aeroporto o hotel. Scegli tra Audi, BMW, Mercedes senza deposito su carta di credito."
+            ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} in Costa Smeralda con protezione completa. Da €${selectedVehicle.daily_rate}/giorno con KS Rent Olbia.`
+            : "Prenota in 2 minuti il tuo veicolo luxury a Olbia. Consegna in aeroporto o hotel. Deposito cauzionale trasparente e copertura assicurativa completa."
         }
         canonical="https://ksrentsardinia.com/prenotaora"
         jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
@@ -1128,6 +1128,9 @@ const PrenotaOra = () => {
 
                   {/* Step indicator in summary */}
                   <div className="pt-4 border-t border-white/5">
+                    <p className="text-xs text-white/50 leading-relaxed mb-3">
+                      Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo scelto.
+                    </p>
                     <div className="flex items-center justify-between text-xs text-white/40">
                       <span>Step {currentStep} di 4</span>
                       <span className="text-gold">{STEP_LABELS[currentStep - 1]}</span>

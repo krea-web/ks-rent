@@ -6,8 +6,8 @@ import { MessageSquare, Star, ShieldCheck, ArrowRight } from "lucide-react";
 
 const faqs = [
   {
-    q: "Serve la carta di credito per noleggiare?",
-    a: "Assolutamente no. Questo è il nostro punto di forza. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Vogliamo renderti il noleggio più semplice possibile.",
+    q: "Quali metodi di pagamento accettate?",
+    a: "Offriamo massima flessibilità: accettiamo carte di credito, carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale viene gestito in base al veicolo scelto.",
     isHighlighted: true,
     icon: Star,
   },
@@ -18,10 +18,10 @@ const faqs = [
     icon: ShieldCheck,
   },
   {
-    q: "Ci sono depositi cauzionali nascosti?",
-    a: "No, le nostre condizioni sono chiare fin dal primo momento. Nessuna sorpresa o trattenuta ingiustificata a fine noleggio.",
+    q: "Come funziona il deposito cauzionale?",
+    a: "Per garantire la massima cura della nostra flotta luxury, è previsto un deposito cauzionale e una franchigia assicurativa. L'importo varia in base alla categoria del veicolo scelto e viene gestito in modo chiaro e veloce al momento del contratto.",
     isHighlighted: true,
-    icon: Star,
+    icon: ShieldCheck,
   },
   {
     q: "Dove posso ritirare il veicolo?",
@@ -105,8 +105,8 @@ const FAQSection = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
             >
-              Abbiamo eliminato la burocrazia inutile. Leggi come abbiamo reso il noleggio in Sardegna rapido, sicuro e
-              senza stress.
+              Tutto ciò che devi sapere sul noleggio luxury in Sardegna: termini chiari, protezione completa e
+              servizio d'eccellenza.
             </motion.p>
           </div>
 
@@ -189,10 +189,10 @@ const FAQSection = () => {
         <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full z-0 opacity-20 pointer-events-none overflow-hidden">
           <div className="animate-banner-roll">
             <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent">
-              KS RENT • COSTA SMERALDA • NESSUNA CARTA • LIBERTÀ ASSOLUTA •&nbsp;
+              KS RENT • COSTA SMERALDA • LUXURY EXPERIENCE • PROTEZIONE TOTALE •&nbsp;
             </span>
             <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent">
-              KS RENT • COSTA SMERALDA • NESSUNA CARTA • LIBERTÀ ASSOLUTA •&nbsp;
+              KS RENT • COSTA SMERALDA • LUXURY EXPERIENCE • PROTEZIONE TOTALE •&nbsp;
             </span>
           </div>
         </div>
@@ -218,7 +218,7 @@ const FAQSection = () => {
             </h2>
             <p className="text-white/80 text-base md:text-xl mb-8 md:mb-10 max-w-lg leading-relaxed drop-shadow-md">
               Scopri la filosofia di KS Rent S.R.L. e perché siamo diventati il punto di riferimento per il noleggio
-              premium, trasparente e senza stress a Olbia.
+              luxury con coperture assicurative complete e termini chiari a Olbia.
             </p>
 
             <Link

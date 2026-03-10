@@ -21,8 +21,8 @@ const Footer = () => (
             loading="lazy"
           />
           <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-            Non noleggiamo solo veicoli, consegniamo la libertà di esplorare la Costa Smeralda senza stress, senza carte
-            di credito e senza burocrazia.
+            Noleggio d'eccellenza in Costa Smeralda con coperture assicurative complete, deposito cauzionale trasparente
+            e termini contrattuali chiari. Libertà di esplorare, professionalità garantita.
           </p>
           <div className="text-xs text-white/80 space-y-1">
             <p className="flex items-center gap-2">

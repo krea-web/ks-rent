@@ -3,7 +3,7 @@ export const localBusinessJsonLd = {
   "@type": ["CarRental", "LocalBusiness"],
   name: "KS Rent S.R.L.",
   description:
-    "Noleggio auto e moto premium in Costa Smeralda. Servizio senza blocco carta di credito, consegna in aeroporto a Olbia. Fiducia totale, zero burocrazia.",
+    "Noleggio auto luxury in Costa Smeralda. Deposito cauzionale trasparente, copertura assicurativa completa e consegna in aeroporto a Olbia. Professionalità garantita.",
   url: "https://ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
@@ -49,7 +49,7 @@ export const buildVehicleJsonLd = (vehicle: {
   "@context": "https://schema.org",
   "@type": "Product",
   name: `Noleggio ${vehicle.make} ${vehicle.model} Olbia`,
-  description: `Noleggia ${vehicle.make} ${vehicle.model} in Costa Smeralda senza carta di credito. KS Rent Olbia.`,
+  description: `Noleggia ${vehicle.make} ${vehicle.model} in Costa Smeralda con protezione completa e deposito trasparente. KS Rent Olbia.`,
   image: vehicle.image_url,
   brand: {
     "@type": "Brand",

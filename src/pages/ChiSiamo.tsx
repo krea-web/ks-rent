@@ -10,7 +10,7 @@ const ChiSiamo = () => {
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
         title="La Nostra Flotta | Noleggio Auto Lusso Porto Cervo - KS Rent"
-        description="Scopri KS Rent: la nostra flotta premium a Olbia e Costa Smeralda. Noleggia auto sportive, SUV e scooter per il tuo hotel o villa senza carta di credito."
+        description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."
         canonical="https://ksrentsardinia.com/chisiamo"
         jsonLd={localBusinessJsonLd}
       />
@@ -97,8 +97,8 @@ const ChiSiamo = () => {
             >
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
               <p className="text-lg md:text-2xl font-light text-white/70 leading-relaxed">
-                Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, depositi
-                bloccati e clausole nascoste.
+                Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, poca
+                trasparenza e clausole incomprensibili.
               </p>
             </motion.div>
 
