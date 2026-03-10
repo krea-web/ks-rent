@@ -71,11 +71,12 @@ const CompanyMap = () => {
           gestureHandling: "cooperative",
         });
 
-        // Sede Operativa marker
+        // Sede Operativa marker (Porto)
         const pinOperativa = new google.maps.marker.PinElement({
           background: "#d4af37",
           borderColor: "#b8941e",
           glyphColor: "#000",
+          scale: 1.2,
         });
         new google.maps.marker.AdvancedMarkerElement({
           map,
@@ -89,6 +90,7 @@ const CompanyMap = () => {
           background: "#888",
           borderColor: "#666",
           glyphColor: "#fff",
+          scale: 1.0,
         });
         new google.maps.marker.AdvancedMarkerElement({
           map,
