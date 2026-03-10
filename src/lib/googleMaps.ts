@@ -2,18 +2,18 @@ export const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '
 
 export const LIBRARIES: ("places")[] = ["places"];
 
-export const OLBIA_CENTER = { lat: 40.9310, lng: 9.5078 };
+export const OLBIA_CENTER = { lat: 40.9336, lng: 9.5094 };
 
 export const SEDE_OPERATIVA = {
-  lat: 40.92318,
-  lng: 9.51405,
+  lat: 40.92256483932831,
+  lng: 9.520862581425746,
   address: "Viale Isola Bianca 38, 07026 Olbia (SS)",
-  label: "Sede Operativa",
+  label: "Sede Operativa (Porto)",
 };
 
 export const SEDE_LEGALE = {
-  lat: 40.93885,
-  lng: 9.50156,
+  lat: 40.94457338720965,
+  lng: 9.497950867622666,
   address: "Viale Aldo Moro 367, 07026 Olbia (SS)",
   label: "Sede Legale",
 };
