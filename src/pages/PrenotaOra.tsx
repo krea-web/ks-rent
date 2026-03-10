@@ -360,7 +360,7 @@ const PrenotaOra = () => {
   };
 
   // Progress percentage
-  const progress = currentStep === 1 ? 0 : currentStep === 2 ? 33 : currentStep === 3 ? 66 : 100;
+  const progress = currentStep === 1 ? 0 : currentStep === 2 ? 20 : currentStep === 3 ? 40 : currentStep === 4 ? 60 : currentStep === 5 ? 100 : 0;
 
   // Driver form fields helper
   const renderDriverFormFields = (driver: typeof initialDriverState, setDriver: (d: typeof initialDriverState) => void) => (
