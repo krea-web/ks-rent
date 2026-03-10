@@ -121,6 +121,13 @@ const PrenotaOra = () => {
   const [bookingId, setBookingId] = useState<string>("");
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
+  const [pickupType, setPickupType] = useState<"sede" | "custom" | null>(null);
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [pickupTime, setPickupTime] = useState("");
+  const [dropoffType, setDropoffType] = useState<"sede" | "custom" | null>(null);
+  const [dropoffLocation, setDropoffLocation] = useState("");
+  const [dropoffTime, setDropoffTime] = useState("");
+
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
 
