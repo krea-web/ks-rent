@@ -1,51 +1,35 @@
 /**
- * Ottimizza URL immagini Supabase Storage con trasformazione server-side (Piano Pro).
- * Aggiunge width, quality e format=webp. Fallback automatico su errore.
+ * Restituisce l'URL pubblico diretto senza trasformazioni.
+ * L'endpoint /render/image/ di Supabase restituisce errori 400,
+ * quindi usiamo esclusivamente l'URL pubblico originale.
  */
-const SUPABASE_STORAGE_HOST = "zgytnkimjpoosvshfopz.supabase.co";
-
 export const getOptimizedImageUrl = (
   url: string | undefined | null,
-  width: number = 800,
-  quality: number = 75
+  _width?: number,
+  _quality?: number
 ): string => {
   if (!url) return "";
-  if (!url.includes(SUPABASE_STORAGE_HOST)) return url;
-  if (!url.includes("/storage/v1/object/public/")) return url;
-
-  const renderUrl = url.replace(
-    "/storage/v1/object/public/",
-    "/storage/v1/render/image/public/"
-  );
-  return `${renderUrl}?width=${width}&quality=${quality}&format=webp`;
+  // Strip any previous render/image transformation
+  return url
+    .replace("/storage/v1/render/image/public/", "/storage/v1/object/public/")
+    .split("?")[0];
 };
 
 /**
- * Restituisce l'URL pubblico originale (senza trasformazioni) come fallback.
+ * Restituisce l'URL pubblico originale.
  */
 export const getOriginalImageUrl = (url: string | undefined | null): string => {
   if (!url) return "";
-  return url.replace("/storage/v1/render/image/public/", "/storage/v1/object/public/").split("?")[0];
-};
-
-/**
- * Genera srcSet per immagini responsive.
- */
-export const getResponsiveSrcSet = (
-  url: string | undefined | null,
-  sizes: number[] = [400, 800, 1200]
-): string => {
-  if (!url) return "";
-  return sizes
-    .map((w) => `${getOptimizedImageUrl(url, w)} ${w}w`)
-    .join(", ");
+  return url
+    .replace("/storage/v1/render/image/public/", "/storage/v1/object/public/")
+    .split("?")[0];
 };
 
 /**
  * Genera alt text SEO-friendly per veicoli.
  */
 export const getVehicleAlt = (make?: string, model?: string): string => {
-  if (make && model) return `Noleggio ${make} ${model} Olbia Costa Smeralda - KS Rent`;
+  if (make && model) return `Noleggio protetto ${make} ${model} Olbia Costa Smeralda - KS Rent`;
   if (model) return `Noleggio ${model} Olbia - KS Rent`;
   return "Veicolo a noleggio KS Rent Olbia";
 };
