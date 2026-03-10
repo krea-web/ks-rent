@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import TrustMarquee from "@/components/TrustMarquee";
 import FleetShowcase from "@/components/FleetShowcase";
 import FAQSection from "@/components/FAQSection";
-import { localBusinessJsonLd } from "@/lib/jsonLd";
+import { localBusinessJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
 
 const Index = () => (
   <>
