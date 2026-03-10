@@ -40,6 +40,37 @@ export const localBusinessJsonLd = {
     "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
 };
 
+export const faqPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "È richiesto un deposito cauzionale?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, per garantire la massima cura della nostra flotta luxury è previsto un deposito cauzionale e una franchigia assicurativa. L'importo varia in base alla categoria del veicolo scelto.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quali documenti servono per il noleggio?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sono necessari una patente di guida valida, codice fiscale e un documento d'identità (Carta d'Identità o Passaporto) in corso di validità.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Dove posso ritirare il veicolo a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Operiamo presso le nostre sedi di Viale Isola Bianca (Porto) e Viale Aldo Moro, offrendo anche la consegna personalizzata in Aeroporto, Hotel o Villa in tutta la Costa Smeralda.",
+      },
+    },
+  ],
+};
+
 export const buildVehicleJsonLd = (vehicle: {
   make: string;
   model: string;
