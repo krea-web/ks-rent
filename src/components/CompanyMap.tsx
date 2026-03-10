@@ -3,6 +3,20 @@ import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { GOOGLE_MAPS_API_KEY, LIBRARIES, OLBIA_CENTER, SEDE_OPERATIVA, SEDE_LEGALE, DARK_MAP_STYLE } from "@/lib/googleMaps";
 
+const FAVICON_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp";
+
+const MapLoader = () => (
+  <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 flex items-center justify-center">
+    <motion.img
+      src={FAVICON_URL}
+      alt="Caricamento..."
+      className="w-12 h-12 object-contain"
+      animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.05, 0.9] }}
+      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+    />
+  </div>
+);
+
 const containerStyle = { width: "100%", height: "400px", borderRadius: "1.5rem" };
 
 const CompanyMap = () => {
@@ -11,21 +25,8 @@ const CompanyMap = () => {
     libraries: LIBRARIES,
   });
 
-  if (loadError) {
-    return (
-      <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 animate-pulse flex items-center justify-center">
-        <MapPin className="text-white/20" size={32} />
-      </div>
-    );
-  }
-
-  if (!isLoaded) {
-    return (
-      <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 animate-pulse flex items-center justify-center">
-        <MapPin className="text-white/20" size={32} />
-      </div>
-    );
-  }
+  if (loadError) return <MapLoader />;
+  if (!isLoaded) return <MapLoader />;
 
   return (
     <motion.div
