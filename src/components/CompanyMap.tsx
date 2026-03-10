@@ -38,6 +38,7 @@ const CompanyMap = () => {
         mapContainerStyle={containerStyle}
         center={OLBIA_CENTER}
         zoom={14}
+        onLoad={() => console.log("Google Maps caricata con API Key e Map ID corretti")}
         options={{
           mapId: "ee2520e4d399bf4fdb360162",
           styles: DARK_MAP_STYLE as google.maps.MapTypeStyle[],
