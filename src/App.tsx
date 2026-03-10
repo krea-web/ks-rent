@@ -35,14 +35,16 @@ const AppLayout = () => {
       {!isIsolated && <Navbar />}
       
       <main>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/chisiamo" element={<ChiSiamo />} />
-          <Route path="/prenotaora" element={<PrenotaOra />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><Skeleton className="w-32 h-32 rounded-xl" /></div>}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/chisiamo" element={<ChiSiamo />} />
+            <Route path="/prenotaora" element={<PrenotaOra />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       {!isIsolated && <Footer />}
       {!isIsolated && <WhatsAppCTA />}
