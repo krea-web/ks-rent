@@ -10,7 +10,7 @@ const ChiSiamo = () => {
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
         title="La Nostra Flotta | Noleggio Auto Lusso Porto Cervo - KS Rent"
-        description="Scopri KS Rent: la nostra flotta premium a Olbia e Costa Smeralda. Noleggia auto sportive, SUV e scooter per il tuo hotel o villa senza carta di credito."
+        description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."
         canonical="https://ksrentsardinia.com/chisiamo"
         jsonLd={localBusinessJsonLd}
       />
