@@ -39,6 +39,7 @@ import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
 import { Skeleton } from "@/components/ui/skeleton";
+import LocationStep from "@/components/LocationStep";
 
 // Code splitting: lazy load heavy components
 const Calendar = lazy(() => import("@/components/ui/calendar").then(m => ({ default: m.Calendar })));
@@ -60,7 +61,7 @@ const initialDriverState = {
   licenseBack: null as File | null,
 };
 
-const STEP_LABELS = ["Veicolo", "Date", "Guidatore", "Secondo Guidatore"];
+const STEP_LABELS = ["Veicolo", "Date", "Guidatore", "Secondo Guidatore", "Ritiro & Consegna"];
 
 // Animated check mark for validated fields
 const FieldCheck = ({ show }: { show: boolean }) => (
@@ -119,6 +120,13 @@ const PrenotaOra = () => {
   const [signatureOpen, setSignatureOpen] = useState(false);
   const [bookingId, setBookingId] = useState<string>("");
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+
+  const [pickupType, setPickupType] = useState<"sede" | "custom" | null>(null);
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [pickupTime, setPickupTime] = useState("");
+  const [dropoffType, setDropoffType] = useState<"sede" | "custom" | null>(null);
+  const [dropoffLocation, setDropoffLocation] = useState("");
+  const [dropoffTime, setDropoffTime] = useState("");
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
@@ -272,6 +280,10 @@ const PrenotaOra = () => {
         },
         license_urls: { front: mainFrontUrl, back: mainBackUrl },
         total_price: total,
+        pickup_location: pickupLocation,
+        pickup_time: pickupTime,
+        dropoff_location: dropoffLocation,
+        dropoff_time: dropoffTime,
         has_second_driver: !!hasSecondDriver,
         second_driver: hasSecondDriver
           ? {
@@ -324,6 +336,12 @@ const PrenotaOra = () => {
     setSelectedVehicle(null);
     setAvailabilityResult(null);
     setBookingId("");
+    setPickupType(null);
+    setPickupLocation("");
+    setPickupTime("");
+    setDropoffType(null);
+    setDropoffLocation("");
+    setDropoffTime("");
     setCurrentStep(1);
   };
 
@@ -342,7 +360,7 @@ const PrenotaOra = () => {
   };
 
   // Progress percentage
-  const progress = currentStep === 1 ? 0 : currentStep === 2 ? 33 : currentStep === 3 ? 66 : 100;
+  const progress = currentStep === 1 ? 0 : currentStep === 2 ? 20 : currentStep === 3 ? 40 : currentStep === 4 ? 60 : currentStep === 5 ? 100 : 0;
 
   // Driver form fields helper
   const renderDriverFormFields = (driver: typeof initialDriverState, setDriver: (d: typeof initialDriverState) => void) => (
@@ -550,6 +568,8 @@ const PrenotaOra = () => {
     if (currentStep === 2) return startDate && endDate ? "Verifica Date" : "Scegli Date";
     if (currentStep === 3) return "Continua";
     if (currentStep === 4 && hasSecondDriver === null) return "Scegli";
+    if (currentStep === 4) return "Continua";
+    if (currentStep === 5) return "Conferma";
     return "Conferma";
   };
 
@@ -562,8 +582,10 @@ const PrenotaOra = () => {
       goToStep(4);
     } else if (currentStep === 4) {
       if (hasSecondDriver === false || (hasSecondDriver === true && secondDriver.name)) {
-        handleSubmit();
+        goToStep(5);
       }
+    } else if (currentStep === 5) {
+      handleSubmit();
     }
   };
 
@@ -999,15 +1021,10 @@ const PrenotaOra = () => {
                       <div className="mt-8">
                         <Button
                           type="button"
-                          onClick={handleSubmit}
-                          disabled={loading}
-                          className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                          onClick={() => goToStep(5)}
+                          className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
                         >
-                          {loading ? (
-                            <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
-                          ) : (
-                            <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
-                          )}
+                          Continua <ArrowRight size={16} className="ml-2" />
                         </Button>
                       </div>
                     </div>
@@ -1042,18 +1059,62 @@ const PrenotaOra = () => {
 
                       <Button
                         type="button"
-                        onClick={handleSubmit}
-                        disabled={loading}
-                        className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                        onClick={() => goToStep(5)}
+                        className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
                       >
-                        {loading ? (
-                          <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
-                        ) : (
-                          <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
-                        )}
+                        Continua <ArrowRight size={16} className="ml-2" />
                       </Button>
                     </div>
                   )}
+                </motion.div>
+              )}
+
+              {/* STEP 5: RITIRO & CONSEGNA */}
+              {currentStep === 5 && (
+                <motion.div
+                  key="step5"
+                  custom={direction}
+                  variants={stepVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                >
+                  <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">5</span>
+                    Ritiro & Consegna
+                  </h2>
+
+                  <LocationStep
+                    pickupType={pickupType}
+                    setPickupType={setPickupType}
+                    pickupLocation={pickupLocation}
+                    setPickupLocation={setPickupLocation}
+                    pickupTime={pickupTime}
+                    setPickupTime={setPickupTime}
+                    dropoffType={dropoffType}
+                    setDropoffType={setDropoffType}
+                    dropoffLocation={dropoffLocation}
+                    setDropoffLocation={setDropoffLocation}
+                    dropoffTime={dropoffTime}
+                    setDropoffTime={setDropoffTime}
+                  />
+
+                  <div className="mt-8">
+                    <Button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={loading || !pickupLocation || !pickupTime || !dropoffLocation || !dropoffTime}
+                      className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                    >
+                      {loading ? (
+                        <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
+                      ) : (
+                        <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
+                      )}
+                    </Button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -1137,7 +1198,7 @@ const PrenotaOra = () => {
                       Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo scelto.
                     </p>
                     <div className="flex items-center justify-between text-xs text-white/40">
-                      <span>Step {currentStep} di 4</span>
+                      <span>Step {currentStep} di 5</span>
                       <span className="text-gold">{STEP_LABELS[currentStep - 1]}</span>
                     </div>
                   </div>

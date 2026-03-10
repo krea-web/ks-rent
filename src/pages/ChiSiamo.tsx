@@ -4,6 +4,7 @@ import { ArrowRight, Instagram } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd } from "@/lib/jsonLd";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
+import CompanyMap from "@/components/CompanyMap";
 
 const ChiSiamo = () => {
   return (
@@ -300,6 +301,22 @@ const ChiSiamo = () => {
               </div>
             </motion.a>
           </div>
+        </div>
+      </section>
+
+      {/* MAPPA SEDI AZIENDALI */}
+      <section className="py-16 md:py-24 bg-[#050505] border-t border-white/5">
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.7 } }}
+            viewport={{ once: true }}
+            className="mb-8"
+          >
+            <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Dove Trovarci</h2>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Le Nostre Sedi a Olbia</h3>
+          </motion.div>
+          <CompanyMap />
         </div>
       </section>
 

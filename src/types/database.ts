@@ -22,6 +22,10 @@ export interface Booking {
   customer_residence: string;
   total_price?: number;
   created_at?: string;
+  pickup_location?: string;
+  pickup_time?: string;
+  dropoff_location?: string;
+  dropoff_time?: string;
 }
 
 export interface PricingPeriod {
