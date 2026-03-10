@@ -302,9 +302,9 @@ const PrenotaOra = () => {
       if (newBookingId) {
         setBookingId(newBookingId);
         setSignatureOpen(true);
-        toast.success("Prenotazione creata! Firma il contratto per completare.");
       } else {
-        toast.success("Prenotazione confermata!");
+        setIsSuccessOpen(true);
+        trackBookingLead();
         resetForm();
       }
     } catch (error) {
