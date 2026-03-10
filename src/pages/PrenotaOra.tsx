@@ -1059,15 +1059,10 @@ const PrenotaOra = () => {
 
                       <Button
                         type="button"
-                        onClick={handleSubmit}
-                        disabled={loading}
-                        className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                        onClick={() => goToStep(5)}
+                        className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
                       >
-                        {loading ? (
-                          <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
-                        ) : (
-                          <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
-                        )}
+                        Continua <ArrowRight size={16} className="ml-2" />
                       </Button>
                     </div>
                   )}
