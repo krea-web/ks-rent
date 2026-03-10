@@ -18,7 +18,7 @@ export const SEDE_LEGALE = {
   label: "Sede Legale",
 };
 
-export const DARK_MAP_STYLE: google.maps.MapTypeStyle[] = [
+export const DARK_MAP_STYLE = [
   { elementType: "geometry", stylers: [{ color: "#1a1a2e" }] },
   { elementType: "labels.text.stroke", stylers: [{ color: "#1a1a2e" }] },
   { elementType: "labels.text.fill", stylers: [{ color: "#8a8a8a" }] },
