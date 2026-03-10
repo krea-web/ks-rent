@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+
 import { ArrowRight } from "lucide-react";
 
 const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/HERO%20GIUSTA.mp4";
