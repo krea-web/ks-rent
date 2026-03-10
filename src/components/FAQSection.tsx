@@ -105,8 +105,8 @@ const FAQSection = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
             >
-              Abbiamo eliminato la burocrazia inutile. Leggi come abbiamo reso il noleggio in Sardegna rapido, sicuro e
-              senza stress.
+              Tutto ciò che devi sapere sul noleggio luxury in Sardegna: termini chiari, protezione completa e
+              servizio d'eccellenza.
             </motion.p>
           </div>
 
