@@ -280,6 +280,10 @@ const PrenotaOra = () => {
         },
         license_urls: { front: mainFrontUrl, back: mainBackUrl },
         total_price: total,
+        pickup_location: pickupLocation,
+        pickup_time: pickupTime,
+        dropoff_location: dropoffLocation,
+        dropoff_time: dropoffTime,
         has_second_driver: !!hasSecondDriver,
         second_driver: hasSecondDriver
           ? {
