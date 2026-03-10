@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { MessageSquare, Star, ShieldCheck, ArrowRight } from "lucide-react";
+import { MessageSquare, Star, ShieldCheck, ArrowRight, MapPin } from "lucide-react";
 
 const faqs = [
   {
@@ -24,8 +24,14 @@ const faqs = [
     icon: ShieldCheck,
   },
   {
-    q: "Dove posso ritirare il veicolo?",
-    a: "Abbiamo due sedi strategiche a Olbia: la Sede Legale in Viale Aldo Moro 367 e la Sede Operativa in Viale Isola Bianca 38, perfette per chi arriva dal porto o dall'aeroporto. Operiamo in tutta la Costa Smeralda.",
+    q: "In quali località effettuate la consegna del veicolo?",
+    a: "Serviamo l'intera Gallura e la Costa Smeralda. Oltre alle nostre sedi di Olbia (Viale Isola Bianca 38 e Viale Aldo Moro 367) e all'Aeroporto Costa Smeralda, consegniamo a Porto Cervo, San Teodoro, Santa Teresa Gallura, Murta Maria, Porto San Paolo, Puntaldia, Monte Contros, Baja Sardinia, Cannigione, Palau e San Pantaleo. Consegniamo direttamente in Villa, in Hotel o al Porto.",
+    isHighlighted: true,
+    icon: MapPin,
+  },
+  {
+    q: "Dove posso ritirare il veicolo se vengo in sede?",
+    a: "Abbiamo due sedi strategiche a Olbia: la Sede Legale in Viale Aldo Moro 367 e la Sede Operativa in Viale Isola Bianca 38, perfette per chi arriva dal porto o dall'aeroporto.",
     isHighlighted: false,
   },
   {
@@ -105,8 +111,8 @@ const FAQSection = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
             >
-              Tutto ciò che devi sapere sul noleggio luxury in Sardegna: termini chiari, protezione completa e
-              servizio d'eccellenza.
+              Tutto ciò che devi sapere sul noleggio luxury in Sardegna: termini chiari, protezione completa e servizio
+              d'eccellenza.
             </motion.p>
           </div>
 
@@ -145,9 +151,7 @@ const FAQSection = () => {
                         </span>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent
-                      className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6 pt-1 md:pt-2 pl-0 md:pl-16"
-                    >
+                    <AccordionContent className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6 pt-1 md:pt-2 pl-0 md:pl-16">
                       <span>{f.a}</span>
                     </AccordionContent>
                   </AccordionItem>
@@ -172,8 +176,9 @@ const FAQSection = () => {
           }
         `}</style>
 
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <img alt="Costa Smeralda" className="w-full h-full object-cover opacity-30" />
+        <div className="absolute inset-0 z-0 pointer-events-none bg-black">
+          {/* Correzione: mancava l'immagine di background qui. Sostituisci src con un tuo URL o rimuovi il tag img se preferisci solo il colore */}
+          <div className="w-full h-full opacity-30 bg-gradient-to-r from-black via-gray-900 to-black"></div>
         </div>
 
         {/* Rolling text */}
