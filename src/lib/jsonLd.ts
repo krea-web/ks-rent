@@ -3,7 +3,7 @@ export const localBusinessJsonLd = {
   "@type": ["CarRental", "LocalBusiness"],
   name: "KS Rent S.R.L.",
   description:
-    "Noleggio auto e moto premium in Costa Smeralda. Servizio senza blocco carta di credito, consegna in aeroporto a Olbia. Fiducia totale, zero burocrazia.",
+    "Noleggio auto luxury in Costa Smeralda. Deposito cauzionale trasparente, copertura assicurativa completa e consegna in aeroporto a Olbia. Professionalità garantita.",
   url: "https://ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
