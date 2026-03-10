@@ -197,7 +197,7 @@ const LocationStep = ({
                 mapContainerStyle={mapContainerStyle}
                 center={mapCenter}
                 zoom={15}
-                options={{ styles: DARK_MAP_STYLE as google.maps.MapTypeStyle[], disableDefaultUI: true, zoomControl: true }}
+                options={{ mapId: "ee2520e4d399bf4fdb360162", styles: DARK_MAP_STYLE as google.maps.MapTypeStyle[], disableDefaultUI: true, zoomControl: true }}
               >
                 <MarkerF position={mapCenter} />
               </GoogleMap>
