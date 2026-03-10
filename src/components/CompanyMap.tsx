@@ -25,21 +25,8 @@ const CompanyMap = () => {
     libraries: LIBRARIES,
   });
 
-  if (loadError) {
-    return (
-      <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 animate-pulse flex items-center justify-center">
-        <MapPin className="text-white/20" size={32} />
-      </div>
-    );
-  }
-
-  if (!isLoaded) {
-    return (
-      <div className="w-full h-[400px] rounded-[1.5rem] bg-[#111] border border-white/10 animate-pulse flex items-center justify-center">
-        <MapPin className="text-white/20" size={32} />
-      </div>
-    );
-  }
+  if (loadError) return <MapLoader />;
+  if (!isLoaded) return <MapLoader />;
 
   return (
     <motion.div
