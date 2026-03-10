@@ -64,7 +64,7 @@ const CompanyMap = () => {
 
         const map = new google.maps.Map(mapRef.current, {
           center: OLBIA_CENTER,
-          zoom: 14,
+          zoom: 13,
           mapId: MAP_ID,
           disableDefaultUI: true,
           zoomControl: true,
