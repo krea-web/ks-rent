@@ -35,7 +35,7 @@ const Navbar = () => {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out",
+          "fixed top-0 left-0 w-full z-[9999] pointer-events-auto transition-all duration-500 ease-in-out",
           scrolled
             ? "bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 py-3 md:py-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             : "bg-transparent py-4 md:py-6 lg:py-8",
