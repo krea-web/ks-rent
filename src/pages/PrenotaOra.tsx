@@ -336,6 +336,12 @@ const PrenotaOra = () => {
     setSelectedVehicle(null);
     setAvailabilityResult(null);
     setBookingId("");
+    setPickupType(null);
+    setPickupLocation("");
+    setPickupTime("");
+    setDropoffType(null);
+    setDropoffLocation("");
+    setDropoffTime("");
     setCurrentStep(1);
   };
 
