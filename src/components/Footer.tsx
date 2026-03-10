@@ -140,8 +140,6 @@ const Footer = () => (
               "San Teodoro",
               "Puntaldia",
               "Palau",
-              "Santa Teresa di Gallura",
-              "La Maddalena",
               "Arzachena",
               "Cannigione",
               "Golfo Aranci",
