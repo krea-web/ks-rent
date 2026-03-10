@@ -9,10 +9,24 @@
       type="image/svg+xml"
     />
 
+    <!-- Critical CSS: Hero + Navbar above-the-fold -->
+    <style>
+      body{margin:0;background:#000;color:#fff;font-family:'Montserrat',sans-serif;overflow-x:hidden}
+      #root{overflow-x:hidden;max-width:100vw}
+    </style>
+
     <!-- Preconnect hints -->
-    <link rel="preconnect" href="https://zgytnkimjpoosvshfopz.supabase.co" />
+    <link rel="preconnect" href="https://zgytnkimjpoosvshfopz.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload LCP logo -->
+    <link rel="preload" as="image" href="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png" fetchpriority="high" />
+
+    <!-- Non-blocking font loading -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" /></noscript>
 
     <title>KS Rent | Noleggio Auto Lusso Olbia Aeroporto e Costa Smeralda</title>
     <meta

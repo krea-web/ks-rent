@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+/* Fonts loaded via index.html with print-swap technique */
 
 @tailwind base;
 @tailwind components;

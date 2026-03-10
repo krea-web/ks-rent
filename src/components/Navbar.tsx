@@ -51,6 +51,7 @@ const Navbar = () => {
               className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105"
               loading="eager"
               fetchPriority="high"
+              decoding="sync"
             />
           </Link>
 
