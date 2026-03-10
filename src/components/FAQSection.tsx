@@ -189,10 +189,10 @@ const FAQSection = () => {
         <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full z-0 opacity-20 pointer-events-none overflow-hidden">
           <div className="animate-banner-roll">
             <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent">
-              KS RENT • COSTA SMERALDA • NESSUNA CARTA • LIBERTÀ ASSOLUTA •&nbsp;
+              KS RENT • COSTA SMERALDA • LUXURY EXPERIENCE • PROTEZIONE TOTALE •&nbsp;
             </span>
             <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent">
-              KS RENT • COSTA SMERALDA • NESSUNA CARTA • LIBERTÀ ASSOLUTA •&nbsp;
+              KS RENT • COSTA SMERALDA • LUXURY EXPERIENCE • PROTEZIONE TOTALE •&nbsp;
             </span>
           </div>
         </div>
