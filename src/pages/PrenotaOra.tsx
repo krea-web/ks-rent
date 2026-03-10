@@ -39,6 +39,7 @@ import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
 import { Skeleton } from "@/components/ui/skeleton";
+import LocationStep from "@/components/LocationStep";
 
 // Code splitting: lazy load heavy components
 const Calendar = lazy(() => import("@/components/ui/calendar").then(m => ({ default: m.Calendar })));
