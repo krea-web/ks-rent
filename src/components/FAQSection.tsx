@@ -150,12 +150,9 @@ const FAQSection = () => {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent
-                      itemScope
-                      itemProp="acceptedAnswer"
-                      itemType="https://schema.org/Answer"
                       className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6 pt-1 md:pt-2 pl-0 md:pl-16"
                     >
-                      <span itemProp="text">{f.a}</span>
+                      <span>{f.a}</span>
                     </AccordionContent>
                   </AccordionItem>
                 );
