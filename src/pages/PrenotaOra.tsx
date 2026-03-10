@@ -61,7 +61,7 @@ const initialDriverState = {
   licenseBack: null as File | null,
 };
 
-const STEP_LABELS = ["Veicolo", "Date", "Guidatore", "Secondo Guidatore"];
+const STEP_LABELS = ["Veicolo", "Date", "Guidatore", "Secondo Guidatore", "Ritiro & Consegna"];
 
 // Animated check mark for validated fields
 const FieldCheck = ({ show }: { show: boolean }) => (
