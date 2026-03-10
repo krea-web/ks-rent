@@ -33,6 +33,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
+import SuccessModal from "@/components/SuccessModal";
+import { trackBookingLead } from "@/lib/analytics";
 import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
@@ -116,6 +118,7 @@ const PrenotaOra = () => {
 
   const [signatureOpen, setSignatureOpen] = useState(false);
   const [bookingId, setBookingId] = useState<string>("");
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
@@ -299,9 +302,9 @@ const PrenotaOra = () => {
       if (newBookingId) {
         setBookingId(newBookingId);
         setSignatureOpen(true);
-        toast.success("Prenotazione creata! Firma il contratto per completare.");
       } else {
-        toast.success("Prenotazione confermata!");
+        setIsSuccessOpen(true);
+        trackBookingLead();
         resetForm();
       }
     } catch (error) {
@@ -326,6 +329,8 @@ const PrenotaOra = () => {
 
   const handleSignatureSuccess = () => {
     setSignatureOpen(false);
+    setIsSuccessOpen(true);
+    trackBookingLead();
     resetForm();
   };
 
@@ -1191,6 +1196,8 @@ const PrenotaOra = () => {
           onSuccess={handleSignatureSuccess}
         />
       </Suspense>
+
+      <SuccessModal open={isSuccessOpen} onClose={() => setIsSuccessOpen(false)} />
     </div>
   );
 };
