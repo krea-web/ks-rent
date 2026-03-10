@@ -1,11 +1,13 @@
 import { ShieldCheck, CreditCard, MapPin, BadgeEuro, Sparkles, Clock } from "lucide-react";
-import audiLogo from "@/assets/brands/audi.png";
-import bmwLogo from "@/assets/brands/bmw.png";
-import mercedesLogo from "@/assets/brands/mercedes.png";
-import jeepLogo from "@/assets/brands/jeep.png";
-import fiatLogo from "@/assets/brands/fiat.png";
-import hondaLogo from "@/assets/brands/honda.png";
-import yamahaLogo from "@/assets/brands/yamaha.png";
+
+const SUPABASE_LOGOS = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/loghi";
+const audiLogo = `${SUPABASE_LOGOS}/Audi.webp`;
+const bmwLogo = `${SUPABASE_LOGOS}/bmw.webp`;
+const mercedesLogo = `${SUPABASE_LOGOS}/mercedes.webp`;
+const jeepLogo = `${SUPABASE_LOGOS}/jeep.webp`;
+const fiatLogo = `${SUPABASE_LOGOS}/fiat.webp`;
+const hondaLogo = `${SUPABASE_LOGOS}/honda.webp`;
+const yamahaLogo = `${SUPABASE_LOGOS}/Yamaha.webp`;
 
 const usps = [
   { text: "Pagamenti Flessibili", icon: CreditCard },
