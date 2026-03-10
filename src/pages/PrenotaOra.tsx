@@ -33,6 +33,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
+import SuccessModal from "@/components/SuccessModal";
+import { trackBookingLead } from "@/lib/analytics";
 import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
