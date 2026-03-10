@@ -123,7 +123,6 @@ const FAQSection = () => {
                   <AccordionItem
                     key={i}
                     value={`faq-${i}`}
-                    className
                     className={`rounded-xl md:rounded-2xl px-3 sm:px-4 md:px-6 transition-all duration-300 border ${
                       isGold
                         ? "bg-gradient-to-br from-gold/10 to-transparent border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
