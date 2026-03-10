@@ -1,6 +1,6 @@
 import { useState, forwardRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getOptimizedImageUrl, getOriginalImageUrl, getResponsiveSrcSet } from "@/lib/imageUtils";
+import { getOriginalImageUrl } from "@/lib/imageUtils";
 import { cn } from "@/lib/utils";
 
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -21,10 +21,10 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
     {
       src,
       alt,
-      width = 800,
+      width,
       imgWidth,
       imgHeight,
-      sizes = "(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px",
+      sizes,
       showSkeleton = false,
       skeletonClassName,
       responsive = false,
@@ -35,16 +35,9 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
     ref
   ) => {
     const [loaded, setLoaded] = useState(false);
-    const [useFallback, setUseFallback] = useState(false);
 
-    const optimizedSrc = useFallback ? getOriginalImageUrl(src) : getOptimizedImageUrl(src, width);
-    const srcSet = !useFallback && responsive ? getResponsiveSrcSet(src) : undefined;
-
-    const handleError = () => {
-      if (!useFallback) {
-        setUseFallback(true);
-      }
-    };
+    // Always use direct public URL — no transformation endpoint
+    const directSrc = getOriginalImageUrl(src);
 
     return (
       <div className="relative w-full h-full">
@@ -53,9 +46,7 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
         )}
         <img
           ref={ref}
-          src={optimizedSrc}
-          srcSet={srcSet}
-          sizes={srcSet ? sizes : undefined}
+          src={directSrc}
           alt={alt}
           width={imgWidth}
           height={imgHeight}
@@ -63,7 +54,6 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
           fetchPriority={priority ? "high" : undefined}
           decoding={priority ? "sync" : "async"}
           onLoad={() => setLoaded(true)}
-          onError={handleError}
           className={cn(
             showSkeleton && !loaded ? "opacity-0" : "opacity-100",
             "transition-opacity duration-300",

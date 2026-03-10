@@ -29,7 +29,7 @@ const HeroSection = () => (
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}
-        className="h-16 sm:h-20 md:h-28 w-auto mx-auto mb-6"
+        className="h-16 sm:h-20 md:h-28 w-auto mx-auto mb-6 object-contain"
         fetchPriority="high"
         loading="eager"
         decoding="sync"
