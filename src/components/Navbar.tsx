@@ -151,7 +151,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[90] bg-[#050505] flex flex-col justify-center px-6 sm:px-8 overflow-hidden"
+            className="fixed inset-0 z-[9990] bg-[#050505] flex flex-col justify-center px-6 sm:px-8 overflow-hidden"
           >
             <div className="absolute top-[-10%] right-[-10%] w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
 
