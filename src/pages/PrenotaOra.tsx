@@ -1068,6 +1068,55 @@ const PrenotaOra = () => {
                   )}
                 </motion.div>
               )}
+
+              {/* STEP 5: RITIRO & CONSEGNA */}
+              {currentStep === 5 && (
+                <motion.div
+                  key="step5"
+                  custom={direction}
+                  variants={stepVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                >
+                  <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">5</span>
+                    Ritiro & Consegna
+                  </h2>
+
+                  <LocationStep
+                    pickupType={pickupType}
+                    setPickupType={setPickupType}
+                    pickupLocation={pickupLocation}
+                    setPickupLocation={setPickupLocation}
+                    pickupTime={pickupTime}
+                    setPickupTime={setPickupTime}
+                    dropoffType={dropoffType}
+                    setDropoffType={setDropoffType}
+                    dropoffLocation={dropoffLocation}
+                    setDropoffLocation={setDropoffLocation}
+                    dropoffTime={dropoffTime}
+                    setDropoffTime={setDropoffTime}
+                  />
+
+                  <div className="mt-8">
+                    <Button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={loading || !pickupLocation || !pickupTime || !dropoffLocation || !dropoffTime}
+                      className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                    >
+                      {loading ? (
+                        <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
+                      ) : (
+                        <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
+                      )}
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
 
