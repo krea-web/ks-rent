@@ -40,6 +40,7 @@ const CompanyMap = () => {
         center={OLBIA_CENTER}
         zoom={14}
         options={{
+          mapId: "ee2520e4d399bf4fdb360162",
           styles: DARK_MAP_STYLE as google.maps.MapTypeStyle[],
           disableDefaultUI: true,
           zoomControl: true,
