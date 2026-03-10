@@ -115,8 +115,6 @@ const FAQSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            itemScope
-            itemType="https://schema.org/FAQPage"
           >
             <Accordion type="single" collapsible className="space-y-3 md:space-y-4">
               {shuffledFaqs.map((f, i) => {
@@ -125,9 +123,6 @@ const FAQSection = () => {
                   <AccordionItem
                     key={i}
                     value={`faq-${i}`}
-                    itemScope
-                    itemProp="mainEntity"
-                    itemType="https://schema.org/Question"
                     className={`rounded-xl md:rounded-2xl px-3 sm:px-4 md:px-6 transition-all duration-300 border ${
                       isGold
                         ? "bg-gradient-to-br from-gold/10 to-transparent border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
@@ -144,7 +139,6 @@ const FAQSection = () => {
                           </span>
                         )}
                         <span
-                          itemProp="name"
                           className={`text-sm sm:text-base md:text-lg font-bold tracking-wide ${isGold ? "" : "group-hover:text-gold transition-colors"}`}
                         >
                           {f.q}
@@ -152,12 +146,9 @@ const FAQSection = () => {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent
-                      itemScope
-                      itemProp="acceptedAnswer"
-                      itemType="https://schema.org/Answer"
                       className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6 pt-1 md:pt-2 pl-0 md:pl-16"
                     >
-                      <span itemProp="text">{f.a}</span>
+                      <span>{f.a}</span>
                     </AccordionContent>
                   </AccordionItem>
                 );
