@@ -1,10 +1,11 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, Component, type ReactNode, type ErrorInfo } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Building2, Navigation, CheckCircle2 } from "lucide-react";
-import { useJsApiLoader, GoogleMap, MarkerF, Autocomplete } from "@react-google-maps/api";
+import { MapPin, Clock, Building2, Navigation, CheckCircle2, AlertTriangle } from "lucide-react";
+import { useJsApiLoader, GoogleMap, Autocomplete } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
   GOOGLE_MAPS_API_KEY,
@@ -14,6 +15,31 @@ import {
   DARK_MAP_STYLE,
   TIME_SLOTS,
 } from "@/lib/googleMaps";
+
+// ErrorBoundary to prevent full-page crash
+class MapErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.warn("LocationStep error caught:", error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex items-center gap-3 bg-red-500/5 border border-red-500/20 rounded-xl p-4 text-sm text-red-400">
+          <AlertTriangle size={16} />
+          Errore nel caricamento della mappa. Ricarica la pagina.
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 interface LocationStepProps {
   pickupType: "sede" | "custom" | null;
@@ -198,9 +224,7 @@ const LocationStep = ({
                 center={mapCenter}
                 zoom={15}
                 options={{ mapId: "ee2520e4d399bf4fdb360162", styles: DARK_MAP_STYLE as google.maps.MapTypeStyle[], disableDefaultUI: true, zoomControl: true }}
-              >
-                <MarkerF position={mapCenter} />
-              </GoogleMap>
+              />
             </motion.div>
           )}
         </motion.div>
@@ -208,8 +232,9 @@ const LocationStep = ({
 
       {/* Loading state for custom when API not ready */}
       {locationType === "custom" && !isLoaded && !loadError && (
-        <div className="flex items-center gap-2 text-xs text-white/40 bg-[#111] rounded-lg px-3 py-4">
-          Caricamento mappa...
+        <div className="space-y-3">
+          <Skeleton className="w-full h-14 rounded-xl" />
+          <Skeleton className="w-full h-[200px] rounded-xl" />
         </div>
       )}
 
@@ -269,4 +294,10 @@ const LocationStep = ({
   );
 };
 
-export default LocationStep;
+const LocationStepWithBoundary = (props: LocationStepProps) => (
+  <MapErrorBoundary>
+    <LocationStep {...props} />
+  </MapErrorBoundary>
+);
+
+export default LocationStepWithBoundary;
