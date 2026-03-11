@@ -1237,8 +1237,8 @@ const PrenotaOra = () => {
               <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
                 <div className="flex flex-col">
                   <span className="text-[11px] uppercase tracking-widest text-white/50">Totale stimato</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-black font-display text-gold">€{total}</span>
+                   <div className="flex items-baseline gap-2 flex-wrap min-w-0">
+                    <span className="text-xl sm:text-2xl font-black font-display text-gold break-words">€{total}</span>
                     {days > 0 && (
                       <span className="text-xs text-white/40">/ {days} giorn{days !== 1 ? "i" : "o"}</span>
                     )}

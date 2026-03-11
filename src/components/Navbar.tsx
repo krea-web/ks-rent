@@ -90,9 +90,9 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* MOBILE TOGGLE */}
+          {/* MOBILE/TABLET TOGGLE */}
           <button
-            className="md:hidden relative z-50 text-white p-2.5 bg-white/5 border border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="lg:hidden relative z-50 text-white p-2.5 bg-white/5 border border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Chiudi menu" : "Apri menu"}
           >
