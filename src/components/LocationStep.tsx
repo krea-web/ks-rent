@@ -1,10 +1,11 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, Component, type ReactNode, type ErrorInfo } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Building2, Navigation, CheckCircle2 } from "lucide-react";
-import { useJsApiLoader, GoogleMap, MarkerF, Autocomplete } from "@react-google-maps/api";
+import { MapPin, Clock, Building2, Navigation, CheckCircle2, AlertTriangle } from "lucide-react";
+import { useJsApiLoader, GoogleMap, Autocomplete } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
   GOOGLE_MAPS_API_KEY,
@@ -14,6 +15,31 @@ import {
   DARK_MAP_STYLE,
   TIME_SLOTS,
 } from "@/lib/googleMaps";
+
+// ErrorBoundary to prevent full-page crash
+class MapErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.warn("LocationStep error caught:", error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex items-center gap-3 bg-red-500/5 border border-red-500/20 rounded-xl p-4 text-sm text-red-400">
+          <AlertTriangle size={16} />
+          Errore nel caricamento della mappa. Ricarica la pagina.
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 interface LocationStepProps {
   pickupType: "sede" | "custom" | null;
