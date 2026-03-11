@@ -1190,9 +1190,7 @@ const PrenotaOra = () => {
                   <div className="flex justify-between items-end pb-6 border-b border-white/5">
                     <div>
                       <p className="text-white/50 text-sm mb-1">Tariffa</p>
-                      <p className="text-white text-lg">
-                        {dailyRate > 0 ? `€${dailyRate}/gg` : <span className="text-white/40 text-sm">Seleziona</span>}
-                      </p>
+                      <span className="text-white text-sm">Tariffa dinamica stagionale</span>
                     </div>
                     <div className="text-right">
                       <p className="text-white/50 text-sm mb-1">Durata</p>
