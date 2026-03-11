@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, Component, type ReactNode, type ErrorInfo } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Building2, Navigation, CheckCircle2, AlertTriangle } from "lucide-react";
-import { useJsApiLoader, GoogleMap, Autocomplete } from "@react-google-maps/api";
+import { GoogleMap, Autocomplete } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
