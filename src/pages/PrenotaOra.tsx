@@ -1137,7 +1137,7 @@ const PrenotaOra = () => {
           </div>
 
           {/* RIGHT COLUMN: RIEPILOGO STICKY */}
-          <div className="lg:col-span-4" ref={summaryRef}>
+          <div className="hidden lg:block lg:col-span-4" ref={summaryRef}>
             <div className="lg:sticky lg:top-28">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
