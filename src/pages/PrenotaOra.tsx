@@ -40,6 +40,8 @@ import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LocationStep from "@/components/LocationStep";
+import { useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_API_KEY, LIBRARIES } from "@/lib/googleMaps";
 
 // Code splitting: lazy load heavy components
 const Calendar = lazy(() => import("@/components/ui/calendar").then(m => ({ default: m.Calendar })));
@@ -130,6 +132,13 @@ const PrenotaOra = () => {
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
+
+  // Load Google Maps API at top level to prevent mount/unmount crashes
+  const { isLoaded: isMapLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries: LIBRARIES,
+  });
 
   useEffect(() => {
     const el = summaryRef.current;
@@ -980,7 +989,7 @@ const PrenotaOra = () => {
                   className="space-y-6"
                 >
                   {/* Ask about second driver */}
-                  {hasSecondDriver === null && (
+                  {(hasSecondDriver === null || hasSecondDriver === false) && (
                     <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 text-center space-y-6">
                       <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto">
                         <Users size={28} className="text-gold" />
@@ -1063,6 +1072,7 @@ const PrenotaOra = () => {
                     setDropoffLocation={setDropoffLocation}
                     dropoffTime={dropoffTime}
                     setDropoffTime={setDropoffTime}
+                    isMapLoaded={isMapLoaded}
                   />
 
                   {/* Riepilogo Finale */}

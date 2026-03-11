@@ -1,15 +1,13 @@
 import { useState, useRef, useCallback, Component, type ReactNode, type ErrorInfo } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Building2, Navigation, CheckCircle2, AlertTriangle } from "lucide-react";
-import { useJsApiLoader, GoogleMap, Autocomplete } from "@react-google-maps/api";
+import { GoogleMap, Autocomplete } from "@react-google-maps/api";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
-  GOOGLE_MAPS_API_KEY,
-  LIBRARIES,
   SEDE_OPERATIVA,
   SEDE_LEGALE,
   DARK_MAP_STYLE,
@@ -54,6 +52,7 @@ interface LocationStepProps {
   setDropoffLocation: (l: string) => void;
   dropoffTime: string;
   setDropoffTime: (t: string) => void;
+  isMapLoaded: boolean;
 }
 
 const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px" };
@@ -61,11 +60,9 @@ const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px"
 const LocationStep = ({
   pickupType, setPickupType, pickupLocation, setPickupLocation, pickupTime, setPickupTime,
   dropoffType, setDropoffType, dropoffLocation, setDropoffLocation, dropoffTime, setDropoffTime,
+  isMapLoaded,
 }: LocationStepProps) => {
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    libraries: LIBRARIES,
-  });
+  const isLoaded = isMapLoaded;
 
   const [pickupMapCenter, setPickupMapCenter] = useState<{ lat: number; lng: number } | null>(null);
   const [dropoffMapCenter, setDropoffMapCenter] = useState<{ lat: number; lng: number } | null>(null);
@@ -231,16 +228,10 @@ const LocationStep = ({
       )}
 
       {/* Loading state for custom when API not ready */}
-      {locationType === "custom" && !isLoaded && !loadError && (
+      {locationType === "custom" && !isLoaded && (
         <div className="space-y-3">
           <Skeleton className="w-full h-14 rounded-xl" />
           <Skeleton className="w-full h-[200px] rounded-xl" />
-        </div>
-      )}
-
-      {locationType === "custom" && loadError && (
-        <div className="flex items-center gap-2 text-xs text-red-400/80 bg-red-500/5 rounded-lg px-3 py-4">
-          Errore nel caricamento della mappa
         </div>
       )}
 
