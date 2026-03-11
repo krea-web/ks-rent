@@ -2,7 +2,7 @@ import { trackWhatsAppClick } from "@/lib/analytics";
 
 const WhatsAppCTA = () => (
   <a
-    href="https://wa.me/39XXXXXXXXXX"
+    href="https://wa.me/393446107071"
     target="_blank"
     rel="noopener noreferrer"
     onClick={trackWhatsAppClick}
