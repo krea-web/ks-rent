@@ -80,7 +80,7 @@ const Navbar = () => {
           </div>
 
           {/* DESKTOP CTA */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Link
               to="/prenotaora"
               className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 py-3 rounded-full bg-white text-black text-xs font-black uppercase tracking-widest hover:bg-gold transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] group min-h-[44px]"
