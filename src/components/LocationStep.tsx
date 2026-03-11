@@ -230,16 +230,10 @@ const LocationStep = ({
       )}
 
       {/* Loading state for custom when API not ready */}
-      {locationType === "custom" && !isLoaded && !loadError && (
+      {locationType === "custom" && !isLoaded && (
         <div className="space-y-3">
           <Skeleton className="w-full h-14 rounded-xl" />
           <Skeleton className="w-full h-[200px] rounded-xl" />
-        </div>
-      )}
-
-      {locationType === "custom" && loadError && (
-        <div className="flex items-center gap-2 text-xs text-red-400/80 bg-red-500/5 rounded-lg px-3 py-4">
-          Errore nel caricamento della mappa
         </div>
       )}
 
