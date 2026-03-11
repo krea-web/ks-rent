@@ -133,6 +133,13 @@ const PrenotaOra = () => {
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
 
+  // Load Google Maps API at top level to prevent mount/unmount crashes
+  const { isLoaded: isMapLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries: LIBRARIES,
+  });
+
   useEffect(() => {
     const el = summaryRef.current;
     if (!el) return;
