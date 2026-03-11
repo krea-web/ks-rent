@@ -9,6 +9,13 @@ export interface Vehicle {
   available: boolean;
   license_plate: string;
   image_url?: string;
+  rate_april?: number;
+  rate_may?: number;
+  rate_june?: number;
+  rate_july?: number;
+  rate_august?: number;
+  rate_september?: number;
+  rate_october?: number;
 }
 
 export interface Booking {
