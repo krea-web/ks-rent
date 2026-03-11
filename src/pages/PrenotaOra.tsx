@@ -952,7 +952,7 @@ const PrenotaOra = () => {
                               <p className="text-white/50 text-xs">Prezzo totale</p>
                               <p className="text-3xl font-black font-display text-gold">€{total}</p>
                             </div>
-                            <p className="text-white/40 text-sm">{days} giorn{days !== 1 ? "i" : "o"} × €{dailyRate}/gg</p>
+                            <p className="text-white/40 text-sm">{days} giorn{days !== 1 ? "i" : "o"} · Tariffa dinamica</p>
                           </div>
                           <Button
                             type="button"
