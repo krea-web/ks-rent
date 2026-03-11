@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef, useCallback, lazy, Suspense } fro
 import { motion, AnimatePresence } from "framer-motion";
 import {
   CalendarIcon,
+  X,
   User,
   CreditCard,
   MapPin,
@@ -1021,10 +1022,25 @@ const PrenotaOra = () => {
                   {/* Second driver form */}
                   {hasSecondDriver === true && (
                     <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10">
-                      <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">4</span>
-                        Dati Secondo Guidatore
-                      </h2>
+                      <div className="flex items-center justify-between mb-5 md:mb-6">
+                        <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
+                          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">4</span>
+                          Dati Secondo Guidatore
+                        </h2>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="text-white/50 hover:text-red-400 hover:bg-red-400/10 gap-1.5"
+                          onClick={() => {
+                            setHasSecondDriver(null);
+                            setSecondDriver({ ...initialDriverState });
+                          }}
+                        >
+                          <X className="w-4 h-4" />
+                          Annulla
+                        </Button>
+                      </div>
                       {renderDriverFormFields(secondDriver, setSecondDriver)}
 
                       <div className="mt-8">
