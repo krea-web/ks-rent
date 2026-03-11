@@ -50,7 +50,7 @@ const Navbar = () => {
           </Link>
 
           {/* DESKTOP NAV */}
-          <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-full backdrop-blur-md">
+          <div className="hidden lg:flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-full backdrop-blur-md">
             {navLinks.map((l) => {
               const isActive = location.pathname === l.to;
               return (
@@ -80,7 +80,7 @@ const Navbar = () => {
           </div>
 
           {/* DESKTOP CTA */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Link
               to="/prenotaora"
               className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 py-3 rounded-full bg-white text-black text-xs font-black uppercase tracking-widest hover:bg-gold transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] group min-h-[44px]"
@@ -90,9 +90,9 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* MOBILE TOGGLE */}
+          {/* MOBILE/TABLET TOGGLE */}
           <button
-            className="md:hidden relative z-50 text-white p-2.5 bg-white/5 border border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="lg:hidden relative z-50 text-white p-2.5 bg-white/5 border border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Chiudi menu" : "Apri menu"}
           >

@@ -732,7 +732,7 @@ const PrenotaOra = () => {
                       ))}
                     </div>
                   )}
-                  <div className="grid grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
                     {filteredVehicles.map((v) => {
                       const isSelected = selectedVehicle?.id === v.id;
                       return (
@@ -1097,22 +1097,22 @@ const PrenotaOra = () => {
                       <CheckCircle2 className="text-gold" size={20} />
                       Riepilogo Finale
                     </h3>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="bg-white/5 rounded-xl p-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
-                        <p className="font-bold">{selectedVehicle?.make} {selectedVehicle?.model}</p>
+                        <p className="font-bold truncate">{selectedVehicle?.make} {selectedVehicle?.model}</p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
-                        <p className="font-bold">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
+                        <p className="font-bold truncate">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Guidatore</p>
-                        <p className="font-bold">{mainDriver.name} {mainDriver.surname}</p>
+                        <p className="font-bold truncate">{mainDriver.name} {mainDriver.surname}</p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
-                        <p className="font-bold text-gold text-xl">€{total}</p>
+                        <p className="font-bold text-gold text-lg sm:text-xl">€{total}</p>
                       </div>
                     </div>
                   </div>
@@ -1137,7 +1137,7 @@ const PrenotaOra = () => {
           </div>
 
           {/* RIGHT COLUMN: RIEPILOGO STICKY */}
-          <div className="lg:col-span-4" ref={summaryRef}>
+          <div className="hidden lg:block lg:col-span-4" ref={summaryRef}>
             <div className="lg:sticky lg:top-28">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -1203,9 +1203,9 @@ const PrenotaOra = () => {
                     )}
                   </div>
 
-                  <div className="pt-6 border-t border-white/5 flex justify-between items-center">
+                  <div className="pt-6 border-t border-white/5 flex flex-wrap justify-between items-center gap-2">
                     <span className="text-lg text-white/70">Totale stimato</span>
-                    <span className="text-4xl font-black font-display text-gold">€{total}</span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl font-black font-display text-gold min-w-0 break-words">€{total}</span>
                   </div>
 
                   {/* Step indicator in summary */}
@@ -1237,8 +1237,8 @@ const PrenotaOra = () => {
               <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
                 <div className="flex flex-col">
                   <span className="text-[11px] uppercase tracking-widest text-white/50">Totale stimato</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-black font-display text-gold">€{total}</span>
+                   <div className="flex items-baseline gap-2 flex-wrap min-w-0">
+                    <span className="text-xl sm:text-2xl font-black font-display text-gold break-words">€{total}</span>
                     {days > 0 && (
                       <span className="text-xs text-white/40">/ {days} giorn{days !== 1 ? "i" : "o"}</span>
                     )}
