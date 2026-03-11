@@ -25,4 +25,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ksrentsardinia.com/sitemap.xml
+Sitemap: https://www.ksrentsardinia.com/sitemap.xml

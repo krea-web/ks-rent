@@ -4,7 +4,7 @@ export const localBusinessJsonLd = {
   name: "KS Rent",
   description:
     "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna VIP in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
-  url: "https://ksrentsardinia.com",
+  url: "https://www.ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
   priceRange: "€€€",

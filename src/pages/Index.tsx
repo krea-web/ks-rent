@@ -10,7 +10,7 @@ const Index = () => (
     <SEOHead
       title="KS Rent — Noleggio Auto Lusso Olbia | Costa Smeralda Sardegna"
       description="Noleggio auto luxury in Costa Smeralda — Trasparenza, protezione e professionalità. Consegna in aeroporto a Olbia. Prenota in 2 minuti con KS Rent."
-      canonical="https://ksrentsardinia.com"
+      canonical="https://www.ksrentsardinia.com/"
       jsonLd={[localBusinessJsonLd, faqPageJsonLd]}
     />
     <HeroSection />

@@ -633,7 +633,7 @@ const PrenotaOra = () => {
             ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} in Costa Smeralda con protezione completa. Da €${selectedVehicle.daily_rate}/giorno con KS Rent Olbia.`
             : "Prenota in 2 minuti il tuo veicolo luxury a Olbia. Consegna in aeroporto o hotel. Deposito cauzionale trasparente e copertura assicurativa completa."
         }
-        canonical="https://ksrentsardinia.com/prenotaora"
+        canonical="https://www.ksrentsardinia.com/prenotaora"
         jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
       />
 
