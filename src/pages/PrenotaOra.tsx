@@ -228,6 +228,7 @@ const PrenotaOra = () => {
 
   const days = availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
   const total = availabilityResult?.estimated_price ?? (selectedVehicle && startDate && endDate ? calculateDynamicPrice(selectedVehicle, startDate, endDate) : 0);
+  const isAvailable = availabilityResult === null ? true : availabilityResult.available;
 
   const uploadFile = async (file: File | null, path: string) => {
     if (!file) return null;
