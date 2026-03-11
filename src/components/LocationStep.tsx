@@ -8,8 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
-  GOOGLE_MAPS_API_KEY,
-  LIBRARIES,
   SEDE_OPERATIVA,
   SEDE_LEGALE,
   DARK_MAP_STYLE,
