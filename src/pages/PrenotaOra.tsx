@@ -24,7 +24,7 @@ import {
   AlertCircle,
   Check,
 } from "lucide-react";
-import { format, differenceInDays } from "date-fns";
+import { format, differenceInDays, eachDayOfInterval, getMonth } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -204,9 +204,30 @@ const PrenotaOra = () => {
     return vehicles.filter((v) => v.category === selectedCategory);
   }, [vehicles, selectedCategory]);
 
+  // Dynamic pricing engine
+  const calculateDynamicPrice = useCallback((vehicle: any, start: Date, end: Date): number => {
+    const monthRateMap: Record<number, string> = {
+      3: 'rate_april',
+      4: 'rate_may',
+      5: 'rate_june',
+      6: 'rate_july',
+      7: 'rate_august',
+      8: 'rate_september',
+      9: 'rate_october',
+    };
+    const interval = eachDayOfInterval({ start, end: new Date(end.getTime() - 86400000) }); // exclude last day (return day)
+    let sum = 0;
+    for (const day of interval) {
+      const m = getMonth(day);
+      const rateKey = monthRateMap[m];
+      const monthRate = rateKey ? vehicle[rateKey] : null;
+      sum += (monthRate && monthRate > 0) ? monthRate : (vehicle.daily_rate || 0);
+    }
+    return Math.max(sum, 0);
+  }, []);
+
   const days = availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
-  const dailyRate = availabilityResult?.price_per_day ?? (selectedVehicle?.daily_rate ?? 0);
-  const total = availabilityResult?.estimated_price ?? (days * dailyRate);
+  const total = availabilityResult?.estimated_price ?? (selectedVehicle && startDate && endDate ? calculateDynamicPrice(selectedVehicle, startDate, endDate) : 0);
   const isAvailable = availabilityResult === null ? true : availabilityResult.available;
 
   const uploadFile = async (file: File | null, path: string) => {
@@ -770,7 +791,7 @@ const PrenotaOra = () => {
                           <span className="font-bold text-sm sm:text-base leading-tight px-1 group-hover/card:text-gold transition-colors">
                             {v.make} {v.model}
                           </span>
-                          <span className="text-xs text-gold/80 font-semibold px-1 mt-1">€{v.daily_rate}/giorno</span>
+                          <span className="text-xs text-gold/80 font-semibold px-1 mt-1">A partire da €{v.daily_rate}/gg</span>
                         </motion.div>
                       );
                     })}
@@ -931,7 +952,7 @@ const PrenotaOra = () => {
                               <p className="text-white/50 text-xs">Prezzo totale</p>
                               <p className="text-3xl font-black font-display text-gold">€{total}</p>
                             </div>
-                            <p className="text-white/40 text-sm">{days} giorn{days !== 1 ? "i" : "o"} × €{dailyRate}/gg</p>
+                            <p className="text-white/40 text-sm">{days} giorn{days !== 1 ? "i" : "o"} · Tariffa dinamica</p>
                           </div>
                           <Button
                             type="button"
@@ -1169,9 +1190,7 @@ const PrenotaOra = () => {
                   <div className="flex justify-between items-end pb-6 border-b border-white/5">
                     <div>
                       <p className="text-white/50 text-sm mb-1">Tariffa</p>
-                      <p className="text-white text-lg">
-                        {dailyRate > 0 ? `€${dailyRate}/gg` : <span className="text-white/40 text-sm">Seleziona</span>}
-                      </p>
+                      <span className="text-white text-sm">Tariffa dinamica stagionale</span>
                     </div>
                     <div className="text-right">
                       <p className="text-white/50 text-sm mb-1">Durata</p>

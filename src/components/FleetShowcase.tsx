@@ -129,7 +129,7 @@ const FleetShowcase = () => {
                     </h3>
                     <p className="text-gold font-bold text-lg mb-6">
                       {v.daily_rate && v.daily_rate > 0
-                        ? `A partire da €${v.daily_rate}/giorno`
+                        ? `A partire da €${v.daily_rate}/gg`
                         : "Prezzo su richiesta"}
                     </p>
 
