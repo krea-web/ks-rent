@@ -50,7 +50,7 @@ const Navbar = () => {
           </Link>
 
           {/* DESKTOP NAV */}
-          <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-full backdrop-blur-md">
+          <div className="hidden lg:flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-full backdrop-blur-md">
             {navLinks.map((l) => {
               const isActive = location.pathname === l.to;
               return (
