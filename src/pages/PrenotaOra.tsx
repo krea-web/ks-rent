@@ -732,7 +732,7 @@ const PrenotaOra = () => {
                       ))}
                     </div>
                   )}
-                  <div className="grid grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
                     {filteredVehicles.map((v) => {
                       const isSelected = selectedVehicle?.id === v.id;
                       return (
