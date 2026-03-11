@@ -54,6 +54,7 @@ interface LocationStepProps {
   setDropoffLocation: (l: string) => void;
   dropoffTime: string;
   setDropoffTime: (t: string) => void;
+  isMapLoaded: boolean;
 }
 
 const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px" };
