@@ -5,7 +5,7 @@ import { X, PenTool, RotateCcw, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
+const N8N_BASE = "https://n8n.kreareweb.com/webhook/ksrent";
 
 interface SignatureModalProps {
   open: boolean;
