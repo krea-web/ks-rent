@@ -1033,7 +1033,7 @@ const PrenotaOra = () => {
                           className="text-white/50 hover:text-red-400 hover:bg-red-400/10 gap-1.5"
                           onClick={() => {
                             setHasSecondDriver(null);
-                            setSecondDriver({ name: '', surname: '', email: '', phone: '', fiscalCode: '', birthDate: '', birthPlace: '', licenseNumber: '', licenseExpiry: '', licenseIssueDate: '', licenseIssuedBy: '' });
+                            setSecondDriver({ ...initialDriverState });
                           }}
                         >
                           <X className="w-4 h-4" />
