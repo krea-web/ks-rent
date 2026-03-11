@@ -980,7 +980,7 @@ const PrenotaOra = () => {
                   className="space-y-6"
                 >
                   {/* Ask about second driver */}
-                  {hasSecondDriver === null && (
+                  {(hasSecondDriver === null || hasSecondDriver === false) && (
                     <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 text-center space-y-6">
                       <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto">
                         <Users size={28} className="text-gold" />
