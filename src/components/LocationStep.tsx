@@ -294,4 +294,10 @@ const LocationStep = ({
   );
 };
 
-export default LocationStep;
+const LocationStepWithBoundary = (props: LocationStepProps) => (
+  <MapErrorBoundary>
+    <LocationStep {...props} />
+  </MapErrorBoundary>
+);
+
+export default LocationStepWithBoundary;
