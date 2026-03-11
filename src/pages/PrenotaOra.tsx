@@ -48,7 +48,7 @@ import { GOOGLE_MAPS_API_KEY, LIBRARIES } from "@/lib/googleMaps";
 const Calendar = lazy(() => import("@/components/ui/calendar").then(m => ({ default: m.Calendar })));
 const SignatureModal = lazy(() => import("@/components/SignatureModal"));
 
-const N8N_BASE = "https://n8n.kreareweb.com/webhook/rent";
+const N8N_BASE = "https://n8n.kreareweb.com/webhook/ksrent";
 
 const initialDriverState = {
   name: "",
