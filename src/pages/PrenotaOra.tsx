@@ -770,7 +770,7 @@ const PrenotaOra = () => {
                           <span className="font-bold text-sm sm:text-base leading-tight px-1 group-hover/card:text-gold transition-colors">
                             {v.make} {v.model}
                           </span>
-                          <span className="text-xs text-gold/80 font-semibold px-1 mt-1">€{v.daily_rate}/giorno</span>
+                          <span className="text-xs text-gold/80 font-semibold px-1 mt-1">A partire da €{v.daily_rate}/gg</span>
                         </motion.div>
                       );
                     })}
