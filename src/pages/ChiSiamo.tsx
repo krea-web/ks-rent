@@ -12,7 +12,7 @@ const ChiSiamo = () => {
       <SEOHead
         title="La Nostra Flotta | Noleggio Auto Lusso Porto Cervo - KS Rent"
         description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."
-        canonical="https://ksrentsardinia.com/chisiamo"
+        canonical="https://www.ksrentsardinia.com/chisiamo"
         jsonLd={localBusinessJsonLd} />
       
 
