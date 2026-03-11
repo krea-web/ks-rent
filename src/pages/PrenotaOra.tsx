@@ -204,10 +204,30 @@ const PrenotaOra = () => {
     return vehicles.filter((v) => v.category === selectedCategory);
   }, [vehicles, selectedCategory]);
 
+  // Dynamic pricing engine
+  const calculateDynamicPrice = useCallback((vehicle: any, start: Date, end: Date): number => {
+    const monthRateMap: Record<number, string> = {
+      3: 'rate_april',
+      4: 'rate_may',
+      5: 'rate_june',
+      6: 'rate_july',
+      7: 'rate_august',
+      8: 'rate_september',
+      9: 'rate_october',
+    };
+    const interval = eachDayOfInterval({ start, end: new Date(end.getTime() - 86400000) }); // exclude last day (return day)
+    let sum = 0;
+    for (const day of interval) {
+      const m = getMonth(day);
+      const rateKey = monthRateMap[m];
+      const monthRate = rateKey ? vehicle[rateKey] : null;
+      sum += (monthRate && monthRate > 0) ? monthRate : (vehicle.daily_rate || 0);
+    }
+    return Math.max(sum, 0);
+  }, []);
+
   const days = availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
-  const dailyRate = availabilityResult?.price_per_day ?? (selectedVehicle?.daily_rate ?? 0);
-  const total = availabilityResult?.estimated_price ?? (days * dailyRate);
-  const isAvailable = availabilityResult === null ? true : availabilityResult.available;
+  const total = availabilityResult?.estimated_price ?? (selectedVehicle && startDate && endDate ? calculateDynamicPrice(selectedVehicle, startDate, endDate) : 0);
 
   const uploadFile = async (file: File | null, path: string) => {
     if (!file) return null;
