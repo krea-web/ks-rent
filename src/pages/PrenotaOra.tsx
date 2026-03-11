@@ -1072,6 +1072,7 @@ const PrenotaOra = () => {
                     setDropoffLocation={setDropoffLocation}
                     dropoffTime={dropoffTime}
                     setDropoffTime={setDropoffTime}
+                    isMapLoaded={isMapLoaded}
                   />
 
                   {/* Riepilogo Finale */}
