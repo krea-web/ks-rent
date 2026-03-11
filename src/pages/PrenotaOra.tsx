@@ -1097,22 +1097,22 @@ const PrenotaOra = () => {
                       <CheckCircle2 className="text-gold" size={20} />
                       Riepilogo Finale
                     </h3>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="bg-white/5 rounded-xl p-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
-                        <p className="font-bold">{selectedVehicle?.make} {selectedVehicle?.model}</p>
+                        <p className="font-bold truncate">{selectedVehicle?.make} {selectedVehicle?.model}</p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
-                        <p className="font-bold">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
+                        <p className="font-bold truncate">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Guidatore</p>
-                        <p className="font-bold">{mainDriver.name} {mainDriver.surname}</p>
+                        <p className="font-bold truncate">{mainDriver.name} {mainDriver.surname}</p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4">
+                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
-                        <p className="font-bold text-gold text-xl">€{total}</p>
+                        <p className="font-bold text-gold text-lg sm:text-xl">€{total}</p>
                       </div>
                     </div>
                   </div>
