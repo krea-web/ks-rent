@@ -232,8 +232,9 @@ const LocationStep = ({
 
       {/* Loading state for custom when API not ready */}
       {locationType === "custom" && !isLoaded && !loadError && (
-        <div className="flex items-center gap-2 text-xs text-white/40 bg-[#111] rounded-lg px-3 py-4">
-          Caricamento mappa...
+        <div className="space-y-3">
+          <Skeleton className="w-full h-14 rounded-xl" />
+          <Skeleton className="w-full h-[200px] rounded-xl" />
         </div>
       )}
 
