@@ -62,11 +62,9 @@ const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px"
 const LocationStep = ({
   pickupType, setPickupType, pickupLocation, setPickupLocation, pickupTime, setPickupTime,
   dropoffType, setDropoffType, dropoffLocation, setDropoffLocation, dropoffTime, setDropoffTime,
+  isMapLoaded,
 }: LocationStepProps) => {
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    libraries: LIBRARIES,
-  });
+  const isLoaded = isMapLoaded;
 
   const [pickupMapCenter, setPickupMapCenter] = useState<{ lat: number; lng: number } | null>(null);
   const [dropoffMapCenter, setDropoffMapCenter] = useState<{ lat: number; lng: number } | null>(null);
