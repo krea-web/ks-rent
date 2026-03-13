@@ -98,15 +98,13 @@ const Admin = () => {
 
   // Raggruppamento veicoli per marca (Per la sezione Manutenzione)
   const vehiclesByMake = useMemo(() => {
-    return vehicles.reduce(
-      (acc, vehicle) => {
-        const make = vehicle.make || "Sconosciuta";
-        if (!acc[make]) acc[make] = [];
-        acc[make].push(vehicle);
-        return acc;
-      },
-      {} as Record<string, any[]>,
-    );
+    const grouped: Record<string, typeof vehicles> = {};
+    for (const vehicle of vehicles) {
+      const make = vehicle.make || "Sconosciuta";
+      if (!grouped[make]) grouped[make] = [];
+      grouped[make].push(vehicle);
+    }
+    return grouped;
   }, [vehicles]);
 
   const handleLogout = async () => {
