@@ -164,44 +164,52 @@ const Admin = () => {
       {/* SIDEBAR */}
       <aside
         className={cn(
-          "fixed lg:sticky lg:top-0 z-50 h-screen w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col shrink-0 transition-transform duration-300 lg:translate-x-0",
+          "fixed lg:sticky lg:top-0 z-50 h-screen w-64 bg-[#0a0a0a] border-r border-white/10 shrink-0 transition-transform duration-300 lg:translate-x-0 overflow-y-auto",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="p-6 border-b border-white/10 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-black font-display tracking-widest">
-              KS <span className="text-[#C8A135]">ADMIN</span>
-            </h1>
-            <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Control Room</p>
-          </div>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-1 text-white/40 hover:text-white">
-            <X size={20} />
-          </button>
-        </div>
-        <nav className="flex-1 p-4 flex flex-col gap-2">
-          {sidebarItems.map((item) => (
-            <button
-              key={item.section}
-              onClick={() => selectSection(item.section)}
-              className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold tracking-wide min-h-[48px]",
-                section === item.section
-                  ? "bg-[#C8A135]/10 text-[#C8A135] border border-[#C8A135]/20"
-                  : "text-white/60 hover:bg-white/5 hover:text-white",
-              )}
-            >
-              <item.icon size={18} /> {item.title}
+        <div className="flex flex-col h-full">
+          {/* Logo */}
+          <div className="p-6 border-b border-white/10 flex items-center justify-between shrink-0">
+            <div className="min-w-0">
+              <h1 className="text-2xl font-black font-display tracking-widest whitespace-nowrap">
+                KS <span className="text-[#C8A135]">ADMIN</span>
+              </h1>
+              <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Control Room</p>
+            </div>
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-white/40 hover:text-white shrink-0 ml-2">
+              <X size={20} />
             </button>
-          ))}
-        </nav>
-        <div className="p-4 border-t border-white/10">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl transition-colors text-sm font-bold min-h-[48px]"
-          >
-            <LogOut size={16} /> Logout
-          </button>
+          </div>
+
+          {/* Nav items */}
+          <nav className="flex-1 p-4 flex flex-col gap-2 overflow-y-auto">
+            {sidebarItems.map((item) => (
+              <button
+                key={item.section}
+                onClick={() => selectSection(item.section)}
+                className={cn(
+                  "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold tracking-wide shrink-0",
+                  section === item.section
+                    ? "bg-[#C8A135]/10 text-[#C8A135] border border-[#C8A135]/20"
+                    : "text-white/60 hover:bg-white/5 hover:text-white",
+                )}
+              >
+                <item.icon size={18} className="shrink-0" />
+                <span className="truncate">{item.title}</span>
+              </button>
+            ))}
+          </nav>
+
+          {/* Logout */}
+          <div className="p-4 border-t border-white/10 shrink-0">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl transition-colors text-sm font-bold"
+            >
+              <LogOut size={16} /> Logout
+            </button>
+          </div>
         </div>
       </aside>
 
@@ -252,6 +260,7 @@ const Admin = () => {
           {/* FLOTTA */}
           {section === "flotta" && (
             <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden">
+              {/* Desktop table */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead className="bg-white/5 text-white/50 text-xs uppercase tracking-widest border-b border-white/10">
@@ -267,9 +276,7 @@ const Admin = () => {
                   <tbody className="divide-y divide-white/5">
                     {vehicles.map((v) => (
                       <tr key={v.id} className="hover:bg-white/[0.02] transition-colors">
-                        <td className="p-4 font-bold">
-                          {v.make} {v.model}
-                        </td>
+                        <td className="p-4 font-bold">{v.make} {v.model}</td>
                         <td className="p-4 text-white/60 uppercase">{v.license_plate || "Nessuna Targa"}</td>
                         <td className="p-4 text-white/60">{v.category}</td>
                         <td className="p-4 text-[#C8A135] font-bold">€{(v.daily_rate ?? 0).toLocaleString("it-IT")}</td>
@@ -285,10 +292,7 @@ const Admin = () => {
                           )}
                         </td>
                         <td className="p-4 text-right">
-                          <button
-                            onClick={() => openEditVehicle(v)}
-                            className="p-2 text-white/40 hover:text-[#C8A135] transition-colors min-h-[44px] min-w-[44px]"
-                          >
+                          <button onClick={() => openEditVehicle(v)} className="p-2 text-white/40 hover:text-[#C8A135] transition-colors">
                             <Edit size={16} />
                           </button>
                         </td>
@@ -296,6 +300,36 @@ const Admin = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile cards */}
+              <div className="md:hidden divide-y divide-white/5">
+                {vehicles.map((v) => (
+                  <div key={v.id} className="p-4 flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-bold text-sm">{v.make} {v.model}</p>
+                        <p className="text-white/40 text-xs uppercase">{v.license_plate || "No Targa"}</p>
+                      </div>
+                      {v.available ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 text-[10px] font-bold border border-green-500/20">
+                          <CheckCircle2 size={10} /> OK
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/10 text-red-500 text-[10px] font-bold border border-red-500/20">
+                          <AlertCircle size={10} /> In uso
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-white/50">{v.category}</span>
+                      <span className="text-[#C8A135] font-bold">€{(v.daily_rate ?? 0).toLocaleString("it-IT")}/gg</span>
+                    </div>
+                    <button onClick={() => openEditVehicle(v)} className="mt-1 text-xs text-[#C8A135] font-bold uppercase tracking-wider self-end">
+                      Modifica →
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -382,6 +416,51 @@ const Admin = () => {
                     })}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile cards */}
+              <div className="md:hidden divide-y divide-white/5">
+                {bookings.map((b) => {
+                  const pdfUrl = b.signed_pdf_url || b.contract_url;
+                  return (
+                    <div key={b.id} className="p-4 flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <div className="min-w-0">
+                          <p className="font-bold text-sm truncate">{b.customer_name} {b.customer_surname}</p>
+                          <p className="text-white/40 text-xs truncate">{b.vehicles ? `${b.vehicles.make} ${b.vehicles.model}` : "Veicolo Eliminato"}</p>
+                        </div>
+                        <span
+                          className={cn(
+                            "shrink-0 ml-2 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase",
+                            b.status === "pending_signature"
+                              ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
+                              : b.status === "active"
+                                ? "bg-green-500/10 text-green-500 border-green-500/20"
+                                : "bg-white/5 text-white/50 border-white/10",
+                          )}
+                        >
+                          {b.status?.replace("_", " ") || "—"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-white/50">
+                          {b.start_date ? new Date(b.start_date).toLocaleDateString("it-IT") : "N/A"} → {b.end_date ? new Date(b.end_date).toLocaleDateString("it-IT") : "N/A"}
+                        </span>
+                        <span className="text-[#C8A135] font-bold">€{(b.total_price ?? 0).toLocaleString("it-IT")}</span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-1 justify-end">
+                        {pdfUrl && (
+                          <button onClick={() => openClientContract(pdfUrl)} className="text-white/60 hover:text-white bg-white/5 p-2 rounded-lg">
+                            <Download size={14} />
+                          </button>
+                        )}
+                        <button onClick={() => openBooking(b)} className="text-xs text-[#C8A135] font-bold uppercase tracking-wider">
+                          Gestisci →
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
