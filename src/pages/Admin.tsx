@@ -164,44 +164,52 @@ const Admin = () => {
       {/* SIDEBAR */}
       <aside
         className={cn(
-          "fixed lg:sticky lg:top-0 z-50 h-screen w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col shrink-0 transition-transform duration-300 lg:translate-x-0",
+          "fixed lg:sticky lg:top-0 z-50 h-screen w-64 bg-[#0a0a0a] border-r border-white/10 shrink-0 transition-transform duration-300 lg:translate-x-0 overflow-y-auto",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="p-6 border-b border-white/10 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-black font-display tracking-widest">
-              KS <span className="text-[#C8A135]">ADMIN</span>
-            </h1>
-            <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Control Room</p>
-          </div>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-1 text-white/40 hover:text-white">
-            <X size={20} />
-          </button>
-        </div>
-        <nav className="flex-1 p-4 flex flex-col gap-2">
-          {sidebarItems.map((item) => (
-            <button
-              key={item.section}
-              onClick={() => selectSection(item.section)}
-              className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold tracking-wide min-h-[48px]",
-                section === item.section
-                  ? "bg-[#C8A135]/10 text-[#C8A135] border border-[#C8A135]/20"
-                  : "text-white/60 hover:bg-white/5 hover:text-white",
-              )}
-            >
-              <item.icon size={18} /> {item.title}
+        <div className="flex flex-col h-full">
+          {/* Logo */}
+          <div className="p-6 border-b border-white/10 flex items-center justify-between shrink-0">
+            <div className="min-w-0">
+              <h1 className="text-2xl font-black font-display tracking-widest whitespace-nowrap">
+                KS <span className="text-[#C8A135]">ADMIN</span>
+              </h1>
+              <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Control Room</p>
+            </div>
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-white/40 hover:text-white shrink-0 ml-2">
+              <X size={20} />
             </button>
-          ))}
-        </nav>
-        <div className="p-4 border-t border-white/10">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl transition-colors text-sm font-bold min-h-[48px]"
-          >
-            <LogOut size={16} /> Logout
-          </button>
+          </div>
+
+          {/* Nav items */}
+          <nav className="flex-1 p-4 flex flex-col gap-2 overflow-y-auto">
+            {sidebarItems.map((item) => (
+              <button
+                key={item.section}
+                onClick={() => selectSection(item.section)}
+                className={cn(
+                  "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold tracking-wide shrink-0",
+                  section === item.section
+                    ? "bg-[#C8A135]/10 text-[#C8A135] border border-[#C8A135]/20"
+                    : "text-white/60 hover:bg-white/5 hover:text-white",
+                )}
+              >
+                <item.icon size={18} className="shrink-0" />
+                <span className="truncate">{item.title}</span>
+              </button>
+            ))}
+          </nav>
+
+          {/* Logout */}
+          <div className="p-4 border-t border-white/10 shrink-0">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl transition-colors text-sm font-bold"
+            >
+              <LogOut size={16} /> Logout
+            </button>
+          </div>
         </div>
       </aside>
 
