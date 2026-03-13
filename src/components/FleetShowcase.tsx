@@ -107,15 +107,16 @@ const FleetShowcase = () => {
           </motion.p>
         </div>
 
-        {fleet.length === 0 ? (
+        {groupedFleet.length === 0 ? (
           <div className="text-center text-white/40 py-20">Caricamento flotta...</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
-            {fleet.map((v, i) => {
+            {groupedFleet.map((group, i) => {
+              const v = group.representative;
               const IconComp = getIcon(v.category);
               return (
                 <motion.div
-                  key={v.id}
+                  key={`${v.make}__${v.model}`}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
