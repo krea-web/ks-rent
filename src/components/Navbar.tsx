@@ -108,61 +108,62 @@ const Navbar = () => {
             initial={{ opacity: 0, y: "-100%" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
-            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[9990] bg-[#050505] flex flex-col justify-center px-6 sm:px-8 overflow-hidden"
+            transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[9990] bg-[#050505] px-5 sm:px-8 pt-24 pb-8 overflow-y-auto"
           >
             <div className="absolute top-[-10%] right-[-10%] w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="flex flex-col gap-6 sm:gap-8 items-start">
-              {[...navLinks, { label: "Prenota Ora", to: "/prenotaora", special: true as const }].map((l, i) => {
-                const isActive = location.pathname === l.to;
-                const isSpecial = "special" in l && l.special;
-                return (
-                  <motion.div
-                    key={l.to}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -30 }}
-                    transition={{ delay: 0.1 * i, duration: 0.4, ease: "easeOut" }}
-                  >
-                    <Link
-                      to={l.to}
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        "flex items-center gap-3 sm:gap-4 text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-tight transition-colors min-h-[48px] relative z-20",
-                        isActive ? "text-gold" : "text-white/60 hover:text-white",
-                        isSpecial
-                          ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-500 mt-6 sm:mt-8"
-                          : "",
-                      )}
+            <div className="relative min-h-full flex flex-col">
+              <div className="flex flex-col gap-3 sm:gap-4 w-full">
+                {[...navLinks, { label: "Prenota Ora", to: "/prenotaora", special: true as const }].map((l, i) => {
+                  const isActive = location.pathname === l.to;
+                  const isSpecial = "special" in l && l.special;
+                  return (
+                    <motion.div
+                      key={l.to}
+                      initial={{ opacity: 0, x: -24 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -24 }}
+                      transition={{ delay: 0.08 * i, duration: 0.35, ease: "easeOut" }}
+                      className="w-full"
                     >
-                      {isActive && (
-                        <span className="w-3 h-3 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)] pointer-events-none" />
-                      )}
-                      <span className="pointer-events-none">{l.label}</span>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
+                      <Link
+                        to={l.to}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "w-full flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-display font-black leading-snug tracking-normal transition-colors min-h-[48px] py-2.5 pr-4 rounded-xl",
+                          isActive ? "text-gold" : "text-white/75 hover:text-white",
+                          isSpecial ? "text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-500 mt-4 sm:mt-6" : "",
+                        )}
+                      >
+                        {isActive && (
+                          <span className="w-2.5 h-2.5 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)] pointer-events-none" />
+                        )}
+                        <span className="pointer-events-none break-words">{l.label}</span>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="absolute bottom-8 sm:bottom-12 left-6 right-6 sm:left-8 sm:right-8 flex justify-between items-end border-t border-white/10 pt-6 sm:pt-8"
-            >
-              <div>
-                <p className="text-white/40 text-xs uppercase tracking-widest mb-2 pointer-events-none">Assistenza</p>
-                <a href="tel:+393446107071" className="text-gold font-bold relative z-20">
-                  +39 344 610 7071
-                </a>
-              </div>
-              <div className="text-right">
-                <p className="text-white/40 text-xs uppercase tracking-widest mb-2 pointer-events-none">Olbia, IT</p>
-                <p className="text-white text-sm pointer-events-none">Costa Smeralda</p>
-              </div>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.35 }}
+                className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4"
+              >
+                <div>
+                  <p className="text-white/40 text-xs uppercase tracking-widest mb-2 pointer-events-none">Assistenza</p>
+                  <a href="tel:+393446107071" className="text-gold font-bold relative z-20 min-h-[48px] inline-flex items-center">
+                    +39 344 610 7071
+                  </a>
+                </div>
+                <div className="sm:text-right">
+                  <p className="text-white/40 text-xs uppercase tracking-widest mb-2 pointer-events-none">Olbia, IT</p>
+                  <p className="text-white text-sm pointer-events-none">Costa Smeralda</p>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
