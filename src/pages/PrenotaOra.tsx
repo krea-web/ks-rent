@@ -775,18 +775,23 @@ const PrenotaOra = () => {
                     </div>
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
-                    {filteredVehicles.map((v) => {
-                      const isSelected = selectedVehicle?.id === v.id;
+                    {filteredGrouped.map((group) => {
+                      const v = group.representative;
+                      const groupKey = `${v.make}__${v.model}`;
+                      const isSelected = selectedVehicle && `${selectedVehicle.make}__${selectedVehicle.model}` === groupKey;
+                      const soldOut = !group.isAvailable;
                       return (
                         <motion.div
-                          key={v.id}
-                          whileTap={{ scale: 0.97 }}
-                          onClick={() => handleVehicleSelect(v)}
+                          key={groupKey}
+                          whileTap={soldOut ? undefined : { scale: 0.97 }}
+                          onClick={() => handleVehicleSelect(group)}
                           className={cn(
-                            "p-3 rounded-xl md:rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group/card",
-                            isSelected
-                              ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
-                              : "bg-[#111] border-white/10 hover:border-white/30"
+                            "p-3 rounded-xl md:rounded-2xl border transition-all duration-300 flex flex-col group/card relative",
+                            soldOut
+                              ? "bg-[#111] border-white/5 opacity-50 cursor-not-allowed"
+                              : isSelected
+                              ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)] cursor-pointer"
+                              : "bg-[#111] border-white/10 hover:border-white/30 cursor-pointer"
                           )}
                         >
                           <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
@@ -796,10 +801,15 @@ const PrenotaOra = () => {
                               width={400}
                               showSkeleton
                               skeletonClassName="rounded-none"
-                              className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
+                              className={cn("w-full h-full object-cover transition-transform duration-500", !soldOut && "group-hover/card:scale-110")}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
-                            {isSelected && (
+                            {soldOut && (
+                              <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                                <span className="bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Esaurito</span>
+                              </div>
+                            )}
+                            {isSelected && !soldOut && (
                               <motion.div
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
