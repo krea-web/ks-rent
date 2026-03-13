@@ -1,102 +1,136 @@
 import { motion } from "framer-motion";
-import { Star, ExternalLink } from "lucide-react";
+import { Star, ExternalLink, Quote } from "lucide-react";
 
 const GOOGLE_REVIEW_URL = "https://g.page/r/CZKdxnQ8w8GFEBM/review";
 
-const Stars = () => (
-  <div className="flex gap-0.5">
-    {Array.from({ length: 5 }, (_, i) => (
-      <Star key={i} size={16} className="fill-current text-[#C8A135]" />
-    ))}
-  </div>
-);
-
+// Dati statici reali formattati per il massimo impatto visivo
 const reviews = [
   {
-    name: "Monica Fodde",
+    author_name: "Monica Fodde",
+    rating: 5,
     content: (
-      <p className="text-white text-sm leading-relaxed">
-        Ho avuto un'<span className="text-[#C8A135] font-semibold">esperienza davvero molto positiva</span> con questo autonoleggio. Il personale è stato <span className="text-[#C8A135] font-semibold">gentile, professionale</span> e sempre disponibile a rispondere a qualsiasi domanda. La procedura di ritiro e riconsegna dell'auto è stata <span className="text-[#C8A135] font-semibold">veloce e senza complicazioni</span>.<br /><br />
-        L'auto che mi è stata consegnata era pulita, <span className="text-[#C8A135] font-semibold">in perfette condizioni</span> e molto confortevole da guidare. Anche <span className="text-[#C8A135] font-semibold">i prezzi mi sono sembrati onesti</span> e ben spiegati fin dall'inizio, <span className="text-[#C8A135] font-semibold">senza sorprese</span>.<br /><br />
-        Consiglio sicuramente questo autonoleggio a chiunque abbia bisogno di un servizio affidabile e di qualità.
+      <p className="text-white/90 text-sm md:text-base leading-relaxed">
+        Ho avuto un’<span className="text-[#C8A135] font-semibold">esperienza davvero molto positiva</span> con questo
+        autonoleggio. Il personale è stato <span className="text-[#C8A135] font-semibold">gentile, professionale</span>{" "}
+        e sempre disponibile a rispondere a qualsiasi domanda. La procedura di ritiro e riconsegna dell’auto è stata{" "}
+        <span className="text-[#C8A135] font-semibold">veloce e senza complicazioni</span>.<br />
+        <br />
+        L’auto che mi è stata consegnata era pulita,{" "}
+        <span className="text-[#C8A135] font-semibold">in perfette condizioni</span> e molto confortevole da guidare.
+        Anche <span className="text-[#C8A135] font-semibold">i prezzi mi sono sembrati onesti</span> e ben spiegati fin
+        dall’inizio, <span className="text-[#C8A135] font-semibold">senza sorprese</span>.
       </p>
     ),
   },
   {
-    name: "Giada Bianchi",
+    author_name: "Giada Bianchi",
+    rating: 5,
     content: (
-      <p className="text-white text-sm leading-relaxed">
-        <span className="text-[#C8A135] font-semibold">Servizio impeccabile!</span> Ritiro e consegna <span className="text-[#C8A135] font-semibold">velocissimi</span>. Personale gentile e <span className="text-[#C8A135] font-semibold">prezzi chiari, senza sorprese</span>.
+      <p className="text-white/90 text-sm md:text-base leading-relaxed">
+        <span className="text-[#C8A135] font-semibold">Servizio impeccabile!</span> Ritiro e consegna{" "}
+        <span className="text-[#C8A135] font-semibold">velocissimi</span>. Personale gentile e{" "}
+        <span className="text-[#C8A135] font-semibold">prezzi chiari, senza sorprese</span>.
       </p>
     ),
   },
   {
-    name: "Dario Deiana",
+    author_name: "Dario Deiana",
+    rating: 5,
     content: (
-      <p className="text-white text-sm leading-relaxed">
-        <span className="text-[#C8A135] font-semibold">Professionalità e cortesia ai massimi livelli</span>. Consegna puntuale in aeroporto a Olbia, <span className="text-[#C8A135] font-semibold">auto pulitissima e nessuna sorpresa</span> sul prezzo. <span className="text-[#C8A135] font-bold">Top!</span>
+      <p className="text-white/90 text-sm md:text-base leading-relaxed">
+        <span className="text-[#C8A135] font-semibold">Professionalità e cortesia ai massimi livelli</span>. Consegna
+        puntuale in aeroporto a Olbia,{" "}
+        <span className="text-[#C8A135] font-semibold">auto pulitissima e nessuna sorpresa</span> sul prezzo.{" "}
+        <span className="text-[#C8A135] font-bold">Top!</span>
       </p>
     ),
   },
 ];
 
+const Stars = ({ rating }: { rating: number }) => (
+  <div className="flex gap-1">
+    {Array.from({ length: 5 }, (_, i) => (
+      <Star key={i} size={20} className={i < rating ? "fill-[#C8A135] text-[#C8A135]" : "text-gray-700"} />
+    ))}
+  </div>
+);
+
+const ReviewCard = ({ review, index }: { review: any; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: index * 0.2, duration: 0.7, ease: "easeOut" }}
+    className="relative bg-[#0a0a0a] rounded-2xl p-8 md:p-10 border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col justify-between h-full group hover:border-[#C8A135]/40 transition-all duration-500"
+  >
+    {/* Icona virgolette in background (Premium touch) */}
+    <div className="absolute top-8 right-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500">
+      <Quote size={80} className="text-[#C8A135] rotate-180" />
+    </div>
+
+    <div className="relative z-10 flex-grow">
+      <Stars rating={review.rating} />
+      <div className="mt-8 mb-10">{review.content}</div>
+    </div>
+
+    {/* Footer della card con Avatar generato */}
+    <div className="flex items-center gap-4 pt-6 border-t border-white/10 relative z-10">
+      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C8A135] to-black flex items-center justify-center text-black font-black text-xl shadow-lg">
+        {review.author_name.charAt(0)}
+      </div>
+      <div>
+        <h4 className="font-bold text-lg text-[#C8A135] tracking-wide">{review.author_name}</h4>
+        <span className="text-xs text-white/40 uppercase tracking-wider">Cliente Verificato</span>
+      </div>
+    </div>
+  </motion.div>
+);
+
 const GoogleReviews = () => {
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden bg-[#C8A135]">
+    <section className="relative py-24 md:py-32 overflow-hidden bg-[#C8A135]">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Header della sezione */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-16 md:mb-20"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Star size={20} className="fill-current text-black" />
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-black/70">
-              Google Reviews
-            </span>
-            <Star size={20} className="fill-current text-black" />
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-[1px] w-12 bg-black/30"></div>
+            <span className="text-sm font-bold uppercase tracking-[0.3em] text-black/80">Esperienze Reali</span>
+            <div className="h-[1px] w-12 bg-black/30"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black text-black tracking-tight mb-4">
-            Dicono di Noi
-          </h2>
-          <p className="text-base md:text-lg text-black/70 max-w-2xl mx-auto">
-            La soddisfazione dei nostri clienti è la nostra priorità. Ecco cosa dicono di noi.
+          <h2 className="text-4xl md:text-6xl font-black text-black tracking-tighter mb-6">Dicono di Noi</h2>
+          <p className="text-lg md:text-xl text-black/80 max-w-2xl mx-auto font-medium">
+            La fiducia dei nostri clienti è il nostro traguardo più grande.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+        {/* Griglia a 3 colonne esatte */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           {reviews.map((review, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="bg-black rounded-2xl p-6 shadow-2xl border border-white/10"
-            >
-              <Stars />
-              <div className="mt-3 mb-4">{review.content}</div>
-              <span className="font-bold text-sm text-[#C8A135]">{review.name}</span>
-            </motion.div>
+            <ReviewCard key={i} review={review} index={i} />
           ))}
         </div>
 
+        {/* Call to Action Nera e Oro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center"
+          className="flex justify-center"
         >
           <a
             href={GOOGLE_REVIEW_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-black text-[#C8A135] text-sm md:text-base font-bold uppercase tracking-wider hover:bg-black/90 transition-colors shadow-2xl border border-white/10"
+            className="group flex items-center gap-4 px-10 py-5 rounded-full bg-[#0a0a0a] text-[#C8A135] text-sm md:text-base font-bold uppercase tracking-[0.15em] hover:bg-black transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.6)] hover:-translate-y-1"
           >
-            <Star size={18} className="fill-current" />
-            Condividi la Tua Esperienza
-            <ExternalLink size={16} />
+            <Star size={20} className="fill-[#C8A135] group-hover:scale-110 transition-transform duration-300" />
+            Condividi la tua esperienza
+            <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
           </a>
         </motion.div>
       </div>
