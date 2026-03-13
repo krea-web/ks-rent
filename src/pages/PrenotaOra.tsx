@@ -265,9 +265,11 @@ const PrenotaOra = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleVehicleSelect = (v: any) => {
-    setSelectedVehicle(v);
-    // Auto-advance to step 2
+  const handleVehicleSelect = (group: { representative: any; allVehicles: any[]; isAvailable: boolean }) => {
+    if (!group.isAvailable) return;
+    // Pick the first available physical vehicle from the group
+    const physicalVehicle = group.allVehicles.find((v) => v.available) || group.representative;
+    setSelectedVehicle(physicalVehicle);
     setTimeout(() => goToStep(2), 300);
   };
 
