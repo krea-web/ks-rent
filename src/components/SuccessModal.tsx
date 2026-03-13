@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2, Star, Home } from "lucide-react";
 import { Link } from "react-router-dom";
+
+const GOOGLE_REVIEW_URL = "https://g.page/r/CZKdxnQ8w8GFEBM/review";
 
 interface SuccessModalProps {
   open: boolean;
@@ -47,7 +49,7 @@ const SuccessModal = ({ open, onClose }: SuccessModalProps) => (
 
           {/* Description */}
           <p className="text-sm md:text-base text-white/60 leading-relaxed mb-8">
-            Grazie per aver scelto KS Rent. Il nostro team verificherà la disponibilità del veicolo e ti contatterà a brevissimo per confermare i dettagli.
+            La tua prenotazione è confermata! Aiutaci a crescere lasciando una recensione su Google.
           </p>
 
           {/* Divider */}
@@ -55,20 +57,23 @@ const SuccessModal = ({ open, onClose }: SuccessModalProps) => (
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button
-              onClick={onClose}
-              className="px-6 py-3 rounded-xl border border-white/10 text-white/70 text-sm font-semibold uppercase tracking-wider hover:border-white/30 hover:text-white transition-all"
-            >
-              Chiudi
-            </button>
             <Link
               to="/"
               onClick={onClose}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-gold to-yellow-600 text-black text-sm font-bold uppercase tracking-wider hover:opacity-90 transition-opacity"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-white/70 text-sm font-semibold uppercase tracking-wider hover:border-white/30 hover:text-white transition-all"
             >
+              <Home size={14} />
               Torna alla Home
-              <ArrowRight size={14} />
             </Link>
+            <a
+              href={GOOGLE_REVIEW_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-gold to-[hsl(43,56%,65%)] text-black text-sm font-bold uppercase tracking-wider hover:scale-105 transition-transform"
+            >
+              <Star size={14} />
+              Lascia una Recensione
+            </a>
           </div>
         </motion.div>
       </motion.div>
