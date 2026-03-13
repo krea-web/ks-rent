@@ -260,6 +260,7 @@ const Admin = () => {
           {/* FLOTTA */}
           {section === "flotta" && (
             <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden">
+              {/* Desktop table */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead className="bg-white/5 text-white/50 text-xs uppercase tracking-widest border-b border-white/10">
@@ -275,9 +276,7 @@ const Admin = () => {
                   <tbody className="divide-y divide-white/5">
                     {vehicles.map((v) => (
                       <tr key={v.id} className="hover:bg-white/[0.02] transition-colors">
-                        <td className="p-4 font-bold">
-                          {v.make} {v.model}
-                        </td>
+                        <td className="p-4 font-bold">{v.make} {v.model}</td>
                         <td className="p-4 text-white/60 uppercase">{v.license_plate || "Nessuna Targa"}</td>
                         <td className="p-4 text-white/60">{v.category}</td>
                         <td className="p-4 text-[#C8A135] font-bold">€{(v.daily_rate ?? 0).toLocaleString("it-IT")}</td>
@@ -293,10 +292,7 @@ const Admin = () => {
                           )}
                         </td>
                         <td className="p-4 text-right">
-                          <button
-                            onClick={() => openEditVehicle(v)}
-                            className="p-2 text-white/40 hover:text-[#C8A135] transition-colors min-h-[44px] min-w-[44px]"
-                          >
+                          <button onClick={() => openEditVehicle(v)} className="p-2 text-white/40 hover:text-[#C8A135] transition-colors">
                             <Edit size={16} />
                           </button>
                         </td>
@@ -304,6 +300,36 @@ const Admin = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile cards */}
+              <div className="md:hidden divide-y divide-white/5">
+                {vehicles.map((v) => (
+                  <div key={v.id} className="p-4 flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-bold text-sm">{v.make} {v.model}</p>
+                        <p className="text-white/40 text-xs uppercase">{v.license_plate || "No Targa"}</p>
+                      </div>
+                      {v.available ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 text-[10px] font-bold border border-green-500/20">
+                          <CheckCircle2 size={10} /> OK
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/10 text-red-500 text-[10px] font-bold border border-red-500/20">
+                          <AlertCircle size={10} /> In uso
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-white/50">{v.category}</span>
+                      <span className="text-[#C8A135] font-bold">€{(v.daily_rate ?? 0).toLocaleString("it-IT")}/gg</span>
+                    </div>
+                    <button onClick={() => openEditVehicle(v)} className="mt-1 text-xs text-[#C8A135] font-bold uppercase tracking-wider self-end">
+                      Modifica →
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           )}
