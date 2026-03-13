@@ -172,10 +172,10 @@ const Admin = () => {
           {/* Logo */}
           <div className="p-6 border-b border-white/10 flex items-center justify-between shrink-0">
             <div className="min-w-0">
-              <h1 className="text-2xl font-black font-display tracking-widest whitespace-nowrap">
+              <h1 className="text-xl font-black font-sans tracking-wide whitespace-nowrap">
                 KS <span className="text-[#C8A135]">ADMIN</span>
               </h1>
-              <p className="text-white/40 text-xs mt-1 uppercase tracking-wider">Control Room</p>
+              <p className="text-white/40 text-[10px] mt-1 uppercase tracking-widest font-sans">Control Room</p>
             </div>
             <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-white/40 hover:text-white shrink-0 ml-2">
               <X size={20} />
