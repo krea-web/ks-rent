@@ -157,13 +157,32 @@ const PrenotaOra = () => {
       const { data, error } = await supabase
         .from("vehicles")
         .select("*")
-        .eq("available", true)
         .order("category", { ascending: true });
       if (data) setVehicles(data);
       if (error) console.error("Errore recupero veicoli:", error);
     };
     fetchVehicles();
   }, []);
+
+  // Group vehicles by make+model for display (1 card per model)
+  const groupedVehicles = useMemo(() => {
+    const groups: Record<string, { representative: any; allVehicles: any[]; isAvailable: boolean }> = {};
+    for (const v of vehicles) {
+      const key = `${v.make}__${v.model}`;
+      if (!groups[key]) {
+        groups[key] = { representative: v, allVehicles: [], isAvailable: false };
+      }
+      groups[key].allVehicles.push(v);
+      if (v.available) {
+        groups[key].isAvailable = true;
+        // Prefer an available vehicle as representative (for pricing)
+        if (!groups[key].representative.available) {
+          groups[key].representative = v;
+        }
+      }
+    }
+    return Object.values(groups);
+  }, [vehicles]);
 
   // Check availability when dates are confirmed
   const checkAvailability = useCallback(async () => {
@@ -195,14 +214,14 @@ const PrenotaOra = () => {
   }, [selectedVehicle, startDate, endDate]);
 
   const categories = useMemo(() => {
-    const cats = new Set(vehicles.map((v) => v.category));
+    const cats = new Set(groupedVehicles.map((g) => g.representative.category));
     return ["Tutti", ...Array.from(cats)];
-  }, [vehicles]);
+  }, [groupedVehicles]);
 
-  const filteredVehicles = useMemo(() => {
-    if (selectedCategory === "Tutti") return vehicles;
-    return vehicles.filter((v) => v.category === selectedCategory);
-  }, [vehicles, selectedCategory]);
+  const filteredGrouped = useMemo(() => {
+    if (selectedCategory === "Tutti") return groupedVehicles;
+    return groupedVehicles.filter((g) => g.representative.category === selectedCategory);
+  }, [groupedVehicles, selectedCategory]);
 
   // Dynamic pricing engine
   const calculateDynamicPrice = useCallback((vehicle: any, start: Date, end: Date): number => {
@@ -246,9 +265,11 @@ const PrenotaOra = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleVehicleSelect = (v: any) => {
-    setSelectedVehicle(v);
-    // Auto-advance to step 2
+  const handleVehicleSelect = (group: { representative: any; allVehicles: any[]; isAvailable: boolean }) => {
+    if (!group.isAvailable) return;
+    // Pick the first available physical vehicle from the group
+    const physicalVehicle = group.allVehicles.find((v) => v.available) || group.representative;
+    setSelectedVehicle(physicalVehicle);
     setTimeout(() => goToStep(2), 300);
   };
 
@@ -754,18 +775,23 @@ const PrenotaOra = () => {
                     </div>
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
-                    {filteredVehicles.map((v) => {
-                      const isSelected = selectedVehicle?.id === v.id;
+                    {filteredGrouped.map((group) => {
+                      const v = group.representative;
+                      const groupKey = `${v.make}__${v.model}`;
+                      const isSelected = selectedVehicle && `${selectedVehicle.make}__${selectedVehicle.model}` === groupKey;
+                      const soldOut = !group.isAvailable;
                       return (
                         <motion.div
-                          key={v.id}
-                          whileTap={{ scale: 0.97 }}
-                          onClick={() => handleVehicleSelect(v)}
+                          key={groupKey}
+                          whileTap={soldOut ? undefined : { scale: 0.97 }}
+                          onClick={() => handleVehicleSelect(group)}
                           className={cn(
-                            "p-3 rounded-xl md:rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col group/card",
-                            isSelected
-                              ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
-                              : "bg-[#111] border-white/10 hover:border-white/30"
+                            "p-3 rounded-xl md:rounded-2xl border transition-all duration-300 flex flex-col group/card relative",
+                            soldOut
+                              ? "bg-[#111] border-white/5 opacity-50 cursor-not-allowed"
+                              : isSelected
+                              ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)] cursor-pointer"
+                              : "bg-[#111] border-white/10 hover:border-white/30 cursor-pointer"
                           )}
                         >
                           <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
@@ -775,10 +801,15 @@ const PrenotaOra = () => {
                               width={400}
                               showSkeleton
                               skeletonClassName="rounded-none"
-                              className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-500"
+                              className={cn("w-full h-full object-cover transition-transform duration-500", !soldOut && "group-hover/card:scale-110")}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
-                            {isSelected && (
+                            {soldOut && (
+                              <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                                <span className="bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Esaurito</span>
+                              </div>
+                            )}
+                            {isSelected && !soldOut && (
                               <motion.div
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
