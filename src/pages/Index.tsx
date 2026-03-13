@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import TrustMarquee from "@/components/TrustMarquee";
 import FleetShowcase from "@/components/FleetShowcase";
 import FAQSection from "@/components/FAQSection";
+import GoogleReviews from "@/components/GoogleReviews";
 import { localBusinessJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
 
 const Index = () => (
@@ -17,6 +18,7 @@ const Index = () => (
     <TrustMarquee />
     <FleetShowcase />
     <FAQSection />
+    <GoogleReviews />
   </>
 );
 
