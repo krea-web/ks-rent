@@ -214,14 +214,14 @@ const PrenotaOra = () => {
   }, [selectedVehicle, startDate, endDate]);
 
   const categories = useMemo(() => {
-    const cats = new Set(vehicles.map((v) => v.category));
+    const cats = new Set(groupedVehicles.map((g) => g.representative.category));
     return ["Tutti", ...Array.from(cats)];
-  }, [vehicles]);
+  }, [groupedVehicles]);
 
-  const filteredVehicles = useMemo(() => {
-    if (selectedCategory === "Tutti") return vehicles;
-    return vehicles.filter((v) => v.category === selectedCategory);
-  }, [vehicles, selectedCategory]);
+  const filteredGrouped = useMemo(() => {
+    if (selectedCategory === "Tutti") return groupedVehicles;
+    return groupedVehicles.filter((g) => g.representative.category === selectedCategory);
+  }, [groupedVehicles, selectedCategory]);
 
   // Dynamic pricing engine
   const calculateDynamicPrice = useCallback((vehicle: any, start: Date, end: Date): number => {
