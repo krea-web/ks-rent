@@ -179,7 +179,7 @@ const Admin = () => {
             <X size={20} />
           </button>
         </div>
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 flex flex-col gap-2">
           {sidebarItems.map((item) => (
             <button
               key={item.section}
