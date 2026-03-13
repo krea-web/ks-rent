@@ -195,15 +195,6 @@ const Admin = () => {
             ))}
           </nav>
 
-          {/* Logout */}
-          <div className="p-4 border-t border-white/10 shrink-0">
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl transition-colors text-sm font-bold"
-            >
-              <LogOut size={16} /> Logout
-            </button>
-          </div>
         </div>
       </aside>
 
