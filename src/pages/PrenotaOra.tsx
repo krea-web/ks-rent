@@ -157,13 +157,32 @@ const PrenotaOra = () => {
       const { data, error } = await supabase
         .from("vehicles")
         .select("*")
-        .eq("available", true)
         .order("category", { ascending: true });
       if (data) setVehicles(data);
       if (error) console.error("Errore recupero veicoli:", error);
     };
     fetchVehicles();
   }, []);
+
+  // Group vehicles by make+model for display (1 card per model)
+  const groupedVehicles = useMemo(() => {
+    const groups: Record<string, { representative: any; allVehicles: any[]; isAvailable: boolean }> = {};
+    for (const v of vehicles) {
+      const key = `${v.make}__${v.model}`;
+      if (!groups[key]) {
+        groups[key] = { representative: v, allVehicles: [], isAvailable: false };
+      }
+      groups[key].allVehicles.push(v);
+      if (v.available) {
+        groups[key].isAvailable = true;
+        // Prefer an available vehicle as representative (for pricing)
+        if (!groups[key].representative.available) {
+          groups[key].representative = v;
+        }
+      }
+    }
+    return Object.values(groups);
+  }, [vehicles]);
 
   // Check availability when dates are confirmed
   const checkAvailability = useCallback(async () => {
