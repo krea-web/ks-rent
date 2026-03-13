@@ -206,7 +206,7 @@ const Admin = () => {
       </aside>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 flex flex-col h-full bg-[#050505] overflow-hidden min-w-0">
+      <main className="flex-1 flex flex-col min-h-screen bg-[#050505] overflow-hidden min-w-0">
         <header className="h-16 lg:h-20 border-b border-white/10 flex items-center justify-between px-4 lg:px-8 bg-[#0a0a0a]/50 backdrop-blur-md shrink-0">
           <div className="flex items-center gap-3">
             <button
