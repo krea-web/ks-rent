@@ -195,15 +195,6 @@ const Admin = () => {
             ))}
           </nav>
 
-          {/* Logout */}
-          <div className="p-4 border-t border-white/10 shrink-0">
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-xl transition-colors text-sm font-bold"
-            >
-              <LogOut size={16} /> Logout
-            </button>
-          </div>
         </div>
       </aside>
 
@@ -229,7 +220,6 @@ const Admin = () => {
               <RefreshCw size={18} className={cn("text-[#C8A135]", loading && "animate-spin")} />
             </button>
 
-            {/* Tasti specifici per sezione */}
             {section === "flotta" && (
               <button
                 onClick={openAddVehicle}
@@ -247,6 +237,14 @@ const Admin = () => {
                 <Printer size={16} /> <span className="hidden sm:inline">Contratto Vuoto</span>
               </button>
             )}
+
+            <button
+              onClick={handleLogout}
+              className="p-2 bg-red-500/10 border border-red-500/20 rounded-full hover:bg-red-500/20 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+              title="Logout"
+            >
+              <LogOut size={18} className="text-red-500" />
+            </button>
           </div>
         </header>
 
