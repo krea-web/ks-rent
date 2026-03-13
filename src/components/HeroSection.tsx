@@ -9,13 +9,12 @@ const HeroSection = () => (
   <section className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
     <video
       autoPlay
-      muted
       loop
+      muted
       playsInline
-      className="absolute inset-0 w-full h-full object-cover"
-      src={HERO_VIDEO_URL}
+      className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
     >
-      <track kind="captions" srcLang="it" label="Italiano" />
+      <source src={HERO_VIDEO_URL} type="video/mp4" />
     </video>
 
     <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background pointer-events-none" />
