@@ -223,7 +223,7 @@ const Admin = () => {
             >
               <Menu size={22} />
             </button>
-            <h2 className="text-lg lg:text-2xl font-bold font-display text-white truncate">
+            <h2 className="text-lg lg:text-2xl font-bold font-sans text-white truncate">
               {sidebarItems.find((s) => s.section === section)?.title}
             </h2>
           </div>
