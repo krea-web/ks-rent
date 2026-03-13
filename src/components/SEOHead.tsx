@@ -5,6 +5,7 @@ interface SEOHeadProps {
   description: string;
   canonical?: string;
   ogImage?: string;
+  keywords?: string;
   jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
@@ -13,11 +14,13 @@ const SEOHead = ({
   description,
   canonical,
   ogImage = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+  keywords,
   jsonLd,
 }: SEOHeadProps) => (
   <Helmet>
     <title>{title}</title>
     <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
     <link rel="canonical" href={canonical || window.location.href} />
 
     <meta property="og:title" content={title} />
