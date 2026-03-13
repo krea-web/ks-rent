@@ -35,13 +35,32 @@ const FleetShowcase = () => {
   const [fleet, setFleet] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetch = async () => {
-      const { data, error } = await supabase.from("vehicles").select("*").eq("available", true).order("category");
+    const fetchFleet = async () => {
+      const { data, error } = await supabase.from("vehicles").select("*").order("category");
       if (data) setFleet(data);
       if (error) console.error("Errore recupero flotta:", error);
     };
-    fetch();
+    fetchFleet();
   }, []);
+
+  // Group by make+model: one card per unique model
+  const groupedFleet = useMemo(() => {
+    const groups: Record<string, { representative: any; isAvailable: boolean }> = {};
+    for (const v of fleet) {
+      const key = `${v.make}__${v.model}`;
+      if (!groups[key]) {
+        groups[key] = { representative: v, isAvailable: false };
+      }
+      if (v.available) {
+        groups[key].isAvailable = true;
+        if (!groups[key].representative.available) {
+          groups[key].representative = v;
+        }
+      }
+    }
+    // Only show models that have at least one available vehicle
+    return Object.values(groups).filter((g) => g.isAvailable);
+  }, [fleet]);
 
   const getImage = (v: any) =>
     v.image_url ||
