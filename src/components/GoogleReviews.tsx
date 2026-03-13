@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Star, ExternalLink } from "lucide-react";
 
@@ -10,6 +10,7 @@ interface Review {
   rating: number;
   text: string;
   relative_time_description?: string;
+  profile_photo_url?: string;
 }
 
 const FALLBACK_REVIEWS: Review[] = [
@@ -51,7 +52,7 @@ const Stars = ({ rating }: { rating: number }) => (
       <Star
         key={i}
         size={16}
-        className={i < rating ? "fill-current text-black/80" : "text-black/20"}
+        className={i < rating ? "fill-current text-foreground/80" : "text-foreground/20"}
       />
     ))}
   </div>
@@ -63,16 +64,26 @@ const ReviewCard = ({ review, index }: { review: Review; index: number }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ delay: index * 0.1, duration: 0.5 }}
-    className="bg-black/10 backdrop-blur-sm rounded-2xl p-6 border border-black/10 hover:border-black/20 transition-colors"
+    className="bg-foreground/10 backdrop-blur-sm rounded-2xl p-6 border border-foreground/10 hover:border-foreground/20 transition-colors"
   >
     <Stars rating={review.rating} />
-    <p className="text-sm leading-relaxed text-black/70 mt-3 mb-4 line-clamp-4">
+    <p className="text-sm leading-relaxed text-foreground/70 mt-3 mb-4 line-clamp-4">
       "{review.text}"
     </p>
-    <div className="flex items-center justify-between">
-      <span className="font-bold text-sm text-black/90">{review.author_name}</span>
+    <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center gap-2">
+        {review.profile_photo_url && (
+          <img
+            src={review.profile_photo_url}
+            alt={review.author_name}
+            className="w-7 h-7 rounded-full object-cover"
+            loading="lazy"
+          />
+        )}
+        <span className="font-bold text-sm text-foreground/90">{review.author_name}</span>
+      </div>
       {review.relative_time_description && (
-        <span className="text-xs text-black/40">{review.relative_time_description}</span>
+        <span className="text-xs text-foreground/40 shrink-0">{review.relative_time_description}</span>
       )}
     </div>
   </motion.div>
@@ -80,13 +91,14 @@ const ReviewCard = ({ review, index }: { review: Review; index: number }) => (
 
 const GoogleReviews = () => {
   const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
-  const mapRef = useRef<HTMLDivElement>(null);
 
   const fetchReviews = useCallback(() => {
-    if (!window.google?.maps?.places?.PlacesService || !mapRef.current) return;
+    if (!window.google?.maps?.places?.PlacesService) return;
 
     try {
-      const service = new window.google.maps.places.PlacesService(mapRef.current);
+      const service = new window.google.maps.places.PlacesService(
+        document.createElement("div")
+      );
       service.getDetails(
         { placeId: PLACE_ID, fields: ["reviews"] },
         (place, status) => {
@@ -95,14 +107,19 @@ const GoogleReviews = () => {
             place?.reviews &&
             place.reviews.length > 0
           ) {
-            setReviews(
-              place.reviews.slice(0, 5).map((r) => ({
+            const bestReviews = place.reviews
+              .filter((r) => r.rating >= 4)
+              .slice(0, 5)
+              .map((r) => ({
                 author_name: r.author_name || "Cliente",
                 rating: r.rating || 5,
                 text: r.text || "",
                 relative_time_description: r.relative_time_description,
-              }))
-            );
+                profile_photo_url: r.profile_photo_url,
+              }));
+            if (bestReviews.length > 0) {
+              setReviews(bestReviews);
+            }
           }
         }
       );
@@ -112,19 +129,15 @@ const GoogleReviews = () => {
   }, []);
 
   useEffect(() => {
-    // Try to fetch after a delay to allow Google Maps to load
     const timer = setTimeout(fetchReviews, 3000);
     return () => clearTimeout(timer);
   }, [fetchReviews]);
 
   return (
     <section className="relative py-20 md:py-28 overflow-hidden">
-      {/* Gold gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(43,56%,52%)] via-[hsl(43,56%,58%)] to-[hsl(43,56%,45%)]" />
+      {/* Gold gradient background using theme tokens */}
+      <div className="absolute inset-0 gradient-gold" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.15),_transparent_60%)]" />
-
-      {/* Hidden div for PlacesService */}
-      <div ref={mapRef} className="hidden" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
@@ -135,16 +148,16 @@ const GoogleReviews = () => {
           className="text-center mb-14"
         >
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Star size={20} className="fill-current text-black/70" />
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-black/60">
+            <Star size={20} className="fill-current text-foreground/70" />
+            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-foreground/60">
               Google Reviews
             </span>
-            <Star size={20} className="fill-current text-black/70" />
+            <Star size={20} className="fill-current text-foreground/70" />
           </div>
-          <h2 className="text-3xl md:text-5xl font-black text-black tracking-tight mb-4">
+          <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight mb-4">
             I Nostri Clienti Parlano
           </h2>
-          <p className="text-base md:text-lg text-black/60 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-foreground/60 max-w-2xl mx-auto">
             La soddisfazione dei nostri clienti è la nostra priorità. Ecco cosa dicono di noi.
           </p>
         </motion.div>
@@ -172,7 +185,7 @@ const GoogleReviews = () => {
             href={GOOGLE_REVIEW_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-black text-white text-sm md:text-base font-bold uppercase tracking-wider hover:scale-105 transition-transform shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
+            className="inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-background text-foreground text-sm md:text-base font-bold uppercase tracking-wider hover:scale-105 transition-transform shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
           >
             <Star size={18} className="fill-current" />
             Condividi la Tua Esperienza
