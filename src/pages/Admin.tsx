@@ -155,7 +155,7 @@ const Admin = () => {
   }
 
   return (
-    <div className="fixed inset-0 z-[999] bg-[#050505] text-white flex overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#050505] text-white flex font-sans">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
@@ -164,7 +164,7 @@ const Admin = () => {
       {/* SIDEBAR */}
       <aside
         className={cn(
-          "fixed lg:relative z-50 h-full w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col transition-transform duration-300 lg:translate-x-0",
+          "fixed lg:sticky lg:top-0 z-50 h-screen w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col shrink-0 transition-transform duration-300 lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
@@ -179,7 +179,7 @@ const Admin = () => {
             <X size={20} />
           </button>
         </div>
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 flex flex-col gap-2">
           {sidebarItems.map((item) => (
             <button
               key={item.section}
@@ -206,7 +206,7 @@ const Admin = () => {
       </aside>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 flex flex-col h-full bg-[#050505] overflow-hidden min-w-0">
+      <main className="flex-1 flex flex-col min-h-screen bg-[#050505] overflow-hidden min-w-0">
         <header className="h-16 lg:h-20 border-b border-white/10 flex items-center justify-between px-4 lg:px-8 bg-[#0a0a0a]/50 backdrop-blur-md shrink-0">
           <div className="flex items-center gap-3">
             <button
