@@ -164,55 +164,54 @@ const Admin = () => {
       {/* SIDEBAR */}
       <aside
         className={cn(
-          "fixed lg:sticky lg:top-0 z-50 h-screen w-64 bg-[#0a0a0a] border-r border-white/10 shrink-0 transition-transform duration-300 lg:translate-x-0 overflow-y-auto",
+          "fixed inset-y-0 left-0 z-50 w-[min(20rem,88vw)] sm:w-72 lg:w-64 bg-[#0a0a0a] border-r border-white/10 shrink-0 transition-transform duration-300 lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen overflow-hidden",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="p-4 border-b border-white/10 flex items-center justify-end shrink-0 min-h-[56px]">
-            <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-white/40 hover:text-white shrink-0">
+          <div className="p-3 sm:p-4 border-b border-white/10 flex items-center justify-end shrink-0 min-h-[56px]">
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-white/40 hover:text-white shrink-0 min-h-[44px] min-w-[44px]">
               <X size={20} />
             </button>
           </div>
 
           {/* Nav items */}
-          <nav className="flex-1 p-4 flex flex-col gap-2 overflow-y-auto">
+          <nav className="flex-1 overflow-y-auto p-3 sm:p-4 flex flex-col gap-2">
             {sidebarItems.map((item) => (
               <button
                 key={item.section}
                 onClick={() => selectSection(item.section)}
                 className={cn(
-                  "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-semibold tracking-wide shrink-0",
+                  "w-full flex items-center gap-3 px-3 sm:px-4 py-3 rounded-xl transition-all text-sm font-semibold leading-snug text-left min-h-[48px]",
                   section === item.section
                     ? "bg-[#C8A135]/10 text-[#C8A135] border border-[#C8A135]/20"
                     : "text-white/60 hover:bg-white/5 hover:text-white",
                 )}
               >
                 <item.icon size={18} className="shrink-0" />
-                <span className="truncate">{item.title}</span>
+                <span className="block flex-1 whitespace-normal break-words">{item.title}</span>
               </button>
             ))}
           </nav>
-
         </div>
       </aside>
 
       {/* MAIN CONTENT */}
       <main className="flex-1 flex flex-col min-h-screen bg-[#050505] overflow-hidden min-w-0">
-        <header className="h-16 lg:h-20 border-b border-white/10 flex items-center justify-between px-4 lg:px-8 bg-[#0a0a0a]/50 backdrop-blur-md shrink-0">
-          <div className="flex items-center gap-3">
+        <header className="min-h-[64px] lg:min-h-[72px] border-b border-white/10 flex items-center justify-between px-3 sm:px-4 lg:px-8 py-3 gap-3 bg-[#0a0a0a]/50 backdrop-blur-md shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <button
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden p-2 text-white/60 hover:text-white min-h-[48px] min-w-[48px] flex items-center justify-center"
             >
               <Menu size={22} />
             </button>
-            <h2 className="text-lg lg:text-2xl font-bold font-sans text-white truncate">
+            <h2 className="text-base sm:text-lg lg:text-2xl font-bold font-sans text-white truncate leading-tight">
               {sidebarItems.find((s) => s.section === section)?.title}
             </h2>
           </div>
-          <div className="flex items-center gap-2 lg:gap-4">
+          <div className="flex items-center flex-wrap justify-end gap-2 shrink-0">
             <button
               onClick={fetchData}
               className="p-2 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
@@ -223,18 +222,18 @@ const Admin = () => {
             {section === "flotta" && (
               <button
                 onClick={openAddVehicle}
-                className="flex items-center gap-2 bg-[#C8A135] text-black px-4 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:scale-105 transition-all shadow-[0_0_15px_rgba(200,161,53,0.3)] min-h-[44px]"
+                className="flex items-center gap-2 bg-[#C8A135] text-black px-3 lg:px-4 py-2 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider hover:scale-105 transition-all shadow-[0_0_15px_rgba(200,161,53,0.3)] min-h-[44px] max-w-full"
               >
-                <Plus size={16} /> <span className="hidden sm:inline">Aggiungi Veicolo</span>
+                <Plus size={16} /> <span className="hidden lg:inline">Aggiungi Veicolo</span>
               </button>
             )}
 
             {section === "contratti" && (
               <button
                 onClick={printBlankContract}
-                className="flex items-center gap-2 bg-white/10 text-white border border-white/20 px-4 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-white/20 transition-all min-h-[44px]"
+                className="flex items-center gap-2 bg-white/10 text-white border border-white/20 px-3 lg:px-4 py-2 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-white/20 transition-all min-h-[44px] max-w-full"
               >
-                <Printer size={16} /> <span className="hidden sm:inline">Contratto Vuoto</span>
+                <Printer size={16} /> <span className="hidden lg:inline">Contratto Vuoto</span>
               </button>
             )}
 
