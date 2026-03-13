@@ -155,7 +155,7 @@ const Admin = () => {
   }
 
   return (
-    <div className="fixed inset-0 z-[999] bg-[#050505] text-white flex overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#050505] text-white flex font-sans">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
@@ -164,7 +164,7 @@ const Admin = () => {
       {/* SIDEBAR */}
       <aside
         className={cn(
-          "fixed lg:relative z-50 h-full w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col transition-transform duration-300 lg:translate-x-0",
+          "fixed lg:sticky lg:top-0 z-50 h-screen w-64 bg-[#0a0a0a] border-r border-white/10 flex flex-col shrink-0 transition-transform duration-300 lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
