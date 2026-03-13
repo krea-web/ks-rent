@@ -417,6 +417,51 @@ const Admin = () => {
                   </tbody>
                 </table>
               </div>
+
+              {/* Mobile cards */}
+              <div className="md:hidden divide-y divide-white/5">
+                {bookings.map((b) => {
+                  const pdfUrl = b.signed_pdf_url || b.contract_url;
+                  return (
+                    <div key={b.id} className="p-4 flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <div className="min-w-0">
+                          <p className="font-bold text-sm truncate">{b.customer_name} {b.customer_surname}</p>
+                          <p className="text-white/40 text-xs truncate">{b.vehicles ? `${b.vehicles.make} ${b.vehicles.model}` : "Veicolo Eliminato"}</p>
+                        </div>
+                        <span
+                          className={cn(
+                            "shrink-0 ml-2 inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase",
+                            b.status === "pending_signature"
+                              ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
+                              : b.status === "active"
+                                ? "bg-green-500/10 text-green-500 border-green-500/20"
+                                : "bg-white/5 text-white/50 border-white/10",
+                          )}
+                        >
+                          {b.status?.replace("_", " ") || "—"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-white/50">
+                          {b.start_date ? new Date(b.start_date).toLocaleDateString("it-IT") : "N/A"} → {b.end_date ? new Date(b.end_date).toLocaleDateString("it-IT") : "N/A"}
+                        </span>
+                        <span className="text-[#C8A135] font-bold">€{(b.total_price ?? 0).toLocaleString("it-IT")}</span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-1 justify-end">
+                        {pdfUrl && (
+                          <button onClick={() => openClientContract(pdfUrl)} className="text-white/60 hover:text-white bg-white/5 p-2 rounded-lg">
+                            <Download size={14} />
+                          </button>
+                        )}
+                        <button onClick={() => openBooking(b)} className="text-xs text-[#C8A135] font-bold uppercase tracking-wider">
+                          Gestisci →
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
 
