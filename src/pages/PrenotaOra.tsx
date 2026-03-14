@@ -654,9 +654,21 @@ const PrenotaOra = () => {
     } else if (currentStep === 2 && availabilityResult?.available) {
       goToStep(3);
     } else if (currentStep === 3) {
+      const missing = getDriverMissingFields(mainDriver);
+      if (missing.length > 0) {
+        toast.error(`Compila tutti i campi: ${missing.join(", ")}`);
+        return;
+      }
       goToStep(4);
     } else if (currentStep === 4) {
-      if (hasSecondDriver === false || (hasSecondDriver === true && secondDriver.name)) {
+      if (hasSecondDriver === false) {
+        goToStep(5);
+      } else if (hasSecondDriver === true) {
+        const missing = getDriverMissingFields(secondDriver);
+        if (missing.length > 0) {
+          toast.error(`Compila tutti i campi del secondo guidatore: ${missing.join(", ")}`);
+          return;
+        }
         goToStep(5);
       }
     } else if (currentStep === 5) {
