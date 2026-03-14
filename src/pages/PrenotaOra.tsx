@@ -402,6 +402,7 @@ const PrenotaOra = () => {
     setSignatureOpen(false);
     setIsSuccessOpen(true);
     trackBookingLead();
+    trackBookingSuccess(bookingId, selectedVehicle, total, days);
     resetForm();
   };
 
