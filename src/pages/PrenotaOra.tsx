@@ -1191,7 +1191,32 @@ const PrenotaOra = () => {
                     dropoffTime={dropoffTime}
                     setDropoffTime={setDropoffTime}
                     isMapLoaded={isMapLoaded}
+                    dropoffSedeOnly
                   />
+
+                  {/* Validation warnings for incomplete driver data */}
+                  {!isDriverComplete(mainDriver) && (
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <AlertCircle size={20} className="text-red-400 shrink-0" />
+                        <p className="text-sm text-white/70">Dati del guidatore principale incompleti</p>
+                      </div>
+                      <Button type="button" variant="outline" size="sm" onClick={() => goToStep(3)} className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0">
+                        Completa Dati
+                      </Button>
+                    </motion.div>
+                  )}
+                  {hasSecondDriver && !isDriverComplete(secondDriver) && (
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <AlertCircle size={20} className="text-red-400 shrink-0" />
+                        <p className="text-sm text-white/70">Dati del secondo guidatore incompleti</p>
+                      </div>
+                      <Button type="button" variant="outline" size="sm" onClick={() => goToStep(4)} className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0">
+                        Completa Dati
+                      </Button>
+                    </motion.div>
+                  )
 
                   {/* Riepilogo Finale */}
                   <div className="mt-8 bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
