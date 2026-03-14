@@ -139,24 +139,15 @@ const LocationStep = ({
 
       {/* Type selection cards - show both options only if not sede-only */}
       {sedeOnly ? (
-        // Auto-select sede for dropoff
-        (() => {
-          // Force sede type on mount
-          if (locationType !== "sede") {
-            setTimeout(() => { setLocationType("sede"); setLocation(""); }, 0);
-          }
-          return (
-            <div className="bg-gold/5 border border-gold/30 rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <Building2 size={20} className="text-gold" />
-                <div>
-                  <p className="text-sm font-bold text-white">Riconsegna in Sede</p>
-                  <p className="text-xs text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
-                </div>
-              </div>
+        <div className="bg-gold/5 border border-gold/30 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <Building2 size={20} className="text-gold" />
+            <div>
+              <p className="text-sm font-bold text-white">Riconsegna in Sede</p>
+              <p className="text-xs text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
             </div>
-          );
-        })()
+          </div>
+        </div>
       ) : (
         <div className="grid grid-cols-2 gap-3">
           <button
