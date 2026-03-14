@@ -1216,7 +1216,7 @@ const PrenotaOra = () => {
                         Completa Dati
                       </Button>
                     </motion.div>
-                  )
+                  )}
 
                   {/* Riepilogo Finale */}
                   <div className="mt-8 bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
