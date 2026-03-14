@@ -1211,7 +1211,7 @@ const PrenotaOra = () => {
                     <Button
                       type="button"
                       onClick={handleSubmit}
-                      disabled={loading || !pickupLocation || !pickupTime || !dropoffLocation || !dropoffTime}
+                      disabled={loading || !pickupLocation || !pickupTime || !dropoffLocation || !dropoffTime || !isDriverComplete(mainDriver) || (hasSecondDriver === true && !isDriverComplete(secondDriver))}
                       className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                     >
                       {loading ? (
