@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, Component, type ReactNode, type ErrorInfo } from "react";
+import { useState, useRef, useCallback, useEffect, Component, type ReactNode, type ErrorInfo } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Building2, Navigation, CheckCircle2, AlertTriangle } from "lucide-react";
 import { GoogleMap, Autocomplete } from "@react-google-maps/api";
@@ -53,6 +53,7 @@ interface LocationStepProps {
   dropoffTime: string;
   setDropoffTime: (t: string) => void;
   isMapLoaded: boolean;
+  dropoffSedeOnly?: boolean;
 }
 
 const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px" };
@@ -60,7 +61,7 @@ const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px"
 const LocationStep = ({
   pickupType, setPickupType, pickupLocation, setPickupLocation, pickupTime, setPickupTime,
   dropoffType, setDropoffType, dropoffLocation, setDropoffLocation, dropoffTime, setDropoffTime,
-  isMapLoaded,
+  isMapLoaded, dropoffSedeOnly = false,
 }: LocationStepProps) => {
   const isLoaded = isMapLoaded;
 
@@ -68,6 +69,14 @@ const LocationStep = ({
   const [dropoffMapCenter, setDropoffMapCenter] = useState<{ lat: number; lng: number } | null>(null);
 
   const pickupAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
+  // Auto-select sede for dropoff when sede-only mode
+  useEffect(() => {
+    if (dropoffSedeOnly && dropoffType !== "sede") {
+      setDropoffType("sede");
+      setDropoffLocation("");
+    }
+  }, [dropoffSedeOnly, dropoffType, setDropoffType, setDropoffLocation]);
+
   const dropoffAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const onPickupPlaceChanged = useCallback(() => {
@@ -120,48 +129,61 @@ const LocationStep = ({
     mapCenter: { lat: number; lng: number } | null,
     autoRef: React.MutableRefObject<google.maps.places.Autocomplete | null>,
     onPlaceChanged: () => void,
-    type: "pickup" | "dropoff"
+    type: "pickup" | "dropoff",
+    sedeOnly?: boolean
   ) => (
     <div className="space-y-4">
       <h3 className="text-sm font-bold text-gold flex items-center gap-2 uppercase tracking-widest">
         {icon} {label}
       </h3>
 
-      {/* Type selection cards */}
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          onClick={() => { setLocationType("sede"); setLocation(""); }}
-          className={cn(
-            "p-4 rounded-xl border text-left transition-all duration-300",
-            locationType === "sede"
-              ? "bg-gold/5 border-gold shadow-[0_0_15px_rgba(212,175,55,0.15)]"
-              : "bg-[#111] border-white/10 hover:border-white/20"
-          )}
-        >
-          <Building2 size={20} className={cn("mb-2", locationType === "sede" ? "text-gold" : "text-white/40")} />
-          <p className={cn("text-sm font-bold", locationType === "sede" ? "text-white" : "text-white/60")}>
-            {type === "pickup" ? "Ritiro in Sede" : "Consegna in Sede"}
-          </p>
-          <p className="text-xs text-white/40 mt-1">Sedi KS Rent Olbia</p>
-        </button>
-        <button
-          type="button"
-          onClick={() => { setLocationType("custom"); setLocation(""); }}
-          className={cn(
-            "p-4 rounded-xl border text-left transition-all duration-300",
-            locationType === "custom"
-              ? "bg-gold/5 border-gold shadow-[0_0_15px_rgba(212,175,55,0.15)]"
-              : "bg-[#111] border-white/10 hover:border-white/20"
-          )}
-        >
-          <Navigation size={20} className={cn("mb-2", locationType === "custom" ? "text-gold" : "text-white/40")} />
-          <p className={cn("text-sm font-bold", locationType === "custom" ? "text-white" : "text-white/60")}>
-            {type === "pickup" ? "Ritiro Personalizzato" : "Consegna Personalizzata"}
-          </p>
-          <p className="text-xs text-white/40 mt-1">Aeroporto, hotel, ecc.</p>
-        </button>
-      </div>
+      {/* Type selection cards - show both options only if not sede-only */}
+      {sedeOnly ? (
+        <div className="bg-gold/5 border border-gold/30 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <Building2 size={20} className="text-gold" />
+            <div>
+              <p className="text-sm font-bold text-white">Riconsegna in Sede</p>
+              <p className="text-xs text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            onClick={() => { setLocationType("sede"); setLocation(""); }}
+            className={cn(
+              "p-4 rounded-xl border text-left transition-all duration-300",
+              locationType === "sede"
+                ? "bg-gold/5 border-gold shadow-[0_0_15px_rgba(212,175,55,0.15)]"
+                : "bg-[#111] border-white/10 hover:border-white/20"
+            )}
+          >
+            <Building2 size={20} className={cn("mb-2", locationType === "sede" ? "text-gold" : "text-white/40")} />
+            <p className={cn("text-sm font-bold", locationType === "sede" ? "text-white" : "text-white/60")}>
+              {type === "pickup" ? "Ritiro in Sede" : "Consegna in Sede"}
+            </p>
+            <p className="text-xs text-white/40 mt-1">Sedi KS Rent Olbia</p>
+          </button>
+          <button
+            type="button"
+            onClick={() => { setLocationType("custom"); setLocation(""); }}
+            className={cn(
+              "p-4 rounded-xl border text-left transition-all duration-300",
+              locationType === "custom"
+                ? "bg-gold/5 border-gold shadow-[0_0_15px_rgba(212,175,55,0.15)]"
+                : "bg-[#111] border-white/10 hover:border-white/20"
+            )}
+          >
+            <Navigation size={20} className={cn("mb-2", locationType === "custom" ? "text-gold" : "text-white/40")} />
+            <p className={cn("text-sm font-bold", locationType === "custom" ? "text-white" : "text-white/60")}>
+              {type === "pickup" ? "Ritiro Personalizzato" : "Consegna Personalizzata"}
+            </p>
+            <p className="text-xs text-white/40 mt-1">Aeroporto, hotel, ecc.</p>
+          </button>
+        </div>
+      )}
 
       {/* Sede select */}
       {locationType === "sede" && (
@@ -272,14 +294,15 @@ const LocationStep = ({
       <div className="w-full h-px bg-white/5" />
 
       {renderLocationBlock(
-        "Luogo di Consegna",
+        "Luogo di Riconsegna",
         <Navigation size={16} />,
         dropoffType, setDropoffType,
         dropoffLocation, setDropoffLocation,
         dropoffTime, setDropoffTime,
         dropoffMapCenter,
         dropoffAutoRef, onDropoffPlaceChanged,
-        "dropoff"
+        "dropoff",
+        dropoffSedeOnly
       )}
     </div>
   );

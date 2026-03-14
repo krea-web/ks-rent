@@ -416,6 +416,27 @@ const PrenotaOra = () => {
   // Progress percentage
   const progress = currentStep === 1 ? 0 : currentStep === 2 ? 20 : currentStep === 3 ? 40 : currentStep === 4 ? 60 : currentStep === 5 ? 100 : 0;
 
+  // Driver validation helper
+  const getDriverMissingFields = (driver: typeof initialDriverState): string[] => {
+    const missing: string[] = [];
+    if (!driver.name.trim()) missing.push("Nome");
+    if (!driver.surname.trim()) missing.push("Cognome");
+    if (!driver.birthDate) missing.push("Data di Nascita");
+    if (!driver.birthPlace.trim()) missing.push("Luogo di Nascita");
+    if (!driver.residence.trim()) missing.push("Indirizzo Residenza");
+    if (!driver.city.trim()) missing.push("Città");
+    if (driver.cf.length !== 16) missing.push("Codice Fiscale");
+    if (!driver.email.includes("@") || !driver.email.includes(".")) missing.push("Email");
+    if (driver.phone.length < 8) missing.push("Telefono");
+    if (!driver.licenseFront) missing.push("Foto Patente Fronte");
+    if (!driver.licenseBack) missing.push("Foto Patente Retro");
+    return missing;
+  };
+
+  const isDriverComplete = (driver: typeof initialDriverState): boolean => {
+    return getDriverMissingFields(driver).length === 0;
+  };
+
   // Driver form fields helper
   const renderDriverFormFields = (driver: typeof initialDriverState, setDriver: (d: typeof initialDriverState) => void) => (
     <div className="space-y-6">
@@ -633,9 +654,21 @@ const PrenotaOra = () => {
     } else if (currentStep === 2 && availabilityResult?.available) {
       goToStep(3);
     } else if (currentStep === 3) {
+      const missing = getDriverMissingFields(mainDriver);
+      if (missing.length > 0) {
+        toast.error(`Compila tutti i campi: ${missing.join(", ")}`);
+        return;
+      }
       goToStep(4);
     } else if (currentStep === 4) {
-      if (hasSecondDriver === false || (hasSecondDriver === true && secondDriver.name)) {
+      if (hasSecondDriver === false) {
+        goToStep(5);
+      } else if (hasSecondDriver === true) {
+        const missing = getDriverMissingFields(secondDriver);
+        if (missing.length > 0) {
+          toast.error(`Compila tutti i campi del secondo guidatore: ${missing.join(", ")}`);
+          return;
+        }
         goToStep(5);
       }
     } else if (currentStep === 5) {
@@ -1023,7 +1056,14 @@ const PrenotaOra = () => {
                   <div className="mt-8">
                     <Button
                       type="button"
-                      onClick={() => goToStep(4)}
+                      onClick={() => {
+                        const missing = getDriverMissingFields(mainDriver);
+                        if (missing.length > 0) {
+                          toast.error(`Compila tutti i campi: ${missing.join(", ")}`);
+                          return;
+                        }
+                        goToStep(4);
+                      }}
                       className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
                     >
                       Continua <ArrowRight size={16} className="ml-2" />
@@ -1101,7 +1141,14 @@ const PrenotaOra = () => {
                       <div className="mt-8">
                         <Button
                           type="button"
-                          onClick={() => goToStep(5)}
+                          onClick={() => {
+                            const missing = getDriverMissingFields(secondDriver);
+                            if (missing.length > 0) {
+                              toast.error(`Compila tutti i campi del secondo guidatore: ${missing.join(", ")}`);
+                              return;
+                            }
+                            goToStep(5);
+                          }}
                           className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Continua <ArrowRight size={16} className="ml-2" />
@@ -1144,7 +1191,32 @@ const PrenotaOra = () => {
                     dropoffTime={dropoffTime}
                     setDropoffTime={setDropoffTime}
                     isMapLoaded={isMapLoaded}
+                    dropoffSedeOnly
                   />
+
+                  {/* Validation warnings for incomplete driver data */}
+                  {!isDriverComplete(mainDriver) && (
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <AlertCircle size={20} className="text-red-400 shrink-0" />
+                        <p className="text-sm text-white/70">Dati del guidatore principale incompleti</p>
+                      </div>
+                      <Button type="button" variant="outline" size="sm" onClick={() => goToStep(3)} className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0">
+                        Completa Dati
+                      </Button>
+                    </motion.div>
+                  )}
+                  {hasSecondDriver && !isDriverComplete(secondDriver) && (
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <AlertCircle size={20} className="text-red-400 shrink-0" />
+                        <p className="text-sm text-white/70">Dati del secondo guidatore incompleti</p>
+                      </div>
+                      <Button type="button" variant="outline" size="sm" onClick={() => goToStep(4)} className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0">
+                        Completa Dati
+                      </Button>
+                    </motion.div>
+                  )}
 
                   {/* Riepilogo Finale */}
                   <div className="mt-8 bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
@@ -1176,7 +1248,7 @@ const PrenotaOra = () => {
                     <Button
                       type="button"
                       onClick={handleSubmit}
-                      disabled={loading || !pickupLocation || !pickupTime || !dropoffLocation || !dropoffTime}
+                      disabled={loading || !pickupLocation || !pickupTime || !dropoffLocation || !dropoffTime || !isDriverComplete(mainDriver) || (hasSecondDriver === true && !isDriverComplete(secondDriver))}
                       className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                     >
                       {loading ? (
