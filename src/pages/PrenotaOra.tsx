@@ -369,6 +369,7 @@ const PrenotaOra = () => {
       } else {
         setIsSuccessOpen(true);
         trackBookingLead();
+        trackBookingSuccess(result.booking_id || "", selectedVehicle, total, days);
         resetForm();
       }
     } catch (error) {
