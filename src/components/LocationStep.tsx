@@ -295,14 +295,15 @@ const LocationStep = ({
       <div className="w-full h-px bg-white/5" />
 
       {renderLocationBlock(
-        "Luogo di Consegna",
+        "Luogo di Riconsegna",
         <Navigation size={16} />,
         dropoffType, setDropoffType,
         dropoffLocation, setDropoffLocation,
         dropoffTime, setDropoffTime,
         dropoffMapCenter,
         dropoffAutoRef, onDropoffPlaceChanged,
-        "dropoff"
+        "dropoff",
+        dropoffSedeOnly
       )}
     </div>
   );
