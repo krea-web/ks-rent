@@ -17,5 +17,10 @@ export const trackBookingLead = () => {
       event_category: "Leads",
       form_name: "Modulo Principale",
     });
+
+    // Google Ads Conversion Tracking: Lead
+    window.gtag("event", "conversion", {
+      send_to: "AW-18006357660/TZlJCIfnwIgcEJztjIpD",
+    });
   }
 };
