@@ -57,6 +57,9 @@ const AppLayout = () => {
             <Route path="/" element={<Index />} />
             <Route path="/chisiamo" element={<ChiSiamo />} />
             <Route path="/prenotaora" element={<PrenotaOra />} />
+            <Route path="/noleggio-auto-porto-olbia" element={<NoleggioPortoOlbia />} />
+            <Route path="/noleggio-auto-aeroporto-olbia" element={<NoleggioAeroportoOlbia />} />
+            <Route path="/noleggio-auto-costa-smeralda" element={<NoleggioCostaSmerlada />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
