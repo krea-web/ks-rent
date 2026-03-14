@@ -69,6 +69,14 @@ const LocationStep = ({
   const [dropoffMapCenter, setDropoffMapCenter] = useState<{ lat: number; lng: number } | null>(null);
 
   const pickupAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
+  // Auto-select sede for dropoff when sede-only mode
+  useEffect(() => {
+    if (dropoffSedeOnly && dropoffType !== "sede") {
+      setDropoffType("sede");
+      setDropoffLocation("");
+    }
+  }, [dropoffSedeOnly, dropoffType, setDropoffType, setDropoffLocation]);
+
   const dropoffAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const onPickupPlaceChanged = useCallback(() => {
