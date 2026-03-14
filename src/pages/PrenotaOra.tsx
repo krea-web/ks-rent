@@ -655,7 +655,7 @@ const PrenotaOra = () => {
             : "Prenota in 2 minuti il tuo veicolo luxury a Olbia. Consegna in aeroporto o hotel. Deposito cauzionale trasparente e copertura assicurativa completa."
         }
         canonical="https://www.ksrentsardinia.com/prenotaora"
-        keywords="noleggio auto olbia, autonoleggio olbia, noleggio moto olbia, rent olbia, noleggio senza carta di credito costa smeralda, noleggio auto costa smeralda, noleggio auto aeroporto olbia, noleggio quad olbia, noleggio auto sportive costa smeralda, noleggio senza carta di credito olbia, autonoleggio al porto olbia"
+        keywords="noleggio auto olbia, autonoleggio olbia, noleggio moto olbia, rent olbia, noleggio senza carta di credito costa smeralda, noleggio auto costa smeralda, noleggio auto aeroporto olbia, noleggio quad olbia, noleggio auto sportive costa smeralda, noleggio senza carta di credito olbia, autonoleggio al porto olbia, noleggio auto lusso olbia, noleggio supercar olbia, rent a car olbia airport, noleggio auto senza carta di credito, luxury rent car olbia"
         jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
       />
 
