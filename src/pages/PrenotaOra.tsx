@@ -1129,7 +1129,14 @@ const PrenotaOra = () => {
                       <div className="mt-8">
                         <Button
                           type="button"
-                          onClick={() => goToStep(5)}
+                          onClick={() => {
+                            const missing = getDriverMissingFields(secondDriver);
+                            if (missing.length > 0) {
+                              toast.error(`Compila tutti i campi del secondo guidatore: ${missing.join(", ")}`);
+                              return;
+                            }
+                            goToStep(5);
+                          }}
                           className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Continua <ArrowRight size={16} className="ml-2" />
