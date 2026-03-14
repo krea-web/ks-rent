@@ -61,7 +61,7 @@ const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px"
 const LocationStep = ({
   pickupType, setPickupType, pickupLocation, setPickupLocation, pickupTime, setPickupTime,
   dropoffType, setDropoffType, dropoffLocation, setDropoffLocation, dropoffTime, setDropoffTime,
-  isMapLoaded,
+  isMapLoaded, dropoffSedeOnly = false,
 }: LocationStepProps) => {
   const isLoaded = isMapLoaded;
 
