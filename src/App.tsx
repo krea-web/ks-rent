@@ -31,6 +31,9 @@ import Index from "./pages/Index";
 // Lazy: secondary routes
 const ChiSiamo = lazy(() => import("./pages/ChiSiamo"));
 const PrenotaOra = lazy(() => import("./pages/PrenotaOra"));
+const NoleggioPortoOlbia = lazy(() => import("./pages/NoleggioPortoOlbia"));
+const NoleggioAeroportoOlbia = lazy(() => import("./pages/NoleggioAeroportoOlbia"));
+const NoleggioCostaSmerlada = lazy(() => import("./pages/NoleggioCostaSmerlada"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
