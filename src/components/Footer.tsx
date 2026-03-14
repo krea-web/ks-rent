@@ -36,35 +36,23 @@ const Footer = () => (
 
         {/* Link Rapidi */}
         <div>
-          {/* Cambiato da h4 a h3 per risolvere il problema di accessibilità (Lighthouse) */}
           <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-6 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-gold"></span> Navigazione
           </h3>
           <div className="flex flex-col gap-4">
-            <Link
-              to="/"
-              className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20"
-            >
-              Home
-            </Link>
-            <Link
-              to="/chisiamo"
-              className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20"
-            >
-              Chi Siamo
-            </Link>
-            <Link
-              to="/prenotaora"
-              className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20"
-            >
-              Prenota Ora
-            </Link>
-            <Link
-              to="/admin"
-              className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20"
-            >
-              Area Riservata
-            </Link>
+            <Link to="/" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Home</Link>
+            <Link to="/chisiamo" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Chi Siamo</Link>
+            <Link to="/prenotaora" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Prenota Ora</Link>
+            <Link to="/admin" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Area Riservata</Link>
+          </div>
+
+          <h3 className="text-white font-bold text-sm uppercase tracking-widest mt-8 mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-gold"></span> Aree Servite
+          </h3>
+          <div className="flex flex-col gap-3">
+            <Link to="/noleggio-auto-porto-olbia" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Noleggio Auto Porto di Olbia</Link>
+            <Link to="/noleggio-auto-aeroporto-olbia" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Noleggio Auto Aeroporto Olbia</Link>
+            <Link to="/noleggio-auto-costa-smeralda" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Noleggio Auto Costa Smeralda</Link>
           </div>
         </div>
 
