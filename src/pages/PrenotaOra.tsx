@@ -35,7 +35,7 @@ import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
 import SuccessModal from "@/components/SuccessModal";
-import { trackBookingLead } from "@/lib/analytics";
+import { trackBookingLead, trackBookingSuccess } from "@/lib/analytics";
 import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
@@ -369,6 +369,7 @@ const PrenotaOra = () => {
       } else {
         setIsSuccessOpen(true);
         trackBookingLead();
+        trackBookingSuccess(result.booking_id || "", selectedVehicle, total, days);
         resetForm();
       }
     } catch (error) {
@@ -401,6 +402,7 @@ const PrenotaOra = () => {
     setSignatureOpen(false);
     setIsSuccessOpen(true);
     trackBookingLead();
+    trackBookingSuccess(bookingId, selectedVehicle, total, days);
     resetForm();
   };
 
