@@ -42,10 +42,12 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const queryClient = new QueryClient();
 
 const ISOLATED_ROUTES = ["/admin", "/login"];
+const HIDE_STICKY_CTA_ROUTES = ["/prenotaora"];
 
 const AppLayout = () => {
   const { pathname } = useLocation();
   const isIsolated = ISOLATED_ROUTES.includes(pathname);
+  const hideStickyCTA = HIDE_STICKY_CTA_ROUTES.includes(pathname);
 
   return (
     <>
@@ -69,7 +71,7 @@ const AppLayout = () => {
       </main>
       {!isIsolated && <Footer />}
       {!isIsolated && <WhatsAppCTA />}
-      {!isIsolated && <MobileStickyCTA />}
+      {!isIsolated && !hideStickyCTA && <MobileStickyCTA />}
     </>
   );
 };

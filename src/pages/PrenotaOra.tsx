@@ -1379,7 +1379,7 @@ const PrenotaOra = () => {
           </div>
         </div>
 
-        {/* MOBILE STICKY BOTTOM BAR */}
+        {/* MOBILE BOOKING SUMMARY BAR */}
         <AnimatePresence>
           {showStickyBar && (
             <motion.div
@@ -1387,25 +1387,36 @@ const PrenotaOra = () => {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed bottom-0 left-0 w-full z-[100] bg-[#0a0a0a]/90 backdrop-blur-xl border-t border-gold/20 p-4 pb-[env(safe-area-inset-bottom,16px)] shadow-[0_-10px_40px_rgba(0,0,0,0.5)] lg:hidden"
+              className="fixed bottom-0 left-0 w-full z-[100] bg-black/90 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.6)] lg:hidden"
             >
-              <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
-                <div className="flex flex-col">
-                  <span className="text-[11px] uppercase tracking-widest text-white/50">Totale stimato</span>
-                   <div className="flex items-baseline gap-2 flex-wrap min-w-0">
-                    <span className="text-xl sm:text-2xl font-black font-display text-gold break-words">€{total}</span>
-                    {days > 0 && (
-                      <span className="text-xs text-white/40">/ {days} giorn{days !== 1 ? "i" : "o"}</span>
-                    )}
-                  </div>
+              <div className="flex items-center justify-between gap-3 px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom))]">
+                {/* LEFT: Vehicle + Price */}
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs text-white/50 truncate">
+                    {selectedVehicle ? `${selectedVehicle.make} ${selectedVehicle.model}` : "Nessun veicolo"}
+                  </span>
+                  {total > 0 ? (
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-xl font-black font-display text-gold">
+                        €{total.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </span>
+                      {days > 0 && (
+                        <span className="text-[10px] text-white/40">per {days} giorn{days !== 1 ? "i" : "o"}</span>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="text-sm text-white/30 italic">Seleziona date</span>
+                  )}
                 </div>
+
+                {/* RIGHT: Dynamic action button */}
                 <Button
                   type="button"
                   onClick={handleMobileAction}
                   disabled={loading || (currentStep === 2 && checkingAvailability)}
-                  className="h-12 px-6 bg-black text-white border border-gold/40 hover:bg-gold hover:text-black font-bold uppercase tracking-wider rounded-xl transition-all duration-300 text-xs shrink-0"
+                  className="h-11 px-6 bg-gold text-black hover:bg-gold/90 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs shrink-0 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
                 >
-                  {loading ? (
+                  {loading || (currentStep === 2 && checkingAvailability) ? (
                     <Loader2 size={14} className="animate-spin" />
                   ) : (
                     <span className="flex items-center gap-2">
