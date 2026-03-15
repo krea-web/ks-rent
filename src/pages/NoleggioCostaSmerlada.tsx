@@ -296,7 +296,7 @@ const NoleggioCostaSmeralda = () => {
               "Cannigione",
               "Arzachena",
               "Palau",
-              "Santa Teresa Gallura",
+              "San Teodoro",
             ].map((loc) => (
               <span
                 key={loc}

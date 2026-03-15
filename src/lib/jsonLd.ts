@@ -91,7 +91,7 @@ export const faqPageJsonLd = {
       name: "In quali località effettuate la consegna del veicolo?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Serviamo l'intera Gallura e la Costa Smeralda. Oltre alle nostre sedi di Olbia (Viale Isola Bianca 38 e Viale Aldo Moro 367) e all'Aeroporto Costa Smeralda, consegniamo a Porto Cervo, San Teodoro, Santa Teresa Gallura, Murta Maria, Porto San Paolo, Puntaldia, Monte Contros, Baja Sardinia, Cannigione, Palau e San Pantaleo. Consegniamo direttamente in Villa, in Hotel o al Porto.",
+        text: "Serviamo la Costa Smeralda e la Gallura. Oltre alle nostre sedi di Olbia (Viale Isola Bianca 38 e Viale Aldo Moro 367) e all'Aeroporto Costa Smeralda, consegniamo da Porto Cervo a San Teodoro, passando per Porto Rotondo, Baja Sardinia, Cannigione, Arzachena, Palau, Murta Maria, Porto San Paolo, Puntaldia e San Pantaleo. Consegniamo direttamente in Villa, in Hotel o al Porto.",
       },
     },
     {
