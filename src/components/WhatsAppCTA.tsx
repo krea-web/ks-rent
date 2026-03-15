@@ -6,7 +6,7 @@ const WhatsAppCTA = () => (
     target="_blank"
     rel="noopener noreferrer"
     onClick={trackWhatsAppClick}
-    className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] shadow-lg hover:scale-110 transition-transform"
+    className="fixed bottom-6 right-6 z-[9998] lg:bottom-6 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] shadow-lg hover:scale-110 transition-transform"
     aria-label="Contattaci su WhatsApp"
   >
     <svg viewBox="0 0 32 32" className="w-7 h-7 fill-white">
