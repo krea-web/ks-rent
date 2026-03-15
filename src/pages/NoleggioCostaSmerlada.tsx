@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "In quali località della Costa Smeralda consegnate?",
-    a: "Copriamo capillarmente tutta la Gallura: Porto Cervo, San Pantaleo, Porto Rotondo, Baja Sardinia, Cannigione, Arzachena, Palau e Santa Teresa di Gallura. Arriviamo ovunque tu sia.",
+    a: "Copriamo capillarmente la Costa Smeralda e la Gallura: da Porto Cervo a San Teodoro, passando per San Pantaleo, Porto Rotondo, Baja Sardinia, Cannigione, Arzachena e Palau. Arriviamo ovunque tu sia.",
     gold: false,
   },
   {
@@ -296,7 +296,7 @@ const NoleggioCostaSmeralda = () => {
               "Cannigione",
               "Arzachena",
               "Palau",
-              "Santa Teresa Gallura",
+              "San Teodoro",
             ].map((loc) => (
               <span
                 key={loc}
