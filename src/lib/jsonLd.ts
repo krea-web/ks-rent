@@ -65,26 +65,74 @@ export const faqPageJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "È richiesto un deposito cauzionale?",
+      name: "Quali metodi di pagamento accettate?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sì, per garantire la massima cura della nostra flotta luxury è previsto un deposito cauzionale e una franchigia assicurativa. L'importo varia in base alla categoria del veicolo scelto.",
+        text: "Offriamo massima flessibilità: accettiamo carte di credito, carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale viene gestito in base al veicolo scelto.",
       },
     },
     {
       "@type": "Question",
-      name: "Quali documenti servono per il noleggio?",
+      name: "Fate controlli o richiedete uno Score Bancario?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sono necessari una patente di guida valida, codice fiscale e un documento d'identità (Carta d'Identità o Passaporto) in corso di validità.",
+        text: "Nessuno Score Bancario e nessuna burocrazia infinita. Il nostro servizio si basa sulla fiducia e sulla trasparenza verso il cliente.",
       },
     },
     {
       "@type": "Question",
-      name: "Dove posso ritirare il veicolo a Olbia?",
+      name: "Come funziona il deposito cauzionale?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Operiamo presso le nostre sedi di Viale Isola Bianca (Porto) e Viale Aldo Moro, offrendo anche la consegna personalizzata in Aeroporto, Hotel o Villa in tutta la Costa Smeralda.",
+        text: "Per garantire la massima cura della nostra flotta luxury, è previsto un deposito cauzionale e una franchigia assicurativa. L'importo varia in base alla categoria del veicolo scelto e viene gestito in modo chiaro e veloce al momento del contratto.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "In quali località effettuate la consegna del veicolo?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Serviamo l'intera Gallura e la Costa Smeralda. Oltre alle nostre sedi di Olbia (Viale Isola Bianca 38 e Viale Aldo Moro 367) e all'Aeroporto Costa Smeralda, consegniamo a Porto Cervo, San Teodoro, Santa Teresa Gallura, Murta Maria, Porto San Paolo, Puntaldia, Monte Contros, Baja Sardinia, Cannigione, Palau e San Pantaleo. Consegniamo direttamente in Villa, in Hotel o al Porto.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Dove posso ritirare il veicolo se vengo in sede?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Abbiamo due sedi strategiche a Olbia: la Sede Legale in Viale Aldo Moro 367 e la Sede Operativa in Viale Isola Bianca 38, perfette per chi arriva dal porto o dall'aeroporto.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quali documenti mi servono al momento del ritiro?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Ti basterà presentare una Patente di guida valida, il tuo Codice Fiscale e un documento d'identità in corso di validità (Carta d'Identità o Passaporto).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "È previsto il chilometraggio illimitato?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "I pacchetti chilometrici variano in base alla categoria del veicolo (City Car, Premium, Scooter o Quad). Contattaci per trovare la soluzione perfetta per il tuo itinerario in Sardegna.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Cosa succede in caso di guasto o incidente?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Niente panico. Offriamo un'assistenza attiva 24 ore su 24, 7 giorni su 7. Ti basterà chiamare il nostro numero dedicato per ricevere supporto immediato.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso cancellare o modificare la mia prenotazione?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, offriamo opzioni di cancellazione flessibili. Contatta il nostro team su WhatsApp per gestire o modificare le date della tua prenotazione.",
       },
     },
   ],
