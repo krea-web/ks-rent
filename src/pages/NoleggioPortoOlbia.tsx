@@ -179,7 +179,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk Porto</h2>
