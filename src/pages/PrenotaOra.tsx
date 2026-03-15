@@ -785,32 +785,40 @@ const PrenotaOra = () => {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-4 sm:p-6 md:p-10 relative overflow-hidden"
                 >
-                  <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
+                  <h2 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-6 flex items-center gap-3">
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">1</span>
                     Scegli il Veicolo
                   </h2>
+
+                  {/* Horizontal swipeable filter pills */}
                   {vehicles.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {categories.map((cat) => (
-                        <button
-                          key={cat}
-                          type="button"
-                          onClick={() => setSelectedCategory(cat)}
-                          className={cn(
-                            "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300",
-                            selectedCategory === cat
-                              ? "bg-gold text-black"
-                              : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white"
-                          )}
-                        >
-                          {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
-                        </button>
-                      ))}
+                    <div className="relative mb-5">
+                      <div className="flex overflow-x-auto gap-2.5 pb-3 snap-x scrollbar-hide">
+                        {categories.map((cat) => (
+                          <button
+                            key={cat}
+                            type="button"
+                            onClick={() => setSelectedCategory(cat)}
+                            className={cn(
+                              "flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 min-h-[44px] whitespace-nowrap",
+                              selectedCategory === cat
+                                ? "bg-gold text-black"
+                                : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white border border-white/10"
+                            )}
+                          >
+                            {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
+                          </button>
+                        ))}
+                      </div>
+                      {/* Right fade hint */}
+                      <div className="absolute right-0 top-0 bottom-3 w-10 bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none" />
                     </div>
                   )}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 max-h-[600px] overflow-y-auto pr-2 pb-4">
+
+                  {/* Luxury edge-to-edge vehicle cards */}
+                  <div className="space-y-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 max-h-[600px] overflow-y-auto scrollbar-hide pb-4">
                     {filteredGrouped.map((group) => {
                       const v = group.representative;
                       const groupKey = `${v.make}__${v.model}`;
@@ -822,43 +830,65 @@ const PrenotaOra = () => {
                           whileTap={soldOut ? undefined : { scale: 0.97 }}
                           onClick={() => handleVehicleSelect(group)}
                           className={cn(
-                            "p-3 rounded-xl md:rounded-2xl border transition-all duration-300 flex flex-col group/card relative",
+                            "relative rounded-2xl overflow-hidden transition-all duration-300 group/card",
                             soldOut
-                              ? "bg-[#111] border-white/5 opacity-50 cursor-not-allowed"
+                              ? "opacity-50 cursor-not-allowed"
                               : isSelected
-                              ? "bg-gold/5 border-gold shadow-[0_0_20px_rgba(212,175,55,0.2)] cursor-pointer"
-                              : "bg-[#111] border-white/10 hover:border-white/30 cursor-pointer"
+                              ? "ring-2 ring-gold shadow-[0_0_24px_rgba(212,175,55,0.25)] cursor-pointer"
+                              : "cursor-pointer"
                           )}
                         >
-                          <div className="relative w-full h-24 sm:h-32 mb-3 rounded-lg sm:rounded-xl overflow-hidden bg-black/50">
+                          {/* Full-bleed image */}
+                          <div className="relative aspect-[16/9] w-full bg-black">
                             <OptimizedImage
                               src={v.image_url}
                               alt={getVehicleAlt(v.make, v.model)}
-                              width={400}
+                              width={600}
                               showSkeleton
                               skeletonClassName="rounded-none"
-                              className={cn("w-full h-full object-cover transition-transform duration-500", !soldOut && "group-hover/card:scale-110")}
+                              className={cn(
+                                "w-full h-full object-cover transition-transform duration-500",
+                                !soldOut && "group-hover/card:scale-105"
+                              )}
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 pointer-events-none" />
+                            {/* Dark gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
+
+                            {/* Sold out badge */}
                             {soldOut && (
                               <div className="absolute inset-0 flex items-center justify-center bg-black/60">
                                 <span className="bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Esaurito</span>
                               </div>
                             )}
+
+                            {/* Selected check */}
                             {isSelected && !soldOut && (
                               <motion.div
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
-                                className="absolute top-2 right-2 bg-gold text-black rounded-full p-1"
+                                className="absolute top-3 right-3 bg-gold text-black rounded-full p-1.5 z-10"
                               >
-                                <CheckCircle2 size={14} />
+                                <CheckCircle2 size={16} />
                               </motion.div>
                             )}
+
+                            {/* Text overlay on image */}
+                            <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between z-10">
+                              <div>
+                                <h3 className="text-white font-black text-lg sm:text-xl leading-tight">
+                                  {v.make} {v.model}
+                                </h3>
+                                <p className="text-gold font-bold text-sm mt-0.5">
+                                  A partire da €{v.daily_rate}/gg
+                                </p>
+                              </div>
+                              {!soldOut && (
+                                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center group-hover/card:bg-gold group-hover/card:border-gold transition-all duration-300">
+                                  <ArrowRight size={16} className="text-gold group-hover/card:text-black transition-colors" />
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <span className="font-bold text-sm sm:text-base leading-tight px-1 group-hover/card:text-gold transition-colors">
-                            {v.make} {v.model}
-                          </span>
-                          <span className="text-xs text-gold/80 font-semibold px-1 mt-1">A partire da €{v.daily_rate}/gg</span>
                         </motion.div>
                       );
                     })}
