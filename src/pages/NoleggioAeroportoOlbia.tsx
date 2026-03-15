@@ -1,193 +1,206 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin, Star, Gauge } from "lucide-react";
+import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin, Gauge, Star, Zap } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
   {
     q: "Come funziona la consegna in Aeroporto?",
-    a: "Un nostro addetto ti aspetterà direttamente all'uscita degli arrivi dell'Aeroporto Costa Smeralda. Nessuna fila ai banconi, nessuna attesa. Ti accompagniamo noi alla tua auto, pronta e accesa nel parcheggio riservato a pochi passi dal terminal.",
-  },
-  {
-    q: "Quali sono i metodi di pagamento accettati?",
-    a: "Siamo i leader del noleggio flessibile: accettiamo carte di credito, carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale è gestito in base al veicolo e non richiede necessariamente una carta di credito tradizionale.",
+    a: "Ti aspettiamo direttamente agli arrivi dell'Aeroporto Costa Smeralda. Niente file o navette: la tua auto è già pronta nel parcheggio dedicato, accesa e climatizzata.",
+    gold: true,
   },
   {
     q: "È possibile noleggiare senza carta di credito?",
-    a: "Assolutamente sì. KS Rent nasce per abbattere le barriere dei noleggi standard. Accettiamo depositi cauzionali tramite carta di debito o contanti per permetterti di goderti la Sardegna in totale libertà.",
+    a: "Certamente. Accettiamo carte di debito, prepagate e contanti per il deposito cauzionale. La flessibilità è il nostro marchio di fabbrica.",
+    gold: true,
   },
   {
-    q: "Posso prenotare direttamente dal sito?",
-    a: "Certamente. Il nostro sistema di booking online è attivo 24/7. Scegli l'auto, inserisci i dati e ricevi la conferma immediata. È il metodo più veloce per garantirti la disponibilità della tua supercar preferita.",
+    q: "Quali metodi di pagamento accettate?",
+    a: "Accettiamo tutti i principali circuiti: Visa, Mastercard, American Express, oltre a contanti e bonifici istantanei.",
+    gold: false,
+  },
+  {
+    q: "Come funziona il deposito cauzionale?",
+    a: "Il deposito è proporzionato alla tipologia di veicolo. Grazie ai nostri depositi flessibili, rendiamo il noleggio di supercar accessibile e trasparente.",
+    gold: false,
+  },
+  {
+    q: "Posso cancellare la mia prenotazione?",
+    a: "Sì, offriamo politiche di cancellazione trasparenti gestibili direttamente dal tuo profilo o contattando il nostro servizio concierge.",
+    gold: false,
   },
 ];
 
 const NoleggioAeroportoOlbia = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
+    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
         title="Noleggio Auto Aeroporto Olbia | Senza Carta di Credito | KS Rent"
-        description="Atterri a Olbia? Scegli l'eccellenza di KS Rent. Noleggio SUV, supercar e moto direttamente in Aeroporto. Senza carta di credito e con consegna immediata."
+        description="Atterri a Olbia? Scegli l'esclusività di KS Rent. Supercar, SUV e moto con consegna immediata in aeroporto. Prenotazione online veloce e senza obbligo di carta di credito."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
+        // Il JSON-LD viene gestito internamente al componente SEOHead per evitare duplicati
       />
 
-      {/* HERO SECTION - FIXED OVERLAP */}
-      <section className="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24 overflow-hidden">
+      {/* HERO SECTION - NAVBAR SAFE */}
+      <section className="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24">
         <div className="absolute inset-0 z-0">
-          <motion.img
-            initial={{ scale: 1.1, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.4 }}
-            transition={{ duration: 1.5 }}
+          <img
             src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webp"
-            alt="Noleggio Audi RS3 Olbia"
-            className="w-full h-full object-cover"
+            alt="Luxury Rent Olbia Airport"
+            className="w-full h-full object-cover opacity-40 scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
 
-        <div className="relative z-10 max-w-5xl">
-          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/20 mb-8 backdrop-blur-md">
+        <div className="relative z-10 max-w-6xl">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/30 mb-8 backdrop-blur-xl">
               <Plane className="text-gold w-4 h-4" />
-              <span className="text-gold text-[10px] md:text-xs uppercase tracking-[0.4em] font-bold">
+              <span className="text-gold text-[10px] md:text-xs uppercase tracking-[0.4em] font-black">
                 Aeroporto Costa Smeralda
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter mb-8 italic uppercase">
-              Libertà <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">Al decollo</span>
+            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase outline-text">
+              LIBERTÀ <br />
+              <span className="text-white">AL DECOLLO</span>
             </h1>
 
-            <p className="text-lg md:text-2xl text-white/70 font-light max-w-2xl mb-10 leading-relaxed">
-              Dimentica le code ai banconi. Atterra a Olbia e sali a bordo della tua Supercar.
-              <span className="text-gold block font-semibold mt-2">Nessun obbligo di carta di credito.</span>
+            <p className="text-lg md:text-2xl text-white/80 font-light max-w-2xl mb-12 leading-relaxed">
+              Atterra a Olbia e sali a bordo del tuo sogno. Consegna immediata,
+              <span className="text-gold font-bold"> zero attese ai banconi </span> e flotta supercar pronta per te.
             </p>
 
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/prenotaora"
-                className="bg-gold text-black px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:shadow-white/20 active:scale-95"
-              >
-                Inizia il viaggio
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* FEATURED CAR SPOTLIGHT - LA RS3 VERDE */}
-      <section className="py-20 relative px-4 md:px-12 lg:px-24 overflow-hidden bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative order-2 lg:order-1"
-          >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gold/5 blur-[120px] rounded-full pointer-events-none" />
-            <img
-              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png"
-              alt="Audi RS3 Supercar Verde KS Rent"
-              className="relative z-10 w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="order-1 lg:order-2"
-          >
-            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-4">Focus Flotta</h2>
-            <h3 className="text-3xl md:text-5xl font-bold mb-6 italic uppercase">
-              Audi RS3 Sportback <br /> <span className="text-gold">Performance</span>
-            </h3>
-            <p className="text-white/60 text-lg mb-8 leading-relaxed">
-              Disponibile ora presso lo scalo di Olbia. 400CV di pura adrenalina per dominare le strade della Costa
-              Smeralda. Scoprila insieme a tutta la nostra flotta di lusso.
-            </p>
-            <div className="grid grid-cols-2 gap-6 mb-10">
-              <div className="flex items-center gap-3">
-                <Gauge className="text-gold w-5 h-5" />
-                <span className="text-sm font-bold">0-100 in 3.8s</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Star className="text-gold w-5 h-5" />
-                <span className="text-sm font-bold">Full Optionals</span>
-              </div>
-            </div>
             <Link
               to="/prenotaora"
-              className="group text-white font-bold uppercase tracking-widest text-sm flex items-center gap-4 hover:text-gold transition-colors"
+              className="inline-flex items-center gap-4 bg-gold text-black px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_50px_rgba(212,175,55,0.4)]"
             >
-              Vedi tutta la flotta <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+              Verifica Disponibilità <ArrowRight size={22} />
             </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* SERVICE CARDS - GLASSMORPHISM STYLE */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+      {/* INTRO TEXT SECTION - SEO & BRANDING */}
+      <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505] border-y border-white/5">
+        <div className="max-w-4xl mx-auto text-center md:text-left">
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">L'Eccellenza a Olbia</h2>
+            <p className="text-xl md:text-3xl font-light leading-relaxed text-white/90 mb-8">
+              Benvenuto al portale d'ingresso della <strong className="text-gold">Costa Smeralda</strong>. KS Rent
+              rivoluziona il concetto di autonoleggio aeroportuale, trasformando l'attesa in piacere.
+            </p>
+            <div className="h-px w-24 bg-gold mb-8 mx-auto md:mx-0" />
+            <p className="text-white/60 text-lg leading-relaxed">
+              Offriamo un servizio premium con consegna del veicolo esattamente dove atterri. Risparmia tempo prenotando
+              in <strong>totale autonomia dal nostro sito</strong>: gestiamo depositi cauzionali flessibili e accettiamo
+              pagamenti <strong>senza obbligo di carta di credito</strong>. Che tu cerchi una supercar, un SUV per la
+              famiglia o uno scooter per le spiagge, la nostra flotta è la tua chiave per la Sardegna.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SUPERCAR SHOWCASE - AUDI RS3 VERDE */}
+      <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#0a0a0a] overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute inset-0 bg-gold/10 blur-[120px] rounded-full scale-150 animate-pulse" />
+            <motion.img
+              initial={{ x: -100, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png"
+              className="relative z-10 w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)]"
+              alt="Audi RS3 Supercar Verde KS Rent"
+            />
+          </div>
+          <div className="order-1 lg:order-2">
+            <div className="flex items-center gap-3 mb-4">
+              <Zap className="text-gold w-5 h-5" />
+              <span className="text-gold font-bold tracking-widest text-xs uppercase italic">Top of the range</span>
+            </div>
+            <h3 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
+              Audi RS3 <br />
+              <span className="text-gold">Kyalami Green</span>
+            </h3>
+            <p className="text-white/50 text-lg mb-10 italic font-light">
+              "Non è solo un'auto, è una dichiarazione d'intenti. Scoprila nella nostra flotta esclusiva."
+            </p>
+            <div className="flex gap-8 mb-10">
+              <div className="text-center">
+                <p className="text-2xl font-black text-white italic">400</p>
+                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Cavalli</p>
+              </div>
+              <div className="text-center border-x border-white/10 px-8">
+                <p className="text-2xl font-black text-white italic">3.8s</p>
+                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">0-100 km/h</p>
+              </div>
+            </div>
+            <Link
+              to="/prenotaora"
+              className="inline-flex items-center gap-3 text-white font-black uppercase tracking-widest text-sm group"
+            >
+              Scopri la flotta <ArrowRight className="group-hover:translate-x-2 transition-transform text-gold" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* BEAUTIFIED SERVICE CARDS */}
+      <section className="py-24 px-4 md:px-12 lg:px-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
           {[
-            { icon: Smartphone, title: "Self Booking", desc: "Prenota in 60 secondi direttamente dal tuo smartphone." },
-            { icon: CreditCard, title: "Libertà Totale", desc: "Contanti o carte di debito accettate. Zero stress." },
             {
-              icon: ShieldCheck,
-              title: "Sicurezza Premium",
-              desc: "Assicurazioni complete e assistenza 24/7 inclusa.",
+              icon: Smartphone,
+              title: "Prenotazione Smart",
+              desc: "Prenota in 4 step dal sito, ricevi conferma istantanea.",
             },
-            { icon: MapPin, title: "Punto d'incontro", desc: "Sede reale al Porto di Olbia e consegna in Aeroporto." },
+            { icon: CreditCard, title: "Zero Vincoli", desc: "Accettiamo prepagate e contanti. Libertà totale." },
+            { icon: ShieldCheck, title: "Safe Deposit", desc: "Cauzione flessibile in base al veicolo scelto." },
+            { icon: MapPin, title: "Ufficio al Porto", desc: "La nostra base operativa è in Viale Isola Bianca 38." },
           ].map((s, i) => (
             <motion.div
               key={i}
-              variants={itemVariants}
-              className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 hover:bg-white/[0.08] hover:border-gold/30 transition-all duration-500 group"
+              whileHover={{ y: -10 }}
+              className="relative p-8 rounded-[2rem] bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 overflow-hidden group"
             >
-              <s.icon className="text-gold w-10 h-10 mb-6 group-hover:scale-110 transition-transform duration-500" />
-              <h3 className="text-xl font-bold mb-3">{s.title}</h3>
-              <p className="text-white/40 text-sm leading-relaxed">{s.desc}</p>
+              <div className="absolute -right-4 -top-4 w-24 h-24 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
+              <s.icon className="text-gold w-12 h-12 mb-6" />
+              <h4 className="text-xl font-bold mb-3 uppercase italic tracking-tighter">{s.title}</h4>
+              <p className="text-white/40 text-sm leading-relaxed font-light">{s.desc}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
-      {/* FAQ SECTION - CLEAN & ELEGANT */}
+      {/* FAQ SECTION - WITH GOLD QUESTIONS */}
       <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4">Informazioni Utili</h2>
-            <h3 className="text-3xl md:text-5xl font-black uppercase italic">
-              Tutto quello che <br /> devi sapere
+            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk</h2>
+            <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+              Domande Frequenti
             </h3>
           </div>
 
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border-b-0">
-                <AccordionTrigger className="bg-white/5 px-6 md:px-10 py-6 rounded-2xl md:rounded-3xl hover:no-underline hover:bg-white/10 transition-all text-left text-sm md:text-lg font-bold">
-                  {f.q}
+              <AccordionItem key={i} value={`faq-${i}`} className="border-none">
+                <AccordionTrigger
+                  className={`
+                  px-8 py-6 rounded-2xl md:rounded-[1.5rem] transition-all text-left font-bold italic uppercase tracking-tight
+                  ${f.gold ? "bg-gold/10 border border-gold/30 text-gold shadow-[0_0_20px_rgba(212,175,55,0.1)]" : "bg-white/5 border border-white/10 text-white hover:bg-white/10"}
+                `}
+                >
+                  <div className="flex items-center gap-4">
+                    {f.gold && <Star className="w-4 h-4 fill-gold" />}
+                    {f.q}
+                  </div>
                 </AccordionTrigger>
-                <AccordionContent className="px-6 md:px-10 pt-6 pb-8 text-white/50 leading-relaxed text-sm md:text-base border-x border-b border-white/5 rounded-b-3xl -mt-4">
+                <AccordionContent className="px-10 pt-6 pb-8 text-white/50 leading-relaxed font-light text-base md:text-lg italic">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
@@ -196,26 +209,18 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
-      {/* FINAL CTA - HIGH CONVERSION */}
-      <section className="py-24 px-4 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gold/10 blur-[150px] rounded-full -translate-y-1/2" />
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative z-10"
-        >
-          <h2 className="text-4xl md:text-7xl font-black mb-8 italic uppercase tracking-tighter">
-            Pronto a <span className="text-gold">guidare?</span>
+      {/* FINAL CTA */}
+      <section className="py-32 px-4 text-center bg-gradient-to-t from-gold/10 to-transparent">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="max-w-4xl mx-auto">
+          <h2 className="text-5xl md:text-8xl font-black mb-10 italic uppercase tracking-tighter leading-none">
+            PRENOTA IL <br />
+            <span className="text-gold">TUO SOGNO</span>
           </h2>
-          <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-12">
-            La tua supercar ti aspetta all'uscita del terminal. Bloccala ora prima che sia troppo tardi.
-          </p>
           <Link
             to="/prenotaora"
-            className="inline-flex items-center gap-4 bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-[0.2em] hover:bg-gold transition-all duration-500"
+            className="inline-flex items-center gap-4 bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:bg-gold transition-all duration-500 text-lg shadow-2xl"
           >
-            Prenota il tuo Sogno <ArrowRight size={20} />
+            Scegli il Veicolo <ArrowRight />
           </Link>
         </motion.div>
       </section>
