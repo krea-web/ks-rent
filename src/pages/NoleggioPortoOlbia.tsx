@@ -108,7 +108,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* SPOTLIGHT - MERCEDES CLASSE A */}
-      <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#0a0a0a] overflow-hidden">
+      <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#050505] overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative order-2 lg:order-1">
             <div className="absolute inset-0 bg-gold/10 blur-[120px] rounded-full scale-150 animate-pulse" />
