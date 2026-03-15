@@ -1,244 +1,226 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin } from "lucide-react";
+import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin, Star, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
   {
     q: "Come funziona la consegna in Aeroporto?",
-    a: "Consegniamo il veicolo direttamente all'Aeroporto Costa Smeralda di Olbia. Prenoti online in autonomia, ci comunichi l'orario di atterraggio e il tuo veicolo sarà pronto ad aspettarti. Un servizio su misura, senza code ai banconi.",
+    a: "Un nostro addetto ti aspetterà direttamente all'uscita degli arrivi dell'Aeroporto Costa Smeralda. Nessuna fila ai banconi, nessuna attesa. Ti accompagniamo noi alla tua auto, pronta e accesa nel parcheggio riservato a pochi passi dal terminal.",
   },
   {
     q: "Quali sono i metodi di pagamento accettati?",
-    a: "Accettiamo carte di credito, carte prepagate, bancomat, carte di debito e contanti. Non è obbligatoria la carta di credito. Il deposito cauzionale è flessibile e varia in base alla categoria del veicolo scelto.",
+    a: "Siamo i leader del noleggio flessibile: accettiamo carte di credito, carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale è gestito in base al veicolo e non richiede necessariamente una carta di credito tradizionale.",
   },
   {
-    q: "Come funziona il deposito cauzionale?",
-    a: "Il deposito cauzionale è previsto per garantire la cura della nostra flotta premium. L'importo è proporzionato al veicolo scelto e viene gestito in modo chiaro e trasparente al momento del ritiro.",
+    q: "È possibile noleggiare senza carta di credito?",
+    a: "Assolutamente sì. KS Rent nasce per abbattere le barriere dei noleggi standard. Accettiamo depositi cauzionali tramite carta di debito o contanti per permetterti di goderti la Sardegna in totale libertà.",
   },
   {
     q: "Posso prenotare direttamente dal sito?",
-    a: "Sì, la prenotazione è 100% online e autonoma. Scegli il veicolo, seleziona le date e conferma in pochi minuti direttamente dal nostro sito.",
-  },
-  {
-    q: "Quali veicoli posso noleggiare in aeroporto?",
-    a: "Offriamo una flotta completa: auto sportive, supercar, SUV premium, moto e quad. Il veicolo perfetto per iniziare la tua vacanza in Costa Smeralda.",
+    a: "Certamente. Il nostro sistema di booking online è attivo 24/7. Scegli l'auto, inserisci i dati e ricevi la conferma immediata. È il metodo più veloce per garantirti la disponibilità della tua supercar preferita.",
   },
 ];
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "AutoRental",
-  name: "KS Rent — Noleggio Auto Aeroporto Olbia",
-  description:
-    "Autonoleggio all'Aeroporto Costa Smeralda di Olbia. Supercar, SUV, moto e quad con consegna direttamente in aeroporto. Prenotazione online, senza carta di credito.",
-  url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
-  telephone: "+393446107071",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Aeroporto Costa Smeralda",
-    addressLocality: "Olbia",
-    postalCode: "07026",
-    addressRegion: "SS",
-    addressCountry: "IT",
-  },
-  areaServed: { "@type": "City", name: "Olbia" },
-};
+const NoleggioAeroportoOlbia = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  };
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
 
-const NoleggioAeroportoOlbia = () => (
-  <div className="bg-background text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
-    <SEOHead
-      title="Noleggio Auto Aeroporto Olbia | Senza Carta di Credito | KS Rent"
-      description="Atterri all'Aeroporto Costa Smeralda? Noleggio SUV, supercar, quad e moto con consegna direttamente in aeroporto. Depositi flessibili e prenotazione online."
-      canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
-      keywords="noleggio auto aeroporto olbia, autonoleggio aeroporto olbia, rent a car olbia airport, noleggio auto costa smeralda aeroporto, noleggio SUV aeroporto olbia, noleggio supercar olbia aeroporto, noleggio senza carta di credito aeroporto olbia, autonoleggio olbia"
-      jsonLd={[jsonLd, faqJsonLd]}
-    />
+  return (
+    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
+      <SEOHead
+        title="Noleggio Auto Aeroporto Olbia | Senza Carta di Credito | KS Rent"
+        description="Atterri a Olbia? Scegli l'eccellenza di KS Rent. Noleggio SUV, supercar e moto direttamente in Aeroporto. Senza carta di credito e con consegna immediata."
+        canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
+      />
 
-    {/* HERO */}
-    <section className="relative min-h-[60vh] md:min-h-[75vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webp"
-          alt="Noleggio auto sportive Aeroporto Olbia Costa Smeralda KS Rent"
-          className="w-full h-full object-cover opacity-35"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
-      </div>
+      {/* HERO SECTION - FIXED OVERLAP */}
+      <section className="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <motion.img
+            initial={{ scale: 1.1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.4 }}
+            transition={{ duration: 1.5 }}
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webp"
+            alt="Noleggio Audi RS3 Olbia"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-transparent" />
+        </div>
 
-      <div className="relative z-10 max-w-4xl">
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <div className="flex items-center gap-3 mb-6">
-            <Plane className="text-gold w-5 h-5" />
-            <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Aeroporto Costa Smeralda</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight tracking-tight mb-6">
-            Autonoleggio all'Aeroporto
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">
-              di Olbia Costa Smeralda
-            </span>
-          </h1>
-          <h2 className="text-lg sm:text-xl md:text-2xl text-white/60 font-light leading-relaxed max-w-2xl mb-8">
-            Atterra e parti subito con la tua Supercar o SUV
-          </h2>
-          <Link
-            to="/prenotaora"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-6 md:px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 group min-h-[48px]"
+        <div className="relative z-10 max-w-5xl">
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/20 mb-8 backdrop-blur-md">
+              <Plane className="text-gold w-4 h-4" />
+              <span className="text-gold text-[10px] md:text-xs uppercase tracking-[0.4em] font-bold">
+                Aeroporto Costa Smeralda
+              </span>
+            </div>
+
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter mb-8 italic uppercase">
+              Libertà <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">Al decollo</span>
+            </h1>
+
+            <p className="text-lg md:text-2xl text-white/70 font-light max-w-2xl mb-10 leading-relaxed">
+              Dimentica le code ai banconi. Atterra a Olbia e sali a bordo della tua Supercar.
+              <span className="text-gold block font-semibold mt-2">Nessun obbligo di carta di credito.</span>
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/prenotaora"
+                className="bg-gold text-black px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:shadow-white/20 active:scale-95"
+              >
+                Inizia il viaggio
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FEATURED CAR SPOTLIGHT - LA RS3 VERDE */}
+      <section className="py-20 relative px-4 md:px-12 lg:px-24 overflow-hidden bg-gradient-to-b from-[#050505] to-[#0a0a0a]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative order-2 lg:order-1"
           >
-            Verifica Disponibilità
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
-      </div>
-    </section>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gold/5 blur-[120px] rounded-full pointer-events-none" />
+            <img
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png"
+              alt="Audi RS3 Supercar Verde KS Rent"
+              className="relative z-10 w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            />
+          </motion.div>
 
-    {/* CONTENUTO */}
-    <section className="py-16 md:py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
-      <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="order-1 lg:order-2"
+          >
+            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-4">Focus Flotta</h2>
+            <h3 className="text-3xl md:text-5xl font-bold mb-6 italic uppercase">
+              Audi RS3 Sportback <br /> <span className="text-gold">Performance</span>
+            </h3>
+            <p className="text-white/60 text-lg mb-8 leading-relaxed">
+              Disponibile ora presso lo scalo di Olbia. 400CV di pura adrenalina per dominare le strade della Costa
+              Smeralda. Scoprila insieme a tutta la nostra flotta di lusso.
+            </p>
+            <div className="grid grid-cols-2 gap-6 mb-10">
+              <div className="flex items-center gap-3">
+                <Gauge className="text-gold w-5 h-5" />
+                <span className="text-sm font-bold">0-100 in 3.8s</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Star className="text-gold w-5 h-5" />
+                <span className="text-sm font-bold">Full Optionals</span>
+              </div>
+            </div>
+            <Link
+              to="/prenotaora"
+              className="group text-white font-bold uppercase tracking-widest text-sm flex items-center gap-4 hover:text-gold transition-colors"
+            >
+              Vedi tutta la flotta <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SERVICE CARDS - GLASSMORPHISM STYLE */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-3xl">
-            Atterri all'<strong className="text-white">Aeroporto Costa Smeralda di Olbia</strong>? Con KS Rent il tuo
-            veicolo ti aspetta direttamente in aeroporto. Consegniamo la tua auto esattamente dove atterri, così puoi
-            iniziare la tua vacanza senza perdere un solo minuto. Risparmia tempo prenotando in{" "}
-            <strong className="text-white">totale autonomia dal nostro sito</strong>.
-          </p>
-          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-12 max-w-3xl">
-            <strong className="text-white">Nessun obbligo di carta di credito</strong>: accettiamo bancomat, prepagate,
-            contanti e carte di debito. I depositi cauzionali sono flessibili e variano in base al veicolo scelto. La
-            nostra flotta comprende
-            <strong className="text-white"> auto sportive, supercar, SUV, moto e quad</strong> — tutto ciò che serve per
-            vivere la Costa Smeralda.
-          </p>
-        </motion.div>
-
-        {/* SERVIZI CHIAVE */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16">
           {[
-            {
-              icon: Smartphone,
-              title: "Prenotazione 100% Online",
-              desc: "Prenota in autonomia dal sito, senza telefonate.",
-            },
-            {
-              icon: CreditCard,
-              title: "Nessun Obbligo Carta di Credito",
-              desc: "Bancomat, prepagate, contanti e carte di debito.",
-            },
+            { icon: Smartphone, title: "Self Booking", desc: "Prenota in 60 secondi direttamente dal tuo smartphone." },
+            { icon: CreditCard, title: "Libertà Totale", desc: "Contanti o carte di debito accettate. Zero stress." },
             {
               icon: ShieldCheck,
-              title: "Depositi Flessibili",
-              desc: "Deposito cauzionale proporzionato al veicolo scelto.",
+              title: "Sicurezza Premium",
+              desc: "Assicurazioni complete e assistenza 24/7 inclusa.",
             },
-            { icon: MapPin, title: "Sede al Porto di Olbia", desc: "Sede operativa in Viale Isola Bianca 38, Olbia." },
+            { icon: MapPin, title: "Punto d'incontro", desc: "Sede reale al Porto di Olbia e consegna in Aeroporto." },
           ].map((s, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/30 transition-colors"
+              variants={itemVariants}
+              className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 hover:bg-white/[0.08] hover:border-gold/30 transition-all duration-500 group"
             >
-              <s.icon className="text-gold w-6 h-6 mb-4" />
-              <h3 className="text-white font-bold text-sm mb-2">{s.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{s.desc}</p>
+              <s.icon className="text-gold w-10 h-10 mb-6 group-hover:scale-110 transition-transform duration-500" />
+              <h3 className="text-xl font-bold mb-3">{s.title}</h3>
+              <p className="text-white/40 text-sm leading-relaxed">{s.desc}</p>
             </motion.div>
           ))}
-        </div>
-
-        {/* FLOTTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Flotta Disponibile</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
-            Supercar, SUV, Sportive, Moto e Quad
-          </h3>
-          <p className="text-white/60 text-base md:text-lg max-w-2xl mb-8">
-            Dall'aeroporto alla Costa Smeralda in un istante. Scegli il veicolo perfetto per la tua avventura in
-            Sardegna.
-          </p>
-          <Link
-            to="/prenotaora"
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px]"
-          >
-            Scopri la Flotta <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
         </motion.div>
+      </section>
 
-        {/* FAQ */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Domande Frequenti</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-8">
-            FAQ — Noleggio Aeroporto Olbia
-          </h3>
-          <Accordion type="single" collapsible className="space-y-3">
+      {/* FAQ SECTION - CLEAN & ELEGANT */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4">Informazioni Utili</h2>
+            <h3 className="text-3xl md:text-5xl font-black uppercase italic">
+              Tutto quello che <br /> devi sapere
+            </h3>
+          </div>
+
+          <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((f, i) => (
-              <AccordionItem
-                key={i}
-                value={`faq-${i}`}
-                className="rounded-xl px-4 md:px-6 bg-white/5 border border-white/10 hover:border-white/20 transition-all"
-              >
-                <AccordionTrigger className="text-left py-4 md:py-6 hover:no-underline text-white text-sm sm:text-base md:text-lg font-bold tracking-wide">
+              <AccordionItem key={i} value={`faq-${i}`} className="border-b-0">
+                <AccordionTrigger className="bg-white/5 px-6 md:px-10 py-6 rounded-2xl md:rounded-3xl hover:no-underline hover:bg-white/10 transition-all text-left text-sm md:text-lg font-bold">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6">
+                <AccordionContent className="px-6 md:px-10 pt-6 pb-8 text-white/50 leading-relaxed text-sm md:text-base border-x border-b border-white/5 rounded-b-3xl -mt-4">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* CTA FINALE */}
+      {/* FINAL CTA - HIGH CONVERSION */}
+      <section className="py-24 px-4 text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gold/10 blur-[150px] rounded-full -translate-y-1/2" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 md:mt-24 text-center py-16 md:py-20 bg-gradient-to-br from-gold/10 to-transparent border border-gold/20 rounded-3xl"
+          className="relative z-10"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4">Atterri a Olbia?</h2>
-          <p className="text-white/60 text-base md:text-lg mb-8 max-w-lg mx-auto">
-            Prenota il tuo veicolo e trovalo pronto all'uscita dell'aeroporto. Inizia la vacanza dal primo istante.
+          <h2 className="text-4xl md:text-7xl font-black mb-8 italic uppercase tracking-tighter">
+            Pronto a <span className="text-gold">guidare?</span>
+          </h2>
+          <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-12">
+            La tua supercar ti aspetta all'uscita del terminal. Bloccala ora prima che sia troppo tardi.
           </p>
           <Link
             to="/prenotaora"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 group min-h-[48px]"
+            className="inline-flex items-center gap-4 bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-[0.2em] hover:bg-gold transition-all duration-500"
           >
-            Prenota Ora
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            Prenota il tuo Sogno <ArrowRight size={20} />
           </Link>
         </motion.div>
-      </div>
-    </section>
-  </div>
-);
+      </section>
+    </div>
+  );
+};
 
 export default NoleggioAeroportoOlbia;
