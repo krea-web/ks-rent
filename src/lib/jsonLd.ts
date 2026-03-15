@@ -42,7 +42,6 @@ export const localBusinessJsonLd = {
     { "@type": "Place", name: "Baja Sardinia" },
     { "@type": "City", name: "San Teodoro" },
     { "@type": "City", name: "Palau" },
-    { "@type": "City", name: "Santa Teresa di Gallura" },
     { "@type": "City", name: "Arzachena" },
     { "@type": "Place", name: "Puntaldia" },
     { "@type": "Place", name: "Porto Rotondo" },
