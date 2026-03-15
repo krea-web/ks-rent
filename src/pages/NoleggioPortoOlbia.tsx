@@ -212,7 +212,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-32 px-4 text-center bg-gradient-to-t from-gold/10 to-transparent">
+      <section className="py-32 px-4 text-center bg-[#050505]">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="max-w-4xl mx-auto">
           <h2 className="text-5xl md:text-8xl font-black mb-10 italic uppercase tracking-tighter leading-none">
             SBARCA E <br />
