@@ -1,247 +1,310 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Ship, ShieldCheck, CreditCard, Smartphone } from "lucide-react";
+import { ArrowRight, MapPin, Ship, ShieldCheck, CreditCard, Smartphone, Zap, Star, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
+// FAQ con identificazione delle "Domande Oro" (f.gold) per risaltare visivamente
 const faqs = [
   {
     q: "Dove ritirare l'auto al Porto di Olbia?",
-    a: "La nostra sede operativa si trova in Viale Isola Bianca 38, esattamente al Porto di Olbia. Appena sbarchi dal traghetto, il tuo veicolo sarà pronto ad aspettarti. Nessuna navetta, nessuna attesa.",
+    a: "La nostra sede operativa si trova in Viale Isola Bianca 38, esattamente al Porto di Olbia Isola Bianca. Appena sbarchi dal traghetto, il tuo veicolo sarà pronto ad aspettarti a pochi metri. Nessuna navetta, nessuna attesa, nessuna perdita di tempo.",
+    gold: true,
   },
   {
     q: "Serve la carta di credito per noleggiare?",
-    a: "No, non è obbligatoria la carta di credito. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale è flessibile e varia in base al veicolo scelto.",
-  },
-  {
-    q: "Come funziona il deposito cauzionale?",
-    a: "Per garantire la massima cura della nostra flotta premium, è previsto un deposito cauzionale il cui importo varia in base alla categoria del veicolo scelto. Viene gestito in modo chiaro e trasparente al momento del ritiro.",
+    a: "No, KS Rent non impone l'obbligo di carta di credito tradizionale. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale è flessibile e varia in base al veicolo scelto.",
+    gold: true,
   },
   {
     q: "Posso prenotare online in totale autonomia?",
-    a: "Assolutamente sì. La prenotazione è 100% online dal nostro sito: scegli il veicolo, le date e conferma in pochi minuti. Nessuna telefonata obbligatoria.",
+    a: "Assolutamente sì. La nostra piattaforma è concepita per il Self-Booking 100% online. Scegli il veicolo, seleziona le date e conferma in pochi minuti. Riceverai subito la conferma e le istruzioni per il ritiro.",
+    gold: false,
   },
   {
-    q: "Quali veicoli sono disponibili al Porto di Olbia?",
-    a: "La nostra flotta al Porto include auto sportive, supercar, SUV premium, moto e quad. Perfetti per esplorare la Costa Smeralda dal momento in cui sbarchi.",
+    q: "Come funziona il deposito cauzionale?",
+    a: "Il deposito cauzionale viene gestito in modo chiaro e trasparente al momento del ritiro. L'importo, proporzionato alla categoria del veicolo scelto, serve a garantire la cura della nostra flotta premium.",
+    gold: false,
+  },
+  {
+    q: "Quali veicoli sono disponibili al Porto?",
+    a: "Al Porto di Olbia offriamo l'intera gamma KS Rent: auto sportive, supercar, SUV premium, moto e quad. Ogni veicolo è perfetto per iniziare la tua avventura in Costa Smeralda dal momento del tuo sbarco.",
+    gold: false,
   },
 ];
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "AutoRental",
-  name: "KS Rent — Noleggio Auto Porto di Olbia",
-  description:
-    "Noleggio auto sportive, SUV, supercar e moto al Porto di Olbia Isola Bianca. Sede operativa al porto, prenotazione online, nessun obbligo di carta di credito.",
-  url: "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia",
-  telephone: "+393446107071",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Viale Isola Bianca 38",
-    addressLocality: "Olbia",
-    postalCode: "07026",
-    addressRegion: "SS",
-    addressCountry: "IT",
-  },
-  areaServed: { "@type": "City", name: "Olbia" },
-};
+const NoleggioPortoOlbia = () => {
+  // Varianti per animazioni staggered
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
+  const itemVariants = {
+    hidden: { y: 40, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: "easeOut" } },
+  };
 
-const NoleggioPortoOlbia = () => (
-  <div className="bg-background text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
-    <SEOHead
-      title="Noleggio Auto al Porto di Olbia | Sportive e SUV | KS Rent"
-      description="Arrivi in traghetto all'Isola Bianca? Noleggia la tua auto sportiva, SUV o moto al Porto di Olbia. Nessuna carta di credito richiesta, prenota online."
-      canonical="https://www.ksrentsardinia.com/noleggio-auto-porto-olbia"
-      keywords="noleggio auto porto olbia, autonoleggio porto olbia, rent a car porto olbia, noleggio auto isola bianca, noleggio moto porto olbia, noleggio SUV olbia, noleggio supercar olbia, noleggio auto senza carta di credito olbia"
-      jsonLd={[jsonLd, faqJsonLd]}
-    />
+  return (
+    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans pt-24 md:pt-32">
+      <SEOHead
+        title="Noleggio Auto Porto Olbia Isola Bianca | Supercar e SUV | KS Rent"
+        description="Arrivi in traghetto a Olbia? Noleggia la tua auto sportiva, SUV o moto direttamente al Porto Isola Bianca con KS Rent. Sede operativa allo sbarco, zero attese, nessun obbligo di carta di credito. Prenota online."
+        canonical="https://www.ksrentsardinia.com/noleggio-auto-porto-olbia"
+        keywords="noleggio auto porto olbia, autonoleggio porto olbia isola bianca, rent a car porto olbia, noleggio auto senza carta di credito olbia porto, noleggio SUV porto olbia, noleggio supercar porto olbia, ks rent porto olbia"
+      />
 
-    {/* HERO */}
-    <section className="relative min-h-[60vh] md:min-h-[75vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-noleggio-mercedesclassea180d.webp"
-          alt="Auto sportiva noleggio Porto di Olbia Sardegna KS Rent"
-          className="w-full h-full object-cover opacity-35"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
-      </div>
+      {/* HERO SECTION - REINVENTATA E "NAVBAR-SAFE" */}
+      <section className="relative min-h-[80vh] flex flex-col justify-center pb-24 px-4 md:px-12 lg:px-24">
+        <div className="absolute inset-0 z-0">
+          <motion.img
+            initial={{ scale: 1.15, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.35 }}
+            transition={{ duration: 1.8 }}
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-noleggio-mercedesclassea180d.webp"
+            alt="Noleggio Auto Lusso Porto Olbia Isola Bianca"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
 
-      <div className="relative z-10 max-w-4xl">
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <div className="flex items-center gap-3 mb-6">
-            <Ship className="text-gold w-5 h-5" />
-            <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Porto Isola Bianca</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight tracking-tight mb-6">
-            Noleggio Auto e Moto
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">
-              al Porto di Olbia
-            </span>
-          </h1>
-          <h2 className="text-lg sm:text-xl md:text-2xl text-white/60 font-light leading-relaxed max-w-2xl mb-8">
-            La tua auto pronta al tuo sbarco all'Isola Bianca
-          </h2>
-          <Link
-            to="/prenotaora"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-6 md:px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 group min-h-[48px]"
+        <div className="relative z-10 max-w-6xl">
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9 }}>
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gold/10 border border-gold/30 mb-10 backdrop-blur-xl">
+              <Ship className="text-gold w-5 h-5" />
+              <span className="text-gold text-xs uppercase tracking-[0.5em] font-black">Porto Isola Bianca Olbia</span>
+            </div>
+
+            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-10 italic uppercase outline-text">
+              Sbarca e <br />
+              <span className="text-white">Guida il Sogno</span>
+            </h1>
+
+            <p className="text-lg md:text-2xl text-white/80 font-light max-w-3xl mb-12 leading-relaxed">
+              Dimentica code e navette. Con KS Rent la tua auto premium ti aspetta
+              <span className="text-gold font-bold"> esattamente allo sbarco </span> del traghetto. Prenotazione 100%
+              online, massima flessibilità.
+            </p>
+
+            <Link
+              to="/prenotaora"
+              className="inline-flex items-center gap-4 bg-gold text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_50px_rgba(212,175,55,0.4)] text-lg"
+            >
+              Verifica Disponibilità <ArrowRight size={22} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* INTRO TEXT SECTION - SEO & BRANDING */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505] border-y border-white/5 relative">
+        <div className="absolute inset-0 bg-gold/5 blur-[150px] rounded-full translate-x-1/2" />
+        <div className="max-w-5xl mx-auto text-center md:text-left relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
           >
-            Verifica Disponibilità
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
-      </div>
-    </section>
+            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">
+              La tua Chiave per la Sardegna
+            </h2>
+            <p className="text-2xl md:text-4xl font-light leading-snug text-white/90 mb-10">
+              Benvenuto al Porto di Olbia. KS Rent è l'autonoleggio che ti libera dalle attese. Sede operativa in{" "}
+              <strong className="text-gold">Viale Isola Bianca 38</strong>, a pochi metri dai traghetti.
+            </p>
+            <div className="h-px w-32 bg-gold mb-10 mx-auto md:mx-0" />
+            <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-4xl">
+              Offriamo un'esperienza premium con consegna del veicolo immediata al tuo sbarco. Risparmia tempo
+              prenotando in <strong>totale autonomia dal nostro sito</strong>: gestiamo depositi cauzionali flessibili e
+              accettiamo pagamenti <strong>senza obbligo di carta di credito</strong>. La nostra flotta al porto include
+              supercar, SUV, sportive, moto e quad — tutto ciò che serve per vivere la Costa Smeralda dal primo istante.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-    {/* CONTENUTO */}
-    <section className="py-16 md:py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
-      <div className="max-w-5xl mx-auto">
+      {/* FEATURED CAR SPOTLIGHT - MERCEDES CLASSE A */}
+      <section className="py-28 relative px-4 md:px-12 lg:px-24 bg-[#0a0a0a] overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute inset-0 bg-gold/10 blur-[130px] rounded-full scale-125 animate-pulse" />
+            <motion.img
+              initial={{ x: -120, opacity: 0, scale: 0.9 }}
+              whileInView={{ x: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.3 }}
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png"
+              className="relative z-10 w-full h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.9)]"
+              alt="Noleggio Mercedes Classe A Olbia Porto KS Rent"
+            />
+          </div>
+          <div className="order-1 lg:order-2 text-center lg:text-left">
+            <div className="flex items-center gap-3 mb-5 justify-center lg:justify-start">
+              <Zap className="text-gold w-6 h-6" />
+              <span className="text-gold font-bold tracking-[0.4em] text-xs uppercase italic">Porto Spotlight</span>
+            </div>
+            <h3 className="text-4xl md:text-7xl font-black mb-8 italic uppercase tracking-tighter leading-none text-white outline-text-gold">
+              Mercedes <br />
+              <span className="text-white">Classe A Premium</span>
+            </h3>
+            <p className="text-white/60 text-xl mb-12 italic font-light leading-relaxed">
+              "L'eleganza incontra la praticità. La compagna perfetta per esplorare le calette più nascoste della Costa
+              Smeralda, pronta al tuo sbarco."
+            </p>
+            <div className="grid grid-cols-2 gap-8 mb-12 max-w-sm mx-auto lg:mx-0">
+              <div className="flex items-center gap-4 justify-center lg:justify-start bg-white/5 p-4 rounded-xl border border-white/10">
+                <Gauge className="text-gold w-7 h-7" />
+                <div>
+                  <p className="text-2xl font-black text-white italic">Sport</p>
+                  <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Driving Mode</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 justify-center lg:justify-start bg-white/5 p-4 rounded-xl border border-white/10">
+                <Star className="text-gold w-7 h-7" />
+                <div>
+                  <p className="text-2xl font-black text-white italic">Premium</p>
+                  <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Interior</p>
+                </div>
+              </div>
+            </div>
+            <Link
+              to="/prenotaora"
+              className="inline-flex items-center gap-4 text-white font-black uppercase tracking-widest text-sm group"
+            >
+              Scopri la flotta{" "}
+              <ArrowRight className="group-hover:translate-x-3 transition-transform text-gold duration-300" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* BEAUTIFIED SERVICE CARDS - GLASSMORPHISM */}
+      <section className="py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
+        <div className="text-center mb-16">
+          <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-4 italic">KS Rent Advantage</h2>
+          <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+            Noleggio Senza Compromessi
+          </h3>
+        </div>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto"
         >
-          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-3xl">
-            La sede operativa di KS Rent si trova esattamente al{" "}
-            <strong className="text-white">Porto di Olbia, Viale Isola Bianca 38</strong>. Se arrivi in traghetto, il
-            tuo veicolo sarà pronto ad aspettarti a pochi passi dallo sbarco. Nessuna coda, nessuna navetta: prenoti
-            tutto online in totale autonomia e ritiri le chiavi in pochi minuti.
-          </p>
-          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-12 max-w-3xl">
-            La nostra flotta premium comprende{" "}
-            <strong className="text-white">auto sportive, supercar, SUV, moto e quad</strong>, perfetti per esplorare la
-            Costa Smeralda dal primo istante. Il deposito cauzionale è flessibile e varia in base al veicolo scelto:{" "}
-            <strong className="text-white">nessun obbligo di carta di credito</strong>.
-          </p>
-        </motion.div>
-
-        {/* SERVIZI CHIAVE */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16">
           {[
             {
               icon: Smartphone,
-              title: "Prenotazione 100% Online",
-              desc: "Prenota in autonomia dal sito, nessuna telefonata obbligatoria.",
+              title: "Self Booking",
+              desc: "Prenotazione concepita per essere 100% online, rapida e autonoma.",
             },
             {
               icon: CreditCard,
-              title: "Nessun Obbligo Carta di Credito",
-              desc: "Accettiamo bancomat, prepagate, contanti e carte di debito.",
+              title: "Zero Vincoli",
+              desc: "Nessun obbligo di carta di credito. Accettiamo prepagate, debito e contanti.",
             },
             {
               icon: ShieldCheck,
-              title: "Depositi Flessibili",
-              desc: "Deposito cauzionale proporzionato al veicolo scelto.",
+              title: "Cauzione Safe",
+              desc: "Depositi cauzionali flessibili e proporzionati alla categoria del veicolo.",
             },
             {
-              icon: MapPin,
-              title: "Sede al Porto",
-              desc: "Viale Isola Bianca 38 — a pochi passi dallo sbarco traghetti.",
+              icon: Ship,
+              title: "Sede allo Sbarco",
+              desc: "Ufficio reale in Viale Isola Bianca 38. Ritiri l'auto in 5 minuti.",
             },
           ].map((s, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/30 transition-colors"
+              variants={itemVariants}
+              whileHover={{ y: -12, borderColor: "hsl(var(--gold)/0.5)", backgroundColor: "hsl(var(--gold)/0.03)" }}
+              className="relative p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/10 overflow-hidden group transition-all duration-500 backdrop-blur-sm"
             >
-              <s.icon className="text-gold w-6 h-6 mb-4" />
-              <h3 className="text-white font-bold text-sm mb-2">{s.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{s.desc}</p>
+              <div className="absolute -right-6 -top-6 w-28 h-28 bg-gold/5 rounded-full blur-3xl group-hover:bg-gold/15 transition-all duration-500" />
+              <s.icon className="text-gold w-14 h-14 mb-8 group-hover:scale-110 transition-transform duration-500" />
+              <h4 className="text-2xl font-black mb-4 uppercase italic tracking-tighter text-white group-hover:text-gold transition-colors">
+                {s.title}
+              </h4>
+              <p className="text-white/40 text-base leading-relaxed font-light group-hover:text-white/70 transition-colors">
+                {s.desc}
+              </p>
             </motion.div>
           ))}
-        </div>
-
-        {/* FLOTTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Flotta Disponibile</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
-            Auto Sportive, Supercar, SUV, Quad e Moto
-          </h3>
-          <p className="text-white/60 text-base md:text-lg max-w-2xl mb-8">
-            Che tu voglia la potenza di una supercar o la praticità di un SUV per la tua vacanza in Sardegna, la nostra
-            flotta è pronta al Porto di Olbia.
-          </p>
-          <Link
-            to="/prenotaora"
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px]"
-          >
-            Scopri la Flotta <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
         </motion.div>
+      </section>
 
-        {/* FAQ */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Domande Frequenti</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-8">
-            FAQ — Noleggio al Porto di Olbia
-          </h3>
-          <Accordion type="single" collapsible className="space-y-3">
+      {/* FAQ SECTION - CON DOMANDE ORO */}
+      <section className="py-28 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-18">
+            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">
+              Concierge Desk Porto
+            </h2>
+            <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+              Domande Frequenti
+            </h3>
+          </div>
+
+          <Accordion type="single" collapsible className="space-y-5">
             {faqs.map((f, i) => (
-              <AccordionItem
-                key={i}
-                value={`faq-${i}`}
-                className="rounded-xl px-4 md:px-6 bg-white/5 border border-white/10 hover:border-white/20 transition-all"
-              >
-                <AccordionTrigger className="text-left py-4 md:py-6 hover:no-underline text-white text-sm sm:text-base md:text-lg font-bold tracking-wide">
-                  {f.q}
+              <AccordionItem key={i} value={`faq-${i}`} className="border-none">
+                <AccordionTrigger
+                  className={`
+                  px-8 py-7 rounded-2xl md:rounded-[2rem] transition-all text-left font-bold italic uppercase tracking-tight
+                  ${f.gold ? "bg-gold/10 border border-gold/40 text-gold shadow-[0_0_25px_rgba(212,175,55,0.15)]" : "bg-white/5 border border-white/10 text-white hover:bg-white/10"}
+                `}
+                >
+                  <div className="flex items-center gap-5">
+                    {f.gold && <Star className="w-5 h-5 fill-gold text-gold animate-pulse" />}
+                    {f.q}
+                  </div>
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6">
+                <AccordionContent className="px-10 pt-8 pb-10 text-white/60 leading-relaxed font-light text-base md:text-lg italic border-x border-b border-white/5 rounded-b-[2rem] -mt-5 bg-[#080808]/50">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* CTA FINALE */}
+      {/* FINAL CTA - MEMORABILE */}
+      <section className="py-36 px-4 text-center bg-gradient-to-t from-gold/15 to-transparent relative overflow-hidden">
+        <div className="absolute inset-0 bg-gold/5 blur-[150px] rounded-full translate-y-1/2" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 md:mt-24 text-center py-16 md:py-20 bg-gradient-to-br from-gold/10 to-transparent border border-gold/20 rounded-3xl"
+          className="max-w-4xl mx-auto relative z-10"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4">Arrivi al Porto di Olbia?</h2>
-          <p className="text-white/60 text-base md:text-lg mb-8 max-w-lg mx-auto">
-            Prenota ora il tuo veicolo e trovalo pronto al tuo sbarco. Zero attese, massima libertà.
+          <h2 className="text-6xl md:text-9xl font-black mb-12 italic uppercase tracking-tighter leading-none text-white outline-text">
+            SBARCA E <br />
+            <span className="text-gold">ACCENDI IL SOGNO</span>
+          </h2>
+          <p className="text-white/70 text-xl md:text-2xl max-w-2xl mx-auto mb-16 font-light leading-relaxed">
+            La tua supercar è pronta a pochi metri dal tuo traghetto. Non farti aspettare.
           </p>
           <Link
             to="/prenotaora"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 group min-h-[48px]"
+            className="inline-flex items-center gap-4 bg-white text-black px-14 py-6 rounded-full font-black uppercase tracking-widest hover:bg-gold transition-all duration-500 text-xl shadow-2xl hover:scale-105"
           >
-            Prenota Ora
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            Scegli il Veicolo <ArrowRight size={24} />
           </Link>
         </motion.div>
-      </div>
-    </section>
-  </div>
-);
+      </section>
+    </div>
+  );
+};
 
 export default NoleggioPortoOlbia;
