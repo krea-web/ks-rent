@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
 
 const FAVICON_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp";
 
@@ -68,6 +69,7 @@ const AppLayout = () => {
       </main>
       {!isIsolated && <Footer />}
       {!isIsolated && <WhatsAppCTA />}
+      {!isIsolated && <MobileStickyCTA />}
     </>
   );
 };
