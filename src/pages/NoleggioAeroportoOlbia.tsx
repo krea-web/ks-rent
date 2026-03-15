@@ -31,7 +31,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRental",
   name: "KS Rent — Noleggio Auto Aeroporto Olbia",
-  description: "Autonoleggio all'Aeroporto Costa Smeralda di Olbia. Supercar, SUV, moto e quad con consegna direttamente in aeroporto. Prenotazione online, senza carta di credito.",
+  description:
+    "Autonoleggio all'Aeroporto Costa Smeralda di Olbia. Supercar, SUV, moto e quad con consegna direttamente in aeroporto. Prenotazione online, senza carta di credito.",
   url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
   telephone: "+393446107071",
   address: {
@@ -69,8 +70,7 @@ const NoleggioAeroportoOlbia = () => (
     <section className="relative min-h-[60vh] md:min-h-[75vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
       <div className="absolute inset-0 z-0">
         <img
-          src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/BMW%20M2%201.jpg"
-          alt="Noleggio auto sportive Aeroporto Olbia Costa Smeralda KS Rent"
+          src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/BMW%20M2%201.jpghttps://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webpNoleggio auto sportive Aeroporto Olbia Costa Smeralda KS Rent"
           className="w-full h-full object-cover opacity-35"
           loading="eager"
           fetchPriority="high"
@@ -87,7 +87,9 @@ const NoleggioAeroportoOlbia = () => (
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight tracking-tight mb-6">
             Autonoleggio all'Aeroporto
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">di Olbia Costa Smeralda</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">
+              di Olbia Costa Smeralda
+            </span>
           </h1>
           <h2 className="text-lg sm:text-xl md:text-2xl text-white/60 font-light leading-relaxed max-w-2xl mb-8">
             Atterra e parti subito con la tua Supercar o SUV
@@ -106,25 +108,45 @@ const NoleggioAeroportoOlbia = () => (
     {/* CONTENUTO */}
     <section className="py-16 md:py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
       <div className="max-w-5xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
           <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-3xl">
-            Atterri all'<strong className="text-white">Aeroporto Costa Smeralda di Olbia</strong>? Con KS Rent il tuo veicolo ti aspetta 
-            direttamente in aeroporto. Consegniamo la tua auto esattamente dove atterri, così puoi iniziare la tua vacanza 
-            senza perdere un solo minuto. Risparmia tempo prenotando in <strong className="text-white">totale autonomia dal nostro sito</strong>.
+            Atterri all'<strong className="text-white">Aeroporto Costa Smeralda di Olbia</strong>? Con KS Rent il tuo
+            veicolo ti aspetta direttamente in aeroporto. Consegniamo la tua auto esattamente dove atterri, così puoi
+            iniziare la tua vacanza senza perdere un solo minuto. Risparmia tempo prenotando in{" "}
+            <strong className="text-white">totale autonomia dal nostro sito</strong>.
           </p>
           <p className="text-white/70 text-base md:text-lg leading-relaxed mb-12 max-w-3xl">
-            <strong className="text-white">Nessun obbligo di carta di credito</strong>: accettiamo bancomat, prepagate, contanti e carte di debito. 
-            I depositi cauzionali sono flessibili e variano in base al veicolo scelto. La nostra flotta comprende 
-            <strong className="text-white"> auto sportive, supercar, SUV, moto e quad</strong> — tutto ciò che serve per vivere la Costa Smeralda.
+            <strong className="text-white">Nessun obbligo di carta di credito</strong>: accettiamo bancomat, prepagate,
+            contanti e carte di debito. I depositi cauzionali sono flessibili e variano in base al veicolo scelto. La
+            nostra flotta comprende
+            <strong className="text-white"> auto sportive, supercar, SUV, moto e quad</strong> — tutto ciò che serve per
+            vivere la Costa Smeralda.
           </p>
         </motion.div>
 
         {/* SERVIZI CHIAVE */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16">
           {[
-            { icon: Smartphone, title: "Prenotazione 100% Online", desc: "Prenota in autonomia dal sito, senza telefonate." },
-            { icon: CreditCard, title: "Nessun Obbligo Carta di Credito", desc: "Bancomat, prepagate, contanti e carte di debito." },
-            { icon: ShieldCheck, title: "Depositi Flessibili", desc: "Deposito cauzionale proporzionato al veicolo scelto." },
+            {
+              icon: Smartphone,
+              title: "Prenotazione 100% Online",
+              desc: "Prenota in autonomia dal sito, senza telefonate.",
+            },
+            {
+              icon: CreditCard,
+              title: "Nessun Obbligo Carta di Credito",
+              desc: "Bancomat, prepagate, contanti e carte di debito.",
+            },
+            {
+              icon: ShieldCheck,
+              title: "Depositi Flessibili",
+              desc: "Deposito cauzionale proporzionato al veicolo scelto.",
+            },
             { icon: MapPin, title: "Sede al Porto di Olbia", desc: "Sede operativa in Viale Isola Bianca 38, Olbia." },
           ].map((s, i) => (
             <motion.div
@@ -143,11 +165,19 @@ const NoleggioAeroportoOlbia = () => (
         </div>
 
         {/* FLOTTA */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
           <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Flotta Disponibile</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">Supercar, SUV, Sportive, Moto e Quad</h3>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
+            Supercar, SUV, Sportive, Moto e Quad
+          </h3>
           <p className="text-white/60 text-base md:text-lg max-w-2xl mb-8">
-            Dall'aeroporto alla Costa Smeralda in un istante. Scegli il veicolo perfetto per la tua avventura in Sardegna.
+            Dall'aeroporto alla Costa Smeralda in un istante. Scegli il veicolo perfetto per la tua avventura in
+            Sardegna.
           </p>
           <Link
             to="/prenotaora"
@@ -158,7 +188,12 @@ const NoleggioAeroportoOlbia = () => (
         </motion.div>
 
         {/* FAQ */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Domande Frequenti</h2>
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-8">
             FAQ — Noleggio Aeroporto Olbia
