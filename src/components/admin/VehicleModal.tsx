@@ -8,7 +8,7 @@ import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-const CATEGORIES = ["City Car", "Supercar/Premium", "Scooter/Moto", "Quad"];
+const CATEGORIES = ["City Car", "SUV/Premium", "Supercar/Premium", "Scooter/Moto", "Quad"];
 const MONTH_FIELDS = [
   { key: "rate_april", label: "Aprile" },
   { key: "rate_may", label: "Maggio" },
