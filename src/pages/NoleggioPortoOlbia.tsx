@@ -88,7 +88,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* INTRO TEXT */}
-      <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505] border-y border-white/5">
+      <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto text-center md:text-left">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
             <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">La tua Chiave per la Sardegna</h2>
@@ -108,7 +108,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* SPOTLIGHT - MERCEDES CLASSE A */}
-      <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#0a0a0a] overflow-hidden">
+      <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#050505] overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative order-2 lg:order-1">
             <div className="absolute inset-0 bg-gold/10 blur-[120px] rounded-full scale-150 animate-pulse" />
@@ -179,7 +179,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk Porto</h2>
@@ -212,7 +212,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-32 px-4 text-center bg-gradient-to-t from-gold/10 to-transparent">
+      <section className="py-32 px-4 text-center bg-[#050505]">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="max-w-4xl mx-auto">
           <h2 className="text-5xl md:text-8xl font-black mb-10 italic uppercase tracking-tighter leading-none">
             SBARCA E <br />
