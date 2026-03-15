@@ -639,8 +639,8 @@ const PrenotaOra = () => {
 
   // Mobile sticky bar action text
   const mobileActionLabel = () => {
-    if (currentStep === 1) return "Scegli Veicolo";
-    if (currentStep === 2) return startDate && endDate ? "Verifica Date" : "Scegli Date";
+    if (currentStep === 1) return "Scegli Auto";
+    if (currentStep === 2) return startDate && endDate ? (availabilityResult?.available ? "Continua" : "Verifica") : "Scegli Date";
     if (currentStep === 3) return "Continua";
     if (currentStep === 4 && hasSecondDriver === null) return "Scegli";
     if (currentStep === 4) return "Continua";
