@@ -917,7 +917,7 @@ const PrenotaOra = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-3">
                       <Label className="text-xs uppercase tracking-widest text-white/50">Ritiro</Label>
-                      <Popover>
+                      <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
@@ -935,7 +935,15 @@ const PrenotaOra = () => {
                             <Calendar
                               mode="single"
                               selected={startDate}
-                              onSelect={setStartDate}
+                              onSelect={(date) => {
+                                setStartDate(date);
+                                if (date) {
+                                  // Reset end date if it's before the new start date
+                                  if (endDate && date > endDate) setEndDate(undefined);
+                                  setStartDateOpen(false);
+                                  setTimeout(() => setEndDateOpen(true), 200);
+                                }
+                              }}
                               disabled={(d) => d < new Date()}
                               className="p-4 pointer-events-auto"
                               classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
@@ -946,7 +954,7 @@ const PrenotaOra = () => {
                     </div>
                     <div className="space-y-3">
                       <Label className="text-xs uppercase tracking-widest text-white/50">Riconsegna</Label>
-                      <Popover>
+                      <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
@@ -964,7 +972,11 @@ const PrenotaOra = () => {
                             <Calendar
                               mode="single"
                               selected={endDate}
-                              onSelect={setEndDate}
+                              onSelect={(date) => {
+                                setEndDate(date);
+                                if (date) setEndDateOpen(false);
+                              }}
+                              defaultMonth={startDate || new Date()}
                               disabled={(d) => d < (startDate || new Date())}
                               className="p-4 pointer-events-auto"
                               classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
