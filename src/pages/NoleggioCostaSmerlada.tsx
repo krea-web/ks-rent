@@ -1,29 +1,34 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowRight, MapPin, ShieldCheck, CreditCard, Smartphone, Palmtree } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { ArrowRight, MapPin, ShieldCheck, CreditCard, Smartphone, Palmtree, Star, Zap, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
   {
     q: "Consegnate l'auto in Hotel o in Villa privata?",
-    a: "Assolutamente sì. Consegniamo il veicolo su misura dove desideri: direttamente in Hotel, Villa privata, Ristorante o qualsiasi altra location in Costa Smeralda. Un servizio pensato per la massima comodità.",
-  },
-  {
-    q: "Quali veicoli sono disponibili in Costa Smeralda?",
-    a: "La nostra flotta per la Costa Smeralda comprende supercar, auto sportive, SUV premium e quad, perfetti per esplorare Porto Cervo, San Pantaleo, Porto Rotondo e tutte le meraviglie della costa sarda.",
+    a: "Assolutamente sì. KS Rent offre un servizio Concierge completo: consegniamo il veicolo su misura esattamente dove desideri, che sia il tuo Hotel, una Villa privata a Porto Cervo, o il Ristorante dove stai cenando. Massima comodità, zero stress.",
+    gold: true,
   },
   {
     q: "Serve la carta di credito per noleggiare?",
-    a: "No, non è obbligatoria. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale è flessibile e varia in base al veicolo scelto.",
+    a: "No, non è obbligatoria. KS Rent abbatte le barriere del noleggio tradizionale accettando carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale è flessibile e viene calcolato in base al veicolo.",
+    gold: true,
+  },
+  {
+    q: "Quali veicoli sono disponibili in Costa Smeralda?",
+    a: "La nostra flotta premium comprende supercar, auto sportive, SUV di lusso e quad, ideali per esplorare Porto Cervo, San Pantaleo, Porto Rotondo e le spiagge più esclusive della costa.",
+    gold: false,
   },
   {
     q: "In quali località della Costa Smeralda consegnate?",
-    a: "Copriamo tutta la Costa Smeralda e la Gallura: Porto Cervo, San Pantaleo, Porto Rotondo, Baja Sardinia, Cannigione, Arzachena, Palau, Santa Teresa di Gallura e molte altre. Contattaci per qualsiasi richiesta specifica.",
+    a: "Copriamo capillarmente tutta la Gallura: Porto Cervo, San Pantaleo, Porto Rotondo, Baja Sardinia, Cannigione, Arzachena, Palau e Santa Teresa di Gallura. Arriviamo ovunque tu sia.",
+    gold: false,
   },
   {
     q: "Come funziona la prenotazione online?",
-    a: "È semplice e veloce: scegli il veicolo, seleziona le date e conferma la prenotazione direttamente dal nostro sito. 100% autonoma, senza telefonate obbligatorie.",
+    a: "Il nostro sistema di booking è progettato per essere autonomo e immediato. Scegli la tua supercar, seleziona date e location di consegna, e ricevi la conferma istantanea senza bisogno di telefonate.",
+    gold: false,
   },
 ];
 
@@ -62,133 +67,227 @@ const faqJsonLd = {
   })),
 };
 
-const NoleggioCostaSmerlada = () => (
-  <div className="bg-background text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
-    <SEOHead
-      title="Noleggio Auto Costa Smeralda | Porto Cervo e Dintorni | KS Rent"
-      description="Esplora Porto Cervo, San Pantaleo e Porto Rotondo. Consegna della tua supercar o SUV direttamente in hotel o villa. Noleggio senza carta di credito."
-      canonical="https://www.ksrentsardinia.com/noleggio-auto-costa-smeralda"
-      keywords="noleggio auto costa smeralda, noleggio auto porto cervo, noleggio supercar costa smeralda, noleggio SUV porto rotondo, rent a car costa smeralda, noleggio auto san pantaleo, noleggio auto lusso costa smeralda, noleggio auto senza carta di credito costa smeralda, luxury rent car sardegna"
-      jsonLd={[jsonLd, faqJsonLd]}
-    />
+const NoleggioCostaSmeralda = () => {
+  // Animazioni sicure per TypeScript (senza easing strings che causavano errore)
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+    },
+  };
 
-    {/* HERO */}
-    <section className="relative min-h-[60vh] md:min-h-[75vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-noleggio-bmwm2.webp"
-          alt="Noleggio auto lusso Costa Smeralda Porto Cervo KS Rent"
-          className="w-full h-full object-cover opacity-35"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
-      </div>
+  const itemVariants: Variants = {
+    hidden: { y: 40, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.7 } },
+  };
 
-      <div className="relative z-10 max-w-4xl">
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <div className="flex items-center gap-3 mb-6">
-            <Palmtree className="text-gold w-5 h-5" />
-            <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Costa Smeralda</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight tracking-tight mb-6">
-            Noleggio Auto di Lusso
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">
-              in Costa Smeralda
-            </span>
-          </h1>
-          <h2 className="text-lg sm:text-xl md:text-2xl text-white/60 font-light leading-relaxed max-w-2xl mb-8">
-            Consegna su misura: Hotel, Villa o Ristorante
-          </h2>
-          <Link
-            to="/prenotaora"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-6 md:px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 group min-h-[48px]"
+  return (
+    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans pt-24 md:pt-32">
+      <SEOHead
+        title="Noleggio Auto Costa Smeralda | Porto Cervo e Dintorni | KS Rent"
+        description="Esplora Porto Cervo, San Pantaleo e Porto Rotondo. Consegna della tua supercar o SUV direttamente in hotel o villa. Noleggio senza carta di credito."
+        canonical="https://www.ksrentsardinia.com/noleggio-auto-costa-smeralda"
+        keywords="noleggio auto costa smeralda, noleggio auto porto cervo, noleggio supercar costa smeralda, noleggio SUV porto rotondo, rent a car costa smeralda, noleggio auto san pantaleo, luxury rent car sardegna"
+        jsonLd={[jsonLd, faqJsonLd]}
+      />
+
+      {/* HERO SECTION - NAVBAR SAFE */}
+      <section className="relative min-h-[80vh] flex flex-col justify-center pb-24 px-4 md:px-12 lg:px-24">
+        <div className="absolute inset-0 z-0">
+          <motion.img
+            initial={{ scale: 1.15, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.4 }}
+            transition={{ duration: 1.8 }}
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-noleggio-bmwm2.webp"
+            alt="Noleggio Auto Lusso Costa Smeralda KS Rent"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+
+        <div className="relative z-10 max-w-6xl">
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9 }}>
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gold/10 border border-gold/30 mb-10 backdrop-blur-xl">
+              <Palmtree className="text-gold w-5 h-5" />
+              <span className="text-gold text-xs uppercase tracking-[0.5em] font-black">Costa Smeralda Lifestyle</span>
+            </div>
+
+            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-10 italic uppercase outline-text">
+              LUSSO SU <br />
+              <span className="text-white">MISURA</span>
+            </h1>
+
+            <p className="text-lg md:text-2xl text-white/80 font-light max-w-3xl mb-12 leading-relaxed">
+              Esplora Porto Cervo e la Gallura a bordo di una Supercar. Te la consegniamo noi
+              <span className="text-gold font-bold"> direttamente in Hotel o in Villa</span>.
+            </p>
+
+            <Link
+              to="/prenotaora"
+              className="inline-flex items-center gap-4 bg-gold text-black px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_50px_rgba(212,175,55,0.4)] text-lg"
+            >
+              Verifica Disponibilità <ArrowRight size={22} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* INTRO TEXT SECTION */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505] border-y border-white/5 relative">
+        <div className="absolute inset-0 bg-gold/5 blur-[150px] rounded-full translate-x-1/2" />
+        <div className="max-w-5xl mx-auto text-center md:text-left relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
           >
-            Verifica Disponibilità
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
-      </div>
-    </section>
+            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">Un Servizio Concierge</h2>
+            <p className="text-2xl md:text-4xl font-light leading-snug text-white/90 mb-10">
+              Vivi la vera essenza della <strong className="text-gold">Costa Smeralda</strong> senza compromessi. KS
+              Rent ti offre un servizio di noleggio auto sartoriale.
+            </p>
+            <div className="h-px w-32 bg-gold mb-10 mx-auto md:mx-0" />
+            <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-4xl">
+              Che tu alloggi a <strong>Porto Cervo, San Pantaleo, o Porto Rotondo</strong>, un nostro addetto porterà il
+              veicolo esattamente dove desideri: nella tua Villa, nel parcheggio del tuo Hotel o fuori dal tuo
+              ristorante preferito. Prenota in totale autonomia dal nostro sito con{" "}
+              <strong>depositi cauzionali flessibili e nessun obbligo di carta di credito</strong>. La vacanza inizia
+              alle tue regole.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-    {/* CONTENUTO */}
-    <section className="py-16 md:py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
-      <div className="max-w-5xl mx-auto">
+      {/* FEATURED CAR SPOTLIGHT - BMW M2 */}
+      <section className="py-28 relative px-4 md:px-12 lg:px-24 bg-[#0a0a0a] overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute inset-0 bg-gold/10 blur-[130px] rounded-full scale-125 animate-pulse" />
+            <motion.img
+              initial={{ x: -120, opacity: 0, scale: 0.9 }}
+              whileInView={{ x: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp"
+              className="relative z-10 w-full h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.9)]"
+              alt="Noleggio BMW M2 Costa Smeralda KS Rent"
+            />
+          </div>
+          <div className="order-1 lg:order-2 text-center lg:text-left">
+            <div className="flex items-center gap-3 mb-5 justify-center lg:justify-start">
+              <Zap className="text-gold w-6 h-6" />
+              <span className="text-gold font-bold tracking-[0.4em] text-xs uppercase italic">
+                Costa Smeralda Spotlight
+              </span>
+            </div>
+            <h3 className="text-4xl md:text-7xl font-black mb-8 italic uppercase tracking-tighter leading-none text-white outline-text-gold">
+              BMW M2 <br />
+              <span className="text-white">M Performance</span>
+            </h3>
+            <p className="text-white/60 text-xl mb-12 italic font-light leading-relaxed">
+              "Linee muscolose, trazione posteriore e pura adrenalina. L'auto perfetta per affrontare le curve
+              panoramiche mozzafiato da Olbia a Porto Cervo."
+            </p>
+            <div className="grid grid-cols-2 gap-8 mb-12 max-w-sm mx-auto lg:mx-0">
+              <div className="flex items-center gap-4 justify-center lg:justify-start bg-white/5 p-4 rounded-xl border border-white/10">
+                <Gauge className="text-gold w-7 h-7" />
+                <div>
+                  <p className="text-2xl font-black text-white italic">460</p>
+                  <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Cavalli</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 justify-center lg:justify-start bg-white/5 p-4 rounded-xl border border-white/10">
+                <Star className="text-gold w-7 h-7" />
+                <div>
+                  <p className="text-2xl font-black text-white italic">RWD</p>
+                  <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Trazione</p>
+                </div>
+              </div>
+            </div>
+            <Link
+              to="/prenotaora"
+              className="inline-flex items-center gap-4 text-white font-black uppercase tracking-widest text-sm group"
+            >
+              Scopri la flotta{" "}
+              <ArrowRight className="group-hover:translate-x-3 transition-transform text-gold duration-300" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* BEAUTIFIED SERVICE CARDS - GLASSMORPHISM */}
+      <section className="py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
+        <div className="text-center mb-16">
+          <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-4 italic">Standard KS Rent</h2>
+          <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+            L'Esclusività è di Serie
+          </h3>
+        </div>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto"
         >
-          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-3xl">
-            Vivi la <strong className="text-white">Costa Smeralda</strong> con il massimo della comodità. KS Rent
-            consegna il tuo veicolo direttamente dove desideri:{" "}
-            <strong className="text-white">Hotel, Villa privata o Ristorante</strong>. Perfetto per chi alloggia a{" "}
-            <strong className="text-white">Porto Cervo, San Pantaleo o Porto Rotondo</strong> e vuole esplorare la costa
-            senza pensieri.
-          </p>
-          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-12 max-w-3xl">
-            La nostra flotta top comprende{" "}
-            <strong className="text-white">supercar, SUV premium, auto sportive e quad</strong> — veicoli perfetti per
-            le strade panoramiche della Sardegna. La prenotazione è <strong className="text-white">100% online</strong>,
-            il deposito cauzionale è flessibile in base al veicolo scelto e{" "}
-            <strong className="text-white">non è richiesta la carta di credito</strong>. La nostra sede fisica è al
-            Porto di Olbia.
-          </p>
-        </motion.div>
-
-        {/* SERVIZI CHIAVE */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16">
           {[
             {
-              icon: Smartphone,
-              title: "Prenotazione 100% Online",
-              desc: "Prenota in autonomia dal sito, in pochi minuti.",
+              icon: MapPin,
+              title: "Delivery VIP",
+              desc: "Consegniamo e ritiriamo la tua auto direttamente in Villa o in Hotel.",
             },
             {
               icon: CreditCard,
-              title: "Nessun Obbligo Carta di Credito",
-              desc: "Bancomat, prepagate, contanti e carte di debito.",
+              title: "Zero Vincoli",
+              desc: "Nessun obbligo di carta di credito. Accettiamo prepagate, debito e contanti.",
             },
             {
               icon: ShieldCheck,
-              title: "Depositi Flessibili",
-              desc: "Deposito cauzionale proporzionato al veicolo scelto.",
+              title: "Cauzione Safe",
+              desc: "Depositi cauzionali flessibili e proporzionati alla categoria del veicolo.",
             },
             {
-              icon: MapPin,
-              title: "Consegna su Misura",
-              desc: "Hotel, Villa, Ristorante — in tutta la Costa Smeralda.",
+              icon: Smartphone,
+              title: "Self Booking",
+              desc: "Prenotazione concepita per essere 100% online, rapida e autonoma.",
             },
           ].map((s, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/30 transition-colors"
+              variants={itemVariants}
+              whileHover={{ y: -12, borderColor: "hsl(var(--gold)/0.5)", backgroundColor: "hsl(var(--gold)/0.03)" }}
+              className="relative p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/10 overflow-hidden group transition-all duration-500 backdrop-blur-sm"
             >
-              <s.icon className="text-gold w-6 h-6 mb-4" />
-              <h3 className="text-white font-bold text-sm mb-2">{s.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{s.desc}</p>
+              <div className="absolute -right-6 -top-6 w-28 h-28 bg-gold/5 rounded-full blur-3xl group-hover:bg-gold/15 transition-all duration-500" />
+              <s.icon className="text-gold w-14 h-14 mb-8 group-hover:scale-110 transition-transform duration-500" />
+              <h4 className="text-2xl font-black mb-4 uppercase italic tracking-tighter text-white group-hover:text-gold transition-colors">
+                {s.title}
+              </h4>
+              <p className="text-white/40 text-base leading-relaxed font-light group-hover:text-white/70 transition-colors">
+                {s.desc}
+              </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+      </section>
 
-        {/* LOCALITÀ */}
+      {/* LOCALITÀ PILLS */}
+      <section className="py-16 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="max-w-7xl mx-auto text-center"
         >
-          <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Località Servite</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
-            Porto Cervo, San Pantaleo, Porto Rotondo e Dintorni
+          <h3 className="text-xl md:text-3xl font-light mb-8 text-white/80 italic">
+            Ovunque tu sia, in tutta la Gallura:
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap justify-center gap-4">
             {[
               "Porto Cervo",
               "San Pantaleo",
@@ -201,89 +300,76 @@ const NoleggioCostaSmerlada = () => (
             ].map((loc) => (
               <span
                 key={loc}
-                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm font-medium"
+                className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-gold text-sm md:text-base font-bold uppercase tracking-widest hover:bg-gold/10 hover:border-gold/30 transition-all cursor-default"
               >
                 {loc}
               </span>
             ))}
           </div>
         </motion.div>
+      </section>
 
-        {/* FLOTTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Flotta Disponibile</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
-            Supercar, SUV, Auto Sportive e Quad
-          </h3>
-          <p className="text-white/60 text-base md:text-lg max-w-2xl mb-8">
-            Dalla potenza di una supercar alla versatilità di un quad: il veicolo perfetto per ogni angolo della Costa
-            Smeralda.
-          </p>
-          <Link
-            to="/prenotaora"
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px]"
-          >
-            Scopri la Flotta <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
+      {/* FAQ SECTION - CON DOMANDE ORO */}
+      <section className="py-28 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-18">
+            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">
+              Concierge Desk Costa Smeralda
+            </h2>
+            <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+              Domande Frequenti
+            </h3>
+          </div>
 
-        {/* FAQ */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Domande Frequenti</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-8">
-            FAQ — Noleggio in Costa Smeralda
-          </h3>
-          <Accordion type="single" collapsible className="space-y-3">
+          <Accordion type="single" collapsible className="space-y-5">
             {faqs.map((f, i) => (
-              <AccordionItem
-                key={i}
-                value={`faq-${i}`}
-                className="rounded-xl px-4 md:px-6 bg-white/5 border border-white/10 hover:border-white/20 transition-all"
-              >
-                <AccordionTrigger className="text-left py-4 md:py-6 hover:no-underline text-white text-sm sm:text-base md:text-lg font-bold tracking-wide">
-                  {f.q}
+              <AccordionItem key={i} value={`faq-${i}`} className="border-none">
+                <AccordionTrigger
+                  className={`
+                  px-8 py-7 rounded-2xl md:rounded-[2rem] transition-all text-left font-bold italic uppercase tracking-tight
+                  ${f.gold ? "bg-gold/10 border border-gold/40 text-gold shadow-[0_0_25px_rgba(212,175,55,0.15)]" : "bg-white/5 border border-white/10 text-white hover:bg-white/10"}
+                `}
+                >
+                  <div className="flex items-center gap-5">
+                    {f.gold && <Star className="w-5 h-5 fill-gold text-gold animate-pulse" />}
+                    {f.q}
+                  </div>
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6">
+                <AccordionContent className="px-10 pt-8 pb-10 text-white/60 leading-relaxed font-light text-base md:text-lg italic border-x border-b border-white/5 rounded-b-[2rem] -mt-5 bg-[#080808]/50">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* CTA FINALE */}
+      {/* FINAL CTA - MEMORABILE */}
+      <section className="py-36 px-4 text-center bg-gradient-to-t from-gold/15 to-[#050505] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gold/5 blur-[150px] rounded-full translate-y-1/2" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 md:mt-24 text-center py-16 md:py-20 bg-gradient-to-br from-gold/10 to-transparent border border-gold/20 rounded-3xl"
+          className="max-w-4xl mx-auto relative z-10"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4">La Costa Smeralda ti Aspetta</h2>
-          <p className="text-white/60 text-base md:text-lg mb-8 max-w-lg mx-auto">
-            Prenota il tuo veicolo e ricevilo direttamente in Hotel, Villa o dove desideri. Massima libertà, zero
-            pensieri.
+          <h2 className="text-6xl md:text-9xl font-black mb-12 italic uppercase tracking-tighter leading-none text-white outline-text">
+            LA COSTA <br />
+            <span className="text-gold">TI ASPETTA</span>
+          </h2>
+          <p className="text-white/70 text-xl md:text-2xl max-w-2xl mx-auto mb-16 font-light leading-relaxed">
+            Prenota il tuo veicolo e ricevilo esattamente dove desideri. Massima libertà, zero pensieri.
           </p>
           <Link
             to="/prenotaora"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--gold)/0.4)] transition-all duration-300 group min-h-[48px]"
+            className="inline-flex items-center gap-4 bg-white text-black px-14 py-6 rounded-full font-black uppercase tracking-widest hover:bg-gold transition-all duration-500 text-xl shadow-2xl hover:scale-105"
           >
-            Prenota Ora
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            Scegli il Veicolo <ArrowRight size={24} />
           </Link>
         </motion.div>
-      </div>
-    </section>
-  </div>
-);
+      </section>
+    </div>
+  );
+};
 
-export default NoleggioCostaSmerlada;
+export default NoleggioCostaSmeralda;
