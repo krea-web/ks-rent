@@ -31,7 +31,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRental",
   name: "KS Rent — Noleggio Auto Costa Smeralda",
-  description: "Noleggio auto di lusso in Costa Smeralda. Supercar, SUV e quad con consegna su misura in Hotel, Villa o Ristorante. Porto Cervo, San Pantaleo, Porto Rotondo.",
+  description:
+    "Noleggio auto di lusso in Costa Smeralda. Supercar, SUV e quad con consegna su misura in Hotel, Villa o Ristorante. Porto Cervo, San Pantaleo, Porto Rotondo.",
   url: "https://www.ksrentsardinia.com/noleggio-auto-costa-smeralda",
   telephone: "+393446107071",
   address: {
@@ -75,7 +76,7 @@ const NoleggioCostaSmerlada = () => (
     <section className="relative min-h-[60vh] md:min-h-[75vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80"
+          src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-noleggio-bmwm2.webp"
           alt="Noleggio auto lusso Costa Smeralda Porto Cervo KS Rent"
           className="w-full h-full object-cover opacity-35"
           loading="eager"
@@ -93,7 +94,9 @@ const NoleggioCostaSmerlada = () => (
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight tracking-tight mb-6">
             Noleggio Auto di Lusso
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">in Costa Smeralda</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">
+              in Costa Smeralda
+            </span>
           </h1>
           <h2 className="text-lg sm:text-xl md:text-2xl text-white/60 font-light leading-relaxed max-w-2xl mb-8">
             Consegna su misura: Hotel, Villa o Ristorante
@@ -112,28 +115,52 @@ const NoleggioCostaSmerlada = () => (
     {/* CONTENUTO */}
     <section className="py-16 md:py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
       <div className="max-w-5xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
           <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-3xl">
-            Vivi la <strong className="text-white">Costa Smeralda</strong> con il massimo della comodità. KS Rent consegna il tuo veicolo 
-            direttamente dove desideri: <strong className="text-white">Hotel, Villa privata o Ristorante</strong>. 
-            Perfetto per chi alloggia a <strong className="text-white">Porto Cervo, San Pantaleo o Porto Rotondo</strong> e vuole 
-            esplorare la costa senza pensieri.
+            Vivi la <strong className="text-white">Costa Smeralda</strong> con il massimo della comodità. KS Rent
+            consegna il tuo veicolo direttamente dove desideri:{" "}
+            <strong className="text-white">Hotel, Villa privata o Ristorante</strong>. Perfetto per chi alloggia a{" "}
+            <strong className="text-white">Porto Cervo, San Pantaleo o Porto Rotondo</strong> e vuole esplorare la costa
+            senza pensieri.
           </p>
           <p className="text-white/70 text-base md:text-lg leading-relaxed mb-12 max-w-3xl">
-            La nostra flotta top comprende <strong className="text-white">supercar, SUV premium, auto sportive e quad</strong> — veicoli 
-            perfetti per le strade panoramiche della Sardegna. La prenotazione è <strong className="text-white">100% online</strong>, 
-            il deposito cauzionale è flessibile in base al veicolo scelto e <strong className="text-white">non è richiesta la carta di credito</strong>. 
-            La nostra sede fisica è al Porto di Olbia.
+            La nostra flotta top comprende{" "}
+            <strong className="text-white">supercar, SUV premium, auto sportive e quad</strong> — veicoli perfetti per
+            le strade panoramiche della Sardegna. La prenotazione è <strong className="text-white">100% online</strong>,
+            il deposito cauzionale è flessibile in base al veicolo scelto e{" "}
+            <strong className="text-white">non è richiesta la carta di credito</strong>. La nostra sede fisica è al
+            Porto di Olbia.
           </p>
         </motion.div>
 
         {/* SERVIZI CHIAVE */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16">
           {[
-            { icon: Smartphone, title: "Prenotazione 100% Online", desc: "Prenota in autonomia dal sito, in pochi minuti." },
-            { icon: CreditCard, title: "Nessun Obbligo Carta di Credito", desc: "Bancomat, prepagate, contanti e carte di debito." },
-            { icon: ShieldCheck, title: "Depositi Flessibili", desc: "Deposito cauzionale proporzionato al veicolo scelto." },
-            { icon: MapPin, title: "Consegna su Misura", desc: "Hotel, Villa, Ristorante — in tutta la Costa Smeralda." },
+            {
+              icon: Smartphone,
+              title: "Prenotazione 100% Online",
+              desc: "Prenota in autonomia dal sito, in pochi minuti.",
+            },
+            {
+              icon: CreditCard,
+              title: "Nessun Obbligo Carta di Credito",
+              desc: "Bancomat, prepagate, contanti e carte di debito.",
+            },
+            {
+              icon: ShieldCheck,
+              title: "Depositi Flessibili",
+              desc: "Deposito cauzionale proporzionato al veicolo scelto.",
+            },
+            {
+              icon: MapPin,
+              title: "Consegna su Misura",
+              desc: "Hotel, Villa, Ristorante — in tutta la Costa Smeralda.",
+            },
           ].map((s, i) => (
             <motion.div
               key={i}
@@ -151,12 +178,31 @@ const NoleggioCostaSmerlada = () => (
         </div>
 
         {/* LOCALITÀ */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
           <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Località Servite</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">Porto Cervo, San Pantaleo, Porto Rotondo e Dintorni</h3>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
+            Porto Cervo, San Pantaleo, Porto Rotondo e Dintorni
+          </h3>
           <div className="flex flex-wrap gap-3">
-            {["Porto Cervo", "San Pantaleo", "Porto Rotondo", "Baja Sardinia", "Cannigione", "Arzachena", "Palau", "Santa Teresa Gallura"].map((loc) => (
-              <span key={loc} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm font-medium">
+            {[
+              "Porto Cervo",
+              "San Pantaleo",
+              "Porto Rotondo",
+              "Baja Sardinia",
+              "Cannigione",
+              "Arzachena",
+              "Palau",
+              "Santa Teresa Gallura",
+            ].map((loc) => (
+              <span
+                key={loc}
+                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm font-medium"
+              >
                 {loc}
               </span>
             ))}
@@ -164,11 +210,19 @@ const NoleggioCostaSmerlada = () => (
         </motion.div>
 
         {/* FLOTTA */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
           <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Flotta Disponibile</h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">Supercar, SUV, Auto Sportive e Quad</h3>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6">
+            Supercar, SUV, Auto Sportive e Quad
+          </h3>
           <p className="text-white/60 text-base md:text-lg max-w-2xl mb-8">
-            Dalla potenza di una supercar alla versatilità di un quad: il veicolo perfetto per ogni angolo della Costa Smeralda.
+            Dalla potenza di una supercar alla versatilità di un quad: il veicolo perfetto per ogni angolo della Costa
+            Smeralda.
           </p>
           <Link
             to="/prenotaora"
@@ -179,7 +233,12 @@ const NoleggioCostaSmerlada = () => (
         </motion.div>
 
         {/* FAQ */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Domande Frequenti</h2>
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-8">
             FAQ — Noleggio in Costa Smeralda
@@ -211,7 +270,8 @@ const NoleggioCostaSmerlada = () => (
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-4">La Costa Smeralda ti Aspetta</h2>
           <p className="text-white/60 text-base md:text-lg mb-8 max-w-lg mx-auto">
-            Prenota il tuo veicolo e ricevilo direttamente in Hotel, Villa o dove desideri. Massima libertà, zero pensieri.
+            Prenota il tuo veicolo e ricevilo direttamente in Hotel, Villa o dove desideri. Massima libertà, zero
+            pensieri.
           </p>
           <Link
             to="/prenotaora"
