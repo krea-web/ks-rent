@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin, Gauge, Star, Zap } from "lucide-react";
+import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin, Star, Zap, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { aeroportoFaqJsonLd } from "@/lib/jsonLd";
 
 const faqs = [
   {
@@ -39,10 +40,10 @@ const NoleggioAeroportoOlbia = () => {
         title="Noleggio Auto Aeroporto Olbia | Senza Carta di Credito | KS Rent"
         description="Atterri a Olbia? Scegli l'esclusività di KS Rent. Supercar, SUV e moto con consegna immediata in aeroporto. Prenotazione online veloce e senza obbligo di carta di credito."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
-        // Il JSON-LD viene gestito internamente al componente SEOHead per evitare duplicati
+        jsonLd={[aeroportoFaqJsonLd]}
       />
 
-      {/* HERO SECTION - NAVBAR SAFE */}
+      {/* HERO */}
       <section className="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24">
         <div className="absolute inset-0 z-0">
           <img
@@ -63,7 +64,7 @@ const NoleggioAeroportoOlbia = () => {
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase outline-text">
+            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase">
               LIBERTÀ <br />
               <span className="text-white">AL DECOLLO</span>
             </h1>
@@ -83,7 +84,7 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
-      {/* INTRO TEXT SECTION - SEO & BRANDING */}
+      {/* INTRO TEXT */}
       <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505] border-y border-white/5">
         <div className="max-w-4xl mx-auto text-center md:text-left">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
@@ -103,7 +104,7 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
-      {/* SUPERCAR SHOWCASE - AUDI RS3 VERDE */}
+      {/* SPOTLIGHT - MERCEDES CLASSE A */}
       <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#0a0a0a] overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative order-2 lg:order-1">
@@ -111,32 +112,33 @@ const NoleggioAeroportoOlbia = () => {
             <motion.img
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png"
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png"
               className="relative z-10 w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)]"
-              alt="Audi RS3 Supercar Verde KS Rent"
+              alt="Noleggio Mercedes Classe A Aeroporto Olbia KS Rent"
             />
           </div>
           <div className="order-1 lg:order-2">
             <div className="flex items-center gap-3 mb-4">
               <Zap className="text-gold w-5 h-5" />
-              <span className="text-gold font-bold tracking-widest text-xs uppercase italic">Top of the range</span>
+              <span className="text-gold font-bold tracking-widest text-xs uppercase italic">Airport Spotlight</span>
             </div>
             <h3 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
-              Audi RS3 <br />
-              <span className="text-gold">Kyalami Green</span>
+              Mercedes <br />
+              <span className="text-gold">Classe A Premium</span>
             </h3>
             <p className="text-white/50 text-lg mb-10 italic font-light">
-              "Non è solo un'auto, è una dichiarazione d'intenti. Scoprila nella nostra flotta esclusiva."
+              "Non è solo un'auto, è una dichiarazione d'intenti. Eleganza e comfort per esplorare ogni angolo della Costa Smeralda."
             </p>
             <div className="flex gap-8 mb-10">
               <div className="text-center">
-                <p className="text-2xl font-black text-white italic">400</p>
-                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Cavalli</p>
+                <p className="text-2xl font-black text-white italic">Sport</p>
+                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Driving Mode</p>
               </div>
               <div className="text-center border-x border-white/10 px-8">
-                <p className="text-2xl font-black text-white italic">3.8s</p>
-                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">0-100 km/h</p>
+                <p className="text-2xl font-black text-white italic">Premium</p>
+                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Interior</p>
               </div>
             </div>
             <Link
@@ -149,15 +151,11 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
-      {/* BEAUTIFIED SERVICE CARDS */}
-      <section className="py-24 px-4 md:px-12 lg:px-24">
+      {/* SERVICE CARDS */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
           {[
-            {
-              icon: Smartphone,
-              title: "Prenotazione Smart",
-              desc: "Prenota in 4 step dal sito, ricevi conferma istantanea.",
-            },
+            { icon: Smartphone, title: "Prenotazione Smart", desc: "Prenota in 4 step dal sito, ricevi conferma istantanea." },
             { icon: CreditCard, title: "Zero Vincoli", desc: "Accettiamo prepagate e contanti. Libertà totale." },
             { icon: ShieldCheck, title: "Safe Deposit", desc: "Cauzione flessibile in base al veicolo scelto." },
             { icon: MapPin, title: "Ufficio al Porto", desc: "La nostra base operativa è in Viale Isola Bianca 38." },
@@ -165,7 +163,7 @@ const NoleggioAeroportoOlbia = () => {
             <motion.div
               key={i}
               whileHover={{ y: -10 }}
-              className="relative p-8 rounded-[2rem] bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 overflow-hidden group"
+              className="relative p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/10 overflow-hidden group backdrop-blur-sm"
             >
               <div className="absolute -right-4 -top-4 w-24 h-24 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
               <s.icon className="text-gold w-12 h-12 mb-6" />
@@ -176,8 +174,8 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
-      {/* FAQ SECTION - WITH GOLD QUESTIONS */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+      {/* FAQ */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk</h2>
@@ -196,7 +194,7 @@ const NoleggioAeroportoOlbia = () => {
                 `}
                 >
                   <div className="flex items-center gap-4">
-                    {f.gold && <Star className="w-4 h-4 fill-gold" />}
+                    {f.gold && <Star className="w-4 h-4 fill-gold text-gold" />}
                     {f.q}
                   </div>
                 </AccordionTrigger>

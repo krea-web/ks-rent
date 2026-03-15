@@ -3,7 +3,7 @@ export const localBusinessJsonLd = {
   "@type": ["AutoRental", "LocalBusiness"],
   name: "KS Rent",
   description:
-    "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna VIP in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
+    "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna su misura in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
   url: "https://www.ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
@@ -133,6 +133,102 @@ export const faqPageJsonLd = {
       acceptedAnswer: {
         "@type": "Answer",
         text: "Sì, offriamo opzioni di cancellazione flessibili. Contatta il nostro team su WhatsApp per gestire o modificare le date della tua prenotazione.",
+      },
+    },
+  ],
+};
+
+/* ── Landing-page specific FAQ JSON-LD (one per page, no duplicates) ── */
+
+export const aeroportoFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Come funziona la consegna in Aeroporto?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Ti aspettiamo direttamente agli arrivi dell'Aeroporto Costa Smeralda. Niente file o navette: la tua auto è già pronta nel parcheggio dedicato, accesa e climatizzata.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "È possibile noleggiare senza carta di credito?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Certamente. Accettiamo carte di debito, prepagate e contanti per il deposito cauzionale. La flessibilità è il nostro marchio di fabbrica.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quali metodi di pagamento accettate?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Accettiamo tutti i principali circuiti: Visa, Mastercard, American Express, oltre a contanti e bonifici istantanei.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Come funziona il deposito cauzionale?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Il deposito è proporzionato alla tipologia di veicolo. Grazie ai nostri depositi flessibili, rendiamo il noleggio di supercar accessibile e trasparente.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso cancellare la mia prenotazione?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, offriamo politiche di cancellazione trasparenti gestibili direttamente dal tuo profilo o contattando il nostro servizio concierge.",
+      },
+    },
+  ],
+};
+
+export const portoFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Dove ritirare l'auto al Porto di Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La nostra sede operativa si trova in Viale Isola Bianca 38, esattamente al Porto di Olbia Isola Bianca. Appena sbarchi dal traghetto, il tuo veicolo sarà pronto ad aspettarti a pochi metri. Nessuna navetta, nessuna attesa, nessuna perdita di tempo.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Serve la carta di credito per noleggiare?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No, KS Rent non impone l'obbligo di carta di credito tradizionale. Accettiamo carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale è flessibile e varia in base al veicolo scelto.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso prenotare online in totale autonomia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Assolutamente sì. La nostra piattaforma è concepita per il Self-Booking 100% online. Scegli il veicolo, seleziona le date e conferma in pochi minuti. Riceverai subito la conferma e le istruzioni per il ritiro.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Come funziona il deposito cauzionale?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Il deposito cauzionale viene gestito in modo chiaro e trasparente al momento del ritiro. L'importo, proporzionato alla categoria del veicolo scelto, serve a garantire la cura della nostra flotta premium.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quali veicoli sono disponibili al Porto?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Al Porto di Olbia offriamo l'intera gamma KS Rent: auto sportive, supercar, SUV premium, moto e quad. Ogni veicolo è perfetto per iniziare la tua avventura in Costa Smeralda dal momento del tuo sbarco.",
       },
     },
   ],
