@@ -69,6 +69,7 @@ const AppLayout = () => {
       </main>
       {!isIsolated && <Footer />}
       {!isIsolated && <WhatsAppCTA />}
+      {!isIsolated && <MobileStickyCTA />}
     </>
   );
 };
