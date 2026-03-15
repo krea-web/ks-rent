@@ -104,7 +104,7 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
-      {/* SPOTLIGHT - MERCEDES CLASSE A */}
+      {/* SPOTLIGHT - AUDI RS3 VERDE */}
       <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#050505] overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative order-2 lg:order-1">
@@ -114,9 +114,9 @@ const NoleggioAeroportoOlbia = () => {
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
               viewport={{ once: true }}
-              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png"
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png"
               className="relative z-10 w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)]"
-              alt="Noleggio Mercedes Classe A Aeroporto Olbia KS Rent"
+              alt="Noleggio Audi RS3 Verde Aeroporto Olbia KS Rent"
             />
           </div>
           <div className="order-1 lg:order-2">
@@ -125,20 +125,20 @@ const NoleggioAeroportoOlbia = () => {
               <span className="text-gold font-bold tracking-widest text-xs uppercase italic">Airport Spotlight</span>
             </div>
             <h3 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
-              Mercedes <br />
-              <span className="text-gold">Classe A Premium</span>
+              Audi RS3 <br />
+              <span className="text-gold">Kyalami Green</span>
             </h3>
             <p className="text-white/50 text-lg mb-10 italic font-light">
-              "Non è solo un'auto, è una dichiarazione d'intenti. Eleganza e comfort per esplorare ogni angolo della Costa Smeralda."
+              "400 cavalli di pura adrenalina. Atterra a Olbia e sali a bordo della sportiva più desiderata della Costa Smeralda."
             </p>
             <div className="flex gap-8 mb-10">
               <div className="text-center">
-                <p className="text-2xl font-black text-white italic">Sport</p>
-                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Driving Mode</p>
+                <p className="text-2xl font-black text-white italic">400</p>
+                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Cavalli</p>
               </div>
               <div className="text-center border-x border-white/10 px-8">
-                <p className="text-2xl font-black text-white italic">Premium</p>
-                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Interior</p>
+                <p className="text-2xl font-black text-white italic">3.8s</p>
+                <p className="text-[10px] uppercase text-gold tracking-widest font-bold">0-100 km/h</p>
               </div>
             </div>
             <Link
