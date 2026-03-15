@@ -23,9 +23,9 @@ const VEHICLE_IMAGES: Record<string, string> = {
 
 const CATEGORY_ICONS: Record<string, any> = {
   "Supercar/Premium": Zap,
-  "SUV Premium": Settings2,
+  "SUV/Premium": Settings2,
   "City Car": Fuel,
-  Scooter: Zap,
+  "Scooter/Moto": Zap,
   Quad: Settings2,
 };
 
