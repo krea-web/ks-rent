@@ -88,7 +88,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* INTRO TEXT */}
-      <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505] border-y border-white/5">
+      <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto text-center md:text-left">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
             <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">La tua Chiave per la Sardegna</h2>
