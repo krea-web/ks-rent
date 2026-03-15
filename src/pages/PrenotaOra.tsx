@@ -106,6 +106,8 @@ const PrenotaOra = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
+  const [startDateOpen, setStartDateOpen] = useState(false);
+  const [endDateOpen, setEndDateOpen] = useState(false);
 
   const [mainDriver, setMainDriver] = useState({ ...initialDriverState });
   const [hasSecondDriver, setHasSecondDriver] = useState<boolean | null>(null);
