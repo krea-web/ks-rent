@@ -135,9 +135,9 @@ const Admin = () => {
     setSidebarOpen(false);
   };
 
-  const printBlankContract = () => {
-    // Si aspetta che ci sia un file 'contratto-vuoto.pdf' nella cartella public del sito
-    window.open("/contratto-vuoto.pdf", "_blank");
+  const printBlankContract = async () => {
+    const { generateBlankContract } = await import("@/lib/generateBlankContract");
+    generateBlankContract();
   };
 
   const openClientContract = (pdfUrl: string) => {
