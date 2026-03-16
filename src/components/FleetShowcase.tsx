@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, Settings2, Zap, Fuel } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -20,16 +20,6 @@ const VEHICLE_IMAGES: Record<string, string> = {
   "Yamaha Quad":
     "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/YAMAHA/ksrent-quadyamaharaptor.webp",
 };
-
-const CATEGORY_ICONS: Record<string, any> = {
-  "Supercar/Premium": Zap,
-  "SUV/Premium": Settings2,
-  "City Car": Fuel,
-  "Scooter/Moto": Zap,
-  Quad: Settings2,
-};
-
-const getIcon = (cat: string) => CATEGORY_ICONS[cat] || Zap;
 
 const FleetShowcase = () => {
   const [fleet, setFleet] = useState<any[]>([]);
@@ -113,7 +103,6 @@ const FleetShowcase = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
             {groupedFleet.map((group, i) => {
               const v = group.representative;
-              const IconComp = getIcon(v.category);
               return (
                 <motion.div
                   key={`${v.make}__${v.model}`}
@@ -148,23 +137,30 @@ const FleetShowcase = () => {
                       {v.make ? `${v.make} ${v.model}` : v.model}
                     </h3>
                     <p className="text-gold font-bold text-lg mb-6">
-                      {v.daily_rate && v.daily_rate > 0
-                        ? `A partire da €${v.daily_rate}/gg`
-                        : "Prezzo su richiesta"}
+                      {v.daily_rate && v.daily_rate > 0 ? `A partire da €${v.daily_rate}/gg` : "Prezzo su richiesta"}
                     </p>
 
-                    <div className="grid grid-cols-3 gap-4 mb-8 mt-auto">
+                    {/* Riquadri dei Prezzi Estivi */}
+                    <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
                       <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
-                        <Users size={20} className="text-gold mb-2" />
-                        <span className="text-xs text-center font-medium">Posti</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                          Giugno
+                        </span>
+                        <span className="text-sm font-bold text-gold">{v.rate_june ? `€${v.rate_june}/gg` : "-"}</span>
                       </div>
                       <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
-                        <Settings2 size={20} className="text-gold mb-2" />
-                        <span className="text-xs text-center font-medium">Automatico</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                          Luglio
+                        </span>
+                        <span className="text-sm font-bold text-gold">{v.rate_july ? `€${v.rate_july}/gg` : "-"}</span>
                       </div>
                       <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
-                        <IconComp size={20} className="text-gold mb-2" />
-                        <span className="text-xs text-center font-medium">{v.category}</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                          Agosto
+                        </span>
+                        <span className="text-sm font-bold text-gold">
+                          {v.rate_august ? `€${v.rate_august}/gg` : "-"}
+                        </span>
                       </div>
                     </div>
 
