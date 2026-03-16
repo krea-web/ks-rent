@@ -133,3 +133,12 @@
   background: hsl(var(--gold) / 0.3);
   border-radius: 3px;
 }
+
+/* Iubenda widget: push above mobile sticky CTA */
+@media (max-width: 1023px) {
+  #iubenda-cs-banner,
+  .iubenda-cs-container,
+  [id^="iubenda"] {
+    bottom: calc(5rem + env(safe-area-inset-bottom)) !important;
+  }
+}
