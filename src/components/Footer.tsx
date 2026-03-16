@@ -156,12 +156,20 @@ const Footer = () => (
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
         <p>© {new Date().getFullYear()} KS Rent S.R.L. — @KREA</p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link to="#" className="hover:text-gold transition-colors relative z-20">
+          <a
+            href="https://www.iubenda.com/privacy-policy/36489583"
+            className="iubenda-nostyle iubenda-noiframe iubenda-embed hover:text-gold transition-colors relative z-20"
+            title="Privacy Policy"
+          >
             Privacy Policy
-          </Link>
-          <Link to="#" className="hover:text-gold transition-colors relative z-20">
-            Termini di Servizio
-          </Link>
+          </a>
+          <a
+            href="https://www.iubenda.com/privacy-policy/36489583/cookie-policy"
+            className="iubenda-nostyle iubenda-noiframe iubenda-embed hover:text-gold transition-colors relative z-20"
+            title="Cookie Policy"
+          >
+            Cookie Policy
+          </a>
           <span className="text-white/20">|</span>
           <span>Powered by KREA</span>
         </div>
