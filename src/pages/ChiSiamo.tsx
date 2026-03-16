@@ -13,8 +13,8 @@ const ChiSiamo = () => {
         title="La Nostra Flotta | Noleggio Auto Lusso Porto Cervo - KS Rent"
         description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."
         canonical="https://www.ksrentsardinia.com/chisiamo"
-        jsonLd={localBusinessJsonLd}
-      />
+        jsonLd={localBusinessJsonLd} />
+      
 
       {/* 1. HERO EDITORIALE */}
       <section className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-16 md:pb-24 px-4 md:px-12 lg:px-24">
@@ -24,8 +24,8 @@ const ChiSiamo = () => {
             alt="Supercar Audi RS3 noleggio Costa Smeralda - KS Rent"
             className="w-full h-full object-cover opacity-40"
             loading="eager"
-            fetchPriority="high"
-          />
+            fetchPriority="high" />
+          
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
         </div>
@@ -35,8 +35,8 @@ const ChiSiamo = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
-            className="flex flex-col items-center"
-          >
+            className="flex flex-col items-center">
+            
             <div className="flex items-center justify-center gap-4 mb-6 md:mb-8">
               <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] font-semibold">
                 KS Rent S.R.L.
@@ -44,7 +44,7 @@ const ChiSiamo = () => {
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[1.05] tracking-tight mb-6 md:mb-8 break-words">
               In{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">
+              <span className="bg-clip-text bg-gradient-to-r from-white to-white/50 text-gold">
                 Costa Smeralda.
               </span>
             </h1>
@@ -58,8 +58,8 @@ const ChiSiamo = () => {
               <motion.div
                 className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent rounded-full shadow-[0_0_20px_#D4AF37,0_0_40px_#D4AF37aa]"
                 animate={{ x: ["-6rem", "calc(100% + 6rem)"] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-              />
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }} />
+              
             </div>
           </motion.div>
         </div>
@@ -75,8 +75,8 @@ const ChiSiamo = () => {
               initial={{ height: "0%" }}
               whileInView={{ height: "100%" }}
               transition={{ duration: 2, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            />
+              viewport={{ once: true, margin: "-100px" }} />
+            
           </div>
 
           {/* Timeline items */}
@@ -86,8 +86,8 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.2 } }}
               viewport={{ once: true, margin: "-100px" }}
-              className="relative"
-            >
+              className="relative">
+              
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37,0_0_20px_#D4AF37aa] border-2 border-[#D4AF37]" />
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold leading-tight">
                 Siamo nati dall'asfalto sardo e dalla voglia di <span className="text-gold">cambiare le regole.</span>
@@ -99,8 +99,8 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.3 } }}
               viewport={{ once: true, margin: "-100px" }}
-              className="relative"
-            >
+              className="relative">
+              
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
               <p className="text-lg md:text-2xl font-light text-white/70 leading-relaxed">
                 Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, poca
@@ -113,8 +113,8 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.4 } }}
               viewport={{ once: true, margin: "-100px" }}
-              className="relative"
-            >
+              className="relative">
+              
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
               <p className="text-lg md:text-2xl font-light text-white/70 leading-relaxed">
                 KS Rent è la nostra risposta: un servizio basato sulla fiducia totale e sulla qualità assoluta. Atterri,
@@ -127,8 +127,8 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.5 } }}
               viewport={{ once: true, margin: "-100px" }}
-              className="relative pt-4"
-            >
+              className="relative pt-4">
+              
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-6 w-4 h-4 rounded-full bg-[#D4AF37] shadow-[0_0_14px_#D4AF37,0_0_30px_#D4AF37aa] border-2 border-[#D4AF37]" />
               <blockquote className="border-l-0 pl-0">
                 <p className="text-2xl md:text-4xl font-display font-medium italic text-white leading-snug">
@@ -154,15 +154,15 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
               viewport={{ once: true }}
-              className="lg:col-span-5 relative"
-            >
+              className="lg:col-span-5 relative">
+              
               <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-white/5">
                 <img
                   src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80"
                   alt="Strada panoramica Sardegna noleggio auto KS Rent"
                   className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                  loading="lazy" />
+                
               </div>
               <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-8 w-36 h-36 md:w-48 md:h-48 bg-[#0a0a0a] border border-white/10 rounded-3xl flex items-center justify-center p-4 md:p-6 hidden md:flex shadow-2xl">
                 <p className="text-xs text-gold uppercase tracking-widest font-semibold text-center leading-loose">
@@ -177,8 +177,8 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
               viewport={{ once: true }}
-              className="lg:col-span-7"
-            >
+              className="lg:col-span-7">
+              
               <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-6 md:mb-8">
                 La Nostra Visione
               </h2>
@@ -211,8 +211,8 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
               viewport={{ once: true }}
-              className="max-w-2xl"
-            >
+              className="max-w-2xl">
+              
               <div className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6 border border-white/10">
                 <Instagram className="text-gold w-6 h-6" />
               </div>
@@ -228,14 +228,14 @@ const ChiSiamo = () => {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
-              viewport={{ once: true }}
-            >
+              viewport={{ once: true }}>
+              
               <a
                 href="https://instagram.com/ksrent_srl"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-6 md:px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px] relative z-20"
-              >
+                className="inline-flex items-center gap-3 px-6 md:px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px] relative z-20">
+                
                 Segui @ksrent_srl <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </motion.div>
@@ -249,14 +249,14 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
               viewport={{ once: true }}
-              className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
-            >
+              className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block">
+              
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3grigia.webp"
                 alt="KS Rent Audi RS3 noleggio supercar Olbia"
                 loading="lazy"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+              
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 md:p-10 pointer-events-none">
                 <Instagram className="text-gold mb-3" size={32} />
@@ -271,14 +271,14 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
               viewport={{ once: true }}
-              className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
-            >
+              className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block">
+              
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/AUDI%20RS3%20VERDE.jpg"
                 alt="Audi RS3 verde noleggio Costa Smeralda KS Rent"
                 loading="lazy"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+              
 
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm pointer-events-none">
                 <Instagram className="text-white" size={28} />
@@ -292,14 +292,14 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.4 } }}
               viewport={{ once: true }}
-              className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
-            >
+              className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block">
+              
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/BMW%20M2%201.jpg"
                 alt="BMW M2 noleggio Olbia Sardegna KS Rent"
                 loading="lazy"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+              
 
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-sm pointer-events-none">
                 <Instagram className="text-white" size={28} />
@@ -316,8 +316,8 @@ const ChiSiamo = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0, transition: { duration: 0.7 } }}
             viewport={{ once: true }}
-            className="mb-8"
-          >
+            className="mb-8">
+            
             <h2 className="text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Dove Trovarci</h2>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Le Nostre Sedi a Olbia</h3>
           </motion.div>
@@ -334,8 +334,8 @@ const ChiSiamo = () => {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
           viewport={{ once: true }}
-          className="max-w-4xl mx-auto relative z-10 flex flex-col items-center"
-        >
+          className="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
+          
           <span className="inline-block py-2 px-6 rounded-full bg-black/10 border border-black/20 text-black text-xs md:text-sm uppercase tracking-[0.3em] font-bold mb-6 shadow-sm">
             Il tuo viaggio inizia qui
           </span>
@@ -353,8 +353,8 @@ const ChiSiamo = () => {
       {/* 6. BEST CAR LINK EROICO ALLA PRENOTAZIONE */}
       <Link
         to="/prenotaora"
-        className="relative block w-full group overflow-hidden cursor-pointer bg-gradient-to-br from-gold via-yellow-500 to-gold"
-      >
+        className="relative block w-full group overflow-hidden cursor-pointer bg-gradient-to-br from-gold via-yellow-500 to-gold">
+        
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.25)_0%,transparent_70%)] pointer-events-none" />
         <div className="absolute inset-0 bg-black/5 pointer-events-none" />
 
@@ -364,8 +364,8 @@ const ChiSiamo = () => {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }}
             viewport={{ once: true }}
-            className="flex-1 text-center lg:text-left"
-          >
+            className="flex-1 text-center lg:text-left">
+            
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black text-black mb-4 leading-tight">
               Scegli la tua Auto
             </h2>
@@ -383,19 +383,19 @@ const ChiSiamo = () => {
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0, transition: { duration: 0.9, ease: "easeOut", delay: 0.2 } }}
             viewport={{ once: true }}
-            className="flex-1 flex justify-center lg:justify-end"
-          >
+            className="flex-1 flex justify-center lg:justify-end">
+            
             <img
               src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp"
               alt="BMW M2 noleggio premium Olbia — KS Rent"
               loading="lazy"
-              className="w-full max-w-lg xl:max-w-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-700 ease-out"
-            />
+              className="w-full max-w-lg xl:max-w-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-700 ease-out" />
+            
           </motion.div>
         </div>
       </Link>
-    </div>
-  );
+    </div>);
+
 };
 
 export default ChiSiamo;
