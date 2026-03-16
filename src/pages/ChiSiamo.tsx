@@ -30,25 +30,30 @@ const ChiSiamo = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
         </div>
 
-        <div className="relative z-10 max-w-full md:max-w-5xl">
+        {/* CONTENUTO CENTRATO IN BASSO */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
+            className="flex flex-col items-center"
           >
-            <div className="flex items-center gap-4 mb-6 md:mb-8">
+            <div className="flex items-center justify-center gap-4 mb-6 md:mb-8">
               <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] font-semibold">
                 KS Rent S.R.L.
               </span>
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[1.05] tracking-tight mb-6 md:mb-8 break-words">
-              Redefiniamo <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">la Libertà.</span>
+              Guidiamo le tue Emozioni in <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">
+                Costa Smeralda.
+              </span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl font-light leading-relaxed">
-              Oltre il semplice noleggio. Un'esperienza di pura libertà, disegnata per la Costa Smeralda.
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
+              Oltre il semplice noleggio. Un'esperienza di pura libertà, disegnata per esaltare ogni tuo viaggio
+              sull'isola.
             </p>
             {/* Gold racing light trail */}
-            <div className="mt-8 w-full max-w-2xl h-[2px] relative overflow-hidden rounded-full">
+            <div className="mt-8 w-full max-w-2xl h-[2px] relative overflow-hidden rounded-full mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
               <motion.div
                 className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent rounded-full shadow-[0_0_20px_#D4AF37,0_0_40px_#D4AF37aa]"
