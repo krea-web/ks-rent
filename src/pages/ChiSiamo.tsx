@@ -44,7 +44,7 @@ const ChiSiamo = () => {
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[1.05] tracking-tight mb-6 md:mb-8 break-words">
               In{" "}
-              <span className="bg-clip-text bg-gradient-to-r from-white to-white/50 text-gold">
+              <span className="text-gradient-gold">
                 Costa Smeralda.
               </span>
             </h1>
