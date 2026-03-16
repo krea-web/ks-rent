@@ -103,6 +103,12 @@ const FleetShowcase = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
             {groupedFleet.map((group, i) => {
               const v = group.representative;
+
+              // Verifica se il veicolo è una RS3 o una M2
+              const isM2 = v.model?.includes("M2");
+              const isRS3 = v.model?.includes("RS3");
+              const isSupercar = isM2 || isRS3;
+
               return (
                 <motion.div
                   key={`${v.make}__${v.model}`}
@@ -140,29 +146,56 @@ const FleetShowcase = () => {
                       {v.daily_rate && v.daily_rate > 0 ? `A partire da €${v.daily_rate}/gg` : "Prezzo su richiesta"}
                     </p>
 
-                    {/* Riquadri dei Prezzi Estivi */}
-                    <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
-                      <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
-                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                          Giugno
-                        </span>
-                        <span className="text-sm font-bold text-gold">{v.rate_june ? `€${v.rate_june}/gg` : "-"}</span>
+                    {/* Mostra le caratteristiche motore per RS3/M2, i prezzi estivi per gli altri */}
+                    {isSupercar ? (
+                      <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                          <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                            Potenza
+                          </span>
+                          <span className="text-sm font-bold text-gold">{isM2 ? "460 CV" : "400 CV"}</span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                          <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                            0-100 km/h
+                          </span>
+                          <span className="text-sm font-bold text-gold">{isM2 ? "4.1 sec" : "3.8 sec"}</span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                          <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                            Vel. Max
+                          </span>
+                          <span className="text-sm font-bold text-gold">{isM2 ? "285 km/h" : "290 km/h"}</span>
+                        </div>
                       </div>
-                      <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
-                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                          Luglio
-                        </span>
-                        <span className="text-sm font-bold text-gold">{v.rate_july ? `€${v.rate_july}/gg` : "-"}</span>
+                    ) : (
+                      <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                          <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                            Giugno
+                          </span>
+                          <span className="text-sm font-bold text-gold">
+                            {v.rate_june ? `€${v.rate_june}/gg` : "-"}
+                          </span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                          <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                            Luglio
+                          </span>
+                          <span className="text-sm font-bold text-gold">
+                            {v.rate_july ? `€${v.rate_july}/gg` : "-"}
+                          </span>
+                        </div>
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                          <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+                            Agosto
+                          </span>
+                          <span className="text-sm font-bold text-gold">
+                            {v.rate_august ? `€${v.rate_august}/gg` : "-"}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
-                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                          Agosto
-                        </span>
-                        <span className="text-sm font-bold text-gold">
-                          {v.rate_august ? `€${v.rate_august}/gg` : "-"}
-                        </span>
-                      </div>
-                    </div>
+                    )}
 
                     <Link
                       to="/prenotaora"
