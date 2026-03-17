@@ -115,32 +115,48 @@ const Footer = () => (
       </div>
     </div>
 
-      {/* Zone di Consegna Rapida — SEO Gallura */}
+      {/* Destinazioni Top & Spiagge — SEO Gallura */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5">
-          <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-gold"></span> Zone di Consegna Rapida
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              "Olbia Aeroporto",
-              "Porto Cervo",
-              "Baja Sardinia",
-              "San Teodoro",
-              "Puntaldia",
-              "Palau",
-              "Arzachena",
-              "Cannigione",
-              "Golfo Aranci",
-              "Porto Rotondo",
-            ].map((zona) => (
-              <span
-                key={zona}
-                className="text-xs text-white/50 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 hover:text-gold hover:border-gold/30 transition-colors"
-              >
-                {zona}
-              </span>
-            ))}
+        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gold"></span> Destinazioni Top
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: "San Teodoro", to: "/noleggio-auto-san-teodoro" },
+                { label: "Porto Cervo", to: "/noleggio-auto-porto-cervo" },
+                { label: "Puntaldia", to: "/noleggio-auto-puntaldia" },
+                { label: "Baja Sardinia", to: "/noleggio-auto-baja-sardinia" },
+                { label: "Golfo Aranci", to: "/noleggio-auto-golfo-aranci" },
+                { label: "Porto Rotondo", to: "/noleggio-auto-porto-rotondo" },
+                { label: "Palau", to: "/noleggio-auto-palau" },
+                { label: "Cannigione", to: "/noleggio-auto-cannigione" },
+              ].map((d) => (
+                <Link key={d.to} to={d.to} className="text-xs text-white/50 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 hover:text-gold hover:border-gold/30 transition-colors">
+                  {d.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gold"></span> Spiagge & Guide
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: "Spiaggia del Principe", to: "/spiaggia-del-principe" },
+                { label: "Liscia Ruja", to: "/liscia-ruja" },
+                { label: "Cala Brandinchi", to: "/cala-brandinchi" },
+                { label: "La Cinta", to: "/la-cinta" },
+                { label: "Capriccioli", to: "/capriccioli" },
+                { label: "Porto Istana", to: "/porto-istana" },
+              ].map((d) => (
+                <Link key={d.to} to={d.to} className="text-xs text-white/50 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 hover:text-gold hover:border-gold/30 transition-colors">
+                  {d.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
