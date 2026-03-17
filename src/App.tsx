@@ -67,6 +67,7 @@ const AppLayout = () => {
             <Route path="/noleggio-auto-aeroporto-olbia" element={<NoleggioAeroportoOlbia />} />
             <Route path="/noleggio-auto-costa-smeralda" element={<NoleggioCostaSmeralda />} />
             <Route path="/noleggio-auto-senza-carta-di-credito-olbia" element={<NoleggioSenzaCartaCredito />} />
+            <Route path="/flotta" element={<Flotta />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/login" element={<Login />} />
             <Route path="/:slug" element={<DynamicPage />} />
