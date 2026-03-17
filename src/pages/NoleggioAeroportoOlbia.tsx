@@ -92,8 +92,11 @@ const NoleggioAeroportoOlbia = () => {
       <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto text-center md:text-left">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">L'Eccellenza a Olbia</h2>
-            <p className="text-xl md:text-3xl font-light leading-relaxed text-white/90 mb-8">
+            <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">L'Eccellenza a Olbia</span>
+            <h2 className="text-3xl md:text-5xl font-display font-black mb-8 italic uppercase tracking-tighter">
+              Autonoleggio Aeroporto Olbia <span className="text-gold">Costa Smeralda</span>
+            </h2>
+            <p className="text-xl md:text-2xl font-light leading-relaxed text-white/90 mb-8">
               Benvenuto al portale d'ingresso della <strong className="text-gold">Costa Smeralda</strong>. KS Rent
               rivoluziona il concetto di autonoleggio aeroportuale, trasformando l'attesa in piacere.
             </p>
@@ -105,6 +108,8 @@ const NoleggioAeroportoOlbia = () => {
               famiglia o uno scooter per le spiagge, la nostra flotta è la tua chiave per la Sardegna. Serviamo anche il{" "}
               <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto di Olbia</Link> e tutta la{" "}
               <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>.
+              Scopri anche il nostro{" "}
+              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-white transition-colors">noleggio senza carta di credito</Link>.
             </p>
           </motion.div>
         </div>
@@ -130,10 +135,10 @@ const NoleggioAeroportoOlbia = () => {
               <Zap className="text-gold w-5 h-5" />
               <span className="text-gold font-bold tracking-widest text-xs uppercase italic">Airport Spotlight</span>
             </div>
-            <h3 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
-              Audi RS3 <br />
-              <span className="text-gold">Kyalami Green</span>
-            </h3>
+            <h2 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
+              Noleggio Audi RS3 <br />
+              <span className="text-gold">Aeroporto Olbia</span>
+            </h2>
             <p className="text-white/50 text-lg mb-10 italic font-light">
               "400 cavalli di pura adrenalina. Atterra a Olbia e sali a bordo della sportiva più desiderata della Costa Smeralda."
             </p>
@@ -173,7 +178,7 @@ const NoleggioAeroportoOlbia = () => {
             >
               <div className="absolute -right-4 -top-4 w-24 h-24 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
               <s.icon className="text-gold w-12 h-12 mb-6" />
-              <h4 className="text-xl font-bold mb-3 uppercase italic tracking-tighter">{s.title}</h4>
+              <h3 className="text-xl font-bold mb-3 uppercase italic tracking-tighter">{s.title}</h3>
               <p className="text-white/40 text-sm leading-relaxed font-light">{s.desc}</p>
             </motion.div>
           ))}
@@ -184,10 +189,10 @@ const NoleggioAeroportoOlbia = () => {
       <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk</h2>
-            <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
-              Domande Frequenti
-            </h3>
+            <span className="block text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk</span>
+            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+              Domande Frequenti <span className="text-gold">Aeroporto Olbia</span>
+            </h2>
           </div>
 
           <Accordion type="single" collapsible className="space-y-4">
@@ -210,6 +215,34 @@ const NoleggioAeroportoOlbia = () => {
               </AccordionItem>
             ))}
           </Accordion>
+        </div>
+      </section>
+
+      {/* SEO RICH TEXT */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+        <div className="max-w-4xl mx-auto">
+          <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">Guida Completa</span>
+          <h2 className="text-3xl md:text-5xl font-display font-black mb-10 italic uppercase tracking-tighter">
+            Noleggio Auto all'Aeroporto <span className="text-gold">Costa Smeralda di Olbia</span>
+          </h2>
+
+          <div className="space-y-6 text-white/60 text-base md:text-lg leading-relaxed font-light">
+            <p>
+              L'<strong className="text-white/80">Aeroporto di Olbia Costa Smeralda</strong> (codice IATA: OLB), gestito dalla società Geasar, è il principale scalo aeroportuale del nord-est della Sardegna. Situato a soli 4 km dal centro di Olbia, il terminal è collegato alla superstrada SS 131 DCN e alla SS 125 Orientale Sarda, rendendo ogni destinazione della Gallura facilmente raggiungibile in auto. Ogni estate, l'aeroporto accoglie milioni di passeggeri provenienti da tutta Europa, attratti dalle spiagge cristalline della Costa Smeralda, Porto Cervo, Baja Sardinia e San Teodoro.
+            </p>
+            <p>
+              <strong className="text-white/80">Come funziona il ritiro dell'auto a Olbia Aeroporto?</strong> Con KS Rent, il processo è stato progettato per eliminare ogni attesa. Una volta atterrato e ritirato il bagaglio, il nostro addetto ti attende nella zona arrivi con la documentazione già pronta. Ti accompagnerà al veicolo parcheggiato nell'area dedicata, a pochi passi dal terminal. Nessuna navetta verso depositi lontani, nessuna coda ai banconi delle compagnie tradizionali: in meno di 5 minuti sarai al volante della tua supercar, SUV o city car, pronto per imboccare la superstrada verso Porto Cervo, San Pantaleo o qualsiasi altra destinazione della costa.
+            </p>
+            <p>
+              La nostra flotta al servizio dell'aeroporto di Olbia comprende veicoli per ogni esigenza: dall'<strong className="text-white/80">Audi RS3 Kyalami Green</strong> da 400 cavalli per chi cerca l'adrenalina pura, alla <strong className="text-white/80">BMW M2 M Performance</strong> per gli amanti della guida sportiva, fino a SUV spaziosi come la <strong className="text-white/80">Jeep Avenger</strong> per famiglie e gruppi. Offriamo anche scooter Honda SH 125 e quad Yamaha Raptor per chi vuole esplorare le calette più nascoste della costa. Ogni veicolo viene consegnato sanificato, con il pieno di carburante e la climatizzazione attiva.
+            </p>
+            <p>
+              Un aspetto che ci distingue nel panorama dell'<strong className="text-white/80">autonoleggio aeroporto Olbia</strong> è la nostra politica di pagamento flessibile: non richiediamo carte di credito tradizionali. Accettiamo carte prepagate, bancomat, carte di debito e anche contanti per il deposito cauzionale. Questa filosofia nasce dall'ascolto dei nostri clienti, stanchi dei vincoli imposti dai grandi marchi internazionali. L'importo del deposito varia in base alla categoria del veicolo ed è sempre comunicato in modo chiaro e trasparente prima della conferma. Offriamo anche consegna e ritiro al{" "}
+              <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto di Olbia Isola Bianca</Link>, in tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link> e{" "}
+              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-white transition-colors">senza obbligo di carta di credito</Link>.
+            </p>
+          </div>
         </div>
       </section>
 

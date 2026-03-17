@@ -92,8 +92,11 @@ const NoleggioPortoOlbia = () => {
       <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto text-center md:text-left">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">La tua Chiave per la Sardegna</h2>
-            <p className="text-xl md:text-3xl font-light leading-relaxed text-white/90 mb-8">
+            <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">La tua Chiave per la Sardegna</span>
+            <h2 className="text-3xl md:text-5xl font-display font-black mb-8 italic uppercase tracking-tighter">
+              Autonoleggio al Porto <span className="text-gold">Isola Bianca di Olbia</span>
+            </h2>
+            <p className="text-xl md:text-2xl font-light leading-relaxed text-white/90 mb-8">
               Benvenuto al Porto di Olbia. KS Rent è l'autonoleggio che ti libera dalle attese. Sede operativa in{" "}
               <strong className="text-gold">Viale Isola Bianca 38</strong>, a pochi metri dai traghetti.
             </p>
@@ -106,6 +109,8 @@ const NoleggioPortoOlbia = () => {
               Offriamo anche consegna all'{" "}
               <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
               <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>.
+              Scopri anche il nostro{" "}
+              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-white transition-colors">noleggio senza carta di credito</Link>.
             </p>
           </motion.div>
         </div>
@@ -131,10 +136,10 @@ const NoleggioPortoOlbia = () => {
               <Zap className="text-gold w-5 h-5" />
               <span className="text-gold font-bold tracking-widest text-xs uppercase italic">Porto Spotlight</span>
             </div>
-            <h3 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
-              Mercedes <br />
-              <span className="text-gold">Classe A Premium</span>
-            </h3>
+            <h2 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
+              Noleggio Mercedes <br />
+              <span className="text-gold">Classe A Porto Olbia</span>
+            </h2>
             <p className="text-white/50 text-lg mb-10 italic font-light">
               "L'eleganza incontra la praticità. La compagna perfetta per esplorare le calette più nascoste della Costa
               Smeralda, pronta al tuo sbarco."
@@ -175,7 +180,7 @@ const NoleggioPortoOlbia = () => {
             >
               <div className="absolute -right-4 -top-4 w-24 h-24 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
               <s.icon className="text-gold w-12 h-12 mb-6" />
-              <h4 className="text-xl font-bold mb-3 uppercase italic tracking-tighter">{s.title}</h4>
+              <h3 className="text-xl font-bold mb-3 uppercase italic tracking-tighter">{s.title}</h3>
               <p className="text-white/40 text-sm leading-relaxed font-light">{s.desc}</p>
             </motion.div>
           ))}
@@ -186,10 +191,10 @@ const NoleggioPortoOlbia = () => {
       <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk Porto</h2>
-            <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
-              Domande Frequenti
-            </h3>
+            <span className="block text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk Porto</span>
+            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+              Domande Frequenti <span className="text-gold">Noleggio Porto Olbia</span>
+            </h2>
           </div>
 
           <Accordion type="single" collapsible className="space-y-4">
@@ -212,6 +217,34 @@ const NoleggioPortoOlbia = () => {
               </AccordionItem>
             ))}
           </Accordion>
+        </div>
+      </section>
+
+      {/* SEO RICH TEXT */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+        <div className="max-w-4xl mx-auto">
+          <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">Guida Completa</span>
+          <h2 className="text-3xl md:text-5xl font-display font-black mb-10 italic uppercase tracking-tighter">
+            Noleggio Auto al Porto <span className="text-gold">Isola Bianca di Olbia</span>
+          </h2>
+
+          <div className="space-y-6 text-white/60 text-base md:text-lg leading-relaxed font-light">
+            <p>
+              Il <strong className="text-white/80">Porto di Olbia Isola Bianca</strong> è il principale porto passeggeri della Sardegna nord-orientale, con collegamenti quotidiani verso Genova, Livorno, Civitavecchia e Piombino operati dalle compagnie Moby, Tirrenia e GNV. Il molo Isola Bianca si trova a pochi minuti dal centro di Olbia e rappresenta il punto di accesso privilegiato per chi arriva in Sardegna in traghetto con l'intenzione di esplorare la Costa Smeralda, la Gallura e tutto il nord-est dell'isola.
+            </p>
+            <p>
+              <strong className="text-white/80">Il traffico estivo a Olbia</strong> può essere intenso, soprattutto nei weekend di luglio e agosto quando migliaia di turisti sbarcano contemporaneamente. I traghetti attraccano tipicamente al mattino presto o nel tardo pomeriggio, creando lunghe code sulla viabilità locale. Per questo motivo, avere un'auto già pronta allo sbarco è un vantaggio enorme: mentre gli altri passeggeri cercano un taxi o aspettano i bus navetta dei grandi noleggiatori, tu sarai già in viaggio verso la tua destinazione.
+            </p>
+            <p>
+              La nostra <strong className="text-white/80">sede operativa in Viale Isola Bianca 38</strong> è letteralmente a pochi metri dallo sbarco traghetti. Non dovrai prendere navette, non dovrai aspettare in fila: scendi dal traghetto, cammini per 2 minuti ed entri nel nostro ufficio. La documentazione viene preparata in anticipo grazie alla prenotazione online, quindi il ritiro effettivo richiede meno di 5 minuti. Dal porto, puoi imboccare immediatamente la superstrada SS 131 DCN verso sud (Nuoro, Cagliari) oppure la SS 125 verso nord lungo la litoranea che costeggia le spiagge più belle della Sardegna: Porto Istana, Murta Maria, Porto San Paolo, fino a San Teodoro e Budoni.
+            </p>
+            <p>
+              Noleggiare un'auto al porto di Olbia con KS Rent significa anche poter scegliere tra <strong className="text-white/80">supercar, SUV premium, moto e quad</strong> senza l'obbligo della carta di credito. La nostra politica di pagamento flessibile — accettiamo prepagate, bancomat e contanti — è nata per liberarti dai vincoli imposti dai grandi autonoleggi. Il deposito cauzionale è proporzionato al veicolo e sempre comunicato in fase di prenotazione, senza sorprese. Se preferisci, offriamo anche consegna all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>, oppure scopri il nostro{" "}
+              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-white transition-colors">noleggio auto senza carta di credito</Link>.
+            </p>
+          </div>
         </div>
       </section>
 
