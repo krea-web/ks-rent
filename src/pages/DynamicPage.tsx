@@ -219,11 +219,11 @@ export default function DynamicPage() {
 
   if (!data) return <NotFound />;
 
-  const mapsEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
-    data.title + " Sardegna"
-  )}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+  const mapsEmbedUrl = type === "beach"
+    ? `https://maps.google.com/maps?saddr=Via+De+Filippi+45,+Olbia,+SS&daddr=${encodeURIComponent(data.title + " Sardegna")}&output=embed`
+    : `https://maps.google.com/maps?q=${encodeURIComponent(data.title + " Sardegna")}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=Via+De+Filippi+45,+Olbia&destination=${encodeURIComponent(
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=Via+De+Filippi+45,+Olbia,+SS&destination=${encodeURIComponent(
     data.title + " Sardegna"
   )}`;
 
