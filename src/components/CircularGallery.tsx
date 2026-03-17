@@ -138,17 +138,18 @@ class Media {
       depthTest: false,
       depthWrite: false,
       vertex: `precision highp float; attribute vec3 position; attribute vec2 uv; uniform mat4 modelViewMatrix; uniform mat4 projectionMatrix; uniform float uTime; uniform float uSpeed; varying vec2 vUv; void main() { vUv = uv; vec3 p = position; p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5); gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0); }`,
-      fragment: `precision highp float; uniform vec2 uImageSizes; uniform vec2 uPlaneSizes; uniform sampler2D tMap; uniform float uBorderRadius; varying vec2 vUv; float roundedBoxSDF(vec2 p, vec2 b, float r) { vec2 d = abs(p) - b; return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r; } void main() { vec2 ratio = vec2( max((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0), max((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0) ); vec2 uv = vec2( vUv.x * ratio.x + (1.0 - ratio.x) * 0.5, vUv.y * ratio.y + (1.0 - ratio.y) * 0.5 ); vec4 color = texture2D(tMap, uv); float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius); float edgeSmooth = 0.002; float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d); gl_FragColor = vec4(color.rgb, alpha * color.a); }`,
+      fragment: `precision highp float; uniform vec2 uImageSizes; uniform vec2 uPlaneSizes; uniform sampler2D tMap; uniform float uBorderRadius; varying vec2 vUv; float roundedBoxSDF(vec2 p, vec2 b, float r) { vec2 d = abs(p) - b; return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r; } void main() { vec2 safePlane = max(uPlaneSizes, vec2(1.0)); vec2 safeImage = max(uImageSizes, vec2(1.0)); vec2 ratio = vec2( max((safePlane.x / safePlane.y) / (safeImage.x / safeImage.y), 1.0), max((safePlane.y / safePlane.x) / (safeImage.y / safeImage.x), 1.0) ); vec2 uv = vec2( vUv.x * ratio.x + (1.0 - ratio.x) * 0.5, vUv.y * ratio.y + (1.0 - ratio.y) * 0.5 ); vec4 color = texture2D(tMap, uv); float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius); float edgeSmooth = 0.002; float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d); gl_FragColor = vec4(color.rgb, alpha * color.a); }`,
       uniforms: {
         tMap: { value: texture },
-        uPlaneSizes: { value: [0, 0] },
-        uImageSizes: { value: [0, 0] },
+        uPlaneSizes: { value: [1.0, 1.0] },
+        uImageSizes: { value: [1.0, 1.0] },
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
         uBorderRadius: { value: this.borderRadius },
       },
       transparent: true,
     });
+
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.src = this.image;
@@ -178,6 +179,7 @@ class Media {
     this.plane.position.x = this.x - scroll.current - this.extra;
     const x = this.plane.position.x;
     const H = this.viewport.width / 2;
+
     if (this.bend === 0) {
       this.plane.position.y = 0;
       this.plane.rotation.z = 0;
@@ -186,6 +188,7 @@ class Media {
       const R = (H * H + B_abs * B_abs) / (2 * B_abs);
       const effectiveX = Math.min(Math.abs(x), H);
       const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
+
       if (this.bend > 0) {
         this.plane.position.y = -arc;
         this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
@@ -194,31 +197,39 @@ class Media {
         this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
       }
     }
+
     this.speed = scroll.current - scroll.last;
     this.program.uniforms.uTime.value += 0.04;
     this.program.uniforms.uSpeed.value = this.speed;
+
     const planeOffset = this.plane.scale.x / 2;
     const viewportOffset = this.viewport.width / 2;
     this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
     this.isAfter = this.plane.position.x - planeOffset > viewportOffset;
+
     if (direction === 'right' && this.isBefore) {
       this.extra -= this.widthTotal;
-      this.isBefore = this.isAfter = false;
+      this.isBefore = false;
+      this.isAfter = false;
     }
+
     if (direction === 'left' && this.isAfter) {
       this.extra += this.widthTotal;
-      this.isBefore = this.isAfter = false;
+      this.isBefore = false;
+      this.isAfter = false;
     }
   }
 
   onResize({ screen, viewport }: any = {}) {
     if (screen) this.screen = screen;
+
     if (viewport) {
       this.viewport = viewport;
       if (this.plane.program.uniforms.uViewportSizes) {
         this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
       }
     }
+
     this.scale = this.screen.height / 1500;
     this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
     this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
@@ -272,7 +283,12 @@ class GalleryApp {
   }
 
   createRenderer() {
-    this.renderer = new Renderer({ alpha: true, antialias: true, dpr: Math.min(window.devicePixelRatio || 1, 2) });
+    const isMobile = window.innerWidth < 768;
+    this.renderer = new Renderer({
+      alpha: true,
+      antialias: true,
+      dpr: isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2),
+    });
     this.gl = this.renderer.gl;
     this.gl.clearColor(0, 0, 0, 0);
     this.container.appendChild(this.gl.canvas);
@@ -304,6 +320,7 @@ class GalleryApp {
       { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png', text: 'Honda SH 125' },
       { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png', text: 'Yamaha Raptor' },
     ];
+
     const galleryItems = items && items.length ? items : defaultItems;
     this.mediasImages = galleryItems.concat(galleryItems);
     this.medias = this.mediasImages.map(
@@ -346,7 +363,7 @@ class GalleryApp {
   }
 
   onWheel(e: WheelEvent) {
-    const delta = e.deltaY;
+    const delta = e.deltaY || 0;
     this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
     this.onCheckDebounce();
   }
@@ -367,6 +384,7 @@ class GalleryApp {
     const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
     const width = height * this.camera.aspect;
     this.viewport = { width, height };
+
     if (this.medias) {
       this.medias.forEach((media) => media.onResize({ screen: this.screen, viewport: this.viewport }));
     }
@@ -375,9 +393,11 @@ class GalleryApp {
   update() {
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
+
     if (this.medias) {
       this.medias.forEach((media) => media.update(this.scroll, direction));
     }
+
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
     this.raf = window.requestAnimationFrame(this.update.bind(this));
@@ -409,8 +429,14 @@ class GalleryApp {
     window.removeEventListener('touchstart', this.boundOnTouchDown);
     window.removeEventListener('touchmove', this.boundOnTouchMove);
     window.removeEventListener('touchend', this.boundOnTouchUp);
+
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+    }
+
+    if (this.gl) {
+      const ext = this.gl.getExtension('WEBGL_lose_context');
+      if (ext) ext.loseContext();
     }
   }
 }
@@ -443,7 +469,17 @@ export default function CircularGallery({
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const app = new GalleryApp(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase });
+
+    const app = new GalleryApp(containerRef.current, {
+      items,
+      bend,
+      textColor,
+      borderRadius,
+      font,
+      scrollSpeed,
+      scrollEase,
+    });
+
     return () => {
       app.destroy();
     };
