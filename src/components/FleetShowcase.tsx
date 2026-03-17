@@ -211,6 +211,13 @@ const FleetShowcase = () => {
           </div>
         )}
       </div>
+
+      {/* SEO KEYWORD PARAGRAPH */}
+      <div className="max-w-7xl mx-auto mt-12 text-white/70 font-light text-sm text-center leading-relaxed">
+        <p>
+          KS Rent vanta una flotta variegata per ogni esigenza. Dai brividi del <strong>noleggio supercar a Olbia</strong> con modelli iconici (prova il brivido del <strong>noleggio Audi RS3 a Olbia</strong> o BMW M2), fino alla mobilità agile. Se preferisci le due ruote, scopri il nostro <strong>noleggio moto a Olbia</strong> per evitare il traffico costiero, oppure divertiti in off-road con il nostro <strong>noleggio quad a Olbia</strong>.
+        </p>
+      </div>
     </section>
   );
 };

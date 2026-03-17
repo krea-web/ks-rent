@@ -246,6 +246,17 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
+      {/* SEO KEYWORD SECTION */}
+      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto text-white/80 font-light leading-relaxed">
+        <h2 className="text-3xl font-bold text-white mb-6">Noleggio Auto Aeroporto Olbia (Costa Smeralda)</h2>
+        <p className="mb-4">
+          Atterra e parti immediatamente. Il nostro servizio di <strong>noleggio auto all'aeroporto di Olbia</strong> è studiato per azzerare i tempi di attesa. Grazie al nostro servizio esclusivo di <strong>consegna auto a Olbia</strong> direttamente al terminal degli arrivi (Geasar), troverai le chiavi pronte e l'auto igienizzata che ti aspetta.
+        </p>
+        <p>
+          Siamo il punto di riferimento per chi cerca un <strong>rent a car at Olbia airport</strong> rapido, trasparente e senza costi nascosti. Evita le navette affollate e i desk lenti: prenota ora e inizia la tua vacanza in Costa Smeralda appena scendi dall'aereo.
+        </p>
+      </section>
+
       {/* FINAL CTA */}
       <section className="py-32 px-4 text-center bg-[#050505]">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="max-w-4xl mx-auto">

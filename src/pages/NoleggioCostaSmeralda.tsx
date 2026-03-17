@@ -377,6 +377,17 @@ const NoleggioCostaSmeralda = () => {
         </div>
       </section>
 
+      {/* SEO KEYWORD SECTION */}
+      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto text-white/80 font-light leading-relaxed">
+        <h2 className="text-3xl font-bold text-white mb-6">Esplora con il nostro Noleggio Auto in Costa Smeralda</h2>
+        <p className="mb-4">
+          Vivi la magia del nord Sardegna a bordo di veicoli perfetti per l'occasione. Il nostro servizio di <strong>noleggio auto in Costa Smeralda</strong> ti accompagna dalle spiagge cristalline fino alle serate più glamour. Se soggiorni nel cuore della movida, approfitta del nostro esclusivo <strong>noleggio auto a Porto Cervo</strong>.
+        </p>
+        <p>
+          Garantiamo la massima comodità con il servizio VIP di <strong>consegna auto a Porto Cervo</strong>: portiamo il veicolo direttamente alla tua villa, hotel o yacht. Per i nostri clienti internazionali, offriamo un servizio <strong>rent a car in Porto Cervo</strong> impareggiabile per qualità e discrezione.
+        </p>
+      </section>
+
       {/* FINAL CTA */}
       <section className="py-36 px-4 text-center bg-gradient-to-t from-gold/15 to-[#050505] relative overflow-hidden">
         <div className="absolute inset-0 bg-gold/5 blur-[150px] rounded-full translate-y-1/2" />
