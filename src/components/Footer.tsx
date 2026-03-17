@@ -196,7 +196,7 @@ const Footer = () => (
                 { label: "Spiaggia Pittulongu", to: "/spiaggia-pittulongu" },
                 { label: "Capo Testa", to: "/capo-testa" },
               ].map((d) => (
-                <Link key={d.to} to={d.to} className="text-xs text-white/50 hover:text-gold transition-colors w-fit relative z-20">
+                <Link key={d.to} to={d.to} className="px-3 py-1.5 text-xs text-white/60 bg-white/5 border border-white/10 rounded-full hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-200 relative z-20">
                   {d.label}
                 </Link>
               ))}
