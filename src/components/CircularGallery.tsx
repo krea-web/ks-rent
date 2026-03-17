@@ -435,13 +435,21 @@ class GalleryApp {
     window.removeEventListener('touchmove', this.boundOnTouchMove);
     window.removeEventListener('touchend', this.boundOnTouchUp);
 
-    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
-      this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+    if (this.medias) {
+      this.medias.forEach(media => {
+        if (media.program && media.program.uniforms.tMap.value) {
+          media.program.uniforms.tMap.value.image = null;
+        }
+      });
     }
 
-    if (this.gl) {
-      const ext = this.gl.getExtension('WEBGL_lose_context');
+    if (this.renderer && this.renderer.gl) {
+      const gl = this.renderer.gl;
+      const ext = gl.getExtension('WEBGL_lose_context');
       if (ext) ext.loseContext();
+      if (gl.canvas.parentNode) {
+        gl.canvas.parentNode.removeChild(gl.canvas);
+      }
     }
   }
 }
