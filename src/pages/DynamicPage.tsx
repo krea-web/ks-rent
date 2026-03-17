@@ -260,11 +260,13 @@ export default function DynamicPage() {
 
   if (!data) return <NotFound />;
 
+  const SEDE_OPERATIVA = "Viale+Isola+Bianca+38,+Olbia,+SS";
+
   const mapsEmbedUrl = type === "beach"
-    ? `https://maps.google.com/maps?saddr=Via+De+Filippi+45,+Olbia,+SS&daddr=${encodeURIComponent(data.title + " Sardegna")}&output=embed`
+    ? `https://maps.google.com/maps?saddr=${SEDE_OPERATIVA}&daddr=${encodeURIComponent(data.title + " Sardegna")}&output=embed`
     : `https://maps.google.com/maps?q=${encodeURIComponent(data.title + " Sardegna")}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=Via+De+Filippi+45,+Olbia,+SS&destination=${encodeURIComponent(
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${SEDE_OPERATIVA}&destination=${encodeURIComponent(
     data.title + " Sardegna"
   )}`;
 
