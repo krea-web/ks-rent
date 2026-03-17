@@ -473,7 +473,57 @@ export default function DynamicPage() {
         </div>
       </motion.section>
 
-      {/* ════════════ 5. SEO CONTENT BLOCKS ════════════ */}
+      {/* ════════════ 5. CONSIGLI DEI LOCAL ════════════ */}
+      <section className="py-20 px-4 md:px-12 bg-zinc-900">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-4">
+            <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+              Insider Tips
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              I consigli di KS Rent per{" "}
+              <span className="text-gold">{data.title}</span>
+            </h2>
+            <p className="text-foreground/60 font-light mt-4 max-w-2xl mx-auto leading-relaxed">
+              Non siamo solo un'agenzia di noleggio, siamo sardi DOC. Ecco i
+              nostri suggerimenti per vivere al meglio la tua giornata a{" "}
+              {data.title}:
+            </p>
+          </div>
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12"
+            variants={cardContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {LOCAL_TIPS.map((tip) => {
+              const Icon = tip.icon;
+              return (
+                <motion.div
+                  key={tip.title}
+                  variants={cardItemVariants}
+                  transition={{ duration: 0.5 }}
+                  className="bg-card border border-border rounded-2xl p-6 hover:border-gold/40 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-gold" />
+                  </div>
+                  <h3 className="text-foreground font-bold text-lg mb-2">
+                    {tip.title}
+                  </h3>
+                  <p className="text-foreground/60 text-sm font-light leading-relaxed">
+                    {tip.text(data.title)}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════ 6. SEO CONTENT BLOCKS ════════════ */}
       <motion.section
         className="py-20 px-4 md:px-12"
         variants={sectionVariants}
