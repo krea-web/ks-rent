@@ -133,7 +133,10 @@ class Media {
   }
 
   createShader() {
-    const texture = new Texture(this.gl, { generateMipmaps: true });
+    const texture = new Texture(this.gl, {
+      generateMipmaps: false,
+      minFilter: this.gl.LINEAR,
+    });
     this.program = new Program(this.gl, {
       depthTest: false,
       depthWrite: false,
@@ -153,10 +156,12 @@ class Media {
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.src = this.image;
-    img.onload = () => {
+    img.decode().then(() => {
       texture.image = img;
       this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-    };
+    }).catch((e) => {
+      console.warn("Errore caricamento immagine 3D:", e);
+    });
   }
 
   createMesh() {
