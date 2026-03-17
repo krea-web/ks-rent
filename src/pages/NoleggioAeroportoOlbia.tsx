@@ -37,8 +37,8 @@ const NoleggioAeroportoOlbia = () => {
   return (
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
-        title="Noleggio Auto Aeroporto Olbia | Senza Carta di Credito | KS Rent"
-        description="Atterri a Olbia? Scegli l'esclusività di KS Rent. Supercar, SUV e moto con consegna immediata in aeroporto. Prenotazione online veloce e senza obbligo di carta di credito."
+        title="Noleggio Auto Aeroporto Olbia | KS Rent"
+        description="Noleggio auto con consegna immediata all'Aeroporto di Olbia. Supercar, SUV e moto senza carta di credito. Prenota online con KS Rent."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
         keywords="noleggio auto aeroporto olbia, rent a car olbia airport, noleggio auto olbia, autonoleggio olbia, noleggio supercar olbia, noleggio auto senza carta di credito, noleggio auto lusso olbia, consegna auto olbia, noleggio audi rs3 olbia, luxury rent car olbia, noleggio moto olbia, noleggio quad olbia, rent olbia"
         jsonLd={[aeroportoFaqJsonLd]}
