@@ -68,6 +68,7 @@ const AppLayout = () => {
             <Route path="/noleggio-auto-senza-carta-di-credito-olbia" element={<NoleggioSenzaCartaCredito />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/:slug" element={<DynamicPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
