@@ -7,6 +7,7 @@ const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/
 
 const navLinks = [
   { label: "Home", to: "/" },
+  { label: "Flotta", to: "/flotta" },
   { label: "Chi Siamo", to: "/chisiamo" },
 ];
 

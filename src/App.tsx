@@ -36,6 +36,7 @@ const NoleggioPortoOlbia = lazy(() => import("./pages/NoleggioPortoOlbia"));
 const NoleggioAeroportoOlbia = lazy(() => import("./pages/NoleggioAeroportoOlbia"));
 const NoleggioCostaSmeralda = lazy(() => import("./pages/NoleggioCostaSmeralda"));
 const NoleggioSenzaCartaCredito = lazy(() => import("./pages/NoleggioSenzaCartaCredito"));
+const Flotta = lazy(() => import("./pages/Flotta"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -66,6 +67,7 @@ const AppLayout = () => {
             <Route path="/noleggio-auto-aeroporto-olbia" element={<NoleggioAeroportoOlbia />} />
             <Route path="/noleggio-auto-costa-smeralda" element={<NoleggioCostaSmeralda />} />
             <Route path="/noleggio-auto-senza-carta-di-credito-olbia" element={<NoleggioSenzaCartaCredito />} />
+            <Route path="/flotta" element={<Flotta />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/login" element={<Login />} />
             <Route path="/:slug" element={<DynamicPage />} />
