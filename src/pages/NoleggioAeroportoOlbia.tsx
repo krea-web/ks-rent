@@ -37,8 +37,8 @@ const NoleggioAeroportoOlbia = () => {
   return (
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
-        title="Noleggio Auto Aeroporto Olbia | Senza Carta di Credito | KS Rent"
-        description="Atterri a Olbia? Scegli l'esclusività di KS Rent. Supercar, SUV e moto con consegna immediata in aeroporto. Prenotazione online veloce e senza obbligo di carta di credito."
+        title="Noleggio Auto Aeroporto Olbia | KS Rent"
+        description="Noleggio auto con consegna immediata all'Aeroporto di Olbia. Supercar, SUV e moto senza carta di credito. Prenota online con KS Rent."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
         keywords="noleggio auto aeroporto olbia, rent a car olbia airport, noleggio auto olbia, autonoleggio olbia, noleggio supercar olbia, noleggio auto senza carta di credito, noleggio auto lusso olbia, consegna auto olbia, noleggio audi rs3 olbia, luxury rent car olbia, noleggio moto olbia, noleggio quad olbia, rent olbia"
         jsonLd={[aeroportoFaqJsonLd]}
@@ -49,8 +49,10 @@ const NoleggioAeroportoOlbia = () => {
         <div className="absolute inset-0 z-0">
           <img
             src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webp"
-            alt="Luxury Rent Olbia Airport"
+            alt="Noleggio Audi RS3 verde Aeroporto Olbia KS Rent"
             className="w-full h-full object-cover opacity-40 scale-105"
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/40 to-background" />
           <div className="absolute inset-0 bg-black/30" />
@@ -67,8 +69,8 @@ const NoleggioAeroportoOlbia = () => {
             </div>
 
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase">
-              LIBERTÀ <br />
-              <span className="text-white">AL DECOLLO</span>
+              Noleggio Auto <br />
+              <span className="text-gold">Aeroporto Olbia</span>
             </h1>
 
             <p className="text-lg md:text-2xl text-white/80 font-light max-w-2xl mb-12 leading-relaxed">
@@ -97,10 +99,12 @@ const NoleggioAeroportoOlbia = () => {
             </p>
             <div className="h-px w-24 bg-gold mb-8 mx-auto md:mx-0" />
             <p className="text-white/60 text-lg leading-relaxed">
-              Offriamo un servizio premium con consegna del veicolo esattamente dove atterri. Risparmia tempo prenotando
+              Offriamo un servizio premium con consegna del veicolo direttamente al terminal arrivi gestito da Geasar. Risparmia tempo prenotando
               in <strong>totale autonomia dal nostro sito</strong>: gestiamo depositi cauzionali flessibili e accettiamo
               pagamenti <strong>senza obbligo di carta di credito</strong>. Che tu cerchi una supercar, un SUV per la
-              famiglia o uno scooter per le spiagge, la nostra flotta è la tua chiave per la Sardegna.
+              famiglia o uno scooter per le spiagge, la nostra flotta è la tua chiave per la Sardegna. Serviamo anche il{" "}
+              <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto di Olbia</Link> e tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>.
             </p>
           </motion.div>
         </div>

@@ -146,9 +146,9 @@ const Footer = () => (
 
     {/* HUGE BOLT TEXT */}
     <div className="w-full flex justify-center items-end px-4 mt-6 md:mt-10 select-none pointer-events-none overflow-hidden">
-      <h1 className="text-[13vw] sm:text-[15vw] md:text-[18vw] leading-[0.75] font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-gold/80 via-gold/20 to-transparent opacity-80">
+      <span className="text-[13vw] sm:text-[15vw] md:text-[18vw] leading-[0.75] font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-gold/80 via-gold/20 to-transparent opacity-80" aria-hidden="true">
         KS RENT
-      </h1>
+      </span>
     </div>
 
     {/* Copyright Bottom Bar */}

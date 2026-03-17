@@ -10,7 +10,7 @@ const ChiSiamo = () => {
   return (
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
-        title="La Nostra Flotta | Noleggio Auto Lusso Porto Cervo - KS Rent"
+        title="Chi Siamo | Noleggio Auto Lusso Olbia | KS Rent"
         description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."
         canonical="https://www.ksrentsardinia.com/chisiamo"
         jsonLd={localBusinessJsonLd} />
@@ -43,9 +43,9 @@ const ChiSiamo = () => {
               </span>
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[1.05] tracking-tight mb-6 md:mb-8 break-words">
-              In{" "}
+              Noleggio Auto di Lusso{" "}
               <span className="text-gradient-gold">
-                Costa Smeralda.
+                in Costa Smeralda.
               </span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">

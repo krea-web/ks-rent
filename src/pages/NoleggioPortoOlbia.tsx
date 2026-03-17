@@ -37,8 +37,8 @@ const NoleggioPortoOlbia = () => {
   return (
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
-        title="Noleggio Auto Porto Olbia Isola Bianca | Supercar e SUV | KS Rent"
-        description="Arrivi in traghetto a Olbia? Noleggia la tua auto sportiva, SUV o moto direttamente al Porto Isola Bianca con KS Rent. Sede operativa allo sbarco, zero attese, nessun obbligo di carta di credito. Prenota online."
+        title="Noleggio Auto Porto Olbia Isola Bianca | KS Rent"
+        description="Arrivi in traghetto a Olbia? Noleggia supercar, SUV o moto al Porto Isola Bianca. Sede allo sbarco, zero attese. Prenota online con KS Rent."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-porto-olbia"
         keywords="noleggio auto porto olbia, autonoleggio porto olbia isola bianca, rent a car porto olbia, noleggio auto senza carta di credito olbia porto, noleggio SUV porto olbia, noleggio supercar porto olbia, ks rent porto olbia, noleggio auto olbia, autonoleggio olbia, consegna auto olbia, noleggio moto olbia, rent olbia"
         jsonLd={[portoFaqJsonLd]}
@@ -69,8 +69,8 @@ const NoleggioPortoOlbia = () => {
             </div>
 
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase">
-              SBARCA E <br />
-              <span className="text-white">GUIDA IL SOGNO</span>
+              Noleggio Auto <br />
+              <span className="text-gold">Porto di Olbia</span>
             </h1>
 
             <p className="text-lg md:text-2xl text-white/80 font-light max-w-2xl mb-12 leading-relaxed">
@@ -99,10 +99,13 @@ const NoleggioPortoOlbia = () => {
             </p>
             <div className="h-px w-24 bg-gold mb-8 mx-auto md:mx-0" />
             <p className="text-white/60 text-lg leading-relaxed">
-              Offriamo un'esperienza premium con consegna del veicolo immediata al tuo sbarco. Risparmia tempo
+              Offriamo un'esperienza premium con consegna del veicolo immediata al tuo sbarco dal molo Isola Bianca. Risparmia tempo
               prenotando in <strong>totale autonomia dal nostro sito</strong>: gestiamo depositi cauzionali flessibili e
               accettiamo pagamenti <strong>senza obbligo di carta di credito</strong>. La nostra flotta al porto include
               supercar, SUV, sportive, moto e quad — tutto ciò che serve per vivere la Costa Smeralda dal primo istante.
+              Offriamo anche consegna all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>.
             </p>
           </motion.div>
         </div>

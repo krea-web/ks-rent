@@ -34,7 +34,7 @@ const ChiSiamo = lazy(() => import("./pages/ChiSiamo"));
 const PrenotaOra = lazy(() => import("./pages/PrenotaOra"));
 const NoleggioPortoOlbia = lazy(() => import("./pages/NoleggioPortoOlbia"));
 const NoleggioAeroportoOlbia = lazy(() => import("./pages/NoleggioAeroportoOlbia"));
-const NoleggioCostaSmerlada = lazy(() => import("./pages/NoleggioCostaSmerlada"));
+const NoleggioCostaSmeralda = lazy(() => import("./pages/NoleggioCostaSmeralda"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -62,7 +62,7 @@ const AppLayout = () => {
             <Route path="/prenotaora" element={<PrenotaOra />} />
             <Route path="/noleggio-auto-porto-olbia" element={<NoleggioPortoOlbia />} />
             <Route path="/noleggio-auto-aeroporto-olbia" element={<NoleggioAeroportoOlbia />} />
-            <Route path="/noleggio-auto-costa-smeralda" element={<NoleggioCostaSmerlada />} />
+            <Route path="/noleggio-auto-costa-smeralda" element={<NoleggioCostaSmeralda />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />

@@ -85,8 +85,8 @@ const NoleggioCostaSmeralda = () => {
   return (
     <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans pt-24 md:pt-32">
       <SEOHead
-        title="Noleggio Auto Costa Smeralda | Porto Cervo e Dintorni | KS Rent"
-        description="Esplora Porto Cervo, San Pantaleo e Porto Rotondo. Consegna della tua supercar o SUV direttamente in hotel o villa. Noleggio senza carta di credito."
+        title="Noleggio Auto Costa Smeralda | Porto Cervo | KS Rent"
+        description="Noleggio supercar e SUV in Costa Smeralda. Consegna in hotel o villa a Porto Cervo, San Pantaleo e Porto Rotondo. Prenota online."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-costa-smeralda"
         keywords="noleggio auto costa smeralda, noleggio auto porto cervo, noleggio supercar costa smeralda, noleggio SUV porto rotondo, rent a car costa smeralda, noleggio auto san pantaleo, luxury rent car sardegna, rent a car porto cervo, consegna auto porto cervo, noleggio auto lusso olbia, noleggio supercar olbia"
         jsonLd={[jsonLd, faqJsonLd]}
@@ -117,8 +117,8 @@ const NoleggioCostaSmeralda = () => {
             </div>
 
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-10 italic uppercase outline-text">
-              LUSSO SU <br />
-              <span className="text-white">MISURA</span>
+              Noleggio Auto <br />
+              <span className="text-gold">Costa Smeralda</span>
             </h1>
 
             <p className="text-lg md:text-2xl text-white/80 font-light max-w-3xl mb-12 leading-relaxed">
@@ -157,7 +157,9 @@ const NoleggioCostaSmeralda = () => {
               veicolo esattamente dove desideri: nella tua Villa, nel parcheggio del tuo Hotel o fuori dal tuo
               ristorante preferito. Prenota in totale autonomia dal nostro sito con{" "}
               <strong>depositi cauzionali flessibili e nessun obbligo di carta di credito</strong>. La vacanza inizia
-              alle tue regole.
+              alle tue regole. Ritira anche al{" "}
+              <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto di Olbia</Link> o all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link>.
             </p>
           </motion.div>
         </div>
