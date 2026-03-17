@@ -555,7 +555,7 @@ export default function DynamicPage() {
               KS Rent è il punto di riferimento per il noleggio auto a Olbia e in tutta la Costa
               Smeralda. Scegliendo il nostro servizio per {data.title}, avrai accesso a una flotta
               premium composta da city car, SUV, berline e supercar, sempre igienizzate, con
-              chilometri illimitati e copertura assicurativa completa. Il nostro team è disponibile
+              pacchetti km flessibili e copertura assicurativa completa. Il nostro team è disponibile
               24 ore su 24 per consegnarti il veicolo direttamente in aeroporto, al porto di Olbia
               o presso la tua struttura ricettiva.
             </p>

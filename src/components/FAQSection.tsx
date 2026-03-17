@@ -40,7 +40,7 @@ const faqs = [
     isHighlighted: false,
   },
   {
-    q: "È previsto il chilometraggio illimitato?",
+    q: "Come funziona il chilometraggio?",
     a: "I pacchetti chilometrici variano in base alla categoria del veicolo (City Car, Premium, Scooter o Quad). Contattaci per trovare la soluzione perfetta per il tuo itinerario in Sardegna.",
     isHighlighted: false,
   },
