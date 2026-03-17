@@ -173,7 +173,7 @@ const Footer = () => (
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-gold"></span> Le Migliori Spiagge
             </h3>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {[
                 { label: "Spiaggia del Principe", to: "/spiaggia-del-principe" },
                 { label: "Liscia Ruja", to: "/liscia-ruja" },
