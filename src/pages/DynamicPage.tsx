@@ -15,6 +15,10 @@ import {
   Gauge,
   Fuel,
   Star,
+  Clock,
+  Wind,
+  AlertTriangle,
+  Utensils,
 } from "lucide-react";
 
 interface PageData {
@@ -153,6 +157,43 @@ const sectionVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+const cardContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
+
+const cardItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const LOCAL_TIPS = [
+  {
+    icon: Clock,
+    title: "Gli orari migliori",
+    text: (title: string) =>
+      `In alta stagione, la Sardegna si sveglia presto. Arriva a ${title} prima delle 9:00 per assicurarti i parcheggi migliori e goderti l'acqua piatta e cristallina prima della folla.`,
+  },
+  {
+    icon: Wind,
+    title: "Occhio al vento",
+    text: (title: string) =>
+      `Il segreto dei sardi? Scegliere la spiaggia in base al vento! Controlla sempre se soffia Maestrale o Scirocco prima di guidare verso ${title}. Se il vento soffia da terra, il mare sarà una piscina.`,
+  },
+  {
+    icon: AlertTriangle,
+    title: "Strade e Parcheggi",
+    text: (title: string) =>
+      `Le perle più belle spesso nascondono strade sterrate. Se incontri tratti non asfaltati vicino a ${title}, procedi a passo d'uomo. E ricorda di parcheggiare sempre nelle strisce blu o aree autorizzate!`,
+  },
+  {
+    icon: Utensils,
+    title: "I sapori autentici",
+    text: (title: string) =>
+      `Dopo il mare a ${title}, evita le trappole per turisti. Cerca un agriturismo nell'entroterra o un ristorantino locale per assaggiare i veri malloreddus o una seadas calda al miele.`,
+  },
+];
+
 /* ───────── COMPONENT ───────── */
 
 export default function DynamicPage() {
@@ -219,11 +260,11 @@ export default function DynamicPage() {
 
   if (!data) return <NotFound />;
 
-  const mapsEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
-    data.title + " Sardegna"
-  )}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+  const mapsEmbedUrl = type === "beach"
+    ? `https://maps.google.com/maps?saddr=Via+De+Filippi+45,+Olbia,+SS&daddr=${encodeURIComponent(data.title + " Sardegna")}&output=embed`
+    : `https://maps.google.com/maps?q=${encodeURIComponent(data.title + " Sardegna")}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=Via+De+Filippi+45,+Olbia&destination=${encodeURIComponent(
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=Via+De+Filippi+45,+Olbia,+SS&destination=${encodeURIComponent(
     data.title + " Sardegna"
   )}`;
 
@@ -432,7 +473,57 @@ export default function DynamicPage() {
         </div>
       </motion.section>
 
-      {/* ════════════ 5. SEO CONTENT BLOCKS ════════════ */}
+      {/* ════════════ 5. CONSIGLI DEI LOCAL ════════════ */}
+      <section className="py-20 px-4 md:px-12 bg-card/80">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-4">
+            <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+              Insider Tips
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              I consigli di KS Rent per{" "}
+              <span className="text-gold">{data.title}</span>
+            </h2>
+            <p className="text-foreground/60 font-light mt-4 max-w-2xl mx-auto leading-relaxed">
+              Non siamo solo un'agenzia di noleggio, siamo sardi DOC. Ecco i
+              nostri suggerimenti per vivere al meglio la tua giornata a{" "}
+              {data.title}:
+            </p>
+          </div>
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12"
+            variants={cardContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {LOCAL_TIPS.map((tip) => {
+              const Icon = tip.icon;
+              return (
+                <motion.div
+                  key={tip.title}
+                  variants={cardItemVariants}
+                  transition={{ duration: 0.5 }}
+                  className="bg-card border border-border rounded-2xl p-6 hover:border-gold/40 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-gold" />
+                  </div>
+                  <h3 className="text-foreground font-bold text-lg mb-2">
+                    {tip.title}
+                  </h3>
+                  <p className="text-foreground/60 text-sm font-light leading-relaxed">
+                    {tip.text(data.title)}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════ 6. SEO CONTENT BLOCKS ════════════ */}
       <motion.section
         className="py-20 px-4 md:px-12"
         variants={sectionVariants}
