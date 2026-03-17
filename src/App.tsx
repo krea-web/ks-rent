@@ -36,6 +36,7 @@ const NoleggioPortoOlbia = lazy(() => import("./pages/NoleggioPortoOlbia"));
 const NoleggioAeroportoOlbia = lazy(() => import("./pages/NoleggioAeroportoOlbia"));
 const NoleggioCostaSmeralda = lazy(() => import("./pages/NoleggioCostaSmeralda"));
 const NoleggioSenzaCartaCredito = lazy(() => import("./pages/NoleggioSenzaCartaCredito"));
+const Flotta = lazy(() => import("./pages/Flotta"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
