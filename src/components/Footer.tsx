@@ -117,7 +117,7 @@ const Footer = () => (
 
       {/* Destinazioni & Spiagge — SEO Internal Linking */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5 space-y-8">
           {/* Costa Est */}
           <div>
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
