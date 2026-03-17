@@ -117,13 +117,13 @@ const Footer = () => (
 
       {/* Destinazioni & Spiagge — SEO Internal Linking */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5 space-y-8">
           {/* Costa Est */}
           <div>
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-gold"></span> Destinazioni Costa Est
             </h3>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {[
                 { label: "San Teodoro", to: "/noleggio-auto-san-teodoro" },
                 { label: "Puntaldia", to: "/noleggio-auto-puntaldia" },
@@ -136,7 +136,7 @@ const Footer = () => (
                 { label: "Bados", to: "/noleggio-auto-bados" },
                 { label: "Golfo Aranci", to: "/noleggio-auto-golfo-aranci" },
               ].map((d) => (
-                <Link key={d.to} to={d.to} className="text-xs text-white/50 hover:text-gold transition-colors w-fit relative z-20">
+                <Link key={d.to} to={d.to} className="px-3 py-1.5 text-xs text-white/60 bg-white/5 border border-white/10 rounded-full hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-200 relative z-20">
                   {d.label}
                 </Link>
               ))}
@@ -148,7 +148,7 @@ const Footer = () => (
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-gold"></span> Destinazioni Costa Smeralda
             </h3>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {[
                 { label: "Porto Cervo", to: "/noleggio-auto-porto-cervo" },
                 { label: "Baja Sardinia", to: "/noleggio-auto-baja-sardinia" },
@@ -161,7 +161,7 @@ const Footer = () => (
                 { label: "Arzachena", to: "/noleggio-auto-arzachena" },
                 { label: "Santa Teresa Gallura", to: "/noleggio-auto-santa-teresa-gallura" },
               ].map((d) => (
-                <Link key={d.to} to={d.to} className="text-xs text-white/50 hover:text-gold transition-colors w-fit relative z-20">
+                <Link key={d.to} to={d.to} className="px-3 py-1.5 text-xs text-white/60 bg-white/5 border border-white/10 rounded-full hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-200 relative z-20">
                   {d.label}
                 </Link>
               ))}
@@ -173,7 +173,7 @@ const Footer = () => (
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-gold"></span> Le Migliori Spiagge
             </h3>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {[
                 { label: "Spiaggia del Principe", to: "/spiaggia-del-principe" },
                 { label: "Liscia Ruja", to: "/liscia-ruja" },
@@ -196,7 +196,7 @@ const Footer = () => (
                 { label: "Spiaggia Pittulongu", to: "/spiaggia-pittulongu" },
                 { label: "Capo Testa", to: "/capo-testa" },
               ].map((d) => (
-                <Link key={d.to} to={d.to} className="text-xs text-white/50 hover:text-gold transition-colors w-fit relative z-20">
+                <Link key={d.to} to={d.to} className="px-3 py-1.5 text-xs text-white/60 bg-white/5 border border-white/10 rounded-full hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-200 relative z-20">
                   {d.label}
                 </Link>
               ))}
