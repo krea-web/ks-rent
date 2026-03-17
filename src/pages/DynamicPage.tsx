@@ -446,8 +446,8 @@ export default function DynamicPage() {
             </h2>
             <p className="text-foreground/60 font-light mt-4 max-w-xl mx-auto leading-relaxed">
               {type === "beach"
-                ? "Calcola il percorso dalla nostra sede di Olbia a questa magnifica spiaggia."
-                : "Distanza dalla nostra sede principale di Via De Filippi 45, Olbia."}
+                ? "Calcola il percorso dalle nostre sedi di Olbia a questa magnifica spiaggia."
+                : "Distanza dalle nostre sedi di Olbia."}
             </p>
           </div>
 
@@ -462,15 +462,24 @@ export default function DynamicPage() {
             />
           </div>
 
-          <div className="text-center mt-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
             <a
-              href={directionsUrl}
+              href={directionsFromOperativa}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 border-2 border-gold text-gold font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full hover:bg-gold hover:text-background transition-colors"
+              className="inline-flex items-center gap-3 border-2 border-gold text-gold font-bold uppercase tracking-wider text-xs px-6 py-3 rounded-full hover:bg-gold hover:text-background transition-colors"
             >
               <Navigation className="w-4 h-4" />
-              Ottieni Indicazioni Stradali
+              Da Sede Operativa (V.le Isola Bianca 38)
+            </a>
+            <a
+              href={directionsFromLegale}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 border-2 border-gold text-gold font-bold uppercase tracking-wider text-xs px-6 py-3 rounded-full hover:bg-gold hover:text-background transition-colors"
+            >
+              <Navigation className="w-4 h-4" />
+              Da Sede Legale (V.le Aldo Moro 367)
             </a>
           </div>
         </div>
