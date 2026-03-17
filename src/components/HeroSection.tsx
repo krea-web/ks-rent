@@ -31,9 +31,9 @@ const HeroSection = () => (
         decoding="sync"
       />
 
-      <p className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4">
-        AUTONOLEGGIO IN COSTA SMERALDA
-      </p>
+      <h1 className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4">
+        Noleggio Auto Lusso Olbia — Costa Smeralda
+      </h1>
 
       <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2">
         <Link
