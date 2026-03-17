@@ -99,10 +99,13 @@ const NoleggioPortoOlbia = () => {
             </p>
             <div className="h-px w-24 bg-gold mb-8 mx-auto md:mx-0" />
             <p className="text-white/60 text-lg leading-relaxed">
-              Offriamo un'esperienza premium con consegna del veicolo immediata al tuo sbarco. Risparmia tempo
+              Offriamo un'esperienza premium con consegna del veicolo immediata al tuo sbarco dal molo Isola Bianca. Risparmia tempo
               prenotando in <strong>totale autonomia dal nostro sito</strong>: gestiamo depositi cauzionali flessibili e
               accettiamo pagamenti <strong>senza obbligo di carta di credito</strong>. La nostra flotta al porto include
               supercar, SUV, sportive, moto e quad — tutto ciò che serve per vivere la Costa Smeralda dal primo istante.
+              Offriamo anche consegna all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>.
             </p>
           </motion.div>
         </div>

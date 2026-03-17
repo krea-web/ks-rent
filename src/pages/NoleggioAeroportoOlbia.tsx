@@ -99,10 +99,12 @@ const NoleggioAeroportoOlbia = () => {
             </p>
             <div className="h-px w-24 bg-gold mb-8 mx-auto md:mx-0" />
             <p className="text-white/60 text-lg leading-relaxed">
-              Offriamo un servizio premium con consegna del veicolo esattamente dove atterri. Risparmia tempo prenotando
+              Offriamo un servizio premium con consegna del veicolo direttamente al terminal arrivi gestito da Geasar. Risparmia tempo prenotando
               in <strong>totale autonomia dal nostro sito</strong>: gestiamo depositi cauzionali flessibili e accettiamo
               pagamenti <strong>senza obbligo di carta di credito</strong>. Che tu cerchi una supercar, un SUV per la
-              famiglia o uno scooter per le spiagge, la nostra flotta è la tua chiave per la Sardegna.
+              famiglia o uno scooter per le spiagge, la nostra flotta è la tua chiave per la Sardegna. Serviamo anche il{" "}
+              <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto di Olbia</Link> e tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>.
             </p>
           </motion.div>
         </div>

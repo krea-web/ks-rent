@@ -157,7 +157,9 @@ const NoleggioCostaSmeralda = () => {
               veicolo esattamente dove desideri: nella tua Villa, nel parcheggio del tuo Hotel o fuori dal tuo
               ristorante preferito. Prenota in totale autonomia dal nostro sito con{" "}
               <strong>depositi cauzionali flessibili e nessun obbligo di carta di credito</strong>. La vacanza inizia
-              alle tue regole.
+              alle tue regole. Ritira anche al{" "}
+              <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto di Olbia</Link> o all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link>.
             </p>
           </motion.div>
         </div>
