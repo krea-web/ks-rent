@@ -69,8 +69,8 @@ const NoleggioAeroportoOlbia = () => {
             </div>
 
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase">
-              LIBERTÀ <br />
-              <span className="text-white">AL DECOLLO</span>
+              Noleggio Auto <br />
+              <span className="text-gold">Aeroporto Olbia</span>
             </h1>
 
             <p className="text-lg md:text-2xl text-white/80 font-light max-w-2xl mb-12 leading-relaxed">
