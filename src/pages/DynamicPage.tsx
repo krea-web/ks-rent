@@ -15,6 +15,10 @@ import {
   Gauge,
   Fuel,
   Star,
+  Clock,
+  Wind,
+  AlertTriangle,
+  Utensils,
 } from "lucide-react";
 
 interface PageData {
