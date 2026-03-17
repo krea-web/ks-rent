@@ -68,7 +68,6 @@ const faqJsonLd = {
 };
 
 const NoleggioCostaSmeralda = () => {
-  // Animazioni sicure per TypeScript (senza easing strings che causavano errore)
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -92,7 +91,7 @@ const NoleggioCostaSmeralda = () => {
         jsonLd={[jsonLd, faqJsonLd]}
       />
 
-      {/* HERO SECTION - NAVBAR SAFE */}
+      {/* HERO SECTION */}
       <section className="relative min-h-[80vh] flex flex-col justify-center pb-24 px-4 md:px-12 lg:px-24">
         <div className="absolute inset-0 z-0">
           <motion.img
@@ -146,8 +145,11 @@ const NoleggioCostaSmeralda = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">Un Servizio Concierge</h2>
-            <p className="text-2xl md:text-4xl font-light leading-snug text-white/90 mb-10">
+            <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">Un Servizio Concierge</span>
+            <h2 className="text-3xl md:text-5xl font-display font-black mb-8 italic uppercase tracking-tighter">
+              Noleggio Auto di Lusso <span className="text-gold">in Costa Smeralda e Porto Cervo</span>
+            </h2>
+            <p className="text-2xl md:text-3xl font-light leading-snug text-white/90 mb-10">
               Vivi la vera essenza della <strong className="text-gold">Costa Smeralda</strong> senza compromessi. KS
               Rent ti offre un servizio di noleggio auto sartoriale.
             </p>
@@ -160,6 +162,8 @@ const NoleggioCostaSmeralda = () => {
               alle tue regole. Ritira anche al{" "}
               <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto di Olbia</Link> o all'{" "}
               <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link>.
+              Scopri anche il nostro{" "}
+              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-white transition-colors">noleggio senza carta di credito</Link>.
             </p>
           </motion.div>
         </div>
@@ -187,10 +191,10 @@ const NoleggioCostaSmeralda = () => {
                 Costa Smeralda Spotlight
               </span>
             </div>
-            <h3 className="text-4xl md:text-7xl font-black mb-8 italic uppercase tracking-tighter leading-none text-white outline-text-gold">
-              BMW M2 <br />
-              <span className="text-white">M Performance</span>
-            </h3>
+            <h2 className="text-4xl md:text-7xl font-black mb-8 italic uppercase tracking-tighter leading-none text-white outline-text-gold">
+              Noleggio BMW M2 <br />
+              <span className="text-white">Costa Smeralda</span>
+            </h2>
             <p className="text-white/60 text-xl mb-12 italic font-light leading-relaxed">
               "Linee muscolose, trazione posteriore e pura adrenalina. L'auto perfetta per affrontare le curve
               panoramiche mozzafiato da Olbia a Porto Cervo."
@@ -222,13 +226,13 @@ const NoleggioCostaSmeralda = () => {
         </div>
       </section>
 
-      {/* BEAUTIFIED SERVICE CARDS - GLASSMORPHISM */}
+      {/* SERVICE CARDS */}
       <section className="py-28 px-4 md:px-12 lg:px-24 bg-[#050505]">
         <div className="text-center mb-16">
-          <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-4 italic">Standard KS Rent</h2>
-          <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
-            L'Esclusività è di Serie
-          </h3>
+          <span className="block text-gold font-bold tracking-[0.4em] uppercase text-xs mb-4 italic">Standard KS Rent</span>
+          <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+            Servizi Noleggio Auto <span className="text-gold">Costa Smeralda</span>
+          </h2>
         </div>
         <motion.div
           variants={containerVariants}
@@ -267,9 +271,9 @@ const NoleggioCostaSmeralda = () => {
             >
               <div className="absolute -right-6 -top-6 w-28 h-28 bg-gold/5 rounded-full blur-3xl group-hover:bg-gold/15 transition-all duration-500" />
               <s.icon className="text-gold w-14 h-14 mb-8 group-hover:scale-110 transition-transform duration-500" />
-              <h4 className="text-2xl font-black mb-4 uppercase italic tracking-tighter text-white group-hover:text-gold transition-colors">
+              <h3 className="text-2xl font-black mb-4 uppercase italic tracking-tighter text-white group-hover:text-gold transition-colors">
                 {s.title}
-              </h4>
+              </h3>
               <p className="text-white/40 text-base leading-relaxed font-light group-hover:text-white/70 transition-colors">
                 {s.desc}
               </p>
@@ -286,9 +290,9 @@ const NoleggioCostaSmeralda = () => {
           viewport={{ once: true }}
           className="max-w-7xl mx-auto text-center"
         >
-          <h3 className="text-xl md:text-3xl font-light mb-8 text-white/80 italic">
-            Ovunque tu sia, in tutta la Gallura:
-          </h3>
+          <h2 className="text-xl md:text-3xl font-display font-bold mb-8 text-white/80 italic">
+            Consegna Auto in Tutta la <span className="text-gold">Gallura e Costa Smeralda</span>
+          </h2>
           <div className="flex flex-wrap justify-center gap-4">
             {[
               "Porto Cervo",
@@ -311,16 +315,16 @@ const NoleggioCostaSmeralda = () => {
         </motion.div>
       </section>
 
-      {/* FAQ SECTION - CON DOMANDE ORO */}
+      {/* FAQ SECTION */}
       <section className="py-28 px-4 md:px-12 lg:px-24 bg-[#0a0a0a]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-18">
-            <h2 className="text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">
+            <span className="block text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">
               Concierge Desk Costa Smeralda
+            </span>
+            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+              Domande Frequenti <span className="text-gold">Noleggio Costa Smeralda</span>
             </h2>
-            <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
-              Domande Frequenti
-            </h3>
           </div>
 
           <Accordion type="single" collapsible className="space-y-5">
@@ -346,7 +350,34 @@ const NoleggioCostaSmeralda = () => {
         </div>
       </section>
 
-      {/* FINAL CTA - MEMORABILE */}
+      {/* SEO RICH TEXT */}
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+        <div className="max-w-4xl mx-auto">
+          <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">Guida Completa</span>
+          <h2 className="text-3xl md:text-5xl font-display font-black mb-10 italic uppercase tracking-tighter">
+            Guida al Noleggio Auto <span className="text-gold">in Costa Smeralda</span>
+          </h2>
+
+          <div className="space-y-6 text-white/60 text-base md:text-lg leading-relaxed font-light">
+            <p>
+              La <strong className="text-white/80">Costa Smeralda</strong> è una delle destinazioni più esclusive del Mediterraneo. Fondata negli anni '60 dal Principe Aga Khan, questo tratto di costa nord-orientale della Sardegna si estende da Porto Rotondo fino a Baja Sardinia, passando per Porto Cervo, Cala di Volpe, Romazzino e Liscia Ruja. Le sue spiagge di sabbia bianchissima, le acque turchesi e i porti turistici di lusso attirano ogni anno migliaia di visitatori internazionali, celebrità e appassionati di lifestyle premium.
+            </p>
+            <p>
+              <strong className="text-white/80">Perché noleggiare un'auto in Costa Smeralda?</strong> Semplice: molte delle spiagge e delle calette più belle non sono raggiungibili con i mezzi pubblici. La litoranea da Olbia a Palau è considerata una delle strade panoramiche più spettacolari d'Italia, con curve che si affacciano su baie nascoste e promontori di granito rosa. Guidare una supercar o una sportiva su queste strade è un'esperienza che trasforma una vacanza in un ricordo indimenticabile. Da Porto Cervo a San Pantaleo — il borgo hipster della Gallura con le sue boutique e i ristoranti stellati — ogni chilometro è un invito a scoprire qualcosa di nuovo.
+            </p>
+            <p>
+              Il servizio <strong className="text-white/80">Concierge KS Rent</strong> è stato pensato per chi non vuole perdere neanche un minuto della propria vacanza. Ti consegniamo il veicolo esattamente dove ti trovi: nella hall del tuo Hotel a Porto Cervo, nel parcheggio della tua Villa privata ad Abbiadori, al ristorante dove stai cenando ad Arzachena o persino al marina di Poltu Quatu. Il ritiro avviene allo stesso modo: basta una chiamata e un nostro addetto verrà a prendere l'auto dove preferisci. Nessuno spostamento, nessun taxi, nessuna perdita di tempo.
+            </p>
+            <p>
+              La nostra flotta dedicata alla Costa Smeralda include i veicoli più desiderati: dall'<strong className="text-white/80">Audi RS3</strong> alla <strong className="text-white/80">BMW M2</strong>, dai SUV di ultima generazione ai quad per le strade sterrate che portano alle spiagge segrete. Tutto disponibile <strong className="text-white/80">senza obbligo di carta di credito</strong> — una rarità nel mondo del noleggio auto di lusso. Accettiamo prepagate, bancomat e contanti. Prenota in autonomia dal sito e ricevi la conferma in pochi minuti. Per chi arriva in Sardegna, offriamo anche il ritiro all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link> e al{" "}
+              <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-white transition-colors">Porto Isola Bianca</Link>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
       <section className="py-36 px-4 text-center bg-gradient-to-t from-gold/15 to-[#050505] relative overflow-hidden">
         <div className="absolute inset-0 bg-gold/5 blur-[150px] rounded-full translate-y-1/2" />
         <motion.div

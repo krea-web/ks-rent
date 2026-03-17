@@ -53,6 +53,7 @@ const Footer = () => (
             <Link to="/noleggio-auto-porto-olbia" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Noleggio Auto Porto di Olbia</Link>
             <Link to="/noleggio-auto-aeroporto-olbia" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Noleggio Auto Aeroporto Olbia</Link>
             <Link to="/noleggio-auto-costa-smeralda" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Noleggio Auto Costa Smeralda</Link>
+            <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-sm text-muted-foreground hover:text-gold transition-colors w-fit relative z-20">Noleggio Senza Carta di Credito</Link>
           </div>
         </div>
 
