@@ -156,17 +156,16 @@ export default function DynamicPage() {
         >
           <ShieldCheck className="w-10 h-10 text-gold mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-white mb-4">
-            Non lasciare nulla al caso.
+            Prenota ora la tua Auto
           </h2>
           <p className="text-white/60 font-light max-w-xl mx-auto mb-8 leading-relaxed">
-            Raggiungi {data.h1.toLowerCase().includes("noleggio") ? "la tua destinazione" : data.h1}{" "}
-            senza preoccuparti di sterrati o distanze. Scopri la flotta KS Rent e viaggia in prima classe, anche senza carta di credito.
+            Viaggia in prima classe con KS Rent. Scegli il tuo veicolo premium per esplorare la Sardegna, anche senza carta di credito.
           </p>
           <Link
             to="/prenotaora"
             className="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-10 py-4 rounded-full hover:bg-gold/90 transition-colors"
           >
-            Scegli la tua Auto
+            Scopri la Flotta
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
