@@ -1,10 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
 import NotFound from "./NotFound";
 import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Info, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  MapPin,
+  Info,
+  ShieldCheck,
+  Car,
+  Navigation,
+  Users,
+  Gauge,
+  Fuel,
+  Star,
+} from "lucide-react";
 
 interface PageData {
   slug: string;
@@ -18,16 +29,147 @@ interface PageData {
   og_image_url?: string;
 }
 
+/* ───────── VEHICLE RECOMMENDATION LOGIC ───────── */
+
+interface RecommendedVehicle {
+  name: string;
+  image: string;
+  tagline: string;
+  transmission: string;
+  seats: number;
+  fuel: string;
+  category: string;
+}
+
+const VEHICLES: Record<string, RecommendedVehicle> = {
+  luxury: {
+    name: "Audi RS3 Sportback",
+    image:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    tagline: "Potenza e prestigio sulla Costa Smeralda",
+    transmission: "Automatico S-Tronic",
+    seats: 5,
+    fuel: "Benzina",
+    category: "Supercar",
+  },
+  luxuryAlt: {
+    name: "BMW M2 Coupé",
+    image:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    tagline: "Sportività pura per le strade della Gallura",
+    transmission: "Automatico Steptronic",
+    seats: 4,
+    fuel: "Benzina",
+    category: "Supercar",
+  },
+  elegant: {
+    name: "Mercedes Classe A 180d",
+    image:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    tagline: "Comfort ed eleganza per ogni percorso",
+    transmission: "Automatico 7G-DCT",
+    seats: 5,
+    fuel: "Diesel",
+    category: "Premium",
+  },
+  offroad: {
+    name: "Jeep Avenger",
+    image:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    tagline: "Perfetto per spiagge nascoste e strade sterrate",
+    transmission: "Automatico 6 marce",
+    seats: 5,
+    fuel: "Benzina",
+    category: "SUV",
+  },
+  city: {
+    name: "Fiat Panda",
+    image:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    tagline: "Agile e pratica, ideale per la città e il litorale",
+    transmission: "Manuale 5 marce",
+    seats: 5,
+    fuel: "Benzina",
+    category: "City Car",
+  },
+};
+
+const LUXURY_KEYWORDS = [
+  "cervo",
+  "quatu",
+  "rotondo",
+  "romazzino",
+  "pevero",
+  "celvia",
+  "faro",
+  "principe",
+  "liscia",
+  "capriccioli",
+  "marinella",
+  "portisco",
+];
+
+const OFFROAD_KEYWORDS = [
+  "brandinchi",
+  "impostu",
+  "moresca",
+  "taverna",
+  "testa",
+  "coda",
+  "istana",
+  "sabina",
+  "agrustos",
+];
+
+const ELEGANT_KEYWORDS = [
+  "arzachena",
+  "cannigione",
+  "baja",
+  "teresa",
+  "palau",
+  "bianca",
+  "bados",
+  "rena",
+];
+
+function getRecommendedVehicle(slug: string): RecommendedVehicle {
+  const s = slug.toLowerCase();
+  if (LUXURY_KEYWORDS.some((k) => s.includes(k))) {
+    // alternate between Audi and BMW for variety
+    return s.includes("cervo") || s.includes("principe") || s.includes("romazzino")
+      ? VEHICLES.luxury
+      : VEHICLES.luxuryAlt;
+  }
+  if (OFFROAD_KEYWORDS.some((k) => s.includes(k))) return VEHICLES.offroad;
+  if (ELEGANT_KEYWORDS.some((k) => s.includes(k))) return VEHICLES.elegant;
+  // city / airport / generic
+  return VEHICLES.city;
+}
+
+/* ───────── ANIMATION VARIANTS ───────── */
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
+/* ───────── COMPONENT ───────── */
+
 export default function DynamicPage() {
   const { slug } = useParams<{ slug: string }>();
   const [data, setData] = useState<PageData | null>(null);
   const [type, setType] = useState<"location" | "beach" | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const vehicle = useMemo(() => getRecommendedVehicle(slug || ""), [slug]);
+
   useEffect(() => {
     async function fetchPageData() {
       setLoading(true);
-      if (!slug) { setLoading(false); return; }
+      if (!slug) {
+        setLoading(false);
+        return;
+      }
 
       const { data: locData } = await supabase
         .from("seo_locations")
@@ -77,6 +219,14 @@ export default function DynamicPage() {
 
   if (!data) return <NotFound />;
 
+  const mapsEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
+    data.title + " Sardegna"
+  )}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=Via+De+Filippi+45,+Olbia&destination=${encodeURIComponent(
+    data.title + " Sardegna"
+  )}`;
+
   return (
     <div className="bg-background min-h-screen">
       <SEOHead
@@ -86,7 +236,7 @@ export default function DynamicPage() {
         ogImage={data.og_image_url}
       />
 
-      {/* 1. HERO SECTION */}
+      {/* ════════════ 1. HERO SECTION ════════════ */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden">
         {data.hero_image_url && (
           <div className="absolute inset-0">
@@ -110,66 +260,279 @@ export default function DynamicPage() {
               <MapPin className="w-3.5 h-3.5" />
               {type === "location" ? "Punto di Ritiro & Consegna" : "Guida KS Rent"}
             </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-white leading-[0.95]">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
               {data.h1}
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-white/70 font-light max-w-2xl leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl text-foreground/70 font-light max-w-2xl leading-relaxed">
               {data.meta_description}
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* 2. CONTENT HTML */}
+      {/* ════════════ 2. CONTENT HTML (prose pulita) ════════════ */}
       <section className="py-16 px-4 md:px-12 max-w-4xl mx-auto">
         {data.content_html ? (
           <div
-            className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-white prose-p:text-white/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-gold prose-a:text-gold hover:prose-a:text-gold/80"
+            className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
             dangerouslySetInnerHTML={{ __html: data.content_html }}
           />
         ) : (
           <div className="text-center py-12">
-            <p className="text-white/60 font-light text-lg leading-relaxed max-w-xl mx-auto">
-              Stiamo aggiornando questa pagina con i migliori consigli e percorsi.
-              Puoi comunque prenotare il tuo veicolo per questa destinazione utilizzando il pulsante qui sotto.
+            <p className="text-muted-foreground font-light text-lg leading-relaxed max-w-xl mx-auto">
+              Stiamo aggiornando questa pagina con i migliori consigli e percorsi. Puoi comunque
+              prenotare il tuo veicolo per questa destinazione utilizzando il pulsante qui sotto.
             </p>
           </div>
         )}
 
-        {/* 3. INFO PARCHEGGIO (Solo per le Spiagge) */}
+        {/* INFO PARCHEGGIO (Solo per le Spiagge) */}
         {type === "beach" && data.parking_info && (
-          <div className="mt-12 bg-white/5 border border-white/10 rounded-2xl p-8">
+          <div className="mt-12 bg-card border border-border rounded-2xl p-8">
             <div className="flex items-center gap-3 mb-4">
               <Info className="w-5 h-5 text-gold" />
-              <h2 className="text-xl font-bold text-white">Informazioni Parcheggio & Viabilità</h2>
+              <h2 className="text-xl font-bold text-foreground">
+                Informazioni Parcheggio &amp; Viabilità
+              </h2>
             </div>
-            <p className="text-white/70 font-light leading-relaxed">{data.parking_info}</p>
+            <p className="text-foreground/70 font-light leading-relaxed">{data.parking_info}</p>
           </div>
         )}
+      </section>
 
-        {/* 4. CTA FINALE */}
-        <motion.div
-          className="mt-20 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <ShieldCheck className="w-10 h-10 text-gold mx-auto mb-4" />
-          <h2 className="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-white mb-4">
+      {/* ════════════ 3. VEICOLO CONSIGLIATO ════════════ */}
+      <motion.section
+        className="py-20 px-4 md:px-12"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+              Scelto per te
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              Il veicolo ideale per questa destinazione
+            </h2>
+          </div>
+
+          <div className="relative bg-card border border-border rounded-[2rem] overflow-hidden">
+            {/* Glow accent */}
+            <div className="absolute -top-20 -right-20 w-60 h-60 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="grid md:grid-cols-2 gap-0">
+              {/* Image side */}
+              <div className="relative flex items-center justify-center p-8 md:p-12 bg-gradient-to-br from-card to-background min-h-[300px]">
+                <motion.img
+                  src={vehicle.image}
+                  alt={`Noleggio ${vehicle.name} - KS Rent Olbia`}
+                  className="w-full max-w-md object-contain drop-shadow-2xl"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.2 }}
+                />
+              </div>
+
+              {/* Info side */}
+              <div className="p-8 md:p-12 flex flex-col justify-center">
+                <span className="text-gold text-xs font-bold tracking-[0.2em] uppercase">
+                  {vehicle.category}
+                </span>
+                <h3 className="text-2xl md:text-3xl font-black italic uppercase tracking-tight text-foreground mt-1">
+                  {vehicle.name}
+                </h3>
+                <p className="text-foreground/60 font-light mt-3 leading-relaxed">
+                  {vehicle.tagline}
+                </p>
+
+                {/* Specs grid */}
+                <div className="grid grid-cols-2 gap-4 mt-8">
+                  <div className="flex items-center gap-3">
+                    <Gauge className="w-4 h-4 text-gold" />
+                    <span className="text-foreground/70 text-sm">{vehicle.transmission}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Users className="w-4 h-4 text-gold" />
+                    <span className="text-foreground/70 text-sm">{vehicle.seats} Posti</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Fuel className="w-4 h-4 text-gold" />
+                    <span className="text-foreground/70 text-sm">{vehicle.fuel}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Star className="w-4 h-4 text-gold" />
+                    <span className="text-foreground/70 text-sm">Assicurata</span>
+                  </div>
+                </div>
+
+                <Link
+                  to="/prenotaora"
+                  className="mt-10 inline-flex items-center justify-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform"
+                >
+                  Prenota questo veicolo
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ════════════ 4. GOOGLE MAPS & DISTANZA ════════════ */}
+      <motion.section
+        className="py-20 px-4 md:px-12 bg-card"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+              <Navigation className="w-3.5 h-3.5 inline mr-2" />
+              Posizione
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              {type === "beach" ? "Dove si trova" : "Come raggiungerci"}
+            </h2>
+            <p className="text-foreground/60 font-light mt-4 max-w-xl mx-auto leading-relaxed">
+              {type === "beach"
+                ? "Calcola il percorso dalla nostra sede di Olbia a questa magnifica spiaggia."
+                : "Distanza dalla nostra sede principale di Via De Filippi 45, Olbia."}
+            </p>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
+            <iframe
+              title={`Mappa ${data.title}`}
+              src={mapsEmbedUrl}
+              className="w-full h-[350px] md:h-[450px]"
+              style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
+              loading="lazy"
+              allowFullScreen
+            />
+          </div>
+
+          <div className="text-center mt-8">
+            <a
+              href={directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 border-2 border-gold text-gold font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full hover:bg-gold hover:text-background transition-colors"
+            >
+              <Navigation className="w-4 h-4" />
+              Ottieni Indicazioni Stradali
+            </a>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ════════════ 5. SEO CONTENT BLOCKS ════════════ */}
+      <motion.section
+        className="py-20 px-4 md:px-12"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-4xl mx-auto space-y-16">
+          {/* Block 1 */}
+          <div>
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+              Perché scegliere il noleggio auto KS Rent per{" "}
+              <span className="text-gold">{data.title}</span>?
+            </h2>
+            <p className="text-foreground/70 font-light leading-relaxed">
+              KS Rent è il punto di riferimento per il noleggio auto a Olbia e in tutta la Costa
+              Smeralda. Scegliendo il nostro servizio per {data.title}, avrai accesso a una flotta
+              premium composta da city car, SUV, berline e supercar, sempre igienizzate, con
+              chilometri illimitati e copertura assicurativa completa. Il nostro team è disponibile
+              24 ore su 24 per consegnarti il veicolo direttamente in aeroporto, al porto di Olbia
+              o presso la tua struttura ricettiva.
+            </p>
+          </div>
+
+          {/* Block 2 */}
+          <div className="bg-card border border-border rounded-2xl p-8 md:p-10">
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+              Noleggio senza carta di credito a{" "}
+              <span className="text-gold">{data.title}</span>
+            </h2>
+            <p className="text-foreground/70 font-light leading-relaxed">
+              Scopri il vantaggio di un noleggio senza carta di credito a {data.title}. A
+              differenza delle grandi catene, KS Rent accetta anche bancomat e contanti per il
+              deposito cauzionale. Nessuna sorpresa, nessun blocco sulla tua carta: solo termini
+              chiari, trasparenti e pensati per il viaggiatore moderno che vuole esplorare la
+              Sardegna in totale libertà.
+            </p>
+          </div>
+
+          {/* Block 3 */}
+          <div>
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+              Consegna su misura a{" "}
+              <span className="text-gold">{data.title}</span>
+            </h2>
+            <p className="text-foreground/70 font-light leading-relaxed">
+              Veicoli premium, flotta aggiornata, nessuna coda al desk aeroportuale e consegna su
+              misura direttamente a {data.title} o presso la tua struttura. Che tu stia cercando
+              un'auto per una vacanza di lusso in Costa Smeralda, un SUV per raggiungere le spiagge
+              più remote o una city car economica per muoverti tra Olbia, San Teodoro e Golfo
+              Aranci, KS Rent ha il veicolo giusto per te.
+            </p>
+          </div>
+
+          {/* Block 4 */}
+          <div className="bg-card border border-border rounded-2xl p-8 md:p-10">
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+              La tua vacanza in Sardegna inizia da{" "}
+              <span className="text-gold">{data.title}</span>
+            </h2>
+            <p className="text-foreground/70 font-light leading-relaxed">
+              La Sardegna nord-orientale offre paesaggi mozzafiato, acque cristalline e una cultura
+              enogastronomica unica. Noleggiare un'auto con KS Rent ti permette di vivere ogni
+              angolo di questo paradiso con la massima comodità: dalle calette segrete della Costa
+              Smeralda ai borghi dell'entroterra gallurese, passando per i mercati locali e i
+              ristoranti stellati. Prenota online in pochi click, scegli il ritiro in aeroporto o
+              al porto di Olbia e parti all'avventura verso {data.title} senza pensieri.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ════════════ 6. CTA FINALE ════════════ */}
+      <motion.section
+        className="py-20 px-4 md:px-12 bg-card"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-3xl mx-auto text-center">
+          <ShieldCheck className="w-12 h-12 text-gold mx-auto mb-6" />
+          <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
             Prenota ora la tua Auto
           </h2>
-          <p className="text-white/60 font-light max-w-xl mx-auto mb-8 leading-relaxed">
-            Viaggia in prima classe con KS Rent. Scegli il tuo veicolo premium per esplorare la Sardegna, anche senza carta di credito.
+          <p className="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
+            Viaggia in prima classe con KS Rent. Scegli il tuo veicolo premium per esplorare la
+            Sardegna, anche senza carta di credito.
           </p>
           <Link
             to="/prenotaora"
-            className="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-10 py-4 rounded-full hover:bg-gold/90 transition-colors"
+            className="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
           >
             Scopri la Flotta
             <ArrowRight className="w-4 h-4" />
           </Link>
-        </motion.div>
-      </section>
+        </div>
+      </motion.section>
     </div>
   );
 }
