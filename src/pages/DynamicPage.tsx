@@ -474,7 +474,7 @@ export default function DynamicPage() {
       </motion.section>
 
       {/* ════════════ 5. CONSIGLI DEI LOCAL ════════════ */}
-      <section className="py-20 px-4 md:px-12 bg-zinc-900">
+      <section className="py-20 px-4 md:px-12 bg-card/80">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-4">
             <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
