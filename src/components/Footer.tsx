@@ -115,44 +115,88 @@ const Footer = () => (
       </div>
     </div>
 
-      {/* Destinazioni Top & Spiagge — SEO Gallura */}
+      {/* Destinazioni & Spiagge — SEO Internal Linking */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div className="mt-8 md:mt-12 pt-8 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {/* Costa Est */}
           <div>
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-gold"></span> Destinazioni Top
+              <span className="w-2 h-2 rounded-full bg-gold"></span> Destinazioni Costa Est
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-col gap-2.5">
               {[
                 { label: "San Teodoro", to: "/noleggio-auto-san-teodoro" },
-                { label: "Porto Cervo", to: "/noleggio-auto-porto-cervo" },
                 { label: "Puntaldia", to: "/noleggio-auto-puntaldia" },
-                { label: "Baja Sardinia", to: "/noleggio-auto-baja-sardinia" },
+                { label: "Murta Maria", to: "/noleggio-auto-murta-maria" },
+                { label: "Porto San Paolo", to: "/noleggio-auto-porto-san-paolo" },
+                { label: "Budoni", to: "/noleggio-auto-budoni" },
+                { label: "Agrustos", to: "/noleggio-auto-agrustos" },
+                { label: "Capo Coda Cavallo", to: "/noleggio-auto-capo-coda-cavallo" },
+                { label: "Pittulongu", to: "/noleggio-auto-pittulongu" },
+                { label: "Bados", to: "/noleggio-auto-bados" },
                 { label: "Golfo Aranci", to: "/noleggio-auto-golfo-aranci" },
-                { label: "Porto Rotondo", to: "/noleggio-auto-porto-rotondo" },
-                { label: "Palau", to: "/noleggio-auto-palau" },
-                { label: "Cannigione", to: "/noleggio-auto-cannigione" },
               ].map((d) => (
-                <Link key={d.to} to={d.to} className="text-xs text-white/50 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 hover:text-gold hover:border-gold/30 transition-colors">
+                <Link key={d.to} to={d.to} className="text-xs text-white/50 hover:text-gold transition-colors w-fit relative z-20">
                   {d.label}
                 </Link>
               ))}
             </div>
           </div>
+
+          {/* Costa Smeralda */}
           <div>
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-gold"></span> Spiagge & Guide
+              <span className="w-2 h-2 rounded-full bg-gold"></span> Destinazioni Costa Smeralda
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-col gap-2.5">
+              {[
+                { label: "Porto Cervo", to: "/noleggio-auto-porto-cervo" },
+                { label: "Baja Sardinia", to: "/noleggio-auto-baja-sardinia" },
+                { label: "Poltu Quatu", to: "/noleggio-auto-poltu-quatu" },
+                { label: "Porto Rotondo", to: "/noleggio-auto-porto-rotondo" },
+                { label: "Marinella", to: "/noleggio-auto-marinella" },
+                { label: "Portisco", to: "/noleggio-auto-portisco" },
+                { label: "Palau", to: "/noleggio-auto-palau" },
+                { label: "Cannigione", to: "/noleggio-auto-cannigione" },
+                { label: "Arzachena", to: "/noleggio-auto-arzachena" },
+                { label: "Santa Teresa Gallura", to: "/noleggio-auto-santa-teresa-gallura" },
+              ].map((d) => (
+                <Link key={d.to} to={d.to} className="text-xs text-white/50 hover:text-gold transition-colors w-fit relative z-20">
+                  {d.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Spiagge */}
+          <div>
+            <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gold"></span> Le Migliori Spiagge
+            </h3>
+            <div className="flex flex-col gap-2.5">
               {[
                 { label: "Spiaggia del Principe", to: "/spiaggia-del-principe" },
                 { label: "Liscia Ruja", to: "/liscia-ruja" },
                 { label: "Cala Brandinchi", to: "/cala-brandinchi" },
                 { label: "La Cinta", to: "/la-cinta" },
+                { label: "Lu Impostu", to: "/lu-impostu" },
                 { label: "Capriccioli", to: "/capriccioli" },
+                { label: "Romazzino", to: "/romazzino" },
+                { label: "Grande Pevero", to: "/grande-pevero" },
+                { label: "Cala Moresca", to: "/cala-moresca" },
+                { label: "Cala Sabina", to: "/cala-sabina" },
+                { label: "Spiaggia Bianca", to: "/spiaggia-bianca" },
                 { label: "Porto Istana", to: "/porto-istana" },
+                { label: "Porto Taverna", to: "/porto-taverna" },
+                { label: "Rena Bianca", to: "/rena-bianca" },
+                { label: "Cala del Faro", to: "/cala-del-faro" },
+                { label: "La Celvia", to: "/la-celvia" },
+                { label: "Spiaggia Marinella", to: "/spiaggia-marinella" },
+                { label: "Spiaggia Bados", to: "/spiaggia-bados" },
+                { label: "Spiaggia Pittulongu", to: "/spiaggia-pittulongu" },
+                { label: "Capo Testa", to: "/capo-testa" },
               ].map((d) => (
-                <Link key={d.to} to={d.to} className="text-xs text-white/50 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 hover:text-gold hover:border-gold/30 transition-colors">
+                <Link key={d.to} to={d.to} className="text-xs text-white/50 hover:text-gold transition-colors w-fit relative z-20">
                   {d.label}
                 </Link>
               ))}
