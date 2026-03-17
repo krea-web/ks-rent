@@ -157,6 +157,43 @@ const sectionVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+const cardContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
+
+const cardItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const LOCAL_TIPS = [
+  {
+    icon: Clock,
+    title: "Gli orari migliori",
+    text: (title: string) =>
+      `In alta stagione, la Sardegna si sveglia presto. Arriva a ${title} prima delle 9:00 per assicurarti i parcheggi migliori e goderti l'acqua piatta e cristallina prima della folla.`,
+  },
+  {
+    icon: Wind,
+    title: "Occhio al vento",
+    text: (title: string) =>
+      `Il segreto dei sardi? Scegliere la spiaggia in base al vento! Controlla sempre se soffia Maestrale o Scirocco prima di guidare verso ${title}. Se il vento soffia da terra, il mare sarà una piscina.`,
+  },
+  {
+    icon: AlertTriangle,
+    title: "Strade e Parcheggi",
+    text: (title: string) =>
+      `Le perle più belle spesso nascondono strade sterrate. Se incontri tratti non asfaltati vicino a ${title}, procedi a passo d'uomo. E ricorda di parcheggiare sempre nelle strisce blu o aree autorizzate!`,
+  },
+  {
+    icon: Utensils,
+    title: "I sapori autentici",
+    text: (title: string) =>
+      `Dopo il mare a ${title}, evita le trappole per turisti. Cerca un agriturismo nell'entroterra o un ristorantino locale per assaggiare i veri malloreddus o una seadas calda al miele.`,
+  },
+];
+
 /* ───────── COMPONENT ───────── */
 
 export default function DynamicPage() {
