@@ -49,8 +49,10 @@ const NoleggioAeroportoOlbia = () => {
         <div className="absolute inset-0 z-0">
           <img
             src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webp"
-            alt="Luxury Rent Olbia Airport"
+            alt="Noleggio Audi RS3 verde Aeroporto Olbia KS Rent"
             className="w-full h-full object-cover opacity-40 scale-105"
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/40 to-background" />
           <div className="absolute inset-0 bg-black/30" />
