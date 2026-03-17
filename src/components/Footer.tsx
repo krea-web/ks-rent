@@ -148,7 +148,7 @@ const Footer = () => (
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-gold"></span> Destinazioni Costa Smeralda
             </h3>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {[
                 { label: "Porto Cervo", to: "/noleggio-auto-porto-cervo" },
                 { label: "Baja Sardinia", to: "/noleggio-auto-baja-sardinia" },
