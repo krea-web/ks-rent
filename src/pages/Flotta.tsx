@@ -3,6 +3,7 @@ import CircularGallery from "@/components/CircularGallery";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import { flottaJsonLd } from "@/lib/jsonLd";
 
 export default function Flotta() {
   return (
@@ -12,6 +13,7 @@ export default function Flotta() {
         description="Scopri la flotta premium di KS Rent: auto sportive, SUV, city car, scooter e quad. Noleggio senza carta di credito a Olbia e Costa Smeralda."
         canonical="https://www.ksrentsardinia.com/flotta"
         keywords="flotta noleggio auto olbia, noleggio moto sardegna, auto premium costa smeralda, suv noleggio olbia"
+        jsonLd={flottaJsonLd}
       />
 
       {/* Hero Intro */}

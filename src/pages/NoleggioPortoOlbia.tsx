@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Ship, ShieldCheck, CreditCard, Smartphone, Zap, Star, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { portoFaqJsonLd } from "@/lib/jsonLd";
+import { portoFaqJsonLd, portoAutoRentalJsonLd } from "@/lib/jsonLd";
 
 const faqs = [
   {
@@ -41,7 +41,7 @@ const NoleggioPortoOlbia = () => {
         description="Arrivi in traghetto a Olbia? Noleggia supercar, SUV o moto al Porto Isola Bianca. Sede allo sbarco, zero attese. Prenota online con KS Rent."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-porto-olbia"
         keywords="noleggio auto porto olbia, autonoleggio porto olbia isola bianca, rent a car porto olbia, noleggio auto senza carta di credito olbia porto, noleggio SUV porto olbia, noleggio supercar porto olbia, ks rent porto olbia, noleggio auto olbia, autonoleggio olbia, consegna auto olbia, noleggio moto olbia, rent olbia"
-        jsonLd={[portoFaqJsonLd]}
+        jsonLd={[portoAutoRentalJsonLd, portoFaqJsonLd]}
       />
 
       {/* HERO */}

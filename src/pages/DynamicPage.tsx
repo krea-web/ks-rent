@@ -20,6 +20,7 @@ import {
   AlertTriangle,
   Utensils,
 } from "lucide-react";
+import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
 
 interface PageData {
   slug: string;
@@ -312,6 +313,7 @@ export default function DynamicPage() {
         description={data.meta_description}
         canonical={data.canonical_url}
         ogImage={data.og_image_url}
+        jsonLd={type === "beach" ? buildBeachJsonLd(data) : buildLocationJsonLd(data)}
       />
 
       {/* ════════════ 1. HERO SECTION ════════════ */}

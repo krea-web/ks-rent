@@ -260,3 +260,111 @@ export const buildVehicleJsonLd = (vehicle: {
     },
   },
 });
+
+/* ── Dynamic page JSON-LD builders (localities & beaches) ── */
+
+const carRentalBase = {
+  "@type": "AutoRental",
+  name: "KS Rent S.R.L.",
+  url: "https://www.ksrentsardinia.com",
+  telephone: "+393446107071",
+  email: "ksrentsrl@gmail.com",
+  priceRange: "€€€",
+  paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
+  logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Viale Isola Bianca 38",
+    addressLocality: "Olbia",
+    postalCode: "07026",
+    addressRegion: "SS",
+    addressCountry: "IT",
+  },
+};
+
+export const buildLocationJsonLd = (page: {
+  title: string;
+  meta_description: string;
+  canonical_url?: string;
+  og_image_url?: string;
+}) => [
+  {
+    "@context": "https://schema.org",
+    ...carRentalBase,
+    description: page.meta_description,
+    url: page.canonical_url || "https://www.ksrentsardinia.com",
+    image: page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+    areaServed: { "@type": "Place", name: page.title },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Place",
+    name: page.title,
+    description: page.meta_description,
+    image: page.og_image_url,
+    geo: { "@type": "GeoCoordinates", latitude: 40.92, longitude: 9.5 },
+    isPartOf: { "@type": "AdministrativeArea", name: "Gallura, Sardegna" },
+  },
+];
+
+export const buildBeachJsonLd = (page: {
+  title: string;
+  meta_description: string;
+  canonical_url?: string;
+  og_image_url?: string;
+  parking_info?: string;
+}) => [
+  {
+    "@context": "https://schema.org",
+    ...carRentalBase,
+    description: page.meta_description,
+    url: page.canonical_url || "https://www.ksrentsardinia.com",
+    image: page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+    areaServed: { "@type": "Beach", name: page.title },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Beach",
+    name: page.title,
+    description: page.meta_description,
+    image: page.og_image_url,
+    geo: { "@type": "GeoCoordinates", latitude: 40.92, longitude: 9.5 },
+    isPartOf: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardegna" },
+    ...(page.parking_info ? { amenityFeature: { "@type": "LocationFeatureSpecification", name: "Parcheggio", value: page.parking_info } } : {}),
+  },
+];
+
+export const aeroportoAutoRentalJsonLd = {
+  "@context": "https://schema.org",
+  ...carRentalBase,
+  name: "KS Rent — Noleggio Auto Aeroporto Olbia",
+  description: "Noleggio auto con consegna immediata all'Aeroporto di Olbia Costa Smeralda. Supercar, SUV e moto senza carta di credito.",
+  url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
+  image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+  areaServed: { "@type": "Place", name: "Aeroporto Olbia Costa Smeralda" },
+};
+
+export const portoAutoRentalJsonLd = {
+  "@context": "https://schema.org",
+  ...carRentalBase,
+  name: "KS Rent — Noleggio Auto Porto Olbia",
+  description: "Noleggio auto al Porto di Olbia Isola Bianca. Sede allo sbarco, zero attese. Supercar, SUV e moto.",
+  url: "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia",
+  image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+  areaServed: { "@type": "Place", name: "Porto Olbia Isola Bianca" },
+};
+
+export const flottaJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Flotta Veicoli KS Rent Olbia",
+  description: "Flotta premium di auto sportive, SUV, city car, scooter e quad a noleggio a Olbia e Costa Smeralda.",
+  url: "https://www.ksrentsardinia.com/flotta",
+  itemListOrder: "https://schema.org/ItemListUnordered",
+  numberOfItems: 15,
+  provider: {
+    "@type": "AutoRental",
+    name: "KS Rent S.R.L.",
+    url: "https://www.ksrentsardinia.com",
+  },
+};
