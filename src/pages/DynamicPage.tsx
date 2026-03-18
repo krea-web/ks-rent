@@ -198,11 +198,45 @@ const LOCAL_TIPS = [
 
 export default function DynamicPage() {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const [data, setData] = useState<PageData | null>(null);
   const [type, setType] = useState<"location" | "beach" | null>(null);
   const [loading, setLoading] = useState(true);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const vehicle = useMemo(() => getRecommendedVehicle(slug || ""), [slug]);
+
+  // Intercetta click su link interni nel content_html
+  const handleContentClick = useCallback((e: MouseEvent) => {
+    const anchor = (e.target as HTMLElement).closest("a");
+    if (!anchor) return;
+    const href = anchor.getAttribute("href");
+    if (!href) return;
+
+    // Gestisci link interni che iniziano con /localita/ o /spiagge/ o /
+    try {
+      const url = new URL(href, window.location.origin);
+      if (url.origin === window.location.origin) {
+        if (url.pathname.startsWith("/localita/") || url.pathname.startsWith("/spiagge/") || url.pathname.startsWith("/")) {
+          e.preventDefault();
+          navigate(url.pathname);
+        }
+      }
+    } catch {
+      // href relativo
+      if (href.startsWith("/")) {
+        e.preventDefault();
+        navigate(href);
+      }
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    el.addEventListener("click", handleContentClick);
+    return () => el.removeEventListener("click", handleContentClick);
+  }, [handleContentClick, data]);
 
   useEffect(() => {
     async function fetchPageData() {
