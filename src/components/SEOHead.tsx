@@ -36,9 +36,17 @@ const SEOHead = ({
     <meta name="twitter:image" content={ogImage} />
 
     {jsonLd && (
-      <script type="application/ld+json">
-        {JSON.stringify(Array.isArray(jsonLd) ? jsonLd : jsonLd)}
-      </script>
+      Array.isArray(jsonLd) ? (
+        jsonLd.map((item, i) => (
+          <script key={i} type="application/ld+json">
+            {JSON.stringify(item)}
+          </script>
+        ))
+      ) : (
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
+      )
     )}
   </Helmet>
 );
