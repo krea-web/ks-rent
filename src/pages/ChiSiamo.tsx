@@ -260,7 +260,7 @@ const ChiSiamo = () => {
               className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
             >
               <img
-                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/AUDI%20RS3%20VERDE.jpg"
+                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webp"
                 alt="Audi RS3 verde noleggio Costa Smeralda KS Rent"
                 loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
