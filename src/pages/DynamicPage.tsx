@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState, useMemo, useRef, useCallback } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
 import NotFound from "./NotFound";
@@ -198,11 +198,45 @@ const LOCAL_TIPS = [
 
 export default function DynamicPage() {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const [data, setData] = useState<PageData | null>(null);
   const [type, setType] = useState<"location" | "beach" | null>(null);
   const [loading, setLoading] = useState(true);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const vehicle = useMemo(() => getRecommendedVehicle(slug || ""), [slug]);
+
+  // Intercetta click su link interni nel content_html
+  const handleContentClick = useCallback((e: MouseEvent) => {
+    const anchor = (e.target as HTMLElement).closest("a");
+    if (!anchor) return;
+    const href = anchor.getAttribute("href");
+    if (!href) return;
+
+    // Gestisci link interni che iniziano con /localita/ o /spiagge/ o /
+    try {
+      const url = new URL(href, window.location.origin);
+      if (url.origin === window.location.origin) {
+        if (url.pathname.startsWith("/localita/") || url.pathname.startsWith("/spiagge/") || url.pathname.startsWith("/")) {
+          e.preventDefault();
+          navigate(url.pathname);
+        }
+      }
+    } catch {
+      // href relativo
+      if (href.startsWith("/")) {
+        e.preventDefault();
+        navigate(href);
+      }
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    el.addEventListener("click", handleContentClick);
+    return () => el.removeEventListener("click", handleContentClick);
+  }, [handleContentClick, data]);
 
   useEffect(() => {
     async function fetchPageData() {
@@ -318,6 +352,7 @@ export default function DynamicPage() {
       <section className="py-16 px-4 md:px-12 max-w-4xl mx-auto">
         {data.content_html ? (
           <div
+            ref={contentRef}
             className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
             dangerouslySetInnerHTML={{ __html: data.content_html }}
           />
