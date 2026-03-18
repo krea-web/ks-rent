@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Ship, ShieldCheck, CreditCard, Smartphone, Zap, Star, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { portoFaqJsonLd } from "@/lib/jsonLd";
+import { portoFaqJsonLd, portoAutoRentalJsonLd } from "@/lib/jsonLd";
 
 const faqs = [
   {
