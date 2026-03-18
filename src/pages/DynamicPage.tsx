@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState, useMemo, useRef, useCallback } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
 import NotFound from "./NotFound";
