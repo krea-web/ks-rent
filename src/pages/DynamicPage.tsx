@@ -20,6 +20,7 @@ import {
   AlertTriangle,
   Utensils,
 } from "lucide-react";
+import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
 
 interface PageData {
   slug: string;
