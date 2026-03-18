@@ -3,6 +3,7 @@ import CircularGallery from "@/components/CircularGallery";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import { flottaJsonLd } from "@/lib/jsonLd";
 
 export default function Flotta() {
   return (
