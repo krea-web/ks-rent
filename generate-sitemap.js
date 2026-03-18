@@ -47,16 +47,16 @@ async function generate() {
     ),
     ...locationSlugs.map(
       (slug) => `  <url>
-    <loc>${DOMAIN}/${slug}</loc>
+    <loc>${DOMAIN}/localita/${slug}</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>`
     ),
     ...beachSlugs.map(
       (slug) => `  <url>
-    <loc>${DOMAIN}/${slug}</loc>
+    <loc>${DOMAIN}/spiagge/${slug}</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>`
     ),
   ];
