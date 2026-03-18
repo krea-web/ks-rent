@@ -41,7 +41,7 @@ const NoleggioAeroportoOlbia = () => {
         description="Noleggio auto con consegna immediata all'Aeroporto di Olbia. Supercar, SUV e moto senza carta di credito. Prenota online con KS Rent."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
         keywords="noleggio auto aeroporto olbia, rent a car olbia airport, noleggio auto olbia, autonoleggio olbia, noleggio supercar olbia, noleggio auto senza carta di credito, noleggio auto lusso olbia, consegna auto olbia, noleggio audi rs3 olbia, luxury rent car olbia, noleggio moto olbia, noleggio quad olbia, rent olbia"
-        jsonLd={[aeroportoFaqJsonLd]}
+        jsonLd={[aeroportoAutoRentalJsonLd, aeroportoFaqJsonLd]}
       />
 
       {/* HERO */}
