@@ -352,6 +352,7 @@ export default function DynamicPage() {
       <section className="py-16 px-4 md:px-12 max-w-4xl mx-auto">
         {data.content_html ? (
           <div
+            ref={contentRef}
             className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
             dangerouslySetInnerHTML={{ __html: data.content_html }}
           />
