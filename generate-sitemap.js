@@ -13,6 +13,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const STATIC_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
   { path: "/prenotaora", priority: "0.9", changefreq: "weekly" },
+  { path: "/flotta", priority: "0.9", changefreq: "weekly" },
   { path: "/chisiamo", priority: "0.8", changefreq: "monthly" },
   { path: "/noleggio-auto-aeroporto-olbia", priority: "0.9", changefreq: "monthly" },
   { path: "/noleggio-auto-porto-olbia", priority: "0.9", changefreq: "monthly" },
@@ -46,16 +47,16 @@ async function generate() {
     ),
     ...locationSlugs.map(
       (slug) => `  <url>
-    <loc>${DOMAIN}/${slug}</loc>
+    <loc>${DOMAIN}/localita/${slug}</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>`
     ),
     ...beachSlugs.map(
       (slug) => `  <url>
-    <loc>${DOMAIN}/${slug}</loc>
+    <loc>${DOMAIN}/spiagge/${slug}</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>`
     ),
   ];
