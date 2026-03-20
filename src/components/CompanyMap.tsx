@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { GOOGLE_MAPS_API_KEY, OLBIA_CENTER, SEDE_OPERATIVA, SEDE_LEGALE } from "@/lib/googleMaps";
+import { GOOGLE_MAPS_API_KEY, OLBIA_CENTER, SEDE_OPERATIVA, SEDE_LEGALE, SEDE_LEGALE_MAPS_URL } from "@/lib/googleMaps";
 
 const FAVICON_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp";
 const MAP_ID = "ee2520e4d399bf4fdb360162";
@@ -139,7 +139,7 @@ const CompanyMap = () => {
           </div>
         </a>
         <a
-          href={`https://www.google.com/maps/search/?api=1&query=${SEDE_LEGALE.lat},${SEDE_LEGALE.lng}`}
+          href={SEDE_LEGALE_MAPS_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3 hover:border-white/30 transition-colors"
@@ -147,7 +147,7 @@ const CompanyMap = () => {
           <MapPin size={14} className="text-white/50 shrink-0" />
           <div>
             <p className="text-xs font-bold text-white/80">Sede Legale</p>
-            <p className="text-[10px] text-white/50">Viale Aldo Moro 367</p>
+            <p className="text-[10px] text-white/50">40.944571, 9.497950</p>
           </div>
         </a>
       </div>
