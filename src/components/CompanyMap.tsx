@@ -139,7 +139,7 @@ const CompanyMap = () => {
           </div>
         </a>
         <a
-          href={`https://www.google.com/maps/dir/?api=1&destination=${SEDE_LEGALE.lat},${SEDE_LEGALE.lng}`}
+          href={`https://www.google.com/maps/search/?api=1&query=${SEDE_LEGALE.lat},${SEDE_LEGALE.lng}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3 hover:border-white/30 transition-colors"

@@ -12,8 +12,8 @@ export const SEDE_OPERATIVA = {
 };
 
 export const SEDE_LEGALE = {
-  lat: 40.94457338720965,
-  lng: 9.497950867622666,
+  lat: 40.936653,
+  lng: 9.502856,
   address: "Viale Aldo Moro 367, 07026 Olbia (SS)",
   label: "Sede Legale",
 };
