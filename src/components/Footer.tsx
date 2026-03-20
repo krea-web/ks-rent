@@ -77,9 +77,9 @@ const Footer = () => (
               <Map size={18} className="text-gold/50 shrink-0 mt-0.5" />
               <div>
                 <strong className="block text-white/70 mb-1">Sede Legale</strong>
-                Viale Aldo Moro 367
+                Coordinate GPS verificate
                 <br />
-                07026, Olbia (SS)
+                40.944571, 9.497950
               </div>
             </div>
           </div>

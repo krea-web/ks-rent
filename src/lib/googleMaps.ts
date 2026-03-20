@@ -12,11 +12,14 @@ export const SEDE_OPERATIVA = {
 };
 
 export const SEDE_LEGALE = {
-  lat: 40.94454867600948,
-  lng: 9.497957602137493,
+  lat: 40.94457130855872,
+  lng: 9.497950286291397,
   address: "Viale Aldo Moro 367, 07026 Olbia (SS)",
   label: "Sede Legale",
 };
+
+export const SEDE_LEGALE_MAPS_URL = "https://www.google.com/maps/place/40.944571,9.497950";
+export const SEDE_LEGALE_EMBED_URL = "https://maps.google.com/maps?q=40.94457130855872,9.497950286291397&hl=it&z=15&output=embed";
 
 export const DARK_MAP_STYLE = [
   { elementType: "geometry", stylers: [{ color: "#1a1a2e" }] },
