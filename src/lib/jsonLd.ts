@@ -1,7 +1,10 @@
+/* ── Main Local Business JSON-LD (Unified) ── */
+
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
-  "@type": ["AutoRental", "LocalBusiness"],
+  "@type": "AutoRental",
   name: "KS Rent",
+  legalName: "KS Rent S.R.L.",
   description:
     "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna su misura in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
   url: "https://www.ksrentsardinia.com",
@@ -12,29 +15,35 @@ export const localBusinessJsonLd = {
   paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
   logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-  address: [
-    {
-      "@type": "PostalAddress",
-      streetAddress: "Viale Isola Bianca 38",
-      addressLocality: "Olbia",
-      postalCode: "07026",
-      addressRegion: "SS",
-      addressCountry: "IT",
-    },
-    {
-      "@type": "PostalAddress",
-      streetAddress: "Viale Aldo Moro 367",
-      addressLocality: "Olbia",
-      postalCode: "07026",
-      addressRegion: "SS",
-      addressCountry: "IT",
-    },
-  ],
+  // Sede Operativa (Indirizzo Principale per Google)
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Viale Isola Bianca 38",
+    addressLocality: "Olbia",
+    postalCode: "07026",
+    addressRegion: "SS",
+    addressCountry: "IT",
+  },
   geo: {
     "@type": "GeoCoordinates",
     latitude: 40.9225,
     longitude: 9.5,
   },
+  // Sede Legale (Indirizzo Secondario)
+  location: [
+    {
+      "@type": "Place",
+      name: "Sede Legale KS Rent",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Viale Aldo Moro 367",
+        addressLocality: "Olbia",
+        postalCode: "07026",
+        addressRegion: "SS",
+        addressCountry: "IT",
+      },
+    },
+  ],
   areaServed: [
     { "@type": "City", name: "Olbia" },
     { "@type": "Place", name: "Costa Smeralda" },
@@ -57,6 +66,8 @@ export const localBusinessJsonLd = {
   },
   sameAs: ["https://instagram.com/ksrent_srl"],
 };
+
+/* ── FAQ JSON-LD ── */
 
 export const faqPageJsonLd = {
   "@context": "https://schema.org",
@@ -137,7 +148,7 @@ export const faqPageJsonLd = {
   ],
 };
 
-/* ── Landing-page specific FAQ JSON-LD (one per page, no duplicates) ── */
+/* ── Landing-page specific FAQ JSON-LD ── */
 
 export const aeroportoFaqJsonLd = {
   "@context": "https://schema.org",
@@ -233,6 +244,33 @@ export const portoFaqJsonLd = {
   ],
 };
 
+/* ── Base per le Pagine Dinamiche (Spiagge e Località) ── */
+
+const carRentalBase = {
+  "@type": "AutoRental",
+  name: "KS Rent",
+  legalName: "KS Rent S.R.L.",
+  url: "https://www.ksrentsardinia.com",
+  telephone: "+393446107071",
+  email: "ksrentsrl@gmail.com",
+  priceRange: "€€€",
+  paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
+  logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Viale Isola Bianca 38",
+    addressLocality: "Olbia",
+    postalCode: "07026",
+    addressRegion: "SS",
+    addressCountry: "IT",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 40.9225,
+    longitude: 9.5,
+  },
+};
+
 export const buildVehicleJsonLd = (vehicle: {
   make: string;
   model: string;
@@ -261,26 +299,7 @@ export const buildVehicleJsonLd = (vehicle: {
   },
 });
 
-/* ── Dynamic page JSON-LD builders (localities & beaches) ── */
-
-const carRentalBase = {
-  "@type": "AutoRental",
-  name: "KS Rent S.R.L.",
-  url: "https://www.ksrentsardinia.com",
-  telephone: "+393446107071",
-  email: "ksrentsrl@gmail.com",
-  priceRange: "€€€",
-  paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
-  logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Viale Isola Bianca 38",
-    addressLocality: "Olbia",
-    postalCode: "07026",
-    addressRegion: "SS",
-    addressCountry: "IT",
-  },
-};
+/* ── Dynamic page JSON-LD builders ── */
 
 export const buildLocationJsonLd = (page: {
   title: string;
@@ -330,7 +349,9 @@ export const buildBeachJsonLd = (page: {
     image: page.og_image_url,
     geo: { "@type": "GeoCoordinates", latitude: 40.92, longitude: 9.5 },
     isPartOf: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardegna" },
-    ...(page.parking_info ? { amenityFeature: { "@type": "LocationFeatureSpecification", name: "Parcheggio", value: page.parking_info } } : {}),
+    ...(page.parking_info
+      ? { amenityFeature: { "@type": "LocationFeatureSpecification", name: "Parcheggio", value: page.parking_info } }
+      : {}),
   },
 ];
 
@@ -338,7 +359,8 @@ export const aeroportoAutoRentalJsonLd = {
   "@context": "https://schema.org",
   ...carRentalBase,
   name: "KS Rent — Noleggio Auto Aeroporto Olbia",
-  description: "Noleggio auto con consegna immediata all'Aeroporto di Olbia Costa Smeralda. Supercar, SUV e moto senza carta di credito.",
+  description:
+    "Noleggio auto con consegna immediata all'Aeroporto di Olbia Costa Smeralda. Supercar, SUV e moto senza carta di credito.",
   url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   areaServed: { "@type": "Place", name: "Aeroporto Olbia Costa Smeralda" },
@@ -364,7 +386,8 @@ export const flottaJsonLd = {
   numberOfItems: 15,
   provider: {
     "@type": "AutoRental",
-    name: "KS Rent S.R.L.",
+    name: "KS Rent",
+    legalName: "KS Rent S.R.L.",
     url: "https://www.ksrentsardinia.com",
   },
 };
