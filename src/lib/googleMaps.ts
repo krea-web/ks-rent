@@ -18,8 +18,8 @@ export const SEDE_LEGALE = {
   label: "Sede Legale",
 };
 
-export const SEDE_LEGALE_MAPS_URL = "https://www.google.com/maps/place/40.944571,9.497950";
-export const SEDE_LEGALE_EMBED_URL = "https://maps.google.com/maps?q=40.94457130855872,9.497950286291397&hl=it&z=15&output=embed";
+export const SEDE_LEGALE_MAPS_URL = "https://www.google.com/maps/search/?api=1&query=KS+RENT+SRL,+Viale+Aldo+Moro,+367,+Olbia";
+export const SEDE_LEGALE_EMBED_URL = "https://maps.google.com/maps?q=KS+RENT+SRL,+Viale+Aldo+Moro,+367,+Olbia&output=embed";
 
 export const DARK_MAP_STYLE = [
   { elementType: "geometry", stylers: [{ color: "#1a1a2e" }] },
