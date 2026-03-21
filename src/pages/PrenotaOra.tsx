@@ -47,20 +47,28 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAPS_API_KEY, LIBRARIES } from "@/lib/googleMaps";
 
 // Code splitting: lazy load heavy components
-const Calendar = lazy(() => import("@/components/ui/calendar").then(m => ({ default: m.Calendar })));
+const Calendar = lazy(() => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })));
 const SignatureModal = lazy(() => import("@/components/SignatureModal"));
 
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/ksrent";
 
 const TRANSPARENT_IMAGES: Record<string, string> = {
-  "Audi__RS3": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
-  "BMW__M2": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png",
-  "Jeep__Avenger": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp",
-  "Mercedes__Classe A": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
-  "Fiat__Panda": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
-  "Honda__SH 350": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter350.png",
-  "Honda__SH 125": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png",
-  "Yamaha__Raptor": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
+  Audi__RS3:
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+  BMW__M2:
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png",
+  Jeep__Avenger:
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp",
+  "Mercedes__Classe A":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+  Fiat__Panda:
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+  "Honda__SH 350":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter350.png",
+  "Honda__SH 125":
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png",
+  Yamaha__Raptor:
+    "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
 };
 
 const getTransparentImage = (make?: string, model?: string): string | null => {
@@ -164,7 +172,7 @@ const PrenotaOra = () => {
 
   // Load Google Maps API at top level to prevent mount/unmount crashes
   const { isLoaded: isMapLoaded } = useJsApiLoader({
-    id: 'google-map-script',
+    id: "google-map-script",
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     libraries: LIBRARIES,
   });
@@ -172,20 +180,14 @@ const PrenotaOra = () => {
   useEffect(() => {
     const el = summaryRef.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setShowStickyBar(!entry.isIntersecting),
-      { threshold: 0.1 }
-    );
+    const observer = new IntersectionObserver(([entry]) => setShowStickyBar(!entry.isIntersecting), { threshold: 0.1 });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     const fetchVehicles = async () => {
-      const { data, error } = await supabase
-        .from("vehicles")
-        .select("*")
-        .order("category", { ascending: true });
+      const { data, error } = await supabase.from("vehicles").select("*").order("category", { ascending: true });
       if (data) setVehicles(data);
       if (error) console.error("Errore recupero veicoli:", error);
     };
@@ -254,13 +256,13 @@ const PrenotaOra = () => {
   // Dynamic pricing engine
   const calculateDynamicPrice = useCallback((vehicle: any, start: Date, end: Date): number => {
     const monthRateMap: Record<number, string> = {
-      3: 'rate_april',
-      4: 'rate_may',
-      5: 'rate_june',
-      6: 'rate_july',
-      7: 'rate_august',
-      8: 'rate_september',
-      9: 'rate_october',
+      3: "rate_april",
+      4: "rate_may",
+      5: "rate_june",
+      6: "rate_july",
+      7: "rate_august",
+      8: "rate_september",
+      9: "rate_october",
     };
     const interval = eachDayOfInterval({ start, end: new Date(end.getTime() - 86400000) }); // exclude last day (return day)
     let sum = 0;
@@ -268,13 +270,16 @@ const PrenotaOra = () => {
       const m = getMonth(day);
       const rateKey = monthRateMap[m];
       const monthRate = rateKey ? vehicle[rateKey] : null;
-      sum += (monthRate && monthRate > 0) ? monthRate : (vehicle.daily_rate || 0);
+      sum += monthRate && monthRate > 0 ? monthRate : vehicle.daily_rate || 0;
     }
     return Math.max(sum, 0);
   }, []);
 
-  const days = availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
-  const total = availabilityResult?.estimated_price ?? (selectedVehicle && startDate && endDate ? calculateDynamicPrice(selectedVehicle, startDate, endDate) : 0);
+  const days =
+    availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
+  const total =
+    availabilityResult?.estimated_price ??
+    (selectedVehicle && startDate && endDate ? calculateDynamicPrice(selectedVehicle, startDate, endDate) : 0);
   const isAvailable = availabilityResult === null ? true : availabilityResult.available;
 
   const uploadFile = async (file: File | null, path: string) => {
@@ -442,7 +447,18 @@ const PrenotaOra = () => {
   };
 
   // Progress percentage
-  const progress = currentStep === 1 ? 0 : currentStep === 2 ? 20 : currentStep === 3 ? 40 : currentStep === 4 ? 60 : currentStep === 5 ? 100 : 0;
+  const progress =
+    currentStep === 1
+      ? 0
+      : currentStep === 2
+        ? 20
+        : currentStep === 3
+          ? 40
+          : currentStep === 4
+            ? 60
+            : currentStep === 5
+              ? 100
+              : 0;
 
   // Driver validation helper
   const getDriverMissingFields = (driver: typeof initialDriverState): string[] => {
@@ -466,7 +482,10 @@ const PrenotaOra = () => {
   };
 
   // Driver form fields helper
-  const renderDriverFormFields = (driver: typeof initialDriverState, setDriver: (d: typeof initialDriverState) => void) => (
+  const renderDriverFormFields = (
+    driver: typeof initialDriverState,
+    setDriver: (d: typeof initialDriverState) => void,
+  ) => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="space-y-2">
@@ -612,8 +631,16 @@ const PrenotaOra = () => {
             <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Fronte</Label>
             <label
               className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
-              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
-              onDrop={(e) => { e.preventDefault(); e.stopPropagation(); const file = e.dataTransfer.files?.[0]; if (file) setDriver({ ...driver, licenseFront: file }); }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const file = e.dataTransfer.files?.[0];
+                if (file) setDriver({ ...driver, licenseFront: file });
+              }}
             >
               <input
                 type="file"
@@ -638,8 +665,16 @@ const PrenotaOra = () => {
             <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Retro</Label>
             <label
               className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
-              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
-              onDrop={(e) => { e.preventDefault(); e.stopPropagation(); const file = e.dataTransfer.files?.[0]; if (file) setDriver({ ...driver, licenseBack: file }); }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const file = e.dataTransfer.files?.[0];
+                if (file) setDriver({ ...driver, licenseBack: file });
+              }}
             >
               <input
                 type="file"
@@ -668,7 +703,8 @@ const PrenotaOra = () => {
   // Mobile sticky bar action text
   const mobileActionLabel = () => {
     if (currentStep === 1) return "Scegli Auto";
-    if (currentStep === 2) return startDate && endDate ? (availabilityResult?.available ? "Continua" : "Verifica") : "Scegli Date";
+    if (currentStep === 2)
+      return startDate && endDate ? (availabilityResult?.available ? "Continua" : "Verifica") : "Scegli Date";
     if (currentStep === 3) return "Continua";
     if (currentStep === 4 && hasSecondDriver === null) return "Scegli";
     if (currentStep === 4) return "Continua";
@@ -739,11 +775,7 @@ const PrenotaOra = () => {
 
       <div className="w-full max-w-7xl mx-auto px-4 relative z-10">
         {/* HEADER */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6 md:mb-10"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 md:mb-10">
           <div className="flex items-center gap-3 md:gap-4 mb-4">
             <div className="w-6 md:w-8 h-[2px] bg-gold" />
             <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold">
@@ -770,8 +802,8 @@ const PrenotaOra = () => {
                       isActive
                         ? "bg-gold text-black"
                         : isDone
-                        ? "bg-gold/20 text-gold cursor-pointer hover:bg-gold/30"
-                        : "bg-white/5 text-white/30 cursor-default"
+                          ? "bg-gold/20 text-gold cursor-pointer hover:bg-gold/30"
+                          : "bg-white/5 text-white/30 cursor-default",
                     )}
                   >
                     {isDone ? <Check size={12} /> : <span>{stepNum}</span>}
@@ -816,7 +848,9 @@ const PrenotaOra = () => {
                   className="relative overflow-hidden"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-6 flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">1</span>
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
+                      1
+                    </span>
                     Scegli il Veicolo
                   </h2>
 
@@ -828,12 +862,15 @@ const PrenotaOra = () => {
                           <button
                             key={cat}
                             type="button"
-                            onClick={() => { setSelectedCategory(cat); setCarouselIndex(0); }}
+                            onClick={() => {
+                              setSelectedCategory(cat);
+                              setCarouselIndex(0);
+                            }}
                             className={cn(
                               "flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 min-h-[44px] whitespace-nowrap",
                               selectedCategory === cat
                                 ? "bg-gold text-black"
-                                : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white border border-white/10"
+                                : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white border border-white/10",
                             )}
                           >
                             {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
@@ -844,114 +881,123 @@ const PrenotaOra = () => {
                   )}
 
                   {/* Centered carousel showcase */}
-                  {filteredGrouped.length > 0 && (() => {
-                    const safeIdx = Math.min(carouselIndex, filteredGrouped.length - 1);
-                    const currentGroup = filteredGrouped[safeIdx];
-                    const v = currentGroup.representative;
-                    const soldOut = !currentGroup.isAvailable;
-                    const imgSrc = getTransparentImage(v.make, v.model) || v.image_url;
+                  {filteredGrouped.length > 0 &&
+                    (() => {
+                      const safeIdx = Math.min(carouselIndex, filteredGrouped.length - 1);
+                      const currentGroup = filteredGrouped[safeIdx];
+                      const v = currentGroup.representative;
+                      const soldOut = !currentGroup.isAvailable;
+                      const imgSrc = getTransparentImage(v.make, v.model) || v.image_url;
 
-                    return (
-                      <div className="relative">
-                        {/* Navigation arrows */}
-                        {filteredGrouped.length > 1 && (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() => setCarouselIndex((p) => (p - 1 + filteredGrouped.length) % filteredGrouped.length)}
-                              className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
-                              aria-label="Veicolo precedente"
-                            >
-                              <ChevronLeft size={24} />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setCarouselIndex((p) => (p + 1) % filteredGrouped.length)}
-                              className="absolute right-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
-                              aria-label="Veicolo successivo"
-                            >
-                              <ChevronRight size={24} />
-                            </button>
-                          </>
-                        )}
-
-                        {/* Floating vehicle image */}
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={`car-${safeIdx}`}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="relative mx-auto w-full max-w-sm md:max-w-lg aspect-[16/10] flex items-center justify-center px-14"
-                          >
-                            <OptimizedImage
-                              src={imgSrc}
-                              alt={getVehicleAlt(v.make, v.model)}
-                              width={700}
-                              className="w-full h-full object-contain drop-shadow-[0_10px_40px_rgba(212,175,55,0.12)]"
-                            />
-                            {soldOut && (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="bg-destructive text-destructive-foreground text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full">Esaurito</span>
-                              </div>
-                            )}
-                          </motion.div>
-                        </AnimatePresence>
-
-                        {/* Pagination dots */}
-                        {filteredGrouped.length > 1 && (
-                          <div className="flex justify-center gap-2 mt-2 mb-4">
-                            {filteredGrouped.map((_, i) => (
+                      return (
+                        <div className="relative">
+                          {/* Navigation arrows */}
+                          {filteredGrouped.length > 1 && (
+                            <>
                               <button
-                                key={i}
                                 type="button"
-                                onClick={() => setCarouselIndex(i)}
-                                className={cn(
-                                  "rounded-full transition-all duration-300",
-                                  i === safeIdx
-                                    ? "w-6 h-2 bg-gold"
-                                    : "w-2 h-2 bg-white/20 hover:bg-white/40"
-                                )}
-                                aria-label={`Vai al veicolo ${i + 1}`}
-                              />
-                            ))}
-                          </div>
-                        )}
+                                onClick={() =>
+                                  setCarouselIndex((p) => (p - 1 + filteredGrouped.length) % filteredGrouped.length)
+                                }
+                                className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
+                                aria-label="Veicolo precedente"
+                              >
+                                <ChevronLeft size={24} />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setCarouselIndex((p) => (p + 1) % filteredGrouped.length)}
+                                className="absolute right-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
+                                aria-label="Veicolo successivo"
+                              >
+                                <ChevronRight size={24} />
+                              </button>
+                            </>
+                          )}
 
-                        {/* Vehicle details centered below */}
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={`info-${safeIdx}`}
-                            initial={{ opacity: 0, y: 15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.3 }}
-                            className="text-center mt-2"
-                          >
-                            <h3 className="text-2xl md:text-3xl font-black text-foreground">
-                              {v.make} <span className="text-gold">{v.model}</span>
-                            </h3>
-                            <div className="flex items-center justify-center gap-4 mt-2 text-sm text-muted-foreground">
-                              {v.category && <span className="flex items-center gap-1">{getCategoryIcon(v.category)} {v.category}</span>}
-                              {v.seats && <span>{v.seats} Posti</span>}
-                              {v.transmission && <span>{v.transmission}</span>}
-                            </div>
-                            <p className="text-gold font-bold text-lg mt-3">
-                              A partire da €{v.daily_rate}<span className="text-sm text-muted-foreground font-normal">/giorno</span>
-                            </p>
-                            <Button
-                              onClick={() => handleVehicleSelect(currentGroup)}
-                              disabled={soldOut}
-                              className="mt-5 bg-gold hover:bg-gold-light text-black font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
+                          {/* Floating vehicle image */}
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={`car-${safeIdx}`}
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.9 }}
+                              transition={{ duration: 0.4, ease: "easeOut" }}
+                              className="relative mx-auto w-full max-w-sm md:max-w-lg aspect-[16/10] flex items-center justify-center px-14"
                             >
-                              {soldOut ? "Non disponibile" : "Seleziona questo veicolo"} <ArrowRight size={16} className="ml-2" />
-                            </Button>
-                          </motion.div>
-                        </AnimatePresence>
-                      </div>
-                    );
-                  })()}
+                              <OptimizedImage
+                                src={imgSrc}
+                                alt={getVehicleAlt(v.make, v.model)}
+                                width={700}
+                                className="w-full h-full object-contain drop-shadow-[0_10px_40px_rgba(212,175,55,0.12)]"
+                              />
+                              {soldOut && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <span className="bg-destructive text-destructive-foreground text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full">
+                                    Esaurito
+                                  </span>
+                                </div>
+                              )}
+                            </motion.div>
+                          </AnimatePresence>
+
+                          {/* Pagination dots */}
+                          {filteredGrouped.length > 1 && (
+                            <div className="flex justify-center gap-2 mt-2 mb-4">
+                              {filteredGrouped.map((_, i) => (
+                                <button
+                                  key={i}
+                                  type="button"
+                                  onClick={() => setCarouselIndex(i)}
+                                  className={cn(
+                                    "rounded-full transition-all duration-300",
+                                    i === safeIdx ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-white/20 hover:bg-white/40",
+                                  )}
+                                  aria-label={`Vai al veicolo ${i + 1}`}
+                                />
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Vehicle details centered below */}
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={`info-${safeIdx}`}
+                              initial={{ opacity: 0, y: 15 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.3 }}
+                              className="text-center mt-2"
+                            >
+                              <h3 className="text-2xl md:text-3xl font-black text-foreground">
+                                {v.make} <span className="text-gold">{v.model}</span>
+                              </h3>
+                              <div className="flex items-center justify-center gap-4 mt-2 text-sm text-muted-foreground">
+                                {v.category && (
+                                  <span className="flex items-center gap-1">
+                                    {getCategoryIcon(v.category)} {v.category}
+                                  </span>
+                                )}
+                                {v.seats && <span>{v.seats} Posti</span>}
+                                {v.transmission && <span>{v.transmission}</span>}
+                              </div>
+                              <p className="text-gold font-bold text-lg mt-3">
+                                A partire da €{v.daily_rate}
+                                <span className="text-sm text-muted-foreground font-normal">/giorno</span>
+                              </p>
+                              <Button
+                                onClick={() => handleVehicleSelect(currentGroup)}
+                                disabled={soldOut}
+                                className="mt-5 bg-gold hover:bg-gold-light text-black font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
+                              >
+                                {soldOut ? "Non disponibile" : "Seleziona questo veicolo"}{" "}
+                                <ArrowRight size={16} className="ml-2" />
+                              </Button>
+                            </motion.div>
+                          </AnimatePresence>
+                        </div>
+                      );
+                    })()}
                 </motion.div>
               )}
 
@@ -968,7 +1014,9 @@ const PrenotaOra = () => {
                   className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">2</span>
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
+                      2
+                    </span>
                     Periodo di Noleggio
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -980,7 +1028,7 @@ const PrenotaOra = () => {
                             variant="outline"
                             className={cn(
                               "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base",
-                              !startDate && "text-white/40"
+                              !startDate && "text-white/40",
                             )}
                           >
                             <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
@@ -988,7 +1036,13 @@ const PrenotaOra = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                          <Suspense fallback={<div className="p-4"><Skeleton className="w-[280px] h-[280px]" /></div>}>
+                          <Suspense
+                            fallback={
+                              <div className="p-4">
+                                <Skeleton className="w-[280px] h-[280px]" />
+                              </div>
+                            }
+                          >
                             <Calendar
                               mode="single"
                               selected={startDate}
@@ -1017,7 +1071,7 @@ const PrenotaOra = () => {
                             variant="outline"
                             className={cn(
                               "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base",
-                              !endDate && "text-white/40"
+                              !endDate && "text-white/40",
                             )}
                           >
                             <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
@@ -1025,7 +1079,13 @@ const PrenotaOra = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
-                          <Suspense fallback={<div className="p-4"><Skeleton className="w-[280px] h-[280px]" /></div>}>
+                          <Suspense
+                            fallback={
+                              <div className="p-4">
+                                <Skeleton className="w-[280px] h-[280px]" />
+                              </div>
+                            }
+                          >
                             <Calendar
                               mode="single"
                               selected={endDate}
@@ -1078,7 +1138,10 @@ const PrenotaOra = () => {
                             <Button
                               type="button"
                               variant="outline"
-                              onClick={() => { setAvailabilityResult(null); goToStep(1); }}
+                              onClick={() => {
+                                setAvailabilityResult(null);
+                                goToStep(1);
+                              }}
                               className="border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl"
                             >
                               <Car size={14} className="mr-2" /> Cambia Auto
@@ -1086,7 +1149,11 @@ const PrenotaOra = () => {
                             <Button
                               type="button"
                               variant="outline"
-                              onClick={() => { setAvailabilityResult(null); setStartDate(undefined); setEndDate(undefined); }}
+                              onClick={() => {
+                                setAvailabilityResult(null);
+                                setStartDate(undefined);
+                                setEndDate(undefined);
+                              }}
                               className="border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl"
                             >
                               <CalendarIcon size={14} className="mr-2" /> Cambia Date
@@ -1120,7 +1187,9 @@ const PrenotaOra = () => {
                               <p className="text-white/50 text-xs">Prezzo totale</p>
                               <p className="text-3xl font-black font-display text-gold">€{total}</p>
                             </div>
-                            <p className="text-white/40 text-sm">{days} giorn{days !== 1 ? "i" : "o"} · Tariffa dinamica</p>
+                            <p className="text-white/40 text-sm">
+                              {days} giorn{days !== 1 ? "i" : "o"} · Tariffa dinamica
+                            </p>
                           </div>
                           <Button
                             type="button"
@@ -1149,7 +1218,9 @@ const PrenotaOra = () => {
                   className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">3</span>
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
+                      3
+                    </span>
                     Dati Guidatore Principale
                   </h2>
                   {renderDriverFormFields(mainDriver, setMainDriver)}
@@ -1191,7 +1262,9 @@ const PrenotaOra = () => {
                       <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto">
                         <Users size={28} className="text-gold" />
                       </div>
-                      <h2 className="text-xl md:text-2xl font-display font-bold">Viaggerai con un secondo guidatore?</h2>
+                      <h2 className="text-xl md:text-2xl font-display font-bold">
+                        Viaggerai con un secondo guidatore?
+                      </h2>
                       <p className="text-white/50 max-w-md mx-auto">
                         Se prevedi di condividere la guida, aggiungi i dati del secondo guidatore.
                       </p>
@@ -1206,7 +1279,10 @@ const PrenotaOra = () => {
                         <Button
                           type="button"
                           variant="outline"
-                          onClick={() => { setHasSecondDriver(false); goToStep(5); }}
+                          onClick={() => {
+                            setHasSecondDriver(false);
+                            goToStep(5);
+                          }}
                           className="h-14 px-8 border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
                         >
                           No, Procedi
@@ -1220,7 +1296,9 @@ const PrenotaOra = () => {
                     <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10">
                       <div className="flex items-center justify-between mb-5 md:mb-6">
                         <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
-                          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">4</span>
+                          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
+                            4
+                          </span>
                           Dati Secondo Guidatore
                         </h2>
                         <Button
@@ -1257,7 +1335,6 @@ const PrenotaOra = () => {
                       </div>
                     </div>
                   )}
-
                 </motion.div>
               )}
 
@@ -1274,7 +1351,9 @@ const PrenotaOra = () => {
                   className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">5</span>
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
+                      5
+                    </span>
                     Ritiro & Consegna
                   </h2>
 
@@ -1297,23 +1376,43 @@ const PrenotaOra = () => {
 
                   {/* Validation warnings for incomplete driver data */}
                   {!isDriverComplete(mainDriver) && (
-                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4">
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-6 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4"
+                    >
                       <div className="flex items-center gap-3">
                         <AlertCircle size={20} className="text-red-400 shrink-0" />
                         <p className="text-sm text-white/70">Dati del guidatore principale incompleti</p>
                       </div>
-                      <Button type="button" variant="outline" size="sm" onClick={() => goToStep(3)} className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => goToStep(3)}
+                        className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0"
+                      >
                         Completa Dati
                       </Button>
                     </motion.div>
                   )}
                   {hasSecondDriver && !isDriverComplete(secondDriver) && (
-                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4">
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-4 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4"
+                    >
                       <div className="flex items-center gap-3">
                         <AlertCircle size={20} className="text-red-400 shrink-0" />
                         <p className="text-sm text-white/70">Dati del secondo guidatore incompleti</p>
                       </div>
-                      <Button type="button" variant="outline" size="sm" onClick={() => goToStep(4)} className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => goToStep(4)}
+                        className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0"
+                      >
                         Completa Dati
                       </Button>
                     </motion.div>
@@ -1328,15 +1427,21 @@ const PrenotaOra = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                       <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
-                        <p className="font-bold truncate">{selectedVehicle?.make} {selectedVehicle?.model}</p>
+                        <p className="font-bold truncate">
+                          {selectedVehicle?.make} {selectedVehicle?.model}
+                        </p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
-                        <p className="font-bold truncate">{startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}</p>
+                        <p className="font-bold truncate">
+                          {startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}
+                        </p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Guidatore</p>
-                        <p className="font-bold truncate">{mainDriver.name} {mainDriver.surname}</p>
+                        <p className="font-bold truncate">
+                          {mainDriver.name} {mainDriver.surname}
+                        </p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
@@ -1349,13 +1454,25 @@ const PrenotaOra = () => {
                     <Button
                       type="button"
                       onClick={handleSubmit}
-                      disabled={loading || !pickupLocation || !pickupTime || !dropoffLocation || !dropoffTime || !isDriverComplete(mainDriver) || (hasSecondDriver === true && !isDriverComplete(secondDriver))}
+                      disabled={
+                        loading ||
+                        !pickupLocation ||
+                        !pickupTime ||
+                        !dropoffLocation ||
+                        !dropoffTime ||
+                        !isDriverComplete(mainDriver) ||
+                        (hasSecondDriver === true && !isDriverComplete(secondDriver))
+                      }
                       className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                     >
                       {loading ? (
-                        <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Caricamento dati...</span>
+                        <span className="flex items-center gap-2">
+                          <Loader2 size={16} className="animate-spin" /> Caricamento dati...
+                        </span>
                       ) : (
-                        <span className="flex items-center">Conferma Prenotazione <ArrowRight size={18} className="ml-3" /></span>
+                        <span className="flex items-center">
+                          Conferma Prenotazione <ArrowRight size={18} className="ml-3" />
+                        </span>
                       )}
                     </Button>
                   </div>
@@ -1377,17 +1494,27 @@ const PrenotaOra = () => {
                   {selectedVehicle ? (
                     <>
                       <div className="absolute inset-0 z-0 pointer-events-none">
-                        <img src={selectedVehicle.image_url} alt="Selected" className="w-full h-full object-cover opacity-40" />
+                        <img
+                          src={selectedVehicle.image_url}
+                          alt="Selected"
+                          className="w-full h-full object-cover opacity-40"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent" />
                       </div>
                       <div className="relative z-10">
-                        <span className="text-gold text-xs font-semibold uppercase tracking-wider">{selectedVehicle.category}</span>
-                        <h3 className="text-2xl font-display font-bold text-white">{selectedVehicle.make} {selectedVehicle.model}</h3>
+                        <span className="text-gold text-xs font-semibold uppercase tracking-wider">
+                          {selectedVehicle.category}
+                        </span>
+                        <h3 className="text-2xl font-display font-bold text-white">
+                          {selectedVehicle.make} {selectedVehicle.model}
+                        </h3>
                       </div>
                     </>
                   ) : (
                     <div className="relative z-10 flex flex-col justify-center h-full">
-                      <span className="text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">Riepilogo Live</span>
+                      <span className="text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
+                        Riepilogo Live
+                      </span>
                       <h3 className="text-xl font-display font-bold text-white/30">Nessun veicolo</h3>
                     </div>
                   )}
@@ -1401,7 +1528,9 @@ const PrenotaOra = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-white/50 text-sm mb-1">Durata</p>
-                      <p className="text-gold font-bold text-xl">{days} Giorn{days !== 1 ? "i" : "o"}</p>
+                      <p className="text-gold font-bold text-xl">
+                        {days} Giorn{days !== 1 ? "i" : "o"}
+                      </p>
                     </div>
                   </div>
 
@@ -1420,7 +1549,11 @@ const PrenotaOra = () => {
                   <div className="space-y-3 py-2">
                     <div className="flex items-center gap-3 text-sm text-white/70">
                       <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
-                      {mainDriver.name && <span className="text-white/40 text-xs ml-auto">{mainDriver.name} {mainDriver.surname}</span>}
+                      {mainDriver.name && (
+                        <span className="text-white/40 text-xs ml-auto">
+                          {mainDriver.name} {mainDriver.surname}
+                        </span>
+                      )}
                     </div>
                     {hasSecondDriver && (
                       <div className="flex items-center gap-3 text-sm text-white/70">
@@ -1431,13 +1564,16 @@ const PrenotaOra = () => {
 
                   <div className="pt-6 border-t border-white/5 flex flex-wrap justify-between items-center gap-2">
                     <span className="text-lg text-white/70">Totale stimato</span>
-                    <span className="text-2xl sm:text-3xl md:text-4xl font-black font-display text-gold min-w-0 break-words">€{total}</span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl font-black font-display text-gold min-w-0 break-words">
+                      €{total}
+                    </span>
                   </div>
 
                   {/* Step indicator in summary */}
                   <div className="pt-4 border-t border-white/5">
                     <p className="text-xs text-white/50 leading-relaxed mb-3">
-                      Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo scelto.
+                      Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo
+                      scelto.
                     </p>
                     <div className="flex items-center justify-between text-xs text-white/40">
                       <span>Step {currentStep} di 5</span>
@@ -1472,7 +1608,9 @@ const PrenotaOra = () => {
                         €{total.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                       {days > 0 && (
-                        <span className="text-[10px] text-white/40">per {days} giorn{days !== 1 ? "i" : "o"}</span>
+                        <span className="text-[10px] text-white/40">
+                          per {days} giorn{days !== 1 ? "i" : "o"}
+                        </span>
                       )}
                     </div>
                   ) : (
