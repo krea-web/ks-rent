@@ -351,12 +351,9 @@ const PrenotaOra = () => {
 
       const bookingPayload = {
         customer: {
-          name: mainDriver.name,
-          surname: mainDriver.surname,
           email: mainDriver.email,
           phone: mainDriver.phone,
           tax_code: mainDriver.cf || undefined,
-          birth_date: mainDriver.birthDate,
         },
         vehicle_id: selectedVehicle.id,
         dates: {
@@ -372,12 +369,9 @@ const PrenotaOra = () => {
         has_second_driver: !!hasSecondDriver,
         second_driver: hasSecondDriver
           ? {
-              name: secondDriver.name,
-              surname: secondDriver.surname,
               email: secondDriver.email,
               phone: secondDriver.phone,
               tax_code: secondDriver.cf || undefined,
-              birth_date: secondDriver.birthDate,
               license_urls: { front: secondFrontUrl, back: secondBackUrl },
             }
           : null,
