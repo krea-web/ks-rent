@@ -214,9 +214,12 @@ const Footer = () => (
 
     {/* Copyright Bottom Bar */}
     <div className="relative z-10 border-t border-white/10 mt-6 md:mt-8 pt-6">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-        <p>© {new Date().getFullYear()} KS Rent S.R.L. — @KREA</p>
+      <div className="container mx-auto px-4 flex flex-col items-center gap-4 text-xs text-muted-foreground text-center">
+        <p className="leading-relaxed max-w-4xl">
+          KS Rent S.R.L. | Sede Legale: Viale Aldo Moro 367, 07026 Olbia (SS) | Sede Operativa: Viale Isola Bianca 38 (Porto di Olbia) | P.IVA e C.F.: 03028900904. Autonoleggio locale in Sardegna, totalmente indipendente e non affiliato ad altre società omonime operanti sul territorio nazionale.
+        </p>
         <div className="flex flex-wrap justify-center gap-4">
+          <p>© {new Date().getFullYear()} KS Rent S.R.L. — @KREA</p>
           <a
             href="https://www.iubenda.com/privacy-policy/36489583"
             className="iubenda-nostyle iubenda-noiframe iubenda-embed hover:text-gold transition-colors relative z-20"

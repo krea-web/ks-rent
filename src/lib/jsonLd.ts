@@ -253,6 +253,11 @@ const carRentalBase = {
   "@type": "AutoRental",
   name: "KS Rent",
   legalName: "KS Rent S.R.L.",
+  alternateName: "KS Rent Sardinia",
+  vatID: "IT03028900904",
+  taxID: "03028900904",
+  disambiguatingDescription:
+    "Azienda sarda di noleggio auto a breve termine con sede a Olbia. Azienda indipendente e non affiliata ad altre società omonime operanti nel Noleggio a Lungo Termine sul territorio nazionale.",
   url: "https://www.ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
