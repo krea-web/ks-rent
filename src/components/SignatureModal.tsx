@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, PenTool, RotateCcw, Loader2 } from "lucide-react";
@@ -17,8 +17,26 @@ interface SignatureModalProps {
 const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalProps) => {
   const sigRef = useRef<SignatureCanvas>(null);
   const [signing, setSigning] = useState(false);
+  const [hasSigned, setHasSigned] = useState(false);
 
-  const handleClear = () => sigRef.current?.clear();
+  // Reset state when modal opens
+  useEffect(() => {
+    if (open) {
+      setHasSigned(false);
+      setSigning(false);
+    }
+  }, [open]);
+
+  const handleEnd = useCallback(() => {
+    if (sigRef.current && !sigRef.current.isEmpty()) {
+      setHasSigned(true);
+    }
+  }, []);
+
+  const handleClear = () => {
+    sigRef.current?.clear();
+    setHasSigned(false);
+  };
 
   const handleConfirm = async () => {
     if (!sigRef.current || sigRef.current.isEmpty()) {
@@ -89,14 +107,15 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
                 <SignatureCanvas
                   ref={sigRef}
                   penColor="#000"
+                  onEnd={handleEnd}
                   canvasProps={{
                     className: "w-full",
                     style: { width: "100%", height: 200 },
                   }}
                 />
               </div>
-              <p className="text-center text-white/30 text-xs mt-2 italic">
-                Disegna la tua firma nel riquadro bianco
+              <p className={`text-center text-xs mt-2 italic ${hasSigned ? 'text-green-400/60' : 'text-red-400/70'}`}>
+                {hasSigned ? "✓ Firma inserita" : "⚠ La firma è obbligatoria per procedere"}
               </p>
             </div>
 
@@ -113,13 +132,17 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
               <Button
                 type="button"
                 onClick={handleConfirm}
-                disabled={signing}
-                className="bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider px-8"
+                disabled={signing || !hasSigned}
+                className={`font-bold uppercase tracking-wider px-8 transition-all ${
+                  hasSigned
+                    ? "bg-gold text-black hover:bg-yellow-400"
+                    : "bg-white/10 text-white/30 cursor-not-allowed"
+                }`}
               >
                 {signing ? (
                   <Loader2 size={16} className="animate-spin mr-2" />
                 ) : null}
-                {signing ? "Invio..." : "Conferma Firma"}
+                {signing ? "Invio..." : "Firma e Conferma"}
               </Button>
             </div>
           </motion.div>
