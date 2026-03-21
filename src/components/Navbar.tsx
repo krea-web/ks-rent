@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, CalendarDays, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
 const navLinks = [
@@ -80,15 +86,44 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* DESKTOP CTA */}
+          {/* DESKTOP CTA — Dropdown */}
           <div className="hidden lg:block">
-            <Link
-              to="/prenotaora"
-              className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 py-3 rounded-full bg-white text-black text-xs font-black uppercase tracking-widest hover:bg-gold transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] group min-h-[44px]"
-            >
-              <span className="pointer-events-none">Prenota Ora</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform pointer-events-none" />
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 py-3 rounded-full bg-white text-black text-xs font-black uppercase tracking-widest hover:bg-gold transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] group min-h-[44px]"
+                >
+                  <span className="pointer-events-none">Prenota Ora</span>
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform pointer-events-none" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                sideOffset={8}
+                className="w-56 bg-[#111] border border-white/10 rounded-xl p-1.5 shadow-2xl backdrop-blur-xl"
+              >
+                <DropdownMenuItem asChild>
+                  <Link
+                    to="/prenotaora"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-white hover:bg-gold/10 hover:text-gold transition-colors cursor-pointer"
+                  >
+                    <CalendarDays size={18} className="text-gold" />
+                    Prenota Online
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <a
+                    href="https://wa.me/393446107071?text=Ciao%2C%20vorrei%20prenotare%20un%20veicolo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-white hover:bg-[#25D366]/10 hover:text-[#25D366] transition-colors cursor-pointer"
+                  >
+                    <MessageCircle size={18} className="text-[#25D366]" />
+                    Prenota su WhatsApp
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* MOBILE/TABLET TOGGLE */}
