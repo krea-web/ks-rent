@@ -530,50 +530,6 @@ const PrenotaOra = () => {
             <FieldCheck show={!!driver.birthDate} />
           </div>
         </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Luogo di Nascita</Label>
-          <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.birthPlace}
-              onChange={(e) => setDriver({ ...driver, birthPlace: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.birthPlace.length > 1} />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Indirizzo Residenza</Label>
-          <div className="relative">
-            <Map className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.residence}
-              onChange={(e) => setDriver({ ...driver, residence: e.target.value })}
-              placeholder="Via Roma 1"
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.residence.length > 3} />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Città</Label>
-          <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.city}
-              onChange={(e) => setDriver({ ...driver, city: e.target.value })}
-              placeholder="Roma"
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.city.length > 1} />
-          </div>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
