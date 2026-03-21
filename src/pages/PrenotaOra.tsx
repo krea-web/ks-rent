@@ -532,13 +532,12 @@ const PrenotaOra = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale</Label>
+          <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale <span className="text-white/30 normal-case tracking-normal">(opzionale)</span></Label>
           <div className="relative">
             <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               maxLength={16}
               value={driver.cf}
               onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
