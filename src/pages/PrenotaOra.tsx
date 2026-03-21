@@ -571,9 +571,12 @@ const PrenotaOra = () => {
       </div>
 
       <div className="pt-4 border-t border-white/5">
-        <h3 className="text-sm font-bold text-gold mb-4 flex items-center gap-2">
+        <h3 className="text-sm font-bold text-gold mb-2 flex items-center gap-2">
           <ShieldCheck size={16} /> Documenti (Patente)
         </h3>
+        <p className="text-white/40 text-xs mb-4 italic">
+          📷 La tua data e luogo di nascita verranno estratti automaticamente dalla foto della patente tramite OCR.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Fronte</Label>
