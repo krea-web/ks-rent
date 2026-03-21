@@ -477,52 +477,6 @@ const PrenotaOra = () => {
     setDriver: (d: typeof initialDriverState) => void,
   ) => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Nome</Label>
-          <div className="relative">
-            <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.name}
-              onChange={(e) => setDriver({ ...driver, name: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.name.length > 1} />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Cognome</Label>
-          <div className="relative">
-            <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.surname}
-              onChange={(e) => setDriver({ ...driver, surname: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.surname.length > 1} />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Data di Nascita</Label>
-          <div className="relative">
-            <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              type="date"
-              value={driver.birthDate}
-              onChange={(e) => setDriver({ ...driver, birthDate: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white appearance-none color-scheme-dark"
-            />
-            <FieldCheck show={!!driver.birthDate} />
-          </div>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div className="space-y-2">
           <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale <span className="text-white/30 normal-case tracking-normal">(opzionale)</span></Label>
@@ -538,7 +492,7 @@ const PrenotaOra = () => {
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Email</Label>
+          <Label className="text-xs uppercase tracking-widest text-white/50">Email *</Label>
           <div className="relative">
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
@@ -552,7 +506,7 @@ const PrenotaOra = () => {
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Telefono</Label>
+          <Label className="text-xs uppercase tracking-widest text-white/50">Telefono *</Label>
           <div className="relative">
             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
