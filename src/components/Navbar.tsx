@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ArrowRight, CalendarDays, MessageCircle } from "lucide-react";
+import { Menu, X, ArrowRight, CalendarDays } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
