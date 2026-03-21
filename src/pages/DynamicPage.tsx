@@ -514,7 +514,7 @@ export default function DynamicPage() {
               className="inline-flex items-center gap-3 border-2 border-gold text-gold font-bold uppercase tracking-wider text-xs px-6 py-3 rounded-full hover:bg-gold hover:text-background transition-colors"
             >
               <Navigation className="w-4 h-4" />
-              Apri Sede Legale (GPS)
+              Sede Legale
             </a>
           </div>
         </div>
