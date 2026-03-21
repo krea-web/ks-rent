@@ -96,9 +96,6 @@ const initialDriverState = {
   phone: "",
   cf: "",
   birthDate: "",
-  birthPlace: "",
-  residence: "",
-  city: "",
   licenseFront: null as File | null,
   licenseBack: null as File | null,
 };
@@ -358,11 +355,8 @@ const PrenotaOra = () => {
           surname: mainDriver.surname,
           email: mainDriver.email,
           phone: mainDriver.phone,
-          tax_code: mainDriver.cf,
+          tax_code: mainDriver.cf || undefined,
           birth_date: mainDriver.birthDate,
-          birth_place: mainDriver.birthPlace,
-          residence_address: mainDriver.residence,
-          city: mainDriver.city,
         },
         vehicle_id: selectedVehicle.id,
         dates: {
@@ -382,11 +376,8 @@ const PrenotaOra = () => {
               surname: secondDriver.surname,
               email: secondDriver.email,
               phone: secondDriver.phone,
-              tax_code: secondDriver.cf,
+              tax_code: secondDriver.cf || undefined,
               birth_date: secondDriver.birthDate,
-              birth_place: secondDriver.birthPlace,
-              residence_address: secondDriver.residence,
-              city: secondDriver.city,
               license_urls: { front: secondFrontUrl, back: secondBackUrl },
             }
           : null,
@@ -472,10 +463,6 @@ const PrenotaOra = () => {
     if (!driver.name.trim()) missing.push("Nome");
     if (!driver.surname.trim()) missing.push("Cognome");
     if (!driver.birthDate) missing.push("Data di Nascita");
-    if (!driver.birthPlace.trim()) missing.push("Luogo di Nascita");
-    if (!driver.residence.trim()) missing.push("Indirizzo Residenza");
-    if (!driver.city.trim()) missing.push("Città");
-    if (driver.cf.length !== 16) missing.push("Codice Fiscale");
     if (!driver.email.includes("@") || !driver.email.includes(".")) missing.push("Email");
     if (driver.phone.length < 8) missing.push("Telefono");
     if (!driver.licenseFront) missing.push("Foto Patente Fronte");
@@ -537,59 +524,14 @@ const PrenotaOra = () => {
             <FieldCheck show={!!driver.birthDate} />
           </div>
         </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Luogo di Nascita</Label>
-          <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.birthPlace}
-              onChange={(e) => setDriver({ ...driver, birthPlace: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.birthPlace.length > 1} />
-          </div>
-        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Indirizzo Residenza</Label>
-          <div className="relative">
-            <Map className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.residence}
-              onChange={(e) => setDriver({ ...driver, residence: e.target.value })}
-              placeholder="Via Roma 1"
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.residence.length > 3} />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Città</Label>
-          <div className="relative">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
-            <Input
-              required
-              value={driver.city}
-              onChange={(e) => setDriver({ ...driver, city: e.target.value })}
-              placeholder="Roma"
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
-            />
-            <FieldCheck show={driver.city.length > 1} />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale</Label>
+          <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale <span className="text-white/30 normal-case tracking-normal">(opzionale)</span></Label>
           <div className="relative">
             <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
             <Input
-              required
               maxLength={16}
               value={driver.cf}
               onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
