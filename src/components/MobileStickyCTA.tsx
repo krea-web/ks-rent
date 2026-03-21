@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { CalendarDays, MessageCircle } from "lucide-react";
+import { CalendarDays } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 const MobileStickyCTA = () => (
   <motion.div
