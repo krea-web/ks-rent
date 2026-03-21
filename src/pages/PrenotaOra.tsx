@@ -1336,9 +1336,9 @@ const PrenotaOra = () => {
                         </p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Guidatore</p>
+                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Ritiro</p>
                         <p className="font-bold truncate">
-                          {mainDriver.name} {mainDriver.surname}
+                          {pickupLocation || <span className="text-white/30 italic">Da impostare</span>}
                         </p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-4 min-w-0">
