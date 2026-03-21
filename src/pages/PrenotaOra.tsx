@@ -339,14 +339,16 @@ const PrenotaOra = () => {
 
     setLoading(true);
     try {
-      const mainFrontUrl = await uploadFile(mainDriver.licenseFront, `front-${mainDriver.cf}`);
-      const mainBackUrl = await uploadFile(mainDriver.licenseBack, `back-${mainDriver.cf}`);
+      const uid = mainDriver.cf || mainDriver.email.replace(/[^a-zA-Z0-9]/g, '');
+      const mainFrontUrl = await uploadFile(mainDriver.licenseFront, `front-${uid}`);
+      const mainBackUrl = await uploadFile(mainDriver.licenseBack, `back-${uid}`);
 
       let secondFrontUrl = null;
       let secondBackUrl = null;
       if (hasSecondDriver) {
-        secondFrontUrl = await uploadFile(secondDriver.licenseFront, `front-${secondDriver.cf}`);
-        secondBackUrl = await uploadFile(secondDriver.licenseBack, `back-${secondDriver.cf}`);
+        const uid2 = secondDriver.cf || secondDriver.email.replace(/[^a-zA-Z0-9]/g, '');
+        secondFrontUrl = await uploadFile(secondDriver.licenseFront, `front-${uid2}`);
+        secondBackUrl = await uploadFile(secondDriver.licenseBack, `back-${uid2}`);
       }
 
       const bookingPayload = {
