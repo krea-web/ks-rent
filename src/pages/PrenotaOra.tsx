@@ -128,6 +128,7 @@ const PrenotaOra = () => {
   const [direction, setDirection] = useState(1);
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Tutti");
+  const [carouselIndex, setCarouselIndex] = useState(0);
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
