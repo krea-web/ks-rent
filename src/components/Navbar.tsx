@@ -119,7 +119,7 @@ const Navbar = () => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-white hover:bg-[#25D366]/10 hover:text-[#25D366] transition-colors cursor-pointer"
                   >
-                    <MessageCircle size={18} className="text-[#25D366]" />
+                    <WhatsAppIcon size={18} className="fill-[#25D366]" />
                     Prenota su WhatsApp
                   </a>
                 </DropdownMenuItem>

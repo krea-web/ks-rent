@@ -24,7 +24,7 @@ const MobileStickyCTA = () => (
         rel="noopener noreferrer"
         className="flex items-center justify-center gap-2 h-14 rounded-r-xl bg-[#25D366] font-sans font-black text-sm uppercase tracking-[0.15em] text-white hover:bg-[#20bd5a] transition-all duration-300"
       >
-        <MessageCircle size={18} className="pointer-events-none" />
+        <WhatsAppIcon size={20} className="fill-white pointer-events-none" />
         <span className="pointer-events-none">WhatsApp</span>
       </a>
     </div>
