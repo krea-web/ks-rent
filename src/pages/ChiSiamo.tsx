@@ -309,6 +309,33 @@ const ChiSiamo = () => {
         </div>
       </section>
 
+      {/* LA NOSTRA IDENTITÀ — Disambiguazione SEO */}
+      <section className="py-16 md:py-24 bg-[#050505] border-t border-white/5">
+        <div className="w-full max-w-4xl mx-auto px-4 md:px-12 lg:px-24">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.7 } }}
+            viewport={{ once: true }}
+            className="p-8 md:p-12 rounded-[2rem] border border-white/10 bg-white/[0.02] backdrop-blur-sm"
+          >
+            <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">
+              La Nostra Identità
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6 leading-tight">
+              Orgogliosamente e Unicamente Sardi.
+            </h2>
+            <div className="space-y-4 text-white/60 font-light text-base md:text-lg leading-relaxed">
+              <p>
+                <strong className="text-white font-medium">KS Rent S.R.L.</strong> è una realtà orgogliosamente e unicamente sarda, nata per servire il turismo di lusso in Costa Smeralda. La nostra sede operativa è fissa al Porto di Olbia (P.IVA 03028900904).
+              </p>
+              <p>
+                Ci teniamo a precisare ai nostri clienti che operiamo in totale indipendenza e <strong className="text-white/80">non abbiamo alcuna affiliazione</strong> con altre agenzie di noleggio auto omonime presenti nel resto d'Italia. KS Rent Sardinia è un marchio esclusivamente legato al territorio sardo.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* 5. BANNER MANIFESTO */}
       <section className="py-24 md:py-32 bg-gradient-to-br from-gold to-yellow-500 text-black text-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/5 pointer-events-none" />
