@@ -147,7 +147,7 @@ const CompanyMap = () => {
           <MapPin size={14} className="text-white/50 shrink-0" />
           <div>
             <p className="text-xs font-bold text-white/80">Sede Legale</p>
-            <p className="text-[10px] text-white/50">40.944571, 9.497950</p>
+            <p className="text-[10px] text-white/50">Viale Aldo Moro 367, Olbia</p>
           </div>
         </a>
       </div>
