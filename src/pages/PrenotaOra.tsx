@@ -96,9 +96,6 @@ const initialDriverState = {
   phone: "",
   cf: "",
   birthDate: "",
-  birthPlace: "",
-  residence: "",
-  city: "",
   licenseFront: null as File | null,
   licenseBack: null as File | null,
 };
