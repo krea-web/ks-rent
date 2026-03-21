@@ -5,8 +5,13 @@ export const localBusinessJsonLd = {
   "@type": "AutoRental",
   name: "KS Rent",
   legalName: "KS Rent S.R.L.",
+  alternateName: "KS Rent Sardinia",
+  vatID: "IT03028900904",
+  taxID: "03028900904",
   description:
-    "Servizio di noleggio auto di lusso, SUV, supercar e scooter in Costa Smeralda. Consegna su misura in Aeroporto Olbia, Porto Cervo, Hotel e Ville. Deposito cauzionale trasparente, copertura assicurativa completa.",
+    "Autonoleggio premium a breve termine in Sardegna. Consegna auto di lusso, supercar e SUV a Olbia, Costa Smeralda e Porto Cervo. Noleggio senza carta di credito.",
+  disambiguatingDescription:
+    "Azienda sarda di noleggio auto a breve termine con sede a Olbia. Azienda indipendente e non affiliata ad altre società omonime operanti nel Noleggio a Lungo Termine sul territorio nazionale.",
   url: "https://www.ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
@@ -15,7 +20,6 @@ export const localBusinessJsonLd = {
   paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
   logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-  // Sede Operativa (Indirizzo Principale per Google)
   address: {
     "@type": "PostalAddress",
     streetAddress: "Viale Isola Bianca 38",
@@ -29,7 +33,6 @@ export const localBusinessJsonLd = {
     latitude: 40.9225,
     longitude: 9.5,
   },
-  // Sede Legale (Indirizzo Secondario)
   location: [
     {
       "@type": "Place",
@@ -45,6 +48,7 @@ export const localBusinessJsonLd = {
     },
   ],
   areaServed: [
+    { "@type": "AdministrativeArea", name: "Sardegna" },
     { "@type": "City", name: "Olbia" },
     { "@type": "Place", name: "Costa Smeralda" },
     { "@type": "Place", name: "Porto Cervo" },
@@ -56,7 +60,6 @@ export const localBusinessJsonLd = {
     { "@type": "Place", name: "Porto Rotondo" },
     { "@type": "Place", name: "Golfo Aranci" },
     { "@type": "AdministrativeArea", name: "Gallura" },
-    { "@type": "AdministrativeArea", name: "Sardegna" },
   ],
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
