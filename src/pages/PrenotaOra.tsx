@@ -460,9 +460,6 @@ const PrenotaOra = () => {
   // Driver validation helper
   const getDriverMissingFields = (driver: typeof initialDriverState): string[] => {
     const missing: string[] = [];
-    if (!driver.name.trim()) missing.push("Nome");
-    if (!driver.surname.trim()) missing.push("Cognome");
-    if (!driver.birthDate) missing.push("Data di Nascita");
     if (!driver.email.includes("@") || !driver.email.includes(".")) missing.push("Email");
     if (driver.phone.length < 8) missing.push("Telefono");
     if (!driver.licenseFront) missing.push("Foto Patente Fronte");
