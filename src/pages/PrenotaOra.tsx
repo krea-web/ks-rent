@@ -813,22 +813,22 @@ const PrenotaOra = () => {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-4 sm:p-6 md:p-10 relative overflow-hidden"
+                  className="relative overflow-hidden"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-6 flex items-center gap-3">
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">1</span>
                     Scegli il Veicolo
                   </h2>
 
-                  {/* Horizontal swipeable filter pills */}
+                  {/* Category filter pills */}
                   {vehicles.length > 0 && (
-                    <div className="relative mb-5">
+                    <div className="relative mb-6">
                       <div className="flex overflow-x-auto gap-2.5 pb-3 snap-x scrollbar-hide">
                         {categories.map((cat) => (
                           <button
                             key={cat}
                             type="button"
-                            onClick={() => setSelectedCategory(cat)}
+                            onClick={() => { setSelectedCategory(cat); setCarouselIndex(0); }}
                             className={cn(
                               "flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 min-h-[44px] whitespace-nowrap",
                               selectedCategory === cat
@@ -840,89 +840,118 @@ const PrenotaOra = () => {
                           </button>
                         ))}
                       </div>
-                      {/* Right fade hint */}
-                      <div className="absolute right-0 top-0 bottom-3 w-10 bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none" />
                     </div>
                   )}
 
-                  {/* Horizontal swipeable vehicle cards */}
-                  <div className="relative">
-                    <div className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-hide">
-                      {filteredGrouped.map((group) => {
-                        const v = group.representative;
-                        const groupKey = `${v.make}__${v.model}`;
-                        const isSelected = selectedVehicle && `${selectedVehicle.make}__${selectedVehicle.model}` === groupKey;
-                        const soldOut = !group.isAvailable;
-                        return (
+                  {/* Centered carousel showcase */}
+                  {filteredGrouped.length > 0 && (() => {
+                    const safeIdx = Math.min(carouselIndex, filteredGrouped.length - 1);
+                    const currentGroup = filteredGrouped[safeIdx];
+                    const v = currentGroup.representative;
+                    const soldOut = !currentGroup.isAvailable;
+                    const imgSrc = getTransparentImage(v.make, v.model) || v.image_url;
+
+                    return (
+                      <div className="relative">
+                        {/* Navigation arrows */}
+                        {filteredGrouped.length > 1 && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => setCarouselIndex((p) => (p - 1 + filteredGrouped.length) % filteredGrouped.length)}
+                              className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
+                              aria-label="Veicolo precedente"
+                            >
+                              <ChevronLeft size={24} />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setCarouselIndex((p) => (p + 1) % filteredGrouped.length)}
+                              className="absolute right-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
+                              aria-label="Veicolo successivo"
+                            >
+                              <ChevronRight size={24} />
+                            </button>
+                          </>
+                        )}
+
+                        {/* Floating vehicle image */}
+                        <AnimatePresence mode="wait">
                           <motion.div
-                            key={groupKey}
-                            whileTap={soldOut ? undefined : { scale: 0.97 }}
-                            onClick={() => handleVehicleSelect(group)}
-                            className={cn(
-                              "relative rounded-2xl overflow-hidden transition-all duration-300 group/card min-w-[280px] md:min-w-[320px] flex-shrink-0 snap-start",
-                              soldOut
-                                ? "opacity-50 cursor-not-allowed"
-                                : isSelected
-                                ? "ring-2 ring-gold shadow-[0_0_24px_rgba(212,175,55,0.25)] cursor-pointer"
-                                : "cursor-pointer"
-                            )}
+                            key={`car-${safeIdx}`}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            className="relative mx-auto w-full max-w-sm md:max-w-lg aspect-[16/10] flex items-center justify-center px-14"
                           >
-                            {/* Transparent PNG image */}
-                            <div className="relative aspect-[16/10] w-full bg-gradient-to-br from-white/[0.03] to-transparent">
-                              <OptimizedImage
-                                src={getTransparentImage(v.make, v.model) || v.image_url}
-                                alt={getVehicleAlt(v.make, v.model)}
-                                width={600}
-                                showSkeleton
-                                skeletonClassName="rounded-none"
-                                className={cn(
-                                  "w-full h-full object-contain transition-transform duration-500 p-4",
-                                  !soldOut && "group-hover/card:scale-110"
-                                )}
-                              />
-
-                              {/* Sold out badge */}
-                              {soldOut && (
-                                <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                                  <span className="bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Esaurito</span>
-                                </div>
-                              )}
-
-                              {/* Selected check */}
-                              {isSelected && !soldOut && (
-                                <motion.div
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  className="absolute top-3 right-3 bg-gold text-black rounded-full p-1.5 z-10"
-                                >
-                                  <CheckCircle2 size={16} />
-                                </motion.div>
-                              )}
-                            </div>
-
-                            {/* Text below image */}
-                            <div className="p-4 bg-[#0a0a0a] border-t border-white/5">
-                              <h3 className="text-white font-black text-lg leading-tight">
-                                {v.make} {v.model}
-                              </h3>
-                              <div className="flex items-center justify-between mt-1.5">
-                                <p className="text-gold font-bold text-sm">
-                                  A partire da €{v.daily_rate}/gg
-                                </p>
-                                {!soldOut && (
-                                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center group-hover/card:bg-gold group-hover/card:border-gold transition-all duration-300">
-                                    <ArrowRight size={14} className="text-gold group-hover/card:text-black transition-colors" />
-                                  </div>
-                                )}
+                            <OptimizedImage
+                              src={imgSrc}
+                              alt={getVehicleAlt(v.make, v.model)}
+                              width={700}
+                              className="w-full h-full object-contain drop-shadow-[0_10px_40px_rgba(212,175,55,0.12)]"
+                            />
+                            {soldOut && (
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="bg-destructive text-destructive-foreground text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full">Esaurito</span>
                               </div>
-                            </div>
+                            )}
                           </motion.div>
-                        );
-                      })}
-                    </div>
-                    {/* Right fade hint */}
-                    <div className="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none" />
-                  </div>
+                        </AnimatePresence>
+
+                        {/* Pagination dots */}
+                        {filteredGrouped.length > 1 && (
+                          <div className="flex justify-center gap-2 mt-2 mb-4">
+                            {filteredGrouped.map((_, i) => (
+                              <button
+                                key={i}
+                                type="button"
+                                onClick={() => setCarouselIndex(i)}
+                                className={cn(
+                                  "rounded-full transition-all duration-300",
+                                  i === safeIdx
+                                    ? "w-6 h-2 bg-gold"
+                                    : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                                )}
+                                aria-label={`Vai al veicolo ${i + 1}`}
+                              />
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Vehicle details centered below */}
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={`info-${safeIdx}`}
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="text-center mt-2"
+                          >
+                            <h3 className="text-2xl md:text-3xl font-black text-foreground">
+                              {v.make} <span className="text-gold">{v.model}</span>
+                            </h3>
+                            <div className="flex items-center justify-center gap-4 mt-2 text-sm text-muted-foreground">
+                              {v.category && <span className="flex items-center gap-1">{getCategoryIcon(v.category)} {v.category}</span>}
+                              {v.seats && <span>{v.seats} Posti</span>}
+                              {v.transmission && <span>{v.transmission}</span>}
+                            </div>
+                            <p className="text-gold font-bold text-lg mt-3">
+                              A partire da €{v.daily_rate}<span className="text-sm text-muted-foreground font-normal">/giorno</span>
+                            </p>
+                            <Button
+                              onClick={() => handleVehicleSelect(currentGroup)}
+                              disabled={soldOut}
+                              className="mt-5 bg-gold hover:bg-gold-light text-black font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
+                            >
+                              {soldOut ? "Non disponibile" : "Seleziona questo veicolo"} <ArrowRight size={16} className="ml-2" />
+                            </Button>
+                          </motion.div>
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })()}
                 </motion.div>
               )}
 
