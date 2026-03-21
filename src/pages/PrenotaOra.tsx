@@ -50,6 +50,29 @@ const SignatureModal = lazy(() => import("@/components/SignatureModal"));
 
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/ksrent";
 
+const TRANSPARENT_IMAGES: Record<string, string> = {
+  "Audi__RS3": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+  "BMW__M2": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.png",
+  "Jeep__Avenger": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+  "Mercedes__Classe A": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+  "Fiat__Panda": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+  "Honda__SH 350": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter350.png",
+  "Honda__SH 125": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png",
+  "Yamaha__Raptor": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
+};
+
+const getTransparentImage = (make?: string, model?: string): string | null => {
+  if (!make || !model) return null;
+  const key = `${make}__${model}`;
+  if (TRANSPARENT_IMAGES[key]) return TRANSPARENT_IMAGES[key];
+  // Fuzzy match by model substring
+  for (const [k, url] of Object.entries(TRANSPARENT_IMAGES)) {
+    const kModel = k.split("__")[1];
+    if (model.includes(kModel) || kModel.includes(model)) return url;
+  }
+  return null;
+};
+
 const initialDriverState = {
   name: "",
   surname: "",
@@ -819,81 +842,83 @@ const PrenotaOra = () => {
                     </div>
                   )}
 
-                  {/* Luxury edge-to-edge vehicle cards */}
-                  <div className="space-y-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 max-h-[600px] overflow-y-auto scrollbar-hide pb-4">
-                    {filteredGrouped.map((group) => {
-                      const v = group.representative;
-                      const groupKey = `${v.make}__${v.model}`;
-                      const isSelected = selectedVehicle && `${selectedVehicle.make}__${selectedVehicle.model}` === groupKey;
-                      const soldOut = !group.isAvailable;
-                      return (
-                        <motion.div
-                          key={groupKey}
-                          whileTap={soldOut ? undefined : { scale: 0.97 }}
-                          onClick={() => handleVehicleSelect(group)}
-                          className={cn(
-                            "relative rounded-2xl overflow-hidden transition-all duration-300 group/card",
-                            soldOut
-                              ? "opacity-50 cursor-not-allowed"
-                              : isSelected
-                              ? "ring-2 ring-gold shadow-[0_0_24px_rgba(212,175,55,0.25)] cursor-pointer"
-                              : "cursor-pointer"
-                          )}
-                        >
-                          {/* Full-bleed image */}
-                          <div className="relative aspect-[16/9] w-full bg-black">
-                            <OptimizedImage
-                              src={v.image_url}
-                              alt={getVehicleAlt(v.make, v.model)}
-                              width={600}
-                              showSkeleton
-                              skeletonClassName="rounded-none"
-                              className={cn(
-                                "w-full h-full object-cover transition-transform duration-500",
-                                !soldOut && "group-hover/card:scale-105"
-                              )}
-                            />
-                            {/* Dark gradient overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
-
-                            {/* Sold out badge */}
-                            {soldOut && (
-                              <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                                <span className="bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Esaurito</span>
-                              </div>
+                  {/* Horizontal swipeable vehicle cards */}
+                  <div className="relative">
+                    <div className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-hide">
+                      {filteredGrouped.map((group) => {
+                        const v = group.representative;
+                        const groupKey = `${v.make}__${v.model}`;
+                        const isSelected = selectedVehicle && `${selectedVehicle.make}__${selectedVehicle.model}` === groupKey;
+                        const soldOut = !group.isAvailable;
+                        return (
+                          <motion.div
+                            key={groupKey}
+                            whileTap={soldOut ? undefined : { scale: 0.97 }}
+                            onClick={() => handleVehicleSelect(group)}
+                            className={cn(
+                              "relative rounded-2xl overflow-hidden transition-all duration-300 group/card min-w-[280px] md:min-w-[320px] flex-shrink-0 snap-start",
+                              soldOut
+                                ? "opacity-50 cursor-not-allowed"
+                                : isSelected
+                                ? "ring-2 ring-gold shadow-[0_0_24px_rgba(212,175,55,0.25)] cursor-pointer"
+                                : "cursor-pointer"
                             )}
+                          >
+                            {/* Transparent PNG image */}
+                            <div className="relative aspect-[16/10] w-full bg-gradient-to-br from-white/[0.03] to-transparent">
+                              <OptimizedImage
+                                src={getTransparentImage(v.make, v.model) || v.image_url}
+                                alt={getVehicleAlt(v.make, v.model)}
+                                width={600}
+                                showSkeleton
+                                skeletonClassName="rounded-none"
+                                className={cn(
+                                  "w-full h-full object-contain transition-transform duration-500 p-4",
+                                  !soldOut && "group-hover/card:scale-110"
+                                )}
+                              />
 
-                            {/* Selected check */}
-                            {isSelected && !soldOut && (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="absolute top-3 right-3 bg-gold text-black rounded-full p-1.5 z-10"
-                              >
-                                <CheckCircle2 size={16} />
-                              </motion.div>
-                            )}
-
-                            {/* Text overlay on image */}
-                            <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between z-10">
-                              <div>
-                                <h3 className="text-white font-black text-lg sm:text-xl leading-tight">
-                                  {v.make} {v.model}
-                                </h3>
-                                <p className="text-gold font-bold text-sm mt-0.5">
-                                  A partire da €{v.daily_rate}/gg
-                                </p>
-                              </div>
-                              {!soldOut && (
-                                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center group-hover/card:bg-gold group-hover/card:border-gold transition-all duration-300">
-                                  <ArrowRight size={16} className="text-gold group-hover/card:text-black transition-colors" />
+                              {/* Sold out badge */}
+                              {soldOut && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                                  <span className="bg-red-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Esaurito</span>
                                 </div>
                               )}
+
+                              {/* Selected check */}
+                              {isSelected && !soldOut && (
+                                <motion.div
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  className="absolute top-3 right-3 bg-gold text-black rounded-full p-1.5 z-10"
+                                >
+                                  <CheckCircle2 size={16} />
+                                </motion.div>
+                              )}
                             </div>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
+
+                            {/* Text below image */}
+                            <div className="p-4 bg-[#0a0a0a] border-t border-white/5">
+                              <h3 className="text-white font-black text-lg leading-tight">
+                                {v.make} {v.model}
+                              </h3>
+                              <div className="flex items-center justify-between mt-1.5">
+                                <p className="text-gold font-bold text-sm">
+                                  A partire da €{v.daily_rate}/gg
+                                </p>
+                                {!soldOut && (
+                                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center group-hover/card:bg-gold group-hover/card:border-gold transition-all duration-300">
+                                    <ArrowRight size={14} className="text-gold group-hover/card:text-black transition-colors" />
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                    {/* Right fade hint */}
+                    <div className="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none" />
                   </div>
                 </motion.div>
               )}
