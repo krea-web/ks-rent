@@ -62,8 +62,6 @@ const TRANSPARENT_IMAGES: Record<string, string> = {
   "Honda__SH 125": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png",
   "Yamaha__Raptor": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
 };
-  "Yamaha__Raptor": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
-};
 
 const getTransparentImage = (make?: string, model?: string): string | null => {
   if (!make || !model) return null;
