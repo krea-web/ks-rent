@@ -469,10 +469,6 @@ const PrenotaOra = () => {
     if (!driver.name.trim()) missing.push("Nome");
     if (!driver.surname.trim()) missing.push("Cognome");
     if (!driver.birthDate) missing.push("Data di Nascita");
-    if (!driver.birthPlace.trim()) missing.push("Luogo di Nascita");
-    if (!driver.residence.trim()) missing.push("Indirizzo Residenza");
-    if (!driver.city.trim()) missing.push("Città");
-    if (driver.cf.length !== 16) missing.push("Codice Fiscale");
     if (!driver.email.includes("@") || !driver.email.includes(".")) missing.push("Email");
     if (driver.phone.length < 8) missing.push("Telefono");
     if (!driver.licenseFront) missing.push("Foto Patente Fronte");
