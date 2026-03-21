@@ -212,13 +212,40 @@ const Footer = () => (
       </span>
     </div>
 
-    {/* Copyright Bottom Bar */}
-    <div className="relative z-10 border-t border-white/10 mt-6 md:mt-8 pt-6">
-      <div className="container mx-auto px-4 flex flex-col items-center gap-4 text-xs text-muted-foreground text-center">
-        <p className="leading-relaxed max-w-4xl">
-          KS Rent S.R.L. | Sede Legale: Viale Aldo Moro 367, 07026 Olbia (SS) | Sede Operativa: Viale Isola Bianca 38 (Porto di Olbia) | P.IVA e C.F.: 03028900904. Autonoleggio locale in Sardegna, totalmente indipendente e non affiliato ad altre società omonime operanti sul territorio nazionale.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
+    {/* Dati Societari (Art. 2250 C.C.) + Copyright */}
+    <div className="relative z-10 border-t border-white/10 mt-6 md:mt-8 pt-6 pb-2">
+      <div className="container mx-auto px-4 flex flex-col items-center gap-5 text-center">
+        {/* Blocco legale */}
+        <div className="text-[11px] md:text-xs text-muted-foreground leading-relaxed max-w-5xl space-y-1.5">
+          <p className="text-white/90 font-semibold tracking-wide text-xs md:text-sm">KS RENT S.R.L.</p>
+          <p>
+            Sede Legale: Viale Aldo Moro 367, 07026 Olbia (SS)
+            <span className="hidden md:inline"> | </span>
+            <br className="md:hidden" />
+            Sede Operativa: Viale Isola Bianca 38 (Porto di Olbia)
+          </p>
+          <p>
+            C.F. / P.IVA: 03028900904
+            <span className="hidden md:inline"> | </span>
+            <br className="md:hidden" />
+            Iscrizione Registro Imprese di Sassari
+            <span className="hidden md:inline"> | </span>
+            <br className="md:hidden" />
+            REA: SS - 224046
+          </p>
+          <p>
+            Capitale Sociale: € 20.000,00 i.v.
+            <span className="hidden md:inline"> | </span>
+            <br className="md:hidden" />
+            PEC: <a href="mailto:ks.rent.srl@pec.it" className="hover:text-gold transition-colors relative z-20">ks.rent.srl@pec.it</a>
+          </p>
+          <p className="text-white/40 italic pt-1">
+            Autonoleggio locale in Sardegna, totalmente indipendente e non affiliato ad altre società omonime sul territorio nazionale.
+          </p>
+        </div>
+
+        {/* Copyright + Policy */}
+        <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground border-t border-white/5 pt-4 w-full">
           <p>© {new Date().getFullYear()} KS Rent S.R.L. — @KREA</p>
           <a
             href="https://www.iubenda.com/privacy-policy/36489583"
