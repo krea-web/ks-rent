@@ -53,7 +53,7 @@ const SignatureModal = lazy(() => import("@/components/SignatureModal"));
 const N8N_BASE = "https://n8n.kreareweb.com/webhook/ksrent";
 
 const TRANSPARENT_IMAGES: Record<string, string> = {
-  "Audi__RS3": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png",
+  "Audi__RS3": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
   "BMW__M2": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png",
   "Jeep__Avenger": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp",
   "Mercedes__Classe A": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
