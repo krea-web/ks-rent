@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SEDE_OPERATIVA, SEDE_LEGALE } from "@/lib/googleMaps";
+import { SEDE_OPERATIVA, SEDE_LEGALE, GOOGLE_MAPS_API_KEY } from "@/lib/googleMaps";
 
 interface CompanyMapProps {
   targetLocation?: string;
@@ -10,19 +10,21 @@ interface CompanyMapProps {
 
 type SedeKey = "operativa" | "legale";
 
-const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: string; mapLabel: string }> = {
-  operativa: { ...SEDE_OPERATIVA, mapLabel: "KS+RENT+Porto+Olbia" },
-  legale: { ...SEDE_LEGALE, mapLabel: "KS+RENT+SARDINIA" },
+const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: string }> = {
+  operativa: SEDE_OPERATIVA,
+  legale: SEDE_LEGALE,
 };
 
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   const s = SEDI[sede];
   const coords = `${s.lat},${s.lng}`;
+  const key = GOOGLE_MAPS_API_KEY;
+
   if (targetLocation) {
-    const dest = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
-    return `https://maps.google.com/maps?saddr=${coords}+(${s.mapLabel})&daddr=${dest}&output=embed`;
+    const origin = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
+    return `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${origin}&destination=${coords}`;
   }
-  return `https://maps.google.com/maps?q=${coords}+(${s.mapLabel})&z=15&output=embed`;
+  return `https://www.google.com/maps/embed/v1/place?key=${key}&q=${coords}&zoom=15`;
 }
 
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
@@ -46,8 +48,8 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
       viewport={{ once: true }}
     >
-      {/* Sede toggle buttons — OUTSIDE the map */}
-      <div className="flex justify-center gap-3 mb-4">
+      {/* Sede toggle buttons — ABOVE the map, not overlapping */}
+      <div className="flex justify-center gap-4 mb-4">
         {(["operativa", "legale"] as SedeKey[]).map((key) => (
           <button
             key={key}
@@ -66,30 +68,30 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       </div>
 
       {/* Map container */}
-      <div className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
+      <div className="rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
         <iframe
           title={targetLocation ? `Percorso verso ${targetLocation}` : `Mappa ${SEDI[activeSede].label}`}
           src={embedUrl}
           className="w-full h-[400px]"
-          style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
+          style={{ border: 0 }}
           loading="lazy"
           allowFullScreen
         />
 
         {/* Bottom legend */}
-        <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
+        <div className="flex flex-col sm:flex-row gap-2 p-4 bg-background/80 backdrop-blur-sm">
           <a
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors"
+            className="flex items-center gap-2 border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors"
           >
             <Navigation size={14} className="text-gold shrink-0" />
             <div>
-              <p className="text-xs font-bold text-white">
+              <p className="text-xs font-bold text-foreground">
                 {targetLocation ? `Percorso da ${SEDI[activeSede].label}` : "Indicazioni stradali"}
               </p>
-              <p className="text-[10px] text-white/50">{SEDI[activeSede].address}</p>
+              <p className="text-[10px] text-muted-foreground">{SEDI[activeSede].address}</p>
             </div>
           </a>
         </div>
