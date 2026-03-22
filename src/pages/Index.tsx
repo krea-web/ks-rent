@@ -25,10 +25,10 @@ const Index = () => (
     <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto text-white/80 font-light leading-relaxed bg-background">
       <h2 className="text-3xl font-bold text-white mb-6">Il tuo Autonoleggio a Olbia di Fiducia</h2>
       <p className="mb-4">
-        Se stai cercando un servizio di <strong>noleggio auto a Olbia</strong> che unisca affidabilità ed esclusività, KS Rent è la scelta perfetta. Non siamo il classico autonoleggio: offriamo un'esperienza premium per chi desidera il <strong>noleggio auto di lusso a Olbia</strong> senza compromessi.
+        Se stai cercando un servizio di <strong>noleggio auto a Olbia</strong> che unisca affidabilità ed esclusività, <strong>KS Rent S.R.L.</strong> è la scelta perfetta. Siamo una realtà orgogliosamente e unicamente sarda (P.IVA 03028900904), totalmente indipendente e non affiliata ad altre società omonime operanti nel resto d'Italia. Non siamo il classico autonoleggio o un intermediario web: possediamo fisicamente la nostra flotta al Porto di Olbia e offriamo un'esperienza premium per chi desidera il <strong>noleggio auto di lusso a Olbia</strong> senza compromessi.
       </p>
       <p className="mb-4">
-        Che tu stia cercando un veicolo pratico per muoverti in città o un servizio di <strong>luxury rent car a Olbia</strong> per esplorare la costa, la nostra flotta è preparata maniacalmente. Scegliere il nostro <strong>autonoleggio a Olbia</strong> significa dire addio alle file interminabili e godersi la Sardegna fin dal primo istante. Scopri il modo migliore di fare <strong>rent a Olbia</strong> con i nostri servizi personalizzati.
+        Che tu stia cercando un veicolo pratico per muoverti in città o un servizio di <strong>luxury rent car a Olbia</strong> per esplorare la costa, la nostra flotta è preparata maniacalmente. Scegliere il nostro <strong>autonoleggio a Olbia</strong> significa dire addio alle file interminabili e godersi la Sardegna fin dal primo istante. Scopri il modo migliore di fare <strong>rent a Olbia</strong> con i nostri servizi diretti e personalizzati.
       </p>
     </section>
   </>
