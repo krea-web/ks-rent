@@ -5,15 +5,15 @@ export const LIBRARIES: ("places")[] = ["places"];
 export const OLBIA_CENTER = { lat: 40.9336, lng: 9.5094 };
 
 export const SEDE_OPERATIVA = {
-  lat: 40.92256483932831,
-  lng: 9.520862581425746,
+  lat: 40.922966745196916,
+  lng: 9.52011508303891,
   address: "Viale Isola Bianca 38, 07026 Olbia (SS)",
   label: "Sede Operativa (Porto)",
 };
 
 export const SEDE_LEGALE = {
-  lat: 40.94457130855872,
-  lng: 9.497950286291397,
+  lat: 40.944573313362326,
+  lng: 9.49789720326003,
   address: "Viale Aldo Moro 367, 07026 Olbia (SS)",
   label: "Sede Legale",
 };

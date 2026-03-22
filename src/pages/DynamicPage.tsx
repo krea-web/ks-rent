@@ -21,7 +21,7 @@ import {
   Utensils,
 } from "lucide-react";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
-import { SEDE_LEGALE_MAPS_URL } from "@/lib/googleMaps";
+import CompanyMap from "@/components/CompanyMap";
 
 interface PageData {
   slug: string;
@@ -296,14 +296,7 @@ export default function DynamicPage() {
 
   if (!data) return <NotFound />;
 
-  const SEDE_OPERATIVA = "Viale+Isola+Bianca+38,+Olbia,+SS";
-  const mapsEmbedUrl = type === "beach"
-    ? `https://maps.google.com/maps?saddr=${SEDE_OPERATIVA}&daddr=${encodeURIComponent(data.title + " Sardegna")}&output=embed`
-    : `https://maps.google.com/maps?q=${encodeURIComponent(data.title + " Sardegna")}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
-
-  const directionsFromOperativa = `https://www.google.com/maps/dir/?api=1&origin=${SEDE_OPERATIVA}&destination=${encodeURIComponent(data.title + " Sardegna")}`;
-
-
+  const locationName = data.title;
   return (
     <div className="bg-background min-h-screen">
       <SEOHead
@@ -486,37 +479,7 @@ export default function DynamicPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
-            <iframe
-              title={`Mappa ${data.title}`}
-              src={mapsEmbedUrl}
-              className="w-full h-[350px] md:h-[450px]"
-              style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
-              loading="lazy"
-              allowFullScreen
-            />
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-            <a
-              href={directionsFromOperativa}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 border-2 border-gold text-gold font-bold uppercase tracking-wider text-xs px-6 py-3 rounded-full hover:bg-gold hover:text-background transition-colors"
-            >
-              <Navigation className="w-4 h-4" />
-              Da Sede Operativa (V.le Isola Bianca 38)
-            </a>
-            <a
-              href={SEDE_LEGALE_MAPS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 border-2 border-gold text-gold font-bold uppercase tracking-wider text-xs px-6 py-3 rounded-full hover:bg-gold hover:text-background transition-colors"
-            >
-              <Navigation className="w-4 h-4" />
-              Sede Legale
-            </a>
-          </div>
+          <CompanyMap targetLocation={locationName} />
         </div>
       </motion.section>
 
