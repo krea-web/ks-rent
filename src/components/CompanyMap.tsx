@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SEDE_OPERATIVA, SEDE_LEGALE, SEDE_LEGALE_MAPS_URL } from "@/lib/googleMaps";
+import { SEDE_OPERATIVA, SEDE_LEGALE } from "@/lib/googleMaps";
 
 interface CompanyMapProps {
   targetLocation?: string;
@@ -10,35 +10,28 @@ interface CompanyMapProps {
 
 type SedeKey = "operativa" | "legale";
 
-const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: string }> = {
-  operativa: SEDE_OPERATIVA,
-  legale: SEDE_LEGALE,
+const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: string; mapLabel: string }> = {
+  operativa: { ...SEDE_OPERATIVA, mapLabel: "KS+RENT+Porto+Olbia" },
+  legale: { ...SEDE_LEGALE, mapLabel: "KS+RENT+SARDINIA" },
 };
 
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   const s = SEDI[sede];
+  const coords = `${s.lat},${s.lng}`;
   if (targetLocation) {
-    // Directions mode: from sede to target location
-    const origin = `${s.lat},${s.lng}`;
     const dest = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
-    return `https://maps.google.com/maps?saddr=${origin}&daddr=${dest}&output=embed`;
+    return `https://maps.google.com/maps?saddr=${coords}+(${s.mapLabel})&daddr=${dest}&output=embed`;
   }
-  // Pin mode: show sede location
-  if (sede === "legale") {
-    return `https://maps.google.com/maps?q=KS%20RENT%20SRL%20Viale%20Aldo%20Moro%20367%20Olbia&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-  }
-  return `https://maps.google.com/maps?q=${s.lat},${s.lng}&z=15&output=embed`;
+  return `https://maps.google.com/maps?q=${coords}+(${s.mapLabel})&z=15&output=embed`;
 }
 
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
   const s = SEDI[sede];
+  const coords = `${s.lat},${s.lng}`;
   if (targetLocation) {
-    return `https://www.google.com/maps/dir/?api=1&origin=${s.lat},${s.lng}&destination=${encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`)}`;
+    return `https://www.google.com/maps/dir/?api=1&origin=${coords}&destination=${encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`)}`;
   }
-  if (sede === "legale") {
-    return SEDE_LEGALE_MAPS_URL;
-  }
-  return `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${coords}`;
 }
 
 const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
@@ -52,19 +45,18 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
       viewport={{ once: true }}
-      className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]"
     >
-      {/* Sede toggle buttons */}
-      <div className="absolute top-4 left-4 right-4 flex gap-2 z-20">
+      {/* Sede toggle buttons — OUTSIDE the map */}
+      <div className="flex justify-center gap-3 mb-4">
         {(["operativa", "legale"] as SedeKey[]).map((key) => (
           <button
             key={key}
             onClick={() => setActiveSede(key)}
             className={cn(
-              "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 backdrop-blur-sm",
+              "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
               activeSede === key
                 ? "bg-gold/90 text-background shadow-lg"
-                : "bg-[#0a0a0a]/80 text-white/70 border border-white/10 hover:border-white/30"
+                : "bg-white/5 text-white/70 border border-white/10 hover:border-white/30"
             )}
           >
             <MapPin size={12} />
@@ -73,32 +65,34 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
         ))}
       </div>
 
-      {/* Iframe map */}
-      <iframe
-        title={targetLocation ? `Percorso verso ${targetLocation}` : `Mappa ${SEDI[activeSede].label}`}
-        src={embedUrl}
-        className="w-full h-[400px]"
-        style={{ border: 0, borderRadius: "1.5rem", filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
-        loading="lazy"
-        allowFullScreen
-      />
+      {/* Map container */}
+      <div className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
+        <iframe
+          title={targetLocation ? `Percorso verso ${targetLocation}` : `Mappa ${SEDI[activeSede].label}`}
+          src={embedUrl}
+          className="w-full h-[400px]"
+          style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
+          loading="lazy"
+          allowFullScreen
+        />
 
-      {/* Bottom legend */}
-      <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
-        <a
-          href={directionsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors"
-        >
-          <Navigation size={14} className="text-gold shrink-0" />
-          <div>
-            <p className="text-xs font-bold text-white">
-              {targetLocation ? `Percorso da ${SEDI[activeSede].label}` : "Indicazioni stradali"}
-            </p>
-            <p className="text-[10px] text-white/50">{SEDI[activeSede].address}</p>
-          </div>
-        </a>
+        {/* Bottom legend */}
+        <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
+          <a
+            href={directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors"
+          >
+            <Navigation size={14} className="text-gold shrink-0" />
+            <div>
+              <p className="text-xs font-bold text-white">
+                {targetLocation ? `Percorso da ${SEDI[activeSede].label}` : "Indicazioni stradali"}
+              </p>
+              <p className="text-[10px] text-white/50">{SEDI[activeSede].address}</p>
+            </div>
+          </a>
+        </div>
       </div>
     </motion.div>
   );
