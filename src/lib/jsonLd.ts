@@ -3,9 +3,9 @@
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRental",
-  name: "KS Rent",
+  name: "KS Rent Sardinia", // BLINDATO: Nome esatto del Google Business Profile
   legalName: "KS Rent S.R.L.",
-  alternateName: "KS Rent Sardinia",
+  alternateName: "KS Rent",
   vatID: "IT03028900904",
   taxID: "03028900904",
   description:
@@ -18,6 +18,13 @@ export const localBusinessJsonLd = {
   priceRange: "€€€",
   currenciesAccepted: "EUR",
   paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
+  iso639Language: "it", // BLINDATO: Lingua
+  knowsAbout: [
+    // BLINDATO: Competenze esclusive per l'IA
+    "Noleggio Auto Olbia",
+    "Costa Smeralda Luxury Rental",
+    "Noleggio senza carta di credito Sardegna",
+  ],
   logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   address: {
@@ -30,13 +37,13 @@ export const localBusinessJsonLd = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 40.9225,
-    longitude: 9.5,
+    latitude: 40.92314262319084, // BLINDATO: Coordinate precise Sede Operativa (Porto)
+    longitude: 9.520060381113954, // BLINDATO: Coordinate precise Sede Operativa (Porto)
   },
   location: [
     {
       "@type": "Place",
-      name: "Sede Legale KS Rent",
+      name: "Sede Legale KS Rent Sardinia",
       address: {
         "@type": "PostalAddress",
         streetAddress: "Viale Aldo Moro 367",
@@ -44,6 +51,11 @@ export const localBusinessJsonLd = {
         postalCode: "07026",
         addressRegion: "SS",
         addressCountry: "IT",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 40.944573313362326, // BLINDATO: Coordinate precise Sede Legale
+        longitude: 9.49789720326003, // BLINDATO: Coordinate precise Sede Legale
       },
     },
   ],
@@ -67,7 +79,10 @@ export const localBusinessJsonLd = {
     opens: "08:00",
     closes: "20:00",
   },
-  sameAs: ["https://instagram.com/ksrent_srl"],
+  sameAs: [
+    "https://instagram.com/ksrent_srl",
+    "INSERISCI_IL_TUO_LINK_GOOGLE_MAPS_QUI", // BLINDATO: Inserisci il link alla tua scheda Google Maps
+  ],
 };
 
 /* ── FAQ JSON-LD ── */
@@ -241,7 +256,7 @@ export const portoFaqJsonLd = {
       name: "Quali veicoli sono disponibili al Porto?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Al Porto di Olbia offriamo l'intera gamma KS Rent: auto sportive, supercar, SUV premium, moto e quad. Ogni veicolo è perfetto per iniziare la tua avventura in Costa Smeralda dal momento del tuo sbarco.",
+        text: "Al Porto di Olbia offriamo l'intera gamma KS Rent Sardinia: auto sportive, supercar, SUV premium, moto e quad. Ogni veicolo è perfetto per iniziare la tua avventura in Costa Smeralda dal momento del tuo sbarco.",
       },
     },
   ],
@@ -251,9 +266,9 @@ export const portoFaqJsonLd = {
 
 const carRentalBase = {
   "@type": "AutoRental",
-  name: "KS Rent",
+  name: "KS Rent Sardinia", // BLINDATO
   legalName: "KS Rent S.R.L.",
-  alternateName: "KS Rent Sardinia",
+  alternateName: "KS Rent",
   vatID: "IT03028900904",
   taxID: "03028900904",
   disambiguatingDescription:
@@ -263,6 +278,13 @@ const carRentalBase = {
   email: "ksrentsrl@gmail.com",
   priceRange: "€€€",
   paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
+  iso639Language: "it", // BLINDATO
+  knowsAbout: [
+    // BLINDATO
+    "Noleggio Auto Olbia",
+    "Costa Smeralda Luxury Rental",
+    "Noleggio senza carta di credito Sardegna",
+  ],
   logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
   address: {
     "@type": "PostalAddress",
@@ -274,9 +296,13 @@ const carRentalBase = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 40.9225,
-    longitude: 9.5,
+    latitude: 40.92314262319084, // BLINDATO: Riferimento esatto Porto di Olbia per tutte le pagine secondarie
+    longitude: 9.520060381113954,
   },
+  sameAs: [
+    "https://instagram.com/ksrent_srl",
+    "INSERISCI_IL_TUO_LINK_GOOGLE_MAPS_QUI", // BLINDATO
+  ],
 };
 
 export const buildVehicleJsonLd = (vehicle: {
@@ -288,7 +314,7 @@ export const buildVehicleJsonLd = (vehicle: {
   "@context": "https://schema.org",
   "@type": "Product",
   name: `Noleggio ${vehicle.make} ${vehicle.model} Olbia`,
-  description: `Noleggia ${vehicle.make} ${vehicle.model} in Costa Smeralda con protezione completa e deposito trasparente. KS Rent Olbia.`,
+  description: `Noleggia ${vehicle.make} ${vehicle.model} in Costa Smeralda con protezione completa e deposito trasparente. KS Rent Sardinia.`,
   image: vehicle.image_url,
   brand: {
     "@type": "Brand",
@@ -329,7 +355,7 @@ export const buildLocationJsonLd = (page: {
     name: page.title,
     description: page.meta_description,
     image: page.og_image_url,
-    geo: { "@type": "GeoCoordinates", latitude: 40.92, longitude: 9.5 },
+    geo: { "@type": "GeoCoordinates", latitude: 40.92314262319084, longitude: 9.520060381113954 },
     isPartOf: { "@type": "AdministrativeArea", name: "Gallura, Sardegna" },
   },
 ];
@@ -355,7 +381,7 @@ export const buildBeachJsonLd = (page: {
     name: page.title,
     description: page.meta_description,
     image: page.og_image_url,
-    geo: { "@type": "GeoCoordinates", latitude: 40.92, longitude: 9.5 },
+    geo: { "@type": "GeoCoordinates", latitude: 40.92314262319084, longitude: 9.520060381113954 },
     isPartOf: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardegna" },
     ...(page.parking_info
       ? { amenityFeature: { "@type": "LocationFeatureSpecification", name: "Parcheggio", value: page.parking_info } }
@@ -366,7 +392,7 @@ export const buildBeachJsonLd = (page: {
 export const aeroportoAutoRentalJsonLd = {
   "@context": "https://schema.org",
   ...carRentalBase,
-  name: "KS Rent — Noleggio Auto Aeroporto Olbia",
+  name: "KS Rent Sardinia — Noleggio Auto Aeroporto Olbia", // BLINDATO
   description:
     "Noleggio auto con consegna immediata all'Aeroporto di Olbia Costa Smeralda. Supercar, SUV e moto senza carta di credito.",
   url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
@@ -377,7 +403,7 @@ export const aeroportoAutoRentalJsonLd = {
 export const portoAutoRentalJsonLd = {
   "@context": "https://schema.org",
   ...carRentalBase,
-  name: "KS Rent — Noleggio Auto Porto Olbia",
+  name: "KS Rent Sardinia — Noleggio Auto Porto Olbia", // BLINDATO
   description: "Noleggio auto al Porto di Olbia Isola Bianca. Sede allo sbarco, zero attese. Supercar, SUV e moto.",
   url: "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
@@ -387,14 +413,14 @@ export const portoAutoRentalJsonLd = {
 export const flottaJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Flotta Veicoli KS Rent Olbia",
+  name: "Flotta Veicoli KS Rent Sardinia Olbia", // BLINDATO
   description: "Flotta premium di auto sportive, SUV, city car, scooter e quad a noleggio a Olbia e Costa Smeralda.",
   url: "https://www.ksrentsardinia.com/flotta",
   itemListOrder: "https://schema.org/ItemListUnordered",
   numberOfItems: 15,
   provider: {
     "@type": "AutoRental",
-    name: "KS Rent",
+    name: "KS Rent Sardinia", // BLINDATO
     legalName: "KS Rent S.R.L.",
     url: "https://www.ksrentsardinia.com",
   },
