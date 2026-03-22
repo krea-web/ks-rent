@@ -15,25 +15,31 @@ const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: 
   legale: SEDE_LEGALE,
 };
 
+const BUSINESS_QUERIES: Record<SedeKey, string> = {
+  operativa: "KS Rent Sardinia, Viale Isola Bianca 38, Olbia",
+  legale: "KS Rent Sardinia, Viale Aldo Moro 367, Olbia",
+};
+
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
-  const s = SEDI[sede];
-  const coords = `${s.lat},${s.lng}`;
   const key = GOOGLE_MAPS_API_KEY;
+  const destinationQuery = BUSINESS_QUERIES[sede];
 
   if (targetLocation) {
-    const origin = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
-    return `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${origin}&destination=${coords}`;
+    const origin = encodeURIComponent(`${targetLocation}, Sardegna`);
+    const dest = encodeURIComponent(destinationQuery);
+    return `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${origin}&destination=${dest}&hl=it`;
   }
-  return `https://www.google.com/maps/embed/v1/place?key=${key}&q=${coords}&zoom=15`;
+  const q = encodeURIComponent(destinationQuery);
+  return `https://www.google.com/maps/embed/v1/place?key=${key}&q=${q}&hl=it`;
 }
 
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
-  const s = SEDI[sede];
-  const coords = `${s.lat},${s.lng}`;
+  const dest = encodeURIComponent(BUSINESS_QUERIES[sede]);
   if (targetLocation) {
-    return `https://www.google.com/maps/dir/?api=1&origin=${coords}&destination=${encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`)}`;
+    const origin = encodeURIComponent(`${targetLocation}, Sardegna`);
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}`;
   }
-  return `https://www.google.com/maps/dir/?api=1&destination=${coords}`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
 }
 
 const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
