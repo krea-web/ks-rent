@@ -21,7 +21,6 @@ import {
   Utensils,
 } from "lucide-react";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
-import { SEDE_LEGALE_MAPS_URL } from "@/lib/googleMaps";
 import CompanyMap from "@/components/CompanyMap";
 
 interface PageData {
