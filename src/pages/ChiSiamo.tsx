@@ -336,6 +336,28 @@ const ChiSiamo = () => {
         </div>
       </section>
 
+      {/* SEZIONE PAGINE GIALLE (Trust & Reviews) */}
+      <section className="py-12 px-4 bg-[#050505]">
+        <div className="max-w-4xl mx-auto bg-[#1a1a1a] border border-white/10 rounded-2xl p-8 md:p-10 text-center shadow-lg relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-50" />
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            La tua opinione conta
+          </h3>
+          <p className="text-white/70 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Siamo fieri di essere presenti su Pagine Gialle, il portale storico italiano delle attività certificate. Hai noleggiato con noi? Aiutaci a crescere e a garantire sempre il miglior servizio lasciando una recensione sulla nostra pagina ufficiale.
+          </p>
+          <a
+            href="https://www.paginegialle.it/ksrentsardinia-olbia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#ffcc00] hover:bg-[#ffdb4d] text-black font-bold px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,204,0,0.2)]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Lascia una recensione su Pagine Gialle
+          </a>
+        </div>
+      </section>
+
       {/* 5. BANNER MANIFESTO */}
       <section className="py-24 md:py-32 bg-gradient-to-br from-gold to-yellow-500 text-black text-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/5 pointer-events-none" />
