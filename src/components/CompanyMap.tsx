@@ -15,6 +15,16 @@ const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: 
   legale: SEDE_LEGALE,
 };
 
+function cleanLocationName(raw: string): string {
+  return raw
+    .split('|')[0]
+    .split('-')[0]
+    .replace(/noleggio auto/gi, '')
+    .replace(/noleggio/gi, '')
+    .replace(/rent a car/gi, '')
+    .trim();
+}
+
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   const s = SEDI[sede];
   
@@ -23,7 +33,7 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
     : `${s.lat},${s.lng}`;
 
   if (targetLocation) {
-    const cleanLocation = targetLocation.replace(/\|.*/, '').replace(/-.*/, '').replace(/noleggio.*/i, '').trim();
+    const cleanLocation = cleanLocationName(targetLocation);
     
     const isBeach = cleanLocation.toLowerCase().includes('spiaggia') || cleanLocation.toLowerCase().includes('cala');
     const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
@@ -46,7 +56,7 @@ function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
     : `${s.lat},${s.lng}`;
 
   if (targetLocation) {
-    const cleanLocation = targetLocation.replace(/\|.*/, '').replace(/-.*/, '').replace(/noleggio.*/i, '').trim();
+    const cleanLocation = cleanLocationName(targetLocation);
     const isBeach = cleanLocation.toLowerCase().includes('spiaggia') || cleanLocation.toLowerCase().includes('cala');
     const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
     
@@ -67,7 +77,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
   const directionsUrl = buildDirectionsUrl(activeSede, targetLocation);
 
   const displayLocation = targetLocation 
-    ? targetLocation.replace(/\|.*/, '').replace(/-.*/, '').trim() 
+    ? cleanLocationName(targetLocation)
     : '';
 
   return (
@@ -77,7 +87,6 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       viewport={{ once: true }}
       className="w-full"
     >
-      {/* Bottoni posizionati SOPRA la mappa */}
       <div className="flex justify-center gap-4 mb-4">
         {(["operativa", "legale"] as SedeKey[]).map((key) => (
           <button
@@ -96,7 +105,6 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
         ))}
       </div>
 
-      {/* Contenitore della Mappa */}
       <div className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
         <iframe
           title={displayLocation ? `Percorso da ${displayLocation}` : `Mappa ${SEDI[activeSede].label}`}
@@ -107,7 +115,6 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
           allowFullScreen
         />
 
-        {/* Legenda inferiore */}
         <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
           <a
             href={directionsUrl}
