@@ -23,7 +23,12 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
     : `${s.lat},${s.lng}`;
 
   if (targetLocation) {
-    const startPoint = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
+    const cleanLocation = targetLocation.replace(/\|.*/, '').replace(/-.*/, '').replace(/noleggio.*/i, '').trim();
+    
+    const isBeach = cleanLocation.toLowerCase().includes('spiaggia') || cleanLocation.toLowerCase().includes('cala');
+    const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
+    
+    const startPoint = encodeURIComponent(`${cleanLocation}${geoSuffix}`);
     return `https://maps.google.com/maps?saddr=${startPoint}&daddr=${destinationSede}&output=embed`;
   }
   
@@ -41,13 +46,18 @@ function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
     : `${s.lat},${s.lng}`;
 
   if (targetLocation) {
-    const startPoint = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
+    const cleanLocation = targetLocation.replace(/\|.*/, '').replace(/-.*/, '').replace(/noleggio.*/i, '').trim();
+    const isBeach = cleanLocation.toLowerCase().includes('spiaggia') || cleanLocation.toLowerCase().includes('cala');
+    const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
+    
+    const startPoint = encodeURIComponent(`${cleanLocation}${geoSuffix}`);
     return `https://maps.google.com/maps?saddr=${startPoint}&daddr=${destinationSede}`;
   }
+  
   if (sede === "legale") {
     return SEDE_LEGALE_MAPS_URL;
   }
-  return `https://maps.google.com/maps?q=${s.lat},${s.lng}`;
+  return `https://maps.google.com/maps?daddr=${s.lat},${s.lng}`;
 }
 
 const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
@@ -56,6 +66,10 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
   const embedUrl = buildEmbedUrl(activeSede, targetLocation);
   const directionsUrl = buildDirectionsUrl(activeSede, targetLocation);
 
+  const displayLocation = targetLocation 
+    ? targetLocation.replace(/\|.*/, '').replace(/-.*/, '').trim() 
+    : '';
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -63,7 +77,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       viewport={{ once: true }}
       className="w-full"
     >
-      {/* Sede toggle buttons - Spostati SOPRA la mappa e non in absolute */}
+      {/* Bottoni posizionati SOPRA la mappa */}
       <div className="flex justify-center gap-4 mb-4">
         {(["operativa", "legale"] as SedeKey[]).map((key) => (
           <button
@@ -73,7 +87,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
               "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
               activeSede === key
                 ? "bg-gold/90 text-background shadow-lg"
-                : "bg-white/5 text-white/70 border border-white/10 hover:border-white/30",
+                : "bg-white/5 text-white/70 border border-white/10 hover:border-white/30"
             )}
           >
             <MapPin size={12} />
@@ -82,11 +96,10 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
         ))}
       </div>
 
-      {/* Map Container */}
+      {/* Contenitore della Mappa */}
       <div className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
-        {/* Iframe map */}
         <iframe
-          title={targetLocation ? `Percorso verso ${targetLocation}` : `Mappa ${SEDI[activeSede].label}`}
+          title={displayLocation ? `Percorso da ${displayLocation}` : `Mappa ${SEDI[activeSede].label}`}
           src={embedUrl}
           className="w-full h-[400px]"
           style={{ border: 0, borderRadius: "1.5rem", filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
@@ -94,7 +107,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
           allowFullScreen
         />
 
-        {/* Bottom legend - Questa va bene in absolute in basso perché non copre nulla */}
+        {/* Legenda inferiore */}
         <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
           <a
             href={directionsUrl}
@@ -105,7 +118,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
             <Navigation size={14} className="text-gold shrink-0" />
             <div className="text-left">
               <p className="text-xs font-bold text-white">
-                {targetLocation ? `Percorso da ${SEDI[activeSede].label}` : "Indicazioni stradali"}
+                {displayLocation ? `Naviga da ${displayLocation}` : "Indicazioni stradali"}
               </p>
               <p className="text-[10px] text-white/50">{SEDI[activeSede].address}</p>
             </div>
