@@ -16,7 +16,7 @@ const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: 
 };
 
 const BUSINESS_QUERIES: Record<SedeKey, string> = {
-  operativa: "Viale Isola Bianca, 38, 07026 Olbia OT",
+  operativa: "40.92301825421415,9.520169263266684",
   legale: "KS Rent Sardinia, Viale Aldo Moro 367, Olbia",
 };
 
@@ -35,6 +35,9 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
     params.append("destination", destinationQuery);
   } else {
     params.append("q", destinationQuery);
+    if (sede === "operativa") {
+      params.append("zoom", "18");
+    }
   }
 
   return `${baseUrl}?${params.toString()}`;
