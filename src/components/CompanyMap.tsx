@@ -15,13 +15,17 @@ const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: 
   legale: SEDE_LEGALE,
 };
 
+// 1. Qui definiamo esattamente come l'API deve cercare le sedi
 const BUSINESS_QUERIES: Record<SedeKey, string> = {
-  operativa: "40.92301825421415,9.520169263266684",
-  legale: "KS Rent Sardinia, Viale Aldo Moro 367, Olbia",
+  operativa: "40.92301825421415,9.520169263266684", // Coordinate pure e spaccate al millimetro per il Porto
+  legale: "KS Rent Sardinia, Viale Aldo Moro 367, Olbia", // Google Business Profile query per la Sede Legale
 };
 
+// 2. Costruzione sicura dell'URL per l'iframe
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   const destinationQuery = BUSINESS_QUERIES[sede];
+
+  // Usiamo i domini ASSOLUTI e UFFICIALI (vietato cambiarli)
   const baseUrl = targetLocation
     ? "https://www.google.com/maps/embed/v1/directions"
     : "https://www.google.com/maps/embed/v1/place";
@@ -31,25 +35,30 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   params.append("hl", "it");
 
   if (targetLocation) {
+    // Se c'è una location di partenza (Pagine dinamiche) usiamo l'endpoint Directions
     params.append("origin", `${targetLocation}, Sardegna`);
     params.append("destination", destinationQuery);
   } else {
+    // Se non c'è location (Home / Contatti) usiamo l'endpoint Place
     params.append("q", destinationQuery);
     if (sede === "operativa") {
-      params.append("zoom", "18");
+      params.append("zoom", "18"); // Zoom ravvicinato per le coordinate pure
     }
   }
 
   return `${baseUrl}?${params.toString()}`;
 }
 
+// 3. Costruzione del link esterno per aprire l'app di Google Maps sul telefono
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
   const dest = encodeURIComponent(BUSINESS_QUERIES[sede]);
+  const baseUrl = "https://www.google.com/maps/dir/?api=1";
+
   if (targetLocation) {
     const origin = encodeURIComponent(`${targetLocation}, Sardegna`);
-    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}`;
+    return `${baseUrl}&origin=${origin}&destination=${dest}`;
   }
-  return `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
+  return `${baseUrl}&destination=${dest}`;
 }
 
 const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
@@ -63,8 +72,9 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
       viewport={{ once: true }}
+      className="w-full"
     >
-      {/* Sede toggle buttons — ABOVE the map, not overlapping */}
+      {/* Bottoni posizionati in sicurezza SOPRA la mappa per non coprire i controlli */}
       <div className="flex justify-center gap-4 mb-4">
         {(["operativa", "legale"] as SedeKey[]).map((key) => (
           <button
@@ -74,7 +84,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
               "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
               activeSede === key
                 ? "bg-gold/90 text-background shadow-lg"
-                : "bg-white/5 text-white/70 border border-white/10 hover:border-white/30"
+                : "bg-white/5 text-white/70 border border-white/10 hover:border-white/30",
             )}
           >
             <MapPin size={12} />
@@ -83,29 +93,30 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
         ))}
       </div>
 
-      {/* Map container */}
-      <div className="rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
+      {/* Contenitore della Mappa */}
+      <div className="rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)] bg-background">
         <iframe
           title={targetLocation ? `Percorso verso ${targetLocation}` : `Mappa ${SEDI[activeSede].label}`}
           src={embedUrl}
-          className="w-full h-[400px]"
+          className="w-full h-[400px] bg-[#e5e3df]"
           style={{ border: 0 }}
           loading="lazy"
           allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade" // Cruciale per far funzionare l'API KEY senza schermate grigie
         />
 
-        {/* Bottom legend */}
+        {/* Legenda inferiore con link all'app vera e propria */}
         <div className="flex flex-col sm:flex-row gap-2 p-4 bg-background/80 backdrop-blur-sm">
           <a
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors"
+            className="flex items-center gap-2 border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors w-full"
           >
             <Navigation size={14} className="text-gold shrink-0" />
-            <div>
+            <div className="text-left">
               <p className="text-xs font-bold text-foreground">
-                {targetLocation ? `Percorso da ${SEDI[activeSede].label}` : "Indicazioni stradali"}
+                {targetLocation ? `Apri navigatore da ${targetLocation}` : "Apri in Google Maps"}
               </p>
               <p className="text-[10px] text-muted-foreground">{SEDI[activeSede].address}</p>
             </div>
