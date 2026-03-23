@@ -22,11 +22,15 @@ const BUSINESS_QUERIES: Record<SedeKey, string> = {
 };
 
 // 2. Costruzione sicura dell'URL per l'iframe
+function cleanLocation(loc?: string): string | undefined {
+  return loc ? loc.split('|')[0].split('-')[0].trim() : undefined;
+}
+
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   const destinationQuery = BUSINESS_QUERIES[sede];
+  const cleanTarget = cleanLocation(targetLocation);
 
-  // Usiamo i domini ASSOLUTI e UFFICIALI (vietato cambiarli)
-  const baseUrl = targetLocation
+  const baseUrl = cleanTarget
     ? "https://www.google.com/maps/embed/v1/directions"
     : "https://www.google.com/maps/embed/v1/place";
 
@@ -34,15 +38,13 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   params.append("key", GOOGLE_MAPS_API_KEY);
   params.append("hl", "it");
 
-  if (targetLocation) {
-    // Se c'è una location di partenza (Pagine dinamiche) usiamo l'endpoint Directions
-    params.append("origin", `${targetLocation}, Sardegna`);
+  if (cleanTarget) {
+    params.append("origin", `${cleanTarget}, Sardegna`);
     params.append("destination", destinationQuery);
   } else {
-    // Se non c'è location (Home / Contatti) usiamo l'endpoint Place
     params.append("q", destinationQuery);
     if (sede === "operativa") {
-      params.append("zoom", "18"); // Zoom ravvicinato per le coordinate pure
+      params.append("zoom", "18");
     }
   }
 
