@@ -21,16 +21,23 @@ const BUSINESS_QUERIES: Record<SedeKey, string> = {
 };
 
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
-  const key = GOOGLE_MAPS_API_KEY;
   const destinationQuery = BUSINESS_QUERIES[sede];
+  const baseUrl = targetLocation
+    ? "https://www.google.com/maps/embed/v1/directions"
+    : "https://www.google.com/maps/embed/v1/place";
+
+  const params = new URLSearchParams();
+  params.append("key", GOOGLE_MAPS_API_KEY);
+  params.append("hl", "it");
 
   if (targetLocation) {
-    const origin = encodeURIComponent(`${targetLocation}, Sardegna`);
-    const dest = encodeURIComponent(destinationQuery);
-    return `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${origin}&destination=${dest}&hl=it`;
+    params.append("origin", `${targetLocation}, Sardegna`);
+    params.append("destination", destinationQuery);
+  } else {
+    params.append("q", destinationQuery);
   }
-  const q = encodeURIComponent(destinationQuery);
-  return `https://www.google.com/maps/embed/v1/place?key=${key}&q=${q}&hl=it`;
+
+  return `${baseUrl}?${params.toString()}`;
 }
 
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
