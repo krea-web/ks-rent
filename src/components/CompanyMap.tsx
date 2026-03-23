@@ -15,53 +15,47 @@ const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: 
   legale: SEDE_LEGALE,
 };
 
-// 1. Qui definiamo esattamente come l'API deve cercare le sedi
-const BUSINESS_QUERIES: Record<SedeKey, string> = {
-  operativa: "40.92301825421415,9.520169263266684", // Coordinate pure e spaccate al millimetro per il Porto
-  legale: "KS Rent Sardinia, Viale Aldo Moro 367, Olbia", // Google Business Profile query per la Sede Legale
-};
-
-// 2. Costruzione sicura dell'URL per l'iframe
-function cleanLocation(loc?: string): string | undefined {
-  return loc ? loc.split('|')[0].split('-')[0].trim() : undefined;
-}
-
+// 1. Costruzione manuale e sicura degli URL per evitare l'errore 400 %2C
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
-  const destinationQuery = BUSINESS_QUERIES[sede];
-  const cleanTarget = cleanLocation(targetLocation);
+  // Puliamo aggressivamente il nome della località (rimuove tutto dopo | o -)
+  const cleanLocation = targetLocation ? targetLocation.replace(/\|.*/, "").replace(/-.*/, "").trim() : "";
 
-  const baseUrl = cleanTarget
-    ? "https://www.google.com/maps/embed/v1/directions"
-    : "https://www.google.com/maps/embed/v1/place";
+  // Usiamo 6 decimali massimi per evitare errori di precisione da Google
+  const coordsOperativa = "40.923018,9.520169";
 
-  const params = new URLSearchParams();
-  params.append("key", GOOGLE_MAPS_API_KEY);
-  params.append("hl", "it");
+  if (cleanLocation) {
+    // MODALITÀ PERCORSO (Directions API)
+    const origin = encodeURIComponent(`${cleanLocation}, Sardegna`);
+    // Per il percorso, Google preferisce l'indirizzo fisico o le coordinate pure, NON il nome del business
+    const destination =
+      sede === "operativa"
+        ? coordsOperativa // Niente encodeURIComponent qui, la virgola deve restare pura!
+        : encodeURIComponent("Viale Aldo Moro 367, Olbia, Sardegna");
 
-  if (cleanTarget) {
-    params.append("origin", `${cleanTarget}, Sardegna`);
-    params.append("destination", destinationQuery);
+    return `https://www.google.com/maps/embed/v1/directions?key=${GOOGLE_MAPS_API_KEY}&origin=${origin}&destination=${destination}&hl=it`;
   } else {
-    params.append("q", destinationQuery);
-    if (sede === "operativa") {
-      params.append("zoom", "18");
-    }
-  }
+    // MODALITÀ PUNTO FISSO (Place API)
+    // Qui possiamo usare la stringa aziendale perché l'endpoint Place la capisce
+    const destination =
+      sede === "operativa" ? coordsOperativa : encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia");
 
-  return `${baseUrl}?${params.toString()}`;
+    const zoom = sede === "operativa" ? "&zoom=18" : "&zoom=17";
+    return `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${destination}&hl=it${zoom}`;
+  }
 }
 
-// 3. Costruzione del link esterno per aprire l'app di Google Maps sul telefono
+// 2. Link diretto per aprire l'app su Smartphone
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
-  const dest = encodeURIComponent(BUSINESS_QUERIES[sede]);
-  const baseUrl = "https://www.google.com/maps/dir/?api=1";
-  const cleanTarget = cleanLocation(targetLocation);
+  const cleanLocation = targetLocation ? targetLocation.replace(/\|.*/, "").replace(/-.*/, "").trim() : "";
 
-  if (cleanTarget) {
-    const origin = encodeURIComponent(`${cleanTarget}, Sardegna`);
-    return `${baseUrl}&origin=${origin}&destination=${dest}`;
+  const dest =
+    sede === "operativa" ? "40.923018,9.520169" : encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia");
+
+  if (cleanLocation) {
+    const origin = encodeURIComponent(`${cleanLocation}, Sardegna`);
+    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}`;
   }
-  return `${baseUrl}&destination=${dest}`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
 }
 
 const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
@@ -70,6 +64,9 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
   const embedUrl = buildEmbedUrl(activeSede, targetLocation);
   const directionsUrl = buildDirectionsUrl(activeSede, targetLocation);
 
+  // Generiamo il nome pulito per la UI
+  const displayLocation = targetLocation ? targetLocation.replace(/\|.*/, "").replace(/-.*/, "").trim() : "";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -77,7 +74,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       viewport={{ once: true }}
       className="w-full"
     >
-      {/* Bottoni posizionati in sicurezza SOPRA la mappa per non coprire i controlli */}
+      {/* Bottoni posizionati in sicurezza SOPRA la mappa */}
       <div className="flex justify-center gap-4 mb-4">
         {(["operativa", "legale"] as SedeKey[]).map((key) => (
           <button
@@ -99,16 +96,16 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       {/* Contenitore della Mappa */}
       <div className="rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)] bg-background">
         <iframe
-          title={targetLocation ? `Percorso verso ${targetLocation}` : `Mappa ${SEDI[activeSede].label}`}
+          title={displayLocation ? `Percorso verso ${displayLocation}` : `Mappa ${SEDI[activeSede].label}`}
           src={embedUrl}
           className="w-full h-[400px] bg-[#e5e3df]"
           style={{ border: 0 }}
           loading="lazy"
           allowFullScreen
-          referrerPolicy="no-referrer-when-downgrade" // Cruciale per far funzionare l'API KEY senza schermate grigie
+          referrerPolicy="no-referrer-when-downgrade"
         />
 
-        {/* Legenda inferiore con link all'app vera e propria */}
+        {/* Legenda inferiore con link all'app */}
         <div className="flex flex-col sm:flex-row gap-2 p-4 bg-background/80 backdrop-blur-sm">
           <a
             href={directionsUrl}
@@ -119,7 +116,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
             <Navigation size={14} className="text-gold shrink-0" />
             <div className="text-left">
               <p className="text-xs font-bold text-foreground">
-                {targetLocation ? `Apri navigatore da ${targetLocation}` : "Apri in Google Maps"}
+                {displayLocation ? `Apri navigatore da ${displayLocation}` : "Apri in Google Maps"}
               </p>
               <p className="text-[10px] text-muted-foreground">{SEDI[activeSede].address}</p>
             </div>
