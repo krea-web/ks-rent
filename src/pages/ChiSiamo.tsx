@@ -218,12 +218,13 @@ const ChiSiamo = () => {
               viewport={{ once: true }}
             >
               <a
-                href="https://instagram.com/ksrent_srl"
+                href="https://instagram.com/ksrentsardinia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-6 md:px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px] relative z-20"
               >
-                Segui @ksrentsardinia <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                Segui @ksrentsardinia{" "}
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </motion.div>
           </div>
@@ -326,10 +327,15 @@ const ChiSiamo = () => {
             </h2>
             <div className="space-y-4 text-white/60 font-light text-base md:text-lg leading-relaxed">
               <p>
-                <strong className="text-white font-medium">KS Rent S.R.L.</strong> è una realtà orgogliosamente e unicamente sarda, nata per servire il turismo di lusso in Costa Smeralda. La nostra sede operativa è fissa al Porto di Olbia (P.IVA 03028900904).
+                <strong className="text-white font-medium">KS Rent S.R.L.</strong> è una realtà orgogliosamente e
+                unicamente sarda, nata per servire il turismo di lusso in Costa Smeralda. La nostra sede operativa è
+                fissa al Porto di Olbia (P.IVA 03028900904).
               </p>
               <p>
-                Ci teniamo a precisare ai nostri clienti che operiamo in totale indipendenza e <strong className="text-white/80">non abbiamo alcuna affiliazione</strong> con altre agenzie di noleggio auto omonime presenti nel resto d'Italia. KS Rent Sardinia è un marchio esclusivamente legato al territorio sardo.
+                Ci teniamo a precisare ai nostri clienti che operiamo in totale indipendenza e{" "}
+                <strong className="text-white/80">non abbiamo alcuna affiliazione</strong> con altre agenzie di noleggio
+                auto omonime presenti nel resto d'Italia. KS Rent Sardinia è un marchio esclusivamente legato al
+                territorio sardo.
               </p>
             </div>
           </motion.div>
@@ -352,7 +358,19 @@ const ChiSiamo = () => {
             <div className="flex justify-center mb-8">
               <div className="flex items-center gap-1.5 bg-[#1a1a1a] px-5 py-2.5 rounded-full border border-white/5 shadow-inner">
                 {[...Array(5)].map((_, i) => (
-                  <svg key={i} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#ffcc00" className="text-[#ffcc00]" stroke="#ffcc00" strokeWidth="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg
+                    key={i}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="#ffcc00"
+                    className="text-[#ffcc00]"
+                    stroke="#ffcc00"
+                    strokeWidth="1"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
                 ))}
                 <span className="text-white/80 font-bold text-sm ml-2">La tua opinione è oro</span>
               </div>
@@ -363,7 +381,8 @@ const ChiSiamo = () => {
             </h3>
 
             <p className="text-white/70 text-lg md:text-xl mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-              Siamo fieri di essere presenti su Pagine Gialle, il portale storico italiano che certifica la qualità delle attività. Aiutaci a mantenere il nostro standard premium condividendo la tua esperienza.
+              Siamo fieri di essere presenti su Pagine Gialle, il portale storico italiano che certifica la qualità
+              delle attività. Aiutaci a mantenere il nostro standard premium condividendo la tua esperienza.
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 mb-12 flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto">
@@ -372,11 +391,16 @@ const ChiSiamo = () => {
               </div>
               <div className="text-center md:text-left flex-grow">
                 <p className="text-white text-base md:text-lg mb-4 font-light">
-                  Ogni recensione viene verificata e certificata da Pagine Gialle, garantendo la massima trasparenza per te e per i futuri clienti.
+                  Ogni recensione viene verificata e certificata da Pagine Gialle, garantendo la massima trasparenza per
+                  te e per i futuri clienti.
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                  <span className="bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">Trasparenza Totale</span>
-                  <span className="bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">Qualità Certificata</span>
+                  <span className="bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
+                    Trasparenza Totale
+                  </span>
+                  <span className="bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
+                    Qualità Certificata
+                  </span>
                 </div>
               </div>
             </div>
@@ -387,7 +411,19 @@ const ChiSiamo = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-[#ffcc00] hover:bg-[#ffdb4d] text-black font-extrabold text-sm md:text-lg uppercase tracking-widest px-8 py-5 rounded-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02] shadow-[0_10px_30px_rgba(255,204,0,0.2)] hover:shadow-[0_15px_40px_rgba(255,204,0,0.4)]"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
               <span>Lascia una recensione certificata</span>
             </a>
           </motion.div>
@@ -427,4 +463,42 @@ const ChiSiamo = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.25)_0%,transparent_70%)] pointer-events-none" />
         <div className="absolute inset-0 bg-black/5 pointer-events-none" />
 
-        <div className="relative z-10 w-full max
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24 py-16 md:py-24 flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }}
+            viewport={{ once: true }}
+            className="flex-1 text-center lg:text-left"
+          >
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black text-black mb-4 leading-tight">
+              Scegli la tua Auto
+            </h2>
+            <p className="text-black/70 uppercase tracking-[0.3em] text-sm md:text-base font-bold mb-8">
+              Prenota in meno di 2 minuti
+            </p>
+            <span className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-black text-gold uppercase tracking-widest text-xs font-bold group-hover:bg-black/80 transition-all duration-300">
+              Scopri la Flotta{" "}
+              <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-500" />
+            </span>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0, transition: { duration: 0.9, ease: "easeOut", delay: 0.2 } }}
+            viewport={{ once: true }}
+            className="flex-1 flex justify-center lg:justify-end"
+          >
+            <img
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp"
+              alt="BMW M2 noleggio premium Olbia — KS Rent"
+              loading="lazy"
+              className="w-full max-w-lg xl:max-w-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-700 ease-out"
+            />
+          </motion.div>
+        </div>
+      </Link>
+    </div>
+  );
+};
+
+export default ChiSiamo;
