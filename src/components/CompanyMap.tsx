@@ -17,39 +17,37 @@ const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: 
 
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   const s = SEDI[sede];
-
-  // Per la Sede Legale forziamo la stringa esatta della scheda Google Business
-  // Per la Sede Operativa usiamo le coordinate esatte (invariato)
-  const originQuery =
-    sede === "legale" ? encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia") : `${s.lat},${s.lng}`;
+  
+  const destinationSede = sede === "legale" 
+    ? encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia")
+    : `${s.lat},${s.lng}`;
 
   if (targetLocation) {
-    // Directions mode: from sede to target location
-    const dest = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
-    return `https://maps.google.com/maps?saddr=${originQuery}&daddr=${dest}&output=embed`;
+    const startPoint = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
+    return `https://maps.google.com/maps?saddr=${startPoint}&daddr=${destinationSede}&output=embed`;
   }
-
-  // Pin mode: show sede location
+  
   if (sede === "legale") {
-    return `https://maps.google.com/maps?q=${originQuery}&t=m&z=17&output=embed&iwloc=near`;
+    return `https://maps.google.com/maps?q=${destinationSede}&t=m&z=17&output=embed&iwloc=near`;
   }
   return `https://maps.google.com/maps?q=${s.lat},${s.lng}&z=15&output=embed`;
 }
 
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
   const s = SEDI[sede];
-
-  const originQuery =
-    sede === "legale" ? encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia") : `${s.lat},${s.lng}`;
+  
+  const destinationSede = sede === "legale" 
+    ? encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia")
+    : `${s.lat},${s.lng}`;
 
   if (targetLocation) {
-    const dest = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
-    return `https://maps.google.com/maps?saddr=${originQuery}&daddr=${dest}`;
+    const startPoint = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
+    return `https://maps.google.com/maps?saddr=${startPoint}&daddr=${destinationSede}`;
   }
   if (sede === "legale") {
     return SEDE_LEGALE_MAPS_URL;
   }
-  return `https://maps.google.com/maps?daddr=${s.lat},${s.lng}`;
+  return `https://maps.google.com/maps?q=${s.lat},${s.lng}`;
 }
 
 const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
