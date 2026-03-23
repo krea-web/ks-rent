@@ -25,6 +25,23 @@ function cleanLocationName(raw: string): string {
     .trim();
 }
 
+/** Override per località che Google Maps geolocalizza in modo errato */
+const LOCATION_OVERRIDES: Record<string, string> = {
+  romazzino: "Spiaggia del Romazzino, Arzachena, Sardegna, Italia",
+  impostu: "Spiaggia di Lu Impostu, San Teodoro, Sardegna, Italia",
+  "porto cervo": "Piazzetta, Porto Cervo, Arzachena, Sardegna, Italia",
+};
+
+function resolveLocationQuery(cleanLocation: string): string {
+  const lower = cleanLocation.toLowerCase();
+  for (const [key, override] of Object.entries(LOCATION_OVERRIDES)) {
+    if (lower.includes(key)) return override;
+  }
+  const isBeach = lower.includes('spiaggia') || lower.includes('cala');
+  const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
+  return `${cleanLocation}${geoSuffix}`;
+}
+
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
   const s = SEDI[sede];
   
@@ -34,11 +51,7 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
 
   if (targetLocation) {
     const cleanLocation = cleanLocationName(targetLocation);
-    
-    const isBeach = cleanLocation.toLowerCase().includes('spiaggia') || cleanLocation.toLowerCase().includes('cala');
-    const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
-    
-    const startPoint = encodeURIComponent(`${cleanLocation}${geoSuffix}`);
+    const startPoint = encodeURIComponent(resolveLocationQuery(cleanLocation));
     return `https://maps.google.com/maps?saddr=${startPoint}&daddr=${destinationSede}&output=embed`;
   }
   
@@ -57,10 +70,7 @@ function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
 
   if (targetLocation) {
     const cleanLocation = cleanLocationName(targetLocation);
-    const isBeach = cleanLocation.toLowerCase().includes('spiaggia') || cleanLocation.toLowerCase().includes('cala');
-    const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
-    
-    const startPoint = encodeURIComponent(`${cleanLocation}${geoSuffix}`);
+    const startPoint = encodeURIComponent(resolveLocationQuery(cleanLocation));
     return `https://maps.google.com/maps?saddr=${startPoint}&daddr=${destinationSede}`;
   }
   
