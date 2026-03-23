@@ -55,9 +55,10 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
   const dest = encodeURIComponent(BUSINESS_QUERIES[sede]);
   const baseUrl = "https://www.google.com/maps/dir/?api=1";
+  const cleanTarget = cleanLocation(targetLocation);
 
-  if (targetLocation) {
-    const origin = encodeURIComponent(`${targetLocation}, Sardegna`);
+  if (cleanTarget) {
+    const origin = encodeURIComponent(`${cleanTarget}, Sardegna`);
     return `${baseUrl}&origin=${origin}&destination=${dest}`;
   }
   return `${baseUrl}&destination=${dest}`;
