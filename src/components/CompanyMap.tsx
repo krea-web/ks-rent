@@ -51,11 +51,7 @@ function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
 
   if (targetLocation) {
     const cleanLocation = cleanLocationName(targetLocation);
-    
-    const isBeach = cleanLocation.toLowerCase().includes('spiaggia') || cleanLocation.toLowerCase().includes('cala');
-    const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
-    
-    const startPoint = encodeURIComponent(`${cleanLocation}${geoSuffix}`);
+    const startPoint = encodeURIComponent(resolveLocationQuery(cleanLocation));
     return `https://maps.google.com/maps?saddr=${startPoint}&daddr=${destinationSede}&output=embed`;
   }
   
