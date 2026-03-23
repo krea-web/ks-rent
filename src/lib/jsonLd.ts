@@ -1,52 +1,37 @@
-/* ── Main Local Business JSON-LD (Unified) ── */
+/* ── Main Local Business JSON-LD (Unified & AI Optimized) ── */
 
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
-  "@type": "AutoRental",
-  name: "KS Rent Sardinia", // BLINDATO: Nome esatto del Google Business Profile
-  legalName: "KS Rent S.R.L.",
-  alternateName: "KS Rent",
-  vatID: "IT03028900904",
-  taxID: "03028900904",
-  description:
-    "Autonoleggio premium a breve termine in Sardegna. Consegna auto di lusso, supercar e SUV a Olbia, Costa Smeralda e Porto Cervo. Noleggio senza carta di credito.",
-  disambiguatingDescription:
-    "Azienda sarda di noleggio auto a breve termine con sede a Olbia. Azienda indipendente e non affiliata ad altre società omonime operanti nel Noleggio a Lungo Termine sul territorio nazionale.",
-  url: "https://www.ksrentsardinia.com",
-  telephone: "+393446107071",
-  email: "ksrentsrl@gmail.com",
-  priceRange: "€€€",
-  currenciesAccepted: "EUR",
-  paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
-  iso639Language: "it", // BLINDATO: Lingua
-  knowsAbout: [
-    // BLINDATO: Competenze esclusive per l'IA
-    "Noleggio Auto Olbia",
-    "Costa Smeralda Luxury Rental",
-    "Noleggio senza carta di credito Sardegna",
-  ],
-  logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
-  image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Viale Isola Bianca 38",
-    addressLocality: "Olbia",
-    postalCode: "07026",
-    addressRegion: "SS",
-    addressCountry: "IT",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 40.92314262319084, // BLINDATO: Coordinate precise Sede Operativa (Porto)
-    longitude: 9.520060381113954, // BLINDATO: Coordinate precise Sede Operativa (Porto)
-  },
-  location: [
+  "@graph": [
     {
-      "@type": "Place",
-      name: "Sede Legale KS Rent Sardinia",
+      "@type": "AutoRental",
+      "@id": "https://www.ksrentsardinia.com/#organization",
+      name: "KS Rent Sardinia",
+      legalName: "KS Rent S.R.L.",
+      alternateName: "KS Rent",
+      vatID: "IT03028900904",
+      taxID: "03028900904",
+      description: "Autonoleggio premium a breve termine in Sardegna. Consegna auto di lusso, supercar e SUV a Olbia, Costa Smeralda e Porto Cervo. Noleggio senza carta di credito.",
+      disambiguatingDescription: "Azienda sarda di noleggio auto a breve termine con sede a Olbia. Azienda indipendente e non affiliata ad altre società omonime operanti nel Noleggio a Lungo Termine sul territorio nazionale.",
+      url: "https://www.ksrentsardinia.com",
+      telephone: "+393446107071",
+      email: "ksrentsrl@gmail.com",
+      priceRange: "€€€",
+      currenciesAccepted: "EUR",
+      paymentAccepted: "Cash, Credit Card, Debit Card, Bonifico",
+      iso639Language: "it-IT",
+      knowsAbout: [
+        "Noleggio auto di lusso",
+        "Noleggio senza carta di credito",
+        "Consegna auto in Aeroporto e Porto a Olbia",
+        "Noleggio Auto Olbia",
+        "Costa Smeralda Luxury Rental"
+      ],
+      logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
+      image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Viale Aldo Moro 367",
+        streetAddress: "Viale Isola Bianca 38",
         addressLocality: "Olbia",
         postalCode: "07026",
         addressRegion: "SS",
@@ -54,35 +39,63 @@ export const localBusinessJsonLd = {
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude: 40.944573313362326, // BLINDATO: Coordinate precise Sede Legale
-        longitude: 9.49789720326003, // BLINDATO: Coordinate precise Sede Legale
+        latitude: 40.923018,
+        longitude: 9.520169,
       },
+      location: [
+        {
+          "@type": "Place",
+          name: "Sede Legale KS Rent Sardinia",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Viale Aldo Moro 367",
+            addressLocality: "Olbia",
+            postalCode: "07026",
+            addressRegion: "SS",
+            addressCountry: "IT",
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 40.94454753561456,
+            longitude: 9.497963852259709,
+          },
+        },
+      ],
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "Sardegna" },
+        { "@type": "City", name: "Olbia" },
+        { "@type": "Place", name: "Costa Smeralda" },
+        { "@type": "Place", name: "Porto Cervo" },
+        { "@type": "Place", name: "Baja Sardinia" },
+        { "@type": "City", name: "San Teodoro" },
+        { "@type": "City", name: "Palau" },
+        { "@type": "City", name: "Arzachena" },
+        { "@type": "Place", name: "Puntaldia" },
+        { "@type": "Place", name: "Porto Rotondo" },
+        { "@type": "Place", name: "Golfo Aranci" },
+        { "@type": "AdministrativeArea", name: "Gallura" },
+      ],
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        opens: "10:00",
+        closes: "22:30",
+      },
+      sameAs: [
+        "https://instagram.com/ksrentsardinia"
+      ]
     },
-  ],
-  areaServed: [
-    { "@type": "AdministrativeArea", name: "Sardegna" },
-    { "@type": "City", name: "Olbia" },
-    { "@type": "Place", name: "Costa Smeralda" },
-    { "@type": "Place", name: "Porto Cervo" },
-    { "@type": "Place", name: "Baja Sardinia" },
-    { "@type": "City", name: "San Teodoro" },
-    { "@type": "City", name: "Palau" },
-    { "@type": "City", name: "Arzachena" },
-    { "@type": "Place", name: "Puntaldia" },
-    { "@type": "Place", name: "Porto Rotondo" },
-    { "@type": "Place", name: "Golfo Aranci" },
-    { "@type": "AdministrativeArea", name: "Gallura" },
-  ],
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    opens: "08:00",
-    closes: "20:00",
-  },
-  sameAs: [
-    "https://instagram.com/ksrent_srl",
-    "INSERISCI_IL_TUO_LINK_GOOGLE_MAPS_QUI", // BLINDATO: Inserisci il link alla tua scheda Google Maps
-  ],
+    {
+      "@type": "WebSite",
+      "@id": "https://www.ksrentsardinia.com/#website",
+      url: "https://www.ksrentsardinia.com/",
+      name: "KS Rent Sardinia",
+      publisher: {
+        "@id": "https://www.ksrentsardinia.com/#organization"
+      },
+      inLanguage: "it-IT"
+    }
+  ]
 };
 
 /* ── FAQ JSON-LD ── */
