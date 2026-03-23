@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SEDE_OPERATIVA, SEDE_LEGALE, GOOGLE_MAPS_API_KEY } from "@/lib/googleMaps";
+import { SEDE_OPERATIVA, SEDE_LEGALE, SEDE_LEGALE_MAPS_URL } from "@/lib/googleMaps";
 
 interface CompanyMapProps {
   targetLocation?: string;
@@ -15,47 +15,30 @@ const SEDI: Record<SedeKey, { lat: number; lng: number; label: string; address: 
   legale: SEDE_LEGALE,
 };
 
-// 1. Costruzione manuale e sicura degli URL per evitare l'errore 400 %2C
 function buildEmbedUrl(sede: SedeKey, targetLocation?: string): string {
-  // Puliamo aggressivamente il nome della località (rimuove tutto dopo | o -)
-  const cleanLocation = targetLocation ? targetLocation.replace(/\|.*/, "").replace(/-.*/, "").trim() : "";
-
-  // Usiamo 6 decimali massimi per evitare errori di precisione da Google
-  const coordsOperativa = "40.923018,9.520169";
-
-  if (cleanLocation) {
-    // MODALITÀ PERCORSO (Directions API)
-    const origin = encodeURIComponent(`${cleanLocation}, Sardegna`);
-    // Per il percorso, Google preferisce l'indirizzo fisico o le coordinate pure, NON il nome del business
-    const destination =
-      sede === "operativa"
-        ? coordsOperativa // Niente encodeURIComponent qui, la virgola deve restare pura!
-        : encodeURIComponent("Viale Aldo Moro 367, Olbia, Sardegna");
-
-    return `https://www.google.com/maps/embed/v1/directions?key=${GOOGLE_MAPS_API_KEY}&origin=${origin}&destination=${destination}&hl=it`;
-  } else {
-    // MODALITÀ PUNTO FISSO (Place API)
-    // Qui possiamo usare la stringa aziendale perché l'endpoint Place la capisce
-    const destination =
-      sede === "operativa" ? coordsOperativa : encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia");
-
-    const zoom = sede === "operativa" ? "&zoom=18" : "&zoom=17";
-    return `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${destination}&hl=it${zoom}`;
+  const s = SEDI[sede];
+  if (targetLocation) {
+    // Directions mode: from sede to target location
+    const origin = `${s.lat},${s.lng}`;
+    const dest = encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`);
+    return `https://maps.google.com/maps?saddr=${origin}&daddr=${dest}&output=embed`;
   }
+  // Pin mode: show sede location
+  if (sede === "legale") {
+    return `https://maps.google.com/maps?q=KS%20RENT%20SRL%20Viale%20Aldo%20Moro%20367%20Olbia&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  }
+  return `https://maps.google.com/maps?q=${s.lat},${s.lng}&z=15&output=embed`;
 }
 
-// 2. Link diretto per aprire l'app su Smartphone
 function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
-  const cleanLocation = targetLocation ? targetLocation.replace(/\|.*/, "").replace(/-.*/, "").trim() : "";
-
-  const dest =
-    sede === "operativa" ? "40.923018,9.520169" : encodeURIComponent("KS Rent Sardinia, Viale Aldo Moro 367, Olbia");
-
-  if (cleanLocation) {
-    const origin = encodeURIComponent(`${cleanLocation}, Sardegna`);
-    return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}`;
+  const s = SEDI[sede];
+  if (targetLocation) {
+    return `https://www.google.com/maps/dir/?api=1&origin=${s.lat},${s.lng}&destination=${encodeURIComponent(`${targetLocation}, Costa Smeralda, Sardegna`)}`;
   }
-  return `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
+  if (sede === "legale") {
+    return SEDE_LEGALE_MAPS_URL;
+  }
+  return `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
 }
 
 const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
@@ -64,27 +47,24 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
   const embedUrl = buildEmbedUrl(activeSede, targetLocation);
   const directionsUrl = buildDirectionsUrl(activeSede, targetLocation);
 
-  // Generiamo il nome pulito per la UI
-  const displayLocation = targetLocation ? targetLocation.replace(/\|.*/, "").replace(/-.*/, "").trim() : "";
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
       viewport={{ once: true }}
-      className="w-full"
+      className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]"
     >
-      {/* Bottoni posizionati in sicurezza SOPRA la mappa */}
-      <div className="flex justify-center gap-4 mb-4">
+      {/* Sede toggle buttons */}
+      <div className="absolute top-4 left-4 right-4 flex gap-2 z-20">
         {(["operativa", "legale"] as SedeKey[]).map((key) => (
           <button
             key={key}
             onClick={() => setActiveSede(key)}
             className={cn(
-              "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
+              "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 backdrop-blur-sm",
               activeSede === key
                 ? "bg-gold/90 text-background shadow-lg"
-                : "bg-white/5 text-white/70 border border-white/10 hover:border-white/30",
+                : "bg-[#0a0a0a]/80 text-white/70 border border-white/10 hover:border-white/30"
             )}
           >
             <MapPin size={12} />
@@ -93,35 +73,32 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
         ))}
       </div>
 
-      {/* Contenitore della Mappa */}
-      <div className="rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)] bg-background">
-        <iframe
-          title={displayLocation ? `Percorso verso ${displayLocation}` : `Mappa ${SEDI[activeSede].label}`}
-          src={embedUrl}
-          className="w-full h-[400px] bg-[#e5e3df]"
-          style={{ border: 0 }}
-          loading="lazy"
-          allowFullScreen
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+      {/* Iframe map */}
+      <iframe
+        title={targetLocation ? `Percorso verso ${targetLocation}` : `Mappa ${SEDI[activeSede].label}`}
+        src={embedUrl}
+        className="w-full h-[400px]"
+        style={{ border: 0, borderRadius: "1.5rem", filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
+        loading="lazy"
+        allowFullScreen
+      />
 
-        {/* Legenda inferiore con link all'app */}
-        <div className="flex flex-col sm:flex-row gap-2 p-4 bg-background/80 backdrop-blur-sm">
-          <a
-            href={directionsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors w-full"
-          >
-            <Navigation size={14} className="text-gold shrink-0" />
-            <div className="text-left">
-              <p className="text-xs font-bold text-foreground">
-                {displayLocation ? `Apri navigatore da ${displayLocation}` : "Apri in Google Maps"}
-              </p>
-              <p className="text-[10px] text-muted-foreground">{SEDI[activeSede].address}</p>
-            </div>
-          </a>
-        </div>
+      {/* Bottom legend */}
+      <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
+        <a
+          href={directionsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors"
+        >
+          <Navigation size={14} className="text-gold shrink-0" />
+          <div>
+            <p className="text-xs font-bold text-white">
+              {targetLocation ? `Percorso da ${SEDI[activeSede].label}` : "Indicazioni stradali"}
+            </p>
+            <p className="text-[10px] text-white/50">{SEDI[activeSede].address}</p>
+          </div>
+        </a>
       </div>
     </motion.div>
   );
