@@ -238,9 +238,9 @@ const Footer = () => (
       </div>
 
       {/* HUGE BOLT TEXT */}
-      <div className="w-full flex justify-center items-end px-4 mt-12 select-none pointer-events-none overflow-hidden">
+      <div className="w-full flex justify-center items-end mt-12 select-none pointer-events-none">
         <span
-          className="text-[13vw] sm:text-[15vw] md:text-[18vw] leading-[0.75] font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-gold/80 via-gold/20 to-transparent opacity-80 whitespace-nowrap"
+          className="text-[18vw] leading-[0.85] font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-gold/80 via-gold/20 to-transparent opacity-80 whitespace-nowrap"
           aria-hidden="true"
         >
           KS&nbsp;RENT
