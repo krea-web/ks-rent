@@ -383,7 +383,12 @@ class GalleryApp {
   }
 
   onResize() {
+    if (!this.container) return;
     this.screen = { width: this.container.clientWidth, height: this.container.clientHeight };
+    
+    // FIX iOS: Se il layout non è ancora pronto e le dimensioni sono 0, esce per evitare crash WebGL (NaN)
+    if (this.screen.width === 0 || this.screen.height === 0) return;
+
     this.renderer.setSize(this.screen.width, this.screen.height);
     this.camera.perspective({ aspect: this.screen.width / this.screen.height });
     const fov = (this.camera.fov * Math.PI) / 180;
