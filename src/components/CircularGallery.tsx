@@ -155,13 +155,14 @@ class Media {
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = this.image;
-    img.decode().then(() => {
+    img.onload = () => {
       texture.image = img;
       this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-    }).catch((e) => {
-      console.warn("Errore caricamento immagine 3D:", e);
-    });
+    };
+    img.onerror = (e) => {
+      console.warn("Errore caricamento immagine 3D su iOS:", e);
+    };
+    img.src = this.image; // Sempre impostare src DOPO onload
   }
 
   createMesh() {
@@ -382,7 +383,12 @@ class GalleryApp {
   }
 
   onResize() {
+    if (!this.container) return;
     this.screen = { width: this.container.clientWidth, height: this.container.clientHeight };
+    
+    // FIX iOS: Se il layout non è ancora pronto e le dimensioni sono 0, esce per evitare crash WebGL (NaN)
+    if (this.screen.width === 0 || this.screen.height === 0) return;
+
     this.renderer.setSize(this.screen.width, this.screen.height);
     this.camera.perspective({ aspect: this.screen.width / this.screen.height });
     const fov = (this.camera.fov * Math.PI) / 180;
