@@ -155,13 +155,14 @@ class Media {
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = this.image;
-    img.decode().then(() => {
+    img.onload = () => {
       texture.image = img;
       this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-    }).catch((e) => {
-      console.warn("Errore caricamento immagine 3D:", e);
-    });
+    };
+    img.onerror = (e) => {
+      console.warn("Errore caricamento immagine 3D su iOS:", e);
+    };
+    img.src = this.image; // Sempre impostare src DOPO onload
   }
 
   createMesh() {
