@@ -1460,8 +1460,8 @@ const PrenotaOra = () => {
                     )}
                   </div>
 
-                  <div className="pt-6 border-t border-white/5 flex flex-wrap justify-between items-center gap-2">
-                    <span className="text-lg text-white/70">Totale stimato</span>
+                  <div className="pt-6 border-t border-gray-200 dark:border-white/5 flex flex-wrap justify-between items-center gap-2">
+                    <span className="text-lg text-gray-600 dark:text-white/70">Totale stimato</span>
                     <span className="text-2xl sm:text-3xl md:text-4xl font-black font-display text-gold min-w-0 break-words">
                       €{total}
                     </span>
