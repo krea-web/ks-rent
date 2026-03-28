@@ -106,7 +106,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
               "flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
               activeSede === key
                 ? "bg-gold/90 text-background shadow-lg"
-                : "bg-white/5 text-white/70 border border-white/10 hover:border-white/30"
+                : "bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-white/70 border border-gray-200 dark:border-white/10 hover:border-gray-400 dark:hover:border-white/30"
             )}
           >
             <MapPin size={12} />
@@ -115,7 +115,7 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
         ))}
       </div>
 
-      <div className="relative rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
+      <div className="relative rounded-[1.5rem] overflow-hidden border border-gray-200 dark:border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
         <iframe
           title={displayLocation ? `Percorso da ${displayLocation}` : `Mappa ${SEDI[activeSede].label}`}
           src={embedUrl}
@@ -130,14 +130,14 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-[#0a0a0a]/90 backdrop-blur-sm border border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors w-full sm:w-auto"
+            className="flex items-center gap-2 bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-sm border border-gray-200 dark:border-gold/20 rounded-xl px-4 py-3 hover:border-gold/50 transition-colors w-full sm:w-auto"
           >
             <Navigation size={14} className="text-gold shrink-0" />
             <div className="text-left">
-              <p className="text-xs font-bold text-white">
+              <p className="text-xs font-bold text-foreground">
                 {displayLocation ? `Naviga da ${displayLocation}` : "Indicazioni stradali"}
               </p>
-              <p className="text-[10px] text-white/50">{SEDI[activeSede].address}</p>
+              <p className="text-[10px] text-muted-foreground">{SEDI[activeSede].address}</p>
             </div>
           </a>
         </div>

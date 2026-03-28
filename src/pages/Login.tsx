@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-// RIMOSSA: import logo from "@/assets/logo.png"; -> Causa del crash
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,16 +26,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#050505] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#050505] px-4">
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
-          {/* Logo sostituito con URL Supabase, aggiunti width e height per Lighthouse CLS Fix */}
           <img
             src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png"
             alt="KS Rent"
             width="250"
             height="50"
-            className="h-14 w-auto mx-auto mb-6 object-contain"
+            className="h-14 w-auto mx-auto mb-6 object-contain dark:brightness-100 brightness-0"
             fetchPriority="high"
           />
           <p className="text-gold/60 text-xs uppercase tracking-[0.3em]">Area Riservata</p>
@@ -50,7 +48,7 @@ const Login = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-md bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors text-sm"
+              className="w-full px-4 py-3 rounded-md bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors text-sm"
               placeholder="admin@ksrent.it"
             />
           </div>
@@ -61,7 +59,7 @@ const Login = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-md bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors text-sm"
+              className="w-full px-4 py-3 rounded-md bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors text-sm"
               placeholder="••••••••"
             />
           </div>

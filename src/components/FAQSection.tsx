@@ -67,11 +67,11 @@ const FAQSection = () => {
   }, []);
 
   return (
-    <section className="relative bg-[#050505] overflow-hidden">
+    <section className="relative bg-gray-50 dark:bg-[#050505] overflow-hidden">
       {/* PARTE 1: FAQ ACCORDION */}
       <div className="relative py-16 md:py-32 z-10">
         <div className="absolute top-0 right-0 w-[200px] md:w-[500px] h-[200px] md:h-[500px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[200px] md:w-[500px] h-[200px] md:h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[200px] md:w-[500px] h-[200px] md:h-[500px] bg-gray-200/50 dark:bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="w-full max-w-4xl mx-auto px-4 relative z-10">
           <div className="text-center mb-10 md:mb-16">
@@ -79,7 +79,7 @@ const FAQSection = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6 border border-white/10 shadow-lg"
+              className="inline-flex items-center justify-center p-3 bg-gray-100 dark:bg-white/5 rounded-2xl mb-6 border border-gray-200 dark:border-white/10 shadow-lg"
             >
               <MessageSquare className="text-gold w-6 h-6" />
             </motion.div>
@@ -98,7 +98,7 @@ const FAQSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-display font-black mb-6 text-white leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl font-display font-black mb-6 text-foreground leading-tight"
             >
               Domande{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">Frequenti</span>
@@ -132,11 +132,11 @@ const FAQSection = () => {
                     className={`rounded-xl md:rounded-2xl px-3 sm:px-4 md:px-6 transition-all duration-300 border ${
                       isGold
                         ? "bg-gradient-to-br from-gold/10 to-transparent border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
-                        : "bg-white/5 border-white/10 hover:border-white/20"
+                        : "bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
                     }`}
                   >
                     <AccordionTrigger
-                      className={`text-left py-4 md:py-6 hover:no-underline group ${isGold ? "text-gold" : "text-white"}`}
+                      className={`text-left py-4 md:py-6 hover:no-underline group ${isGold ? "text-gold" : "text-foreground"}`}
                     >
                       <div className="flex items-center gap-3 md:gap-4">
                         {isGold && f.icon && (
@@ -163,7 +163,7 @@ const FAQSection = () => {
       </div>
 
       {/* PARTE 2: FULL-WIDTH ROLL BANNER */}
-      <div className="relative w-full py-16 md:py-32 bg-[#0a0a0a] border-y border-white/10 overflow-hidden flex items-center justify-center">
+      <div className="relative w-full py-16 md:py-32 bg-gray-100 dark:bg-[#0a0a0a] border-y border-gray-200 dark:border-white/10 overflow-hidden flex items-center justify-center">
         <style>{`
           @keyframes banner-roll {
             0% { transform: translateX(0); }
@@ -176,24 +176,22 @@ const FAQSection = () => {
           }
         `}</style>
 
-        <div className="absolute inset-0 z-0 pointer-events-none bg-black">
-          {/* Correzione: mancava l'immagine di background qui. Sostituisci src con un tuo URL o rimuovi il tag img se preferisci solo il colore */}
-          <div className="w-full h-full opacity-30 bg-gradient-to-r from-black via-gray-900 to-black"></div>
+        <div className="absolute inset-0 z-0 pointer-events-none bg-gray-100 dark:bg-black">
+          <div className="w-full h-full opacity-30 bg-gradient-to-r from-gray-100 dark:from-black via-gray-200 dark:via-gray-900 to-gray-100 dark:to-black"></div>
         </div>
 
-        {/* Rolling text */}
         <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full z-0 opacity-20 pointer-events-none overflow-hidden">
           <div className="animate-banner-roll">
-            <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent">
+            <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-gray-400 dark:from-white to-transparent">
               KS RENT • COSTA SMERALDA • LUXURY EXPERIENCE • PROTEZIONE TOTALE •&nbsp;
             </span>
-            <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent">
+            <span className="text-[10vw] md:text-[12vw] font-black font-display uppercase whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-gray-400 dark:from-white to-transparent">
               KS RENT • COSTA SMERALDA • LUXURY EXPERIENCE • PROTEZIONE TOTALE •&nbsp;
             </span>
           </div>
         </div>
 
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#050505] via-[#050505]/70 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-gray-50 dark:from-[#050505] via-gray-50/70 dark:via-[#050505]/70 to-transparent pointer-events-none" />
 
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           <motion.div
@@ -203,16 +201,16 @@ const FAQSection = () => {
             transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-gold text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold mb-4 md:mb-6 backdrop-blur-md">
+            <span className="inline-block py-1 px-3 rounded-full bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gold text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold mb-4 md:mb-6 backdrop-blur-md">
               Dietro le Quinte
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black mb-5 md:mb-6 leading-tight text-white drop-shadow-xl break-words">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black mb-5 md:mb-6 leading-tight text-foreground drop-shadow-xl break-words">
               Non noleggiamo solo auto. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">
                 Consegniamo Libertà.
               </span>
             </h2>
-            <p className="text-white/80 text-base md:text-xl mb-8 md:mb-10 max-w-lg leading-relaxed drop-shadow-md">
+            <p className="text-gray-600 dark:text-white/80 text-base md:text-xl mb-8 md:mb-10 max-w-lg leading-relaxed drop-shadow-md">
               Scopri la filosofia di KS Rent S.R.L. e perché siamo diventati il punto di riferimento per il noleggio
               luxury con coperture assicurative complete e termini chiari a Olbia.
             </p>

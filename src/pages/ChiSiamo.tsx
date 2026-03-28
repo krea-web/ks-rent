@@ -8,7 +8,7 @@ import CompanyMap from "@/components/CompanyMap";
 
 const ChiSiamo = () => {
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
         title="Chi Siamo | Noleggio Auto Lusso Olbia | KS Rent"
         description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."

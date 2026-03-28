@@ -5,7 +5,54 @@
 @tailwind utilities;
 
 @layer base {
+  /* ═══════ LIGHT MODE (default) ═══════ */
   :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 9%;
+
+    --primary: 43 56% 52%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 43 56% 52%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 43 56% 52%;
+
+    --radius: 0.5rem;
+
+    --gold: 43 56% 52%;
+    --gold-light: 43 56% 65%;
+    --gold-dark: 43 56% 38%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 43 56% 52%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 43 56% 52%;
+  }
+
+  /* ═══════ DARK MODE ═══════ */
+  .dark {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
@@ -33,8 +80,6 @@
     --border: 0 0% 16%;
     --input: 0 0% 16%;
     --ring: 43 56% 52%;
-
-    --radius: 0.5rem;
 
     --gold: 43 56% 52%;
     --gold-light: 43 56% 65%;

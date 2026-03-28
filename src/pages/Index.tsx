@@ -22,8 +22,8 @@ const Index = () => (
     <GoogleReviews />
 
     {/* SEO RICH TEXT & ENTITY DISAMBIGUATION */}
-    <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto text-white/80 font-light leading-relaxed bg-background">
-      <h2 className="text-3xl font-bold text-white mb-6">Il tuo Autonoleggio a Olbia di Fiducia</h2>
+    <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto text-gray-600 dark:text-white/80 font-light leading-relaxed bg-background">
+      <h2 className="text-3xl font-bold text-foreground mb-6">Il tuo Autonoleggio a Olbia di Fiducia</h2>
       <p className="mb-4">
         Se stai cercando un servizio di <strong>noleggio auto a Olbia</strong> che unisca affidabilità ed esclusività,
         KS Rent S.R.L. è la scelta perfetta.{" "}

@@ -33,9 +33,9 @@ const duplicatedBrands = [...brands, ...brands, ...brands, ...brands, ...brands]
 
 const TrustMarquee = () => {
   return (
-    <section className="relative py-12 bg-[#050505] border-y border-white/5 overflow-hidden flex flex-col gap-10">
-      <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-[#050505] to-transparent pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-[#050505] to-transparent pointer-events-none" />
+    <section className="relative py-12 bg-gray-50 dark:bg-[#050505] border-y border-gray-200 dark:border-white/5 overflow-hidden flex flex-col gap-10">
+      <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-gray-50 dark:from-[#050505] to-transparent pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-gray-50 dark:from-[#050505] to-transparent pointer-events-none" />
 
       <style>
         {`
@@ -71,10 +71,10 @@ const TrustMarquee = () => {
           {duplicatedUsps.map((usp, i) => (
             <div
               key={`usp-${i}`}
-              className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-gold hover:bg-gold/5 transition-all duration-300 cursor-default whitespace-nowrap shadow-lg"
+              className="flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold hover:bg-gold/5 transition-all duration-300 cursor-default whitespace-nowrap shadow-lg"
             >
               <usp.icon size={20} className="text-gold" />
-              <span className="text-sm font-bold tracking-wider text-white uppercase">{usp.text}</span>
+              <span className="text-sm font-bold tracking-wider text-foreground uppercase">{usp.text}</span>
             </div>
           ))}
         </div>
@@ -92,7 +92,7 @@ const TrustMarquee = () => {
                 height={56}
                 loading="lazy"
                 decoding="async"
-                className="max-w-full max-h-full object-contain opacity-90 hover:opacity-100 hover:scale-110 transition-all duration-300 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)]"
+                className="max-w-full max-h-full object-contain opacity-90 hover:opacity-100 hover:scale-110 transition-all duration-300 dark:drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] drop-shadow-[0_0_6px_rgba(0,0,0,0.15)]"
               />
             </div>
           ))}
