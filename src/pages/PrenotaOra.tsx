@@ -768,7 +768,7 @@ const PrenotaOra = () => {
                               "flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 min-h-[44px] whitespace-nowrap",
                               selectedCategory === cat
                                 ? "bg-gold text-black"
-                                : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white border border-white/10",
+                                : "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-white/50 hover:bg-gray-200 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10",
                             )}
                           >
                             {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
