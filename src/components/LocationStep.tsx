@@ -260,7 +260,7 @@ const LocationStep = ({
       {/* Time picker */}
       {locationType && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50 flex items-center gap-2">
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 flex items-center gap-2">
             <Clock size={12} /> Orario
           </Label>
           <Select value={time} onValueChange={setTime}>
