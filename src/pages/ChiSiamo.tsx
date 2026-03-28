@@ -237,7 +237,7 @@ const ChiSiamo = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }}
               viewport={{ once: true }}
-              className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-[#111] border border-white/5 block"
+              className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-gray-200 dark:bg-[#111] border border-gray-200 dark:border-white/5 block"
             >
               <img
                 src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3grigia.webp"
