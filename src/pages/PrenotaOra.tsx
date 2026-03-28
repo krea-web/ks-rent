@@ -1040,7 +1040,7 @@ const PrenotaOra = () => {
                                 setAvailabilityResult(null);
                                 goToStep(1);
                               }}
-                              className="border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl"
+                              className="border-gray-200 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl"
                             >
                               <Car size={14} className="mr-2" /> Cambia Auto
                             </Button>
