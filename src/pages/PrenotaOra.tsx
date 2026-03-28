@@ -919,7 +919,7 @@ const PrenotaOra = () => {
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-3">
-                      <Label className="text-xs uppercase tracking-widest text-white/50">Ritiro</Label>
+                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Ritiro</Label>
                       <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
                         <PopoverTrigger asChild>
                           <Button
