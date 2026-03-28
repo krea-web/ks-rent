@@ -708,7 +708,7 @@ const PrenotaOra = () => {
                     <span className="hidden sm:inline">{label}</span>
                   </button>
                   {i < STEP_LABELS.length - 1 && (
-                    <div className={cn("w-6 h-px", isDone ? "bg-gold/40" : "bg-white/10")} />
+                    <div className={cn("w-6 h-px", isDone ? "bg-gold/40" : "bg-gray-200 dark:bg-white/10")} />
                   )}
                 </div>
               );
