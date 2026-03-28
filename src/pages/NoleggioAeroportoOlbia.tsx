@@ -80,7 +80,7 @@ const NoleggioAeroportoOlbia = () => {
 
             <Link
               to="/prenotaora"
-              className="inline-flex items-center gap-4 bg-gold text-black px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_50px_rgba(212,175,55,0.4)]"
+              className="inline-flex items-center gap-4 bg-gold text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_50px_rgba(212,175,55,0.4)]"
             >
               Verifica Disponibilità <ArrowRight size={22} />
             </Link>

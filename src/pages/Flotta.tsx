@@ -57,7 +57,7 @@ export default function Flotta() {
             </p>
             <Link
               to="/prenotaora"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-black font-bold text-sm uppercase tracking-widest hover:bg-yellow-400 transition-all group"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold text-white font-bold text-sm uppercase tracking-widest hover:bg-yellow-400 transition-all group"
             >
               Verifica Disponibilità{" "}
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

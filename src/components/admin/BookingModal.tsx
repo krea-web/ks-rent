@@ -92,7 +92,7 @@ const BookingModal = ({ open, onClose, booking, onSaved }: BookingModalProps) =>
           <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-white/50 hover:text-white hover:border-white/20 transition-colors">
             <FileUp size={14} /> Carica Contratto PDF
           </button>
-          <button onClick={onClose} className="px-5 py-2 bg-gold text-black rounded-full font-bold text-sm uppercase tracking-wider hover:bg-yellow-400 transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+          <button onClick={onClose} className="px-5 py-2 bg-gold text-white rounded-full font-bold text-sm uppercase tracking-wider hover:bg-yellow-400 transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)]">
             {saving ? <Loader2 size={14} className="animate-spin" /> : "Chiudi"}
           </button>
         </DialogFooter>

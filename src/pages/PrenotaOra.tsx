@@ -698,7 +698,7 @@ const PrenotaOra = () => {
                     className={cn(
                       "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all",
                       isActive
-                        ? "bg-gold text-black"
+                        ? "bg-gold text-white"
                         : isDone
                           ? "bg-gold/20 text-gold cursor-pointer hover:bg-gold/30"
                           : "bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-default",
@@ -767,7 +767,7 @@ const PrenotaOra = () => {
                             className={cn(
                               "flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 min-h-[44px] whitespace-nowrap",
                               selectedCategory === cat
-                                ? "bg-gold text-black"
+                                ? "bg-gold text-white"
                                 : "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-white/50 hover:bg-gray-200 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10",
                             )}
                           >
@@ -955,7 +955,7 @@ const PrenotaOra = () => {
                               }}
                               disabled={(d) => d < new Date()}
                               className="p-4 pointer-events-auto"
-                              classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                              classNames={{ day_selected: "bg-gold text-white hover:bg-gold/80" }}
                             />
                           </Suspense>
                         </PopoverContent>
@@ -994,7 +994,7 @@ const PrenotaOra = () => {
                               defaultMonth={startDate || new Date()}
                               disabled={(d) => d < (startDate || new Date())}
                               className="p-4 pointer-events-auto"
-                              classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                              classNames={{ day_selected: "bg-gold text-white hover:bg-gold/80" }}
                             />
                           </Suspense>
                         </PopoverContent>

@@ -138,7 +138,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
                 disabled={signing || !hasSigned}
                 className={`font-bold uppercase tracking-wider px-8 transition-all ${
                   hasSigned
-                    ? "bg-gold text-black hover:bg-yellow-400"
+                    ? "bg-gold text-white hover:bg-yellow-500"
                     : "bg-white/10 text-white/30 cursor-not-allowed"
                 }`}
               >

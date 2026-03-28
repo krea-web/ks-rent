@@ -69,7 +69,7 @@ const MaintenanceModal = ({ open, onClose, vehicle, onSaved }: MaintenanceModalP
         <DialogFooter>
           <button onClick={onClose} className="px-4 py-2 text-sm text-white/50 hover:text-white transition-colors">Annulla</button>
           <button onClick={handleSubmit} disabled={saving}
-            className="flex items-center gap-2 bg-gold text-black px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-yellow-400 transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)] disabled:opacity-50">
+            className="flex items-center gap-2 bg-gold text-white px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-yellow-400 transition-colors shadow-[0_0_15px_rgba(212,175,55,0.3)] disabled:opacity-50">
             {saving && <Loader2 size={14} className="animate-spin" />}
             Salva
           </button>
