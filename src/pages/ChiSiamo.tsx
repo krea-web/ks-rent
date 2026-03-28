@@ -311,13 +311,13 @@ const ChiSiamo = () => {
       </section>
 
       {/* LA NOSTRA IDENTITÀ — Disambiguazione SEO */}
-      <section className="py-16 md:py-24 bg-[#050505] border-t border-white/5">
+      <section className="py-16 md:py-24 bg-gray-100 dark:bg-[#050505] border-t border-gray-200 dark:border-white/5">
         <div className="w-full max-w-4xl mx-auto px-4 md:px-12 lg:px-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0, transition: { duration: 0.7 } }}
             viewport={{ once: true }}
-            className="p-8 md:p-12 rounded-[2rem] border border-white/10 bg-white/[0.02] backdrop-blur-sm"
+            className="p-8 md:p-12 rounded-[2rem] border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] backdrop-blur-sm"
           >
             <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">
               La Nostra Identità
