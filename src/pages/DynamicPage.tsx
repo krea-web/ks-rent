@@ -346,7 +346,7 @@ export default function DynamicPage() {
         {data.content_html ? (
           <div
             ref={contentRef}
-            className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
+            className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
             dangerouslySetInnerHTML={{ __html: data.content_html }}
           />
         ) : (
@@ -515,7 +515,7 @@ export default function DynamicPage() {
                   key={tip.title}
                   variants={cardItemVariants}
                   transition={{ duration: 0.5 }}
-                  className="bg-card border border-border rounded-2xl p-6 hover:border-gold/40 transition-colors"
+                  className="bg-white dark:bg-card border border-gray-200 dark:border-border border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl p-6 hover:border-gold/40 transition-colors shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-none"
                 >
                   <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center mb-4">
                     <Icon className="w-5 h-5 text-gold" />

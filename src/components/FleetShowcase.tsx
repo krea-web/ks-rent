@@ -112,7 +112,7 @@ const FleetShowcase = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="group flex flex-col bg-gray-100 dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/5 rounded-3xl overflow-hidden hover:border-gold/30 transition-all duration-500 shadow-2xl"
+                  className="group flex flex-col bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/5 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-3xl overflow-hidden hover:border-gold/30 transition-all duration-500 shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-2xl"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                     <div className="absolute top-4 left-4 z-20">
