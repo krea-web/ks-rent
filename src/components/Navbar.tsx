@@ -70,7 +70,7 @@ const Navbar = () => {
               alt="KS Rent Noleggio Auto Olbia Costa Smeralda"
               width={120}
               height={48}
-              className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105 pointer-events-none dark:brightness-100 brightness-0"
+              className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105 pointer-events-none"
               loading="eager"
               fetchPriority="high"
               decoding="sync"

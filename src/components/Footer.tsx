@@ -16,7 +16,7 @@ const Footer = () => (
             alt="KS Rent Noleggio Auto Lusso Olbia"
             width={120}
             height={48}
-            className="h-12 w-auto mb-6 object-contain dark:brightness-100 brightness-0"
+            className="h-12 w-auto mb-6 object-contain"
             loading="lazy"
           />
           <p className="text-sm text-muted-foreground leading-relaxed">
