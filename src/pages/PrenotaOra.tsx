@@ -849,7 +849,7 @@ const PrenotaOra = () => {
                                   onClick={() => setCarouselIndex(i)}
                                   className={cn(
                                     "rounded-full transition-all duration-300",
-                                    i === safeIdx ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-white/20 hover:bg-white/40",
+                                    i === safeIdx ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-gray-300 dark:bg-white/20 hover:bg-gray-400 dark:hover:bg-white/40",
                                   )}
                                   aria-label={`Vai al veicolo ${i + 1}`}
                                 />
