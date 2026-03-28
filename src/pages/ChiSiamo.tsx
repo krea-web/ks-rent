@@ -133,7 +133,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* 3. VISION */}
-      <section className="py-16 md:py-32 bg-[#050505] relative overflow-hidden border-t border-white/5">
+      <section className="py-16 md:py-32 bg-stone-50 dark:bg-[#050505] relative overflow-hidden border-t border-gray-200 dark:border-white/5">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold/5 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">
