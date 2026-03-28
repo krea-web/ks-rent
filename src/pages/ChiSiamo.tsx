@@ -173,7 +173,7 @@ const ChiSiamo = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 md:mb-8 break-words">
                 Non siamo nati per essere l'ennesima agenzia.
               </h2>
-              <div className="space-y-5 md:space-y-6 text-white/60 font-light text-base md:text-lg">
+              <div className="space-y-5 md:space-y-6 text-gray-600 dark:text-white/60 font-light text-base md:text-lg">
                 <p>
                   Siamo nati per essere il partner che avremmo sempre voluto incontrare nei nostri viaggi. KS Rent nasce
                   da una frustrazione comune: la burocrazia infinita del noleggio tradizionale.
