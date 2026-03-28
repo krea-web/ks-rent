@@ -1323,8 +1323,8 @@ const PrenotaOra = () => {
                       Riepilogo Finale
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
+                       <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
                         <p className="font-bold truncate">
                           {selectedVehicle?.make} {selectedVehicle?.model}
                         </p>
