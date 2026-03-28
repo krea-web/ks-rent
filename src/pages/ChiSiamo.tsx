@@ -350,7 +350,7 @@ const ChiSiamo = () => {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } }}
             viewport={{ once: true }}
-            className="bg-[#111] border border-white/10 rounded-[2rem] p-10 md:p-14 shadow-[0_0_60px_rgba(212,175,55,0.08)] w-full max-w-5xl relative overflow-hidden"
+            className="bg-white dark:bg-[#111] border border-gray-200 dark:border-white/10 rounded-[2rem] p-10 md:p-14 shadow-[0_0_60px_rgba(212,175,55,0.08)] w-full max-w-5xl relative overflow-hidden"
           >
             {/* Elemento Decorativo Top */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-50"></div>
