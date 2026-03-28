@@ -1077,7 +1077,7 @@ const PrenotaOra = () => {
                             </motion.div>
                             <div>
                               <p className="text-green-400 font-bold">Disponibile!</p>
-                              <p className="text-white/50 text-xs">Tariffa calcolata in tempo reale</p>
+                              <p className="text-gray-500 dark:text-white/50 text-xs">Tariffa calcolata in tempo reale</p>
                             </div>
                           </div>
                           <div className="flex items-end justify-between pt-2 border-t border-white/5">
