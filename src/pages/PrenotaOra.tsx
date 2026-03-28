@@ -526,9 +526,9 @@ const PrenotaOra = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Fronte</Label>
+            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">Foto Fronte</Label>
             <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
+              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
               onDragOver={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
