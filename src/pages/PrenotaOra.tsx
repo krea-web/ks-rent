@@ -1397,7 +1397,7 @@ const PrenotaOra = () => {
                           alt="Selected"
                           className="w-full h-full object-cover opacity-40"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-50 dark:from-[#111] via-gray-50/80 dark:via-[#111]/80 to-transparent" />
                       </div>
                       <div className="relative z-10">
                         <span className="text-gold text-xs font-semibold uppercase tracking-wider">
