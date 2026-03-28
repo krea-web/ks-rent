@@ -86,14 +86,14 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
             className="relative w-full max-w-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-gold/30 rounded-2xl shadow-[0_0_60px_rgba(212,175,55,0.1)] overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-white/10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
                   <PenTool className="w-5 h-5 text-gold" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-display font-bold text-white">Firma Digitale</h3>
-                  <p className="text-xs text-white/50">Firma qui per accettare il contratto</p>
+                  <h3 className="text-lg font-display font-bold text-gray-900 dark:text-white">Firma Digitale</h3>
+                  <p className="text-xs text-gray-500 dark:text-white/50">Firma qui per accettare il contratto</p>
                 </div>
               </div>
               <button onClick={onClose} className="text-white/40 hover:text-white transition-colors">
