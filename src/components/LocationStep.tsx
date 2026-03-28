@@ -264,10 +264,10 @@ const LocationStep = ({
             <Clock size={12} /> Orario
           </Label>
           <Select value={time} onValueChange={setTime}>
-            <SelectTrigger className="h-14 bg-[#111] border-white/10 focus:border-gold rounded-xl text-white">
+            <SelectTrigger className="h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold rounded-xl text-gray-900 dark:text-white">
               <SelectValue placeholder="Seleziona orario" />
             </SelectTrigger>
-            <SelectContent className="bg-[#111] border-white/10 text-white max-h-60">
+            <SelectContent className="bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white max-h-60">
               {TIME_SLOTS.map((slot) => (
                 <SelectItem key={slot} value={slot}>{slot}</SelectItem>
               ))}
