@@ -143,8 +143,8 @@ const LocationStep = ({
           <div className="flex items-center gap-3">
             <Building2 size={20} className="text-gold" />
             <div>
-              <p className="text-sm font-bold text-white">Riconsegna in Sede</p>
-              <p className="text-xs text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
+              <p className="text-sm font-bold text-gray-900 dark:text-white">Riconsegna in Sede</p>
+              <p className="text-xs text-gray-500 dark:text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
             </div>
           </div>
         </div>
