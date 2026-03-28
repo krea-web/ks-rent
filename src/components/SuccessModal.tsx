@@ -48,7 +48,7 @@ const SuccessModal = ({ open, onClose }: SuccessModalProps) => (
           </h2>
 
           {/* Description */}
-          <p className="text-sm md:text-base text-white/60 leading-relaxed mb-8">
+          <p className="text-sm md:text-base text-gray-600 dark:text-white/60 leading-relaxed mb-8">
             La tua prenotazione è confermata! Aiutaci a crescere lasciando una recensione su Google.
           </p>
 
