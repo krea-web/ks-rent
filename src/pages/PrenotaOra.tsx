@@ -639,7 +639,7 @@ const PrenotaOra = () => {
   };
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-40 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-gray-50 dark:bg-[#050505] min-h-screen text-gray-900 dark:text-white pt-24 pb-40 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
         title={
           selectedVehicle
