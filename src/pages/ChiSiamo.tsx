@@ -325,9 +325,9 @@ const ChiSiamo = () => {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6 leading-tight">
               Orgogliosamente e Unicamente Sardi.
             </h2>
-            <div className="space-y-4 text-white/60 font-light text-base md:text-lg leading-relaxed">
+            <div className="space-y-4 text-gray-600 dark:text-white/60 font-light text-base md:text-lg leading-relaxed">
               <p>
-                <strong className="text-white font-medium">KS Rent S.R.L.</strong> è una realtà orgogliosamente e
+                <strong className="text-gray-900 dark:text-white font-medium">KS Rent S.R.L.</strong> è una realtà orgogliosamente e
                 unicamente sarda, nata per servire il turismo di lusso in Costa Smeralda. La nostra sede operativa è
                 fissa al Porto di Olbia (P.IVA 03028900904).
               </p>
