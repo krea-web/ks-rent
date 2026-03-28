@@ -191,7 +191,7 @@ const ChiSiamo = () => {
       <GoldKeywordsMarquee />
 
       {/* 4. SOCIAL (Instagram) */}
-      <section className="py-16 md:py-32 bg-[#0a0a0a] border-t border-white/5 relative">
+      <section className="py-16 md:py-32 bg-gray-100 dark:bg-[#0a0a0a] border-t border-gray-200 dark:border-white/5 relative">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-8 mb-10 md:mb-16">
             <motion.div
