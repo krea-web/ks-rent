@@ -933,7 +933,7 @@ const PrenotaOra = () => {
                             {startDate ? format(startDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
+                        <PopoverContent className="w-auto p-0 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl z-50">
                           <Suspense
                             fallback={
                               <div className="p-4">
