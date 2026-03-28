@@ -7,7 +7,7 @@ import { flottaJsonLd } from "@/lib/jsonLd";
 
 export default function Flotta() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white dark:bg-black text-foreground">
       <SEOHead
         title="Flotta Veicoli KS Rent | Noleggio Auto e Moto Olbia Sardegna"
         description="Scopri la flotta premium di KS Rent: auto sportive, SUV, city car, scooter e quad. Noleggio senza carta di credito a Olbia e Costa Smeralda."
@@ -30,7 +30,7 @@ export default function Flotta() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-4 max-w-2xl mx-auto text-white/60 text-base md:text-lg"
+          className="mt-4 max-w-2xl mx-auto text-muted-foreground text-base md:text-lg"
         >
           Esplora la nostra flotta trascinando con il mouse o scivolando con il dito. Dalle prestazioni estreme alle passeggiate costiere, abbiamo il veicolo perfetto per te.
         </motion.p>
@@ -38,7 +38,7 @@ export default function Flotta() {
 
       {/* WebGL Circular Gallery */}
       <section className="relative w-full h-[60vh] md:h-[70vh]">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-black via-transparent to-white dark:to-black pointer-events-none z-10" />
         <CircularGallery bend={3} textColor="#D4AF37" borderRadius={0.05} font="bold 30px sans-serif" />
       </section>
 
@@ -46,13 +46,13 @@ export default function Flotta() {
       <section className="py-16 md:py-24 px-4">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-start">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
               Eccellenza su strada, senza compromessi
             </h2>
-            <p className="text-white/60 leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               La flotta di KS Rent è rigorosamente selezionata per offrirti solo il meglio. Che tu voglia sfrecciare tra le curve della Costa Smeralda a bordo di una rombante Audi RS3 o di una BMW M2, oppure goderti la brezza marina su un Honda SH 350, garantiamo veicoli in perfette condizioni.
             </p>
-            <p className="text-white/60 leading-relaxed mb-8">
+            <p className="text-muted-foreground leading-relaxed mb-8">
               Viaggi in famiglia? I nostri SUV come la Jeep Avenger sono la scelta ideale. Cerchi praticità? La nostra Fiat Panda Hybrid ti porterà ovunque e potrai noleggiarla comodamente anche senza carta di credito.
             </p>
             <Link
@@ -64,10 +64,10 @@ export default function Flotta() {
             </Link>
           </div>
 
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
+          <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8">
             <ShieldCheck className="text-gold mb-4" size={32} />
-            <h3 className="text-xl font-bold mb-4 text-white">I vantaggi di KS Rent</h3>
-            <ul className="space-y-3 text-white/60 text-sm">
+            <h3 className="text-xl font-bold mb-4 text-foreground">I vantaggi di KS Rent</h3>
+            <ul className="space-y-3 text-muted-foreground text-sm">
               <li>✅ Nessuna fila al desk aeroportuale</li>
               <li>✅ Consegna su misura in Hotel o Villa</li>
               <li>✅ Parco auto e moto premium</li>
