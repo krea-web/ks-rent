@@ -1386,9 +1386,9 @@ const PrenotaOra = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden"
+                className="w-full bg-white dark:bg-[#0a0a0a] border border-gold/20 shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden"
               >
-                <div className="p-6 md:p-8 border-b border-white/5 bg-[#111] relative min-h-[140px] flex flex-col justify-end">
+                <div className="p-6 md:p-8 border-b border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#111] relative min-h-[140px] flex flex-col justify-end">
                   {selectedVehicle ? (
                     <>
                       <div className="absolute inset-0 z-0 pointer-events-none">
