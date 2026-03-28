@@ -92,7 +92,7 @@ const ChiSiamo = () => {
               className="relative"
             >
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
-              <p className="text-lg md:text-2xl font-light text-white/70 leading-relaxed">
+              <p className="text-lg md:text-2xl font-light text-gray-600 dark:text-white/70 leading-relaxed">
                 Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, poca
                 trasparenza e clausole incomprensibili.
               </p>
