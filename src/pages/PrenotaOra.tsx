@@ -657,7 +657,7 @@ const PrenotaOra = () => {
       />
 
       {/* PROGRESS BAR */}
-      <div className="fixed top-0 left-0 w-full z-[9998] h-1 bg-white/5">
+      <div className="fixed top-0 left-0 w-full z-[9998] h-1 bg-gray-200 dark:bg-white/5">
         <motion.div
           className="h-full bg-gradient-to-r from-gold via-yellow-300 to-gold"
           initial={{ width: "0%" }}
