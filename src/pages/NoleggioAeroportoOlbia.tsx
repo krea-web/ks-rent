@@ -35,7 +35,7 @@ const faqs = [
 
 const NoleggioAeroportoOlbia = () => {
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
         title="Noleggio Auto Aeroporto Olbia | KS Rent"
         description="Noleggio auto con consegna immediata all'Aeroporto di Olbia. Supercar, SUV e moto senza carta di credito. Prenota online con KS Rent."

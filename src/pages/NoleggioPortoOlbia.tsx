@@ -35,7 +35,7 @@ const faqs = [
 
 const NoleggioPortoOlbia = () => {
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
         title="Noleggio Auto Porto Olbia Isola Bianca | KS Rent"
         description="Arrivi in traghetto a Olbia? Noleggia supercar, SUV o moto al Porto Isola Bianca. Sede allo sbarco, zero attese. Prenota online con KS Rent."

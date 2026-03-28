@@ -63,7 +63,7 @@ const senzaCCJsonLd = {
 
 const NoleggioSenzaCartaCredito = () => {
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
         title="Noleggio Auto Senza Carta di Credito Olbia | KS Rent"
         description="Noleggia auto a Olbia senza carta di credito. Accettiamo prepagate, bancomat e contanti. Supercar, SUV e moto in Costa Smeralda. Prenota online."

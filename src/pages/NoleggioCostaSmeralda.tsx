@@ -82,7 +82,7 @@ const NoleggioCostaSmeralda = () => {
   };
 
   return (
-    <div className="bg-[#050505] text-white selection:bg-gold selection:text-black overflow-x-hidden font-sans pt-24 md:pt-32">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans pt-24 md:pt-32">
       <SEOHead
         title="Noleggio Auto Costa Smeralda | Porto Cervo | KS Rent"
         description="Noleggio supercar e SUV in Costa Smeralda. Consegna in hotel o villa a Porto Cervo, San Pantaleo e Porto Rotondo. Prenota online."
