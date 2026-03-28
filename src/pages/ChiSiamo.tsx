@@ -26,7 +26,7 @@ const ChiSiamo = () => {
             loading="eager"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-50 dark:from-[#050505] via-gray-50/50 dark:via-[#050505]/50 to-transparent pointer-events-none" />
         </div>
 
         <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center">
