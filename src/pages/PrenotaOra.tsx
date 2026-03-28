@@ -698,7 +698,7 @@ const PrenotaOra = () => {
                     className={cn(
                       "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all",
                       isActive
-                        ? "bg-gold text-black"
+                        ? "bg-gold text-white"
                         : isDone
                           ? "bg-gold/20 text-gold cursor-pointer hover:bg-gold/30"
                           : "bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-default",
@@ -767,7 +767,7 @@ const PrenotaOra = () => {
                             className={cn(
                               "flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 min-h-[44px] whitespace-nowrap",
                               selectedCategory === cat
-                                ? "bg-gold text-black"
+                                ? "bg-gold text-white"
                                 : "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-white/50 hover:bg-gray-200 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10",
                             )}
                           >
@@ -886,7 +886,7 @@ const PrenotaOra = () => {
                               <Button
                                 onClick={() => handleVehicleSelect(currentGroup)}
                                 disabled={soldOut}
-                                className="mt-5 bg-gold hover:bg-gold-light text-black font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
+                                className="mt-5 bg-gold hover:bg-yellow-500 text-white font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
                               >
                                 {soldOut ? "Non disponibile" : "Seleziona questo veicolo"}{" "}
                                 <ArrowRight size={16} className="ml-2" />
@@ -955,7 +955,7 @@ const PrenotaOra = () => {
                               }}
                               disabled={(d) => d < new Date()}
                               className="p-4 pointer-events-auto"
-                              classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                              classNames={{ day_selected: "bg-gold text-white hover:bg-gold/80" }}
                             />
                           </Suspense>
                         </PopoverContent>
@@ -994,7 +994,7 @@ const PrenotaOra = () => {
                               defaultMonth={startDate || new Date()}
                               disabled={(d) => d < (startDate || new Date())}
                               className="p-4 pointer-events-auto"
-                              classNames={{ day_selected: "bg-gold text-black hover:bg-gold/80" }}
+                              classNames={{ day_selected: "bg-gold text-white hover:bg-gold/80" }}
                             />
                           </Suspense>
                         </PopoverContent>
@@ -1009,7 +1009,7 @@ const PrenotaOra = () => {
                         <Button
                           type="button"
                           onClick={handleDatesConfirm}
-                          className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                          className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Verifica Disponibilità <ArrowRight size={16} className="ml-2" />
                         </Button>
@@ -1092,7 +1092,7 @@ const PrenotaOra = () => {
                           <Button
                             type="button"
                             onClick={() => goToStep(3)}
-                            className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                            className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                           >
                             Continua <ArrowRight size={16} className="ml-2" />
                           </Button>
@@ -1134,7 +1134,7 @@ const PrenotaOra = () => {
                         }
                         goToStep(4);
                       }}
-                      className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                      className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                     >
                       Continua <ArrowRight size={16} className="ml-2" />
                     </Button>
@@ -1170,7 +1170,7 @@ const PrenotaOra = () => {
                         <Button
                           type="button"
                           onClick={() => setHasSecondDriver(true)}
-                          className="h-14 px-8 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                          className="h-14 px-8 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Sì, Aggiungi
                         </Button>
@@ -1181,7 +1181,7 @@ const PrenotaOra = () => {
                             setHasSecondDriver(false);
                             goToStep(5);
                           }}
-                          className="h-14 px-8 border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
+                          className="h-14 px-8 border-gray-300 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
                         >
                           No, Procedi
                         </Button>
@@ -1203,7 +1203,7 @@ const PrenotaOra = () => {
                           type="button"
                           variant="ghost"
                           size="sm"
-                          className="text-white/50 hover:text-red-400 hover:bg-red-400/10 gap-1.5"
+                          className="text-gray-500 dark:text-white/50 hover:text-red-400 hover:bg-red-400/10 gap-1.5"
                           onClick={() => {
                             setHasSecondDriver(null);
                             setSecondDriver({ ...initialDriverState });
@@ -1226,7 +1226,7 @@ const PrenotaOra = () => {
                             }
                             goToStep(5);
                           }}
-                          className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                          className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Continua <ArrowRight size={16} className="ml-2" />
                         </Button>
@@ -1361,7 +1361,7 @@ const PrenotaOra = () => {
                         !isDriverComplete(mainDriver) ||
                         (hasSecondDriver === true && !isDriverComplete(secondDriver))
                       }
-                      className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                      className="w-full h-16 bg-gold text-white hover:bg-yellow-500 font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
                     >
                       {loading ? (
                         <span className="flex items-center gap-2">
@@ -1521,7 +1521,7 @@ const PrenotaOra = () => {
                   type="button"
                   onClick={handleMobileAction}
                   disabled={loading || (currentStep === 2 && checkingAvailability)}
-                  className="h-11 px-6 bg-gold text-black hover:bg-gold/90 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs shrink-0 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
+                  className="h-11 px-6 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs shrink-0 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
                 >
                   {loading || (currentStep === 2 && checkingAvailability) ? (
                     <Loader2 size={14} className="animate-spin" />
