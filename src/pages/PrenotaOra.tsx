@@ -1433,7 +1433,7 @@ const PrenotaOra = () => {
                   </div>
 
                   {checkingAvailability && (
-                    <div className="flex items-center justify-center gap-2 py-2 text-white/40 text-sm">
+                    <div className="flex items-center justify-center gap-2 py-2 text-gray-500 dark:text-white/40 text-sm">
                       <Loader2 size={14} className="animate-spin" /> Aggiornamento prezzo...
                     </div>
                   )}
