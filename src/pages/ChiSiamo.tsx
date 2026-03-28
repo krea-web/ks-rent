@@ -377,7 +377,7 @@ const ChiSiamo = () => {
             </div>
 
             <h3 className="text-3xl md:text-4xl lg:text-5xl font-display font-extrabold text-gold mb-6 leading-tight tracking-tight">
-              Diventa il Nostro <span className="text-white">Giudice di Fiducia</span>
+              Diventa il Nostro <span className="text-gray-900 dark:text-white">Giudice di Fiducia</span>
             </h3>
 
             <p className="text-white/70 text-lg md:text-xl mb-12 max-w-3xl mx-auto font-light leading-relaxed">
