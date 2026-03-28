@@ -96,7 +96,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
                   <p className="text-xs text-gray-500 dark:text-white/50">Firma qui per accettare il contratto</p>
                 </div>
               </div>
-              <button onClick={onClose} className="text-white/40 hover:text-white transition-colors">
+              <button onClick={onClose} className="text-gray-400 dark:text-white/40 hover:text-gray-900 dark:hover:text-white transition-colors">
                 <X size={20} />
               </button>
             </div>
