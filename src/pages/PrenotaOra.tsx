@@ -1425,7 +1425,7 @@ const PrenotaOra = () => {
                       <span className="text-gray-700 dark:text-white text-sm">Tariffa dinamica stagionale</span>
                     </div>
                     <div className="text-right">
-                      <p className="text-white/50 text-sm mb-1">Durata</p>
+                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">Durata</p>
                       <p className="text-gold font-bold text-xl">
                         {days} Giorn{days !== 1 ? "i" : "o"}
                       </p>
