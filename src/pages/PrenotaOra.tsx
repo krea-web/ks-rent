@@ -1317,7 +1317,7 @@ const PrenotaOra = () => {
                   )}
 
                   {/* Riepilogo Finale */}
-                  <div className="mt-8 bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
+                  <div className="mt-8 bg-gray-50 dark:bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
                     <h3 className="text-lg font-display font-bold flex items-center gap-3">
                       <CheckCircle2 className="text-gold" size={20} />
                       Riepilogo Finale
