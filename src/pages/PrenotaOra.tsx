@@ -1497,7 +1497,7 @@ const PrenotaOra = () => {
               <div className="flex items-center justify-between gap-3 px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom))]">
                 {/* LEFT: Vehicle + Price */}
                 <div className="flex flex-col min-w-0">
-                  <span className="text-xs text-white/50 truncate">
+                  <span className="text-xs text-gray-500 dark:text-white/50 truncate">
                     {selectedVehicle ? `${selectedVehicle.make} ${selectedVehicle.model}` : "Nessun veicolo"}
                   </span>
                   {total > 0 ? (
