@@ -1473,7 +1473,7 @@ const PrenotaOra = () => {
                       Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo
                       scelto.
                     </p>
-                    <div className="flex items-center justify-between text-xs text-white/40">
+                    <div className="flex items-center justify-between text-xs text-gray-400 dark:text-white/40">
                       <span>Step {currentStep} di 5</span>
                       <span className="text-gold">{STEP_LABELS[currentStep - 1]}</span>
                     </div>
