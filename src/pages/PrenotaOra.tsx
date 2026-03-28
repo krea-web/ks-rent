@@ -1506,7 +1506,7 @@ const PrenotaOra = () => {
                         €{total.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                       {days > 0 && (
-                        <span className="text-[10px] text-white/40">
+                        <span className="text-[10px] text-gray-500 dark:text-white/40">
                           per {days} giorn{days !== 1 ? "i" : "o"}
                         </span>
                       )}
