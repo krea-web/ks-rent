@@ -1338,7 +1338,7 @@ const PrenotaOra = () => {
                        <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Ritiro</p>
                         <p className="font-bold truncate">
-                          {pickupLocation || <span className="text-white/30 italic">Da impostare</span>}
+                          {pickupLocation || <span className="text-gray-400 dark:text-white/30 italic">Da impostare</span>}
                         </p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-4 min-w-0">
