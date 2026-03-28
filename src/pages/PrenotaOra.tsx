@@ -797,7 +797,7 @@ const PrenotaOra = () => {
                                 onClick={() =>
                                   setCarouselIndex((p) => (p - 1 + filteredGrouped.length) % filteredGrouped.length)
                                 }
-                                className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
+                                className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-gray-300 dark:border-white/20 bg-white/60 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center text-gray-600 dark:text-white/70 hover:text-gold hover:border-gold/50 transition-all"
                                 aria-label="Veicolo precedente"
                               >
                                 <ChevronLeft size={24} />
