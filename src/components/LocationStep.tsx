@@ -291,7 +291,7 @@ const LocationStep = ({
         "pickup"
       )}
 
-      <div className="w-full h-px bg-white/5" />
+      <div className="w-full h-px bg-gray-200 dark:bg-white/5" />
 
       {renderLocationBlock(
         "Luogo di Riconsegna",
