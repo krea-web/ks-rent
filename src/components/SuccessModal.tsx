@@ -43,7 +43,7 @@ const SuccessModal = ({ open, onClose }: SuccessModalProps) => (
           </motion.div>
 
           {/* Title */}
-          <h2 className="text-2xl md:text-3xl font-black text-white mb-3 tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white mb-3 tracking-tight">
             Richiesta Ricevuta
           </h2>
 
