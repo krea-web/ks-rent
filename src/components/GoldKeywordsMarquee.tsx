@@ -35,7 +35,7 @@ const GoldKeywordsMarquee = () => {
           {duplicated.map((kw, i) => (
             <span
               key={i}
-              className="whitespace-nowrap text-sm md:text-base font-black uppercase tracking-[0.2em] text-black/90 flex items-center gap-6"
+              className="whitespace-nowrap text-sm md:text-base font-black uppercase tracking-[0.2em] text-black/80 flex items-center gap-6"
             >
               {kw}
               <span className="text-black/30 text-lg">✦</span>

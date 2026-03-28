@@ -222,7 +222,7 @@ const Footer = () => (
               <Link
                 key={d.to}
                 to={d.to}
-                className="px-3 py-1.5 text-[11px] font-medium text-gray-500 dark:text-white/60 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-200 relative z-20 uppercase tracking-wider"
+                className="px-3 py-1.5 text-[11px] font-medium text-gray-800 dark:text-white/60 bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-full hover:border-gold hover:text-gold dark:hover:bg-gold/10 transition-all duration-200 relative z-20 uppercase tracking-wider"
               >
                 {d.label}
               </Link>
