@@ -886,7 +886,7 @@ const PrenotaOra = () => {
                               <Button
                                 onClick={() => handleVehicleSelect(currentGroup)}
                                 disabled={soldOut}
-                                className="mt-5 bg-gold hover:bg-gold-light text-black font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
+                                className="mt-5 bg-gold hover:bg-yellow-500 text-white font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
                               >
                                 {soldOut ? "Non disponibile" : "Seleziona questo veicolo"}{" "}
                                 <ArrowRight size={16} className="ml-2" />
@@ -1009,7 +1009,7 @@ const PrenotaOra = () => {
                         <Button
                           type="button"
                           onClick={handleDatesConfirm}
-                          className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                          className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Verifica Disponibilità <ArrowRight size={16} className="ml-2" />
                         </Button>
@@ -1092,7 +1092,7 @@ const PrenotaOra = () => {
                           <Button
                             type="button"
                             onClick={() => goToStep(3)}
-                            className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                            className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                           >
                             Continua <ArrowRight size={16} className="ml-2" />
                           </Button>
@@ -1134,7 +1134,7 @@ const PrenotaOra = () => {
                         }
                         goToStep(4);
                       }}
-                      className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                      className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                     >
                       Continua <ArrowRight size={16} className="ml-2" />
                     </Button>
@@ -1170,7 +1170,7 @@ const PrenotaOra = () => {
                         <Button
                           type="button"
                           onClick={() => setHasSecondDriver(true)}
-                          className="h-14 px-8 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                          className="h-14 px-8 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Sì, Aggiungi
                         </Button>
@@ -1226,7 +1226,7 @@ const PrenotaOra = () => {
                             }
                             goToStep(5);
                           }}
-                          className="w-full h-14 bg-gold text-black hover:bg-yellow-400 font-bold uppercase tracking-wider rounded-xl"
+                          className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
                           Continua <ArrowRight size={16} className="ml-2" />
                         </Button>
@@ -1521,7 +1521,7 @@ const PrenotaOra = () => {
                   type="button"
                   onClick={handleMobileAction}
                   disabled={loading || (currentStep === 2 && checkingAvailability)}
-                  className="h-11 px-6 bg-gold text-black hover:bg-gold/90 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs shrink-0 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
+                  className="h-11 px-6 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs shrink-0 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
                 >
                   {loading || (currentStep === 2 && checkingAvailability) ? (
                     <Loader2 size={14} className="animate-spin" />
