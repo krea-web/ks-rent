@@ -390,7 +390,7 @@ const ChiSiamo = () => {
                 <span className="text-black font-extrabold text-lg tracking-wider">PAGINEGIALLE</span>
               </div>
               <div className="text-center md:text-left flex-grow">
-                <p className="text-white text-base md:text-lg mb-4 font-light">
+                <p className="text-gray-800 dark:text-white text-base md:text-lg mb-4 font-light">
                   Ogni recensione viene verificata e certificata da Pagine Gialle, garantendo la massima trasparenza per
                   te e per i futuri clienti.
                 </p>
