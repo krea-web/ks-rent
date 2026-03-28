@@ -221,7 +221,7 @@ const ChiSiamo = () => {
                 href="https://instagram.com/ksrentsardinia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-6 md:px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:border-gold/50 hover:bg-gold/10 text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px] relative z-20"
+                className="inline-flex items-center gap-3 px-6 md:px-8 py-4 rounded-full bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 hover:border-gold/50 hover:bg-gold/10 text-gray-900 dark:text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px] relative z-20"
               >
                 Segui @ksrentsardinia{" "}
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
