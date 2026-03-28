@@ -1448,7 +1448,7 @@ const PrenotaOra = () => {
                     <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
                       <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
                       {mainDriver.name && (
-                        <span className="text-white/40 text-xs ml-auto">
+                        <span className="text-gray-400 dark:text-white/40 text-xs ml-auto">
                           {mainDriver.name} {mainDriver.surname}
                         </span>
                       )}
