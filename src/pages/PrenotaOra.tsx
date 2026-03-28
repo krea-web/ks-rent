@@ -1445,7 +1445,7 @@ const PrenotaOra = () => {
                   )}
 
                   <div className="space-y-3 py-2">
-                    <div className="flex items-center gap-3 text-sm text-white/70">
+                    <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
                       <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
                       {mainDriver.name && (
                         <span className="text-white/40 text-xs ml-auto">
