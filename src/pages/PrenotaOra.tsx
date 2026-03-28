@@ -1410,10 +1410,10 @@ const PrenotaOra = () => {
                     </>
                   ) : (
                     <div className="relative z-10 flex flex-col justify-center h-full">
-                      <span className="text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
+                      <span className="text-gray-500 dark:text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
                         Riepilogo Live
                       </span>
-                      <h3 className="text-xl font-display font-bold text-white/30">Nessun veicolo</h3>
+                      <h3 className="text-xl font-display font-bold text-gray-300 dark:text-white/30">Nessun veicolo</h3>
                     </div>
                   )}
                 </div>
