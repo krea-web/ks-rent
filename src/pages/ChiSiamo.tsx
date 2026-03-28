@@ -356,7 +356,7 @@ const ChiSiamo = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-50"></div>
 
             <div className="flex justify-center mb-8">
-              <div className="flex items-center gap-1.5 bg-[#1a1a1a] px-5 py-2.5 rounded-full border border-white/5 shadow-inner">
+              <div className="flex items-center gap-1.5 bg-gray-100 dark:bg-[#1a1a1a] px-5 py-2.5 rounded-full border border-gray-200 dark:border-white/5 shadow-inner">
                 {[...Array(5)].map((_, i) => (
                   <svg
                     key={i}
