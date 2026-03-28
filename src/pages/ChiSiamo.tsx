@@ -333,7 +333,7 @@ const ChiSiamo = () => {
               </p>
               <p>
                 Ci teniamo a precisare ai nostri clienti che operiamo in totale indipendenza e{" "}
-                <strong className="text-white/80">non abbiamo alcuna affiliazione</strong> con altre agenzie di noleggio
+                <strong className="text-gray-800 dark:text-white/80">non abbiamo alcuna affiliazione</strong> con altre agenzie di noleggio
                 auto omonime presenti nel resto d'Italia. KS Rent Sardinia è un marchio esclusivamente legato al
                 territorio sardo.
               </p>
