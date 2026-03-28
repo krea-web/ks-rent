@@ -482,7 +482,7 @@ const PrenotaOra = () => {
               maxLength={16}
               value={driver.cf}
               onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white uppercase"
+              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white uppercase"
             />
             <FieldCheck show={driver.cf.length === 16} />
           </div>
