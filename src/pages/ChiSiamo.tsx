@@ -380,7 +380,7 @@ const ChiSiamo = () => {
               Diventa il Nostro <span className="text-gray-900 dark:text-white">Giudice di Fiducia</span>
             </h3>
 
-            <p className="text-white/70 text-lg md:text-xl mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="text-gray-600 dark:text-white/70 text-lg md:text-xl mb-12 max-w-3xl mx-auto font-light leading-relaxed">
               Siamo fieri di essere presenti su Pagine Gialle, il portale storico italiano che certifica la qualità
               delle attività. Aiutaci a mantenere il nostro standard premium condividendo la tua esperienza.
             </p>
