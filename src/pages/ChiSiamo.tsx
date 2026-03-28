@@ -206,7 +206,7 @@ const ChiSiamo = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 leading-tight">
                 Vivi l'Esperienza.
               </h2>
-              <p className="text-white/50 font-light text-base md:text-lg">
+              <p className="text-gray-500 dark:text-white/50 font-light text-base md:text-lg">
                 Unisciti alla nostra community. Esplora le bellezze della Sardegna e scopri il dietro le quinte della
                 nostra flotta esclusiva.
               </p>
