@@ -723,7 +723,7 @@ const PrenotaOra = () => {
             animate={{ opacity: 1, x: 0 }}
             type="button"
             onClick={() => goToStep(currentStep - 1)}
-            className="flex items-center gap-2 text-white/50 hover:text-gold text-sm mb-6 transition-colors"
+            className="flex items-center gap-2 text-gray-500 dark:text-white/50 hover:text-gold text-sm mb-6 transition-colors"
           >
             <ArrowLeft size={16} /> Indietro
           </motion.button>
