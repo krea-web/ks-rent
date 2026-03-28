@@ -152,7 +152,7 @@ const ChiSiamo = () => {
                   loading="lazy"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-8 w-36 h-36 md:w-48 md:h-48 bg-[#0a0a0a] border border-white/10 rounded-3xl flex items-center justify-center p-4 md:p-6 hidden md:flex shadow-2xl">
+              <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-8 w-36 h-36 md:w-48 md:h-48 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 rounded-3xl flex items-center justify-center p-4 md:p-6 hidden md:flex shadow-2xl">
                 <p className="text-xs text-gold uppercase tracking-widest font-semibold text-center leading-loose">
                   DAL 2025
                   <br />
