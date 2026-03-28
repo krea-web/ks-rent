@@ -1191,7 +1191,7 @@ const PrenotaOra = () => {
 
                   {/* Second driver form */}
                   {hasSecondDriver === true && (
-                    <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10">
+                    <div className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 shadow-md dark:shadow-none">
                       <div className="flex items-center justify-between mb-5 md:mb-6">
                         <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
                           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
