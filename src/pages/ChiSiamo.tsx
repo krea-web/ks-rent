@@ -43,7 +43,7 @@ const ChiSiamo = () => {
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[1.05] tracking-tight mb-6 md:mb-8 break-words">
               Noleggio Auto di Lusso <span className="text-gradient-gold">in Costa Smeralda.</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
               Oltre il semplice noleggio. Un'esperienza di pura libertà, disegnata per esaltare ogni tuo viaggio
               sull'isola.
             </p>
