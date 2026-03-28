@@ -60,7 +60,7 @@ const SuccessModal = ({ open, onClose }: SuccessModalProps) => (
             <Link
               to="/"
               onClick={onClose}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-white/70 text-sm font-semibold uppercase tracking-wider hover:border-white/30 hover:text-white transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-gray-300 dark:border-white/10 text-gray-600 dark:text-white/70 text-sm font-semibold uppercase tracking-wider hover:border-gray-400 dark:hover:border-white/30 hover:text-gray-900 dark:hover:text-white transition-all"
             >
               <Home size={14} />
               Torna alla Home
