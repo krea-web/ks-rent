@@ -123,12 +123,12 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between p-6 border-t border-white/10 gap-3">
+            <div className="flex items-center justify-between p-6 border-t border-gray-200 dark:border-white/10 gap-3">
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleClear}
-                className="border-white/10 text-white/60 hover:text-white hover:bg-white/5"
+                className="border-gray-300 dark:border-white/10 text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
               >
                 <RotateCcw size={14} className="mr-2" /> Cancella
               </Button>
