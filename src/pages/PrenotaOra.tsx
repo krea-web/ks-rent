@@ -1454,7 +1454,7 @@ const PrenotaOra = () => {
                       )}
                     </div>
                     {hasSecondDriver && (
-                      <div className="flex items-center gap-3 text-sm text-white/70">
+                      <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
                         <Users className="text-gold shrink-0" size={16} /> Secondo guidatore incluso
                       </div>
                     )}
