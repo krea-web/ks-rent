@@ -395,10 +395,10 @@ const ChiSiamo = () => {
                   te e per i futuri clienti.
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                  <span className="bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
+                  <span className="bg-gold/10 dark:bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
                     Trasparenza Totale
                   </span>
-                  <span className="bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
+                  <span className="bg-gold/10 dark:bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
                     Qualità Certificata
                   </span>
                 </div>
