@@ -119,7 +119,7 @@ const ChiSiamo = () => {
             >
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-6 w-4 h-4 rounded-full bg-[#D4AF37] shadow-[0_0_14px_#D4AF37,0_0_30px_#D4AF37aa] border-2 border-[#D4AF37]" />
               <blockquote className="border-l-0 pl-0">
-                <p className="text-2xl md:text-4xl font-display font-medium italic text-white leading-snug">
+                <p className="text-2xl md:text-4xl font-display font-medium italic text-gray-900 dark:text-white leading-snug">
                   "Non affittiamo semplicemente veicoli, ma ti consegniamo la chiave per vivere l'isola esattamente come
                   va vissuta: in totale libertà."
                 </p>
