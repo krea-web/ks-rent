@@ -1302,7 +1302,7 @@ const PrenotaOra = () => {
                     >
                       <div className="flex items-center gap-3">
                         <AlertCircle size={20} className="text-red-400 shrink-0" />
-                        <p className="text-sm text-white/70">Dati del secondo guidatore incompleti</p>
+                        <p className="text-sm text-gray-600 dark:text-white/70">Dati del secondo guidatore incompleti</p>
                       </div>
                       <Button
                         type="button"
