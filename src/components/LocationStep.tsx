@@ -189,10 +189,10 @@ const LocationStep = ({
       {locationType === "sede" && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
           <Select onValueChange={(v) => handleSedeSelect(v, type)}>
-            <SelectTrigger className="h-14 bg-[#111] border-white/10 focus:border-gold rounded-xl text-white">
+            <SelectTrigger className="h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold rounded-xl text-gray-900 dark:text-white">
               <SelectValue placeholder="Seleziona sede" />
             </SelectTrigger>
-            <SelectContent className="bg-[#111] border-white/10 text-white">
+            <SelectContent className="bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white">
               <SelectItem value="operativa">
                 <div className="flex items-center gap-2">
                   <MapPin size={14} className="text-gold" />
