@@ -69,7 +69,7 @@ const SuccessModal = ({ open, onClose }: SuccessModalProps) => (
               href={GOOGLE_REVIEW_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-gold to-[hsl(43,56%,65%)] text-black text-sm font-bold uppercase tracking-wider hover:scale-105 transition-transform"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-gold to-[hsl(43,56%,65%)] text-white text-sm font-bold uppercase tracking-wider hover:scale-105 transition-transform"
             >
               <Star size={14} />
               Lascia una Recensione

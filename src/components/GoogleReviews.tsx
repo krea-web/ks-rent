@@ -60,7 +60,7 @@ const ReviewCard = ({ review, index }: { review: any; index: number }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ delay: index * 0.2, duration: 0.7, ease: "easeOut" }}
-    className="relative bg-white dark:bg-[#0a0a0a] rounded-2xl p-8 md:p-10 border border-gray-200 dark:border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col justify-between h-full group hover:border-[#C8A135]/40 transition-all duration-500"
+    className="relative bg-white dark:bg-[#0a0a0a] rounded-2xl p-8 md:p-10 border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col justify-between h-full group hover:border-[#C8A135]/40 transition-all duration-500"
   >
     <div className="absolute top-8 right-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500">
       <Quote size={80} className="text-[#C8A135] rotate-180" />

@@ -1361,7 +1361,7 @@ const PrenotaOra = () => {
                         !isDriverComplete(mainDriver) ||
                         (hasSecondDriver === true && !isDriverComplete(secondDriver))
                       }
-                      className="w-full h-16 bg-white text-black hover:bg-gold font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                      className="w-full h-16 bg-gold text-white hover:bg-yellow-500 font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
                     >
                       {loading ? (
                         <span className="flex items-center gap-2">
