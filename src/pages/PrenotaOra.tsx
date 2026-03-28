@@ -552,7 +552,7 @@ const PrenotaOra = () => {
                   <span className="text-xs font-bold">{driver.licenseFront.name}</span>
                 </div>
               ) : (
-                <div className="text-center text-white/40">
+                <div className="text-center text-gray-400 dark:text-white/40">
                   <UploadCloud className="mx-auto mb-2" size={24} />
                   <span className="text-xs uppercase font-semibold tracking-wider">Carica Fronte</span>
                 </div>
