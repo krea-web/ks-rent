@@ -1082,7 +1082,7 @@ const PrenotaOra = () => {
                           </div>
                           <div className="flex items-end justify-between pt-2 border-t border-gray-200 dark:border-white/5">
                             <div>
-                              <p className="text-white/50 text-xs">Prezzo totale</p>
+                              <p className="text-gray-500 dark:text-white/50 text-xs">Prezzo totale</p>
                               <p className="text-3xl font-black font-display text-gold">€{total}</p>
                             </div>
                             <p className="text-white/40 text-sm">
