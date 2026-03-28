@@ -27,7 +27,7 @@ const SuccessModal = ({ open, onClose }: SuccessModalProps) => (
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="relative z-10 w-full max-w-md bg-[#0a0a0a] border border-gold/30 rounded-2xl p-8 md:p-10 text-center shadow-[0_0_60px_rgba(212,175,55,0.15)]"
+          className="relative z-10 w-full max-w-md bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-gold/30 rounded-2xl p-8 md:p-10 text-center shadow-[0_0_60px_rgba(212,175,55,0.15)]"
         >
           {/* Glow effect */}
           <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-gold/20 rounded-full blur-[80px] pointer-events-none" />
