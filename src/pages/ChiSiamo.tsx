@@ -144,7 +144,7 @@ const ChiSiamo = () => {
               viewport={{ once: true }}
               className="lg:col-span-5 relative"
             >
-              <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-white/5">
+              <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-gray-200 dark:border-white/5">
                 <img
                   src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80"
                   alt="Strada panoramica Sardegna noleggio auto KS Rent"
