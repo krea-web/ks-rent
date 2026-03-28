@@ -1335,8 +1335,8 @@ const PrenotaOra = () => {
                           {startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}
                         </p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Ritiro</p>
+                       <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Ritiro</p>
                         <p className="font-bold truncate">
                           {pickupLocation || <span className="text-white/30 italic">Da impostare</span>}
                         </p>
