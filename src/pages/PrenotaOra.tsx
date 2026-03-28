@@ -1419,10 +1419,10 @@ const PrenotaOra = () => {
                 </div>
 
                 <div className="p-6 md:p-8 space-y-6">
-                  <div className="flex justify-between items-end pb-6 border-b border-white/5">
+                  <div className="flex justify-between items-end pb-6 border-b border-gray-200 dark:border-white/5">
                     <div>
-                      <p className="text-white/50 text-sm mb-1">Tariffa</p>
-                      <span className="text-white text-sm">Tariffa dinamica stagionale</span>
+                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">Tariffa</p>
+                      <span className="text-gray-700 dark:text-white text-sm">Tariffa dinamica stagionale</span>
                     </div>
                     <div className="text-right">
                       <p className="text-white/50 text-sm mb-1">Durata</p>
