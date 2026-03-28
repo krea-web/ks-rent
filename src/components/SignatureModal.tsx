@@ -103,7 +103,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
 
             {/* Canvas */}
             <div className="p-6">
-              <div className="bg-white rounded-xl overflow-hidden border-2 border-gold/20">
+              <div className="bg-gray-50 dark:bg-white rounded-xl overflow-hidden border-2 border-gray-300 dark:border-gold/20">
                 <SignatureCanvas
                   ref={sigRef}
                   penColor="#000"
