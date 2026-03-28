@@ -1016,7 +1016,7 @@ const PrenotaOra = () => {
                       )}
 
                       {checkingAvailability && (
-                        <div className="flex items-center justify-center gap-3 py-6 text-white/50">
+                        <div className="flex items-center justify-center gap-3 py-6 text-gray-500 dark:text-white/50">
                           <Loader2 size={20} className="animate-spin text-gold" />
                           <span>Verifica disponibilità in tempo reale...</span>
                         </div>
