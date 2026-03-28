@@ -496,7 +496,7 @@ const PrenotaOra = () => {
               type="email"
               value={driver.email}
               onChange={(e) => setDriver({ ...driver, email: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white"
             />
             <FieldCheck show={driver.email.includes("@") && driver.email.includes(".")} />
           </div>
