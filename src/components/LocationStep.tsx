@@ -160,11 +160,11 @@ const LocationStep = ({
                 : "bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
             )}
           >
-            <Building2 size={20} className={cn("mb-2", locationType === "sede" ? "text-gold" : "text-white/40")} />
-            <p className={cn("text-sm font-bold", locationType === "sede" ? "text-white" : "text-white/60")}>
+            <Building2 size={20} className={cn("mb-2", locationType === "sede" ? "text-gold" : "text-gray-400 dark:text-white/40")} />
+            <p className={cn("text-sm font-bold", locationType === "sede" ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-white/60")}>
               {type === "pickup" ? "Ritiro in Sede" : "Consegna in Sede"}
             </p>
-            <p className="text-xs text-white/40 mt-1">Sedi KS Rent Olbia</p>
+            <p className="text-xs text-gray-500 dark:text-white/40 mt-1">Sedi KS Rent Olbia</p>
           </button>
           <button
             type="button"
