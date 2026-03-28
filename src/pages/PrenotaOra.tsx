@@ -701,7 +701,7 @@ const PrenotaOra = () => {
                         ? "bg-gold text-black"
                         : isDone
                           ? "bg-gold/20 text-gold cursor-pointer hover:bg-gold/30"
-                          : "bg-white/5 text-white/30 cursor-default",
+                          : "bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-default",
                     )}
                   >
                     {isDone ? <Check size={12} /> : <span>{stepNum}</span>}
