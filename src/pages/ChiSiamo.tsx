@@ -295,7 +295,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* MAPPA SEDI */}
-      <section className="py-16 md:py-24 bg-[#050505] border-t border-white/5">
+      <section className="py-16 md:py-24 bg-stone-50 dark:bg-[#050505] border-t border-gray-200 dark:border-white/5">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
