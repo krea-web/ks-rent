@@ -83,7 +83,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="relative w-full max-w-lg bg-[#0a0a0a] border border-gold/30 rounded-2xl shadow-[0_0_60px_rgba(212,175,55,0.1)] overflow-hidden"
+            className="relative w-full max-w-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-gold/30 rounded-2xl shadow-[0_0_60px_rgba(212,175,55,0.1)] overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">
