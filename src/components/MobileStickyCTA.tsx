@@ -8,7 +8,7 @@ const MobileStickyCTA = () => (
     initial={{ y: 100 }}
     animate={{ y: 0 }}
     transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 30 }}
-    className="fixed bottom-0 left-0 w-full z-[9998] lg:hidden bg-black/80 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] pb-[env(safe-area-inset-bottom)]"
+    className="fixed bottom-0 left-0 w-full z-[9998] lg:hidden bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.5)] pb-[env(safe-area-inset-bottom)]"
   >
     <div className="px-3 py-2.5 grid grid-cols-2 gap-[2px]">
       <Link

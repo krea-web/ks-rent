@@ -33,7 +33,6 @@ const FleetShowcase = () => {
     fetchFleet();
   }, []);
 
-  // Group by make+model: one card per unique model
   const groupedFleet = useMemo(() => {
     const groups: Record<string, { representative: any; isAvailable: boolean }> = {};
     for (const v of fleet) {
@@ -48,7 +47,6 @@ const FleetShowcase = () => {
         }
       }
     }
-    // Only show models that have at least one available vehicle
     return Object.values(groups).filter((g) => g.isAvailable);
   }, [fleet]);
 
@@ -98,13 +96,11 @@ const FleetShowcase = () => {
         </div>
 
         {groupedFleet.length === 0 ? (
-          <div className="text-center text-white/40 py-20">Caricamento flotta...</div>
+          <div className="text-center text-muted-foreground py-20">Caricamento flotta...</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
             {groupedFleet.map((group, i) => {
               const v = group.representative;
-
-              // Verifica se il veicolo è una RS3 o una M2
               const isM2 = v.model?.includes("M2");
               const isRS3 = v.model?.includes("RS3");
               const isSupercar = isM2 || isRS3;
@@ -116,7 +112,7 @@ const FleetShowcase = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="group flex flex-col bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden hover:border-gold/30 transition-all duration-500 shadow-2xl"
+                  className="group flex flex-col bg-gray-100 dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/5 rounded-3xl overflow-hidden hover:border-gold/30 transition-all duration-500 shadow-2xl"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                     <div className="absolute top-4 left-4 z-20">
@@ -135,7 +131,7 @@ const FleetShowcase = () => {
                       skeletonClassName="rounded-none"
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700 ease-in-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-100 dark:from-[#0a0a0a] via-transparent to-transparent opacity-80 pointer-events-none" />
                   </div>
 
                   <div className="p-5 md:p-8 flex-1 flex flex-col">
@@ -146,22 +142,21 @@ const FleetShowcase = () => {
                       {v.daily_rate && v.daily_rate > 0 ? `A partire da €${v.daily_rate}/gg` : "Prezzo su richiesta"}
                     </p>
 
-                    {/* Mostra le caratteristiche motore per RS3/M2, i prezzi estivi per gli altri */}
                     {isSupercar ? (
                       <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
-                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
                             Potenza
                           </span>
                           <span className="text-sm font-bold text-gold">{isM2 ? "460 CV" : "400 CV"}</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
                             0-100 km/h
                           </span>
                           <span className="text-sm font-bold text-gold">{isM2 ? "4.1 sec" : "3.8 sec"}</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
                             Vel. Max
                           </span>
@@ -170,7 +165,7 @@ const FleetShowcase = () => {
                       </div>
                     ) : (
                       <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
-                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
                             Giugno
                           </span>
@@ -178,7 +173,7 @@ const FleetShowcase = () => {
                             {v.rate_june ? `€${v.rate_june}/gg` : "-"}
                           </span>
                         </div>
-                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
                             Luglio
                           </span>
@@ -186,7 +181,7 @@ const FleetShowcase = () => {
                             {v.rate_july ? `€${v.rate_july}/gg` : "-"}
                           </span>
                         </div>
-                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/5">
+                        <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
                             Agosto
                           </span>
@@ -213,7 +208,7 @@ const FleetShowcase = () => {
       </div>
 
       {/* SEO KEYWORD PARAGRAPH */}
-      <div className="max-w-7xl mx-auto mt-12 text-white/70 font-light text-sm text-center leading-relaxed">
+      <div className="max-w-7xl mx-auto mt-12 text-gray-600 dark:text-white/70 font-light text-sm text-center leading-relaxed">
         <p>
           KS Rent vanta una flotta variegata per ogni esigenza. Dai brividi del <strong>noleggio supercar a Olbia</strong> con modelli iconici (prova il brivido del <strong>noleggio Audi RS3 a Olbia</strong> o BMW M2), fino alla mobilità agile. Se preferisci le due ruote, scopri il nostro <strong>noleggio moto a Olbia</strong> per evitare il traffico costiero, oppure divertiti in off-road con il nostro <strong>noleggio quad a Olbia</strong>.
         </p>
