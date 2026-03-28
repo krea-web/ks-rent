@@ -343,7 +343,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* RECENSIONI - PAGINE GIALLE */}
-      <section className="py-20 px-4 md:px-12 bg-[#050505] relative overflow-hidden border-t border-white/5">
+      <section className="py-20 px-4 md:px-12 bg-stone-50 dark:bg-[#050505] relative overflow-hidden border-t border-gray-200 dark:border-white/5">
         <div className="absolute inset-0 bg-gold/5 opacity-40 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto flex flex-col items-center justify-center text-center relative z-10">
           <motion.div
