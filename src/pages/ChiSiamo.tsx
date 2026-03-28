@@ -385,7 +385,7 @@ const ChiSiamo = () => {
               delle attività. Aiutaci a mantenere il nostro standard premium condividendo la tua esperienza.
             </p>
 
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 mb-12 flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto">
+            <div className="bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 mb-12 flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto">
               <div className="bg-[#ffcc00] rounded-xl p-3 shadow-lg flex-shrink-0">
                 <span className="text-black font-extrabold text-lg tracking-wider">PAGINEGIALLE</span>
               </div>
