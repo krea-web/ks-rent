@@ -1163,7 +1163,7 @@ const PrenotaOra = () => {
                       <h2 className="text-xl md:text-2xl font-display font-bold">
                         Viaggerai con un secondo guidatore?
                       </h2>
-                      <p className="text-white/50 max-w-md mx-auto">
+                      <p className="text-gray-500 dark:text-white/50 max-w-md mx-auto">
                         Se prevedi di condividere la guida, aggiungi i dati del secondo guidatore.
                       </p>
                       <div className="flex gap-4 justify-center">
