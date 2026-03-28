@@ -681,7 +681,7 @@ const PrenotaOra = () => {
             </span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight break-words">
-            Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Ora.</span>
+            Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 dark:from-white to-gray-400 dark:to-white/40">Ora.</span>
           </h1>
 
           {/* Step indicator */}
