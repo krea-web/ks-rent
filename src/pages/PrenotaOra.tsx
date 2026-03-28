@@ -1029,7 +1029,7 @@ const PrenotaOra = () => {
                           className="bg-red-500/5 border border-red-500/20 rounded-2xl p-6 text-center space-y-4"
                         >
                           <AlertCircle size={32} className="text-red-400 mx-auto" />
-                          <p className="text-white/80">
+                          <p className="text-gray-700 dark:text-white/80">
                             Questa vettura è già impegnata per queste date, ma abbiamo altre soluzioni per te.
                           </p>
                           <div className="flex gap-3 justify-center">
