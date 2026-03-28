@@ -117,7 +117,7 @@ const SignatureModal = ({ open, bookingId, onClose, onSuccess }: SignatureModalP
               <p className={`text-center text-xs mt-2 italic ${hasSigned ? 'text-green-400/60' : 'text-red-400/70'}`}>
                 {hasSigned ? "✓ Firma inserita" : "⚠ La firma è obbligatoria per procedere"}
               </p>
-              <p className="text-center text-xs mt-1 text-white/30 italic">
+              <p className="text-center text-xs mt-1 text-gray-400 dark:text-white/30 italic">
                 📷 La tua data e luogo di nascita verranno estratti automaticamente dalla foto della patente che hai caricato.
               </p>
             </div>
