@@ -475,60 +475,60 @@ const PrenotaOra = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Codice Fiscale <span className="text-white/30 normal-case tracking-normal">(opzionale)</span></Label>
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Codice Fiscale <span className="text-gray-400 dark:text-white/30 normal-case tracking-normal">(opzionale)</span></Label>
           <div className="relative">
-            <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+            <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
             <Input
               maxLength={16}
               value={driver.cf}
               onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white uppercase"
+              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white uppercase"
             />
             <FieldCheck show={driver.cf.length === 16} />
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Email *</Label>
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Email *</Label>
           <div className="relative">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
             <Input
               required
               type="email"
               value={driver.email}
               onChange={(e) => setDriver({ ...driver, email: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white"
             />
             <FieldCheck show={driver.email.includes("@") && driver.email.includes(".")} />
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50">Telefono *</Label>
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Telefono *</Label>
           <div className="relative">
-            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
             <Input
               required
               type="tel"
               value={driver.phone}
               onChange={(e) => setDriver({ ...driver, phone: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white"
             />
             <FieldCheck show={driver.phone.length >= 8} />
           </div>
         </div>
       </div>
 
-      <div className="pt-4 border-t border-white/5">
+      <div className="pt-4 border-t border-gray-200 dark:border-white/5">
         <h3 className="text-sm font-bold text-gold mb-2 flex items-center gap-2">
           <ShieldCheck size={16} /> Documenti (Patente)
         </h3>
-        <p className="text-white/40 text-xs mb-4 italic">
+        <p className="text-gray-500 dark:text-white/40 text-xs mb-4 italic">
           📷 La tua data e luogo di nascita verranno estratti automaticamente dalla foto della patente tramite OCR.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Fronte</Label>
+            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">Foto Fronte</Label>
             <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
+              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
               onDragOver={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -552,7 +552,7 @@ const PrenotaOra = () => {
                   <span className="text-xs font-bold">{driver.licenseFront.name}</span>
                 </div>
               ) : (
-                <div className="text-center text-white/40">
+                <div className="text-center text-gray-400 dark:text-white/40">
                   <UploadCloud className="mx-auto mb-2" size={24} />
                   <span className="text-xs uppercase font-semibold tracking-wider">Carica Fronte</span>
                 </div>
@@ -560,9 +560,9 @@ const PrenotaOra = () => {
             </label>
           </div>
           <div>
-            <Label className="text-xs uppercase tracking-widest text-white/50 mb-2 block">Foto Retro</Label>
+            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">Foto Retro</Label>
             <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
+              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
               onDragOver={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -586,7 +586,7 @@ const PrenotaOra = () => {
                   <span className="text-xs font-bold">{driver.licenseBack.name}</span>
                 </div>
               ) : (
-                <div className="text-center text-white/40">
+                <div className="text-center text-gray-400 dark:text-white/40">
                   <UploadCloud className="mx-auto mb-2" size={24} />
                   <span className="text-xs uppercase font-semibold tracking-wider">Carica Retro</span>
                 </div>
@@ -639,7 +639,7 @@ const PrenotaOra = () => {
   };
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white pt-24 pb-40 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-gray-50 dark:bg-[#050505] min-h-screen text-gray-900 dark:text-white pt-24 pb-40 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
         title={
           selectedVehicle
@@ -657,7 +657,7 @@ const PrenotaOra = () => {
       />
 
       {/* PROGRESS BAR */}
-      <div className="fixed top-0 left-0 w-full z-[9998] h-1 bg-white/5">
+      <div className="fixed top-0 left-0 w-full z-[9998] h-1 bg-gray-200 dark:bg-white/5">
         <motion.div
           className="h-full bg-gradient-to-r from-gold via-yellow-300 to-gold"
           initial={{ width: "0%" }}
@@ -668,7 +668,7 @@ const PrenotaOra = () => {
 
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gray-200/50 dark:bg-white/5 rounded-full blur-[150px]" />
       </div>
 
       <div className="w-full max-w-7xl mx-auto px-4 relative z-10">
@@ -681,7 +681,7 @@ const PrenotaOra = () => {
             </span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight break-words">
-            Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Ora.</span>
+            Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 dark:from-white to-gray-400 dark:to-white/40">Ora.</span>
           </h1>
 
           {/* Step indicator */}
@@ -701,14 +701,14 @@ const PrenotaOra = () => {
                         ? "bg-gold text-black"
                         : isDone
                           ? "bg-gold/20 text-gold cursor-pointer hover:bg-gold/30"
-                          : "bg-white/5 text-white/30 cursor-default",
+                          : "bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-white/30 cursor-default",
                     )}
                   >
                     {isDone ? <Check size={12} /> : <span>{stepNum}</span>}
                     <span className="hidden sm:inline">{label}</span>
                   </button>
                   {i < STEP_LABELS.length - 1 && (
-                    <div className={cn("w-6 h-px", isDone ? "bg-gold/40" : "bg-white/10")} />
+                    <div className={cn("w-6 h-px", isDone ? "bg-gold/40" : "bg-gray-200 dark:bg-white/10")} />
                   )}
                 </div>
               );
@@ -723,7 +723,7 @@ const PrenotaOra = () => {
             animate={{ opacity: 1, x: 0 }}
             type="button"
             onClick={() => goToStep(currentStep - 1)}
-            className="flex items-center gap-2 text-white/50 hover:text-gold text-sm mb-6 transition-colors"
+            className="flex items-center gap-2 text-gray-500 dark:text-white/50 hover:text-gold text-sm mb-6 transition-colors"
           >
             <ArrowLeft size={16} /> Indietro
           </motion.button>
@@ -768,7 +768,7 @@ const PrenotaOra = () => {
                               "flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 min-h-[44px] whitespace-nowrap",
                               selectedCategory === cat
                                 ? "bg-gold text-black"
-                                : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white border border-white/10",
+                                : "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-white/50 hover:bg-gray-200 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10",
                             )}
                           >
                             {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
@@ -797,7 +797,7 @@ const PrenotaOra = () => {
                                 onClick={() =>
                                   setCarouselIndex((p) => (p - 1 + filteredGrouped.length) % filteredGrouped.length)
                                 }
-                                className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
+                                className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-gray-300 dark:border-white/20 bg-white/60 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center text-gray-600 dark:text-white/70 hover:text-gold hover:border-gold/50 transition-all"
                                 aria-label="Veicolo precedente"
                               >
                                 <ChevronLeft size={24} />
@@ -805,7 +805,7 @@ const PrenotaOra = () => {
                               <button
                                 type="button"
                                 onClick={() => setCarouselIndex((p) => (p + 1) % filteredGrouped.length)}
-                                className="absolute right-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-gold hover:border-gold/50 transition-all"
+                                className="absolute right-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-gray-300 dark:border-white/20 bg-white/60 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center text-gray-600 dark:text-white/70 hover:text-gold hover:border-gold/50 transition-all"
                                 aria-label="Veicolo successivo"
                               >
                                 <ChevronRight size={24} />
@@ -849,7 +849,7 @@ const PrenotaOra = () => {
                                   onClick={() => setCarouselIndex(i)}
                                   className={cn(
                                     "rounded-full transition-all duration-300",
-                                    i === safeIdx ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-white/20 hover:bg-white/40",
+                                    i === safeIdx ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-gray-300 dark:bg-white/20 hover:bg-gray-400 dark:hover:bg-white/40",
                                   )}
                                   aria-label={`Vai al veicolo ${i + 1}`}
                                 />
@@ -909,7 +909,7 @@ const PrenotaOra = () => {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                  className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden shadow-md dark:shadow-none"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
@@ -919,21 +919,21 @@ const PrenotaOra = () => {
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-3">
-                      <Label className="text-xs uppercase tracking-widest text-white/50">Ritiro</Label>
+                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Ritiro</Label>
                       <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
                             className={cn(
-                              "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base",
-                              !startDate && "text-white/40",
+                              "w-full justify-start text-left bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gold/50 hover:bg-gray-50 dark:hover:bg-[#151515] h-14 rounded-xl text-base",
+                              !startDate && "text-gray-400 dark:text-white/40",
                             )}
                           >
                             <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
                             {startDate ? format(startDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
+                        <PopoverContent className="w-auto p-0 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl z-50">
                           <Suspense
                             fallback={
                               <div className="p-4">
@@ -962,21 +962,21 @@ const PrenotaOra = () => {
                       </Popover>
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-xs uppercase tracking-widest text-white/50">Riconsegna</Label>
+                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Riconsegna</Label>
                       <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
                             className={cn(
-                              "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base",
-                              !endDate && "text-white/40",
+                              "w-full justify-start text-left bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gold/50 hover:bg-gray-50 dark:hover:bg-[#151515] h-14 rounded-xl text-base",
+                              !endDate && "text-gray-400 dark:text-white/40",
                             )}
                           >
                             <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
                             {endDate ? format(endDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-[#111] border-white/10 text-white rounded-2xl z-50">
+                        <PopoverContent className="w-auto p-0 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl z-50">
                           <Suspense
                             fallback={
                               <div className="p-4">
@@ -1016,7 +1016,7 @@ const PrenotaOra = () => {
                       )}
 
                       {checkingAvailability && (
-                        <div className="flex items-center justify-center gap-3 py-6 text-white/50">
+                        <div className="flex items-center justify-center gap-3 py-6 text-gray-500 dark:text-white/50">
                           <Loader2 size={20} className="animate-spin text-gold" />
                           <span>Verifica disponibilità in tempo reale...</span>
                         </div>
@@ -1029,7 +1029,7 @@ const PrenotaOra = () => {
                           className="bg-red-500/5 border border-red-500/20 rounded-2xl p-6 text-center space-y-4"
                         >
                           <AlertCircle size={32} className="text-red-400 mx-auto" />
-                          <p className="text-white/80">
+                          <p className="text-gray-700 dark:text-white/80">
                             Questa vettura è già impegnata per queste date, ma abbiamo altre soluzioni per te.
                           </p>
                           <div className="flex gap-3 justify-center">
@@ -1040,7 +1040,7 @@ const PrenotaOra = () => {
                                 setAvailabilityResult(null);
                                 goToStep(1);
                               }}
-                              className="border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl"
+                              className="border-gray-200 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl"
                             >
                               <Car size={14} className="mr-2" /> Cambia Auto
                             </Button>
@@ -1052,7 +1052,7 @@ const PrenotaOra = () => {
                                 setStartDate(undefined);
                                 setEndDate(undefined);
                               }}
-                              className="border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl"
+                              className="border-gray-200 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl"
                             >
                               <CalendarIcon size={14} className="mr-2" /> Cambia Date
                             </Button>
@@ -1077,15 +1077,15 @@ const PrenotaOra = () => {
                             </motion.div>
                             <div>
                               <p className="text-green-400 font-bold">Disponibile!</p>
-                              <p className="text-white/50 text-xs">Tariffa calcolata in tempo reale</p>
+                              <p className="text-gray-500 dark:text-white/50 text-xs">Tariffa calcolata in tempo reale</p>
                             </div>
                           </div>
-                          <div className="flex items-end justify-between pt-2 border-t border-white/5">
+                          <div className="flex items-end justify-between pt-2 border-t border-gray-200 dark:border-white/5">
                             <div>
-                              <p className="text-white/50 text-xs">Prezzo totale</p>
+                              <p className="text-gray-500 dark:text-white/50 text-xs">Prezzo totale</p>
                               <p className="text-3xl font-black font-display text-gold">€{total}</p>
                             </div>
-                            <p className="text-white/40 text-sm">
+                            <p className="text-gray-500 dark:text-white/40 text-sm">
                               {days} giorn{days !== 1 ? "i" : "o"} · Tariffa dinamica
                             </p>
                           </div>
@@ -1113,7 +1113,7 @@ const PrenotaOra = () => {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                  className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden shadow-md dark:shadow-none"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
@@ -1156,14 +1156,14 @@ const PrenotaOra = () => {
                 >
                   {/* Ask about second driver */}
                   {(hasSecondDriver === null || hasSecondDriver === false) && (
-                    <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 text-center space-y-6">
+                    <div className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 text-center space-y-6 shadow-md dark:shadow-none">
                       <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto">
                         <Users size={28} className="text-gold" />
                       </div>
                       <h2 className="text-xl md:text-2xl font-display font-bold">
                         Viaggerai con un secondo guidatore?
                       </h2>
-                      <p className="text-white/50 max-w-md mx-auto">
+                      <p className="text-gray-500 dark:text-white/50 max-w-md mx-auto">
                         Se prevedi di condividere la guida, aggiungi i dati del secondo guidatore.
                       </p>
                       <div className="flex gap-4 justify-center">
@@ -1191,7 +1191,7 @@ const PrenotaOra = () => {
 
                   {/* Second driver form */}
                   {hasSecondDriver === true && (
-                    <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10">
+                    <div className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 shadow-md dark:shadow-none">
                       <div className="flex items-center justify-between mb-5 md:mb-6">
                         <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
                           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
@@ -1246,7 +1246,7 @@ const PrenotaOra = () => {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                  className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden shadow-md dark:shadow-none"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
@@ -1281,7 +1281,7 @@ const PrenotaOra = () => {
                     >
                       <div className="flex items-center gap-3">
                         <AlertCircle size={20} className="text-red-400 shrink-0" />
-                        <p className="text-sm text-white/70">Dati del guidatore principale incompleti</p>
+                        <p className="text-sm text-gray-600 dark:text-white/70">Dati del guidatore principale incompleti</p>
                       </div>
                       <Button
                         type="button"
@@ -1302,7 +1302,7 @@ const PrenotaOra = () => {
                     >
                       <div className="flex items-center gap-3">
                         <AlertCircle size={20} className="text-red-400 shrink-0" />
-                        <p className="text-sm text-white/70">Dati del secondo guidatore incompleti</p>
+                        <p className="text-sm text-gray-600 dark:text-white/70">Dati del secondo guidatore incompleti</p>
                       </div>
                       <Button
                         type="button"
@@ -1317,32 +1317,32 @@ const PrenotaOra = () => {
                   )}
 
                   {/* Riepilogo Finale */}
-                  <div className="mt-8 bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
+                  <div className="mt-8 bg-gray-50 dark:bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
                     <h3 className="text-lg font-display font-bold flex items-center gap-3">
                       <CheckCircle2 className="text-gold" size={20} />
                       Riepilogo Finale
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
+                       <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
                         <p className="font-bold truncate">
                           {selectedVehicle?.make} {selectedVehicle?.model}
                         </p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
+                       <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
                         <p className="font-bold truncate">
                           {startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}
                         </p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Ritiro</p>
+                       <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Ritiro</p>
                         <p className="font-bold truncate">
-                          {pickupLocation || <span className="text-white/30 italic">Da impostare</span>}
+                          {pickupLocation || <span className="text-gray-400 dark:text-white/30 italic">Da impostare</span>}
                         </p>
                       </div>
-                      <div className="bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
+                       <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
                         <p className="font-bold text-gold text-lg sm:text-xl">€{total}</p>
                       </div>
                     </div>
@@ -1386,9 +1386,9 @@ const PrenotaOra = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-full bg-[#0a0a0a] border border-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden"
+                className="w-full bg-white dark:bg-[#0a0a0a] border border-gold/20 shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-[0_0_40px_rgba(212,175,55,0.05)] rounded-2xl md:rounded-[2rem] overflow-hidden"
               >
-                <div className="p-6 md:p-8 border-b border-white/5 bg-[#111] relative min-h-[140px] flex flex-col justify-end">
+                <div className="p-6 md:p-8 border-b border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#111] relative min-h-[140px] flex flex-col justify-end">
                   {selectedVehicle ? (
                     <>
                       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -1397,35 +1397,35 @@ const PrenotaOra = () => {
                           alt="Selected"
                           className="w-full h-full object-cover opacity-40"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-50 dark:from-[#111] via-gray-50/80 dark:via-[#111]/80 to-transparent" />
                       </div>
                       <div className="relative z-10">
                         <span className="text-gold text-xs font-semibold uppercase tracking-wider">
                           {selectedVehicle.category}
                         </span>
-                        <h3 className="text-2xl font-display font-bold text-white">
+                        <h3 className="text-2xl font-display font-bold text-gray-900 dark:text-white">
                           {selectedVehicle.make} {selectedVehicle.model}
                         </h3>
                       </div>
                     </>
                   ) : (
                     <div className="relative z-10 flex flex-col justify-center h-full">
-                      <span className="text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
+                      <span className="text-gray-500 dark:text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
                         Riepilogo Live
                       </span>
-                      <h3 className="text-xl font-display font-bold text-white/30">Nessun veicolo</h3>
+                      <h3 className="text-xl font-display font-bold text-gray-300 dark:text-white/30">Nessun veicolo</h3>
                     </div>
                   )}
                 </div>
 
                 <div className="p-6 md:p-8 space-y-6">
-                  <div className="flex justify-between items-end pb-6 border-b border-white/5">
+                  <div className="flex justify-between items-end pb-6 border-b border-gray-200 dark:border-white/5">
                     <div>
-                      <p className="text-white/50 text-sm mb-1">Tariffa</p>
-                      <span className="text-white text-sm">Tariffa dinamica stagionale</span>
+                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">Tariffa</p>
+                      <span className="text-gray-700 dark:text-white text-sm">Tariffa dinamica stagionale</span>
                     </div>
                     <div className="text-right">
-                      <p className="text-white/50 text-sm mb-1">Durata</p>
+                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">Durata</p>
                       <p className="text-gold font-bold text-xl">
                         {days} Giorn{days !== 1 ? "i" : "o"}
                       </p>
@@ -1433,7 +1433,7 @@ const PrenotaOra = () => {
                   </div>
 
                   {checkingAvailability && (
-                    <div className="flex items-center justify-center gap-2 py-2 text-white/40 text-sm">
+                    <div className="flex items-center justify-center gap-2 py-2 text-gray-500 dark:text-white/40 text-sm">
                       <Loader2 size={14} className="animate-spin" /> Aggiornamento prezzo...
                     </div>
                   )}
@@ -1445,35 +1445,35 @@ const PrenotaOra = () => {
                   )}
 
                   <div className="space-y-3 py-2">
-                    <div className="flex items-center gap-3 text-sm text-white/70">
+                    <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
                       <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
                       {mainDriver.name && (
-                        <span className="text-white/40 text-xs ml-auto">
+                        <span className="text-gray-400 dark:text-white/40 text-xs ml-auto">
                           {mainDriver.name} {mainDriver.surname}
                         </span>
                       )}
                     </div>
                     {hasSecondDriver && (
-                      <div className="flex items-center gap-3 text-sm text-white/70">
+                      <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
                         <Users className="text-gold shrink-0" size={16} /> Secondo guidatore incluso
                       </div>
                     )}
                   </div>
 
-                  <div className="pt-6 border-t border-white/5 flex flex-wrap justify-between items-center gap-2">
-                    <span className="text-lg text-white/70">Totale stimato</span>
+                  <div className="pt-6 border-t border-gray-200 dark:border-white/5 flex flex-wrap justify-between items-center gap-2">
+                    <span className="text-lg text-gray-600 dark:text-white/70">Totale stimato</span>
                     <span className="text-2xl sm:text-3xl md:text-4xl font-black font-display text-gold min-w-0 break-words">
                       €{total}
                     </span>
                   </div>
 
                   {/* Step indicator in summary */}
-                  <div className="pt-4 border-t border-white/5">
-                    <p className="text-xs text-white/50 leading-relaxed mb-3">
+                  <div className="pt-4 border-t border-gray-200 dark:border-white/5">
+                    <p className="text-xs text-gray-500 dark:text-white/50 leading-relaxed mb-3">
                       Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo
                       scelto.
                     </p>
-                    <div className="flex items-center justify-between text-xs text-white/40">
+                    <div className="flex items-center justify-between text-xs text-gray-400 dark:text-white/40">
                       <span>Step {currentStep} di 5</span>
                       <span className="text-gold">{STEP_LABELS[currentStep - 1]}</span>
                     </div>
@@ -1492,12 +1492,12 @@ const PrenotaOra = () => {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed bottom-0 left-0 w-full z-[100] bg-black/90 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.6)] lg:hidden"
+              className="fixed bottom-0 left-0 w-full z-[100] bg-white/90 dark:bg-black/90 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.6)] lg:hidden"
             >
               <div className="flex items-center justify-between gap-3 px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom))]">
                 {/* LEFT: Vehicle + Price */}
                 <div className="flex flex-col min-w-0">
-                  <span className="text-xs text-white/50 truncate">
+                  <span className="text-xs text-gray-500 dark:text-white/50 truncate">
                     {selectedVehicle ? `${selectedVehicle.make} ${selectedVehicle.model}` : "Nessun veicolo"}
                   </span>
                   {total > 0 ? (
@@ -1506,13 +1506,13 @@ const PrenotaOra = () => {
                         €{total.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                       {days > 0 && (
-                        <span className="text-[10px] text-white/40">
+                        <span className="text-[10px] text-gray-500 dark:text-white/40">
                           per {days} giorn{days !== 1 ? "i" : "o"}
                         </span>
                       )}
                     </div>
                   ) : (
-                    <span className="text-sm text-white/30 italic">Seleziona date</span>
+                    <span className="text-sm text-gray-400 dark:text-white/30 italic">Seleziona date</span>
                   )}
                 </div>
 

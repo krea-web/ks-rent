@@ -143,8 +143,8 @@ const LocationStep = ({
           <div className="flex items-center gap-3">
             <Building2 size={20} className="text-gold" />
             <div>
-              <p className="text-sm font-bold text-white">Riconsegna in Sede</p>
-              <p className="text-xs text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
+              <p className="text-sm font-bold text-gray-900 dark:text-white">Riconsegna in Sede</p>
+              <p className="text-xs text-gray-500 dark:text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
             </div>
           </div>
         </div>
@@ -157,14 +157,14 @@ const LocationStep = ({
               "p-4 rounded-xl border text-left transition-all duration-300",
               locationType === "sede"
                 ? "bg-gold/5 border-gold shadow-[0_0_15px_rgba(212,175,55,0.15)]"
-                : "bg-[#111] border-white/10 hover:border-white/20"
+                : "bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
             )}
           >
-            <Building2 size={20} className={cn("mb-2", locationType === "sede" ? "text-gold" : "text-white/40")} />
-            <p className={cn("text-sm font-bold", locationType === "sede" ? "text-white" : "text-white/60")}>
+            <Building2 size={20} className={cn("mb-2", locationType === "sede" ? "text-gold" : "text-gray-400 dark:text-white/40")} />
+            <p className={cn("text-sm font-bold", locationType === "sede" ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-white/60")}>
               {type === "pickup" ? "Ritiro in Sede" : "Consegna in Sede"}
             </p>
-            <p className="text-xs text-white/40 mt-1">Sedi KS Rent Olbia</p>
+            <p className="text-xs text-gray-500 dark:text-white/40 mt-1">Sedi KS Rent Olbia</p>
           </button>
           <button
             type="button"
@@ -173,14 +173,14 @@ const LocationStep = ({
               "p-4 rounded-xl border text-left transition-all duration-300",
               locationType === "custom"
                 ? "bg-gold/5 border-gold shadow-[0_0_15px_rgba(212,175,55,0.15)]"
-                : "bg-[#111] border-white/10 hover:border-white/20"
+                : "bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
             )}
           >
-            <Navigation size={20} className={cn("mb-2", locationType === "custom" ? "text-gold" : "text-white/40")} />
-            <p className={cn("text-sm font-bold", locationType === "custom" ? "text-white" : "text-white/60")}>
+            <Navigation size={20} className={cn("mb-2", locationType === "custom" ? "text-gold" : "text-gray-400 dark:text-white/40")} />
+            <p className={cn("text-sm font-bold", locationType === "custom" ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-white/60")}>
               {type === "pickup" ? "Ritiro Personalizzato" : "Consegna Personalizzata"}
             </p>
-            <p className="text-xs text-white/40 mt-1">Aeroporto, hotel, ecc.</p>
+            <p className="text-xs text-gray-500 dark:text-white/40 mt-1">Aeroporto, hotel, ecc.</p>
           </button>
         </div>
       )}
@@ -189,10 +189,10 @@ const LocationStep = ({
       {locationType === "sede" && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
           <Select onValueChange={(v) => handleSedeSelect(v, type)}>
-            <SelectTrigger className="h-14 bg-[#111] border-white/10 focus:border-gold rounded-xl text-white">
+            <SelectTrigger className="h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold rounded-xl text-gray-900 dark:text-white">
               <SelectValue placeholder="Seleziona sede" />
             </SelectTrigger>
-            <SelectContent className="bg-[#111] border-white/10 text-white">
+            <SelectContent className="bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white">
               <SelectItem value="operativa">
                 <div className="flex items-center gap-2">
                   <MapPin size={14} className="text-gold" />
@@ -224,10 +224,10 @@ const LocationStep = ({
             restrictions={{ country: "it" }}
           >
             <div className="relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
               <Input
                 placeholder="Cerca indirizzo, aeroporto, hotel..."
-                className="pl-12 h-14 bg-[#111] border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-white"
+                className="pl-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white"
               />
             </div>
           </Autocomplete>
@@ -260,14 +260,14 @@ const LocationStep = ({
       {/* Time picker */}
       {locationType && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-white/50 flex items-center gap-2">
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 flex items-center gap-2">
             <Clock size={12} /> Orario
           </Label>
           <Select value={time} onValueChange={setTime}>
-            <SelectTrigger className="h-14 bg-[#111] border-white/10 focus:border-gold rounded-xl text-white">
+            <SelectTrigger className="h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold rounded-xl text-gray-900 dark:text-white">
               <SelectValue placeholder="Seleziona orario" />
             </SelectTrigger>
-            <SelectContent className="bg-[#111] border-white/10 text-white max-h-60">
+            <SelectContent className="bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white max-h-60">
               {TIME_SLOTS.map((slot) => (
                 <SelectItem key={slot} value={slot}>{slot}</SelectItem>
               ))}
@@ -291,7 +291,7 @@ const LocationStep = ({
         "pickup"
       )}
 
-      <div className="w-full h-px bg-white/5" />
+      <div className="w-full h-px bg-gray-200 dark:bg-white/5" />
 
       {renderLocationBlock(
         "Luogo di Riconsegna",
