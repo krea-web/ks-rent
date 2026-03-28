@@ -1512,7 +1512,7 @@ const PrenotaOra = () => {
                       )}
                     </div>
                   ) : (
-                    <span className="text-sm text-white/30 italic">Seleziona date</span>
+                    <span className="text-sm text-gray-400 dark:text-white/30 italic">Seleziona date</span>
                   )}
                 </div>
 
