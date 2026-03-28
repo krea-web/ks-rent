@@ -925,8 +925,8 @@ const PrenotaOra = () => {
                           <Button
                             variant="outline"
                             className={cn(
-                              "w-full justify-start text-left bg-[#111] border-white/10 hover:border-gold/50 hover:bg-[#151515] h-14 rounded-xl text-base",
-                              !startDate && "text-white/40",
+                              "w-full justify-start text-left bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gold/50 hover:bg-gray-50 dark:hover:bg-[#151515] h-14 rounded-xl text-base",
+                              !startDate && "text-gray-400 dark:text-white/40",
                             )}
                           >
                             <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
