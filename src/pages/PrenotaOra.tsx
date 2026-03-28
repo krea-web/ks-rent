@@ -1181,7 +1181,7 @@ const PrenotaOra = () => {
                             setHasSecondDriver(false);
                             goToStep(5);
                           }}
-                          className="h-14 px-8 border-white/10 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
+                          className="h-14 px-8 border-gray-300 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
                         >
                           No, Procedi
                         </Button>
