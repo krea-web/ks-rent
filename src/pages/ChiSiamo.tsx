@@ -60,9 +60,9 @@ const ChiSiamo = () => {
       </section>
 
       {/* 2. MISSION — Neon Gold Timeline */}
-      <section className="py-24 md:py-40 px-4 md:px-12 lg:px-24 bg-[#050505] relative">
+      <section className="py-24 md:py-40 px-4 md:px-12 lg:px-24 bg-stone-50 dark:bg-[#050505] relative">
         <div className="max-w-4xl mx-auto relative">
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-[2px] bg-white/5 rounded-full">
+          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-[2px] bg-gray-200 dark:bg-white/5 rounded-full">
             <motion.div
               className="absolute top-0 left-0 w-full rounded-full bg-gradient-to-b from-[#D4AF37] via-[#D4AF37] to-transparent shadow-[0_0_12px_#D4AF37,0_0_30px_#D4AF37aa,0_0_60px_#D4AF3755]"
               initial={{ height: "0%" }}
