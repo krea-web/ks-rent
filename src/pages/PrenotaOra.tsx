@@ -1203,7 +1203,7 @@ const PrenotaOra = () => {
                           type="button"
                           variant="ghost"
                           size="sm"
-                          className="text-white/50 hover:text-red-400 hover:bg-red-400/10 gap-1.5"
+                          className="text-gray-500 dark:text-white/50 hover:text-red-400 hover:bg-red-400/10 gap-1.5"
                           onClick={() => {
                             setHasSecondDriver(null);
                             setSecondDriver({ ...initialDriverState });
