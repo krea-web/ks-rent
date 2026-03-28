@@ -1113,7 +1113,7 @@ const PrenotaOra = () => {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden"
+                  className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden shadow-md dark:shadow-none"
                 >
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
