@@ -1403,7 +1403,7 @@ const PrenotaOra = () => {
                         <span className="text-gold text-xs font-semibold uppercase tracking-wider">
                           {selectedVehicle.category}
                         </span>
-                        <h3 className="text-2xl font-display font-bold text-white">
+                        <h3 className="text-2xl font-display font-bold text-gray-900 dark:text-white">
                           {selectedVehicle.make} {selectedVehicle.model}
                         </h3>
                       </div>
