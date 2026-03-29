@@ -17,7 +17,7 @@ const SEOHead = ({
   keywords,
   jsonLd,
 }: SEOHeadProps) => {
-  const canonicalUrl = canonical || (typeof window !== 'undefined' ? window.location.href : 'https://www.ksrentsardinia.com/');
+  const canonicalUrl = canonical || (typeof window !== 'undefined' ? `https://www.ksrentsardinia.com${window.location.pathname}` : 'https://www.ksrentsardinia.com/');
 
   return (
     <Helmet>
