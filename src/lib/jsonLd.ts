@@ -82,7 +82,8 @@ export const localBusinessJsonLd = {
         closes: "22:30",
       },
       sameAs: [
-        "https://instagram.com/ksrentsardinia"
+        "https://www.instagram.com/ksrentsardinia",
+        "https://www.tiktok.com/@ksrentsardinia"
       ]
     },
     {
