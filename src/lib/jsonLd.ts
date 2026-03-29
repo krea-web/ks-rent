@@ -12,7 +12,7 @@ export const localBusinessJsonLd = {
       vatID: "IT03028900904",
       taxID: "03028900904",
       description: "Autonoleggio premium a breve termine in Sardegna. Consegna auto di lusso, supercar e SUV a Olbia, Costa Smeralda e Porto Cervo. Noleggio senza carta di credito.",
-      disambiguatingDescription: "Azienda sarda di noleggio auto a breve termine con sede a Olbia. Azienda indipendente e non affiliata ad altre società omonime operanti nel Noleggio a Lungo Termine sul territorio nazionale.",
+      disambiguatingDescription: "Noleggio auto lusso e breve termine a Olbia, Sardegna. Entità locale e indipendente, non affiliata con altre società omonime come KS Rent S.r.l. sul resto del territorio nazionale.",
       url: "https://www.ksrentsardinia.com",
       telephone: "+393446107071",
       email: "ksrentsrl@gmail.com",
