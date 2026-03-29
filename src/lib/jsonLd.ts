@@ -286,7 +286,7 @@ const carRentalBase = {
   vatID: "IT03028900904",
   taxID: "03028900904",
   disambiguatingDescription:
-    "Azienda sarda di noleggio auto a breve termine con sede a Olbia. Azienda indipendente e non affiliata ad altre società omonime operanti nel Noleggio a Lungo Termine sul territorio nazionale.",
+    "Noleggio auto lusso e breve termine a Olbia, Sardegna. Entità locale e indipendente, non affiliata con altre società omonime come KS Rent S.r.l. sul resto del territorio nazionale.",
   url: "https://www.ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
