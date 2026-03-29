@@ -4,7 +4,7 @@ export const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "AutoRental",
+      "@type": ["AutoRental", "LocalBusiness"],
       "@id": "https://www.ksrentsardinia.com/#organization",
       name: "KS Rent Sardinia",
       legalName: "KS Rent S.R.L.",
