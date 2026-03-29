@@ -38,7 +38,7 @@ export default function Flotta() {
 
       {/* WebGL Circular Gallery */}
       <section className="relative w-full h-[60vh] md:h-[70vh]">
-        <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-black via-transparent to-white dark:to-black pointer-events-none z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-black/60 via-transparent to-white dark:to-black/60 pointer-events-none z-10" />
         <CircularGallery bend={3} textColor="#D4AF37" borderRadius={0.05} font="bold 30px sans-serif" />
       </section>
 
