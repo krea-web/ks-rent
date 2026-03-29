@@ -314,8 +314,8 @@ const carRentalBase = {
     longitude: 9.520060381113954,
   },
   sameAs: [
-    "https://instagram.com/ksrent_srl",
-    "INSERISCI_IL_TUO_LINK_GOOGLE_MAPS_QUI", // BLINDATO
+    "https://www.instagram.com/ksrentsardinia",
+    "https://www.tiktok.com/@ksrentsardinia",
   ],
 };
 
