@@ -87,7 +87,7 @@ const NoleggioCostaSmeralda = () => {
         title="Noleggio Auto Costa Smeralda | Porto Cervo | KS Rent"
         description="Noleggio supercar e SUV in Costa Smeralda. Consegna in hotel o villa a Porto Cervo, San Pantaleo e Porto Rotondo. Prenota online."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-costa-smeralda"
-        keywords="noleggio auto costa smeralda, noleggio auto porto cervo, noleggio supercar costa smeralda, noleggio SUV porto rotondo, rent a car costa smeralda, noleggio auto san pantaleo, luxury rent car sardegna, rent a car porto cervo, consegna auto porto cervo, noleggio auto lusso olbia, noleggio supercar olbia"
+        
         jsonLd={[jsonLd, faqJsonLd]}
       />
 

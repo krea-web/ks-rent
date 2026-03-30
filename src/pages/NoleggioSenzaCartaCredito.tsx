@@ -68,7 +68,7 @@ const NoleggioSenzaCartaCredito = () => {
         title="Noleggio Auto Senza Carta di Credito Olbia | KS Rent"
         description="Noleggia auto a Olbia senza carta di credito. Accettiamo prepagate, bancomat e contanti. Supercar, SUV e moto in Costa Smeralda. Prenota online."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-senza-carta-di-credito-olbia"
-        keywords="noleggio auto senza carta di credito, noleggio senza carta di credito sardegna, noleggio auto senza carta di credito olbia, autonoleggio senza carta credito, rent a car senza carta di credito, noleggio auto prepagata olbia, noleggio auto contanti sardegna, noleggio auto olbia, autonoleggio olbia, noleggio supercar olbia, noleggio auto costa smeralda"
+        
         jsonLd={[senzaCCJsonLd, senzaCCFaqJsonLd]}
       />
 
