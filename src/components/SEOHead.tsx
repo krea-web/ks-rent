@@ -22,7 +22,7 @@ const SEOHead = ({
       {/* 1. Meta Tag Principali e Tecnici */}
       <title>{title}</title>
       <meta name="description" content={description} />
-      {keywords && <meta name="keywords" content={keywords} />}
+      
       <meta name="author" content="KS Rent S.R.L." />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
