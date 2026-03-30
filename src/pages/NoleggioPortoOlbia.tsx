@@ -68,19 +68,19 @@ const NoleggioPortoOlbia = () => {
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase">
+            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black leading-[0.85] tracking-tighter mb-8 italic uppercase text-gray-900 dark:text-white">
               Noleggio Auto <br />
               <span className="text-gold">Porto di Olbia</span>
             </h1>
 
-            <p className="text-lg md:text-2xl text-white/80 font-light max-w-2xl mb-12 leading-relaxed">
+            <p className="text-lg md:text-2xl text-gray-600 dark:text-white/80 font-light max-w-2xl mb-12 leading-relaxed">
               Dimentica code e navette. Con KS Rent la tua auto premium ti aspetta
               <span className="text-gold font-bold"> esattamente allo sbarco </span> del traghetto.
             </p>
 
             <Link
               to="/prenotaora"
-              className="inline-flex items-center gap-4 bg-gold text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white transition-all duration-500 shadow-[0_0_50px_rgba(212,175,55,0.4)]"
+              className="inline-flex items-center gap-4 bg-gold text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-500 shadow-[0_0_50px_rgba(212,175,55,0.4)]"
             >
               Verifica Disponibilità <ArrowRight size={22} />
             </Link>
@@ -89,35 +89,35 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* INTRO TEXT */}
-      <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#050505]">
+      <section className="py-20 px-4 md:px-12 lg:px-24 bg-white dark:bg-[#050505] shadow-md dark:shadow-none border-b-[3px] border-b-gold/40 dark:border-b-transparent">
         <div className="max-w-4xl mx-auto text-center md:text-left">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
             <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">La tua Chiave per la Sardegna</span>
-            <h2 className="text-3xl md:text-5xl font-display font-black mb-8 italic uppercase tracking-tighter">
+            <h2 className="text-3xl md:text-5xl font-display font-black mb-8 italic uppercase tracking-tighter text-gray-900 dark:text-white">
               Autonoleggio al Porto <span className="text-gold">Isola Bianca di Olbia</span>
             </h2>
-            <p className="text-xl md:text-2xl font-light leading-relaxed text-white/90 mb-8">
+            <p className="text-xl md:text-2xl font-light leading-relaxed text-gray-700 dark:text-white/90 mb-8">
               Benvenuto al Porto di Olbia. KS Rent è l'autonoleggio che ti libera dalle attese. Sede operativa in{" "}
               <strong className="text-gold">Viale Isola Bianca 38</strong>, a pochi metri dai traghetti.
             </p>
             <div className="h-px w-24 bg-gold mb-8 mx-auto md:mx-0" />
-            <p className="text-white/60 text-lg leading-relaxed">
+            <p className="text-gray-600 dark:text-white/60 text-lg leading-relaxed">
               Offriamo un'esperienza premium con consegna del veicolo immediata al tuo sbarco dal molo Isola Bianca. Risparmia tempo
               prenotando in <strong>totale autonomia dal nostro sito</strong>: gestiamo depositi cauzionali flessibili e
               accettiamo pagamenti <strong>senza obbligo di carta di credito</strong>. La nostra flotta al porto include
               supercar, SUV, sportive, moto e quad — tutto ciò che serve per vivere la Costa Smeralda dal primo istante.
               Offriamo anche consegna all'{" "}
-              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
-              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>.
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>.
               Scopri anche il nostro{" "}
-              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-white transition-colors">noleggio senza carta di credito</Link>.
+              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">noleggio senza carta di credito</Link>.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* SPOTLIGHT - MERCEDES CLASSE A */}
-      <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-[#050505] overflow-hidden">
+      <section className="py-24 relative px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505] overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative order-2 lg:order-1">
             <div className="absolute inset-0 bg-gold/10 blur-[120px] rounded-full scale-150 animate-pulse" />
@@ -136,27 +136,27 @@ const NoleggioPortoOlbia = () => {
               <Zap className="text-gold w-5 h-5" />
               <span className="text-gold font-bold tracking-widest text-xs uppercase italic">Porto Spotlight</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter">
+            <h2 className="text-4xl md:text-6xl font-black mb-6 italic uppercase tracking-tighter text-gray-900 dark:text-white">
               Noleggio Mercedes <br />
               <span className="text-gold">Classe A Porto Olbia</span>
             </h2>
-            <p className="text-white/50 text-lg mb-10 italic font-light">
+            <p className="text-gray-600 dark:text-white/50 text-lg mb-10 italic font-light">
               "L'eleganza incontra la praticità. La compagna perfetta per esplorare le calette più nascoste della Costa
               Smeralda, pronta al tuo sbarco."
             </p>
             <div className="flex gap-8 mb-10">
               <div className="text-center">
-                <p className="text-2xl font-black text-white italic">Sport</p>
+                <p className="text-2xl font-black text-gray-900 dark:text-white italic">Sport</p>
                 <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Driving Mode</p>
               </div>
-              <div className="text-center border-x border-white/10 px-8">
-                <p className="text-2xl font-black text-white italic">Premium</p>
+              <div className="text-center border-x border-gray-200 dark:border-white/10 px-8">
+                <p className="text-2xl font-black text-gray-900 dark:text-white italic">Premium</p>
                 <p className="text-[10px] uppercase text-gold tracking-widest font-bold">Interior</p>
               </div>
             </div>
             <Link
               to="/prenotaora"
-              className="inline-flex items-center gap-3 text-white font-black uppercase tracking-widest text-sm group"
+              className="inline-flex items-center gap-3 text-gray-900 dark:text-white font-black uppercase tracking-widest text-sm group"
             >
               Scopri la flotta <ArrowRight className="group-hover:translate-x-2 transition-transform text-gold" />
             </Link>
@@ -165,7 +165,7 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* SERVICE CARDS */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
           {[
             { icon: Smartphone, title: "Self Booking", desc: "Prenotazione concepita per essere 100% online, rapida e autonoma." },
@@ -176,23 +176,23 @@ const NoleggioPortoOlbia = () => {
             <motion.div
               key={i}
               whileHover={{ y: -10 }}
-              className="relative p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/10 overflow-hidden group backdrop-blur-sm"
+              className="relative p-8 rounded-[2.5rem] bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 overflow-hidden group backdrop-blur-sm shadow-md dark:shadow-none border-b-[3px] border-b-gold/40 dark:border-b-transparent"
             >
               <div className="absolute -right-4 -top-4 w-24 h-24 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
               <s.icon className="text-gold w-12 h-12 mb-6" />
-              <h3 className="text-xl font-bold mb-3 uppercase italic tracking-tighter">{s.title}</h3>
-              <p className="text-white/40 text-sm leading-relaxed font-light">{s.desc}</p>
+              <h3 className="text-xl font-bold mb-3 uppercase italic tracking-tighter text-gray-900 dark:text-white">{s.title}</h3>
+              <p className="text-gray-600 dark:text-white/40 text-sm leading-relaxed font-light">{s.desc}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <span className="block text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">Concierge Desk Porto</span>
-            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">
+            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-gray-900 dark:text-white">
               Domande Frequenti <span className="text-gold">Noleggio Porto Olbia</span>
             </h2>
           </div>
@@ -203,7 +203,7 @@ const NoleggioPortoOlbia = () => {
                 <AccordionTrigger
                   className={`
                   px-8 py-6 rounded-2xl md:rounded-[1.5rem] transition-all text-left font-bold italic uppercase tracking-tight
-                  ${f.gold ? "bg-gold/10 border border-gold/30 text-gold shadow-[0_0_20px_rgba(212,175,55,0.1)]" : "bg-white/5 border border-white/10 text-white hover:bg-white/10"}
+                  ${f.gold ? "bg-gold/10 border border-gold/30 text-gold shadow-[0_0_20px_rgba(212,175,55,0.1)]" : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10"}
                 `}
                 >
                   <div className="flex items-center gap-4">
@@ -211,7 +211,7 @@ const NoleggioPortoOlbia = () => {
                     {f.q}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="px-10 pt-6 pb-8 text-white/50 leading-relaxed font-light text-base md:text-lg italic">
+                <AccordionContent className="px-10 pt-6 pb-8 text-gray-600 dark:text-white/50 leading-relaxed font-light text-base md:text-lg italic">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
@@ -221,43 +221,43 @@ const NoleggioPortoOlbia = () => {
       </section>
 
       {/* SEO RICH TEXT */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#050505]">
+      <section className="py-24 px-4 md:px-12 lg:px-24 bg-white dark:bg-[#050505] shadow-md dark:shadow-none border-b-[3px] border-b-gold/40 dark:border-b-transparent">
         <div className="max-w-4xl mx-auto">
           <span className="block text-gold font-bold tracking-[0.3em] uppercase text-xs mb-6">Guida Completa</span>
-          <h2 className="text-3xl md:text-5xl font-display font-black mb-10 italic uppercase tracking-tighter">
+          <h2 className="text-3xl md:text-5xl font-display font-black mb-10 italic uppercase tracking-tighter text-gray-900 dark:text-white">
             Noleggio Auto al Porto <span className="text-gold">Isola Bianca di Olbia</span>
           </h2>
 
-          <div className="space-y-6 text-white/60 text-base md:text-lg leading-relaxed font-light">
+          <div className="space-y-6 text-gray-600 dark:text-white/60 text-base md:text-lg leading-relaxed font-light">
             <p>
-              Il <strong className="text-white/80">Porto di Olbia Isola Bianca</strong> è il principale porto passeggeri della Sardegna nord-orientale, con collegamenti quotidiani verso Genova, Livorno, Civitavecchia e Piombino operati dalle compagnie Moby, Tirrenia e GNV. Il molo Isola Bianca si trova a pochi minuti dal centro di Olbia e rappresenta il punto di accesso privilegiato per chi arriva in Sardegna in traghetto con l'intenzione di esplorare la Costa Smeralda, la Gallura e tutto il nord-est dell'isola.
+              Il <strong className="text-gray-800 dark:text-white/80">Porto di Olbia Isola Bianca</strong> è il principale porto passeggeri della Sardegna nord-orientale, con collegamenti quotidiani verso Genova, Livorno, Civitavecchia e Piombino operati dalle compagnie Moby, Tirrenia e GNV. Il molo Isola Bianca si trova a pochi minuti dal centro di Olbia e rappresenta il punto di accesso privilegiato per chi arriva in Sardegna in traghetto con l'intenzione di esplorare la Costa Smeralda, la Gallura e tutto il nord-est dell'isola.
             </p>
             <p>
-              <strong className="text-white/80">Il traffico estivo a Olbia</strong> può essere intenso, soprattutto nei weekend di luglio e agosto quando migliaia di turisti sbarcano contemporaneamente. I traghetti attraccano tipicamente al mattino presto o nel tardo pomeriggio, creando lunghe code sulla viabilità locale. Per questo motivo, avere un'auto già pronta allo sbarco è un vantaggio enorme: mentre gli altri passeggeri cercano un taxi o aspettano i bus navetta dei grandi noleggiatori, tu sarai già in viaggio verso la tua destinazione.
+              <strong className="text-gray-800 dark:text-white/80">Il traffico estivo a Olbia</strong> può essere intenso, soprattutto nei weekend di luglio e agosto quando migliaia di turisti sbarcano contemporaneamente. I traghetti attraccano tipicamente al mattino presto o nel tardo pomeriggio, creando lunghe code sulla viabilità locale. Per questo motivo, avere un'auto già pronta allo sbarco è un vantaggio enorme: mentre gli altri passeggeri cercano un taxi o aspettano i bus navetta dei grandi noleggiatori, tu sarai già in viaggio verso la tua destinazione.
             </p>
             <p>
-              La nostra <strong className="text-white/80">sede operativa in Viale Isola Bianca 38</strong> è letteralmente a pochi metri dallo sbarco traghetti. Non dovrai prendere navette, non dovrai aspettare in fila: scendi dal traghetto, cammini per 2 minuti ed entri nel nostro ufficio. La documentazione viene preparata in anticipo grazie alla prenotazione online, quindi il ritiro effettivo richiede meno di 5 minuti. Dal porto, puoi imboccare immediatamente la superstrada SS 131 DCN verso sud (Nuoro, Cagliari) oppure la SS 125 verso nord lungo la litoranea che costeggia le spiagge più belle della Sardegna: Porto Istana, Murta Maria, Porto San Paolo, fino a San Teodoro e Budoni.
+              La nostra <strong className="text-gray-800 dark:text-white/80">sede operativa in Viale Isola Bianca 38</strong> è letteralmente a pochi metri dallo sbarco traghetti. Non dovrai prendere navette, non dovrai aspettare in fila: scendi dal traghetto, cammini per 2 minuti ed entri nel nostro ufficio. La documentazione viene preparata in anticipo grazie alla prenotazione online, quindi il ritiro effettivo richiede meno di 5 minuti. Dal porto, puoi imboccare immediatamente la superstrada SS 131 DCN verso sud (Nuoro, Cagliari) oppure la SS 125 verso nord lungo la litoranea che costeggia le spiagge più belle della Sardegna: Porto Istana, Murta Maria, Porto San Paolo, fino a San Teodoro e Budoni.
             </p>
             <p>
-              Noleggiare un'auto al porto di Olbia con KS Rent significa anche poter scegliere tra <strong className="text-white/80">supercar, SUV premium, moto e quad</strong> senza l'obbligo della carta di credito. La nostra politica di pagamento flessibile — accettiamo prepagate, bancomat e contanti — è nata per liberarti dai vincoli imposti dai grandi autonoleggi. Il deposito cauzionale è proporzionato al veicolo e sempre comunicato in fase di prenotazione, senza sorprese. Se preferisci, offriamo anche consegna all'{" "}
-              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
-              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-white transition-colors">Costa Smeralda</Link>, oppure scopri il nostro{" "}
-              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-white transition-colors">noleggio auto senza carta di credito</Link>.
+              Noleggiare un'auto al porto di Olbia con KS Rent significa anche poter scegliere tra <strong className="text-gray-800 dark:text-white/80">supercar, SUV premium, moto e quad</strong> senza l'obbligo della carta di credito. La nostra politica di pagamento flessibile — accettiamo prepagate, bancomat e contanti — è nata per liberarti dai vincoli imposti dai grandi autonoleggi. Il deposito cauzionale è proporzionato al veicolo e sempre comunicato in fase di prenotazione, senza sorprese. Se preferisci, offriamo anche consegna all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aeroporto di Olbia</Link> e in tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>, oppure scopri il nostro{" "}
+              <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">noleggio auto senza carta di credito</Link>.
             </p>
           </div>
         </div>
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-32 px-4 text-center bg-[#050505]">
+      <section className="py-32 px-4 text-center bg-gray-50 dark:bg-[#050505]">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-8xl font-black mb-10 italic uppercase tracking-tighter leading-none">
+          <h2 className="text-5xl md:text-8xl font-black mb-10 italic uppercase tracking-tighter leading-none text-gray-900 dark:text-white">
             SBARCA E <br />
             <span className="text-gold">ACCENDI IL SOGNO</span>
           </h2>
           <Link
             to="/prenotaora"
-            className="inline-flex items-center gap-4 bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:bg-gold transition-all duration-500 text-lg shadow-2xl"
+            className="inline-flex items-center gap-4 bg-gold text-white px-12 py-6 rounded-full font-black uppercase tracking-widest hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all duration-500 text-lg shadow-2xl"
           >
             Scegli il Veicolo <ArrowRight />
           </Link>
