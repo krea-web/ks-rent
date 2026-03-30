@@ -13,7 +13,6 @@ const SEOHead = ({
   description,
   canonical,
   ogImage = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-  keywords,
   jsonLd,
 }: SEOHeadProps) => {
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? `https://www.ksrentsardinia.com${window.location.pathname}` : 'https://www.ksrentsardinia.com/');
