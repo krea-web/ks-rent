@@ -5,7 +5,6 @@ interface SEOHeadProps {
   description: string;
   canonical?: string;
   ogImage?: string;
-  keywords?: string;
   jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
