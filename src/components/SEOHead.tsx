@@ -5,7 +5,6 @@ interface SEOHeadProps {
   description: string;
   canonical?: string;
   ogImage?: string;
-  keywords?: string;
   jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
@@ -14,7 +13,6 @@ const SEOHead = ({
   description,
   canonical,
   ogImage = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-  keywords,
   jsonLd,
 }: SEOHeadProps) => {
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? `https://www.ksrentsardinia.com${window.location.pathname}` : 'https://www.ksrentsardinia.com/');
@@ -24,7 +22,7 @@ const SEOHead = ({
       {/* 1. Meta Tag Principali e Tecnici */}
       <title>{title}</title>
       <meta name="description" content={description} />
-      {keywords && <meta name="keywords" content={keywords} />}
+      
       <meta name="author" content="KS Rent S.R.L." />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
