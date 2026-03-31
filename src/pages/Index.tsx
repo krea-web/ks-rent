@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import HeroSection from "@/components/HeroSection";
 import TrustMarquee from "@/components/TrustMarquee";
@@ -32,16 +33,18 @@ const Index = () => (
         </strong>
       </p>
       <p className="mb-4">
-        Non siamo il classico autonoleggio o un intermediario web: possediamo fisicamente la nostra flotta al Porto di
-        Olbia e offriamo un'esperienza premium per chi desidera il <strong>noleggio auto di lusso a Olbia</strong> senza
+        Non siamo il classico autonoleggio o un intermediario web: possediamo fisicamente la nostra flotta al{" "}
+        <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto di Olbia</Link> e offriamo un'esperienza premium per chi desidera il <strong>noleggio auto di lusso a Olbia</strong> senza
         compromessi.
       </p>
       <p className="mb-4">
         Che tu stia cercando un veicolo pratico per muoverti in città o un servizio di{" "}
-        <strong>luxury rent car a Olbia</strong> per esplorare la costa, la nostra flotta è preparata maniacalmente.
+        <strong>luxury rent car a Olbia</strong> per esplorare la{" "}
+        <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>, la nostra flotta è preparata maniacalmente.
         Scegliere il nostro <strong>autonoleggio a Olbia</strong> significa dire addio alle file interminabili e godersi
-        la Sardegna fin dal primo istante. Scopri il modo migliore di fare <strong>rent a Olbia</strong> con i nostri
-        servizi diretti e personalizzati.
+        la Sardegna fin dal primo istante. Ritira la tua auto all'{" "}
+        <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aeroporto di Olbia</Link> o noleggia{" "}
+        <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">senza carta di credito</Link>.
       </p>
     </section>
   </>

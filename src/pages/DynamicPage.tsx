@@ -550,11 +550,14 @@ export default function DynamicPage() {
               <span className="text-gold">{data.title}</span>?
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
-              KS Rent è il punto di riferimento per il noleggio auto a Olbia e in tutta la Costa
-              Smeralda. Scegliendo il nostro servizio per {data.title}, avrai accesso a una flotta
+              KS Rent è il punto di riferimento per il noleggio auto a Olbia e in tutta la{" "}
+              <Link to="/noleggio-auto-costa-smeralda" className="text-gold hover:text-gold/80 underline">Costa Smeralda</Link>.
+              Scegliendo il nostro servizio per {data.title}, avrai accesso a una flotta
               premium composta da city car, SUV, berline e supercar, sempre igienizzate, con
               pacchetti km flessibili e copertura assicurativa completa. Il nostro team è disponibile
-              24 ore su 24 per consegnarti il veicolo direttamente in aeroporto, al porto di Olbia
+              24 ore su 24 per consegnarti il veicolo direttamente all'{" "}
+              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold hover:text-gold/80 underline">aeroporto</Link>, al{" "}
+              <Link to="/noleggio-auto-porto-olbia" className="text-gold hover:text-gold/80 underline">porto di Olbia</Link>{" "}
               o presso la tua struttura ricettiva.
             </p>
           </div>
@@ -584,8 +587,10 @@ export default function DynamicPage() {
               Veicoli premium, flotta aggiornata, nessuna coda al desk aeroportuale e consegna su
               misura direttamente a {data.title} o presso la tua struttura. Che tu stia cercando
               un'auto per una vacanza di lusso in Costa Smeralda, un SUV per raggiungere le spiagge
-              più remote o una city car economica per muoverti tra Olbia, San Teodoro e Golfo
-              Aranci, KS Rent ha il veicolo giusto per te.
+              più remote o una city car economica per muoverti tra Olbia,{" "}
+              <Link to="/noleggio-auto-san-teodoro" className="text-gold hover:text-gold/80 underline">San Teodoro</Link> e{" "}
+              <Link to="/noleggio-auto-golfo-aranci" className="text-gold hover:text-gold/80 underline">Golfo Aranci</Link>,
+              KS Rent ha il veicolo giusto per te.
             </p>
           </div>
 
