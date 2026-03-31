@@ -587,8 +587,10 @@ export default function DynamicPage() {
               Veicoli premium, flotta aggiornata, nessuna coda al desk aeroportuale e consegna su
               misura direttamente a {data.title} o presso la tua struttura. Che tu stia cercando
               un'auto per una vacanza di lusso in Costa Smeralda, un SUV per raggiungere le spiagge
-              più remote o una city car economica per muoverti tra Olbia, San Teodoro e Golfo
-              Aranci, KS Rent ha il veicolo giusto per te.
+              più remote o una city car economica per muoverti tra Olbia,{" "}
+              <Link to="/noleggio-auto-san-teodoro" className="text-gold hover:text-gold/80 underline">San Teodoro</Link> e{" "}
+              <Link to="/noleggio-auto-golfo-aranci" className="text-gold hover:text-gold/80 underline">Golfo Aranci</Link>,
+              KS Rent ha il veicolo giusto per te.
             </p>
           </div>
 

@@ -328,8 +328,10 @@ const ChiSiamo = () => {
             <div className="space-y-4 text-gray-600 dark:text-white/60 font-light text-base md:text-lg leading-relaxed">
               <p>
                 <strong className="text-gray-900 dark:text-white font-medium">KS Rent S.R.L.</strong> è una realtà orgogliosamente e
-                unicamente sarda, nata per servire il turismo di lusso in Costa Smeralda. La nostra sede operativa è
-                fissa al Porto di Olbia (P.IVA 03028900904).
+                unicamente sarda, nata per servire il turismo di lusso in{" "}
+                <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>. La nostra sede operativa è
+                fissa al{" "}
+                <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto di Olbia</Link> (P.IVA 03028900904).
               </p>
               <p>
                 Ci teniamo a precisare ai nostri clienti che operiamo in totale indipendenza e{" "}

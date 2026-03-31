@@ -295,22 +295,32 @@ const NoleggioCostaSmeralda = () => {
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              "Porto Cervo",
-              "San Pantaleo",
-              "Porto Rotondo",
-              "Baja Sardinia",
-              "Cannigione",
-              "Arzachena",
-              "Palau",
-              "San Teodoro",
-            ].map((loc) => (
-              <span
-                key={loc}
-                className="px-6 py-3 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gold text-sm md:text-base font-bold uppercase tracking-widest hover:bg-gold/10 hover:border-gold/30 transition-all cursor-default"
-              >
-                {loc}
-              </span>
-            ))}
+              { name: "Porto Cervo", to: "/noleggio-auto-porto-cervo" },
+              { name: "San Pantaleo", to: null },
+              { name: "Porto Rotondo", to: "/noleggio-auto-porto-rotondo" },
+              { name: "Baja Sardinia", to: "/noleggio-auto-baja-sardinia" },
+              { name: "Cannigione", to: "/noleggio-auto-cannigione" },
+              { name: "Arzachena", to: "/noleggio-auto-arzachena" },
+              { name: "Palau", to: "/noleggio-auto-palau" },
+              { name: "San Teodoro", to: "/noleggio-auto-san-teodoro" },
+            ].map((loc) =>
+              loc.to ? (
+                <Link
+                  key={loc.name}
+                  to={loc.to}
+                  className="px-6 py-3 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gold text-sm md:text-base font-bold uppercase tracking-widest hover:bg-gold/10 hover:border-gold/30 transition-all"
+                >
+                  {loc.name}
+                </Link>
+              ) : (
+                <span
+                  key={loc.name}
+                  className="px-6 py-3 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gold text-sm md:text-base font-bold uppercase tracking-widest hover:bg-gold/10 hover:border-gold/30 transition-all cursor-default"
+                >
+                  {loc.name}
+                </span>
+              )
+            )}
           </div>
         </motion.div>
       </section>
