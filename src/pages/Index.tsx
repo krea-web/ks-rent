@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import HeroSection from "@/components/HeroSection";
 import TrustMarquee from "@/components/TrustMarquee";
