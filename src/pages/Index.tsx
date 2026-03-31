@@ -33,8 +33,8 @@ const Index = () => (
         </strong>
       </p>
       <p className="mb-4">
-        Non siamo il classico autonoleggio o un intermediario web: possediamo fisicamente la nostra flotta al Porto di
-        Olbia e offriamo un'esperienza premium per chi desidera il <strong>noleggio auto di lusso a Olbia</strong> senza
+        Non siamo il classico autonoleggio o un intermediario web: possediamo fisicamente la nostra flotta al{" "}
+        <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto di Olbia</Link> e offriamo un'esperienza premium per chi desidera il <strong>noleggio auto di lusso a Olbia</strong> senza
         compromessi.
       </p>
       <p className="mb-4">
