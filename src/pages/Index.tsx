@@ -4,7 +4,7 @@ import TrustMarquee from "@/components/TrustMarquee";
 import FleetShowcase from "@/components/FleetShowcase";
 import FAQSection from "@/components/FAQSection";
 import GoogleReviews from "@/components/GoogleReviews";
-import { localBusinessJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
+import { faqPageJsonLd } from "@/lib/jsonLd";
 
 const Index = () => (
   <>
@@ -12,8 +12,7 @@ const Index = () => (
       title="Noleggio Auto Lusso Olbia Costa Smeralda | KS Rent Sardinia"
       description="Noleggio auto luxury a Olbia e Costa Smeralda. Supercar, SUV e moto con consegna in aeroporto. Prenota online in 2 minuti con KS Rent Sardinia."
       canonical="https://www.ksrentsardinia.com/"
-      
-      jsonLd={[localBusinessJsonLd, faqPageJsonLd]}
+      jsonLd={[faqPageJsonLd]}
     />
     <HeroSection />
     <TrustMarquee />
@@ -26,7 +25,7 @@ const Index = () => (
       <h2 className="text-3xl font-bold text-foreground mb-6">Il tuo Autonoleggio a Olbia di Fiducia</h2>
       <p className="mb-4">
         Se stai cercando un servizio di <strong>noleggio auto a Olbia</strong> che unisca affidabilità ed esclusività,
-        KS Rent S.R.L. è la scelta perfetta.{" "}
+        KS Rent Sardinia è la scelta perfetta.{" "}
         <strong>
           Siamo una realtà orgogliosamente e unicamente sarda (P.IVA 03028900904), totalmente indipendente e non
           affiliata ad altre società omonime operanti nel resto d'Italia.
