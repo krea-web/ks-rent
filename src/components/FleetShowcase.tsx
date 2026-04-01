@@ -112,7 +112,8 @@ const FleetShowcase = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="group flex flex-col bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/5 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-3xl overflow-hidden hover:border-gold/30 transition-all duration-500 shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-2xl"
+                  style={{ borderRadius: "1.5rem", overflow: "hidden" }}
+                  className="group flex flex-col bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/5 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-3xl overflow-hidden hover:border-gold/30 transition-colors duration-500 shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-2xl"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                     <div className="absolute top-4 left-4 z-20">
@@ -210,7 +211,11 @@ const FleetShowcase = () => {
       {/* SEO KEYWORD PARAGRAPH */}
       <div className="max-w-7xl mx-auto mt-12 text-gray-600 dark:text-white/70 font-light text-sm text-center leading-relaxed">
         <p>
-          KS Rent vanta una flotta variegata per ogni esigenza. Dai brividi del <strong>noleggio supercar a Olbia</strong> con modelli iconici (prova il brivido del <strong>noleggio Audi RS3 a Olbia</strong> o BMW M2), fino alla mobilità agile. Se preferisci le due ruote, scopri il nostro <strong>noleggio moto a Olbia</strong> per evitare il traffico costiero, oppure divertiti in off-road con il nostro <strong>noleggio quad a Olbia</strong>.
+          KS Rent vanta una flotta variegata per ogni esigenza. Dai brividi del{" "}
+          <strong>noleggio supercar a Olbia</strong> con modelli iconici (prova il brivido del{" "}
+          <strong>noleggio Audi RS3 a Olbia</strong> o BMW M2), fino alla mobilità agile. Se preferisci le due ruote,
+          scopri il nostro <strong>noleggio moto a Olbia</strong> per evitare il traffico costiero, oppure divertiti in
+          off-road con il nostro <strong>noleggio quad a Olbia</strong>.
         </p>
       </div>
     </section>
