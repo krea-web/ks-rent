@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/localita/:slug", "destination": "/:slug", "permanent": true },
+    { "source": "/spiagge/:slug", "destination": "/:slug", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
