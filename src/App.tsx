@@ -71,8 +71,6 @@ const AppLayout = () => {
             <Route path="/flotta" element={<Flotta />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/localita/:slug" element={<DynamicPage />} />
-            <Route path="/spiagge/:slug" element={<DynamicPage />} />
             <Route path="/:slug" element={<DynamicPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
