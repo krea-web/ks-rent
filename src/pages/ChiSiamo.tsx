@@ -544,7 +544,7 @@ const ChiSiamo = () => {
                     src={vehicle.image}
                     alt={`Noleggio ${vehicle.text} Olbia — KS Rent Sardinia`}
                     loading="lazy"
-                    className="max-h-[250px] md:max-h-[320px] w-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.3)]"
+                    className="max-h-[250px] md:max-h-[320px] w-auto object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.12)]"
                   />
                 </div>
               ))}
