@@ -488,20 +488,23 @@ const ChiSiamo = () => {
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0, transition: { duration: 0.9, ease: "easeOut", delay: 0.2 } }}
             viewport={{ once: true }}
-            className="flex-1 overflow-hidden relative group"
+            className="flex-1 overflow-hidden relative"
           >
-            {/* Frecce navigazione */}
+            {/* Frecce desktop */}
             <button
               aria-label="Scorri a sinistra"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 const container = e.currentTarget.parentElement?.querySelector('[data-fleet-scroll]') as HTMLElement;
-                container?.scrollBy({ left: -280, behavior: 'smooth' });
+                if (container) {
+                  const w = container.clientWidth;
+                  container.scrollBy({ left: -w, behavior: 'smooth' });
+                }
               }}
-              className="flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-card/80 border border-border backdrop-blur-sm text-foreground hover:bg-gold hover:text-primary-foreground transition-colors duration-300"
+              className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-black/60 text-foreground hover:bg-black/80 transition-colors duration-300"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={20} />
             </button>
             <button
               aria-label="Scorri a destra"
@@ -509,16 +512,19 @@ const ChiSiamo = () => {
                 e.preventDefault();
                 e.stopPropagation();
                 const container = e.currentTarget.parentElement?.querySelector('[data-fleet-scroll]') as HTMLElement;
-                container?.scrollBy({ left: 280, behavior: 'smooth' });
+                if (container) {
+                  const w = container.clientWidth;
+                  container.scrollBy({ left: w, behavior: 'smooth' });
+                }
               }}
-              className="flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-card/80 border border-border backdrop-blur-sm text-foreground hover:bg-gold hover:text-primary-foreground transition-colors duration-300"
+              className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-black/60 text-foreground hover:bg-black/80 transition-colors duration-300"
             >
-              <ArrowRight size={18} />
+              <ArrowRight size={20} />
             </button>
 
             <div
               data-fleet-scroll
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide px-14"
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
             >
@@ -533,14 +539,13 @@ const ChiSiamo = () => {
                 { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png', text: 'Honda SH 125' },
                 { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png', text: 'Yamaha Raptor' },
               ].map((vehicle, i) => (
-                <div key={i} className="flex-shrink-0 snap-center w-56 md:w-64 flex flex-col items-center gap-3">
+                <div key={i} className="flex-shrink-0 snap-center w-full flex items-center justify-center py-4">
                   <img
                     src={vehicle.image}
                     alt={`Noleggio ${vehicle.text} Olbia — KS Rent Sardinia`}
                     loading="lazy"
-                    className="w-full h-40 md:h-48 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.3)] transform hover:scale-105 hover:-translate-y-1 transition-transform duration-500 ease-out"
+                    className="max-h-[250px] md:max-h-[320px] w-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.3)]"
                   />
-                  <span className="text-sm font-semibold tracking-wide text-gold">{vehicle.text}</span>
                 </div>
               ))}
             </div>
