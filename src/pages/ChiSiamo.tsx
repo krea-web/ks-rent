@@ -490,29 +490,38 @@ const ChiSiamo = () => {
             viewport={{ once: true }}
             className="flex-1 overflow-hidden relative group"
           >
-            {/* Frecce desktop only */}
+            {/* Frecce navigazione */}
             <button
               aria-label="Scorri a sinistra"
               onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 const container = e.currentTarget.parentElement?.querySelector('[data-fleet-scroll]') as HTMLElement;
                 container?.scrollBy({ left: -280, behavior: 'smooth' });
               }}
-              className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-card/80 border border-border backdrop-blur-sm text-foreground hover:bg-gold hover:text-primary-foreground transition-colors duration-300 opacity-0 group-hover:opacity-100"
+              className="flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-card/80 border border-border backdrop-blur-sm text-foreground hover:bg-gold hover:text-primary-foreground transition-colors duration-300"
             >
               <ArrowLeft size={18} />
             </button>
             <button
               aria-label="Scorri a destra"
               onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 const container = e.currentTarget.parentElement?.querySelector('[data-fleet-scroll]') as HTMLElement;
                 container?.scrollBy({ left: 280, behavior: 'smooth' });
               }}
-              className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-card/80 border border-border backdrop-blur-sm text-foreground hover:bg-gold hover:text-primary-foreground transition-colors duration-300 opacity-0 group-hover:opacity-100"
+              className="flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-card/80 border border-border backdrop-blur-sm text-foreground hover:bg-gold hover:text-primary-foreground transition-colors duration-300"
             >
               <ArrowRight size={18} />
             </button>
 
-            <div data-fleet-scroll className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide px-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div
+              data-fleet-scroll
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide px-14"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+            >
               {[
                 { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png', text: 'Audi RS3 Grigia' },
                 { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png', text: 'BMW M2 Coupe' },
