@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Instagram } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import { useCallback } from "react";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd } from "@/lib/jsonLd";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
