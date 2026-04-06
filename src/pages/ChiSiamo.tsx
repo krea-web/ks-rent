@@ -488,14 +488,31 @@ const ChiSiamo = () => {
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0, transition: { duration: 0.9, ease: "easeOut", delay: 0.2 } }}
             viewport={{ once: true }}
-            className="flex-1 flex justify-center lg:justify-end"
+            className="flex-1 overflow-hidden"
           >
-            <img
-              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp"
-              alt="BMW M2 noleggio premium Olbia — KS Rent"
-              loading="lazy"
-              className="w-full max-w-lg xl:max-w-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] transform group-hover:scale-105 group-hover:-translate-y-2 transition-transform duration-700 ease-out"
-            />
+            <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide px-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {[
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png', text: 'Audi RS3 Grigia' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png', text: 'BMW M2 Coupe' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp', text: 'Jeep Avenger' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png', text: 'Mercedes Classe A' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png', text: 'Audi RS3 Verde' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-fiatpandacitycar.webp', text: 'Fiat Panda Hybrid' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter350.png', text: 'Honda SH 350' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png', text: 'Honda SH 125' },
+                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png', text: 'Yamaha Raptor' },
+              ].map((vehicle, i) => (
+                <div key={i} className="flex-shrink-0 snap-center w-56 md:w-64 flex flex-col items-center gap-3">
+                  <img
+                    src={vehicle.image}
+                    alt={`Noleggio ${vehicle.text} Olbia — KS Rent Sardinia`}
+                    loading="lazy"
+                    className="w-full h-40 md:h-48 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.3)] transform hover:scale-105 hover:-translate-y-1 transition-transform duration-500 ease-out"
+                  />
+                  <span className="text-sm font-semibold tracking-wide text-gold">{vehicle.text}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </Link>
