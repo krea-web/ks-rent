@@ -1,12 +1,30 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Instagram } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import { useCallback } from "react";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd } from "@/lib/jsonLd";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
 import CompanyMap from "@/components/CompanyMap";
 
+const FLEET_VEHICLES = [
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png', text: 'Audi RS3 Grigia' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png', text: 'BMW M2 Coupe' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp', text: 'Jeep Avenger' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png', text: 'Mercedes Classe A' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png', text: 'Audi RS3 Verde' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-fiatpandacitycar.webp', text: 'Fiat Panda Hybrid' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter350.png', text: 'Honda SH 350' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png', text: 'Honda SH 125' },
+  { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png', text: 'Yamaha Raptor' },
+];
+
 const ChiSiamo = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' });
+  const scrollPrev = useCallback((e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); emblaApi?.scrollPrev(); }, [emblaApi]);
+  const scrollNext = useCallback((e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); emblaApi?.scrollNext(); }, [emblaApi]);
+
   return (
     <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
@@ -490,64 +508,34 @@ const ChiSiamo = () => {
             viewport={{ once: true }}
             className="flex-1 overflow-hidden relative"
           >
-            {/* Frecce desktop */}
             <button
               aria-label="Scorri a sinistra"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const container = e.currentTarget.parentElement?.querySelector('[data-fleet-scroll]') as HTMLElement;
-                if (container) {
-                  const w = container.clientWidth;
-                  container.scrollBy({ left: -w, behavior: 'smooth' });
-                }
-              }}
+              onClick={scrollPrev}
               className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-black/60 text-foreground hover:bg-black/80 transition-colors duration-300"
             >
               <ArrowLeft size={20} />
             </button>
             <button
               aria-label="Scorri a destra"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const container = e.currentTarget.parentElement?.querySelector('[data-fleet-scroll]') as HTMLElement;
-                if (container) {
-                  const w = container.clientWidth;
-                  container.scrollBy({ left: w, behavior: 'smooth' });
-                }
-              }}
+              onClick={scrollNext}
               className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-black/60 text-foreground hover:bg-black/80 transition-colors duration-300"
             >
               <ArrowRight size={20} />
             </button>
 
-            <div
-              data-fleet-scroll
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-            >
-              {[
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png', text: 'Audi RS3 Grigia' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png', text: 'BMW M2 Coupe' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp', text: 'Jeep Avenger' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png', text: 'Mercedes Classe A' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png', text: 'Audi RS3 Verde' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-fiatpandacitycar.webp', text: 'Fiat Panda Hybrid' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter350.png', text: 'Honda SH 350' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png', text: 'Honda SH 125' },
-                { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png', text: 'Yamaha Raptor' },
-              ].map((vehicle, i) => (
-                <div key={i} className="flex-shrink-0 snap-center w-full flex items-center justify-center py-4">
-                  <img
-                    src={vehicle.image}
-                    alt={`Noleggio ${vehicle.text} Olbia — KS Rent Sardinia`}
-                    loading="lazy"
-                    className="max-h-[250px] md:max-h-[320px] w-auto object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.12)]"
-                  />
-                </div>
-              ))}
+            <div ref={emblaRef} className="overflow-hidden" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+              <div className="flex">
+                {FLEET_VEHICLES.map((vehicle, i) => (
+                  <div key={i} className="flex-[0_0_100%] min-w-0 flex items-center justify-center py-4">
+                    <img
+                      src={vehicle.image}
+                      alt={`Noleggio ${vehicle.text} Olbia — KS Rent Sardinia`}
+                      loading="lazy"
+                      className="max-h-[250px] md:max-h-[320px] w-auto object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.12)]"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
