@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Instagram } from "lucide-react";
+import { ArrowLeft, ArrowRight, Instagram } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd } from "@/lib/jsonLd";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
