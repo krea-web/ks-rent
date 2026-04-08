@@ -217,6 +217,11 @@ const PrenotaOra = () => {
     return Object.values(groups);
   }, [vehicles]);
 
+  // Reset availability when dates change so user must re-verify
+  useEffect(() => {
+    setAvailabilityResult(null);
+  }, [startDate, endDate]);
+
   // Check availability when dates are confirmed
   const checkAvailability = useCallback(async () => {
     if (!selectedVehicle || !startDate || !endDate) {
