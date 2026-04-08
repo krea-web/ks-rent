@@ -3,9 +3,18 @@ import CircularGallery from "@/components/CircularGallery";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { flottaJsonLd } from "@/lib/jsonLd";
 
 export default function Flotta() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.jscache.com/wejs?wtype=cdswritereviewlgvi&uniq=728&locationId=34295915&lang=it&display_version=2";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white dark:bg-black text-foreground">
       <SEOHead
@@ -73,6 +82,19 @@ export default function Flotta() {
               <li>✅ Parco auto e moto premium</li>
               <li>✅ Assistenza dedicata 24/7 in Sardegna</li>
             </ul>
+          </div>
+
+          {/* TripAdvisor Widget */}
+          <div className="md:col-span-2 flex justify-center mt-8">
+            <div id="TA_cdswritereviewlgvi728" className="TA_cdswritereviewlgvi">
+              <ul id="gJ5oLXuG" className="TA_links krxNmttyasQD">
+                <li id="SgotFxx8y" className="pnqFLv2">
+                  <a target="_blank" rel="noopener noreferrer" href="https://www.tripadvisor.it/">
+                    <img src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" alt="TripAdvisor" />
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
