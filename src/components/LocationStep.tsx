@@ -139,7 +139,9 @@ const LocationStep = ({
     autoRef: React.MutableRefObject<google.maps.places.Autocomplete | null>,
     onPlaceChanged: () => void,
     type: "pickup" | "dropoff",
-    sedeOnly?: boolean
+    sedeOnly?: boolean,
+    timeSlots: string[] = TIME_SLOTS,
+    timeHelper?: string
   ) => (
     <div className="space-y-4">
       <h3 className="text-sm font-bold text-gold flex items-center gap-2 uppercase tracking-widest">
