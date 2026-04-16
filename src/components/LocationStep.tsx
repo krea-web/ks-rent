@@ -279,15 +279,22 @@ const LocationStep = ({
               <SelectValue placeholder="Seleziona orario" />
             </SelectTrigger>
             <SelectContent className="bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white max-h-60">
-              {TIME_SLOTS.map((slot) => (
+              {timeSlots.map((slot) => (
                 <SelectItem key={slot} value={slot}>{slot}</SelectItem>
               ))}
             </SelectContent>
           </Select>
+          {timeHelper && (
+            <p className="text-xs text-gold/80 flex items-center gap-1.5 mt-1">
+              <AlertTriangle size={11} /> {timeHelper}
+            </p>
+          )}
         </motion.div>
       )}
     </div>
   );
+
+  const allowedDropoffSlots = getAllowedDropoffSlots(pickupTime);
 
   return (
     <div className="space-y-8">
@@ -313,7 +320,11 @@ const LocationStep = ({
         dropoffMapCenter,
         dropoffAutoRef, onDropoffPlaceChanged,
         "dropoff",
-        dropoffSedeOnly
+        dropoffSedeOnly,
+        allowedDropoffSlots,
+        pickupTime
+          ? `La riconsegna deve avvenire entro 1 ora dall'orario di ritiro (${pickupTime}).`
+          : "Seleziona prima l'orario di ritiro per scegliere la riconsegna."
       )}
     </div>
   );
