@@ -56,6 +56,15 @@ interface LocationStepProps {
   dropoffSedeOnly?: boolean;
 }
 
+// Returns time slots within +1 hour from the given pickup time (inclusive).
+// Slots are 30-min increments, so we allow pickupTime, +30min, +60min.
+const getAllowedDropoffSlots = (pickupTime: string): string[] => {
+  if (!pickupTime) return TIME_SLOTS;
+  const idx = TIME_SLOTS.indexOf(pickupTime);
+  if (idx === -1) return TIME_SLOTS;
+  return TIME_SLOTS.slice(idx, idx + 3);
+};
+
 const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px" };
 
 const LocationStep = ({
@@ -78,6 +87,15 @@ const LocationStep = ({
   }, [dropoffSedeOnly, dropoffType, setDropoffType, setDropoffLocation]);
 
   const dropoffAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+  // Enforce: dropoff time must be within 1h after pickup time. Reset if invalid.
+  useEffect(() => {
+    if (!pickupTime) return;
+    const allowed = getAllowedDropoffSlots(pickupTime);
+    if (dropoffTime && !allowed.includes(dropoffTime)) {
+      setDropoffTime("");
+    }
+  }, [pickupTime, dropoffTime, setDropoffTime]);
 
   const onPickupPlaceChanged = useCallback(() => {
     if (pickupAutoRef.current) {
@@ -130,7 +148,9 @@ const LocationStep = ({
     autoRef: React.MutableRefObject<google.maps.places.Autocomplete | null>,
     onPlaceChanged: () => void,
     type: "pickup" | "dropoff",
-    sedeOnly?: boolean
+    sedeOnly?: boolean,
+    timeSlots: string[] = TIME_SLOTS,
+    timeHelper?: string
   ) => (
     <div className="space-y-4">
       <h3 className="text-sm font-bold text-gold flex items-center gap-2 uppercase tracking-widest">
@@ -268,15 +288,22 @@ const LocationStep = ({
               <SelectValue placeholder="Seleziona orario" />
             </SelectTrigger>
             <SelectContent className="bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white max-h-60">
-              {TIME_SLOTS.map((slot) => (
+              {timeSlots.map((slot) => (
                 <SelectItem key={slot} value={slot}>{slot}</SelectItem>
               ))}
             </SelectContent>
           </Select>
+          {timeHelper && (
+            <p className="text-xs text-gold/80 flex items-center gap-1.5 mt-1">
+              <AlertTriangle size={11} /> {timeHelper}
+            </p>
+          )}
         </motion.div>
       )}
     </div>
   );
+
+  const allowedDropoffSlots = getAllowedDropoffSlots(pickupTime);
 
   return (
     <div className="space-y-8">
@@ -302,7 +329,11 @@ const LocationStep = ({
         dropoffMapCenter,
         dropoffAutoRef, onDropoffPlaceChanged,
         "dropoff",
-        dropoffSedeOnly
+        dropoffSedeOnly,
+        allowedDropoffSlots,
+        pickupTime
+          ? `La riconsegna deve avvenire entro 1 ora dall'orario di ritiro (${pickupTime}).`
+          : "Seleziona prima l'orario di ritiro per scegliere la riconsegna."
       )}
     </div>
   );
