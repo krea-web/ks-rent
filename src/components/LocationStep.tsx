@@ -56,13 +56,12 @@ interface LocationStepProps {
   dropoffSedeOnly?: boolean;
 }
 
-// Returns time slots within +1 hour from the given pickup time (inclusive).
-// Slots are 30-min increments, so we allow pickupTime, +30min, +60min.
+// Dropoff time must match pickup time exactly.
 const getAllowedDropoffSlots = (pickupTime: string): string[] => {
   if (!pickupTime) return TIME_SLOTS;
   const idx = TIME_SLOTS.indexOf(pickupTime);
   if (idx === -1) return TIME_SLOTS;
-  return TIME_SLOTS.slice(idx, idx + 3);
+  return [TIME_SLOTS[idx]];
 };
 
 const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px" };
