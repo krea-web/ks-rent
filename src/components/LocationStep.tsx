@@ -330,8 +330,8 @@ const LocationStep = ({
         dropoffSedeOnly,
         allowedDropoffSlots,
         pickupTime
-          ? `La riconsegna deve avvenire entro 1 ora dall'orario di ritiro (${pickupTime}).`
-          : "Seleziona prima l'orario di ritiro per scegliere la riconsegna."
+          ? `La riconsegna deve avvenire allo stesso orario del ritiro (${pickupTime}).`
+          : "Seleziona prima l'orario di ritiro."
       )}
     </div>
   );
