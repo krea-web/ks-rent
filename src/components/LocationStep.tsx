@@ -87,12 +87,11 @@ const LocationStep = ({
 
   const dropoffAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
 
-  // Enforce: dropoff time must be within 1h after pickup time. Reset if invalid.
+  // Enforce: dropoff time must equal pickup time. Auto-sync if different.
   useEffect(() => {
     if (!pickupTime) return;
-    const allowed = getAllowedDropoffSlots(pickupTime);
-    if (dropoffTime && !allowed.includes(dropoffTime)) {
-      setDropoffTime("");
+    if (dropoffTime !== pickupTime) {
+      setDropoffTime(pickupTime);
     }
   }, [pickupTime, dropoffTime, setDropoffTime]);
 
