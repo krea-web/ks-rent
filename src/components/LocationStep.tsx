@@ -56,13 +56,12 @@ interface LocationStepProps {
   dropoffSedeOnly?: boolean;
 }
 
-// Returns time slots within +1 hour from the given pickup time (inclusive).
-// Slots are 30-min increments, so we allow pickupTime, +30min, +60min.
+// Dropoff time must match pickup time exactly.
 const getAllowedDropoffSlots = (pickupTime: string): string[] => {
   if (!pickupTime) return TIME_SLOTS;
   const idx = TIME_SLOTS.indexOf(pickupTime);
   if (idx === -1) return TIME_SLOTS;
-  return TIME_SLOTS.slice(idx, idx + 3);
+  return [TIME_SLOTS[idx]];
 };
 
 const mapContainerStyle = { width: "100%", height: "200px", borderRadius: "12px" };
@@ -88,12 +87,11 @@ const LocationStep = ({
 
   const dropoffAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
 
-  // Enforce: dropoff time must be within 1h after pickup time. Reset if invalid.
+  // Enforce: dropoff time must equal pickup time. Auto-sync if different.
   useEffect(() => {
     if (!pickupTime) return;
-    const allowed = getAllowedDropoffSlots(pickupTime);
-    if (dropoffTime && !allowed.includes(dropoffTime)) {
-      setDropoffTime("");
+    if (dropoffTime !== pickupTime) {
+      setDropoffTime(pickupTime);
     }
   }, [pickupTime, dropoffTime, setDropoffTime]);
 
@@ -332,8 +330,8 @@ const LocationStep = ({
         dropoffSedeOnly,
         allowedDropoffSlots,
         pickupTime
-          ? `La riconsegna deve avvenire entro 1 ora dall'orario di ritiro (${pickupTime}).`
-          : "Seleziona prima l'orario di ritiro per scegliere la riconsegna."
+          ? `La riconsegna deve avvenire allo stesso orario del ritiro (${pickupTime}).`
+          : "Seleziona prima l'orario di ritiro."
       )}
     </div>
   );
