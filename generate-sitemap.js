@@ -18,7 +18,7 @@ const STATIC_ROUTES = [
   { path: "/noleggio-auto-aeroporto-olbia", priority: "0.9", changefreq: "monthly" },
   { path: "/noleggio-auto-porto-olbia", priority: "0.9", changefreq: "monthly" },
   { path: "/noleggio-auto-costa-smeralda", priority: "0.9", changefreq: "monthly" },
-  { path: "/noleggio-senza-carta-credito", priority: "0.9", changefreq: "monthly" },
+  { path: "/noleggio-auto-senza-carta-di-credito-olbia", priority: "0.9", changefreq: "monthly" },
 ];
 
 async function generate() {
@@ -36,11 +36,14 @@ async function generate() {
   const locationSlugs = (locRes.data || []).map((r) => r.slug);
   const beachSlugs = (beachRes.data || []).map((r) => r.slug);
 
+  const today = new Date().toISOString().split("T")[0];
+
   // Build URL entries
   const urls = [
     ...STATIC_ROUTES.map(
       (r) => `  <url>
     <loc>${DOMAIN}${r.path}</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
     <priority>${r.priority}</priority>
   </url>`
@@ -48,6 +51,7 @@ async function generate() {
     ...locationSlugs.map(
       (slug) => `  <url>
     <loc>${DOMAIN}/${slug}</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>`
@@ -55,6 +59,7 @@ async function generate() {
     ...beachSlugs.map(
       (slug) => `  <url>
     <loc>${DOMAIN}/${slug}</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`

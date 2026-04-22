@@ -15,7 +15,21 @@ const SEOHead = ({
   ogImage = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   jsonLd,
 }: SEOHeadProps) => {
-  const canonicalUrl = canonical || (typeof window !== 'undefined' ? `https://www.ksrentsardinia.com${window.location.pathname}` : 'https://www.ksrentsardinia.com/');
+  // Always force https://www. to avoid canonical issues with http:// or non-www variants
+  let canonicalUrl = canonical || (typeof window !== 'undefined' ? `https://www.ksrentsardinia.com${window.location.pathname}` : 'https://www.ksrentsardinia.com/');
+  // Normalize: ensure canonical always starts with https://www.ksrentsardinia.com
+  if (canonicalUrl && !canonicalUrl.startsWith('https://www.ksrentsardinia.com')) {
+    try {
+      const parsed = new URL(canonicalUrl);
+      canonicalUrl = `https://www.ksrentsardinia.com${parsed.pathname}`;
+    } catch {
+      // fallback: keep as-is
+    }
+  }
+  // Remove trailing slash except for homepage
+  if (canonicalUrl.endsWith('/') && canonicalUrl !== 'https://www.ksrentsardinia.com/') {
+    canonicalUrl = canonicalUrl.slice(0, -1);
+  }
 
   return (
     <Helmet>
@@ -37,6 +51,7 @@ const SEOHead = ({
       {/* 3. Open Graph */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
+      <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={ogImage} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="it_IT" />

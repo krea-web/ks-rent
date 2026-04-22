@@ -43,7 +43,7 @@ export const localBusinessJsonLd = {
       alternateName: "KS Rent",
       vatID: "IT03028900904",
       taxID: "03028900904",
-      foundingDate: "2022",
+      foundingDate: "2025",
       description:
         "Autonoleggio premium a breve termine in Sardegna. Consegna a domicilio di auto di lusso, supercar e SUV a Olbia, Costa Smeralda e Porto Cervo. Noleggio senza carta di credito obbligatoria.",
       disambiguatingDescription:
@@ -332,7 +332,7 @@ const carRentalBase = {
   alternateName: "KS Rent",
   vatID: "IT03028900904",
   taxID: "03028900904",
-  foundingDate: "2022",
+  foundingDate: "2025",
   disambiguatingDescription:
     "KS Rent Sardinia è un autonoleggio di lusso con sede a Olbia, Sardegna, con partita IVA IT03028900904. Entità locale e indipendente, non affiliata con altre società omonime operanti sul resto del territorio nazionale.",
   url: "https://www.ksrentsardinia.com",

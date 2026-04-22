@@ -1,7 +1,8 @@
 {
   "redirects": [
     { "source": "/localita/:slug", "destination": "/:slug", "permanent": true },
-    { "source": "/spiagge/:slug", "destination": "/:slug", "permanent": true }
+    { "source": "/spiagge/:slug", "destination": "/:slug", "permanent": true },
+    { "source": "/noleggio-senza-carta-credito", "destination": "/noleggio-auto-senza-carta-di-credito-olbia", "permanent": true }
   ],
   "rewrites": [
     {

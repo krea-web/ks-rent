@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
 import CompanyMap from "@/components/CompanyMap";
+import { getLocalitySEOContent } from "@/data/locality-content";
 
 interface PageData {
   slug: string;
@@ -207,6 +208,7 @@ export default function DynamicPage() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const vehicle = useMemo(() => getRecommendedVehicle(slug || ""), [slug]);
+  const seoContent = useMemo(() => getLocalitySEOContent(slug || ""), [slug]);
 
   // Intercetta click su link interni nel content_html
   const handleContentClick = useCallback((e: MouseEvent) => {
@@ -304,7 +306,25 @@ export default function DynamicPage() {
         description={data.meta_description}
         canonical={data.canonical_url}
         ogImage={data.og_image_url}
-        jsonLd={type === "beach" ? buildBeachJsonLd(data) : buildLocationJsonLd(data)}
+        jsonLd={[
+          ...(type === "beach" ? buildBeachJsonLd(data) : buildLocationJsonLd(data)),
+          ...(seoContent.faqs.length > 0
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: seoContent.faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.q,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: faq.a,
+                    },
+                  })),
+                },
+              ]
+            : []),
+        ]}
       />
 
       {/* ════════════ 1. HERO SECTION ════════════ */}
@@ -533,7 +553,7 @@ export default function DynamicPage() {
         </div>
       </section>
 
-      {/* ════════════ 6. SEO CONTENT BLOCKS ════════════ */}
+      {/* ════════════ 6. SEO CONTENT BLOCKS (unici per ogni pagina) ════════════ */}
       <motion.section
         className="py-20 px-4 md:px-12"
         variants={sectionVariants}
@@ -543,72 +563,92 @@ export default function DynamicPage() {
         transition={{ duration: 0.6 }}
       >
         <div className="max-w-4xl mx-auto space-y-16">
-          {/* Block 1 */}
+          {/* Block 1 — Perche scegliere KS Rent */}
           <div>
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-              Perché scegliere il noleggio auto KS Rent per{" "}
+              Perché scegliere KS Rent Sardinia per{" "}
               <span className="text-gold">{data.title}</span>?
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
-              KS Rent è il punto di riferimento per il noleggio auto a Olbia e in tutta la{" "}
-              <Link to="/noleggio-auto-costa-smeralda" className="text-gold hover:text-gold/80 underline">Costa Smeralda</Link>.
-              Scegliendo il nostro servizio per {data.title}, avrai accesso a una flotta
-              premium composta da city car, SUV, berline e supercar, sempre igienizzate, con
-              pacchetti km flessibili e copertura assicurativa completa. Il nostro team è disponibile
-              24 ore su 24 per consegnarti il veicolo direttamente all'{" "}
-              <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold hover:text-gold/80 underline">aeroporto</Link>, al{" "}
-              <Link to="/noleggio-auto-porto-olbia" className="text-gold hover:text-gold/80 underline">porto di Olbia</Link>{" "}
-              o presso la tua struttura ricettiva.
+              {seoContent.whyUs}
             </p>
           </div>
 
-          {/* Block 2 */}
+          {/* Block 2 — Noleggio senza carta di credito */}
           <div className="bg-card border border-border rounded-2xl p-8 md:p-10">
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
               Noleggio senza carta di credito a{" "}
               <span className="text-gold">{data.title}</span>
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
-              Scopri il vantaggio di un noleggio senza carta di credito a {data.title}. A
-              differenza delle grandi catene, KS Rent accetta anche bancomat e contanti per il
-              deposito cauzionale. Nessuna sorpresa, nessun blocco sulla tua carta: solo termini
-              chiari, trasparenti e pensati per il viaggiatore moderno che vuole esplorare la
-              Sardegna in totale libertà.
+              {seoContent.noCreditCard}
             </p>
           </div>
 
-          {/* Block 3 */}
+          {/* Block 3 — Consegna su misura */}
           <div>
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
               Consegna su misura a{" "}
               <span className="text-gold">{data.title}</span>
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
-              Veicoli premium, flotta aggiornata, nessuna coda al desk aeroportuale e consegna su
-              misura direttamente a {data.title} o presso la tua struttura. Che tu stia cercando
-              un'auto per una vacanza di lusso in Costa Smeralda, un SUV per raggiungere le spiagge
-              più remote o una city car economica per muoverti tra Olbia,{" "}
-              <Link to="/noleggio-auto-san-teodoro" className="text-gold hover:text-gold/80 underline">San Teodoro</Link> e{" "}
-              <Link to="/noleggio-auto-golfo-aranci" className="text-gold hover:text-gold/80 underline">Golfo Aranci</Link>,
-              KS Rent ha il veicolo giusto per te.
+              {seoContent.delivery}
             </p>
           </div>
 
-          {/* Block 4 */}
+          {/* Block 4 — Vacanza */}
           <div className="bg-card border border-border rounded-2xl p-8 md:p-10">
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
               La tua vacanza in Sardegna inizia da{" "}
               <span className="text-gold">{data.title}</span>
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
-              La Sardegna nord-orientale offre paesaggi mozzafiato, acque cristalline e una cultura
-              enogastronomica unica. Noleggiare un'auto con KS Rent ti permette di vivere ogni
-              angolo di questo paradiso con la massima comodità: dalle calette segrete della Costa
-              Smeralda ai borghi dell'entroterra gallurese, passando per i mercati locali e i
-              ristoranti stellati. Prenota online in pochi click, scegli il ritiro in aeroporto o
-              al porto di Olbia e parti all'avventura verso {data.title} senza pensieri.
+              {seoContent.vacation}
             </p>
           </div>
+
+          {/* Block 5 — FAQ per AEO (unico per pagina) */}
+          {seoContent.faqs.length > 0 && (
+            <div>
+              <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-8">
+                Domande frequenti — <span className="text-gold">{data.title}</span>
+              </h2>
+              <div className="space-y-4">
+                {seoContent.faqs.map((faq, i) => (
+                  <details
+                    key={i}
+                    className="bg-card border border-border rounded-xl overflow-hidden group"
+                  >
+                    <summary className="px-6 py-5 cursor-pointer text-foreground font-semibold hover:text-gold transition-colors list-none flex items-center justify-between">
+                      {faq.q}
+                      <ArrowRight className="w-4 h-4 text-gold transition-transform group-open:rotate-90 shrink-0 ml-4" />
+                    </summary>
+                    <div className="px-6 pb-5">
+                      <p className="text-foreground/70 font-light leading-relaxed">
+                        {faq.a}
+                      </p>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Link interni correlati */}
+          {seoContent.relatedSlugs && seoContent.relatedSlugs.length > 0 && (
+            <div className="flex flex-wrap gap-3">
+              <span className="text-foreground/50 text-sm font-light">Scopri anche:</span>
+              {seoContent.relatedSlugs.map((relSlug) => (
+                <Link
+                  key={relSlug}
+                  to={`/${relSlug}`}
+                  className="text-gold text-sm font-medium hover:text-gold/80 underline underline-offset-4"
+                >
+                  {relSlug.replace(/-/g, " ").replace(/^noleggio auto /, "")}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </motion.section>
 
