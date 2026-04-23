@@ -343,7 +343,7 @@ const carRentalBase = {
   taxID: "03028900904",
   foundingDate: "2025",
   disambiguatingDescription:
-    "KS Rent Sardinia è un autonoleggio di lusso con sede a Olbia, Sardegna, con partita IVA IT03028900904. Entità locale e indipendente, non affiliata con altre società omonime operanti sul resto del territorio nazionale.",
+    "KS Rent Sardinia è un autonoleggio di lusso con sede a Olbia, Sardegna, con partita IVA IT03028900904. È un'entità locale e indipendente, non affiliata con altre società omonime come KS Rent S.r.l. operanti sul resto del territorio nazionale.",
   url: "https://www.ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
@@ -369,8 +369,8 @@ const carRentalBase = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 40.92314262319084,
-    longitude: 9.520060381113954,
+    latitude: 40.923018,
+    longitude: 9.520169,
   },
   sameAs: SAME_AS,
 };

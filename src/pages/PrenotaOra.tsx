@@ -192,7 +192,6 @@ const PrenotaOra = () => {
     const fetchVehicles = async () => {
       const { data, error } = await supabase.from("vehicles").select("*").order("category", { ascending: true });
       if (data) setVehicles(data);
-      if (error) console.error("Errore recupero veicoli:", error);
     };
     fetchVehicles();
   }, []);
@@ -242,8 +241,7 @@ const PrenotaOra = () => {
       if (!data.available) {
         toast.error("Veicolo non disponibile per queste date.");
       }
-    } catch (err) {
-      console.error("Availability check failed:", err);
+    } catch {
       setAvailabilityResult(null);
       toast.error("Impossibile verificare la disponibilità. Calcolo locale attivo.");
     } finally {
@@ -403,9 +401,8 @@ const PrenotaOra = () => {
         trackBookingSuccess(result.booking_id || "", selectedVehicle, total, days);
         resetForm();
       }
-    } catch (error) {
+    } catch {
       toast.error("Errore durante la prenotazione. Riprova.");
-      console.error(error);
     } finally {
       setLoading(false);
     }

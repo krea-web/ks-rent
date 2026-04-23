@@ -22,19 +22,31 @@ const VEHICLE_IMAGES: Record<string, string> = {
 };
 
 const FleetShowcase = () => {
-  const [fleet, setFleet] = useState<any[]>([]);
+  interface Vehicle {
+    id: string;
+    make: string;
+    model: string;
+    category: string;
+    daily_rate: number;
+    rate_june?: number;
+    rate_july?: number;
+    rate_august?: number;
+    image_url?: string;
+    available: boolean;
+  }
+
+  const [fleet, setFleet] = useState<Vehicle[]>([]);
 
   useEffect(() => {
     const fetchFleet = async () => {
       const { data, error } = await supabase.from("vehicles").select("*").order("category");
       if (data) setFleet(data);
-      if (error) console.error("Errore recupero flotta:", error);
     };
     fetchFleet();
   }, []);
 
   const groupedFleet = useMemo(() => {
-    const groups: Record<string, { representative: any; isAvailable: boolean }> = {};
+    const groups: Record<string, { representative: Vehicle; isAvailable: boolean }> = {};
     for (const v of fleet) {
       const key = `${v.make}__${v.model}`;
       if (!groups[key]) {
@@ -50,7 +62,7 @@ const FleetShowcase = () => {
     return Object.values(groups).filter((g) => g.isAvailable);
   }, [fleet]);
 
-  const getImage = (v: any) =>
+  const getImage = (v: Vehicle) =>
     v.image_url ||
     VEHICLE_IMAGES[v.model] ||
     "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80";

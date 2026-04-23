@@ -159,8 +159,8 @@ class Media {
       texture.image = img;
       this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
     };
-    img.onerror = (e) => {
-      console.warn("Errore caricamento immagine 3D su iOS:", e);
+    img.onerror = () => {
+      // Image failed to load — handled silently
     };
     img.src = this.image; // Sempre impostare src DOPO onload
   }

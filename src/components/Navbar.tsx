@@ -57,7 +57,7 @@ const Navbar = () => {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 w-full z-[9999] pointer-events-auto transition-all duration-500 ease-in-out",
+          "fixed top-0 left-0 w-full z-[100] pointer-events-auto transition-all duration-500 ease-in-out",
           scrolled
             ? "bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/10 py-3 md:py-4 shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             : "bg-transparent py-4 md:py-6 lg:py-8",
@@ -170,7 +170,7 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9990] bg-white dark:bg-[#050505] w-full h-full px-6 sm:px-8 pt-24 pb-8 overflow-y-auto overflow-x-hidden"
+            className="fixed inset-0 z-[200] bg-white dark:bg-[#050505] w-full h-full px-6 sm:px-8 pt-24 pb-8 overflow-y-auto overflow-x-hidden"
           >
             <div className="absolute top-[-10%] right-[-10%] w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
 

@@ -23,8 +23,8 @@ class MapErrorBoundary extends Component<{ children: ReactNode }, { hasError: bo
   static getDerivedStateFromError() {
     return { hasError: true };
   }
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    console.warn("LocationStep error caught:", error, info);
+  componentDidCatch(_error: Error, _info: ErrorInfo) {
+    // Error boundary caught a rendering error in the map component
   }
   render() {
     if (this.state.hasError) {

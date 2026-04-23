@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
 import NotFound from "./NotFound";
@@ -379,7 +380,7 @@ export default function DynamicPage() {
           <div
             ref={contentRef}
             className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
-            dangerouslySetInnerHTML={{ __html: data.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>") }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>")) }}
           />
         ) : (
           <div className="text-center py-12">
