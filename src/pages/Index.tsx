@@ -10,8 +10,8 @@ import { faqPageJsonLd, localBusinessJsonLd } from "@/lib/jsonLd";
 const Index = () => (
   <>
     <SEOHead
-      title="Noleggio Auto Lusso Olbia Costa Smeralda | KS Rent Sardinia"
-      description="Noleggio auto luxury a Olbia e Costa Smeralda. Supercar, SUV e moto con consegna in aeroporto. Prenota online in 2 minuti con KS Rent Sardinia."
+      title="Noleggio Auto Olbia | Autonoleggio Costa Smeralda — KS Rent"
+      description="Noleggio auto a Olbia con consegna a domicilio in Costa Smeralda. SUV, supercar e city car senza carta di credito. Prenota online con KS Rent Sardinia."
       canonical="https://www.ksrentsardinia.com/"
       jsonLd={[localBusinessJsonLd, faqPageJsonLd]}
     />
@@ -23,39 +23,42 @@ const Index = () => (
 
     {/* SEO RICH TEXT & ENTITY DISAMBIGUATION */}
     <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto text-gray-600 dark:text-white/80 font-light leading-relaxed bg-background">
-      <h2 className="text-3xl font-bold text-foreground mb-6">Il tuo Autonoleggio a Olbia di Fiducia</h2>
+      <h2 className="text-3xl font-bold text-foreground mb-6">Noleggio Auto Olbia — Il tuo Autonoleggio di Fiducia</h2>
       <p className="mb-4">
-        Se stai cercando un servizio di <strong>noleggio auto a Olbia</strong> che unisca affidabilità ed esclusività,
-        KS Rent Sardinia è la scelta perfetta.{" "}
+        Cerchi un <strong>noleggio auto a Olbia</strong>? KS Rent Sardinia è l'<strong>autonoleggio Olbia</strong> di
+        riferimento per chi vuole esplorare la Sardegna nord-orientale senza vincoli. Consegniamo SUV, supercar, city car,
+        moto e quad direttamente al{" "}
+        <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto di Olbia</Link>,
+        all'<Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aeroporto Olbia Costa Smeralda</Link>,
+        al tuo hotel o alla tua villa — dalle 10:00 alle 22:30, 7 giorni su 7.
+      </p>
+      <p className="mb-4">
         <strong>
           Siamo una realtà orgogliosamente e unicamente sarda (P.IVA 03028900904), totalmente indipendente e non
           affiliata ad altre società omonime operanti nel resto d'Italia.
-        </strong>
+        </strong>{" "}
+        Non siamo il classico autonoleggio o un intermediario web: possediamo fisicamente la nostra flotta — Audi RS3, BMW M2,
+        Mercedes Classe A, Jeep Avenger, Fiat Panda, Honda SH — e la prepariamo maniacalmente per ogni cliente.
       </p>
       <p className="mb-4">
-        Non siamo il classico autonoleggio o un intermediario web: possediamo fisicamente la nostra flotta al{" "}
-        <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto di Olbia</Link> e offriamo un'esperienza premium per chi desidera il <strong>noleggio auto di lusso a Olbia</strong> senza
-        compromessi.
-      </p>
-      <p className="mb-4">
-        Che tu stia cercando un veicolo pratico per muoverti in città o un servizio di{" "}
-        <strong>luxury rent car a Olbia</strong> per esplorare la{" "}
-        <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>, la nostra flotta è preparata maniacalmente.
-        Scegliere il nostro <strong>autonoleggio a Olbia</strong> significa dire addio alle file interminabili e godersi
-        la Sardegna fin dal primo istante. Ritira la tua auto all'{" "}
-        <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aeroporto di Olbia</Link> o noleggia{" "}
-        <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">senza carta di credito</Link>.
+        Il nostro <strong>noleggio auto Olbia</strong> si distingue per un vantaggio concreto: accettiamo bancomat,
+        prepagate e contanti per il deposito cauzionale. Nessuna carta di credito obbligatoria, nessun blocco sulla carta,
+        nessuna sorpresa.{" "}
+        <Link to="/noleggio-auto-senza-carta-di-credito-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Scopri il noleggio senza carta di credito</Link>.
       </p>
 
-      <h3 className="text-2xl font-bold text-foreground mt-10 mb-4">Consegna a domicilio in tutta la Gallura</h3>
+      <h3 className="text-2xl font-bold text-foreground mt-10 mb-4">Consegna a domicilio in tutta la Gallura e Costa Smeralda</h3>
       <p className="mb-4">
-        KS Rent Sardinia consegna auto, SUV, moto e quad direttamente al tuo alloggio in tutta la Gallura. Dalle località più richieste come{" "}
+        Il servizio di <strong>autonoleggio a Olbia</strong> di KS Rent copre capillarmente tutta la Gallura. Consegniamo alle località più richieste:{" "}
         <Link to="/noleggio-auto-porto-cervo" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Cervo</Link>,{" "}
-        <Link to="/noleggio-auto-san-teodoro" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">San Teodoro</Link> e{" "}
-        <Link to="/noleggio-auto-baja-sardinia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Baja Sardinia</Link> fino a{" "}
+        <Link to="/noleggio-auto-san-teodoro" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">San Teodoro</Link>,{" "}
+        <Link to="/noleggio-auto-baja-sardinia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Baja Sardinia</Link>,{" "}
         <Link to="/noleggio-auto-palau" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Palau</Link>,{" "}
-        <Link to="/noleggio-auto-santa-teresa-gallura" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Santa Teresa Gallura</Link> e{" "}
-        <Link to="/noleggio-auto-budoni" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Budoni</Link>. Il servizio è attivo dalle 10:00 alle 22:30, 7 giorni su 7.
+        <Link to="/noleggio-auto-porto-rotondo" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Rotondo</Link>,{" "}
+        <Link to="/noleggio-auto-santa-teresa-gallura" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Santa Teresa Gallura</Link>,{" "}
+        <Link to="/noleggio-auto-budoni" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Budoni</Link> e la{" "}
+        <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>.
+        Il tuo <strong>noleggio auto a Olbia</strong> inizia dal momento in cui atterri o sbarchi dal traghetto.
       </p>
 
       <h3 className="text-2xl font-bold text-foreground mt-10 mb-4">Le spiagge più belle a portata di auto</h3>

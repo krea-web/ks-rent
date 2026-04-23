@@ -60,6 +60,13 @@ const senzaCCJsonLd = {
     addressRegion: "SS",
     addressCountry: "IT",
   },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5.0",
+    bestRating: "5",
+    worstRating: "1",
+    ratingCount: "20",
+  },
 };
 
 const NoleggioSenzaCartaCredito = () => {
@@ -257,6 +264,12 @@ const NoleggioSenzaCartaCredito = () => {
           >
             Prenota Senza Carta di Credito <ArrowRight />
           </Link>
+          <p className="text-foreground/40 text-sm mt-6 font-light">
+            <Link to="/" className="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors">
+              Noleggio auto Olbia
+            </Link>
+            {" "}— KS Rent Sardinia, autonoleggio con consegna a domicilio in tutta la Gallura e Costa Smeralda.
+          </p>
         </motion.div>
       </section>
     </div>

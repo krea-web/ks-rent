@@ -22,7 +22,7 @@ const HeroSection = () => (
     <div className="relative z-10 w-full max-w-full px-4 md:px-8 text-center">
       <img
         src={LOGO_URL}
-        alt="KS Rent — Noleggio Auto Lusso Olbia Costa Smeralda"
+        alt="KS Rent — Noleggio Auto Olbia e Costa Smeralda"
         width={280}
         height={112}
         className="h-16 sm:h-20 md:h-28 w-auto mx-auto mb-6 object-contain"
@@ -32,7 +32,7 @@ const HeroSection = () => (
       />
 
       <h1 className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4">
-        Noleggio Auto Lusso Olbia — Costa Smeralda
+        Noleggio Auto Olbia e Costa Smeralda
       </h1>
 
       <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2">

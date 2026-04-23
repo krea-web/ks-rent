@@ -111,7 +111,7 @@ const FAQSection = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
             >
-              Tutto ciò che devi sapere sul noleggio luxury in Sardegna: termini chiari, protezione completa e servizio
+              Tutto ciò che devi sapere sul noleggio auto a Olbia e in Costa Smeralda: termini chiari, protezione completa e servizio
               d'eccellenza.
             </motion.p>
           </div>
@@ -212,7 +212,7 @@ const FAQSection = () => {
             </h2>
             <p className="text-gray-600 dark:text-white/80 text-base md:text-xl mb-8 md:mb-10 max-w-lg leading-relaxed drop-shadow-md">
               Scopri la filosofia di KS Rent S.R.L. e perché siamo diventati il punto di riferimento per il noleggio
-              luxury con coperture assicurative complete e termini chiari a Olbia.
+              auto a Olbia con coperture assicurative complete e termini chiari in Costa Smeralda.
             </p>
 
             <Link

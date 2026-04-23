@@ -270,6 +270,12 @@ const NoleggioAeroportoOlbia = () => {
           >
             Scegli il Veicolo <ArrowRight />
           </Link>
+          <p className="text-foreground/40 text-sm mt-6 font-light">
+            <Link to="/" className="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors">
+              Noleggio auto Olbia
+            </Link>
+            {" "}— KS Rent Sardinia, autonoleggio con consegna a domicilio in tutta la Gallura e Costa Smeralda.
+          </p>
         </motion.div>
       </section>
     </div>

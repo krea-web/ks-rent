@@ -55,7 +55,16 @@ export const localBusinessJsonLd = {
       currenciesAccepted: "EUR",
       paymentAccepted: "Cash, Credit Card, Debit Card, Prepaid Card, Bonifico Bancario",
       inLanguage: "it-IT",
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        bestRating: "5",
+        worstRating: "1",
+        ratingCount: "20",
+      },
       knowsAbout: [
+        "Noleggio auto Olbia",
+        "Autonoleggio Olbia",
         "Noleggio auto di lusso Olbia",
         "Noleggio senza carta di credito Sardegna",
         "Consegna auto in Aeroporto Olbia Costa Smeralda",
@@ -342,8 +351,9 @@ const carRentalBase = {
   paymentAccepted: "Cash, Credit Card, Debit Card, Prepaid Card, Bonifico Bancario",
   inLanguage: "it-IT",
   knowsAbout: [
+    "Noleggio auto Olbia",
+    "Autonoleggio Olbia",
     "Noleggio auto di lusso Olbia",
-    "Costa Smeralda Luxury Rental",
     "Noleggio senza carta di credito Sardegna",
     "Consegna auto a domicilio Gallura",
     "Rent a car aeroporto Olbia",
@@ -532,6 +542,13 @@ export const aeroportoAutoRentalJsonLd = {
   url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   areaServed: { "@type": "Place", name: "Aeroporto Olbia Costa Smeralda" },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5.0",
+    bestRating: "5",
+    worstRating: "1",
+    ratingCount: "20",
+  },
 };
 
 export const portoAutoRentalJsonLd = {
@@ -543,6 +560,13 @@ export const portoAutoRentalJsonLd = {
   url: "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   areaServed: { "@type": "Place", name: "Porto Olbia Isola Bianca" },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5.0",
+    bestRating: "5",
+    worstRating: "1",
+    ratingCount: "20",
+  },
 };
 
 export const flottaJsonLd = {
