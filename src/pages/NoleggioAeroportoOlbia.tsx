@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin, Star, Zap, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { aeroportoFaqJsonLd, aeroportoAutoRentalJsonLd } from "@/lib/jsonLd";
+import { aeroportoFaqJsonLd, aeroportoAutoRentalJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
 
 const faqs = [
   {
@@ -41,7 +41,7 @@ const NoleggioAeroportoOlbia = () => {
         description="Noleggio auto con consegna immediata all'Aeroporto di Olbia. Supercar, SUV e moto senza carta di credito. Prenota online con KS Rent."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia"
         
-        jsonLd={[aeroportoAutoRentalJsonLd, aeroportoFaqJsonLd]}
+        jsonLd={[aeroportoAutoRentalJsonLd, aeroportoFaqJsonLd, buildBreadcrumb("Noleggio Auto Aeroporto Olbia", "/noleggio-auto-aeroporto-olbia")]}
       />
 
       {/* HERO */}

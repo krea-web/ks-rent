@@ -402,24 +402,70 @@ export const buildLocationJsonLd = (page: {
   meta_description: string;
   canonical_url?: string;
   og_image_url?: string;
-}) => [
-  {
-    "@context": "https://schema.org",
-    ...carRentalBase,
-    description: page.meta_description,
-    url: page.canonical_url || "https://www.ksrentsardinia.com",
-    image: page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-    areaServed: { "@type": "Place", name: page.title },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Place",
-    name: page.title,
-    description: page.meta_description,
-    image: page.og_image_url,
-    isPartOf: { "@type": "AdministrativeArea", name: "Gallura, Sardegna" },
-  },
-];
+}) => {
+  const pageUrl = page.canonical_url || "https://www.ksrentsardinia.com";
+  const pageImage = page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
+  return [
+    {
+      "@context": "https://schema.org",
+      ...carRentalBase,
+      description: page.meta_description,
+      url: pageUrl,
+      image: pageImage,
+      areaServed: { "@type": "Place", name: page.title },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Place",
+      name: page.title,
+      description: page.meta_description,
+      image: page.og_image_url,
+      isPartOf: { "@type": "AdministrativeArea", name: "Gallura, Sardegna" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: `Noleggio Auto di Lusso a ${page.title}`,
+      serviceType: "Car Rental",
+      description: page.meta_description,
+      url: pageUrl,
+      provider: {
+        "@type": "AutoRental",
+        name: "KS Rent Sardinia",
+        legalName: "KS Rent S.R.L.",
+        url: "https://www.ksrentsardinia.com",
+        telephone: "+393446107071",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Viale Isola Bianca 38",
+          addressLocality: "Olbia",
+          postalCode: "07026",
+          addressRegion: "SS",
+          addressCountry: "IT",
+        },
+      },
+      areaServed: { "@type": "Place", name: page.title },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.ksrentsardinia.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: page.title,
+          item: pageUrl,
+        },
+      ],
+    },
+  ];
+};
 
 export const buildBeachJsonLd = (page: {
   title: string;
@@ -427,33 +473,55 @@ export const buildBeachJsonLd = (page: {
   canonical_url?: string;
   og_image_url?: string;
   parking_info?: string;
-}) => [
-  {
-    "@context": "https://schema.org",
-    ...carRentalBase,
-    description: page.meta_description,
-    url: page.canonical_url || "https://www.ksrentsardinia.com",
-    image: page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
-    areaServed: { "@type": "Beach", name: page.title },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Beach",
-    name: page.title,
-    description: page.meta_description,
-    image: page.og_image_url,
-    isPartOf: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardegna" },
-    ...(page.parking_info
-      ? {
-          amenityFeature: {
-            "@type": "LocationFeatureSpecification",
-            name: "Parcheggio",
-            value: page.parking_info,
-          },
-        }
-      : {}),
-  },
-];
+}) => {
+  const pageUrl = page.canonical_url || "https://www.ksrentsardinia.com";
+  const pageImage = page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
+  return [
+    {
+      "@context": "https://schema.org",
+      ...carRentalBase,
+      description: page.meta_description,
+      url: pageUrl,
+      image: pageImage,
+      areaServed: { "@type": "Beach", name: page.title },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Beach",
+      name: page.title,
+      description: page.meta_description,
+      image: page.og_image_url,
+      isPartOf: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardegna" },
+      ...(page.parking_info
+        ? {
+            amenityFeature: {
+              "@type": "LocationFeatureSpecification",
+              name: "Parcheggio",
+              value: page.parking_info,
+            },
+          }
+        : {}),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.ksrentsardinia.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: page.title,
+          item: pageUrl,
+        },
+      ],
+    },
+  ];
+};
 
 export const aeroportoAutoRentalJsonLd = {
   "@context": "https://schema.org",
@@ -493,3 +561,14 @@ export const flottaJsonLd = {
     url: "https://www.ksrentsardinia.com",
   },
 };
+
+/* ── BreadcrumbList builder for static pages ── */
+
+export const buildBreadcrumb = (name: string, path: string) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.ksrentsardinia.com" },
+    { "@type": "ListItem", position: 2, name, item: `https://www.ksrentsardinia.com${path}` },
+  ],
+});

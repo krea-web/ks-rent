@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, MapPin, ShieldCheck, CreditCard, Smartphone, Palmtree, Star, Zap, Gauge } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import { buildBreadcrumb } from "@/lib/jsonLd";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
@@ -88,7 +89,7 @@ const NoleggioCostaSmeralda = () => {
         description="Noleggio supercar e SUV in Costa Smeralda. Consegna in hotel o villa a Porto Cervo, San Pantaleo e Porto Rotondo. Prenota online."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-costa-smeralda"
         
-        jsonLd={[jsonLd, faqJsonLd]}
+        jsonLd={[jsonLd, faqJsonLd, buildBreadcrumb("Noleggio Auto Costa Smeralda", "/noleggio-auto-costa-smeralda")]}
       />
 
       {/* HERO SECTION */}

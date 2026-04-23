@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Instagram } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback } from "react";
 import SEOHead from "@/components/SEOHead";
-import { localBusinessJsonLd } from "@/lib/jsonLd";
+import { localBusinessJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
 import CompanyMap from "@/components/CompanyMap";
 
@@ -31,7 +31,7 @@ const ChiSiamo = () => {
         title="Chi Siamo | Noleggio Auto Lusso Olbia | KS Rent"
         description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."
         canonical="https://www.ksrentsardinia.com/chisiamo"
-        jsonLd={localBusinessJsonLd}
+        jsonLd={[localBusinessJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
       />
 
       {/* 1. HERO EDITORIALE */}

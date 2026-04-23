@@ -379,7 +379,7 @@ export default function DynamicPage() {
           <div
             ref={contentRef}
             className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
-            dangerouslySetInnerHTML={{ __html: data.content_html }}
+            dangerouslySetInnerHTML={{ __html: data.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>") }}
           />
         ) : (
           <div className="text-center py-12">
@@ -432,7 +432,7 @@ export default function DynamicPage() {
               <div className="relative flex items-center justify-center p-8 md:p-12 bg-gradient-to-br from-card to-background min-h-[300px]">
                 <motion.img
                   src={vehicle.image}
-                  alt={`Noleggio ${vehicle.name} - KS Rent Olbia`}
+                  alt={`Noleggio ${vehicle.name} a ${locationName} - KS Rent Sardinia`}
                   className="w-full max-w-md object-contain drop-shadow-2xl"
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -659,7 +659,11 @@ export default function DynamicPage() {
                   to={`/${relSlug}`}
                   className="text-gold text-sm font-medium hover:text-gold/80 underline underline-offset-4"
                 >
-                  {relSlug.replace(/-/g, " ").replace(/^noleggio auto /, "")}
+                  {relSlug
+                    .replace(/-/g, " ")
+                    .replace(/^noleggio auto /, "")
+                    .replace(/^spiaggia /, "Spiaggia ")
+                    .replace(/\b\w/g, (c) => c.toUpperCase())}
                 </Link>
               ))}
             </div>
