@@ -9,7 +9,6 @@ import {
   MapPin,
   Info,
   ShieldCheck,
-  Car,
   Navigation,
   Users,
   Gauge,
@@ -17,9 +16,14 @@ import {
   Star,
   Clock,
   Wind,
-  AlertTriangle,
   Utensils,
+  Camera,
+  Waves,
+  Mountain,
+  Ship,
+  Route,
 } from "lucide-react";
+import type { LocalTip } from "@/data/locality-content";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
 import CompanyMap from "@/components/CompanyMap";
 import { getLocalitySEOContent } from "@/data/locality-content";
@@ -170,31 +174,24 @@ const cardItemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const LOCAL_TIPS = [
-  {
-    icon: Clock,
-    title: "Gli orari migliori",
-    text: (title: string) =>
-      `In alta stagione, la Sardegna si sveglia presto. Arriva a ${title} prima delle 9:00 per assicurarti i parcheggi migliori e goderti l'acqua piatta e cristallina prima della folla.`,
-  },
-  {
-    icon: Wind,
-    title: "Occhio al vento",
-    text: (title: string) =>
-      `Il segreto dei sardi? Scegliere la spiaggia in base al vento! Controlla sempre se soffia Maestrale o Scirocco prima di guidare verso ${title}. Se il vento soffia da terra, il mare sarà una piscina.`,
-  },
-  {
-    icon: AlertTriangle,
-    title: "Strade e Parcheggi",
-    text: (title: string) =>
-      `Le perle più belle spesso nascondono strade sterrate. Se incontri tratti non asfaltati vicino a ${title}, procedi a passo d'uomo. E ricorda di parcheggiare sempre nelle strisce blu o aree autorizzate!`,
-  },
-  {
-    icon: Utensils,
-    title: "I sapori autentici",
-    text: (title: string) =>
-      `Dopo il mare a ${title}, evita le trappole per turisti. Cerca un agriturismo nell'entroterra o un ristorantino locale per assaggiare i veri malloreddus o una seadas calda al miele.`,
-  },
+/* Map icon string names from LocalTip to Lucide components */
+const TIP_ICON_MAP: Record<LocalTip["icon"], React.ComponentType<{ className?: string }>> = {
+  clock: Clock,
+  wind: Wind,
+  road: Route,
+  food: Utensils,
+  camera: Camera,
+  swim: Waves,
+  mountain: Mountain,
+  boat: Ship,
+};
+
+/** Fallback tips used when seoContent.localTips is empty */
+const FALLBACK_TIPS: LocalTip[] = [
+  { icon: "clock", title: "Gli orari migliori", text: "In alta stagione, la Sardegna si sveglia presto. Arriva prima delle 9:00 per assicurarti i parcheggi migliori e goderti l'acqua cristallina prima della folla." },
+  { icon: "wind", title: "Occhio al vento", text: "Il segreto dei sardi? Scegliere la spiaggia in base al vento! Controlla se soffia Maestrale o Scirocco. Se il vento soffia da terra, il mare sarà una piscina." },
+  { icon: "road", title: "Strade e Parcheggi", text: "Le perle più belle spesso nascondono strade sterrate. Procedi a passo d'uomo e parcheggia nelle strisce blu o aree autorizzate." },
+  { icon: "food", title: "I sapori autentici", text: "Dopo il mare, cerca un agriturismo nell'entroterra per assaggiare i veri malloreddus o una seadas calda al miele. Evita le trappole per turisti." },
 ];
 
 /* ───────── COMPONENT ───────── */
@@ -361,6 +358,21 @@ export default function DynamicPage() {
         </div>
       </section>
 
+      {/* ════════════ 1b. SNIPPET BAIT (featured snippet opener) ════════════ */}
+      {seoContent.snippetBait && (
+        <section className="px-4 md:px-12 max-w-4xl mx-auto pt-10">
+          <p className="text-lg md:text-xl text-foreground/80 font-medium leading-relaxed border-l-4 border-gold pl-6">
+            {seoContent.snippetBait}
+          </p>
+          {seoContent.distanceFromOlbia && (
+            <p className="mt-3 text-sm text-foreground/50 font-light flex items-center gap-2">
+              <Navigation className="w-3.5 h-3.5 text-gold" />
+              Distanza da Olbia: {seoContent.distanceFromOlbia}
+            </p>
+          )}
+        </section>
+      )}
+
       {/* ════════════ 2. CONTENT HTML (prose pulita) ════════════ */}
       <section className="py-16 px-4 md:px-12 max-w-4xl mx-auto">
         {data.content_html ? (
@@ -438,7 +450,7 @@ export default function DynamicPage() {
                   {vehicle.name}
                 </h3>
                 <p className="text-foreground/60 font-light mt-3 leading-relaxed">
-                  {vehicle.tagline}
+                  {seoContent.vehicleReason || vehicle.tagline}
                 </p>
 
                 {/* Specs grid */}
@@ -528,8 +540,11 @@ export default function DynamicPage() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            {LOCAL_TIPS.map((tip) => {
-              const Icon = tip.icon;
+            {(seoContent.localTips && seoContent.localTips.length > 0
+              ? seoContent.localTips
+              : FALLBACK_TIPS
+            ).map((tip) => {
+              const Icon = TIP_ICON_MAP[tip.icon] || Clock;
               return (
                 <motion.div
                   key={tip.title}
@@ -544,7 +559,7 @@ export default function DynamicPage() {
                     {tip.title}
                   </h3>
                   <p className="text-foreground/60 text-sm font-light leading-relaxed">
-                    {tip.text(data.title)}
+                    {tip.text}
                   </p>
                 </motion.div>
               );
@@ -667,8 +682,8 @@ export default function DynamicPage() {
             Prenota ora la tua Auto
           </h2>
           <p className="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
-            Viaggia in prima classe con KS Rent. Scegli il tuo veicolo premium per esplorare la
-            Sardegna, anche senza carta di credito.
+            {seoContent.ctaText ||
+              `Viaggia in prima classe con KS Rent. Scegli il tuo veicolo premium per esplorare ${data.title} e tutta la Sardegna, anche senza carta di credito.`}
           </p>
           <Link
             to="/prenotaora"

@@ -4,9 +4,17 @@
  * e le FAQ, evitando contenuto duplicato penalizzato da Google.
  */
 
+import { getExtraData } from "./locality-extra";
+
 export interface LocalityFAQ {
   q: string;
   a: string;
+}
+
+export interface LocalTip {
+  icon: "clock" | "wind" | "road" | "food" | "camera" | "swim" | "mountain" | "boat";
+  title: string;
+  text: string;
 }
 
 export interface LocalitySEOContent {
@@ -18,10 +26,20 @@ export interface LocalitySEOContent {
   delivery: string;
   /** Block 4: La tua vacanza inizia da [localita] */
   vacation: string;
+  /** Snippet bait: frase di apertura diretta per featured snippet (max 3 righe) */
+  snippetBait?: string;
+  /** Distanza da Olbia in formato "XX km, YY minuti" */
+  distanceFromOlbia?: string;
+  /** Descrizione personalizzata per la sezione veicolo consigliato */
+  vehicleReason?: string;
+  /** 4 consigli locali UNICI (sostituiscono i LOCAL_TIPS generici) */
+  localTips?: LocalTip[];
   /** FAQ specifiche per la localita */
   faqs: LocalityFAQ[];
   /** Slug di localita/spiagge correlate per link interni */
   relatedSlugs?: string[];
+  /** CTA personalizzata */
+  ctaText?: string;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -30,6 +48,15 @@ export interface LocalitySEOContent {
 
 const LOCATION_CONTENT: Record<string, LocalitySEOContent> = {
   "noleggio-auto-porto-cervo": {
+    snippetBait: "KS Rent Sardinia consegna auto di lusso direttamente a Porto Cervo in 35 minuti da Olbia. Audi RS3, BMW M2 e Jeep Avenger disponibili anche senza carta di credito. Consegna al porto turistico, hotel 5 stelle o villa privata.",
+    distanceFromOlbia: "30 km, 35-40 minuti",
+    vehicleReason: "A Porto Cervo i nostri clienti scelgono soprattutto l'Audi RS3 per la Piazzetta e la BMW M2 per le strade panoramiche verso Romazzino. Per le famiglie in villa, il Jeep Avenger è ideale per combinare comfort e sterrati verso le calette.",
+    localTips: [
+      { icon: "boat", title: "La marina al tramonto", text: "Il tramonto dalla Promenade du Port è spettacolare. Parcheggia al porto turistico entro le 18:00 in estate per goderti l'aperitivo con vista sugli yacht. Il parcheggio della Piazzetta si riempie velocemente." },
+      { icon: "food", title: "Dove mangiare davvero bene", text: "Evita i ristoranti sul porto principale e prova il Pevero Golf Club Restaurant o guida 15 minuti verso San Pantaleo per cucina gallurese autentica a prezzi ragionevoli. Il giovedì c'è il mercatino artigianale." },
+      { icon: "swim", title: "Le calette segrete", text: "A 5 minuti da Porto Cervo c'è Spiaggia del Principe (sterrato, arriva prima delle 9). Capriccioli Est e Ovest offrono snorkeling eccezionale. Liscia Ruja è la Long Beach perfetta per famiglie." },
+      { icon: "camera", title: "Il Consorzio Costa Smeralda", text: "Porto Cervo fu creato dall'Aga Khan nel 1962. La chiesa di Stella Maris ospita un dipinto di El Greco. La Piazzetta si anima dopo le 21:00 con boutique e locali esclusivi." },
+    ],
     whyUs:
       "Porto Cervo è la capitale mondiale del lusso nautico e KS Rent Sardinia è il partner ideale per chi atterra a Olbia e vuole raggiungere la Piazzetta o la Promenade du Port in totale stile. La nostra flotta premium — Audi RS3, BMW M2, Mercedes Classe A — è pensata per chi frequenta yacht club, ristoranti stellati e boutique esclusive. Consegniamo direttamente al porto turistico, all'Hotel Cala di Volpe o alla tua villa privata, con un servizio discreto e puntuale che i nostri clienti VIP apprezzano da anni.",
     noCreditCard:
@@ -661,5 +688,17 @@ const DEFAULT_LOCATION_CONTENT: LocalitySEOContent = {
    ═══════════════════════════════════════════════════════ */
 
 export function getLocalitySEOContent(slug: string): LocalitySEOContent {
-  return LOCATION_CONTENT[slug] || BEACH_CONTENT[slug] || DEFAULT_LOCATION_CONTENT;
+  const base = LOCATION_CONTENT[slug] || BEACH_CONTENT[slug] || DEFAULT_LOCATION_CONTENT;
+  const extra = getExtraData(slug);
+
+  if (!extra) return base;
+
+  return {
+    ...base,
+    snippetBait: base.snippetBait || extra.snippetBait,
+    distanceFromOlbia: base.distanceFromOlbia || extra.distanceFromOlbia,
+    vehicleReason: base.vehicleReason || extra.vehicleReason,
+    localTips: base.localTips && base.localTips.length > 0 ? base.localTips : extra.localTips,
+    ctaText: base.ctaText || extra.ctaText,
+  };
 }
