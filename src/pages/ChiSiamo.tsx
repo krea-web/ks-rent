@@ -1,12 +1,51 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Instagram } from "lucide-react";
+import { ArrowLeft, ArrowRight, Instagram, Star } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback } from "react";
 import SEOHead from "@/components/SEOHead";
 import { localBusinessJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
 import CompanyMap from "@/components/CompanyMap";
+
+const chiSiamoFaqs = [
+  {
+    q: "Chi è KS Rent Sardinia?",
+    a: "KS Rent S.R.L. (P.IVA IT03028900904) è un autonoleggio di lusso con sede a Olbia, Sardegna. Fondata nel 2025, è un'entità al 100% sarda, totalmente indipendente e non affiliata ad altre società omonime operanti nel resto d'Italia.",
+    gold: true,
+  },
+  {
+    q: "Dove si trovano le sedi di KS Rent a Olbia?",
+    a: "Abbiamo due sedi strategiche: la Sede Operativa in Viale Isola Bianca 38 (al Porto di Olbia, ideale per chi arriva in traghetto) e la Sede Legale in Viale Aldo Moro 367, comoda per chi arriva dall'aeroporto. Consegniamo anche a domicilio in tutta la Gallura e Costa Smeralda.",
+    gold: true,
+  },
+  {
+    q: "Quali veicoli offre KS Rent Sardinia?",
+    a: "La nostra flotta comprende supercar (Audi RS3, BMW M2), SUV (Jeep Avenger), premium (Mercedes Classe A), city car (Fiat Panda Hybrid), scooter (Honda SH 125/350) e quad (Yamaha Raptor). Ogni veicolo è di nostra proprietà, preparato maniacalmente e consegnato sanificato.",
+    gold: false,
+  },
+  {
+    q: "KS Rent Sardinia è la stessa azienda di KS Rent Roma?",
+    a: "No. KS Rent Sardinia (ksrentsardinia.com) con sede a Olbia è un'entità completamente distinta e non affiliata rispetto a KS Rent S.r.l. di Roma (ksrent.it), che opera nel noleggio a lungo termine su scala nazionale. Siamo due realtà separate con partite IVA diverse.",
+    gold: false,
+  },
+  {
+    q: "Quali sono gli orari di KS Rent Sardinia?",
+    a: "Siamo operativi dalle 10:00 alle 22:30, 7 giorni su 7, tutti i giorni della settimana inclusi festivi. Consegniamo veicoli all'aeroporto di Olbia, al porto e in tutta la Costa Smeralda.",
+    gold: false,
+  },
+];
+
+const chiSiamoFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: chiSiamoFaqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 
 const FLEET_VEHICLES = [
   { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png', text: 'Audi RS3 Grigia' },
@@ -28,10 +67,10 @@ const ChiSiamo = () => {
   return (
     <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
-        title="Chi Siamo | Noleggio Auto Lusso Olbia | KS Rent"
-        description="Scopri KS Rent: noleggio auto luxury a Olbia e Costa Smeralda. Flotta premium con coperture assicurative complete, deposito trasparente e termini chiari."
+        title="Chi Siamo — KS Rent | Autonoleggio Olbia Sardegna"
+        description="KS Rent Sardinia: autonoleggio di lusso con sede a Olbia. Flotta di proprietà, consegna a domicilio in Costa Smeralda, deposito flessibile e senza carta di credito obbligatoria."
         canonical="https://www.ksrentsardinia.com/chisiamo"
-        jsonLd={[localBusinessJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
+        jsonLd={[localBusinessJsonLd, chiSiamoFaqJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
       />
 
       {/* 1. HERO EDITORIALE */}
@@ -59,7 +98,7 @@ const ChiSiamo = () => {
               </span>
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[1.05] tracking-tight mb-6 md:mb-8 break-words">
-              Noleggio Auto di Lusso <span className="text-gradient-gold">in Costa Smeralda.</span>
+              Autonoleggio Olbia <span className="text-gradient-gold">e Costa Smeralda.</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
               Oltre il semplice noleggio. Un'esperienza di pura libertà, disegnata per esaltare ogni tuo viaggio
@@ -197,8 +236,12 @@ const ChiSiamo = () => {
                   da una frustrazione comune: la burocrazia infinita del noleggio tradizionale.
                 </p>
                 <p>
-                  Abbiamo deciso di cambiare le regole. Il nostro focus è la Costa Smeralda e il nostro obiettivo è
-                  farti iniziare la vacanza dal momento esatto in cui atterri a Olbia.
+                  Abbiamo deciso di cambiare le regole. Il nostro focus è il{" "}
+                  <Link to="/" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">noleggio auto a Olbia</Link>{" "}
+                  e il nostro obiettivo è farti iniziare la vacanza dal momento esatto in cui atterri all'{" "}
+                  <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aeroporto di Olbia</Link>{" "}
+                  o sbarchi al{" "}
+                  <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Isola Bianca</Link>.
                 </p>
               </div>
             </motion.div>
@@ -359,6 +402,39 @@ const ChiSiamo = () => {
               </p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ — AEO */}
+      <section className="py-16 md:py-24 bg-stone-50 dark:bg-[#050505] border-t border-gray-200 dark:border-white/5">
+        <div className="w-full max-w-4xl mx-auto px-4 md:px-12 lg:px-24">
+          <div className="text-center mb-12">
+            <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Trasparenza Totale</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-tight">
+              Domande Frequenti su <span className="text-gold">KS Rent Sardinia</span>
+            </h2>
+          </div>
+          <Accordion type="single" collapsible className="space-y-4">
+            {chiSiamoFaqs.map((f, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="border-none">
+                <AccordionTrigger
+                  className={`px-8 py-6 rounded-2xl md:rounded-[1.5rem] transition-all text-left font-bold italic uppercase tracking-tight ${
+                    f.gold
+                      ? "bg-gold/10 border border-gold/30 text-gold shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                      : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10"
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    {f.gold && <Star className="w-4 h-4 fill-gold text-gold" />}
+                    {f.q}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-10 pt-6 pb-8 text-gray-600 dark:text-white/50 leading-relaxed font-light text-base md:text-lg italic">
+                  {f.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
 
@@ -540,6 +616,16 @@ const ChiSiamo = () => {
           </motion.div>
         </div>
       </Link>
+
+      {/* LINK HOMEPAGE SEO */}
+      <div className="py-6 text-center bg-stone-50 dark:bg-[#050505]">
+        <p className="text-foreground/40 text-sm font-light">
+          <Link to="/" className="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors">
+            Noleggio auto Olbia
+          </Link>
+          {" "}— KS Rent Sardinia, autonoleggio con consegna a domicilio in tutta la Gallura e Costa Smeralda.
+        </p>
+      </div>
     </div>
   );
 };
