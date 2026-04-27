@@ -38,7 +38,7 @@ import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
 import SuccessModal from "@/components/SuccessModal";
 import { trackBookingLead, trackBookingSuccess } from "@/lib/analytics";
-import { localBusinessJsonLd, buildVehicleJsonLd } from "@/lib/jsonLd";
+import { buildVehicleJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -655,7 +655,7 @@ const PrenotaOra = () => {
         }
         canonical="https://www.ksrentsardinia.com/prenotaora"
         
-        jsonLd={selectedVehicle ? [localBusinessJsonLd, buildVehicleJsonLd(selectedVehicle)] : localBusinessJsonLd}
+        jsonLd={selectedVehicle ? [buildVehicleJsonLd(selectedVehicle), buildBreadcrumb("Prenota Ora", "/prenotaora")] : buildBreadcrumb("Prenota Ora", "/prenotaora")}
       />
 
       {/* PROGRESS BAR */}

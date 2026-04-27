@@ -542,13 +542,6 @@ export const aeroportoAutoRentalJsonLd = {
   url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   areaServed: { "@type": "Place", name: "Aeroporto Olbia Costa Smeralda" },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    bestRating: "5",
-    worstRating: "1",
-    ratingCount: "20",
-  },
 };
 
 export const portoAutoRentalJsonLd = {
@@ -560,13 +553,6 @@ export const portoAutoRentalJsonLd = {
   url: "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   areaServed: { "@type": "Place", name: "Porto Olbia Isola Bianca" },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    bestRating: "5",
-    worstRating: "1",
-    ratingCount: "20",
-  },
 };
 
 export const flottaJsonLd = {

@@ -66,17 +66,23 @@ const SEOHead = ({
       <meta name="twitter:image" content={ogImage} />
 
       {jsonLd && (
-        Array.isArray(jsonLd) ? (
-          jsonLd.map((item, i) => (
-            <script key={i} type="application/ld+json">
-              {JSON.stringify(item)}
-            </script>
-          ))
-        ) : (
-          <script type="application/ld+json">
-            {JSON.stringify(jsonLd)}
-          </script>
-        )
+        <script type="application/ld+json">
+          {JSON.stringify(
+            Array.isArray(jsonLd)
+              ? {
+                  "@context": "https://schema.org",
+                  "@graph": jsonLd.flatMap((item) => {
+                    const { "@context": _, ...rest } = item;
+                    // Flatten nested @graph arrays into the top-level graph
+                    if (rest["@graph"] && Array.isArray(rest["@graph"])) {
+                      return rest["@graph"];
+                    }
+                    return [rest];
+                  }),
+                }
+              : jsonLd
+          )}
+        </script>
       )}
     </Helmet>
   );

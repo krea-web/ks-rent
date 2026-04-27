@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Instagram, Star } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback } from "react";
 import SEOHead from "@/components/SEOHead";
-import { localBusinessJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
+import { buildBreadcrumb } from "@/lib/jsonLd";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
 import CompanyMap from "@/components/CompanyMap";
@@ -70,7 +70,7 @@ const ChiSiamo = () => {
         title="Chi Siamo — KS Rent | Autonoleggio Olbia Sardegna"
         description="KS Rent Sardinia: autonoleggio di lusso con sede a Olbia. Flotta di proprietà, consegna a domicilio in Costa Smeralda, deposito flessibile e senza carta di credito obbligatoria."
         canonical="https://www.ksrentsardinia.com/chisiamo"
-        jsonLd={[localBusinessJsonLd, chiSiamoFaqJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
+        jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
       />
 
       {/* 1. HERO EDITORIALE */}

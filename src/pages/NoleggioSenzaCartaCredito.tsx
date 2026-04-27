@@ -60,13 +60,6 @@ const senzaCCJsonLd = {
     addressRegion: "SS",
     addressCountry: "IT",
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    bestRating: "5",
-    worstRating: "1",
-    ratingCount: "20",
-  },
 };
 
 const NoleggioSenzaCartaCredito = () => {
