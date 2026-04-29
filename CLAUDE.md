@@ -58,7 +58,6 @@ src/components/FAQSection.tsx
 | **Sede operativa** | Viale Isola Bianca 38, 07026 Olbia (SS) — coord: 40.922967, 9.520115 |
 | **Sede legale** | Viale Aldo Moro 367, 07026 Olbia (SS) — coord: 40.944573, 9.497897 |
 | **Orari** | 10:00 – 22:30, 7 giorni su 7 |
-| **Wikidata** | Q138824571 (con P1889 "different from" per disambiguare da Roma) |
 | **Entita legale distinta da** | KS Rent S.r.l. (Roma) — sito `ksrent.it` — **NON siamo loro** |
 
 ### Social e directory

@@ -251,6 +251,26 @@ const ChiSiamo = () => {
 
       <GoldKeywordsMarquee />
 
+      {/* 3.5. MENZIONATI SU */}
+      <section className="py-12 md:py-16 bg-white dark:bg-black border-t border-gray-200 dark:border-white/5">
+        <div className="w-full max-w-5xl mx-auto px-4 md:px-12 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }}
+            viewport={{ once: true }}
+          >
+            <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">
+              Menzionati su
+            </span>
+            <p className="text-gray-700 dark:text-white/70 text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto">
+              KS Rent Sardinia è inserita tra gli autonoleggi consigliati dal portale turistico
+              ufficiale <span className="font-semibold text-gray-900 dark:text-white">Hello Olbia</span>,
+              riferimento informativo per chi visita Olbia, la Gallura e la Costa Smeralda.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* 4. SOCIAL (Instagram) */}
       <section className="py-16 md:py-32 bg-gray-100 dark:bg-[#0a0a0a] border-t border-gray-200 dark:border-white/5 relative">
         <div className="w-full max-w-7xl mx-auto px-4 md:px-12 lg:px-24">

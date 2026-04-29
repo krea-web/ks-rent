@@ -3,12 +3,14 @@
 const SAME_AS = [
   "https://www.instagram.com/ksrentsardinia",
   "https://www.tiktok.com/@ksrentsardinia",
-  "https://www.wikidata.org/wiki/Q138824571",
   "https://www.cylex-italia.it/olbia/ks-rent-sardinia-16333738.html",
   "https://www.hotfrog.it/company/015164232099b216397bae94e44fadc7/ks-rent-sardinia/olbia/car-rental-companies",
   "https://www.paginegialle.it/ksrentsardinia-olbia",
   "https://trova-aperto.it/olbia/ks-rent-sardinia-2967671",
   "https://firmania.it/olbia/ks-rent-sardinia-5234308",
+  "https://www.paginebianche.it/ksrentsardinia-olbia-a3a5413c-6bb6-4471-91b0-121e05b1a939",
+  "https://www.misterimprese.it/sardegna/olbia-tempio/olbia/autonoleggio/2638614.html",
+  "https://www.tripadvisor.it/Attraction_Review-g187883-d34295915-Reviews-KS_RENT_SARDINIA-Olbia_Province_of_Olbia_Tempio_Sardinia.html",
 ];
 
 const AREA_SERVED = [
