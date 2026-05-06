@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, MapPin, Star, Zap, Gauge } from "lucide-react";
+import { ArrowRight, Plane, ShieldCheck, CreditCard, Smartphone, Luggage, Clock3, BellRing, Star, Zap } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { aeroportoFaqJsonLd, aeroportoAutoRentalJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
+import ServiceCardGrid from "@/components/ServiceCardGrid";
 
 const faqs = [
   {
@@ -162,28 +163,17 @@ const NoleggioAeroportoOlbia = () => {
         </div>
       </section>
 
-      {/* SERVICE CARDS */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
-          {[
-            { icon: Smartphone, title: "Prenotazione Smart", desc: "Prenota in 4 step dal sito, ricevi conferma istantanea." },
-            { icon: CreditCard, title: "Zero Vincoli", desc: "Accettiamo prepagate e contanti. Libertà totale." },
-            { icon: ShieldCheck, title: "Safe Deposit", desc: "Cauzione flessibile in base al veicolo scelto." },
-            { icon: MapPin, title: "Ufficio al Porto", desc: "La nostra base operativa è in Viale Isola Bianca 38." },
-          ].map((s, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -10 }}
-              className="relative p-8 rounded-[2.5rem] bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 overflow-hidden group backdrop-blur-sm shadow-md dark:shadow-none border-b-[3px] border-b-gold/40 dark:border-b-transparent"
-            >
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
-              <s.icon className="text-gold w-12 h-12 mb-6" />
-              <h3 className="text-xl font-bold mb-3 uppercase italic tracking-tighter text-gray-900 dark:text-white">{s.title}</h3>
-              <p className="text-gray-600 dark:text-white/40 text-sm leading-relaxed font-light">{s.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* SERVICE CARDS — angle: velocità di ritiro post-volo */}
+      <ServiceCardGrid
+        eyebrow="Airport Concierge"
+        heading={<>Servizio dedicato all'<span className="text-gold">arrivo a Olbia</span></>}
+        cards={[
+          { icon: Clock3, title: "Ritiro in 5 minuti", desc: "Atterri, ritiri il bagaglio e l'auto è già accesa nel parcheggio dedicato. Zero navette, zero file ai banchi." },
+          { icon: Luggage, title: "Aiuto con i bagagli", desc: "Il nostro addetto ti raggiunge in arrivi e gestisce trasferimento e bagagli fino al veicolo, così tu pensi solo alla vacanza." },
+          { icon: BellRing, title: "Tracking del volo", desc: "Monitoriamo il numero del tuo volo: se sei in ritardo o in anticipo siamo lì all'orario reale di atterraggio." },
+          { icon: Plane, title: "Voli notturni gestiti", desc: "Servizio attivo 10:00–22:30 con consegna fuori orario su richiesta per chi atterra dopo le 22:00 in alta stagione." },
+        ]}
+      />
 
       {/* FAQ */}
       <section className="py-24 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">

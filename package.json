@@ -11,7 +11,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "seo:check": "node scripts/seo-similarity.mjs",
+    "seo:check:ci": "node scripts/seo-similarity.mjs --threshold 0.5",
+    "seo:audit-supabase": "node scripts/audit-supabase-seo.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

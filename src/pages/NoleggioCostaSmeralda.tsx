@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
-import { ArrowRight, MapPin, ShieldCheck, CreditCard, Smartphone, Palmtree, Star, Zap, Gauge } from "lucide-react";
+import { ArrowRight, MapPin, ShieldCheck, Sailboat, Diamond, Wine, Sparkles, Star, Zap, Gauge, Palmtree } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { buildBreadcrumb } from "@/lib/jsonLd";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import ServiceCardGrid from "@/components/ServiceCardGrid";
 
 const faqs = [
   {
@@ -227,61 +228,34 @@ const NoleggioCostaSmeralda = () => {
         </div>
       </section>
 
-      {/* SERVICE CARDS */}
-      <section className="py-28 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">
-        <div className="text-center mb-16">
-          <span className="block text-gold font-bold tracking-[0.4em] uppercase text-xs mb-4 italic">Standard KS Rent</span>
-          <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-gray-900 dark:text-white">
-            Servizi Noleggio Auto <span className="text-gold">Costa Smeralda</span>
-          </h2>
-        </div>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto"
-        >
-          {[
-            {
-              icon: MapPin,
-              title: "Delivery VIP",
-              desc: "Consegniamo e ritiriamo la tua auto direttamente in Villa o in Hotel.",
-            },
-            {
-              icon: CreditCard,
-              title: "Zero Vincoli",
-              desc: "Nessun obbligo di carta di credito. Accettiamo prepagate, debito e contanti.",
-            },
-            {
-              icon: ShieldCheck,
-              title: "Cauzione Safe",
-              desc: "Depositi cauzionali flessibili e proporzionati alla categoria del veicolo.",
-            },
-            {
-              icon: Smartphone,
-              title: "Self Booking",
-              desc: "Prenotazione concepita per essere 100% online, rapida e autonoma.",
-            },
-          ].map((s, i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              whileHover={{ y: -12, borderColor: "hsl(var(--gold)/0.5)", backgroundColor: "hsl(var(--gold)/0.03)" }}
-              className="relative p-10 rounded-[2.5rem] bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-white/10 overflow-hidden group transition-all duration-500 backdrop-blur-sm shadow-md dark:shadow-none border-b-[3px] border-b-gold/40 dark:border-b-transparent"
-            >
-              <div className="absolute -right-6 -top-6 w-28 h-28 bg-gold/5 rounded-full blur-3xl group-hover:bg-gold/15 transition-all duration-500" />
-              <s.icon className="text-gold w-14 h-14 mb-8 group-hover:scale-110 transition-transform duration-500" />
-              <h3 className="text-2xl font-black mb-4 uppercase italic tracking-tighter text-gray-900 dark:text-white group-hover:text-gold transition-colors">
-                {s.title}
-              </h3>
-              <p className="text-gray-600 dark:text-white/40 text-base leading-relaxed font-light group-hover:text-gray-800 dark:group-hover:text-white/70 transition-colors">
-                {s.desc}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+      {/* SERVICE CARDS — angle: concierge esclusivo Costa Smeralda */}
+      <ServiceCardGrid
+        eyebrow="VIP Concierge"
+        heading={<>Il livello di servizio della <span className="text-gold">Costa Smeralda</span></>}
+        sectionClassName="py-28 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]"
+        cards={[
+          {
+            icon: Sailboat,
+            title: "Consegna a yacht & marina",
+            desc: "Coordinamento diretto con la capitaneria di Porto Cervo, Porto Rotondo e Cala di Volpe per consegna sotto bordo, anche per soggiorni di una sola notte.",
+          },
+          {
+            icon: Diamond,
+            title: "Consegna in villa privata",
+            desc: "Marinella, Romazzino, Pevero Hills, Pantogia: indica solo l'indirizzo della villa, alle chiavi e ai documenti pensa il nostro autista.",
+          },
+          {
+            icon: Wine,
+            title: "Eventi e ristoranti stellati",
+            desc: "Phi Beach, Cala di Volpe, Pevero Golf Club, Cervo Hotel: ti riprendiamo l'auto a fine serata se vuoi cenare senza pensieri al rientro.",
+          },
+          {
+            icon: Sparkles,
+            title: "Flotta in stile Porto Cervo",
+            desc: "Audi RS3, BMW M2 e SUV premium configurati per la Piazzetta: i veicoli arrivano lavati, pieni e con accessori dress code (chiavi presentate al volet).",
+          },
+        ]}
+      />
 
       {/* LOCALITÀ PILLS */}
       <section className="py-16 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">

@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, ShieldCheck, Banknote, Smartphone, Star, CheckCircle } from "lucide-react";
+import { ArrowRight, CreditCard, ShieldCheck, Banknote, Smartphone, Star, CheckCircle, GraduationCap, UserCheck, Globe, Wallet } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { buildBreadcrumb } from "@/lib/jsonLd";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import ServiceCardGrid from "@/components/ServiceCardGrid";
 
 const faqs = [
   {

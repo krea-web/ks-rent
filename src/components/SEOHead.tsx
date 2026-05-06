@@ -6,6 +6,7 @@ interface SEOHeadProps {
   canonical?: string;
   ogImage?: string;
   jsonLd?: Record<string, any> | Record<string, any>[];
+  noIndex?: boolean;
 }
 
 const SEOHead = ({
@@ -14,6 +15,7 @@ const SEOHead = ({
   canonical,
   ogImage = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   jsonLd,
+  noIndex = false,
 }: SEOHeadProps) => {
   // Always force https://www. to avoid canonical issues with http:// or non-www variants
   let canonicalUrl = canonical || (typeof window !== 'undefined' ? `https://www.ksrentsardinia.com${window.location.pathname}` : 'https://www.ksrentsardinia.com/');
@@ -38,7 +40,14 @@ const SEOHead = ({
       <meta name="description" content={description} />
       
       <meta name="author" content="KS Rent S.R.L." />
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta
+        name="robots"
+        content={
+          noIndex
+            ? "noindex, nofollow"
+            : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        }
+      />
 
       {/* Formattazione e Device */}
       <meta name="format-detection" content="telephone=yes, date=no, email=no, address=no" />

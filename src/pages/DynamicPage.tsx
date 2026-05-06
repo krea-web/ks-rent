@@ -106,55 +106,60 @@ const VEHICLES: Record<string, RecommendedVehicle> = {
   },
 };
 
-const LUXURY_KEYWORDS = [
-  "cervo",
-  "quatu",
-  "rotondo",
-  "romazzino",
-  "pevero",
-  "celvia",
-  "faro",
-  "principe",
-  "liscia",
-  "capriccioli",
-  "marinella",
-  "portisco",
-];
+/**
+ * Mapping esplicito slug → veicolo. Distribuisce 5 categorie sui 41 slug
+ * variando l'assegnazione tra pagine dello stesso "tipo" (località vs spiaggia)
+ * per evitare che pagine simili condividano lo stesso veicolo nella scheda.
+ */
+const VEHICLE_BY_SLUG: Record<string, keyof typeof VEHICLES> = {
+  // ─── LOCALITÀ ───
+  "noleggio-auto-porto-cervo": "luxury",
+  "noleggio-auto-baja-sardinia": "luxuryAlt",
+  "noleggio-auto-poltu-quatu": "luxury",
+  "noleggio-auto-porto-rotondo": "elegant",
+  "noleggio-auto-portisco": "elegant",
+  "noleggio-auto-marinella": "city",
+  "noleggio-auto-pittulongu": "city",
+  "noleggio-auto-bados": "offroad",
+  "noleggio-auto-golfo-aranci": "city",
+  "noleggio-auto-murta-maria": "city",
+  "noleggio-auto-porto-san-paolo": "offroad",
+  "noleggio-auto-puntaldia": "elegant",
+  "noleggio-auto-capo-coda-cavallo": "offroad",
+  "noleggio-auto-san-teodoro": "offroad",
+  "noleggio-auto-budoni": "city",
+  "noleggio-auto-agrustos": "offroad",
+  "noleggio-auto-palau": "elegant",
+  "noleggio-auto-cannigione": "elegant",
+  "noleggio-auto-arzachena": "elegant",
+  "noleggio-auto-santa-teresa-gallura": "elegant",
 
-const OFFROAD_KEYWORDS = [
-  "brandinchi",
-  "impostu",
-  "moresca",
-  "taverna",
-  "testa",
-  "coda",
-  "istana",
-  "sabina",
-  "agrustos",
-];
-
-const ELEGANT_KEYWORDS = [
-  "arzachena",
-  "cannigione",
-  "baja",
-  "teresa",
-  "palau",
-  "bianca",
-  "bados",
-  "rena",
-];
+  // ─── SPIAGGE ───
+  "spiaggia-del-principe": "luxuryAlt",
+  "liscia-ruja": "elegant",
+  "cala-brandinchi": "offroad",
+  "la-cinta": "city",
+  "lu-impostu": "offroad",
+  "capriccioli": "luxury",
+  "romazzino": "luxury",
+  "grande-pevero": "elegant",
+  "cala-moresca": "offroad",
+  "cala-sabina": "offroad",
+  "spiaggia-bianca": "city",
+  "porto-istana": "offroad",
+  "porto-taverna": "offroad",
+  "rena-bianca": "elegant",
+  "cala-del-faro": "luxuryAlt",
+  "la-celvia": "elegant",
+  "spiaggia-marinella": "city",
+  "spiaggia-bados": "offroad",
+  "spiaggia-pittulongu": "city",
+  "capo-testa": "offroad",
+};
 
 function getRecommendedVehicle(slug: string): RecommendedVehicle {
-  const s = slug.toLowerCase();
-  if (LUXURY_KEYWORDS.some((k) => s.includes(k))) {
-    // alternate between Audi and BMW for variety
-    return s.includes("cervo") || s.includes("principe") || s.includes("romazzino")
-      ? VEHICLES.luxury
-      : VEHICLES.luxuryAlt;
-  }
-  if (OFFROAD_KEYWORDS.some((k) => s.includes(k))) return VEHICLES.offroad;
-  if (ELEGANT_KEYWORDS.some((k) => s.includes(k))) return VEHICLES.elegant;
-  // city / airport / generic
+  const key = VEHICLE_BY_SLUG[slug];
+  if (key) return VEHICLES[key];
   return VEHICLES.city;
 }
 
@@ -187,13 +192,224 @@ const TIP_ICON_MAP: Record<LocalTip["icon"], React.ComponentType<{ className?: s
   boat: Ship,
 };
 
-/** Fallback tips used when seoContent.localTips is empty */
-const FALLBACK_TIPS: LocalTip[] = [
-  { icon: "clock", title: "Gli orari migliori", text: "In alta stagione, la Sardegna si sveglia presto. Arriva prima delle 9:00 per assicurarti i parcheggi migliori e goderti l'acqua cristallina prima della folla." },
-  { icon: "wind", title: "Occhio al vento", text: "Il segreto dei sardi? Scegliere la spiaggia in base al vento! Controlla se soffia Maestrale o Scirocco. Se il vento soffia da terra, il mare sarà una piscina." },
-  { icon: "road", title: "Strade e Parcheggi", text: "Le perle più belle spesso nascondono strade sterrate. Procedi a passo d'uomo e parcheggia nelle strisce blu o aree autorizzate." },
-  { icon: "food", title: "I sapori autentici", text: "Dopo il mare, cerca un agriturismo nell'entroterra per assaggiare i veri malloreddus o una seadas calda al miele. Evita le trappole per turisti." },
-];
+/* ───────── DETERMINISTIC VARIANT ROTATION (anti-duplicate-content)
+   Quando il contenuto SEO per uno slug non specifica un override, usiamo
+   una rotazione deterministica fra N varianti. Lo stesso slug riceve sempre
+   la stessa variante, ma slug diversi ottengono varianti diverse → riduce
+   il boilerplate identico tra le 41 pagine. ───────── */
+
+function hashSlug(slug: string): number {
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function pickVariant<T>(slug: string, salt: string, options: readonly T[]): T {
+  return options[hashSlug(slug + ":" + salt) % options.length];
+}
+
+const EYEBROW_LOCATION = [
+  "Punto di Ritiro & Consegna",
+  "Costa & Entroterra",
+  "Destinazione Premium",
+  "Hub di Consegna",
+  "Servizio in Loco",
+] as const;
+
+const EYEBROW_BEACH = [
+  "Guida KS Rent",
+  "Spiaggia & Calette",
+  "Mare di Sardegna",
+  "Acqua e Granito",
+  "Beach Guide",
+] as const;
+
+const VEHICLE_EYEBROW = [
+  "Scelto per te",
+  "La nostra scelta",
+  "Top pick",
+  "Suggerito",
+  "Best match",
+] as const;
+
+const VEHICLE_HEADING = [
+  "Il veicolo ideale per questa destinazione",
+  "L'auto giusta per ogni curva",
+  "La scelta dei nostri clienti qui",
+  "Cosa noleggia chi viene qui",
+  "Il modello più richiesto",
+] as const;
+
+const MAP_EYEBROW = [
+  "Posizione",
+  "Itinerario",
+  "Geografia",
+  "Coordinate",
+  "Sulla mappa",
+] as const;
+
+const MAP_HEADING_LOCATION = [
+  "Come raggiungerci",
+  "Dalla nostra sede a casa tua",
+  "Il percorso da Olbia",
+  "Distanza & itinerario",
+  "Quanto manca da Olbia",
+] as const;
+
+const MAP_HEADING_BEACH = [
+  "Dove si trova",
+  "Sulla mappa",
+  "Coordinate & accesso",
+  "Localizzazione",
+  "La spiaggia in posizione",
+] as const;
+
+const MAP_INTRO_LOCATION = [
+  "Distanza dalle nostre sedi di Olbia.",
+  "Il tragitto dalle sedi KS Rent al tuo punto di consegna.",
+  "Calcola il percorso dalla nostra sede operativa al porto Isola Bianca o legale in Viale Aldo Moro.",
+  "Ecco la distanza che ci separa: arriviamo presto, anche con preavviso ridotto.",
+  "Mappa con le nostre due sedi di Olbia e la destinazione finale.",
+] as const;
+
+const MAP_INTRO_BEACH = [
+  "Calcola il percorso dalle nostre sedi di Olbia a questa magnifica spiaggia.",
+  "Dalla sede KS Rent fino al parcheggio della spiaggia: ecco l'itinerario consigliato.",
+  "Il tragitto sulla mappa: scegli tu il punto di partenza dalle nostre due sedi.",
+  "Quanto manca al mare? Ecco le coordinate esatte da Olbia.",
+  "Visualizza il percorso e i tempi reali in alta stagione.",
+] as const;
+
+const TIPS_EYEBROW = [
+  "Insider Tips",
+  "Sardi DOC",
+  "Conoscenza locale",
+  "Dietro le quinte",
+  "Consigli on-the-ground",
+] as const;
+
+const TIPS_HEADING_TPL = [
+  "I consigli di KS Rent per {title}",
+  "{title} secondo chi ci vive",
+  "Sardegna autentica: {title}",
+  "Le dritte vere su {title}",
+  "{title}: gli insider tips",
+] as const;
+
+const TIPS_INTRO_TPL = [
+  "Non siamo solo un'agenzia di noleggio, siamo sardi DOC. Ecco i nostri suggerimenti per vivere al meglio la tua giornata a {title}:",
+  "Conosciamo questo angolo di Sardegna come la nostra tasca. Quattro dritte che condividiamo solo con i clienti KS Rent:",
+  "I nostri consigli arrivano da chi vive qui tutto l'anno. Quattro idee concrete per goderti {title}:",
+  "Non leggerai questi suggerimenti su una guida: vengono dall'esperienza diretta del team KS Rent a {title}.",
+  "Quattro consigli pratici da chi conosce {title} oltre la stagione turistica: spostamenti, orari, segreti.",
+] as const;
+
+const HEADING_WHYUS_TPL = [
+  "Perché scegliere KS Rent Sardinia per {title}?",
+  "KS Rent Sardinia a {title}: il nostro vantaggio",
+  "Cosa rende KS Rent diverso a {title}",
+  "Il valore di KS Rent Sardinia per {title}",
+  "{title}: perché i clienti scelgono KS Rent",
+] as const;
+
+const HEADING_NCC_TPL = [
+  "Noleggio senza carta di credito a {title}",
+  "{title} senza carta di credito: come funziona",
+  "Senza carta di credito anche a {title}",
+  "Pagamenti flessibili per {title}",
+  "{title}: bancomat, prepagate o contanti",
+] as const;
+
+const HEADING_DELIVERY_TPL = [
+  "Consegna su misura a {title}",
+  "Come consegniamo l'auto a {title}",
+  "{title}: dove ti portiamo l'auto",
+  "Consegna a domicilio per {title}",
+  "{title}: tempi e punti di consegna",
+] as const;
+
+const HEADING_VACATION_TPL = [
+  "La tua vacanza in Sardegna inizia da {title}",
+  "{title}: il punto di partenza della vacanza",
+  "Da {title} alla scoperta della Sardegna",
+  "Esplorare la Sardegna con base a {title}",
+  "{title} come hub della tua vacanza",
+] as const;
+
+const CTA_EYEBROW = [
+  "Prossimo passo",
+  "Pronto?",
+  "Last step",
+  "Ci siamo",
+  "Tocca a te",
+] as const;
+
+const CTA_TITLE_TPL = [
+  "Prenota ora la tua Auto",
+  "L'auto ti aspetta a {title}",
+  "Pronto a guidare a {title}?",
+  "Prenota in pochi minuti",
+  "Riserva il tuo veicolo per {title}",
+] as const;
+
+const FAQ_HEADING_TPL = [
+  "Domande frequenti — {title}",
+  "Tu chiedi, KS Rent risponde — {title}",
+  "{title}: le domande più comuni",
+  "FAQ — Tutto sul noleggio a {title}",
+  "Cose da sapere su {title}",
+] as const;
+
+const PARKING_HEADING = [
+  "Informazioni Parcheggio & Viabilità",
+  "Come parcheggiare",
+  "Accesso e sosta auto",
+  "Parcheggio: dove e come",
+  "Arrivo, parcheggio, viabilità",
+] as const;
+
+const DISTANCE_LABEL = [
+  "Distanza da Olbia:",
+  "Da Olbia:",
+  "Tempo di percorrenza:",
+  "Quanto è lontana:",
+  "Tragitto da Olbia:",
+] as const;
+
+const CTA_SUBTITLE_TPL = [
+  "Viaggia in prima classe con KS Rent. Scegli il tuo veicolo premium per esplorare {title} e tutta la Sardegna, anche senza carta di credito.",
+  "{title} ti aspetta. Scegli ora la tua auto KS Rent: consegna a domicilio, deposito flessibile, zero burocrazia.",
+  "Pochi click e l'auto è tua. Esplora {title} e la Gallura con la flotta KS Rent — bancomat, prepagate o contanti accettati.",
+  "Pianifica la tua giornata a {title} con un'auto KS Rent: consegna in villa, hotel o porto, anche con preavviso ridotto.",
+  "Non aspettare l'alta stagione: prenota ora il veicolo per {title} e fissa il prezzo prima del rialzo estivo.",
+] as const;
+
+const FOOTER_TAGLINE = [
+  "— KS Rent Sardinia, autonoleggio con consegna a domicilio in tutta la Gallura e Costa Smeralda.",
+  "— KS Rent Sardinia: consegna ovunque tra Olbia, Costa Smeralda e costa orientale.",
+  "— Autonoleggio KS Rent Sardinia, con sede a Olbia e servizio in tutta la Gallura.",
+  "— KS Rent Sardinia, flotta premium con consegna a domicilio dalla sede di Olbia.",
+  "— KS Rent Sardinia: il noleggio auto della Gallura, dalle calette di San Teodoro a Capo Testa.",
+] as const;
+
+function tpl(s: string, title: string): string {
+  return s.replace(/\{title\}/g, title);
+}
+
+/**
+ * Renderizza un template "...{title}..." spezzandolo agli occorrenze di {title}
+ * e wrappando il titolo in uno span gold per mantenere l'highlight visivo.
+ */
+function renderTitleTpl(template: string, title: string): React.ReactNode {
+  const parts = template.split("{title}");
+  return parts.map((part, i) => (
+    <span key={i}>
+      {part}
+      {i < parts.length - 1 && <span className="text-gold">{title}</span>}
+    </span>
+  ));
+}
+
 
 /* ───────── COMPONENT ───────── */
 
@@ -304,25 +520,11 @@ export default function DynamicPage() {
         description={data.meta_description}
         canonical={data.canonical_url}
         ogImage={data.og_image_url}
-        jsonLd={[
-          ...(type === "beach" ? buildBeachJsonLd(data) : buildLocationJsonLd(data)),
-          ...(seoContent.faqs.length > 0
-            ? [
-                {
-                  "@context": "https://schema.org",
-                  "@type": "FAQPage",
-                  mainEntity: seoContent.faqs.map((faq) => ({
-                    "@type": "Question",
-                    name: faq.q,
-                    acceptedAnswer: {
-                      "@type": "Answer",
-                      text: faq.a,
-                    },
-                  })),
-                },
-              ]
-            : []),
-        ]}
+        jsonLd={
+          type === "beach"
+            ? buildBeachJsonLd(data, seoContent.faqs)
+            : buildLocationJsonLd(data, seoContent.faqs)
+        }
       />
 
       {/* ════════════ 1. HERO SECTION ════════════ */}
@@ -347,7 +549,8 @@ export default function DynamicPage() {
           >
             <span className="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
               <MapPin className="w-3.5 h-3.5" />
-              {type === "location" ? "Punto di Ritiro & Consegna" : "Guida KS Rent"}
+              {seoContent.eyebrowLabel ??
+                pickVariant(slug || "", "eyebrow", type === "location" ? EYEBROW_LOCATION : EYEBROW_BEACH)}
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
               {data.h1}
@@ -368,7 +571,7 @@ export default function DynamicPage() {
           {seoContent.distanceFromOlbia && (
             <p className="mt-3 text-sm text-foreground/50 font-light flex items-center gap-2">
               <Navigation className="w-3.5 h-3.5 text-gold" />
-              Distanza da Olbia: {seoContent.distanceFromOlbia}
+              {pickVariant(slug || "", "distLbl", DISTANCE_LABEL)} {seoContent.distanceFromOlbia}
             </p>
           )}
         </section>
@@ -397,7 +600,7 @@ export default function DynamicPage() {
             <div className="flex items-center gap-3 mb-4">
               <Info className="w-5 h-5 text-gold" />
               <h2 className="text-xl font-bold text-foreground">
-                Informazioni Parcheggio &amp; Viabilità
+                {pickVariant(slug || "", "park", PARKING_HEADING)}
               </h2>
             </div>
             <p className="text-foreground/70 font-light leading-relaxed">{data.parking_info}</p>
@@ -417,10 +620,10 @@ export default function DynamicPage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
-              Scelto per te
+              {seoContent.vehicleEyebrow ?? pickVariant(slug || "", "vehEyebrow", VEHICLE_EYEBROW)}
             </span>
             <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
-              Il veicolo ideale per questa destinazione
+              {seoContent.vehicleHeading ?? pickVariant(slug || "", "vehHead", VEHICLE_HEADING)}
             </h2>
           </div>
 
@@ -500,15 +703,15 @@ export default function DynamicPage() {
           <div className="text-center mb-12">
             <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
               <Navigation className="w-3.5 h-3.5 inline mr-2" />
-              Posizione
+              {seoContent.mapEyebrow ?? pickVariant(slug || "", "mapEye", MAP_EYEBROW)}
             </span>
             <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
-              {type === "beach" ? "Dove si trova" : "Come raggiungerci"}
+              {seoContent.mapHeading ??
+                pickVariant(slug || "", "mapHead", type === "beach" ? MAP_HEADING_BEACH : MAP_HEADING_LOCATION)}
             </h2>
             <p className="text-foreground/60 font-light mt-4 max-w-xl mx-auto leading-relaxed">
-              {type === "beach"
-                ? "Calcola il percorso dalle nostre sedi di Olbia a questa magnifica spiaggia."
-                : "Distanza dalle nostre sedi di Olbia."}
+              {seoContent.mapIntro ??
+                pickVariant(slug || "", "mapIntro", type === "beach" ? MAP_INTRO_BEACH : MAP_INTRO_LOCATION)}
             </p>
           </div>
 
@@ -517,20 +720,20 @@ export default function DynamicPage() {
       </motion.section>
 
       {/* ════════════ 5. CONSIGLI DEI LOCAL ════════════ */}
+      {seoContent.localTips && seoContent.localTips.length > 0 && (
       <section className="py-20 px-4 md:px-12 bg-card/80">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-4">
             <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
-              Insider Tips
+              {seoContent.tipsEyebrow ?? pickVariant(slug || "", "tipsEye", TIPS_EYEBROW)}
             </span>
             <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
-              I consigli di KS Rent per{" "}
-              <span className="text-gold">{data.title}</span>
+              {seoContent.tipsHeading
+                ? seoContent.tipsHeading
+                : renderTitleTpl(pickVariant(slug || "", "tipsHead", TIPS_HEADING_TPL), data.title)}
             </h2>
             <p className="text-foreground/60 font-light mt-4 max-w-2xl mx-auto leading-relaxed">
-              Non siamo solo un'agenzia di noleggio, siamo sardi DOC. Ecco i
-              nostri suggerimenti per vivere al meglio la tua giornata a{" "}
-              {data.title}:
+              {seoContent.tipsIntro ?? tpl(pickVariant(slug || "", "tipsIntro", TIPS_INTRO_TPL), data.title)}
             </p>
           </div>
 
@@ -541,10 +744,7 @@ export default function DynamicPage() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            {(seoContent.localTips && seoContent.localTips.length > 0
-              ? seoContent.localTips
-              : FALLBACK_TIPS
-            ).map((tip) => {
+            {(seoContent.localTips ?? []).map((tip) => {
               const Icon = TIP_ICON_MAP[tip.icon] || Clock;
               return (
                 <motion.div
@@ -568,6 +768,7 @@ export default function DynamicPage() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* ════════════ 6. SEO CONTENT BLOCKS (unici per ogni pagina) ════════════ */}
       <motion.section
@@ -582,8 +783,9 @@ export default function DynamicPage() {
           {/* Block 1 — Perche scegliere KS Rent */}
           <div>
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-              Perché scegliere KS Rent Sardinia per{" "}
-              <span className="text-gold">{data.title}</span>?
+              {seoContent.blockHeadings?.whyUs
+                ? renderTitleTpl(seoContent.blockHeadings.whyUs, data.title)
+                : renderTitleTpl(pickVariant(slug || "", "hWhy", HEADING_WHYUS_TPL), data.title)}
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
               {seoContent.whyUs}
@@ -593,8 +795,9 @@ export default function DynamicPage() {
           {/* Block 2 — Noleggio senza carta di credito */}
           <div className="bg-card border border-border rounded-2xl p-8 md:p-10">
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-              Noleggio senza carta di credito a{" "}
-              <span className="text-gold">{data.title}</span>
+              {seoContent.blockHeadings?.noCreditCard
+                ? renderTitleTpl(seoContent.blockHeadings.noCreditCard, data.title)
+                : renderTitleTpl(pickVariant(slug || "", "hNcc", HEADING_NCC_TPL), data.title)}
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
               {seoContent.noCreditCard}
@@ -604,8 +807,9 @@ export default function DynamicPage() {
           {/* Block 3 — Consegna su misura */}
           <div>
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-              Consegna su misura a{" "}
-              <span className="text-gold">{data.title}</span>
+              {seoContent.blockHeadings?.delivery
+                ? renderTitleTpl(seoContent.blockHeadings.delivery, data.title)
+                : renderTitleTpl(pickVariant(slug || "", "hDel", HEADING_DELIVERY_TPL), data.title)}
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
               {seoContent.delivery}
@@ -615,8 +819,9 @@ export default function DynamicPage() {
           {/* Block 4 — Vacanza */}
           <div className="bg-card border border-border rounded-2xl p-8 md:p-10">
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-              La tua vacanza in Sardegna inizia da{" "}
-              <span className="text-gold">{data.title}</span>
+              {seoContent.blockHeadings?.vacation
+                ? renderTitleTpl(seoContent.blockHeadings.vacation, data.title)
+                : renderTitleTpl(pickVariant(slug || "", "hVac", HEADING_VACATION_TPL), data.title)}
             </h2>
             <p className="text-foreground/70 font-light leading-relaxed">
               {seoContent.vacation}
@@ -627,7 +832,7 @@ export default function DynamicPage() {
           {seoContent.faqs.length > 0 && (
             <div>
               <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-8">
-                Domande frequenti — <span className="text-gold">{data.title}</span>
+                {renderTitleTpl(pickVariant(slug || "", "faqHead", FAQ_HEADING_TPL), data.title)}
               </h2>
               <div className="space-y-4">
                 {seoContent.faqs.map((faq, i) => (
@@ -683,12 +888,17 @@ export default function DynamicPage() {
       >
         <div className="max-w-3xl mx-auto text-center">
           <ShieldCheck className="w-12 h-12 text-gold mx-auto mb-6" />
+          <span className="text-gold font-bold tracking-[0.3em] uppercase text-[10px] block mb-3">
+            {seoContent.ctaEyebrow ?? pickVariant(slug || "", "ctaEye", CTA_EYEBROW)}
+          </span>
           <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-            Prenota ora la tua Auto
+            {seoContent.ctaTitle
+              ? renderTitleTpl(seoContent.ctaTitle, data.title)
+              : renderTitleTpl(pickVariant(slug || "", "ctaTitle", CTA_TITLE_TPL), data.title)}
           </h2>
           <p className="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
             {seoContent.ctaText ||
-              `Viaggia in prima classe con KS Rent. Scegli il tuo veicolo premium per esplorare ${data.title} e tutta la Sardegna, anche senza carta di credito.`}
+              tpl(pickVariant(slug || "", "ctaSub", CTA_SUBTITLE_TPL), data.title)}
           </p>
           <Link
             to="/prenotaora"
@@ -701,7 +911,7 @@ export default function DynamicPage() {
             <Link to="/" className="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors">
               Noleggio auto Olbia
             </Link>
-            {" "}— KS Rent Sardinia, autonoleggio con consegna a domicilio in tutta la Gallura e Costa Smeralda.
+            {" "}{pickVariant(slug || "", "footerTag", FOOTER_TAGLINE)}
           </p>
         </div>
       </motion.section>

@@ -409,12 +409,34 @@ export const buildVehicleJsonLd = (vehicle: {
 
 /* ── Dynamic page JSON-LD builders ── */
 
-export const buildLocationJsonLd = (page: {
-  title: string;
-  meta_description: string;
-  canonical_url?: string;
-  og_image_url?: string;
-}) => {
+interface PageFaq {
+  q: string;
+  a: string;
+}
+
+const buildFaqPageSchema = (pageUrl: string, faqs: PageFaq[]) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.a,
+    },
+  })),
+});
+
+export const buildLocationJsonLd = (
+  page: {
+    title: string;
+    meta_description: string;
+    canonical_url?: string;
+    og_image_url?: string;
+  },
+  faqs?: PageFaq[]
+) => {
   const pageUrl = page.canonical_url || "https://www.ksrentsardinia.com";
   const pageImage = page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
   return [
@@ -476,16 +498,20 @@ export const buildLocationJsonLd = (page: {
         },
       ],
     },
+    ...(faqs && faqs.length > 0 ? [buildFaqPageSchema(pageUrl, faqs)] : []),
   ];
 };
 
-export const buildBeachJsonLd = (page: {
-  title: string;
-  meta_description: string;
-  canonical_url?: string;
-  og_image_url?: string;
-  parking_info?: string;
-}) => {
+export const buildBeachJsonLd = (
+  page: {
+    title: string;
+    meta_description: string;
+    canonical_url?: string;
+    og_image_url?: string;
+    parking_info?: string;
+  },
+  faqs?: PageFaq[]
+) => {
   const pageUrl = page.canonical_url || "https://www.ksrentsardinia.com";
   const pageImage = page.og_image_url || "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
   return [
@@ -532,6 +558,7 @@ export const buildBeachJsonLd = (page: {
         },
       ],
     },
+    ...(faqs && faqs.length > 0 ? [buildFaqPageSchema(pageUrl, faqs)] : []),
   ];
 };
 

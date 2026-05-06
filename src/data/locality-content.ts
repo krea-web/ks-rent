@@ -40,6 +40,40 @@ export interface LocalitySEOContent {
   relatedSlugs?: string[];
   /** CTA personalizzata */
   ctaText?: string;
+
+  /* ─── Differenziazione visiva (override JSX boilerplate) ───
+     Riempire questi campi rimuove il testo identico tra pagine.
+     Ogni campo è opzionale: in assenza di override, viene usato
+     un fallback rotante deterministico basato sullo slug (vedi pickVariant). */
+  /** Eyebrow sopra l'H1 (es. "Costa Smeralda · Lusso", "Sbarco & Marina") */
+  eyebrowLabel?: string;
+  /** Eyebrow sopra il titolo della scheda veicolo (es. "La nostra scelta", "Top pick") */
+  vehicleEyebrow?: string;
+  /** Titolo della scheda veicolo consigliato (sostituisce "Il veicolo ideale per questa destinazione") */
+  vehicleHeading?: string;
+  /** Eyebrow della sezione mappa (es. "Itinerario", "Geografia") */
+  mapEyebrow?: string;
+  /** Titolo H2 della sezione mappa (sostituisce "Posizione" / "Come raggiungerci") */
+  mapHeading?: string;
+  /** Sotto-paragrafo della sezione mappa (sostituisce "Distanza dalle nostre sedi di Olbia.") */
+  mapIntro?: string;
+  /** Eyebrow della sezione tips (es. "Local know-how", "Insider stories") */
+  tipsEyebrow?: string;
+  /** Titolo H2 della sezione tips (es. "I segreti di Porto Cervo") */
+  tipsHeading?: string;
+  /** Paragrafo introduttivo dei tips (sostituisce "...siamo sardi DOC...") */
+  tipsIntro?: string;
+  /** Override H2 dei 4 blocchi SEO finali (whyUs, noCreditCard, delivery, vacation) */
+  blockHeadings?: {
+    whyUs?: string;
+    noCreditCard?: string;
+    delivery?: string;
+    vacation?: string;
+  };
+  /** Eyebrow del CTA finale (es. "Prenota ora", "Last call") */
+  ctaEyebrow?: string;
+  /** Titolo H2 del CTA finale (sostituisce "Prenota ora la tua Auto") */
+  ctaTitle?: string;
 }
 
 /* ═══════════════════════════════════════════════════════

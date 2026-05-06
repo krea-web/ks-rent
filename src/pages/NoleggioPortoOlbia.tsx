@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Ship, ShieldCheck, CreditCard, Smartphone, Zap, Star, Gauge } from "lucide-react";
+import { ArrowRight, Ship, ShieldCheck, Anchor, Briefcase, Compass, Star, Zap } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { portoFaqJsonLd, portoAutoRentalJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
+import ServiceCardGrid from "@/components/ServiceCardGrid";
 
 const faqs = [
   {
@@ -164,28 +165,17 @@ const NoleggioPortoOlbia = () => {
         </div>
       </section>
 
-      {/* SERVICE CARDS */}
-      <section className="py-24 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
-          {[
-            { icon: Smartphone, title: "Self Booking", desc: "Prenotazione concepita per essere 100% online, rapida e autonoma." },
-            { icon: CreditCard, title: "Zero Vincoli", desc: "Nessun obbligo di carta di credito. Accettiamo prepagate, debito e contanti." },
-            { icon: ShieldCheck, title: "Cauzione Safe", desc: "Depositi cauzionali flessibili e proporzionati alla categoria del veicolo." },
-            { icon: Ship, title: "Sede allo Sbarco", desc: "Ufficio reale in Viale Isola Bianca 38. Ritiri l'auto in 5 minuti." },
-          ].map((s, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -10 }}
-              className="relative p-8 rounded-[2.5rem] bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 overflow-hidden group backdrop-blur-sm shadow-md dark:shadow-none border-b-[3px] border-b-gold/40 dark:border-b-transparent"
-            >
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
-              <s.icon className="text-gold w-12 h-12 mb-6" />
-              <h3 className="text-xl font-bold mb-3 uppercase italic tracking-tighter text-gray-900 dark:text-white">{s.title}</h3>
-              <p className="text-gray-600 dark:text-white/40 text-sm leading-relaxed font-light">{s.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* SERVICE CARDS — angle: sbarco traghetto, deposito bagagli, navigazione */}
+      <ServiceCardGrid
+        eyebrow="Ferry Welcome"
+        heading={<>Servizi pensati per chi <span className="text-gold">sbarca a Olbia</span></>}
+        cards={[
+          { icon: Anchor, title: "Sede a 50 metri dalla nave", desc: "Viale Isola Bianca 38: appena sbarchi dal traghetto, l'ufficio è in vista. Niente shuttle, niente attese in coda all'autostrada." },
+          { icon: Briefcase, title: "Deposito bagagli prima del check-in", desc: "Sbarcato la mattina ma il check-in in hotel è alle 15:00? Lasciamo i bagagli in sede mentre giri Olbia con l'auto." },
+          { icon: Ship, title: "Coordinamento con tutte le compagnie", desc: "Tirrenia, Moby, GNV, Grimaldi e Corsica Sardinia: monitoriamo il tuo arrivo e ti aspettiamo all'orario reale dello sbarco." },
+          { icon: Compass, title: "Itinerari da nord o da sud", desc: "Ti consigliamo la rotta migliore in base alla tua destinazione: Costa Smeralda da nord, San Teodoro e Budoni da sud." },
+        ]}
+      />
 
       {/* FAQ */}
       <section className="py-24 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505]">
