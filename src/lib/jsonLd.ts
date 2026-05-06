@@ -62,7 +62,7 @@ export const localBusinessJsonLd = {
         ratingValue: "5.0",
         bestRating: "5",
         worstRating: "1",
-        ratingCount: "23",
+        ratingCount: "27",
       },
       knowsAbout: [
         "Noleggio auto Olbia",
