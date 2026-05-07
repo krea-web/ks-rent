@@ -4,6 +4,10 @@ import { ArrowRight } from "lucide-react";
 
 const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/HERO%20GIUSTA.mp4";
 const LOGO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
+// Poster: immagine OG ksrent (1200x630, ~80 KB). Carica in <1s su 4G,
+// evitando che il video MP4 (vari MB) gonfi il LCP fino a quando il
+// browser non è pronto a riprodurlo.
+const HERO_POSTER_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
 
 const HeroSection = () => (
   <section className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
@@ -12,6 +16,8 @@ const HeroSection = () => (
       loop
       muted
       playsInline
+      preload="metadata"
+      poster={HERO_POSTER_URL}
       className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
     >
       <source src={HERO_VIDEO_URL} type="video/mp4" />
