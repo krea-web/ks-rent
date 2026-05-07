@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Admin from "@/views/Admin";
+---
+<BaseLayout
+  title="Admin — KS Rent"
+  description="Area riservata KS Rent."
+  noindex={true}
+  showChrome={false}
+>
+  <Admin client:load />
+</BaseLayout>

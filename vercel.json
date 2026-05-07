@@ -2,13 +2,8 @@
   "redirects": [
     { "source": "/localita/:slug", "destination": "/:slug", "permanent": true },
     { "source": "/spiagge/:slug", "destination": "/:slug", "permanent": true },
-    { "source": "/noleggio-senza-carta-credito", "destination": "/noleggio-auto-senza-carta-di-credito-olbia", "permanent": true }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/noleggio-senza-carta-credito", "destination": "/noleggio-auto-senza-carta-di-credito-olbia", "permanent": true },
+    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true }
   ],
   "headers": [
     {

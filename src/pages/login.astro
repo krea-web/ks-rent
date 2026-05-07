@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Login from "@/views/Login";
+---
+<BaseLayout
+  title="Login — KS Rent"
+  description="Accesso area riservata KS Rent."
+  noindex={true}
+  showChrome={false}
+>
+  <Login client:load />
+</BaseLayout>

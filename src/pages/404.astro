@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NotFound from "@/views/NotFound";
+---
+<BaseLayout
+  title="Pagina non trovata — KS Rent Sardinia"
+  description="La pagina che cerchi non esiste. Torna alla home di KS Rent Sardinia o esplora la flotta."
+  noindex={true}
+>
+  <NotFound client:load />
+</BaseLayout>

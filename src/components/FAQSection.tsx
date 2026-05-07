@@ -1,7 +1,4 @@
-import { useMemo } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Link } from "@/lib/router-shim";
 import { MessageSquare, Star, ShieldCheck, ArrowRight, MapPin } from "lucide-react";
 
 const faqs = [
@@ -57,15 +54,6 @@ const faqs = [
 ];
 
 const FAQSection = () => {
-  const shuffledFaqs = useMemo(() => {
-    const array = [...faqs];
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }, []);
-
   return (
     <section className="relative bg-gray-50 dark:bg-[#050505] overflow-hidden">
       {/* PARTE 1: FAQ ACCORDION */}
@@ -75,90 +63,59 @@ const FAQSection = () => {
 
         <div className="w-full max-w-4xl mx-auto px-4 relative z-10">
           <div className="text-center mb-10 md:mb-16">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center justify-center p-3 bg-gray-100 dark:bg-white/5 rounded-2xl mb-6 border border-gray-200 dark:border-white/10 shadow-lg"
-            >
+            <div className="inline-flex items-center justify-center p-3 bg-gray-100 dark:bg-white/5 rounded-2xl mb-6 border border-gray-200 dark:border-white/10 shadow-lg">
               <MessageSquare className="text-gold w-6 h-6" />
-            </motion.div>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4"
-            >
+            <p className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4">
               Trasparenza Totale
-            </motion.p>
+            </p>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-display font-black mb-6 text-foreground leading-tight"
-            >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black mb-6 text-foreground leading-tight">
               Domande{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">Frequenti</span>
-            </motion.h2>
+            </h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto"
-            >
+            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
               Tutto ciò che devi sapere sul noleggio auto a Olbia e in Costa Smeralda: termini chiari, protezione completa e servizio
               d'eccellenza.
-            </motion.p>
+            </p>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <Accordion type="single" collapsible className="space-y-3 md:space-y-4">
-              {shuffledFaqs.map((f, i) => {
-                const isGold = f.isHighlighted;
-                return (
-                  <AccordionItem
-                    key={i}
-                    value={`faq-${i}`}
-                    className={`rounded-xl md:rounded-2xl px-3 sm:px-4 md:px-6 transition-all duration-300 border ${
-                      isGold
-                        ? "bg-gradient-to-br from-gold/10 to-transparent border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
-                        : "bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
+          <div className="space-y-3 md:space-y-4">
+            {faqs.map((f, i) => {
+              const isGold = f.isHighlighted;
+              return (
+                <details
+                  key={i}
+                  className={`group rounded-xl md:rounded-2xl px-3 sm:px-4 md:px-6 transition-all duration-300 border ${
+                    isGold
+                      ? "bg-gradient-to-br from-gold/10 to-transparent border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                      : "bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
+                  }`}
+                >
+                  <summary
+                    className={`text-left py-4 md:py-6 cursor-pointer list-none flex items-center justify-between ${
+                      isGold ? "text-gold" : "text-foreground"
                     }`}
                   >
-                    <AccordionTrigger
-                      className={`text-left py-4 md:py-6 hover:no-underline group ${isGold ? "text-gold" : "text-foreground"}`}
-                    >
-                      <div className="flex items-center gap-3 md:gap-4">
-                        {isGold && f.icon && (
-                          <span className="flex-shrink-0 p-1.5 md:p-2 bg-gold/20 rounded-lg">
-                            <f.icon className="w-4 h-4 md:w-5 md:h-5 text-gold" />
-                          </span>
-                        )}
-                        <span
-                          className={`text-sm sm:text-base md:text-lg font-bold tracking-wide ${isGold ? "" : "group-hover:text-gold transition-colors"}`}
-                        >
-                          {f.q}
+                    <div className="flex items-center gap-3 md:gap-4">
+                      {isGold && f.icon && (
+                        <span className="flex-shrink-0 p-1.5 md:p-2 bg-gold/20 rounded-lg">
+                          <f.icon className="w-4 h-4 md:w-5 md:h-5 text-gold" />
                         </span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6 pt-1 md:pt-2 pl-0 md:pl-16">
-                      <span>{f.a}</span>
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          </motion.div>
+                      )}
+                      <span className="text-sm sm:text-base md:text-lg font-bold tracking-wide">{f.q}</span>
+                    </div>
+                    <span className="text-gold transition-transform group-open:rotate-90 shrink-0 ml-4">›</span>
+                  </summary>
+                  <div className="text-muted-foreground text-sm md:text-base leading-relaxed pb-4 md:pb-6 pt-1 md:pt-2 pl-0 md:pl-16">
+                    <span>{f.a}</span>
+                  </div>
+                </details>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -194,13 +151,7 @@ const FAQSection = () => {
         <div className="absolute inset-0 z-0 bg-gradient-to-r from-gray-50 dark:from-[#050505] via-gray-50/70 dark:via-[#050505]/70 to-transparent pointer-events-none" />
 
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl"
-          >
+          <div className="max-w-2xl">
             <span className="inline-block py-1 px-3 rounded-full bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gold text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold mb-4 md:mb-6 backdrop-blur-md">
               Dietro le Quinte
             </span>
@@ -222,7 +173,7 @@ const FAQSection = () => {
               La Nostra Filosofia
               <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

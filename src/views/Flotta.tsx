@@ -1,10 +1,9 @@
 import SEOHead from "@/components/SEOHead";
 import CircularGallery from "@/components/CircularGallery";
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/router-shim";
 import { ArrowRight, ShieldCheck, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { flottaJsonLd } from "@/lib/jsonLd";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const flottaFaqs = [
   {
@@ -34,7 +33,7 @@ const flottaFaqs = [
   },
 ];
 
-const flottaFaqJsonLd = {
+export const flottaFaqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: flottaFaqs.map((f) => ({
@@ -44,7 +43,7 @@ const flottaFaqJsonLd = {
   })),
 };
 
-const flottaBreadcrumbJsonLd = {
+export const flottaBreadcrumbJsonLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
@@ -174,27 +173,33 @@ export default function Flotta() {
           <h2 className="text-2xl md:text-3xl font-bold mb-8 text-foreground text-center">
             Domande frequenti sulla nostra flotta
           </h2>
-          <Accordion type="single" collapsible className="space-y-4">
+          <div className="space-y-4">
             {flottaFaqs.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border-none">
-                <AccordionTrigger
-                  className={`px-6 py-5 rounded-xl transition-all text-left font-semibold ${
-                    f.gold
-                      ? "bg-gold/10 border border-gold/40 text-gold"
-                      : "bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-foreground hover:bg-gray-100 dark:hover:bg-white/10"
+              <details
+                key={i}
+                className={`group rounded-xl transition-all ${
+                  f.gold
+                    ? "bg-gold/10 border border-gold/40"
+                    : "bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/10"
+                }`}
+              >
+                <summary
+                  className={`px-6 py-5 cursor-pointer list-none text-left font-semibold flex items-center justify-between ${
+                    f.gold ? "text-gold" : "text-foreground"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     {f.gold && <Star className="w-4 h-4 fill-gold text-gold shrink-0" />}
                     {f.q}
                   </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pt-4 pb-6 text-muted-foreground leading-relaxed font-light">
+                  <span className="text-gold transition-transform group-open:rotate-90 shrink-0 ml-4">›</span>
+                </summary>
+                <div className="px-6 pt-2 pb-6 text-muted-foreground leading-relaxed font-light">
                   {f.a}
-                </AccordionContent>
-              </AccordionItem>
+                </div>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </div>
       </section>
     </div>

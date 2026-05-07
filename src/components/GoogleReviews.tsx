@@ -76,7 +76,7 @@ const ReviewCard = ({ review, index }: { review: typeof reviews[number]; index: 
         {review.author_name.charAt(0)}
       </div>
       <div>
-        <h4 className="font-bold text-lg text-gold tracking-wide">{review.author_name}</h4>
+        <h3 className="font-bold text-lg text-gold tracking-wide">{review.author_name}</h3>
         <span className="text-xs text-gray-400 dark:text-white/40 uppercase tracking-wider">Cliente Verificato</span>
       </div>
     </div>

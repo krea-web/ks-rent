@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Star, Home } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/router-shim";
 
 const GOOGLE_REVIEW_URL = "https://g.page/r/CZKdxnQ8w8GFEBM/review";
 

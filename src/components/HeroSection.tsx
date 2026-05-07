@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/router-shim";
 
 import { ArrowRight } from "lucide-react";
 
 const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/HERO%20GIUSTA.mp4";
 const LOGO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
+// Poster: og-image.jpg trasformata on-the-fly da Supabase Image Transformation
+// (1920x1080 cover, quality 70) → ~80 KB invece di 1.7 MB. Niente da
+// ri-uploadare, basta che il bucket abbia "Enable image transformation" ON.
+const HERO_POSTER_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/render/image/public/asset/og-image.jpg?width=1920&height=1080&resize=cover&quality=70";
 
 const HeroSection = () => (
   <section className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
@@ -12,6 +16,10 @@ const HeroSection = () => (
       loop
       muted
       playsInline
+      preload="metadata"
+      poster={HERO_POSTER_URL}
+      // @ts-expect-error fetchpriority is a valid HTML attribute, types may lag
+      fetchpriority="high"
       className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
     >
       <source src={HERO_VIDEO_URL} type="video/mp4" />

@@ -1,0 +1,459 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CompanyMap from "@/components/CompanyMap";
+import { supabase } from "@/lib/supabase";
+import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
+import { getLocalitySEOContent } from "@/data/locality-content";
+import {
+  getRecommendedVehicle,
+  pickVariant,
+  tpl,
+  tplGoldHtml,
+  EYEBROW_LOCATION,
+  EYEBROW_BEACH,
+  VEHICLE_EYEBROW,
+  VEHICLE_HEADING,
+  MAP_EYEBROW,
+  MAP_HEADING_LOCATION,
+  MAP_HEADING_BEACH,
+  MAP_INTRO_LOCATION,
+  MAP_INTRO_BEACH,
+  TIPS_EYEBROW,
+  TIPS_HEADING_TPL,
+  TIPS_INTRO_TPL,
+  HEADING_WHYUS_TPL,
+  HEADING_NCC_TPL,
+  HEADING_DELIVERY_TPL,
+  HEADING_VACATION_TPL,
+  FAQ_HEADING_TPL,
+  CTA_EYEBROW,
+  CTA_TITLE_TPL,
+  CTA_SUBTITLE_TPL,
+  FOOTER_TAGLINE,
+  PARKING_HEADING,
+  DISTANCE_LABEL,
+} from "@/lib/dynamic-page-helpers";
+import {
+  ArrowRight,
+  MapPin,
+  Info,
+  ShieldCheck,
+  Navigation,
+  Users,
+  Gauge,
+  Fuel,
+  Star,
+  Clock,
+  Wind,
+  Utensils,
+  Camera,
+  Waves,
+  Mountain,
+  Ship,
+  Route,
+} from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
+
+interface SeoRecord {
+  slug: string;
+  title: string;
+  h1: string;
+  meta_description: string;
+  hero_image_url?: string;
+  content_html?: string;
+  parking_info?: string;
+  canonical_url?: string;
+  og_image_url?: string;
+}
+
+export async function getStaticPaths() {
+  const [locRes, beachRes] = await Promise.all([
+    supabase.from("seo_locations").select("*"),
+    supabase.from("seo_beaches").select("*"),
+  ]);
+
+  if (locRes.error) {
+    console.warn("[getStaticPaths] seo_locations:", locRes.error.message);
+  }
+  if (beachRes.error) {
+    console.warn("[getStaticPaths] seo_beaches:", beachRes.error.message);
+  }
+
+  const locs = (locRes.data || []) as SeoRecord[];
+  const beaches = (beachRes.data || []) as SeoRecord[];
+
+  return [
+    ...locs.map((d) => ({
+      params: { slug: d.slug },
+      props: { data: d, type: "location" as const },
+    })),
+    ...beaches.map((d) => ({
+      params: { slug: d.slug },
+      props: { data: d, type: "beach" as const },
+    })),
+  ];
+}
+
+const { data, type } = Astro.props as { data: SeoRecord; type: "location" | "beach" };
+const slug = data.slug;
+const seoContent = getLocalitySEOContent(slug);
+const vehicle = getRecommendedVehicle(slug);
+
+const jsonLd =
+  type === "beach"
+    ? buildBeachJsonLd(data, seoContent.faqs)
+    : buildLocationJsonLd(data, seoContent.faqs);
+
+// Sanitize content_html lato build, evita di spedire DOMPurify al client.
+const safeContentHtml = data.content_html
+  ? DOMPurify.sanitize(
+      data.content_html
+        .replace(/<h1(\s|>)/gi, "<h2$1")
+        .replace(/<\/h1>/gi, "</h2>"),
+    )
+  : "";
+
+const eyebrow =
+  seoContent.eyebrowLabel ??
+  pickVariant(slug, "eyebrow", type === "location" ? EYEBROW_LOCATION : EYEBROW_BEACH);
+
+const vehicleEyebrow = seoContent.vehicleEyebrow ?? pickVariant(slug, "vehEyebrow", VEHICLE_EYEBROW);
+const vehicleHeading = seoContent.vehicleHeading ?? pickVariant(slug, "vehHead", VEHICLE_HEADING);
+
+const mapEyebrow = seoContent.mapEyebrow ?? pickVariant(slug, "mapEye", MAP_EYEBROW);
+const mapHeading =
+  seoContent.mapHeading ??
+  pickVariant(slug, "mapHead", type === "beach" ? MAP_HEADING_BEACH : MAP_HEADING_LOCATION);
+const mapIntro =
+  seoContent.mapIntro ??
+  pickVariant(slug, "mapIntro", type === "beach" ? MAP_INTRO_BEACH : MAP_INTRO_LOCATION);
+
+const tipsEyebrow = seoContent.tipsEyebrow ?? pickVariant(slug, "tipsEye", TIPS_EYEBROW);
+const tipsHeadingTpl = seoContent.tipsHeading ?? pickVariant(slug, "tipsHead", TIPS_HEADING_TPL);
+const tipsIntro = seoContent.tipsIntro ?? tpl(pickVariant(slug, "tipsIntro", TIPS_INTRO_TPL), data.title);
+
+const whyUsHeadingTpl =
+  seoContent.blockHeadings?.whyUs ?? pickVariant(slug, "hWhy", HEADING_WHYUS_TPL);
+const nccHeadingTpl =
+  seoContent.blockHeadings?.noCreditCard ?? pickVariant(slug, "hNcc", HEADING_NCC_TPL);
+const deliveryHeadingTpl =
+  seoContent.blockHeadings?.delivery ?? pickVariant(slug, "hDel", HEADING_DELIVERY_TPL);
+const vacationHeadingTpl =
+  seoContent.blockHeadings?.vacation ?? pickVariant(slug, "hVac", HEADING_VACATION_TPL);
+const faqHeadingTpl = pickVariant(slug, "faqHead", FAQ_HEADING_TPL);
+
+const ctaEyebrow = seoContent.ctaEyebrow ?? pickVariant(slug, "ctaEye", CTA_EYEBROW);
+const ctaTitleTpl = seoContent.ctaTitle ?? pickVariant(slug, "ctaTitle", CTA_TITLE_TPL);
+const ctaSubtitle = seoContent.ctaText ?? tpl(pickVariant(slug, "ctaSub", CTA_SUBTITLE_TPL), data.title);
+const footerTagline = pickVariant(slug, "footerTag", FOOTER_TAGLINE);
+
+const parkingHeading = pickVariant(slug, "park", PARKING_HEADING);
+const distanceLabel = pickVariant(slug, "distLbl", DISTANCE_LABEL);
+
+const TIP_ICON_MAP = {
+  clock: Clock,
+  wind: Wind,
+  road: Route,
+  food: Utensils,
+  camera: Camera,
+  swim: Waves,
+  mountain: Mountain,
+  boat: Ship,
+} as const;
+
+function relatedLabel(s: string) {
+  return s
+    .replace(/-/g, " ")
+    .replace(/^noleggio auto /, "")
+    .replace(/^spiaggia /, "Spiaggia ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+---
+<BaseLayout
+  title={data.title}
+  description={data.meta_description}
+  canonical={data.canonical_url}
+  ogImage={data.og_image_url}
+  jsonLd={jsonLd}
+>
+  <div class="bg-background min-h-screen">
+    {/* ════════════ 1. HERO SECTION ════════════ */}
+    <section class="relative min-h-[60vh] flex items-end overflow-hidden">
+      {data.hero_image_url && (
+        <div class="absolute inset-0">
+          <img
+            src={data.hero_image_url}
+            alt={data.h1}
+            class="w-full h-full object-cover"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent"></div>
+        </div>
+      )}
+
+      <div class="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-12 pb-16 pt-32">
+        <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
+          <MapPin className="w-3.5 h-3.5" />
+          {eyebrow}
+        </span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
+          {data.h1}
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-foreground/70 font-light max-w-2xl leading-relaxed">
+          {data.meta_description}
+        </p>
+      </div>
+    </section>
+
+    {/* ════════════ 1b. SNIPPET BAIT ════════════ */}
+    {seoContent.snippetBait && (
+      <section class="px-4 md:px-12 max-w-4xl mx-auto pt-10">
+        <p class="text-lg md:text-xl text-foreground/80 font-medium leading-relaxed border-l-4 border-gold pl-6">
+          {seoContent.snippetBait}
+        </p>
+        {seoContent.distanceFromOlbia && (
+          <p class="mt-3 text-sm text-foreground/50 font-light flex items-center gap-2">
+            <Navigation className="w-3.5 h-3.5 text-gold" />
+            {distanceLabel} {seoContent.distanceFromOlbia}
+          </p>
+        )}
+      </section>
+    )}
+
+    {/* ════════════ 2. CONTENT HTML ════════════ */}
+    <section class="py-16 px-4 md:px-12 max-w-4xl mx-auto">
+      {safeContentHtml ? (
+        <div
+          class="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
+          set:html={safeContentHtml}
+        />
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-muted-foreground font-light text-lg leading-relaxed max-w-xl mx-auto">
+            Stiamo aggiornando questa pagina con i migliori consigli e percorsi. Puoi comunque
+            prenotare il tuo veicolo per questa destinazione utilizzando il pulsante qui sotto.
+          </p>
+        </div>
+      )}
+
+      {type === "beach" && data.parking_info && (
+        <div class="mt-12 bg-card border border-border rounded-2xl p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <Info className="w-5 h-5 text-gold" />
+            <h2 class="text-xl font-bold text-foreground">{parkingHeading}</h2>
+          </div>
+          <p class="text-foreground/70 font-light leading-relaxed">{data.parking_info}</p>
+        </div>
+      )}
+    </section>
+
+    {/* ════════════ 3. VEICOLO CONSIGLIATO ════════════ */}
+    <section class="py-20 px-4 md:px-12">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">{vehicleEyebrow}</span>
+          <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+            {vehicleHeading}
+          </h2>
+        </div>
+
+        <div class="relative bg-card border border-border rounded-[2rem] overflow-hidden">
+          <div class="absolute -top-20 -right-20 w-60 h-60 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="grid md:grid-cols-2 gap-0">
+            <div class="relative flex items-center justify-center p-8 md:p-12 bg-gradient-to-br from-card to-background min-h-[300px]">
+              <img
+                src={vehicle.image}
+                alt={`Noleggio ${vehicle.name} a ${data.title} - KS Rent Sardinia`}
+                class="w-full max-w-md object-contain drop-shadow-2xl"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="p-8 md:p-12 flex flex-col justify-center">
+              <span class="text-gold text-xs font-bold tracking-[0.2em] uppercase">{vehicle.category}</span>
+              <h3 class="text-2xl md:text-3xl font-black italic uppercase tracking-tight text-foreground mt-1">
+                {vehicle.name}
+              </h3>
+              <p class="text-foreground/60 font-light mt-3 leading-relaxed">
+                {seoContent.vehicleReason || vehicle.tagline}
+              </p>
+
+              <div class="grid grid-cols-2 gap-4 mt-8">
+                <div class="flex items-center gap-3">
+                  <Gauge className="w-4 h-4 text-gold" />
+                  <span class="text-foreground/70 text-sm">{vehicle.transmission}</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <Users className="w-4 h-4 text-gold" />
+                  <span class="text-foreground/70 text-sm">{vehicle.seats} Posti</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <Fuel className="w-4 h-4 text-gold" />
+                  <span class="text-foreground/70 text-sm">{vehicle.fuel}</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <Star className="w-4 h-4 text-gold" />
+                  <span class="text-foreground/70 text-sm">Assicurata</span>
+                </div>
+              </div>
+
+              <a
+                href="/prenotaora"
+                class="mt-10 inline-flex items-center justify-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform"
+              >
+                Prenota questo veicolo
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ════════════ 4. GOOGLE MAPS ════════════ */}
+    <section class="py-20 px-4 md:px-12 bg-card">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+            <Navigation className="w-3.5 h-3.5 inline mr-2" />
+            {mapEyebrow}
+          </span>
+          <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+            {mapHeading}
+          </h2>
+          <p class="text-foreground/60 font-light mt-4 max-w-xl mx-auto leading-relaxed">{mapIntro}</p>
+        </div>
+
+        <CompanyMap client:visible targetLocation={data.title} />
+      </div>
+    </section>
+
+    {/* ════════════ 5. LOCAL TIPS ════════════ */}
+    {seoContent.localTips && seoContent.localTips.length > 0 && (
+      <section class="py-20 px-4 md:px-12 bg-card/80">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-4">
+            <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">{tipsEyebrow}</span>
+            <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              <Fragment set:html={tplGoldHtml(tipsHeadingTpl, data.title)} />
+            </h2>
+            <p class="text-foreground/60 font-light mt-4 max-w-2xl mx-auto leading-relaxed">{tipsIntro}</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            {seoContent.localTips.map((tip) => {
+              const Icon = TIP_ICON_MAP[tip.icon] ?? Clock;
+              return (
+                <div class="bg-white dark:bg-card border border-gray-200 dark:border-border border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl p-6 hover:border-gold/40 transition-colors shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-none">
+                  <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-gold" />
+                  </div>
+                  <h3 class="text-foreground font-bold text-lg mb-2">{tip.title}</h3>
+                  <p class="text-foreground/60 text-sm font-light leading-relaxed">{tip.text}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* ════════════ 6. SEO BLOCKS ════════════ */}
+    <section class="py-20 px-4 md:px-12">
+      <div class="max-w-4xl mx-auto space-y-16">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+            <Fragment set:html={tplGoldHtml(whyUsHeadingTpl, data.title)} />
+          </h2>
+          <p class="text-foreground/70 font-light leading-relaxed">{seoContent.whyUs}</p>
+        </div>
+
+        <div class="bg-card border border-border rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+            <Fragment set:html={tplGoldHtml(nccHeadingTpl, data.title)} />
+          </h2>
+          <p class="text-foreground/70 font-light leading-relaxed">{seoContent.noCreditCard}</p>
+        </div>
+
+        <div>
+          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+            <Fragment set:html={tplGoldHtml(deliveryHeadingTpl, data.title)} />
+          </h2>
+          <p class="text-foreground/70 font-light leading-relaxed">{seoContent.delivery}</p>
+        </div>
+
+        <div class="bg-card border border-border rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+            <Fragment set:html={tplGoldHtml(vacationHeadingTpl, data.title)} />
+          </h2>
+          <p class="text-foreground/70 font-light leading-relaxed">{seoContent.vacation}</p>
+        </div>
+
+        {seoContent.faqs.length > 0 && (
+          <div>
+            <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-8">
+              <Fragment set:html={tplGoldHtml(faqHeadingTpl, data.title)} />
+            </h2>
+            <div class="space-y-4">
+              {seoContent.faqs.map((faq) => (
+                <details class="bg-card border border-border rounded-xl overflow-hidden group">
+                  <summary class="px-6 py-5 cursor-pointer text-foreground font-semibold hover:text-gold transition-colors list-none flex items-center justify-between">
+                    {faq.q}
+                    <ArrowRight className="w-4 h-4 text-gold transition-transform group-open:rotate-90 shrink-0 ml-4" />
+                  </summary>
+                  <div class="px-6 pb-5">
+                    <p class="text-foreground/70 font-light leading-relaxed">{faq.a}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {seoContent.relatedSlugs && seoContent.relatedSlugs.length > 0 && (
+          <div class="flex flex-wrap gap-3">
+            <span class="text-foreground/50 text-sm font-light">Scopri anche:</span>
+            {seoContent.relatedSlugs.map((relSlug) => (
+              <a
+                href={`/${relSlug}`}
+                class="text-gold text-sm font-medium hover:text-gold/80 underline underline-offset-4"
+              >
+                {relatedLabel(relSlug)}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    {/* ════════════ 7. CTA FINALE ════════════ */}
+    <section class="py-20 px-4 md:px-12 bg-card">
+      <div class="max-w-3xl mx-auto text-center">
+        <ShieldCheck className="w-12 h-12 text-gold mx-auto mb-6" />
+        <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px] block mb-3">{ctaEyebrow}</span>
+        <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+          <Fragment set:html={tplGoldHtml(ctaTitleTpl, data.title)} />
+        </h2>
+        <p class="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">{ctaSubtitle}</p>
+        <a
+          href="/prenotaora"
+          class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
+        >
+          Scopri la Flotta
+          <ArrowRight className="w-4 h-4" />
+        </a>
+        <p class="text-foreground/40 text-sm mt-6 font-light">
+          <a
+            href="/"
+            class="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors"
+          >
+            Noleggio auto Olbia
+          </a>
+          {" "}{footerTagline}
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
