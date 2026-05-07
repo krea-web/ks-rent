@@ -11,16 +11,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SITE_URL = "https://www.ksrentsardinia.com";
 
-// Diagnostic env vars al build (verifica che PUBLIC_* arrivino dal runner Vercel)
-console.log("[env-diag] PUBLIC_SUPABASE_URL:",
-  process.env.PUBLIC_SUPABASE_URL ? `set (${process.env.PUBLIC_SUPABASE_URL.slice(0, 30)}...)` : "MISSING");
-console.log("[env-diag] PUBLIC_SUPABASE_ANON_KEY:",
-  process.env.PUBLIC_SUPABASE_ANON_KEY ? `set (len=${process.env.PUBLIC_SUPABASE_ANON_KEY.length})` : "MISSING");
-console.log("[env-diag] PUBLIC_GOOGLE_MAPS_API_KEY:",
-  process.env.PUBLIC_GOOGLE_MAPS_API_KEY ? `set (len=${process.env.PUBLIC_GOOGLE_MAPS_API_KEY.length})` : "MISSING");
-console.log("[env-diag] VERCEL_ENV:", process.env.VERCEL_ENV || "n/a");
-console.log("[env-diag] VERCEL_GIT_COMMIT_REF:", process.env.VERCEL_GIT_COMMIT_REF || "n/a");
-
 export default defineConfig({
   site: SITE_URL,
   output: "static",
