@@ -18,6 +18,8 @@ const HeroSection = () => (
       playsInline
       preload="metadata"
       poster={HERO_POSTER_URL}
+      // @ts-expect-error fetchpriority is a valid HTML attribute, types may lag
+      fetchpriority="high"
       className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
     >
       <source src={HERO_VIDEO_URL} type="video/mp4" />

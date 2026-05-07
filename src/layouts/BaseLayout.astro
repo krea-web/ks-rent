@@ -114,12 +114,18 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
 
-    <!-- Preconnect -->
+    <!-- Preconnect: solo le origini critiche per il primo render
+         (Supabase asset + Google Fonts). I preconnect Maps/iubenda sono
+         dns-prefetch perche caricati on-demand (CompanyMap client:visible
+         + iubenda widget defer). Riduce concorrenza preconnect a 4 max. -->
     <link rel="preconnect" href="https://zgytnkimjpoosvshfopz.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://maps.googleapis.com" />
-    <link rel="preconnect" href="https://maps.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://maps.googleapis.com" />
+    <link rel="dns-prefetch" href="https://maps.gstatic.com" />
+    <link rel="dns-prefetch" href="https://embeds.iubenda.com" />
+    <link rel="dns-prefetch" href="https://cdn.iubenda.com" />
+    <link rel="dns-prefetch" href="https://idb.iubenda.com" />
 
     <!-- Logo preload -->
     <link rel="preload" as="image" href={LOGO} fetchpriority="high" />
@@ -171,10 +177,13 @@ const customJsonLdList: Record<string, any>[] = jsonLd
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
 
-    <!-- Iubenda -->
+    <!-- Iubenda: defer per non bloccare LCP. Il widget si attiva
+         dopo il caricamento iniziale, l'utente non perde nulla a livello
+         compliance perche lo script aggiunge il banner dinamicamente. -->
     <script
       type="text/javascript"
       src="https://embeds.iubenda.com/widgets/0ba8fa23-7357-47fd-827e-809c2c13c61f.js"
+      defer
     ></script>
 
     <!-- GA4 + Google Ads -->
@@ -197,6 +206,6 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     {showChrome && <WhatsAppCTA client:idle />}
     {showChrome && !hideMobileSticky && <MobileStickyCTA client:idle />}
 
-    <script type="text/javascript" src="https://cdn.iubenda.com/iubenda.js"></script>
+    <script type="text/javascript" src="https://cdn.iubenda.com/iubenda.js" defer></script>
   </body>
 </html>
