@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ChiSiamo, { chiSiamoFaqJsonLd } from "@/views/ChiSiamo";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Chi Siamo — KS Rent | Autonoleggio Olbia Sardegna"
+  description="KS Rent Sardinia: autonoleggio di lusso con sede a Olbia. Flotta di proprietà, consegna a domicilio in Costa Smeralda, deposito flessibile e senza carta di credito obbligatoria."
+  canonical="https://www.ksrentsardinia.com/chisiamo"
+  jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
+>
+  <ChiSiamo client:load />
+</BaseLayout>

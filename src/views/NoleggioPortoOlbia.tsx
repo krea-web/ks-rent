@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/router-shim";
 import { motion } from "framer-motion";
 import { ArrowRight, Ship, ShieldCheck, Anchor, Briefcase, Compass, Star, Zap } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { portoFaqJsonLd, portoAutoRentalJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
 import ServiceCardGrid from "@/components/ServiceCardGrid";
 
@@ -187,26 +186,33 @@ const NoleggioPortoOlbia = () => {
             </h2>
           </div>
 
-          <Accordion type="single" collapsible className="space-y-4">
+          <div className="space-y-4">
             {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border-none">
-                <AccordionTrigger
-                  className={`
-                  px-8 py-6 rounded-2xl md:rounded-[1.5rem] transition-all text-left font-bold italic uppercase tracking-tight
-                  ${f.gold ? "bg-gold/10 border border-gold/30 text-gold shadow-[0_0_20px_rgba(212,175,55,0.1)]" : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10"}
-                `}
+              <details
+                key={i}
+                className={`group rounded-2xl md:rounded-[1.5rem] transition-all ${
+                  f.gold
+                    ? "bg-gold/10 border border-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                    : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10"
+                }`}
+              >
+                <summary
+                  className={`px-8 py-6 cursor-pointer list-none text-left font-bold italic uppercase tracking-tight flex items-center justify-between ${
+                    f.gold ? "text-gold" : "text-gray-900 dark:text-white"
+                  }`}
                 >
                   <div className="flex items-center gap-4">
                     {f.gold && <Star className="w-4 h-4 fill-gold text-gold" />}
                     {f.q}
                   </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-10 pt-6 pb-8 text-gray-600 dark:text-white/50 leading-relaxed font-light text-base md:text-lg italic">
+                  <span className="text-gold transition-transform group-open:rotate-90 shrink-0 ml-4">›</span>
+                </summary>
+                <div className="px-10 pt-2 pb-8 text-gray-600 dark:text-white/50 leading-relaxed font-light text-base md:text-lg italic">
                   {f.a}
-                </AccordionContent>
-              </AccordionItem>
+                </div>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </div>
       </section>
 

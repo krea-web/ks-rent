@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/router-shim";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, MapPin, ShieldCheck, Sailboat, Diamond, Wine, Sparkles, Star, Zap, Gauge, Palmtree } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { buildBreadcrumb } from "@/lib/jsonLd";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import ServiceCardGrid from "@/components/ServiceCardGrid";
 
 const faqs = [
@@ -34,7 +33,7 @@ const faqs = [
   },
 ];
 
-const jsonLd = {
+export const costaSmeraldaJsonLd = {
   "@context": "https://schema.org",
   "@type": "AutoRental",
   name: "KS Rent — Noleggio Auto Costa Smeralda",
@@ -59,7 +58,7 @@ const jsonLd = {
   ],
 };
 
-const faqJsonLd = {
+export const costaSmeraldaFaqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: faqs.map((f) => ({
@@ -90,7 +89,7 @@ const NoleggioCostaSmeralda = () => {
         description="Noleggio supercar e SUV in Costa Smeralda. Consegna in hotel o villa a Porto Cervo, San Pantaleo e Porto Rotondo. Prenota online."
         canonical="https://www.ksrentsardinia.com/noleggio-auto-costa-smeralda"
         
-        jsonLd={[jsonLd, faqJsonLd, buildBreadcrumb("Noleggio Auto Costa Smeralda", "/noleggio-auto-costa-smeralda")]}
+        jsonLd={[costaSmeraldaJsonLd, costaSmeraldaFaqJsonLd, buildBreadcrumb("Noleggio Auto Costa Smeralda", "/noleggio-auto-costa-smeralda")]}
       />
 
       {/* HERO SECTION */}
@@ -312,26 +311,33 @@ const NoleggioCostaSmeralda = () => {
             </h2>
           </div>
 
-          <Accordion type="single" collapsible className="space-y-5">
+          <div className="space-y-5">
             {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border-none">
-                <AccordionTrigger
-                  className={`
-                  px-8 py-7 rounded-2xl md:rounded-[2rem] transition-all text-left font-bold italic uppercase tracking-tight
-                  ${f.gold ? "bg-gold/10 border border-gold/40 text-gold shadow-[0_0_25px_rgba(212,175,55,0.15)]" : "bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"}
-                `}
+              <details
+                key={i}
+                className={`group rounded-2xl md:rounded-[2rem] transition-all ${
+                  f.gold
+                    ? "bg-gold/10 border border-gold/40 shadow-[0_0_25px_rgba(212,175,55,0.15)]"
+                    : "bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/10"
+                }`}
+              >
+                <summary
+                  className={`px-8 py-7 cursor-pointer list-none text-left font-bold italic uppercase tracking-tight flex items-center justify-between ${
+                    f.gold ? "text-gold" : "text-gray-900 dark:text-white"
+                  }`}
                 >
                   <div className="flex items-center gap-5">
                     {f.gold && <Star className="w-5 h-5 fill-gold text-gold animate-pulse" />}
                     {f.q}
                   </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-10 pt-8 pb-10 text-gray-600 dark:text-white/60 leading-relaxed font-light text-base md:text-lg italic border-x border-b border-gray-200 dark:border-white/5 rounded-b-[2rem] -mt-5 bg-gray-50/50 dark:bg-[#080808]/50">
+                  <span className="text-gold transition-transform group-open:rotate-90 shrink-0 ml-4">›</span>
+                </summary>
+                <div className="px-10 pt-2 pb-10 text-gray-600 dark:text-white/60 leading-relaxed font-light text-base md:text-lg italic">
                   {f.a}
-                </AccordionContent>
-              </AccordionItem>
+                </div>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </div>
       </section>
 

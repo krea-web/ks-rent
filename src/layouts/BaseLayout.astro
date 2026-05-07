@@ -1,0 +1,202 @@
+---
+import "@/index.css";
+import { localBusinessJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppCTA from "@/components/WhatsAppCTA";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, any> | Record<string, any>[];
+  /** Mostra Navbar + Footer + CTA. Disattivato per /admin e /login. */
+  showChrome?: boolean;
+  /** Nasconde il MobileStickyCTA sulla pagina prenotaora */
+  hideMobileSticky?: boolean;
+  /** Inietta il FAQPage JSON-LD globale (homepage) */
+  includeGlobalFaq?: boolean;
+}
+
+const SITE = "https://www.ksrentsardinia.com";
+const DEFAULT_OG = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
+const FAVICON = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp";
+const LOGO = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = DEFAULT_OG,
+  noindex = false,
+  jsonLd,
+  showChrome = true,
+  hideMobileSticky = false,
+  includeGlobalFaq = false,
+} = Astro.props;
+
+// Canonical: forza https://www.ksrentsardinia.com + rimuove trailing slash (eccetto root)
+let canonicalUrl = canonical
+  ? canonical
+  : new URL(Astro.url.pathname, SITE).href;
+if (!canonicalUrl.startsWith(SITE)) {
+  try {
+    const parsed = new URL(canonicalUrl);
+    canonicalUrl = `${SITE}${parsed.pathname}`;
+  } catch {
+    /* keep */
+  }
+}
+if (canonicalUrl.endsWith("/") && canonicalUrl !== `${SITE}/`) {
+  canonicalUrl = canonicalUrl.slice(0, -1);
+}
+
+// Normalizza il jsonLd custom in array per emettere uno script per ogni schema
+const customJsonLdList: Record<string, any>[] = jsonLd
+  ? Array.isArray(jsonLd)
+    ? jsonLd
+    : [jsonLd]
+  : [];
+---
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#000000" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="KS Rent S.R.L." />
+    <meta
+      name="robots"
+      content={noindex
+        ? "noindex, nofollow"
+        : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
+    <meta name="format-detection" content="telephone=yes, date=no, email=no, address=no" />
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="it-IT" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+
+    <!-- Geo tags -->
+    <meta name="geo.region" content="IT-SS" />
+    <meta name="geo.placename" content="Olbia" />
+    <meta name="geo.position" content="40.923018;9.520169" />
+    <meta name="ICBM" content="40.923018, 9.520169" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="KS Rent Sardinia" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ksrent_srl" />
+    <meta name="twitter:creator" content="@ksrent_srl" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Icons & Manifest -->
+    <link rel="icon" type="image/webp" href={FAVICON} />
+    <link rel="apple-touch-icon" href={FAVICON} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://zgytnkimjpoosvshfopz.supabase.co" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://maps.googleapis.com" />
+    <link rel="preconnect" href="https://maps.gstatic.com" crossorigin />
+
+    <!-- Logo preload -->
+    <link rel="preload" as="image" href={LOGO} fetchpriority="high" />
+
+    <!-- Fonts (print-swap technique) -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap"
+      />
+    </noscript>
+
+    <!-- Anti-flash dark mode -->
+    <script is:inline>
+      (function () {
+        try {
+          var key = "ksrent-ui-theme";
+          var t = localStorage.getItem(key) || "dark";
+          var apply = t;
+          if (t === "system") {
+            apply = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          }
+          document.documentElement.classList.add(apply === "light" ? "light" : "dark");
+        } catch (e) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+
+    <!-- JSON-LD globale (Organization + WebSite) -->
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessJsonLd)} />
+
+    {includeGlobalFaq && (
+      <script type="application/ld+json" set:html={JSON.stringify(faqPageJsonLd)} />
+    )}
+
+    {customJsonLdList.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    <!-- Iubenda -->
+    <script
+      type="text/javascript"
+      src="https://embeds.iubenda.com/widgets/0ba8fa23-7357-47fd-827e-809c2c13c61f.js"
+    ></script>
+
+    <!-- GA4 + Google Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1JL353W8QW"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-1JL353W8QW");
+      gtag("config", "AW-18006357660");
+    </script>
+  </head>
+
+  <body class="bg-background text-foreground antialiased font-sans overflow-x-hidden">
+    {showChrome && <Navbar client:load />}
+    <main>
+      <slot />
+    </main>
+    {showChrome && <Footer />}
+    {showChrome && <WhatsAppCTA client:idle />}
+    {showChrome && !hideMobileSticky && <MobileStickyCTA client:idle />}
+
+    <script type="text/javascript" src="https://cdn.iubenda.com/iubenda.js"></script>
+  </body>
+</html>

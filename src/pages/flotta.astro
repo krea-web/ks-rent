@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Flotta, { flottaFaqJsonLd, flottaBreadcrumbJsonLd } from "@/views/Flotta";
+import { flottaJsonLd } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Flotta Veicoli KS Rent | Noleggio Auto Olbia"
+  description="Scopri la flotta premium di KS Rent: auto sportive, SUV, city car, scooter e quad. Noleggio senza carta di credito a Olbia e Costa Smeralda."
+  canonical="https://www.ksrentsardinia.com/flotta"
+  jsonLd={[flottaJsonLd, flottaFaqJsonLd, flottaBreadcrumbJsonLd]}
+>
+  <Flotta client:load />
+</BaseLayout>

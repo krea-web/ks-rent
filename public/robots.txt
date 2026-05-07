@@ -63,4 +63,4 @@ Disallow: /*?fbclid=*
 Disallow: /*?gclid=*
 
 # 4. SITEMAP
-Sitemap: https://www.ksrentsardinia.com/sitemap.xml
+Sitemap: https://www.ksrentsardinia.com/sitemap-index.xml

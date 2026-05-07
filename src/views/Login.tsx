@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@/lib/router-shim";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
