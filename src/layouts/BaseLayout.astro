@@ -22,7 +22,8 @@ interface Props {
 }
 
 const SITE = "https://www.ksrentsardinia.com";
-const DEFAULT_OG = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
+// OG image trasformata via Supabase image render (1200x630 standard, ~50 KB)
+const DEFAULT_OG = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/render/image/public/asset/og-image.jpg?width=1200&height=630&resize=cover&quality=80";
 const FAVICON = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp";
 const LOGO = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 

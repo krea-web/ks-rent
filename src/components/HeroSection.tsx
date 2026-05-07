@@ -4,10 +4,10 @@ import { ArrowRight } from "lucide-react";
 
 const HERO_VIDEO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/HERO%20GIUSTA.mp4";
 const LOGO_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
-// Poster: immagine OG ksrent (1200x630, ~80 KB). Carica in <1s su 4G,
-// evitando che il video MP4 (vari MB) gonfi il LCP fino a quando il
-// browser non è pronto a riprodurlo.
-const HERO_POSTER_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg";
+// Poster: og-image.jpg trasformata on-the-fly da Supabase Image Transformation
+// (1920x1080 cover, quality 70) → ~80 KB invece di 1.7 MB. Niente da
+// ri-uploadare, basta che il bucket abbia "Enable image transformation" ON.
+const HERO_POSTER_URL = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/render/image/public/asset/og-image.jpg?width=1920&height=1080&resize=cover&quality=70";
 
 const HeroSection = () => (
   <section className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
