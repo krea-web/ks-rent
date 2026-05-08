@@ -362,6 +362,14 @@ const Navbar = () => {
 
           {/* DESKTOP CTA + THEME TOGGLE */}
           <div className="hidden lg:flex items-center gap-3">
+            <Link
+              to="/mappa-sito"
+              className="text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-white/50 hover:text-gold transition-colors"
+              aria-label="Mappa del sito"
+              title="Mappa del sito"
+            >
+              Mappa
+            </Link>
             <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -653,6 +661,23 @@ const Navbar = () => {
                   <p className="text-gray-400 dark:text-white/40 text-xs uppercase tracking-widest mb-2 pointer-events-none">Olbia, IT</p>
                   <p className="text-gray-700 dark:text-white text-sm pointer-events-none">Costa Smeralda</p>
                 </div>
+              </motion.div>
+
+              {/* Mappa del sito link (discreto, in fondo) */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.55 }}
+                className="mt-6 pt-4 border-t border-gray-200 dark:border-white/5 text-center"
+              >
+                <Link
+                  to="/mappa-sito"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-gray-500 dark:text-white/50 hover:text-gold transition-colors min-h-[44px]"
+                >
+                  <MapPin size={12} className="text-gold/70" />
+                  Mappa del sito
+                </Link>
               </motion.div>
             </div>
           </motion.div>

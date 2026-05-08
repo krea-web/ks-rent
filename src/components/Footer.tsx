@@ -50,6 +50,12 @@ const Footer = () => (
               Prenota Ora
             </Link>
             <Link
+              to="/mappa-sito"
+              className="px-4 py-2 text-xs text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-300 relative z-20"
+            >
+              Mappa Sito
+            </Link>
+            <Link
               to="/admin"
               className="px-4 py-2 text-xs text-gray-400 dark:text-white/50 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl hover:text-foreground transition-all duration-300 relative z-20"
             >
