@@ -57,7 +57,9 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
     { to, children, end, caseSensitive, className, style, ...rest },
     ref,
   ) {
-    const [path, setPath] = useState<string>(getCurrentPath());
+    // SSR-safe: stato iniziale costante "/" su server e client (prima dell'idratazione).
+    // Il path reale viene letto in useEffect per evitare hydration mismatch (React #418/#423).
+    const [path, setPath] = useState<string>("/");
     useEffect(() => {
       setPath(getCurrentPath());
       const onPop = () => setPath(getCurrentPath());
@@ -85,13 +87,14 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
 );
 
 export function useLocation() {
-  const [pathname, setPathname] = useState<string>(getCurrentPath());
-  const [search, setSearch] = useState<string>(
-    typeof window === "undefined" ? "" : window.location.search,
-  );
-  const [hash, setHash] = useState<string>(
-    typeof window === "undefined" ? "" : window.location.hash,
-  );
+  // SSR-safe: stato iniziale costante (uguale a quello che ottiene il server)
+  // per evitare hydration mismatch — il path reale viene letto in useEffect.
+  // Senza questo, la Navbar renderizzata server-side con pathname="/" non
+  // combacia col primo render client (es. /noleggio-auto-porto-cervo) e
+  // React lancia gli errori #418 e #423.
+  const [pathname, setPathname] = useState<string>("/");
+  const [search, setSearch] = useState<string>("");
+  const [hash, setHash] = useState<string>("");
   useEffect(() => {
     const update = () => {
       setPathname(getCurrentPath());
