@@ -74,20 +74,7 @@ const NoleggioSenzaCartaCredito = () => {
       />
 
       {/* HERO */}
-      <section className="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24 overflow-hidden bg-background">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-noleggio-jeepavenger.webp"
-            alt="Noleggio Auto Senza Carta di Credito Olbia KS Rent"
-            className="w-full h-full object-cover opacity-40 scale-105"
-            loading="eager"
-            fetchPriority="high"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/40 to-background" />
-          <div className="absolute inset-0 bg-black/30" />
-          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-background via-background/95 to-transparent" />
-        </div>
-
+      <section className="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24 overflow-hidden bg-white dark:bg-black">
         <div className="relative z-10 max-w-6xl">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/30 mb-8 backdrop-blur-xl">
