@@ -16,7 +16,7 @@ const GRAY_LIGHT = [245, 245, 245] as const;
 const GRAY_TEXT = [100, 100, 100] as const;
 const BORDER_GRAY = [200, 200, 200] as const;
 
-export const generateBlankContract = () => {
+export const generateBlankContract = (mode: "download" | "print" = "print") => {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
   const margin = 15;
@@ -227,5 +227,17 @@ export const generateBlankContract = () => {
   doc.rect(margin + colW + 10, y, colW, 20);
 
   // ── Output ──
-  doc.save("contratto_standard_ksrent.pdf");
+  if (mode === "download") {
+    doc.save("contratto_standard_ksrent.pdf");
+    return;
+  }
+
+  // Apre il PDF in una nuova scheda con il dialogo di stampa attivo
+  doc.autoPrint();
+  const blobUrl = doc.output("bloburl") as unknown as string;
+  const win = window.open(blobUrl, "_blank");
+  if (!win) {
+    // Popup bloccato → fallback download
+    doc.save("contratto_standard_ksrent.pdf");
+  }
 };

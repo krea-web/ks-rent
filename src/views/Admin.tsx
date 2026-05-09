@@ -15,7 +15,6 @@ import {
   X,
   Printer,
   Folder,
-  Download,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
@@ -137,12 +136,47 @@ const Admin = () => {
 
   const printBlankContract = async () => {
     const { generateBlankContract } = await import("@/lib/generateBlankContract");
-    generateBlankContract();
+    generateBlankContract("print");
   };
 
-  const openClientContract = (pdfUrl: string) => {
-    if (pdfUrl) window.open(pdfUrl, "_blank");
-    else toast.error("PDF del contratto non ancora generato per questo cliente.");
+  const printClientContract = async (pdfUrl: string) => {
+    if (!pdfUrl) {
+      toast.error("PDF del contratto non ancora generato per questo cliente.");
+      return;
+    }
+    try {
+      const res = await fetch(pdfUrl);
+      if (!res.ok) throw new Error("Impossibile scaricare il PDF (" + res.status + ")");
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "fixed";
+      iframe.style.right = "0";
+      iframe.style.bottom = "0";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "0";
+      iframe.src = blobUrl;
+      iframe.onload = () => {
+        try {
+          iframe.contentWindow?.focus();
+          iframe.contentWindow?.print();
+        } catch {
+          window.open(pdfUrl, "_blank");
+        }
+      };
+      document.body.appendChild(iframe);
+
+      // Cleanup dopo che il dialogo di stampa è stato gestito
+      setTimeout(() => {
+        URL.revokeObjectURL(blobUrl);
+        iframe.remove();
+      }, 60000);
+    } catch (err: any) {
+      toast.error("Errore stampa: " + (err?.message || "impossibile aprire il PDF"));
+      window.open(pdfUrl, "_blank");
+    }
   };
 
   if (!authChecked) {
@@ -233,7 +267,7 @@ const Admin = () => {
                 onClick={printBlankContract}
                 className="flex items-center gap-2 bg-white/10 text-white border border-white/20 px-3 lg:px-4 py-2 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-white/20 transition-all min-h-[44px] max-w-full"
               >
-                <Printer size={16} /> <span className="hidden lg:inline">Contratto Vuoto</span>
+                <Printer size={16} /> <span className="hidden lg:inline">Stampa Contratto Vuoto</span>
               </button>
             )}
 
@@ -388,11 +422,11 @@ const Admin = () => {
                           <td className="p-4 text-right flex items-center justify-end gap-2">
                             {pdfUrl && (
                               <button
-                                onClick={() => openClientContract(pdfUrl)}
-                                title="Stampa PDF"
+                                onClick={() => printClientContract(pdfUrl)}
+                                title="Stampa contratto"
                                 className="text-white/60 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-lg transition-colors"
                               >
-                                <Download size={18} />
+                                <Printer size={18} />
                               </button>
                             )}
                             <button
@@ -441,8 +475,8 @@ const Admin = () => {
                       </div>
                       <div className="flex items-center gap-2 mt-1 justify-end">
                         {pdfUrl && (
-                          <button onClick={() => openClientContract(pdfUrl)} className="text-white/60 hover:text-white bg-white/5 p-2 rounded-lg">
-                            <Download size={14} />
+                          <button onClick={() => printClientContract(pdfUrl)} title="Stampa contratto" className="text-white/60 hover:text-white bg-white/5 p-2 rounded-lg">
+                            <Printer size={14} />
                           </button>
                         )}
                         <button onClick={() => openBooking(b)} className="text-xs text-[#C8A135] font-bold uppercase tracking-wider">
