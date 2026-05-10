@@ -8,11 +8,23 @@
 --
 -- Esegui DOPO sql/08-phase-0-admin-redesign-schema.sql.
 -- Idempotente (usa ON CONFLICT e DROP POLICY IF EXISTS).
+--
+-- IMPORTANTE — Supabase Cloud:
+-- L'utente Dashboard NON e' owner di storage.objects (lo e' il ruolo
+-- interno supabase_storage_admin). Per questo lo script NON include
+-- "ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY" — RLS e'
+-- gia' attivo by default su storage.objects in Supabase Cloud.
+-- INSERT su storage.buckets e CREATE POLICY su storage.objects sono
+-- pero' permessi via Dashboard SQL editor.
+--
+-- Se anche INSERT INTO storage.buckets fallisce con "must be owner",
+-- crea i 3 bucket via UI Dashboard (Storage > New bucket) e poi
+-- esegui SOLO le sezioni 3 (funzione helper) e 4-6 (policy).
 -- ============================================================
 
 
 -- ============================================================
--- 1) CREAZIONE BUCKET
+-- 1) CREAZIONE BUCKET (puo' richiedere UI Dashboard se SQL fallisce)
 -- ============================================================
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES
@@ -29,16 +41,10 @@ ON CONFLICT (id) DO UPDATE
 
 
 -- ============================================================
--- 2) RLS GLOBALE su storage.objects
--- (gia' attivo di default su Supabase, ma garantiamo)
--- ============================================================
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
-
-
--- ============================================================
--- 3) HELPER: funzione is_admin() (idempotente)
+-- 2) HELPER: funzione is_admin_user() (idempotente)
 -- ------------------------------------------------------------
 -- Centralizza la logica "utente e' admin" usata dalle policy.
+-- Vive in schema public (l'utente Dashboard ne e' owner).
 -- ============================================================
 CREATE OR REPLACE FUNCTION public.is_admin_user()
 RETURNS boolean
@@ -54,9 +60,12 @@ AS $$
   );
 $$;
 
+-- Concedi execute alle role che possono valutare la policy
+GRANT EXECUTE ON FUNCTION public.is_admin_user() TO anon, authenticated, service_role;
+
 
 -- ============================================================
--- 4) BUCKET `vehicles` - public read, admin write
+-- 3) BUCKET `vehicles` - public read, admin write
 -- ============================================================
 DROP POLICY IF EXISTS "vehicles: public read"   ON storage.objects;
 DROP POLICY IF EXISTS "vehicles: admin insert"  ON storage.objects;
@@ -82,7 +91,7 @@ CREATE POLICY "vehicles: admin delete"
 
 
 -- ============================================================
--- 5) BUCKET `reviews` - public read, admin write
+-- 4) BUCKET `reviews` - public read, admin write
 -- (foto autori Google Reviews cached)
 -- ============================================================
 DROP POLICY IF EXISTS "reviews: public read"  ON storage.objects;
@@ -109,7 +118,7 @@ CREATE POLICY "reviews: admin delete"
 
 
 -- ============================================================
--- 6) BUCKET `contracts` - admin only (private)
+-- 5) BUCKET `contracts` - admin only (private)
 -- ------------------------------------------------------------
 -- I PDF contratti firmati contengono dati personali (patente, CF).
 -- Solo admin possono leggere/scrivere/eliminare.
@@ -147,10 +156,14 @@ CREATE POLICY "contracts: admin delete"
 -- SELECT id, public FROM storage.buckets WHERE id IN ('vehicles','contracts','reviews');
 -- -- atteso: 3 righe (vehicles=true, contracts=false, reviews=true)
 --
--- SELECT policyname, cmd FROM pg_policies WHERE tablename='objects' AND schemaname='storage'
--- AND policyname LIKE '%vehicles%' OR policyname LIKE '%contracts%' OR policyname LIKE '%reviews%';
+-- SELECT policyname, cmd FROM pg_policies
+-- WHERE tablename='objects' AND schemaname='storage'
+--   AND (policyname LIKE 'vehicles:%' OR policyname LIKE 'contracts:%' OR policyname LIKE 'reviews:%');
 -- -- atteso: 12 policy (4 per bucket × 3 bucket)
 --
--- Test: nell'admin, prova upload immagine veicolo. Deve funzionare.
--- Test: da utente NON admin, prova upload via fetch. Deve fallire 403.
+-- Test funzionali:
+--  - Admin: prova upload immagine veicolo dall'admin UI. Deve funzionare.
+--  - Anonymous fetch: GET /storage/v1/object/public/vehicles/test.jpg deve servire
+--    il file (bucket vehicles e' public).
+--  - Anonymous fetch su contracts: deve restituire 401/403 (bucket privato).
 -- ============================================================
