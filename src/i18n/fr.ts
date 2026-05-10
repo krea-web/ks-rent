@@ -31,6 +31,8 @@ export const fr: typeof it = {
     locCostaSmeraldaFull: "Localités Costa Smeralda",
     locCostaEstFull: "Localités Côte Est",
     beachesCSFull: "Plages Costa Smeralda",
+    locationsAll: "Localités",
+    beachesAll: "Plages",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
     themeLight: "Activer le thème clair",

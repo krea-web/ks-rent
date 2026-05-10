@@ -31,6 +31,8 @@ export const en: typeof it = {
     locCostaSmeraldaFull: "Costa Smeralda Locations",
     locCostaEstFull: "East Coast Locations",
     beachesCSFull: "Costa Smeralda Beaches",
+    locationsAll: "Locations",
+    beachesAll: "Beaches",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     themeLight: "Switch to light theme",

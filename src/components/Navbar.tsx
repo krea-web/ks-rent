@@ -83,7 +83,7 @@ const MegaColumn = ({
       <IconC size={11} className="text-gold flex-shrink-0" />
       <span className="leading-tight">{title}</span>
     </h4>
-    <ul className="space-y-0.5">
+    <ul className="space-y-0.5 max-h-[55vh] overflow-y-auto pr-1">
       {items.map(({ label, to, Icon }) => (
         <li key={to}>
           <Link
@@ -467,14 +467,6 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
 
           {/* DESKTOP CTA + THEME TOGGLE + LANGUAGE */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link
-              to={siteMapHref}
-              className="text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-white/50 hover:text-gold transition-colors"
-              aria-label={t.nav.siteMapAria}
-              title={t.nav.siteMapAria}
-            >
-              {t.nav.siteMapShort}
-            </Link>
             <LanguageSwitcher variant="compact" />
             <ThemeToggle lightLabel={t.nav.themeLight} darkLabel={t.nav.themeDark} />
             <DropdownMenu>
@@ -557,8 +549,8 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                   </p>
                 </div>
 
-                {/* 5 columns */}
-                <div className="grid grid-cols-5 divide-x divide-gray-200 dark:divide-white/10">
+                {/* 3 colonne ariose: Hubs + Localita (unificate) + Spiagge (unificate) */}
+                <div className="grid grid-cols-3 divide-x divide-gray-200 dark:divide-white/10">
                   <MegaColumn
                     title={t.nav.mainPoints}
                     IconC={MapPin}
@@ -567,27 +559,15 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                     withIcons
                   />
                   <MegaColumn
-                    title={t.nav.locCostaSmeralda}
+                    title={(t.nav as any).locationsAll || "Località"}
                     IconC={MapPin}
-                    items={LOC_COSTA_SMERALDA}
+                    items={[...LOC_COSTA_SMERALDA, ...LOC_COSTA_EST]}
                     onItemClick={() => setMegaOpen(false)}
                   />
                   <MegaColumn
-                    title={t.nav.locCostaEst}
-                    IconC={MapPin}
-                    items={LOC_COSTA_EST}
-                    onItemClick={() => setMegaOpen(false)}
-                  />
-                  <MegaColumn
-                    title={t.nav.beachesCS}
+                    title={(t.nav as any).beachesAll || "Spiagge"}
                     IconC={Waves}
-                    items={SPIAGGE_COSTA_SMERALDA}
-                    onItemClick={() => setMegaOpen(false)}
-                  />
-                  <MegaColumn
-                    title={t.nav.beachesEN}
-                    IconC={Waves}
-                    items={SPIAGGE_COSTA_EST_NORD}
+                    items={[...SPIAGGE_COSTA_SMERALDA, ...SPIAGGE_COSTA_EST_NORD]}
                     onItemClick={() => setMegaOpen(false)}
                   />
                 </div>
@@ -760,7 +740,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                 />
               </motion.div>
 
-              {/* DOVE CONSEGNIAMO section */}
+              {/* DOVE CONSEGNIAMO section (3 accordion invece di 5 per piu' snellezza) */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -771,9 +751,6 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                   <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-[10px] mb-1.5">
                     {t.nav.deliveryWhere}
                   </span>
-                  <p className="text-gray-600 dark:text-white/60 text-sm font-light leading-snug">
-                    {t.nav.deliveryTitle}
-                  </p>
                 </div>
 
                 <MobileAccordion
@@ -787,39 +764,21 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                   withIcons
                 />
                 <MobileAccordion
-                  id="loc-cs"
-                  title={t.nav.locCostaSmeraldaFull}
+                  id="loc-all"
+                  title={(t.nav as any).locationsAll || "Località"}
                   IconC={MapPin}
-                  active={mobileSection === "loc-cs"}
+                  active={mobileSection === "loc-all"}
                   onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
-                  items={LOC_COSTA_SMERALDA}
+                  items={[...LOC_COSTA_SMERALDA, ...LOC_COSTA_EST]}
                   closeMenu={() => setOpen(false)}
                 />
                 <MobileAccordion
-                  id="loc-est"
-                  title={t.nav.locCostaEstFull}
-                  IconC={MapPin}
-                  active={mobileSection === "loc-est"}
-                  onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
-                  items={LOC_COSTA_EST}
-                  closeMenu={() => setOpen(false)}
-                />
-                <MobileAccordion
-                  id="sp-cs"
-                  title={t.nav.beachesCSFull}
+                  id="sp-all"
+                  title={(t.nav as any).beachesAll || "Spiagge"}
                   IconC={Waves}
-                  active={mobileSection === "sp-cs"}
+                  active={mobileSection === "sp-all"}
                   onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
-                  items={SPIAGGE_COSTA_SMERALDA}
-                  closeMenu={() => setOpen(false)}
-                />
-                <MobileAccordion
-                  id="sp-est"
-                  title={t.nav.beachesEN}
-                  IconC={Waves}
-                  active={mobileSection === "sp-est"}
-                  onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
-                  items={SPIAGGE_COSTA_EST_NORD}
+                  items={[...SPIAGGE_COSTA_SMERALDA, ...SPIAGGE_COSTA_EST_NORD]}
                   closeMenu={() => setOpen(false)}
                 />
               </motion.div>

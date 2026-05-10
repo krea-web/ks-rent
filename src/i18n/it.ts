@@ -32,6 +32,8 @@ export const it = {
     locCostaSmeraldaFull: "Località Costa Smeralda",
     locCostaEstFull: "Località Costa Est",
     beachesCSFull: "Spiagge Costa Smeralda",
+    locationsAll: "Località",
+    beachesAll: "Spiagge",
     openMenu: "Apri menu",
     closeMenu: "Chiudi menu",
     themeLight: "Attiva tema chiaro",
