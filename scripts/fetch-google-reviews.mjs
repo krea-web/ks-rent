@@ -49,8 +49,9 @@ async function main() {
   const json = await res.json();
 
   if (json.status !== "OK") {
-    console.error(`[fetch-google-reviews] Google API error: ${json.status} ${json.error_message || ""}`);
-    process.exit(1);
+    console.warn(`[fetch-google-reviews] Google API error: ${json.status} ${json.error_message || ""}`);
+    console.warn("[fetch-google-reviews] Skip sync (build continues). Risolvi: rimuovi referer restrictions dalla GOOGLE_PLACES_API_KEY oppure crea chiave server-side dedicata.");
+    process.exit(0);
   }
 
   const placeName = json.result?.name;
@@ -119,6 +120,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error("[fetch-google-reviews] Fatal:", err);
-  process.exit(1);
+  console.warn("[fetch-google-reviews] Fatal (build continues):", err?.message || err);
+  process.exit(0);
 });
