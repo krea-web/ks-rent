@@ -78,12 +78,12 @@ const MegaColumn = ({
   onItemClick: () => void;
   withIcons?: boolean;
 }) => (
-  <div className="px-5 py-6">
+  <div className="px-5 py-6 min-w-0">
     <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-gold mb-4 flex items-center gap-2">
       <IconC size={11} className="text-gold flex-shrink-0" />
       <span className="leading-tight">{title}</span>
     </h4>
-    <ul className="space-y-0.5 max-h-[55vh] overflow-y-auto pr-1">
+    <ul className="space-y-0.5 max-h-[55vh] overflow-y-auto overflow-x-hidden pr-2 nav-mega-scroll">
       {items.map(({ label, to, Icon }) => (
         <li key={to}>
           <Link
@@ -92,7 +92,7 @@ const MegaColumn = ({
             className="group/link flex items-center gap-2 px-2 py-1.5 -mx-2 rounded-lg text-[12.5px] font-medium text-gray-700 dark:text-white/75 hover:text-gold hover:bg-gold/5 transition-colors leading-tight"
           >
             {withIcons && Icon && <Icon size={14} className="text-gold/80 group-hover/link:text-gold flex-shrink-0" />}
-            <span>{label}</span>
+            <span className="truncate">{label}</span>
           </Link>
         </li>
       ))}
@@ -341,7 +341,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
       <Link
         key={l.to}
         to={l.to}
-        className="relative flex items-center justify-center px-4 lg:px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full transition-colors group min-h-[44px]"
+        className="relative flex items-center justify-center px-3 lg:px-4 py-2 text-[11px] font-bold tracking-[0.15em] uppercase rounded-full transition-colors group min-h-[40px]"
       >
         <span
           className={cn(
@@ -370,8 +370,8 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
         className={cn(
           "fixed top-0 left-0 w-full z-[100] pointer-events-auto transition-all duration-500 ease-in-out",
           scrolled
-            ? "bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/10 py-3 md:py-4 shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
-            : "bg-transparent py-4 md:py-6 lg:py-8",
+            ? "bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/10 py-2 md:py-3 shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            : "bg-transparent py-3 md:py-4 lg:py-5",
         )}
       >
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
@@ -381,7 +381,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
               alt={t.nav.logoAlt}
               width={120}
               height={48}
-              className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105 pointer-events-none"
+              className="h-7 sm:h-8 md:h-10 w-auto object-contain transition-transform group-hover:scale-105 pointer-events-none"
               loading="eager"
               fetchPriority="high"
               decoding="sync"
@@ -389,7 +389,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
           </Link>
 
           {/* DESKTOP NAV PILL */}
-          <div className="hidden lg:flex items-center gap-1 bg-gray-100/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-1.5 rounded-full backdrop-blur-md">
+          <div className="hidden lg:flex items-center gap-0.5 bg-gray-100/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-1 rounded-full backdrop-blur-md">
             {renderSimpleLink({ label: t.nav.home, to: homeHref })}
 
             {/* Flotta trigger */}
@@ -400,7 +400,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
               onClick={() => setFlottaOpen((v) => !v)}
               aria-expanded={flottaOpen}
               aria-haspopup="true"
-              className="relative flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full transition-colors group min-h-[44px]"
+              className="relative flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 text-[11px] font-bold tracking-[0.15em] uppercase rounded-full transition-colors group min-h-[40px]"
             >
               <span
                 className={cn(
@@ -435,7 +435,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
               onClick={() => setMegaOpen((v) => !v)}
               aria-expanded={megaOpen}
               aria-haspopup="true"
-              className="relative flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full transition-colors group min-h-[44px]"
+              className="relative flex items-center justify-center gap-1.5 px-3 lg:px-4 py-2 text-[11px] font-bold tracking-[0.15em] uppercase rounded-full transition-colors group min-h-[40px]"
             >
               <span
                 className={cn(

@@ -76,7 +76,14 @@ export async function getStaticPaths() {
 const { seo, variants } = Astro.props as { seo: SeoVehicle; variants: Vehicle[] };
 
 const primary = variants.find((v) => v.is_primary_variant) || variants[0] || null;
-const heroImage = seo.hero_image_url || primary?.transparent_image_url || primary?.image_url || null;
+// Hero: due livelli — sfondo (image_url del veicolo, in scena, blurred) e
+// foreground (transparent_image_url, PNG ritagliato in primo piano).
+const backgroundImage = primary?.image_url || seo.hero_image_url || null;
+const foregroundImage = primary?.transparent_image_url || primary?.image_url || seo.hero_image_url || null;
+const heroImage = foregroundImage; // legacy alias per JSON-LD
+
+// Booking URL pre-filtrato per group_slug (PrenotaOra lo legge e pre-seleziona)
+const bookHref = `/prenotaora?vehicle=${encodeURIComponent(seo.group_slug)}`;
 
 const MONTHS = [
   { key: "rate_april", label: "Aprile" },
@@ -109,23 +116,42 @@ const galleryImages = Array.from(
   ),
 );
 
-// Località consigliate (lookup multi-tabella)
-const recommendedSlugs = (seo.recommended_locations || []).slice(0, 6);
+// Destinazioni consigliate: SOLO SPIAGGE (evita doppione foto con localita
+// che riusano le stesse immagini hero; e spiagge sono il vero punto di interesse
+// per chi noleggia un veicolo). Se recommended_locations contiene slug di
+// localita, vengono droppate silenziosamente. Se < 4 match, completa con
+// spiagge di default per riempire la griglia.
+const recommendedSlugs = (seo.recommended_locations || []).slice(0, 8);
 let recommendedLocations: { slug: string; title: string; hero_image_url: string | null }[] = [];
 if (recommendedSlugs.length > 0) {
-  const [locRes, beachRes] = await Promise.all([
-    supabase.from("seo_locations").select("slug, title, hero_image_url").in("slug", recommendedSlugs),
-    supabase.from("seo_beaches").select("slug, title, hero_image_url").in("slug", recommendedSlugs),
-  ]);
-  recommendedLocations = [
-    ...((locRes.data || []) as any),
-    ...((beachRes.data || []) as any),
-  ];
+  const beachRes = await supabase
+    .from("seo_beaches")
+    .select("slug, title, hero_image_url")
+    .in("slug", recommendedSlugs);
+  recommendedLocations = ((beachRes.data || []) as any[]).slice(0, 6);
+}
+// Fallback: se < 3 spiagge, riempi con spiagge piu' iconiche
+if (recommendedLocations.length < 3) {
+  const fallback = await supabase
+    .from("seo_beaches")
+    .select("slug, title, hero_image_url")
+    .in("slug", ["spiaggia-del-principe", "cala-brandinchi", "la-cinta", "liscia-ruja", "capriccioli", "romazzino"])
+    .limit(6 - recommendedLocations.length);
+  const existing = new Set(recommendedLocations.map((r) => r.slug));
+  for (const b of (fallback.data || []) as any[]) {
+    if (!existing.has(b.slug)) recommendedLocations.push(b);
+  }
+  recommendedLocations = recommendedLocations.slice(0, 6);
 }
 
-const safeContentHtml = seo.content_html
-  ? DOMPurify.sanitize(seo.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>"))
+const rawContentHtml = seo.content_html
+  ? seo.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>")
   : "";
+
+// Auto-link delle menzioni di altri veicoli nel contenuto (cross-link interno)
+const { autolinkVehicles } = await import("@/lib/vehicle-autolink");
+const linkedContentHtml = autolinkVehicles(rawContentHtml, seo.group_slug, "it");
+const safeContentHtml = linkedContentHtml ? DOMPurify.sanitize(linkedContentHtml, { ADD_ATTR: ["target", "rel"] }) : "";
 
 const pageUrl = seo.canonical_url || `https://www.ksrentsardinia.com/flotta/${seo.group_slug}`;
 const displayTitle = seo.title || (primary ? `${primary.make} ${primary.model}` : seo.group_slug);
@@ -171,13 +197,26 @@ if (primary) {
   ]}
 >
   <div class="bg-background min-h-screen">
-    {/* HERO */}
-    <section class="relative overflow-hidden border-b border-border">
-      <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+    {/* HERO con foto del veicolo come sfondo + foreground in trasparenza */}
+    <section class="relative overflow-hidden border-b border-border min-h-[80vh] flex items-center">
+      {backgroundImage && (
+        <div class="absolute inset-0">
+          <img
+            src={backgroundImage}
+            alt=""
+            aria-hidden="true"
+            class="w-full h-full object-cover scale-110"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="absolute inset-0 bg-gradient-to-br from-background/85 via-background/70 to-background/85 backdrop-blur-[2px]"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/80"></div>
+        </div>
+      )}
       <div class="absolute -top-20 -right-20 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="relative max-w-7xl mx-auto px-4 md:px-12 pt-32 pb-16">
+      <div class="relative max-w-7xl mx-auto px-4 md:px-12 pt-32 pb-16 w-full">
         <nav class="flex items-center gap-2 text-xs text-foreground/50 mb-6 font-light">
           <a href="/" class="hover:text-gold transition-colors">Home</a>
           <ArrowRight className="w-3 h-3" />
@@ -209,7 +248,7 @@ if (primary) {
 
             <div class="mt-8 flex flex-wrap gap-3">
               <a
-                href="/prenotaora"
+                href={bookHref}
                 class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-6 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_20px_rgba(212,175,55,0.3)]"
               >
                 Prenota ora
@@ -224,13 +263,13 @@ if (primary) {
             </div>
           </div>
 
-          {heroImage && (
+          {foregroundImage && (
             <div class="relative">
               <div class="relative aspect-[4/3] flex items-center justify-center">
                 <img
-                  src={heroImage}
+                  src={foregroundImage}
                   alt={`Noleggio ${displayTitle} - KS Rent Sardinia`}
-                  class="w-full h-full object-contain drop-shadow-2xl"
+                  class="w-full h-full object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
                   loading="eager"
                   fetchpriority="high"
                 />
@@ -423,7 +462,7 @@ if (primary) {
           Consegna a domicilio in tutta la Gallura e Costa Smeralda. Senza carta di credito obbligatoria.
         </p>
         <a
-          href="/prenotaora"
+          href={bookHref}
           class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
         >
           Prenota Ora

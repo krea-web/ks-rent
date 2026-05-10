@@ -36,7 +36,10 @@ const localized = {
 };
 
 const primary = variants.find((v) => v.is_primary_variant) || variants[0] || null;
-const heroImage = seo.hero_image_url || primary?.transparent_image_url || primary?.image_url || null;
+// Hero: due livelli — sfondo (image_url, in scena) + foreground (transparent PNG)
+const backgroundImage = primary?.image_url || seo.hero_image_url || null;
+const foregroundImage = primary?.transparent_image_url || primary?.image_url || seo.hero_image_url || null;
+const heroImage = foregroundImage;
 
 const MONTHS = [
   { key: "rate_april", label_en: "April", label_de: "April", label_fr: "Avril" },
@@ -66,34 +69,59 @@ const galleryImages = Array.from(
   ),
 );
 
-// Recommended locations (multilingua)
-const recommendedSlugs = (seo.recommended_locations || []).slice(0, 6);
+// Destinazioni consigliate: SOLO SPIAGGE (no doppione foto con localita).
+const recommendedSlugs = (seo.recommended_locations || []).slice(0, 8);
 let recommendedLocations: { slug: string; title: string; hero_image_url: string | null }[] = [];
 if (recommendedSlugs.length > 0) {
   const slugCol = `slug_${lang}`;
   const titleCol = `title_${lang}`;
-  const [locRes, beachRes] = await Promise.all([
-    supabase
-      .from("seo_locations")
-      .select(`slug, ${slugCol}, ${titleCol}, hero_image_url`)
-      .in("slug", recommendedSlugs)
-      .not(titleCol, "is", null),
-    supabase
-      .from("seo_beaches")
-      .select(`slug, ${slugCol}, ${titleCol}, hero_image_url`)
-      .in("slug", recommendedSlugs)
-      .not(titleCol, "is", null),
-  ]);
-  recommendedLocations = [...(locRes.data || []), ...(beachRes.data || [])].map((r: any) => ({
+  const beachRes = await supabase
+    .from("seo_beaches")
+    .select(`slug, ${slugCol}, ${titleCol}, hero_image_url`)
+    .in("slug", recommendedSlugs)
+    .not(titleCol, "is", null);
+  recommendedLocations = ((beachRes.data || []) as any[]).map((r) => ({
     slug: r[slugCol] || r.slug,
     title: r[titleCol] || "",
     hero_image_url: r.hero_image_url,
-  }));
+  })).slice(0, 6);
+}
+// Fallback se < 3 spiagge: aggiungi le top iconiche (in lingua corrente)
+if (recommendedLocations.length < 3) {
+  const slugCol = `slug_${lang}`;
+  const titleCol = `title_${lang}`;
+  const fallback = await supabase
+    .from("seo_beaches")
+    .select(`slug, ${slugCol}, ${titleCol}, hero_image_url`)
+    .in("slug", ["spiaggia-del-principe", "cala-brandinchi", "la-cinta", "liscia-ruja", "capriccioli", "romazzino"])
+    .not(titleCol, "is", null)
+    .limit(6 - recommendedLocations.length);
+  const existing = new Set(recommendedLocations.map((r) => r.slug));
+  for (const b of (fallback.data || []) as any[]) {
+    const slug = b[slugCol] || b.slug;
+    if (!existing.has(slug)) {
+      recommendedLocations.push({ slug, title: b[titleCol] || "", hero_image_url: b.hero_image_url });
+    }
+  }
+  recommendedLocations = recommendedLocations.slice(0, 6);
 }
 
-const safeContentHtml = localized.content_html
-  ? DOMPurify.sanitize(localized.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>"))
+const rawContentHtml = localized.content_html
+  ? localized.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>")
   : "";
+
+// Auto-link delle menzioni di altri veicoli
+const { autolinkVehicles } = await import("@/lib/vehicle-autolink");
+const linkedContentHtml = autolinkVehicles(rawContentHtml, seo.group_slug, lang);
+const safeContentHtml = linkedContentHtml ? DOMPurify.sanitize(linkedContentHtml, { ADD_ATTR: ["target", "rel"] }) : "";
+
+// Booking URL pre-filtrato
+const bookingPathByLang: Record<"en" | "de" | "fr", string> = {
+  en: "/en/book-now",
+  de: "/de/jetzt-buchen",
+  fr: "/fr/reserver",
+};
+const bookHref = `${bookingPathByLang[lang]}?vehicle=${encodeURIComponent(seo.group_slug)}`;
 
 const labels = {
   en: {
@@ -160,12 +188,26 @@ const localityPathPrefix = `/${lang}`;
 const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
 ---
 <div class="bg-background min-h-screen">
-  {/* HERO */}
-  <section class="relative overflow-hidden border-b border-border">
-    <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+  {/* HERO con foto del veicolo come sfondo + foreground in trasparenza */}
+  <section class="relative overflow-hidden border-b border-border min-h-[80vh] flex items-center">
+    {backgroundImage && (
+      <div class="absolute inset-0">
+        <img
+          src={backgroundImage}
+          alt=""
+          aria-hidden="true"
+          class="w-full h-full object-cover scale-110"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-background/85 via-background/70 to-background/85 backdrop-blur-[2px]"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/80"></div>
+      </div>
+    )}
     <div class="absolute -top-20 -right-20 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative max-w-7xl mx-auto px-4 md:px-12 pt-32 pb-16">
+    <div class="relative max-w-7xl mx-auto px-4 md:px-12 pt-32 pb-16 w-full">
       <div class="grid lg:grid-cols-[1fr_1.2fr] gap-10 items-center">
         <div>
           <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
@@ -189,7 +231,7 @@ const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
 
           <div class="mt-8 flex flex-wrap gap-3">
             <a
-              href={labels.bookPath}
+              href={bookHref}
               class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-6 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_20px_rgba(212,175,55,0.3)]"
             >
               {labels.bookNow}
@@ -198,13 +240,13 @@ const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
           </div>
         </div>
 
-        {heroImage && (
+        {foregroundImage && (
           <div class="relative">
             <div class="relative aspect-[4/3] flex items-center justify-center">
               <img
-                src={heroImage}
+                src={foregroundImage}
                 alt={localized.title}
-                class="w-full h-full object-contain drop-shadow-2xl"
+                class="w-full h-full object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
                 loading="eager"
                 fetchpriority="high"
               />
@@ -384,7 +426,7 @@ const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
         {labels.deliveryAt}
       </p>
       <a
-        href={labels.bookPath}
+        href={bookHref}
         class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
       >
         {labels.bookNow}

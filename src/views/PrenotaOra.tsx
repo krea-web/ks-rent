@@ -748,6 +748,22 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     fetchVehicles();
   }, []);
 
+  // Pre-seleziona il veicolo se l'URL contiene ?vehicle=group_slug
+  // (link in arrivo dalle pagine /flotta/[slug])
+  useEffect(() => {
+    if (vehicles.length === 0 || selectedVehicle) return;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const groupSlug = params.get("vehicle");
+    if (!groupSlug) return;
+    // Trova il primary variant del gruppo, oppure il primo disponibile
+    const match =
+      vehicles.find((v) => v.group_slug === groupSlug && v.is_primary_variant && v.available) ||
+      vehicles.find((v) => v.group_slug === groupSlug && v.available) ||
+      vehicles.find((v) => v.group_slug === groupSlug);
+    if (match) setSelectedVehicle(match);
+  }, [vehicles, selectedVehicle]);
+
   // Group vehicles by make+model for display (1 card per model)
   const groupedVehicles = useMemo(() => {
     const groups: Record<string, { representative: any; allVehicles: any[]; isAvailable: boolean }> = {};

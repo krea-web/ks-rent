@@ -179,6 +179,25 @@
   border-radius: 3px;
 }
 
+/* Mega-menu scrollbar overlay (sottile, dorato, non occupa spazio) */
+.nav-mega-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.4) transparent;
+}
+.nav-mega-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.nav-mega-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.nav-mega-scroll::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.35);
+  border-radius: 2px;
+}
+.nav-mega-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.6);
+}
+
 /* Iubenda widget: push above mobile sticky CTA */
 @media (max-width: 1023px) {
   #iubenda-cs-banner,
