@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioSenzaCartaCredito, {
+  senzaCCJsonLd,
+  senzaCCFaqJsonLd,
+} from "@/views/NoleggioSenzaCartaCredito";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Autovermietung ohne Kreditkarte Olbia | KS Rent"
+  description="Mieten Sie ein Auto in Olbia ohne Kreditkarte. Wir akzeptieren Prepaid, Bankkarte und Bargeld. Supersportwagen, SUVs und Motorräder an der Costa Smeralda. Online buchen."
+  canonical="https://www.ksrentsardinia.com/de/autovermietung-ohne-kreditkarte-olbia"
+  jsonLd={[
+    senzaCCJsonLd,
+    senzaCCFaqJsonLd,
+    buildBreadcrumb("Vermietung ohne Kreditkarte", "/de/autovermietung-ohne-kreditkarte-olbia"),
+  ]}
+>
+  <NoleggioSenzaCartaCredito lang="de" />
+</BaseLayout>

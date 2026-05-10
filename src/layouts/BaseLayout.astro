@@ -1,6 +1,7 @@
 ---
 import "@/index.css";
-import { localBusinessJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
+import { localBusinessJsonLd, faqPageJsonLd, buildBreadcrumbJsonLd } from "@/lib/jsonLd";
+import { getAlternateLinks, getLocaleFromPath, LOCALE_NAMES } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
@@ -19,6 +20,10 @@ interface Props {
   hideMobileSticky?: boolean;
   /** Inietta il FAQPage JSON-LD globale (homepage) */
   includeGlobalFaq?: boolean;
+  /** Override aggregateRating in localBusinessJsonLd (es. dalla home con dati reali) */
+  aggregateRating?: { ratingValue: number; reviewCount: number };
+  /** Auto-inietta BreadcrumbList. Esempio: [{name: 'Flotta', path: '/flotta'}] */
+  breadcrumbs?: { name: string; path: string }[];
 }
 
 const SITE = "https://www.ksrentsardinia.com";
@@ -37,7 +42,37 @@ const {
   showChrome = true,
   hideMobileSticky = false,
   includeGlobalFaq = false,
+  aggregateRating,
+  breadcrumbs,
 } = Astro.props;
+
+// i18n: lingua corrente + hreflang alternates (definito PRIMA del JSON-LD per usare htmlLang)
+const currentLocale = getLocaleFromPath(Astro.url.pathname);
+const htmlLang = LOCALE_NAMES[currentLocale].htmlLang;
+const alternateLinks = getAlternateLinks(Astro.url.pathname, SITE);
+
+// Se passato aggregateRating, override quello hardcoded nel localBusinessJsonLd
+// Override anche `inLanguage` con la lingua corrente della pagina
+const effectiveLocalBusinessJsonLd = {
+  ...localBusinessJsonLd,
+  inLanguage: htmlLang,
+  ...(aggregateRating
+    ? {
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: aggregateRating.ratingValue.toFixed(1),
+          reviewCount: aggregateRating.reviewCount,
+          bestRating: "5",
+          worstRating: "1",
+        },
+      }
+    : {}),
+};
+
+// BreadcrumbList auto-injected
+const autoBreadcrumbJsonLd = breadcrumbs && breadcrumbs.length > 0
+  ? buildBreadcrumbJsonLd(breadcrumbs)
+  : null;
 
 // Canonical: forza https://www.ksrentsardinia.com + rimuove trailing slash (eccetto root)
 let canonicalUrl = canonical
@@ -63,7 +98,7 @@ const customJsonLdList: Record<string, any>[] = jsonLd
   : [];
 ---
 <!doctype html>
-<html lang="it">
+<html lang={htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
@@ -81,8 +116,9 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     <meta name="format-detection" content="telephone=yes, date=no, email=no, address=no" />
 
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="it-IT" href={canonicalUrl} />
-    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    {alternateLinks.map((alt) => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
 
     <!-- Geo tags -->
     <meta name="geo.region" content="IT-SS" />
@@ -98,13 +134,21 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="it_IT" />
+    <meta property="og:locale" content={htmlLang.replace("-", "_")} />
+    {currentLocale !== "it" && (
+      <>
+        <meta property="og:locale:alternate" content="it_IT" />
+        {currentLocale !== "en" && <meta property="og:locale:alternate" content="en_GB" />}
+        {currentLocale !== "de" && <meta property="og:locale:alternate" content="de_DE" />}
+        {currentLocale !== "fr" && <meta property="og:locale:alternate" content="fr_FR" />}
+      </>
+    )}
     <meta property="og:site_name" content="KS Rent Sardinia" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@ksrent_srl" />
-    <meta name="twitter:creator" content="@ksrent_srl" />
+    <meta name="twitter:site" content="@ksrentsardinia" />
+    <meta name="twitter:creator" content="@ksrentsardinia" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
@@ -167,11 +211,15 @@ const customJsonLdList: Record<string, any>[] = jsonLd
       })();
     </script>
 
-    <!-- JSON-LD globale (Organization + WebSite) -->
-    <script type="application/ld+json" set:html={JSON.stringify(localBusinessJsonLd)} />
+    <!-- JSON-LD globale (Organization + WebSite + AggregateRating) -->
+    <script type="application/ld+json" set:html={JSON.stringify(effectiveLocalBusinessJsonLd)} />
 
     {includeGlobalFaq && (
       <script type="application/ld+json" set:html={JSON.stringify(faqPageJsonLd)} />
+    )}
+
+    {autoBreadcrumbJsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(autoBreadcrumbJsonLd)} />
     )}
 
     {customJsonLdList.map((schema) => (
@@ -199,13 +247,13 @@ const customJsonLdList: Record<string, any>[] = jsonLd
   </head>
 
   <body class="bg-background text-foreground antialiased font-sans overflow-x-hidden">
-    {showChrome && <Navbar client:load />}
+    {showChrome && <Navbar lang={currentLocale} client:load />}
     <main>
       <slot />
     </main>
-    {showChrome && <Footer />}
-    {showChrome && <WhatsAppCTA client:idle />}
-    {showChrome && !hideMobileSticky && <MobileStickyCTA client:idle />}
+    {showChrome && <Footer lang={currentLocale} />}
+    {showChrome && <WhatsAppCTA lang={currentLocale} client:idle />}
+    {showChrome && !hideMobileSticky && <MobileStickyCTA lang={currentLocale} client:idle />}
 
     <script type="text/javascript" src="https://cdn.iubenda.com/iubenda.js" defer></script>
   </body>

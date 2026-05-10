@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PrenotaOra from "@/views/PrenotaOra";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Mietwagen Olbia Flughafen buchen | KS Rent Costa Smeralda"
+  description="Buchen Sie in 2 Minuten Ihr Premium-Fahrzeug in Olbia. Lieferung am Flughafen oder im Hotel. Transparente Kaution und vollständiger Versicherungsschutz."
+  canonical="https://www.ksrentsardinia.com/de/jetzt-buchen"
+  jsonLd={buildBreadcrumb("Jetzt buchen", "/de/jetzt-buchen")}
+  hideMobileSticky={true}
+>
+  <PrenotaOra client:load lang="de" />
+</BaseLayout>

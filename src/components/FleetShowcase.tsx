@@ -5,6 +5,8 @@ import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
+import { getDict } from "@/i18n";
+import { localizePath, type Locale } from "@/lib/i18n";
 
 // Immagini di fallback per modello
 const VEHICLE_IMAGES: Record<string, string> = {
@@ -21,7 +23,14 @@ const VEHICLE_IMAGES: Record<string, string> = {
     "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/YAMAHA/ksrent-quadyamaharaptor.webp",
 };
 
-const FleetShowcase = () => {
+interface FleetShowcaseProps {
+  lang?: Locale;
+}
+
+const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
+  const t = getDict(lang);
+  const bookHref = localizePath("/prenotaora", lang);
+
   interface Vehicle {
     id: string;
     make: string;
@@ -81,7 +90,7 @@ const FleetShowcase = () => {
             viewport={{ once: true }}
             className="text-gold text-sm uppercase tracking-[0.3em] font-semibold mb-4"
           >
-            Esplora la Flotta
+            {t.fleetShowcase.eyebrow}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -90,9 +99,9 @@ const FleetShowcase = () => {
             transition={{ delay: 0.1 }}
             className="text-3xl md:text-6xl font-display font-black mb-6 leading-tight break-words"
           >
-            Scegli la tua <br />
+            {t.fleetShowcase.headingPart1} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-gold">
-              Prossima Emozione
+              {t.fleetShowcase.headingAccent}
             </span>
           </motion.h2>
           <motion.p
@@ -102,13 +111,12 @@ const FleetShowcase = () => {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-lg"
           >
-            Dalle city car perfette per le vie di Olbia alle supercar più esclusive. Ogni veicolo KS Rent è preparato
-            per offrirti un'esperienza impeccabile.
+            {t.fleetShowcase.intro}
           </motion.p>
         </div>
 
         {groupedFleet.length === 0 ? (
-          <div className="text-center text-muted-foreground py-20">Caricamento flotta...</div>
+          <div className="text-center text-muted-foreground py-20">{t.fleetShowcase.loading}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
             {groupedFleet.map((group, i) => {
@@ -152,26 +160,28 @@ const FleetShowcase = () => {
                       {v.make ? `${v.make} ${v.model}` : v.model}
                     </h3>
                     <p className="text-gold font-bold text-lg mb-6">
-                      {v.daily_rate && v.daily_rate > 0 ? `A partire da €${v.daily_rate}/gg` : "Prezzo su richiesta"}
+                      {v.daily_rate && v.daily_rate > 0
+                        ? `${t.fleetShowcase.fromPerDay} €${v.daily_rate}${t.fleetShowcase.perDayShort}`
+                        : t.fleetShowcase.priceOnRequest}
                     </p>
 
                     {isSupercar ? (
                       <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
                         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                            Potenza
+                            {t.fleetShowcase.power}
                           </span>
                           <span className="text-sm font-bold text-gold">{isM2 ? "460 CV" : "400 CV"}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                            0-100 km/h
+                            {t.fleetShowcase.accel}
                           </span>
                           <span className="text-sm font-bold text-gold">{isM2 ? "4.1 sec" : "3.8 sec"}</span>
                         </div>
                         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                            Vel. Max
+                            {t.fleetShowcase.topSpeed}
                           </span>
                           <span className="text-sm font-bold text-gold">{isM2 ? "285 km/h" : "290 km/h"}</span>
                         </div>
@@ -180,36 +190,36 @@ const FleetShowcase = () => {
                       <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 mt-auto">
                         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                            Giugno
+                            {t.fleetShowcase.june}
                           </span>
                           <span className="text-sm font-bold text-gold">
-                            {v.rate_june ? `€${v.rate_june}/gg` : "-"}
+                            {v.rate_june ? `€${v.rate_june}${t.fleetShowcase.perDayShort}` : "-"}
                           </span>
                         </div>
                         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                            Luglio
+                            {t.fleetShowcase.july}
                           </span>
                           <span className="text-sm font-bold text-gold">
-                            {v.rate_july ? `€${v.rate_july}/gg` : "-"}
+                            {v.rate_july ? `€${v.rate_july}${t.fleetShowcase.perDayShort}` : "-"}
                           </span>
                         </div>
                         <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/5">
                           <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                            Agosto
+                            {t.fleetShowcase.august}
                           </span>
                           <span className="text-sm font-bold text-gold">
-                            {v.rate_august ? `€${v.rate_august}/gg` : "-"}
+                            {v.rate_august ? `€${v.rate_august}${t.fleetShowcase.perDayShort}` : "-"}
                           </span>
                         </div>
                       </div>
                     )}
 
                     <Link
-                      to="/prenotaora"
+                      to={bookHref}
                       className="flex items-center justify-center gap-3 w-full bg-gold/10 hover:bg-gold text-gold hover:text-black py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 group/btn min-h-[48px] relative z-10"
                     >
-                      Noleggia Ora
+                      {t.fleetShowcase.rentNow}
                       <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                   </div>
@@ -222,13 +232,7 @@ const FleetShowcase = () => {
 
       {/* SEO KEYWORD PARAGRAPH */}
       <div className="max-w-7xl mx-auto mt-12 text-gray-600 dark:text-white/70 font-light text-sm text-center leading-relaxed">
-        <p>
-          KS Rent vanta una flotta variegata per ogni esigenza. Dai brividi del{" "}
-          <strong>noleggio supercar a Olbia</strong> con modelli iconici (prova il brivido del{" "}
-          <strong>noleggio Audi RS3 a Olbia</strong> o BMW M2), fino alla mobilità agile. Se preferisci le due ruote,
-          scopri il nostro <strong>noleggio moto a Olbia</strong> per evitare il traffico costiero, oppure divertiti in
-          off-road con il nostro <strong>noleggio quad a Olbia</strong>.
-        </p>
+        <p>{t.fleetShowcase.seoText}</p>
       </div>
     </section>
   );

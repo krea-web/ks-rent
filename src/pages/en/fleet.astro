@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Flotta, { flottaFaqJsonLd, flottaBreadcrumbJsonLd } from "@/views/Flotta";
+import FleetGrid from "@/components/FleetGrid.astro";
+import { flottaJsonLd } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="KS Rent Vehicle Fleet | Car Hire Olbia"
+  description="Discover KS Rent's premium fleet: sports cars, SUVs, city cars, scooters and quads. Car hire without a credit card in Olbia and Costa Smeralda."
+  canonical="https://www.ksrentsardinia.com/en/fleet"
+  jsonLd={[flottaJsonLd, flottaFaqJsonLd]}
+  breadcrumbs={[{ name: "Fleet", path: "/en/fleet" }]}
+>
+  <Flotta client:load lang="en" />
+  <FleetGrid
+    lang="en"
+    heading="All our vehicles"
+    intro="Discover every model in detail: seasonal rates, available variants and recommended destinations."
+  />
+</BaseLayout>

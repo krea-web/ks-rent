@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Flotta, { flottaFaqJsonLd, flottaBreadcrumbJsonLd } from "@/views/Flotta";
+import FleetGrid from "@/components/FleetGrid.astro";
+import { flottaJsonLd } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Fuhrpark KS Rent | Autovermietung Olbia"
+  description="Entdecken Sie den Premium-Fuhrpark von KS Rent: Sportwagen, SUVs, Kleinwagen, Roller und Quads. Vermietung ohne Kreditkarte in Olbia und an der Costa Smeralda."
+  canonical="https://www.ksrentsardinia.com/de/fuhrpark"
+  jsonLd={[flottaJsonLd, flottaFaqJsonLd]}
+  breadcrumbs={[{ name: "Fuhrpark", path: "/de/fuhrpark" }]}
+>
+  <Flotta client:load lang="de" />
+  <FleetGrid
+    lang="de"
+    heading="Alle unsere Fahrzeuge"
+    intro="Entdecken Sie jedes Modell im Detail: Saisonpreise, verfügbare Varianten und empfohlene Reiseziele."
+  />
+</BaseLayout>

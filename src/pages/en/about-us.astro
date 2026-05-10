@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ChiSiamo, { chiSiamoFaqJsonLd } from "@/views/ChiSiamo";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="About Us — KS Rent | Car Hire Olbia Sardinia"
+  description="KS Rent Sardinia: luxury car hire based in Olbia. Owned fleet, home delivery in Costa Smeralda, flexible deposit and no credit card required."
+  canonical="https://www.ksrentsardinia.com/en/about-us"
+  jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("About Us", "/en/about-us")]}
+>
+  <ChiSiamo client:load lang="en" />
+</BaseLayout>

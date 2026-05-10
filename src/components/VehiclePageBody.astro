@@ -1,0 +1,406 @@
+---
+/**
+ * Body condiviso per pagine veicolo multilingua.
+ * Usato da:
+ *   - src/pages/en/fleet/[slug].astro
+ *   - src/pages/de/fuhrpark/[slug].astro
+ *   - src/pages/fr/flotte/[slug].astro
+ *
+ * La versione IT ha il suo file dedicato in src/pages/flotta/[slug].astro.
+ */
+import {
+  ArrowRight,
+  Calendar,
+  MapPin,
+  CheckCircle2,
+  ShieldCheck,
+  Car,
+} from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
+import { supabase } from "@/lib/supabase";
+
+interface Props {
+  seo: any;
+  variants: any[];
+  lang: "en" | "de" | "fr";
+}
+
+const { seo, variants, lang } = Astro.props as Props;
+
+const localized = {
+  slug: seo[`slug_${lang}`] as string,
+  title: seo[`title_${lang}`] as string,
+  h1: seo[`h1_${lang}`] || seo[`title_${lang}`],
+  meta_description: seo[`meta_description_${lang}`] || seo.meta_description || "",
+  content_html: seo[`content_html_${lang}`] || seo.content_html || "",
+};
+
+const primary = variants.find((v) => v.is_primary_variant) || variants[0] || null;
+const heroImage = seo.hero_image_url || primary?.transparent_image_url || primary?.image_url || null;
+
+const MONTHS = [
+  { key: "rate_april", label_en: "April", label_de: "April", label_fr: "Avril" },
+  { key: "rate_may", label_en: "May", label_de: "Mai", label_fr: "Mai" },
+  { key: "rate_june", label_en: "June", label_de: "Juni", label_fr: "Juin" },
+  { key: "rate_july", label_en: "July", label_de: "Juli", label_fr: "Juillet" },
+  { key: "rate_august", label_en: "August", label_de: "August", label_fr: "Août" },
+  { key: "rate_september", label_en: "September", label_de: "September", label_fr: "Septembre" },
+  { key: "rate_october", label_en: "October", label_de: "Oktober", label_fr: "Octobre" },
+] as const;
+
+const allRates: number[] = [];
+for (const v of variants) {
+  for (const m of MONTHS) {
+    const r = (v as any)[m.key];
+    if (typeof r === "number" && r > 0) allRates.push(r);
+  }
+  if (typeof v.daily_rate === "number" && v.daily_rate > 0) allRates.push(v.daily_rate);
+}
+const priceFrom = allRates.length ? Math.min(...allRates) : null;
+
+const galleryImages = Array.from(
+  new Set(
+    variants
+      .flatMap((v) => [...(Array.isArray(v.gallery_urls) ? v.gallery_urls : []), v.image_url])
+      .filter((u): u is string => !!u && u !== heroImage),
+  ),
+);
+
+// Recommended locations (multilingua)
+const recommendedSlugs = (seo.recommended_locations || []).slice(0, 6);
+let recommendedLocations: { slug: string; title: string; hero_image_url: string | null }[] = [];
+if (recommendedSlugs.length > 0) {
+  const slugCol = `slug_${lang}`;
+  const titleCol = `title_${lang}`;
+  const [locRes, beachRes] = await Promise.all([
+    supabase
+      .from("seo_locations")
+      .select(`slug, ${slugCol}, ${titleCol}, hero_image_url`)
+      .in("slug", recommendedSlugs)
+      .not(titleCol, "is", null),
+    supabase
+      .from("seo_beaches")
+      .select(`slug, ${slugCol}, ${titleCol}, hero_image_url`)
+      .in("slug", recommendedSlugs)
+      .not(titleCol, "is", null),
+  ]);
+  recommendedLocations = [...(locRes.data || []), ...(beachRes.data || [])].map((r: any) => ({
+    slug: r[slugCol] || r.slug,
+    title: r[titleCol] || "",
+    hero_image_url: r.hero_image_url,
+  }));
+}
+
+const safeContentHtml = localized.content_html
+  ? DOMPurify.sanitize(localized.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>"))
+  : "";
+
+const labels = {
+  en: {
+    perDay: "/day", from: "from",
+    bookNow: "Book Now",
+    seasonal: "Seasonal rates", monthlyPrices: "Monthly prices",
+    monthlyIntro: "Rates in € per day. Indicative prices: final quotes are confirmed at booking.",
+    variant: "Variant",
+    gallery: "Gallery", allVariants: "All variants",
+    idealFor: "Ideal for", bestDestinations: "The best-suited destinations",
+    faq: "FAQ", faqTitle: "Frequently asked questions",
+    readyTo: "Ready to drive",
+    deliveryAt: "Home delivery throughout Gallura and Costa Smeralda. No credit card required.",
+    freeDelivery: "Free delivery", noCard: "No credit card required", open: "Open 7 days a week",
+    bookPath: "/en/book-now",
+    specs: { category: "Category", fuel: "Fuel", year: "Year", variants: "Variants" },
+  },
+  de: {
+    perDay: "/Tag", from: "ab",
+    bookNow: "Jetzt buchen",
+    seasonal: "Saisonpreise", monthlyPrices: "Monatspreise",
+    monthlyIntro: "Preise in € pro Tag. Richtwerte: die endgültigen Tarife werden bei der Buchung bestätigt.",
+    variant: "Variante",
+    gallery: "Galerie", allVariants: "Alle Varianten",
+    idealFor: "Ideal für", bestDestinations: "Die passendsten Reiseziele",
+    faq: "FAQ", faqTitle: "Häufig gestellte Fragen",
+    readyTo: "Bereit zu fahren",
+    deliveryAt: "Lieferung an die Haustür in ganz Gallura und an der Costa Smeralda. Ohne Kreditkartenpflicht.",
+    freeDelivery: "Kostenlose Lieferung", noCard: "Ohne Kreditkarte", open: "7 Tage geöffnet",
+    bookPath: "/de/jetzt-buchen",
+    specs: { category: "Kategorie", fuel: "Kraftstoff", year: "Baujahr", variants: "Varianten" },
+  },
+  fr: {
+    perDay: "/jour", from: "à partir de",
+    bookNow: "Réserver maintenant",
+    seasonal: "Tarifs saisonniers", monthlyPrices: "Prix par mois",
+    monthlyIntro: "Tarifs en € par jour. Prix indicatifs : les tarifs définitifs sont confirmés lors de la réservation.",
+    variant: "Variante",
+    gallery: "Galerie", allVariants: "Toutes les variantes",
+    idealFor: "Idéal pour", bestDestinations: "Les destinations les plus adaptées",
+    faq: "FAQ", faqTitle: "Questions fréquentes",
+    readyTo: "Prêt à conduire",
+    deliveryAt: "Livraison à domicile dans toute la Gallura et la Costa Smeralda. Sans carte de crédit obligatoire.",
+    freeDelivery: "Livraison gratuite", noCard: "Sans carte de crédit", open: "Ouvert 7j/7",
+    bookPath: "/fr/reserver",
+    specs: { category: "Catégorie", fuel: "Carburant", year: "Année", variants: "Variantes" },
+  },
+}[lang];
+
+const monthLabel = (m: typeof MONTHS[number]) =>
+  lang === "en" ? m.label_en : lang === "de" ? m.label_de : m.label_fr;
+
+const specs: { label: string; value: string }[] = [];
+if (primary) {
+  specs.push({ label: labels.specs.category, value: primary.category });
+  specs.push({ label: labels.specs.fuel, value: primary.fuel_type || "—" });
+  if (primary.year) specs.push({ label: labels.specs.year, value: String(primary.year) });
+  specs.push({ label: labels.specs.variants, value: String(variants.length) });
+}
+
+// Path localizzato per linkare a pagine località nella stessa lingua
+const localityPathPrefix = `/${lang}`;
+
+const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
+---
+<div class="bg-background min-h-screen">
+  {/* HERO */}
+  <section class="relative overflow-hidden border-b border-border">
+    <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 md:px-12 pt-32 pb-16">
+      <div class="grid lg:grid-cols-[1fr_1.2fr] gap-10 items-center">
+        <div>
+          <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
+            <Car className="w-3.5 h-3.5" />
+            {primary?.category || ""}
+          </span>
+          <h1 class="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
+            {localized.h1}
+          </h1>
+          <p class="mt-6 text-lg text-foreground/70 font-light leading-relaxed">
+            {localized.meta_description}
+          </p>
+
+          {priceFrom && (
+            <div class="mt-8 inline-flex items-baseline gap-2 bg-gold/10 border border-gold/30 rounded-2xl px-5 py-3">
+              <span class="text-foreground/60 text-sm uppercase tracking-wider font-bold">{labels.from}</span>
+              <span class="text-3xl font-black text-gold">€{priceFrom}</span>
+              <span class="text-foreground/60 text-sm">{labels.perDay}</span>
+            </div>
+          )}
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href={labels.bookPath}
+              class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-6 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+            >
+              {labels.bookNow}
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+
+        {heroImage && (
+          <div class="relative">
+            <div class="relative aspect-[4/3] flex items-center justify-center">
+              <img
+                src={heroImage}
+                alt={localized.title}
+                class="w-full h-full object-contain drop-shadow-2xl"
+                loading="eager"
+                fetchpriority="high"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {specs.length > 0 && (
+    <section class="py-12 px-4 md:px-12 border-b border-border">
+      <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+        {specs.map((s) => (
+          <div class="bg-card border border-border rounded-2xl p-5 text-center">
+            <p class="text-xs uppercase tracking-wider text-foreground/40 mb-2">{s.label}</p>
+            <p class="text-foreground font-bold text-lg">{s.value}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {safeContentHtml && (
+    <section class="py-16 px-4 md:px-12">
+      <div class="max-w-4xl mx-auto">
+        <div
+          class="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
+          set:html={safeContentHtml}
+        />
+      </div>
+    </section>
+  )}
+
+  {priceFrom && (
+    <section class="py-16 px-4 md:px-12 bg-card">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+            <Calendar className="w-3.5 h-3.5 inline mr-2" />
+            {labels.seasonal}
+          </span>
+          <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+            {labels.monthlyPrices}
+          </h2>
+          <p class="text-foreground/60 font-light mt-4 max-w-xl mx-auto leading-relaxed">{labels.monthlyIntro}</p>
+        </div>
+
+        <div class="bg-background border border-border rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-card/50 border-b border-border">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">{labels.variant}</th>
+                  {MONTHS.map((m) => (
+                    <th class="px-4 py-3 text-center text-xs uppercase tracking-wider text-foreground/50 font-bold">{monthLabel(m)}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {variants.map((v) => (
+                  <tr class="border-b border-border/50 last:border-0 hover:bg-card/30 transition-colors">
+                    <td class="px-4 py-3 font-bold text-foreground">
+                      {v.make} {v.model}
+                      {v.color && <span class="text-foreground/50 font-light ml-1">— {v.color}</span>}
+                    </td>
+                    {MONTHS.map((m) => {
+                      const rate = (v as any)[m.key];
+                      return (
+                        <td class="px-4 py-3 text-center">
+                          {rate ? <span class="text-gold font-bold">€{rate}</span> : <span class="text-foreground/30">—</span>}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {galleryImages.length > 0 && (
+    <section class="py-16 px-4 md:px-12">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">{labels.gallery}</span>
+          <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+            {labels.allVariants}
+          </h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {galleryImages.map((url) => (
+            <div class="aspect-square bg-card rounded-2xl overflow-hidden border border-border hover:border-gold/40 transition-colors">
+              <img src={url} alt={localized.title} class="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {recommendedLocations.length > 0 && (
+    <section class="py-16 px-4 md:px-12 bg-card">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+            <MapPin className="w-3.5 h-3.5 inline mr-2" />
+            {labels.idealFor}
+          </span>
+          <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+            {labels.bestDestinations}
+          </h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {recommendedLocations.map((loc) => (
+            <a
+              href={`${localityPathPrefix}/${loc.slug}`}
+              class="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-border hover:border-gold/40 transition-colors"
+            >
+              {loc.hero_image_url && (
+                <img
+                  src={loc.hero_image_url}
+                  alt={loc.title}
+                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              )}
+              <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4">
+                <p class="text-foreground font-bold text-sm leading-tight group-hover:text-gold transition-colors">
+                  {loc.title}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {faqs.length > 0 && (
+    <section class="py-16 px-4 md:px-12">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">{labels.faq}</span>
+          <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+            {labels.faqTitle}
+          </h2>
+        </div>
+        <div class="space-y-4">
+          {faqs.map((faq: any) => (
+            <details class="bg-card border border-border rounded-xl overflow-hidden group">
+              <summary class="px-6 py-5 cursor-pointer text-foreground font-semibold hover:text-gold transition-colors list-none flex items-center justify-between">
+                {faq.q}
+                <ArrowRight className="w-4 h-4 text-gold transition-transform group-open:rotate-90 shrink-0 ml-4" />
+              </summary>
+              <div class="px-6 pb-5">
+                <p class="text-foreground/70 font-light leading-relaxed">{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="py-20 px-4 md:px-12">
+    <div class="max-w-3xl mx-auto text-center">
+      <ShieldCheck className="w-12 h-12 text-gold mx-auto mb-6" />
+      <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+        {labels.readyTo} {primary ? `${primary.make} ${primary.model}` : localized.title}?
+      </h2>
+      <p class="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
+        {labels.deliveryAt}
+      </p>
+      <a
+        href={labels.bookPath}
+        class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
+      >
+        {labels.bookNow}
+        <ArrowRight className="w-4 h-4" />
+      </a>
+      <div class="mt-8 flex items-center justify-center gap-6 text-xs text-foreground/40 flex-wrap">
+        <div class="flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-gold" /> {labels.freeDelivery}
+        </div>
+        <div class="flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-gold" /> {labels.noCard}
+        </div>
+        <div class="flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-gold" /> {labels.open}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -3,46 +3,35 @@ import { Star, ExternalLink, Quote } from "lucide-react";
 
 const GOOGLE_REVIEW_URL = "https://g.page/r/CZKdxnQ8w8GFEBM/review";
 
-const reviews = [
+export interface ReviewItem {
+  author_name: string;
+  author_photo_url?: string | null;
+  rating: number;
+  text: string;
+  published_at?: string | null;
+}
+
+interface GoogleReviewsProps {
+  reviews?: ReviewItem[];
+  totalCount?: number;
+  averageRating?: number;
+}
+
+const FALLBACK_REVIEWS: ReviewItem[] = [
   {
     author_name: "Monica Fodde",
     rating: 5,
-    content: (
-      <p className="text-gray-700 dark:text-white/90 text-sm md:text-base leading-relaxed">
-        Ho avuto un'<span className="text-gold font-semibold">esperienza davvero molto positiva</span> con questo
-        autonoleggio. Il personale è stato <span className="text-gold font-semibold">gentile, professionale</span>{" "}
-        e sempre disponibile a rispondere a qualsiasi domanda. La procedura di ritiro e riconsegna dell'auto è stata{" "}
-        <span className="text-gold font-semibold">veloce e senza complicazioni</span>.<br />
-        <br />
-        L'auto che mi è stata consegnata era pulita,{" "}
-        <span className="text-gold font-semibold">in perfette condizioni</span> e molto confortevole da guidare.
-        Anche <span className="text-gold font-semibold">i prezzi mi sono sembrati onesti</span> e ben spiegati fin
-        dall'inizio, <span className="text-gold font-semibold">senza sorprese</span>.
-      </p>
-    ),
+    text: "Ho avuto un'esperienza davvero molto positiva con questo autonoleggio. Il personale è stato gentile, professionale e sempre disponibile. La procedura di ritiro e riconsegna dell'auto è stata veloce e senza complicazioni. Auto pulita, in perfette condizioni e prezzi onesti, ben spiegati fin dall'inizio.",
   },
   {
     author_name: "Giada Bianchi",
     rating: 5,
-    content: (
-      <p className="text-gray-700 dark:text-white/90 text-sm md:text-base leading-relaxed">
-        <span className="text-gold font-semibold">Servizio impeccabile!</span> Ritiro e consegna{" "}
-        <span className="text-gold font-semibold">velocissimi</span>. Personale gentile e{" "}
-        <span className="text-gold font-semibold">prezzi chiari, senza sorprese</span>.
-      </p>
-    ),
+    text: "Servizio impeccabile! Ritiro e consegna velocissimi. Personale gentile e prezzi chiari, senza sorprese.",
   },
   {
     author_name: "Dario Deiana",
     rating: 5,
-    content: (
-      <p className="text-gray-700 dark:text-white/90 text-sm md:text-base leading-relaxed">
-        <span className="text-gold font-semibold">Professionalità e cortesia ai massimi livelli</span>. Consegna
-        puntuale in aeroporto a Olbia,{" "}
-        <span className="text-gold font-semibold">auto pulitissima e nessuna sorpresa</span> sul prezzo.{" "}
-        <span className="text-gold font-bold">Top!</span>
-      </p>
-    ),
+    text: "Professionalità e cortesia ai massimi livelli. Consegna puntuale in aeroporto a Olbia, auto pulitissima e nessuna sorpresa sul prezzo. Top!",
   },
 ];
 
@@ -54,36 +43,58 @@ const Stars = ({ rating }: { rating: number }) => (
   </div>
 );
 
-const ReviewCard = ({ review, index }: { review: typeof reviews[number]; index: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay: index * 0.2, duration: 0.7, ease: "easeOut" }}
-    className="relative bg-white dark:bg-[#0a0a0a] rounded-2xl p-8 md:p-10 border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col justify-between h-full group hover:border-gold/40 transition-all duration-500"
-  >
-    <div className="absolute top-8 right-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500">
-      <Quote size={80} className="text-gold rotate-180" />
-    </div>
+const ReviewCard = ({ review, index }: { review: ReviewItem; index: number }) => {
+  const formattedDate = review.published_at
+    ? new Date(review.published_at).toLocaleDateString("it-IT", { year: "numeric", month: "long" })
+    : null;
 
-    <div className="relative z-10 flex-grow">
-      <Stars rating={review.rating} />
-      <div className="mt-8 mb-10">{review.content}</div>
-    </div>
-
-    <div className="flex items-center gap-4 pt-6 border-t border-gray-200 dark:border-white/10 relative z-10">
-      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-black flex items-center justify-center text-black font-black text-xl shadow-lg">
-        {review.author_name.charAt(0)}
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.2, duration: 0.7, ease: "easeOut" }}
+      className="relative bg-white dark:bg-[#0a0a0a] rounded-2xl p-8 md:p-10 border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col justify-between h-full group hover:border-gold/40 transition-all duration-500"
+    >
+      <div className="absolute top-8 right-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500">
+        <Quote size={80} className="text-gold rotate-180" />
       </div>
-      <div>
-        <h3 className="font-bold text-lg text-gold tracking-wide">{review.author_name}</h3>
-        <span className="text-xs text-gray-400 dark:text-white/40 uppercase tracking-wider">Cliente Verificato</span>
-      </div>
-    </div>
-  </motion.div>
-);
 
-const GoogleReviews = () => {
+      <div className="relative z-10 flex-grow">
+        <Stars rating={review.rating} />
+        <p className="mt-8 mb-10 text-gray-700 dark:text-white/90 text-sm md:text-base leading-relaxed">
+          {review.text}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-4 pt-6 border-t border-gray-200 dark:border-white/10 relative z-10">
+        {review.author_photo_url ? (
+          <img
+            src={review.author_photo_url}
+            alt={review.author_name}
+            className="w-12 h-12 rounded-full object-cover shadow-lg"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-black flex items-center justify-center text-black font-black text-xl shadow-lg">
+            {review.author_name.charAt(0)}
+          </div>
+        )}
+        <div>
+          <h3 className="font-bold text-lg text-gold tracking-wide">{review.author_name}</h3>
+          <span className="text-xs text-gray-400 dark:text-white/40 uppercase tracking-wider">
+            {formattedDate || "Cliente Verificato"}
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const GoogleReviews = ({ reviews, totalCount, averageRating }: GoogleReviewsProps = {}) => {
+  const list = (reviews && reviews.length > 0 ? reviews : FALLBACK_REVIEWS).slice(0, 3);
+  const showRatingBadge = averageRating && totalCount && totalCount >= 5;
+
   return (
     <section className="relative py-24 md:py-32 overflow-hidden bg-gold">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
@@ -99,14 +110,26 @@ const GoogleReviews = () => {
             <div className="h-[1px] w-12 bg-black/30"></div>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-black tracking-tighter mb-6">Dicono di Noi</h2>
-          <p className="text-lg md:text-xl text-black/80 max-w-2xl mx-auto font-medium">
-            La fiducia dei nostri clienti è il nostro traguardo più grande.
-          </p>
+          {showRatingBadge ? (
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="flex gap-1">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} size={22} className={i < Math.round(averageRating!) ? "fill-black text-black" : "text-black/20"} />
+                ))}
+              </div>
+              <span className="text-2xl font-black text-black">{averageRating!.toFixed(1)}</span>
+              <span className="text-sm text-black/70 font-medium">su Google · {totalCount} recensioni</span>
+            </div>
+          ) : (
+            <p className="text-lg md:text-xl text-black/80 max-w-2xl mx-auto font-medium">
+              La fiducia dei nostri clienti è il nostro traguardo più grande.
+            </p>
+          )}
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-          {reviews.map((review, i) => (
-            <ReviewCard key={i} review={review} index={i} />
+          {list.map((review, i) => (
+            <ReviewCard key={`${review.author_name}-${i}`} review={review} index={i} />
           ))}
         </div>
 

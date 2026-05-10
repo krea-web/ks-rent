@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioSenzaCartaCredito, {
+  senzaCCJsonLd,
+  senzaCCFaqJsonLd,
+} from "@/views/NoleggioSenzaCartaCredito";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Car Hire Without Credit Card Olbia | KS Rent"
+  description="Hire a car in Olbia without a credit card. We accept prepaid cards, debit cards and cash. Supercars, SUVs and motorbikes in Costa Smeralda. Book online."
+  canonical="https://www.ksrentsardinia.com/en/car-hire-no-credit-card-olbia"
+  jsonLd={[
+    senzaCCJsonLd,
+    senzaCCFaqJsonLd,
+    buildBreadcrumb("Car Hire Without Credit Card", "/en/car-hire-no-credit-card-olbia"),
+  ]}
+>
+  <NoleggioSenzaCartaCredito lang="en" />
+</BaseLayout>

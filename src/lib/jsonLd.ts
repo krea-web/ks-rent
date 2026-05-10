@@ -611,3 +611,104 @@ export const buildBreadcrumb = (name: string, path: string) => ({
     { "@type": "ListItem", position: 2, name, item: `https://www.ksrentsardinia.com${path}` },
   ],
 });
+
+/* ── BreadcrumbList builder per percorsi multi-livello ── */
+
+export const buildBreadcrumbJsonLd = (items: { name: string; path: string }[]) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.ksrentsardinia.com" },
+    ...items.map((item, idx) => ({
+      "@type": "ListItem",
+      position: idx + 2,
+      name: item.name,
+      item: `https://www.ksrentsardinia.com${item.path}`,
+    })),
+  ],
+});
+
+/* ── Vehicle schema builder per pagine /flotta/[slug] ── */
+
+interface VehiclePageData {
+  group_slug: string;
+  name: string;
+  brand?: string | null;
+  category?: string | null;
+  fuel?: string | null;
+  description?: string | null;
+  image?: string | null;
+  priceFrom?: number | null;
+  priceTo?: number | null;
+  url: string;
+}
+
+export const buildVehiclePageJsonLd = (
+  v: VehiclePageData,
+  faqs?: { q: string; a: string }[],
+) => {
+  const fuelMap: Record<string, string> = {
+    Benzina: "Gasoline",
+    Diesel: "Diesel",
+    Elettrico: "Electric",
+    Ibrida: "Hybrid",
+    "Ibrido Plug-in": "Plugin hybrid electric",
+    Gasolio: "Diesel",
+  };
+
+  const vehicleSchema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "Vehicle",
+    name: v.name,
+    url: v.url,
+    brand: v.brand
+      ? { "@type": "Brand", name: v.brand }
+      : undefined,
+    description: v.description || undefined,
+    image: v.image || undefined,
+    vehicleConfiguration: v.category || undefined,
+    fuelType: v.fuel ? (fuelMap[v.fuel] || v.fuel) : undefined,
+    offers:
+      v.priceFrom != null
+        ? {
+            "@type": "Offer",
+            priceCurrency: "EUR",
+            price: v.priceFrom,
+            priceSpecification: v.priceTo
+              ? {
+                  "@type": "PriceSpecification",
+                  minPrice: v.priceFrom,
+                  maxPrice: v.priceTo,
+                  priceCurrency: "EUR",
+                  unitCode: "DAY",
+                }
+              : undefined,
+            availability: "https://schema.org/InStock",
+            seller: {
+              "@type": "AutoRental",
+              name: "KS Rent Sardinia",
+              url: "https://www.ksrentsardinia.com",
+            },
+          }
+        : undefined,
+  };
+
+  // Rimuove undefined cleanly
+  Object.keys(vehicleSchema).forEach((k) => vehicleSchema[k] === undefined && delete vehicleSchema[k]);
+
+  const out: any[] = [vehicleSchema];
+
+  if (faqs && faqs.length > 0) {
+    out.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    });
+  }
+
+  return out;
+};

@@ -1,0 +1,269 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { supabase } from "@/lib/supabase";
+import { ArrowRight, ShieldCheck, Calendar, CreditCard, CheckCircle2 } from "lucide-react";
+
+interface VehicleRow {
+  make: string;
+  model: string;
+  category: string;
+  group_slug: string | null;
+  is_primary_variant: boolean | null;
+  is_archived: boolean | null;
+  transparent_image_url: string | null;
+  image_url: string | null;
+  daily_rate: number | null;
+  rate_april: number | null;
+  rate_may: number | null;
+  rate_june: number | null;
+  rate_july: number | null;
+  rate_august: number | null;
+  rate_september: number | null;
+  rate_october: number | null;
+}
+
+interface SeoVehicleRow {
+  group_slug: string;
+  title: string | null;
+}
+
+const [vehRes, seoRes] = await Promise.all([
+  supabase
+    .from("vehicles")
+    .select("*")
+    .or("is_archived.is.null,is_archived.eq.false")
+    .order("category"),
+  supabase.from("seo_vehicles").select("group_slug, title"),
+]);
+
+const allVehicles = (vehRes.data || []) as VehicleRow[];
+const seoMap = new Map<string, SeoVehicleRow>();
+for (const s of (seoRes.data || []) as SeoVehicleRow[]) {
+  seoMap.set(s.group_slug, s);
+}
+
+// Raggruppa per group_slug, prendi primary variant
+const groupsMap = new Map<string, { primary: VehicleRow; rates: Record<string, number | null>; image: string | null; title: string }>();
+for (const v of allVehicles) {
+  const slug = v.group_slug || `${v.make}-${v.model}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  if (!groupsMap.has(slug) || v.is_primary_variant) {
+    const seo = seoMap.get(slug);
+    groupsMap.set(slug, {
+      primary: v,
+      rates: {
+        rate_april: v.rate_april,
+        rate_may: v.rate_may,
+        rate_june: v.rate_june,
+        rate_july: v.rate_july,
+        rate_august: v.rate_august,
+        rate_september: v.rate_september,
+        rate_october: v.rate_october,
+      },
+      image: v.transparent_image_url || v.image_url,
+      title: seo?.title || `${v.make} ${v.model}`,
+    });
+  }
+}
+
+const groups = Array.from(groupsMap.entries())
+  .map(([slug, g]) => ({ slug, ...g }))
+  .sort((a, b) => a.primary.category.localeCompare(b.primary.category));
+
+const MONTHS = [
+  { key: "rate_april", label: "Aprile" },
+  { key: "rate_may", label: "Maggio" },
+  { key: "rate_june", label: "Giugno" },
+  { key: "rate_july", label: "Luglio" },
+  { key: "rate_august", label: "Agosto" },
+  { key: "rate_september", label: "Settembre" },
+  { key: "rate_october", label: "Ottobre" },
+] as const;
+
+// Categorie per raggruppare visivamente
+const byCategory = new Map<string, typeof groups>();
+for (const g of groups) {
+  const cat = g.primary.category;
+  if (!byCategory.has(cat)) byCategory.set(cat, []);
+  byCategory.get(cat)!.push(g);
+}
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "PriceSpecification",
+    name: "Tariffe stagionali noleggio auto KS Rent Sardinia",
+    description: "Tariffe ufficiali aggiornate per il noleggio di auto, scooter e quad in Costa Smeralda.",
+    priceCurrency: "EUR",
+    validFrom: `${new Date().getFullYear()}-04-01`,
+    validThrough: `${new Date().getFullYear()}-10-31`,
+  },
+];
+---
+<BaseLayout
+  title="Tariffe Noleggio Auto Olbia | Prezzi Mensili — KS Rent Sardinia"
+  description="Tariffe trasparenti per il noleggio auto a Olbia: prezzi mensili da Aprile a Ottobre per ogni veicolo. Audi RS3, BMW M2, Jeep Avenger, Fiat Panda, scooter e quad."
+  canonical="https://www.ksrentsardinia.com/tariffe"
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Tariffe", path: "/tariffe" }]}
+>
+  <div class="bg-background min-h-screen">
+    {/* HERO */}
+    <section class="relative overflow-hidden border-b border-border">
+      <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+      <div class="absolute -top-20 -right-20 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative max-w-5xl mx-auto px-4 md:px-12 pt-32 pb-16 text-center">
+        <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
+          <Calendar className="w-3.5 h-3.5" />
+          Listino ufficiale {new Date().getFullYear()}
+        </span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
+          Tariffe Noleggio Auto Olbia
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-foreground/70 font-light max-w-2xl mx-auto leading-relaxed">
+          Prezzi trasparenti per ogni veicolo, da Aprile a Ottobre. Senza carta di credito obbligatoria, senza sorprese, senza commissioni nascoste.
+        </p>
+
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4 text-xs text-foreground/60">
+          <span class="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-gold" /> Consegna gratuita</span>
+          <span class="flex items-center gap-2"><CreditCard className="w-4 h-4 text-gold" /> Senza carta di credito</span>
+          <span class="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-gold" /> Assicurazione inclusa</span>
+        </div>
+      </div>
+    </section>
+
+    {/* TARIFFE PER CATEGORIA */}
+    {Array.from(byCategory.entries()).map(([category, catGroups]) => (
+      <section class="py-12 md:py-16 px-4 md:px-12 border-b border-border last:border-0">
+        <div class="max-w-6xl mx-auto">
+          <div class="mb-8">
+            <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">Categoria</span>
+            <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mt-1">
+              {category}
+            </h2>
+          </div>
+
+          <div class="bg-card border border-border rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-background/50 border-b border-border">
+                  <tr>
+                    <th class="px-4 py-4 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold min-w-[200px]">
+                      Veicolo
+                    </th>
+                    {MONTHS.map((m) => (
+                      <th class="px-3 py-4 text-center text-xs uppercase tracking-wider text-foreground/50 font-bold">
+                        {m.label.slice(0, 3)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {catGroups.map((g) => {
+                    const validRates = MONTHS.map((m) => g.rates[m.key]).filter((r): r is number => typeof r === "number" && r > 0);
+                    const minRate = validRates.length ? Math.min(...validRates) : null;
+                    return (
+                      <tr class="border-b border-border/50 last:border-0 hover:bg-background/30 transition-colors">
+                        <td class="px-4 py-4">
+                          <a href={`/flotta/${g.slug}`} class="flex items-center gap-3 group">
+                            {g.image && (
+                              <img
+                                src={g.image}
+                                alt={g.title}
+                                class="w-14 h-14 object-contain bg-background rounded-lg p-1 shrink-0"
+                                loading="lazy"
+                              />
+                            )}
+                            <div>
+                              <p class="font-bold text-foreground group-hover:text-gold transition-colors">
+                                {g.title}
+                              </p>
+                              {minRate && (
+                                <p class="text-xs text-foreground/50 mt-0.5">da €{minRate}/giorno</p>
+                              )}
+                            </div>
+                          </a>
+                        </td>
+                        {MONTHS.map((m) => {
+                          const rate = g.rates[m.key];
+                          return (
+                            <td class="px-3 py-4 text-center">
+                              {rate ? (
+                                <span class="text-gold font-bold">€{rate}</span>
+                              ) : (
+                                <span class="text-foreground/30">—</span>
+                              )}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    {groups.length === 0 && (
+      <section class="py-20 px-4 text-center">
+        <p class="text-foreground/60 text-lg">
+          Listino in aggiornamento. Contattaci direttamente per un preventivo personalizzato.
+        </p>
+      </section>
+    )}
+
+    {/* INFO LISTINO */}
+    <section class="py-16 md:py-20 px-4 md:px-12 bg-card">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground text-center mb-10">
+          Come funziona il nostro listino
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-background border border-border rounded-2xl p-6">
+            <Calendar className="w-8 h-8 text-gold mb-4" />
+            <h3 class="font-bold text-foreground mb-2">Tariffe stagionali</h3>
+            <p class="text-foreground/60 text-sm font-light leading-relaxed">
+              Aprile e Ottobre sono i mesi più convenienti. Luglio e Agosto sono in alta stagione: prenota con anticipo per garantirti il veicolo.
+            </p>
+          </div>
+          <div class="bg-background border border-border rounded-2xl p-6">
+            <CreditCard className="w-8 h-8 text-gold mb-4" />
+            <h3 class="font-bold text-foreground mb-2">Senza carta di credito</h3>
+            <p class="text-foreground/60 text-sm font-light leading-relaxed">
+              Accettiamo bancomat, prepagate (PostePay, Revolut, N26) e contanti per il deposito cauzionale. Nessun blocco sulla carta.
+            </p>
+          </div>
+          <div class="bg-background border border-border rounded-2xl p-6">
+            <ShieldCheck className="w-8 h-8 text-gold mb-4" />
+            <h3 class="font-bold text-foreground mb-2">Tutto incluso</h3>
+            <p class="text-foreground/60 text-sm font-light leading-relaxed">
+              Le tariffe includono assicurazione, chilometraggio illimitato e consegna gratuita in tutta la Gallura. Nessuna commissione nascosta.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section class="py-20 px-4 md:px-12">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+          Pronto a prenotare?
+        </h2>
+        <p class="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
+          Conferma le tariffe per le tue date e scegli il veicolo perfetto per la tua vacanza in Costa Smeralda.
+        </p>
+        <a
+          href="/prenotaora"
+          class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
+        >
+          Verifica disponibilità
+          <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioCostaSmeralda, {
+  costaSmeraldaJsonLd,
+  costaSmeraldaFaqJsonLd,
+} from "@/views/NoleggioCostaSmeralda";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Location de Voiture Costa Smeralda | Porto Cervo | KS Rent"
+  description="Location de supercars et SUV en Costa Smeralda. Livraison à l'hôtel ou à la villa à Porto Cervo, San Pantaleo et Porto Rotondo. Réservez en ligne."
+  canonical="https://www.ksrentsardinia.com/fr/location-voiture-costa-smeralda"
+  jsonLd={[
+    costaSmeraldaJsonLd,
+    costaSmeraldaFaqJsonLd,
+    buildBreadcrumb("Location de Voiture Costa Smeralda", "/fr/location-voiture-costa-smeralda"),
+  ]}
+>
+  <NoleggioCostaSmeralda lang="fr" />
+</BaseLayout>

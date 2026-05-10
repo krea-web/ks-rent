@@ -14,8 +14,12 @@ import {
   CreditCard,
   MapPin,
   Waves,
+  Car,
+  Bike,
+  Sparkles,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/theme-provider";
@@ -25,79 +29,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getDict } from "@/i18n";
+import { localizePath, getFleetPath, type Locale } from "@/lib/i18n";
+
 const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
-type LucideIcon = React.ComponentType<{ size?: number; className?: string }>;
+// Compatibile sia con icone lucide (ForwardRefExoticComponent) sia con qualsiasi React.ComponentType
+type LucideIcon = React.ComponentType<any>;
 type DeliveryItem = { label: string; to: string; Icon?: LucideIcon };
 
-const PUNTI_PRINCIPALI: DeliveryItem[] = [
-  { label: "Aeroporto Olbia", to: "/noleggio-auto-aeroporto-olbia", Icon: Plane },
-  { label: "Porto Olbia", to: "/noleggio-auto-porto-olbia", Icon: Anchor },
-  { label: "Costa Smeralda", to: "/noleggio-auto-costa-smeralda", Icon: Palmtree },
-  { label: "Senza Carta di Credito", to: "/noleggio-auto-senza-carta-di-credito-olbia", Icon: CreditCard },
-];
+interface NavbarProps {
+  lang?: Locale;
+}
 
-const LOC_COSTA_SMERALDA: DeliveryItem[] = [
-  { label: "Porto Cervo", to: "/noleggio-auto-porto-cervo" },
-  { label: "Baja Sardinia", to: "/noleggio-auto-baja-sardinia" },
-  { label: "Poltu Quatu", to: "/noleggio-auto-poltu-quatu" },
-  { label: "Porto Rotondo", to: "/noleggio-auto-porto-rotondo" },
-  { label: "Marinella", to: "/noleggio-auto-marinella" },
-  { label: "Portisco", to: "/noleggio-auto-portisco" },
-  { label: "Palau", to: "/noleggio-auto-palau" },
-  { label: "Cannigione", to: "/noleggio-auto-cannigione" },
-  { label: "Arzachena", to: "/noleggio-auto-arzachena" },
-  { label: "Santa Teresa Gallura", to: "/noleggio-auto-santa-teresa-gallura" },
-];
+/** Prefix a dynamic SEO slug (locality / beach) with the locale when needed. */
+const localizeSlug = (slug: string, lang: Locale) =>
+  lang === "it" ? `/${slug}` : `/${lang}/${slug}`;
 
-const LOC_COSTA_EST: DeliveryItem[] = [
-  { label: "San Teodoro", to: "/noleggio-auto-san-teodoro" },
-  { label: "Puntaldia", to: "/noleggio-auto-puntaldia" },
-  { label: "Murta Maria", to: "/noleggio-auto-murta-maria" },
-  { label: "Porto San Paolo", to: "/noleggio-auto-porto-san-paolo" },
-  { label: "Budoni", to: "/noleggio-auto-budoni" },
-  { label: "Agrustos", to: "/noleggio-auto-agrustos" },
-  { label: "Capo Coda Cavallo", to: "/noleggio-auto-capo-coda-cavallo" },
-  { label: "Pittulongu", to: "/noleggio-auto-pittulongu" },
-  { label: "Bados", to: "/noleggio-auto-bados" },
-  { label: "Golfo Aranci", to: "/noleggio-auto-golfo-aranci" },
-];
-
-const SPIAGGE_COSTA_SMERALDA: DeliveryItem[] = [
-  { label: "Spiaggia del Principe", to: "/spiaggia-del-principe" },
-  { label: "Liscia Ruja", to: "/liscia-ruja" },
-  { label: "Capriccioli", to: "/capriccioli" },
-  { label: "Romazzino", to: "/romazzino" },
-  { label: "Grande Pevero", to: "/grande-pevero" },
-  { label: "La Celvia", to: "/la-celvia" },
-  { label: "Cala del Faro", to: "/cala-del-faro" },
-  { label: "Cala Moresca", to: "/cala-moresca" },
-  { label: "Cala Sabina", to: "/cala-sabina" },
-  { label: "Spiaggia Marinella", to: "/spiaggia-marinella" },
-];
-
-const SPIAGGE_COSTA_EST_NORD: DeliveryItem[] = [
-  { label: "La Cinta", to: "/la-cinta" },
-  { label: "Cala Brandinchi", to: "/cala-brandinchi" },
-  { label: "Lu Impostu", to: "/lu-impostu" },
-  { label: "Porto Istana", to: "/porto-istana" },
-  { label: "Porto Taverna", to: "/porto-taverna" },
-  { label: "Spiaggia Bianca", to: "/spiaggia-bianca" },
-  { label: "Spiaggia Pittulongu", to: "/spiaggia-pittulongu" },
-  { label: "Spiaggia Bados", to: "/spiaggia-bados" },
-  { label: "Rena Bianca", to: "/rena-bianca" },
-  { label: "Capo Testa", to: "/capo-testa" },
-];
-
-const ALL_DELIVERY_PATHS: string[] = [
-  ...PUNTI_PRINCIPALI,
-  ...LOC_COSTA_SMERALDA,
-  ...LOC_COSTA_EST,
-  ...SPIAGGE_COSTA_SMERALDA,
-  ...SPIAGGE_COSTA_EST_NORD,
-].map((l) => l.to);
-
-const ThemeToggle = () => {
+const ThemeToggle = ({ lightLabel, darkLabel }: { lightLabel: string; darkLabel: string }) => {
   const { theme, setTheme } = useTheme();
   const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
@@ -105,7 +54,7 @@ const ThemeToggle = () => {
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className="relative z-50 p-2.5 bg-white/5 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-gold/10 hover:border-gold/30 transition-all duration-300"
-      aria-label={isDark ? "Attiva tema chiaro" : "Attiva tema scuro"}
+      aria-label={isDark ? lightLabel : darkLabel}
     >
       {isDark ? (
         <Sun size={18} className="text-gold pointer-events-none" />
@@ -218,15 +167,119 @@ const MobileAccordion = ({
   </div>
 );
 
-const Navbar = () => {
+const Navbar = ({ lang = "it" }: NavbarProps) => {
+  const t = getDict(lang);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [flottaOpen, setFlottaOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>("punti");
   const location = useLocation();
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const flottaTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Localized top-level paths
+  const homeHref = localizePath("/", lang);
+  const fleetHref = localizePath("/flotta", lang);
+  const aboutHref = localizePath("/chisiamo", lang);
+  const bookHref = localizePath("/prenotaora", lang);
+  const siteMapHref = localizePath("/mappa-sito", lang);
+
+  // Localized service landing paths
+  const airportHref = localizePath("/noleggio-auto-aeroporto-olbia", lang);
+  const portHref = localizePath("/noleggio-auto-porto-olbia", lang);
+  const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
+  const noCardHref = localizePath("/noleggio-auto-senza-carta-di-credito-olbia", lang);
+
+  // Fleet vehicle URLs
+  const fleetBase = getFleetPath(lang);
+  const fleetVehicleHref = (slug: string) =>
+    lang === "it" ? `${fleetBase}/${slug}` : `/${lang}${fleetBase}/${slug}`;
+
+  // Delivery main hubs (use localized service hrefs)
+  const PUNTI_PRINCIPALI: DeliveryItem[] = [
+    { label: t.nav.deliveryItems.airport, to: airportHref, Icon: Plane },
+    { label: t.nav.deliveryItems.port, to: portHref, Icon: Anchor },
+    { label: t.nav.deliveryItems.costaSmeralda, to: costaSmeraldaHref, Icon: Palmtree },
+    { label: t.nav.deliveryItems.noCard, to: noCardHref, Icon: CreditCard },
+  ];
+
+  const LOC_COSTA_SMERALDA: DeliveryItem[] = [
+    { label: "Porto Cervo", to: localizeSlug("noleggio-auto-porto-cervo", lang) },
+    { label: "Baja Sardinia", to: localizeSlug("noleggio-auto-baja-sardinia", lang) },
+    { label: "Poltu Quatu", to: localizeSlug("noleggio-auto-poltu-quatu", lang) },
+    { label: "Porto Rotondo", to: localizeSlug("noleggio-auto-porto-rotondo", lang) },
+    { label: "Marinella", to: localizeSlug("noleggio-auto-marinella", lang) },
+    { label: "Portisco", to: localizeSlug("noleggio-auto-portisco", lang) },
+    { label: "Palau", to: localizeSlug("noleggio-auto-palau", lang) },
+    { label: "Cannigione", to: localizeSlug("noleggio-auto-cannigione", lang) },
+    { label: "Arzachena", to: localizeSlug("noleggio-auto-arzachena", lang) },
+    { label: "Santa Teresa Gallura", to: localizeSlug("noleggio-auto-santa-teresa-gallura", lang) },
+  ];
+
+  const LOC_COSTA_EST: DeliveryItem[] = [
+    { label: "San Teodoro", to: localizeSlug("noleggio-auto-san-teodoro", lang) },
+    { label: "Puntaldia", to: localizeSlug("noleggio-auto-puntaldia", lang) },
+    { label: "Murta Maria", to: localizeSlug("noleggio-auto-murta-maria", lang) },
+    { label: "Porto San Paolo", to: localizeSlug("noleggio-auto-porto-san-paolo", lang) },
+    { label: "Budoni", to: localizeSlug("noleggio-auto-budoni", lang) },
+    { label: "Agrustos", to: localizeSlug("noleggio-auto-agrustos", lang) },
+    { label: "Capo Coda Cavallo", to: localizeSlug("noleggio-auto-capo-coda-cavallo", lang) },
+    { label: "Pittulongu", to: localizeSlug("noleggio-auto-pittulongu", lang) },
+    { label: "Bados", to: localizeSlug("noleggio-auto-bados", lang) },
+    { label: "Golfo Aranci", to: localizeSlug("noleggio-auto-golfo-aranci", lang) },
+  ];
+
+  const SPIAGGE_COSTA_SMERALDA: DeliveryItem[] = [
+    { label: "Spiaggia del Principe", to: localizeSlug("spiaggia-del-principe", lang) },
+    { label: "Liscia Ruja", to: localizeSlug("liscia-ruja", lang) },
+    { label: "Capriccioli", to: localizeSlug("capriccioli", lang) },
+    { label: "Romazzino", to: localizeSlug("romazzino", lang) },
+    { label: "Grande Pevero", to: localizeSlug("grande-pevero", lang) },
+    { label: "La Celvia", to: localizeSlug("la-celvia", lang) },
+    { label: "Cala del Faro", to: localizeSlug("cala-del-faro", lang) },
+    { label: "Cala Moresca", to: localizeSlug("cala-moresca", lang) },
+    { label: "Cala Sabina", to: localizeSlug("cala-sabina", lang) },
+    { label: "Spiaggia Marinella", to: localizeSlug("spiaggia-marinella", lang) },
+  ];
+
+  const SPIAGGE_COSTA_EST_NORD: DeliveryItem[] = [
+    { label: "La Cinta", to: localizeSlug("la-cinta", lang) },
+    { label: "Cala Brandinchi", to: localizeSlug("cala-brandinchi", lang) },
+    { label: "Lu Impostu", to: localizeSlug("lu-impostu", lang) },
+    { label: "Porto Istana", to: localizeSlug("porto-istana", lang) },
+    { label: "Porto Taverna", to: localizeSlug("porto-taverna", lang) },
+    { label: "Spiaggia Bianca", to: localizeSlug("spiaggia-bianca", lang) },
+    { label: "Spiaggia Pittulongu", to: localizeSlug("spiaggia-pittulongu", lang) },
+    { label: "Spiaggia Bados", to: localizeSlug("spiaggia-bados", lang) },
+    { label: "Rena Bianca", to: localizeSlug("rena-bianca", lang) },
+    { label: "Capo Testa", to: localizeSlug("capo-testa", lang) },
+  ];
+
+  const VEICOLI_AUTO: DeliveryItem[] = [
+    { label: "Audi RS3", to: fleetVehicleHref("audi-rs3"), Icon: Sparkles },
+    { label: "BMW M2", to: fleetVehicleHref("bmw-m2"), Icon: Sparkles },
+    { label: "Mercedes Classe A", to: fleetVehicleHref("mercedes-classe-a"), Icon: Car },
+    { label: "Jeep Avenger", to: fleetVehicleHref("jeep-avenger"), Icon: Car },
+    { label: "Fiat Panda", to: fleetVehicleHref("fiat-panda"), Icon: Car },
+  ];
+
+  const VEICOLI_DUE_RUOTE: DeliveryItem[] = [
+    { label: "Honda SH", to: fleetVehicleHref("honda-sh"), Icon: Bike },
+    { label: "Yamaha Quad Raptor", to: fleetVehicleHref("yamaha-quad-raptor"), Icon: Bike },
+  ];
+
+  const ALL_DELIVERY_PATHS: string[] = [
+    ...PUNTI_PRINCIPALI,
+    ...LOC_COSTA_SMERALDA,
+    ...LOC_COSTA_EST,
+    ...SPIAGGE_COSTA_SMERALDA,
+    ...SPIAGGE_COSTA_EST_NORD,
+  ].map((l) => l.to);
 
   const isDeliveryActive = ALL_DELIVERY_PATHS.includes(location.pathname);
+  const isFlottaActive =
+    location.pathname === fleetHref || location.pathname.startsWith(`${fleetHref}/`);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -241,12 +294,14 @@ const Navbar = () => {
   useEffect(() => {
     setOpen(false);
     setMegaOpen(false);
+    setFlottaOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMegaOpen(false);
+        setFlottaOpen(false);
         setOpen(false);
       }
     };
@@ -260,10 +315,24 @@ const Navbar = () => {
       closeTimerRef.current = null;
     }
     setMegaOpen(true);
+    setFlottaOpen(false);
   };
   const handleMegaLeave = () => {
     if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
     closeTimerRef.current = setTimeout(() => setMegaOpen(false), 150);
+  };
+
+  const handleFlottaEnter = () => {
+    if (flottaTimerRef.current) {
+      clearTimeout(flottaTimerRef.current);
+      flottaTimerRef.current = null;
+    }
+    setFlottaOpen(true);
+    setMegaOpen(false);
+  };
+  const handleFlottaLeave = () => {
+    if (flottaTimerRef.current) clearTimeout(flottaTimerRef.current);
+    flottaTimerRef.current = setTimeout(() => setFlottaOpen(false), 150);
   };
 
   const renderSimpleLink = (l: { label: string; to: string }) => {
@@ -293,6 +362,8 @@ const Navbar = () => {
     );
   };
 
+  const whatsappHref = `https://wa.me/393446107071?text=${encodeURIComponent(t.mobileStickyCta.whatsappPrefill)}`;
+
   return (
     <>
       <nav
@@ -304,10 +375,10 @@ const Navbar = () => {
         )}
       >
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
-          <Link to="/" className="flex items-center group relative z-50">
+          <Link to={homeHref} className="flex items-center group relative z-50">
             <img
               src={logo}
-              alt="KS Rent Noleggio Auto Olbia Costa Smeralda"
+              alt={t.nav.logoAlt}
               width={120}
               height={48}
               className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105 pointer-events-none"
@@ -319,8 +390,42 @@ const Navbar = () => {
 
           {/* DESKTOP NAV PILL */}
           <div className="hidden lg:flex items-center gap-1 bg-gray-100/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-1.5 rounded-full backdrop-blur-md">
-            {renderSimpleLink({ label: "Home", to: "/" })}
-            {renderSimpleLink({ label: "Flotta", to: "/flotta" })}
+            {renderSimpleLink({ label: t.nav.home, to: homeHref })}
+
+            {/* Flotta trigger */}
+            <button
+              type="button"
+              onMouseEnter={handleFlottaEnter}
+              onMouseLeave={handleFlottaLeave}
+              onClick={() => setFlottaOpen((v) => !v)}
+              aria-expanded={flottaOpen}
+              aria-haspopup="true"
+              className="relative flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase rounded-full transition-colors group min-h-[44px]"
+            >
+              <span
+                className={cn(
+                  "relative z-10 transition-colors duration-300 pointer-events-none whitespace-nowrap",
+                  isFlottaActive ? "text-black" : "text-gray-500 dark:text-white/70 group-hover:text-gray-900 dark:group-hover:text-white",
+                )}
+              >
+                {t.nav.fleet}
+              </span>
+              <ChevronDown
+                size={12}
+                className={cn(
+                  "relative z-10 transition-transform duration-300 pointer-events-none",
+                  isFlottaActive ? "text-black" : "text-gray-500 dark:text-white/70 group-hover:text-gray-900 dark:group-hover:text-white",
+                  flottaOpen && "rotate-180",
+                )}
+              />
+              {isFlottaActive && (
+                <motion.div
+                  layoutId="nav-indicator"
+                  className="absolute inset-0 bg-gold rounded-full z-0 shadow-[0_0_15px_rgba(212,175,55,0.4)] pointer-events-none"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+            </button>
 
             {/* Dove Consegniamo trigger */}
             <button
@@ -338,7 +443,7 @@ const Navbar = () => {
                   isDeliveryActive ? "text-black" : "text-gray-500 dark:text-white/70 group-hover:text-gray-900 dark:group-hover:text-white",
                 )}
               >
-                Dove Consegniamo
+                {t.nav.deliveryWhere}
               </span>
               <ChevronDown
                 size={12}
@@ -357,26 +462,27 @@ const Navbar = () => {
               )}
             </button>
 
-            {renderSimpleLink({ label: "Chi Siamo", to: "/chisiamo" })}
+            {renderSimpleLink({ label: t.nav.aboutUs, to: aboutHref })}
           </div>
 
-          {/* DESKTOP CTA + THEME TOGGLE */}
+          {/* DESKTOP CTA + THEME TOGGLE + LANGUAGE */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
-              to="/mappa-sito"
+              to={siteMapHref}
               className="text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-white/50 hover:text-gold transition-colors"
-              aria-label="Mappa del sito"
-              title="Mappa del sito"
+              aria-label={t.nav.siteMapAria}
+              title={t.nav.siteMapAria}
             >
-              Mappa
+              {t.nav.siteMapShort}
             </Link>
-            <ThemeToggle />
+            <LanguageSwitcher variant="compact" />
+            <ThemeToggle lightLabel={t.nav.themeLight} darkLabel={t.nav.themeDark} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
                   className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black text-xs font-black uppercase tracking-widest hover:bg-gold transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] group min-h-[44px]"
                 >
-                  <span className="pointer-events-none">Prenota Ora</span>
+                  <span className="pointer-events-none">{t.nav.bookNow}</span>
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform pointer-events-none" />
                 </button>
               </DropdownMenuTrigger>
@@ -387,35 +493,36 @@ const Navbar = () => {
               >
                 <DropdownMenuItem asChild>
                   <Link
-                    to="/prenotaora"
+                    to={bookHref}
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-gray-900 dark:text-white hover:bg-gold/10 hover:text-gold transition-colors cursor-pointer"
                   >
                     <CalendarDays size={18} className="text-gold" />
-                    Prenota Online
+                    {t.cta.bookOnline}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <a
-                    href="https://wa.me/393446107071?text=Ciao%2C%20vorrei%20prenotare%20un%20veicolo"
+                    href={whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-gray-900 dark:text-white hover:bg-[#25D366]/10 hover:text-[#25D366] transition-colors cursor-pointer"
                   >
                     <WhatsAppIcon size={18} className="fill-[#25D366]" />
-                    Prenota su WhatsApp
+                    {t.cta.bookWhatsapp}
                   </a>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
 
-          {/* MOBILE/TABLET: THEME TOGGLE + HAMBURGER */}
+          {/* MOBILE/TABLET: LANGUAGE + THEME TOGGLE + HAMBURGER */}
           <div className="lg:hidden flex items-center gap-2 relative z-50">
-            <ThemeToggle />
+            <LanguageSwitcher variant="compact" />
+            <ThemeToggle lightLabel={t.nav.themeLight} darkLabel={t.nav.themeDark} />
             <button
               className="text-gray-900 dark:text-white p-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
               onClick={() => setOpen(!open)}
-              aria-label={open ? "Chiudi menu" : "Apri menu"}
+              aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
             >
               {open ? <X size={20} className="text-gold pointer-events-none" /> : <Menu size={20} className="pointer-events-none" />}
             </button>
@@ -440,48 +547,105 @@ const Navbar = () => {
                 {/* Header narrative */}
                 <div className="px-7 pt-6 pb-5 border-b border-gray-200 dark:border-white/10">
                   <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-[10px] mb-2">
-                    Dove consegniamo
+                    {t.nav.deliveryWhere}
                   </span>
                   <h3 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-white leading-tight">
-                    Le nostre auto ovunque tu sia in Gallura.
+                    {t.nav.deliveryTitle}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-white/60 mt-1.5 font-light">
-                    Aeroporto, porto, hotel, ville e direttamente in spiaggia.
+                    {t.nav.deliverySubtitle}
                   </p>
                 </div>
 
                 {/* 5 columns */}
                 <div className="grid grid-cols-5 divide-x divide-gray-200 dark:divide-white/10">
                   <MegaColumn
-                    title="Punti Principali"
+                    title={t.nav.mainPoints}
                     IconC={MapPin}
                     items={PUNTI_PRINCIPALI}
                     onItemClick={() => setMegaOpen(false)}
                     withIcons
                   />
                   <MegaColumn
-                    title="Loc. Costa Smeralda"
+                    title={t.nav.locCostaSmeralda}
                     IconC={MapPin}
                     items={LOC_COSTA_SMERALDA}
                     onItemClick={() => setMegaOpen(false)}
                   />
                   <MegaColumn
-                    title="Loc. Costa Est"
+                    title={t.nav.locCostaEst}
                     IconC={MapPin}
                     items={LOC_COSTA_EST}
                     onItemClick={() => setMegaOpen(false)}
                   />
                   <MegaColumn
-                    title="Spiagge Costa Smer."
+                    title={t.nav.beachesCS}
                     IconC={Waves}
                     items={SPIAGGE_COSTA_SMERALDA}
                     onItemClick={() => setMegaOpen(false)}
                   />
                   <MegaColumn
-                    title="Spiagge Costa Est & Nord"
+                    title={t.nav.beachesEN}
                     IconC={Waves}
                     items={SPIAGGE_COSTA_EST_NORD}
                     onItemClick={() => setMegaOpen(false)}
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* DESKTOP FLOTTA MEGA-MENU */}
+        <AnimatePresence>
+          {flottaOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              onMouseEnter={handleFlottaEnter}
+              onMouseLeave={handleFlottaLeave}
+              className="hidden lg:block absolute top-full left-0 right-0 mt-2 px-4 md:px-8"
+            >
+              <div className="relative max-w-4xl mx-auto bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-3xl shadow-2xl overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent pointer-events-none" />
+
+                <div className="px-7 pt-6 pb-5 border-b border-gray-200 dark:border-white/10 flex items-center justify-between gap-4">
+                  <div>
+                    <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-[10px] mb-2">
+                      {t.nav.fleet}
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-white leading-tight">
+                      {t.nav.fleetSubtitle}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-white/60 mt-1.5 font-light">
+                      {t.nav.fleetDesc}
+                    </p>
+                  </div>
+                  <Link
+                    to={fleetHref}
+                    onClick={() => setFlottaOpen(false)}
+                    className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold hover:text-gold/80 whitespace-nowrap"
+                  >
+                    {t.nav.seeAll} <ArrowRight size={12} />
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-2 divide-x divide-gray-200 dark:divide-white/10">
+                  <MegaColumn
+                    title={t.nav.cars}
+                    IconC={Car}
+                    items={VEICOLI_AUTO}
+                    onItemClick={() => setFlottaOpen(false)}
+                    withIcons
+                  />
+                  <MegaColumn
+                    title={t.nav.twoWheels}
+                    IconC={Bike}
+                    items={VEICOLI_DUE_RUOTE}
+                    onItemClick={() => setFlottaOpen(false)}
+                    withIcons
                   />
                 </div>
               </div>
@@ -520,7 +684,7 @@ const Navbar = () => {
             <div className="relative min-h-full flex flex-col">
               {/* Top simple links */}
               <div className="flex flex-col gap-1 w-full">
-                {[{ label: "Home", to: "/" }, { label: "Flotta", to: "/flotta" }].map((l, i) => {
+                {[{ label: t.nav.home, to: homeHref }, { label: t.nav.fleet, to: fleetHref }].map((l, i) => {
                   const isActive = location.pathname === l.to;
                   return (
                     <motion.div
@@ -549,6 +713,53 @@ const Navbar = () => {
                 })}
               </div>
 
+              {/* FLOTTA section */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.35, ease: "easeOut" }}
+                className="mt-6 pt-6 border-t border-gray-200 dark:border-white/10"
+              >
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <div>
+                    <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-[10px] mb-1.5">
+                      {t.nav.fleet}
+                    </span>
+                    <p className="text-gray-600 dark:text-white/60 text-sm font-light leading-snug">
+                      {t.nav.fleetMobileDesc}
+                    </p>
+                  </div>
+                  <Link
+                    to={fleetHref}
+                    onClick={() => setOpen(false)}
+                    className="text-xs font-bold uppercase tracking-wider text-gold hover:text-gold/80 whitespace-nowrap"
+                  >
+                    {t.nav.allShort} →
+                  </Link>
+                </div>
+
+                <MobileAccordion
+                  id="vei-auto"
+                  title={t.nav.cars}
+                  IconC={Car}
+                  active={mobileSection === "vei-auto"}
+                  onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
+                  items={VEICOLI_AUTO}
+                  closeMenu={() => setOpen(false)}
+                  withIcons
+                />
+                <MobileAccordion
+                  id="vei-due"
+                  title={t.nav.twoWheels}
+                  IconC={Bike}
+                  active={mobileSection === "vei-due"}
+                  onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
+                  items={VEICOLI_DUE_RUOTE}
+                  closeMenu={() => setOpen(false)}
+                  withIcons
+                />
+              </motion.div>
+
               {/* DOVE CONSEGNIAMO section */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -558,16 +769,16 @@ const Navbar = () => {
               >
                 <div className="mb-4">
                   <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-[10px] mb-1.5">
-                    Dove consegniamo
+                    {t.nav.deliveryWhere}
                   </span>
                   <p className="text-gray-600 dark:text-white/60 text-sm font-light leading-snug">
-                    Le nostre auto ovunque tu sia in Gallura.
+                    {t.nav.deliveryTitle}
                   </p>
                 </div>
 
                 <MobileAccordion
                   id="punti"
-                  title="Punti Principali"
+                  title={t.nav.mainPoints}
                   IconC={MapPin}
                   active={mobileSection === "punti"}
                   onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
@@ -577,7 +788,7 @@ const Navbar = () => {
                 />
                 <MobileAccordion
                   id="loc-cs"
-                  title="Località Costa Smeralda"
+                  title={t.nav.locCostaSmeraldaFull}
                   IconC={MapPin}
                   active={mobileSection === "loc-cs"}
                   onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
@@ -586,7 +797,7 @@ const Navbar = () => {
                 />
                 <MobileAccordion
                   id="loc-est"
-                  title="Località Costa Est"
+                  title={t.nav.locCostaEstFull}
                   IconC={MapPin}
                   active={mobileSection === "loc-est"}
                   onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
@@ -595,7 +806,7 @@ const Navbar = () => {
                 />
                 <MobileAccordion
                   id="sp-cs"
-                  title="Spiagge Costa Smeralda"
+                  title={t.nav.beachesCSFull}
                   IconC={Waves}
                   active={mobileSection === "sp-cs"}
                   onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
@@ -604,7 +815,7 @@ const Navbar = () => {
                 />
                 <MobileAccordion
                   id="sp-est"
-                  title="Spiagge Costa Est & Nord"
+                  title={t.nav.beachesEN}
                   IconC={Waves}
                   active={mobileSection === "sp-est"}
                   onToggle={(id) => setMobileSection(mobileSection === id ? null : id)}
@@ -621,26 +832,26 @@ const Navbar = () => {
                 className="mt-6 pt-6 border-t border-gray-200 dark:border-white/10 flex flex-col gap-1"
               >
                 <Link
-                  to="/chisiamo"
+                  to={aboutHref}
                   onClick={() => setOpen(false)}
                   className={cn(
                     "w-full flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-display font-black leading-snug tracking-normal transition-colors min-h-[48px] py-2.5 pr-4 rounded-xl",
-                    location.pathname === "/chisiamo"
+                    location.pathname === aboutHref
                       ? "text-gold"
                       : "text-gray-800 dark:text-white/75 hover:text-gray-900 dark:hover:text-white",
                   )}
                 >
-                  {location.pathname === "/chisiamo" && (
+                  {location.pathname === aboutHref && (
                     <span className="w-2.5 h-2.5 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)] pointer-events-none" />
                   )}
-                  <span className="pointer-events-none break-words">Chi Siamo</span>
+                  <span className="pointer-events-none break-words">{t.nav.aboutUs}</span>
                 </Link>
                 <Link
-                  to="/prenotaora"
+                  to={bookHref}
                   onClick={() => setOpen(false)}
                   className="mt-4 sm:mt-6 w-full flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-display font-black leading-snug tracking-normal transition-colors min-h-[48px] py-2.5 pr-4 rounded-xl text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-500"
                 >
-                  <span className="break-words">Prenota Ora</span>
+                  <span className="break-words">{t.nav.bookNow}</span>
                 </Link>
               </motion.div>
 
@@ -652,7 +863,7 @@ const Navbar = () => {
                 className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gray-200 dark:border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4"
               >
                 <div>
-                  <p className="text-gray-400 dark:text-white/40 text-xs uppercase tracking-widest mb-2 pointer-events-none">Assistenza</p>
+                  <p className="text-gray-400 dark:text-white/40 text-xs uppercase tracking-widest mb-2 pointer-events-none">{t.nav.support}</p>
                   <a href="tel:+393446107071" className="text-gold font-bold relative z-20 min-h-[48px] inline-flex items-center">
                     +39 344 610 7071
                   </a>
@@ -671,12 +882,12 @@ const Navbar = () => {
                 className="mt-6 pt-4 border-t border-gray-200 dark:border-white/5 text-center"
               >
                 <Link
-                  to="/mappa-sito"
+                  to={siteMapHref}
                   onClick={() => setOpen(false)}
                   className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-gray-500 dark:text-white/50 hover:text-gold transition-colors min-h-[44px]"
                 >
                   <MapPin size={12} className="text-gold/70" />
-                  Mappa del sito
+                  {t.nav.siteMapFull}
                 </Link>
               </motion.div>
             </div>

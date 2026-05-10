@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioAeroportoOlbia from "@/views/NoleggioAeroportoOlbia";
+import {
+  aeroportoAutoRentalJsonLd,
+  aeroportoFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Car Hire Olbia Airport | KS Rent"
+  description="Car hire with immediate delivery at Olbia Airport. Supercars, SUVs and motorbikes without a credit card. Book online with KS Rent."
+  canonical="https://www.ksrentsardinia.com/en/car-hire-olbia-airport"
+  jsonLd={[
+    aeroportoAutoRentalJsonLd,
+    aeroportoFaqJsonLd,
+    buildBreadcrumb("Car Hire Olbia Airport", "/en/car-hire-olbia-airport"),
+  ]}
+>
+  <NoleggioAeroportoOlbia lang="en" />
+</BaseLayout>

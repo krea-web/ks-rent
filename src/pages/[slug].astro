@@ -175,6 +175,7 @@ function relatedLabel(s: string) {
   canonical={data.canonical_url}
   ogImage={data.og_image_url}
   jsonLd={jsonLd}
+  breadcrumbs={[{ name: data.title, path: `/${data.slug}` }]}
 >
   <div class="bg-background min-h-screen">
     {/* ════════════ 1. HERO SECTION ════════════ */}
@@ -299,13 +300,21 @@ function relatedLabel(s: string) {
                 </div>
               </div>
 
-              <a
-                href="/prenotaora"
-                class="mt-10 inline-flex items-center justify-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform"
-              >
-                Prenota questo veicolo
-                <ArrowRight className="w-4 h-4" />
-              </a>
+              <div class="mt-10 flex flex-wrap gap-3">
+                <a
+                  href={`/flotta/${vehicle.groupSlug}`}
+                  class="inline-flex items-center justify-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-7 py-4 rounded-full hover:scale-105 transition-transform"
+                >
+                  Scopri {vehicle.name.split(" ").slice(0, 2).join(" ")}
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <a
+                  href="/prenotaora"
+                  class="inline-flex items-center justify-center gap-2 border border-foreground/20 text-foreground/80 font-bold uppercase tracking-wider text-xs px-6 py-4 rounded-full hover:border-gold hover:text-gold transition-colors"
+                >
+                  Prenota ora
+                </a>
+              </div>
             </div>
           </div>
         </div>

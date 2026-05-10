@@ -15,6 +15,14 @@ export default defineConfig({
   site: SITE_URL,
   output: "static",
   trailingSlash: "never",
+  i18n: {
+    defaultLocale: "it",
+    locales: ["it", "en", "de", "fr"],
+    routing: {
+      prefixDefaultLocale: false, // IT senza prefisso
+      redirectToDefaultLocale: false,
+    },
+  },
   build: {
     inlineStylesheets: "auto",
   },
@@ -38,6 +46,7 @@ export default defineConfig({
         } else if (
           url.endsWith("/prenotaora") ||
           url.endsWith("/flotta") ||
+          url.endsWith("/tariffe") ||
           url.endsWith("/chisiamo") ||
           url.includes("/noleggio-auto-aeroporto-olbia") ||
           url.includes("/noleggio-auto-porto-olbia") ||
@@ -45,9 +54,12 @@ export default defineConfig({
           url.includes("/noleggio-auto-senza-carta-di-credito-olbia")
         ) {
           priority = 0.9;
-          changefreq = url.endsWith("/prenotaora") || url.endsWith("/flotta") ? "weekly" : "monthly";
+          changefreq = url.endsWith("/prenotaora") || url.endsWith("/flotta") || url.endsWith("/tariffe") ? "weekly" : "monthly";
         } else if (url.includes("/noleggio-auto-")) {
           priority = 0.8;
+        } else if (url.includes("/flotta/")) {
+          priority = 0.85;
+          changefreq = "monthly";
         }
         return {
           ...item,

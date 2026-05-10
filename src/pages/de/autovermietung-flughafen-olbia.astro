@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioAeroportoOlbia from "@/views/NoleggioAeroportoOlbia";
+import {
+  aeroportoAutoRentalJsonLd,
+  aeroportoFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Autovermietung Flughafen Olbia | KS Rent"
+  description="Autovermietung mit sofortiger Lieferung am Flughafen Olbia. Supersportwagen, SUVs und Motorräder ohne Kreditkarte. Online buchen mit KS Rent."
+  canonical="https://www.ksrentsardinia.com/de/autovermietung-flughafen-olbia"
+  jsonLd={[
+    aeroportoAutoRentalJsonLd,
+    aeroportoFaqJsonLd,
+    buildBreadcrumb("Autovermietung Flughafen Olbia", "/de/autovermietung-flughafen-olbia"),
+  ]}
+>
+  <NoleggioAeroportoOlbia lang="de" />
+</BaseLayout>

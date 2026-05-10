@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PrenotaOra from "@/views/PrenotaOra";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Réserver Location de Voiture Aéroport Olbia | KS Rent Costa Smeralda"
+  description="Réservez en 2 minutes votre véhicule luxe à Olbia. Livraison à l'aéroport ou à l'hôtel. Dépôt de garantie transparent et couverture d'assurance complète."
+  canonical="https://www.ksrentsardinia.com/fr/reserver"
+  jsonLd={buildBreadcrumb("Réserver Maintenant", "/fr/reserver")}
+  hideMobileSticky={true}
+>
+  <PrenotaOra client:load lang="fr" />
+</BaseLayout>

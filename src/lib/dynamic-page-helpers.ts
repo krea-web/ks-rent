@@ -12,6 +12,8 @@ export interface RecommendedVehicle {
   seats: number;
   fuel: string;
   category: string;
+  /** group_slug del veicolo per linkare a /flotta/[groupSlug] */
+  groupSlug: string;
 }
 
 export const VEHICLES: Record<string, RecommendedVehicle> = {
@@ -24,6 +26,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
     seats: 5,
     fuel: "Benzina",
     category: "Supercar",
+    groupSlug: "audi-rs3",
   },
   luxuryAlt: {
     name: "BMW M2 Coupé",
@@ -34,6 +37,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
     seats: 4,
     fuel: "Benzina",
     category: "Supercar",
+    groupSlug: "bmw-m2",
   },
   elegant: {
     name: "Mercedes Classe A 180d",
@@ -44,6 +48,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
     seats: 5,
     fuel: "Diesel",
     category: "Premium",
+    groupSlug: "mercedes-classe-a",
   },
   offroad: {
     name: "Jeep Avenger",
@@ -54,6 +59,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
     seats: 5,
     fuel: "Benzina",
     category: "SUV",
+    groupSlug: "jeep-avenger",
   },
   city: {
     name: "Fiat Panda",
@@ -64,6 +70,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
     seats: 5,
     fuel: "Benzina",
     category: "City Car",
+    groupSlug: "fiat-panda",
   },
 };
 

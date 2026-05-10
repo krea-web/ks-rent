@@ -3,20 +3,60 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import HeroSection from "@/components/HeroSection";
 import TrustMarquee from "@/components/TrustMarquee";
 import FleetShowcase from "@/components/FleetShowcase";
+import FleetGrid from "@/components/FleetGrid.astro";
 import FAQSection from "@/components/FAQSection";
 import GoogleReviews from "@/components/GoogleReviews";
+import { supabase } from "@/lib/supabase";
+
+// Fetch reviews al build-time da Supabase
+const { data: reviewsData } = await supabase
+  .from("reviews")
+  .select("author_name, author_photo_url, rating, text, published_at, is_featured")
+  .eq("is_published", true)
+  .order("is_featured", { ascending: false })
+  .order("published_at", { ascending: false })
+  .limit(3);
+
+const { count: reviewsCount } = await supabase
+  .from("reviews")
+  .select("id", { count: "exact", head: true })
+  .eq("is_published", true);
+
+const { data: avgData } = await supabase
+  .from("reviews")
+  .select("rating")
+  .eq("is_published", true);
+
+const averageRating = avgData && avgData.length > 0
+  ? avgData.reduce((s, r) => s + r.rating, 0) / avgData.length
+  : null;
 ---
 <BaseLayout
   title="Noleggio Auto Olbia | Autonoleggio Costa Smeralda — KS Rent"
   description="Noleggio auto a Olbia con consegna a domicilio in Costa Smeralda. SUV, supercar e city car senza carta di credito. Prenota online con KS Rent Sardinia."
   canonical="https://www.ksrentsardinia.com/"
   includeGlobalFaq={true}
+  aggregateRating={
+    averageRating !== null && (reviewsCount || 0) >= 5
+      ? { ratingValue: averageRating, reviewCount: reviewsCount! }
+      : undefined
+  }
 >
-  <HeroSection />
-  <TrustMarquee />
-  <FleetShowcase client:visible />
-  <FAQSection />
-  <GoogleReviews />
+  <HeroSection lang="it" />
+  <TrustMarquee lang="it" />
+  <FleetShowcase lang="it" client:visible />
+  <FleetGrid
+    lang="it"
+    heading="La nostra flotta"
+    intro="Ogni veicolo ha la sua pagina con tariffe stagionali, varianti disponibili e destinazioni consigliate."
+  />
+  <FAQSection lang="it" />
+  <GoogleReviews
+    reviews={reviewsData || []}
+    totalCount={reviewsCount || 0}
+    averageRating={averageRating ?? undefined}
+    client:visible
+  />
 
   {/* SEO RICH TEXT statico — letto direttamente da Google senza JS */}
   <section class="py-16 px-4 md:px-12 max-w-7xl mx-auto text-gray-600 dark:text-white/80 font-light leading-relaxed bg-background">

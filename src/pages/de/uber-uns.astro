@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ChiSiamo, { chiSiamoFaqJsonLd } from "@/views/ChiSiamo";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Über uns — KS Rent | Autovermietung Olbia Sardinien"
+  description="KS Rent Sardinia: Premium-Autovermietung mit Sitz in Olbia. Eigener Fuhrpark, Lieferung an die Haustür an der Costa Smeralda, flexible Kaution und ohne Kreditkartenpflicht."
+  canonical="https://www.ksrentsardinia.com/de/uber-uns"
+  jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("Über uns", "/de/uber-uns")]}
+>
+  <ChiSiamo client:load lang="de" />
+</BaseLayout>

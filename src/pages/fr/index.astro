@@ -1,0 +1,112 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import HeroSection from "@/components/HeroSection";
+import TrustMarquee from "@/components/TrustMarquee";
+import FleetShowcase from "@/components/FleetShowcase";
+import FleetGrid from "@/components/FleetGrid.astro";
+import FAQSection from "@/components/FAQSection";
+import GoogleReviews from "@/components/GoogleReviews";
+import { supabase } from "@/lib/supabase";
+
+// Fetch reviews al build-time da Supabase
+const { data: reviewsData } = await supabase
+  .from("reviews")
+  .select("author_name, author_photo_url, rating, text, published_at, is_featured")
+  .eq("is_published", true)
+  .order("is_featured", { ascending: false })
+  .order("published_at", { ascending: false })
+  .limit(3);
+
+const { count: reviewsCount } = await supabase
+  .from("reviews")
+  .select("id", { count: "exact", head: true })
+  .eq("is_published", true);
+
+const { data: avgData } = await supabase
+  .from("reviews")
+  .select("rating")
+  .eq("is_published", true);
+
+const averageRating = avgData && avgData.length > 0
+  ? avgData.reduce((s, r) => s + r.rating, 0) / avgData.length
+  : null;
+---
+<BaseLayout
+  title="Location de Voiture Olbia | Autonoleggio Costa Smeralda — KS Rent"
+  description="Location de voiture à Olbia avec livraison à domicile en Costa Smeralda. SUV, supercars et citadines sans carte de crédit. Réservez en ligne avec KS Rent Sardinia."
+  canonical="https://www.ksrentsardinia.com/fr/"
+  includeGlobalFaq={true}
+  aggregateRating={
+    averageRating !== null && (reviewsCount || 0) >= 5
+      ? { ratingValue: averageRating, reviewCount: reviewsCount! }
+      : undefined
+  }
+>
+  <HeroSection lang="fr" />
+  <TrustMarquee lang="fr" />
+  <FleetShowcase lang="fr" client:visible />
+  <FleetGrid
+    lang="fr"
+    heading="Notre flotte"
+    intro="Chaque véhicule a sa page dédiée avec tarifs saisonniers, variantes disponibles et destinations recommandées."
+  />
+  <FAQSection lang="fr" />
+  <GoogleReviews
+    reviews={reviewsData || []}
+    totalCount={reviewsCount || 0}
+    averageRating={averageRating ?? undefined}
+    client:visible
+  />
+
+  {/* SEO RICH TEXT statique — letto direttamente da Google senza JS */}
+  <section class="py-16 px-4 md:px-12 max-w-7xl mx-auto text-gray-600 dark:text-white/80 font-light leading-relaxed bg-background">
+    <h2 class="text-3xl font-bold text-foreground mb-6">Location de Voiture Olbia — Votre Loueur de Confiance</h2>
+    <p class="mb-4">
+      Vous cherchez une <strong>location de voiture à Olbia</strong> ? KS Rent Sardinia est le <strong>loueur de référence à Olbia</strong>
+      pour tous ceux qui souhaitent explorer la Sardaigne du nord-est sans contraintes. Nous livrons SUV, supercars, citadines,
+      motos et quads directement au
+      <a href="/fr/location-voiture-port-olbia" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Port d'Olbia</a>,
+      à l'<a href="/fr/location-voiture-aeroport-olbia" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aéroport Olbia Costa Smeralda</a>,
+      à votre hôtel ou à votre villa — de 10h00 à 22h30, 7 jours sur 7.
+    </p>
+    <p class="mb-4">
+      <strong>
+        Nous sommes une entreprise fièrement et exclusivement sarde (TVA 03028900904), totalement indépendante et non
+        affiliée à d'autres sociétés homonymes opérant dans le reste de l'Italie.
+      </strong>
+      Nous ne sommes pas un loueur classique ni un intermédiaire web : nous possédons physiquement notre flotte — Audi RS3, BMW M2,
+      Mercedes Classe A, Jeep Avenger, Fiat Panda, Honda SH — et nous la préparons méticuleusement pour chaque client.
+    </p>
+    <p class="mb-4">
+      Notre <strong>location de voiture Olbia</strong> se distingue par un avantage concret : nous acceptons la carte de débit,
+      les cartes prépayées et les espèces pour le dépôt de garantie. Aucune carte de crédit obligatoire, aucun blocage sur la carte,
+      aucune surprise.
+      <a href="/fr/location-voiture-sans-carte-credit-olbia" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Découvrez la location sans carte de crédit</a>.
+    </p>
+
+    <h3 class="text-2xl font-bold text-foreground mt-10 mb-4">Livraison à domicile dans toute la Gallura et la Costa Smeralda</h3>
+    <p class="mb-4">
+      Le service de <strong>location de voiture à Olbia</strong> de KS Rent couvre largement toute la Gallura. Nous livrons dans les localités les plus prisées :
+      <a href="/fr/noleggio-auto-porto-cervo" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Cervo</a>,
+      <a href="/fr/noleggio-auto-san-teodoro" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">San Teodoro</a>,
+      <a href="/fr/noleggio-auto-baja-sardinia" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Baja Sardinia</a>,
+      <a href="/fr/noleggio-auto-palau" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Palau</a>,
+      <a href="/fr/noleggio-auto-porto-rotondo" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Rotondo</a>,
+      <a href="/fr/noleggio-auto-santa-teresa-gallura" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Santa Teresa Gallura</a>,
+      <a href="/fr/noleggio-auto-budoni" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Budoni</a> et la
+      <a href="/fr/location-voiture-costa-smeralda" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</a>.
+      Votre <strong>location de voiture à Olbia</strong> commence dès l'instant où vous atterrissez ou débarquez du ferry.
+    </p>
+
+    <h3 class="text-2xl font-bold text-foreground mt-10 mb-4">Les plus belles plages à portée de voiture</h3>
+    <p class="mb-4">
+      Avec un SUV KS Rent, vous accédez aussi aux criques les plus secrètes de la Sardaigne du nord-est :
+      <a href="/fr/spiaggia-del-principe" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Spiaggia del Principe</a>,
+      <a href="/fr/cala-brandinchi" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Cala Brandinchi</a>,
+      <a href="/fr/la-cinta" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">La Cinta</a>,
+      <a href="/fr/capriccioli" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Capriccioli</a> et
+      <a href="/fr/porto-istana" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Istana</a> avec vue sur Tavolara.
+      Pour les plages avec piste, nous recommandons le Jeep Avenger ; pour les routes panoramiques côtières, l'Audi RS3 ou la BMW M2.
+    </p>
+  </section>
+</BaseLayout>

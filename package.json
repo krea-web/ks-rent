@@ -8,9 +8,11 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "prebuild": "node scripts/fetch-google-reviews.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "indexnow": "node scripts/indexnow-ping.mjs"
+    "indexnow": "node scripts/indexnow-ping.mjs",
+    "sync-reviews": "node scripts/fetch-google-reviews.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.4",

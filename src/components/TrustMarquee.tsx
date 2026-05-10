@@ -1,4 +1,6 @@
 import { ShieldCheck, CreditCard, MapPin, BadgeEuro, Sparkles, Clock } from "lucide-react";
+import { getDict } from "@/i18n";
+import type { Locale } from "@/lib/i18n";
 
 const SUPABASE_LOGOS = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/loghi";
 const audiLogo = `${SUPABASE_LOGOS}/Audi.webp`;
@@ -9,14 +11,9 @@ const fiatLogo = `${SUPABASE_LOGOS}/fiat.webp`;
 const hondaLogo = `${SUPABASE_LOGOS}/honda.webp`;
 const yamahaLogo = `${SUPABASE_LOGOS}/Yamaha.webp`;
 
-const usps = [
-  { text: "Pagamenti Flessibili", icon: CreditCard },
-  { text: "Deposito Cauzionale Trasparente", icon: ShieldCheck },
-  { text: "Olbia & Costa Smeralda", icon: MapPin },
-  { text: "Copertura Assicurativa Completa", icon: BadgeEuro },
-  { text: "Assistenza 24/7", icon: Clock },
-  { text: "Flotta Premium", icon: Sparkles },
-];
+interface TrustMarqueeProps {
+  lang?: Locale;
+}
 
 const brands = [
   { name: "Audi", logo: audiLogo },
@@ -28,10 +25,22 @@ const brands = [
   { name: "Yamaha", logo: yamahaLogo },
 ];
 
-const duplicatedUsps = [...usps, ...usps, ...usps, ...usps];
 const duplicatedBrands = [...brands, ...brands, ...brands, ...brands, ...brands];
 
-const TrustMarquee = () => {
+const TrustMarquee = ({ lang = "it" }: TrustMarqueeProps) => {
+  const t = getDict(lang);
+
+  const usps = [
+    { text: t.trustMarquee.flexiblePayments, icon: CreditCard },
+    { text: t.trustMarquee.transparentDeposit, icon: ShieldCheck },
+    { text: t.trustMarquee.olbiaCostaSmeralda, icon: MapPin },
+    { text: t.trustMarquee.fullInsurance, icon: BadgeEuro },
+    { text: t.trustMarquee.support247, icon: Clock },
+    { text: t.trustMarquee.premiumFleet, icon: Sparkles },
+  ];
+
+  const duplicatedUsps = [...usps, ...usps, ...usps, ...usps];
+
   return (
     <section className="relative py-12 bg-gray-50 dark:bg-[#050505] border-y border-gray-200 dark:border-white/5 overflow-hidden flex flex-col gap-10">
       <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-gray-50 dark:from-[#050505] to-transparent pointer-events-none" />
@@ -87,7 +96,7 @@ const TrustMarquee = () => {
             <div key={`brand-${i}`} className="flex items-center justify-center w-28 h-14 cursor-pointer">
               <img
                 src={brand.logo}
-                alt={`${brand.name} noleggio auto Olbia KS Rent`}
+                alt={`${brand.name} ${t.trustMarquee.brandAltSuffix}`}
                 width={112}
                 height={56}
                 loading="lazy"

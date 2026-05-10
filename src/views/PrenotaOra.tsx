@@ -27,7 +27,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { format, differenceInDays, eachDayOfInterval, getMonth } from "date-fns";
-import { it } from "date-fns/locale";
+import { it as itLocale, enGB as enLocale, de as deLocale, fr as frLocale } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +45,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import LocationStep from "@/components/LocationStep";
 import { useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAPS_API_KEY, LIBRARIES } from "@/lib/googleMaps";
+import type { Locale } from "@/lib/i18n";
 
 // Code splitting: lazy load heavy components
 const Calendar = lazy(() => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })));
@@ -100,7 +101,553 @@ const initialDriverState = {
   licenseBack: null as File | null,
 };
 
-const STEP_LABELS = ["Veicolo", "Date", "Guidatore", "Secondo Guidatore", "Ritiro & Consegna"];
+// ---------------------------------------------------------------------------
+// Translations
+// ---------------------------------------------------------------------------
+const TRANSLATIONS = {
+  it: {
+    seo: {
+      titleDefault: "Prenota Noleggio Auto Olbia Aeroporto | KS Rent Costa Smeralda",
+      titleVehicle: (make: string, model: string) => `Noleggia ${make} ${model} a Olbia — KS Rent`,
+      descDefault:
+        "Prenota in 2 minuti il tuo veicolo luxury a Olbia. Consegna in aeroporto o hotel. Deposito cauzionale trasparente e copertura assicurativa completa.",
+      descVehicle: (make: string, model: string, rate: number) =>
+        `Noleggia ${make} ${model} in Costa Smeralda con protezione completa. Da €${rate}/giorno con KS Rent Olbia.`,
+      breadcrumb: "Prenota Ora",
+    },
+    header: {
+      eyebrow: "Fast Booking",
+      titlePart1: "Prenota",
+      titlePart2: "Ora.",
+      back: "Indietro",
+    },
+    stepLabels: ["Veicolo", "Date", "Guidatore", "Secondo Guidatore", "Ritiro & Consegna"],
+    step1: {
+      heading: "Scegli il Veicolo",
+      categoryAll: "Tutti",
+      soldOut: "Esaurito",
+      pricePrefix: "A partire da",
+      pricePerDay: "/giorno",
+      seats: (n: number) => `${n} Posti`,
+      selectButton: "Seleziona questo veicolo",
+      notAvailable: "Non disponibile",
+      prevAria: "Veicolo precedente",
+      nextAria: "Veicolo successivo",
+      goToVehicle: (i: number) => `Vai al veicolo ${i}`,
+    },
+    step2: {
+      heading: "Periodo di Noleggio",
+      pickupLabel: "Ritiro",
+      returnLabel: "Riconsegna",
+      selectDate: "Seleziona Data",
+      verifyButton: "Verifica Disponibilità",
+      checking: "Verifica disponibilità in tempo reale...",
+      unavailableMsg: "Questa vettura è già impegnata per queste date, ma abbiamo altre soluzioni per te.",
+      changeCar: "Cambia Auto",
+      changeDates: "Cambia Date",
+      availableTitle: "Disponibile!",
+      realTimeRate: "Tariffa calcolata in tempo reale",
+      totalPrice: "Prezzo totale",
+      days: (n: number) => `${n} giorn${n !== 1 ? "i" : "o"} · Tariffa dinamica`,
+      continue: "Continua",
+    },
+    step3: {
+      heading: "Dati Guidatore Principale",
+      continue: "Continua",
+    },
+    step4: {
+      askTitle: "Viaggerai con un secondo guidatore?",
+      askDesc: "Se prevedi di condividere la guida, aggiungi i dati del secondo guidatore.",
+      yes: "Sì, Aggiungi",
+      no: "No, Procedi",
+      heading: "Dati Secondo Guidatore",
+      cancel: "Annulla",
+      continue: "Continua",
+    },
+    step5: {
+      heading: "Ritiro & Consegna",
+      mainIncomplete: "Dati del guidatore principale incompleti",
+      secondIncomplete: "Dati del secondo guidatore incompleti",
+      completeData: "Completa Dati",
+      summaryTitle: "Riepilogo Finale",
+      summaryVehicle: "Veicolo",
+      summaryPeriod: "Periodo",
+      summaryPickup: "Ritiro",
+      summaryTotal: "Totale",
+      toBeSet: "Da impostare",
+      loading: "Caricamento dati...",
+      confirmBooking: "Conferma Prenotazione",
+    },
+    driver: {
+      taxCode: "Codice Fiscale",
+      optional: "(opzionale)",
+      email: "Email *",
+      phone: "Telefono *",
+      documentsTitle: "Documenti (Patente)",
+      ocrHint: "📷 La tua data e luogo di nascita verranno estratti automaticamente dalla foto della patente tramite OCR.",
+      photoFront: "Foto Fronte",
+      photoBack: "Foto Retro",
+      uploadFront: "Carica Fronte",
+      uploadBack: "Carica Retro",
+    },
+    summary: {
+      categoryNone: "Nessun veicolo",
+      live: "Riepilogo Live",
+      noVehicle: "Nessun veicolo",
+      rate: "Tariffa",
+      seasonalRate: "Tariffa dinamica stagionale",
+      duration: "Durata",
+      days: (n: number) => `${n} Giorn${n !== 1 ? "i" : "o"}`,
+      updatingPrice: "Aggiornamento prezzo...",
+      realTimeRate: "Tariffa calcolata in tempo reale",
+      mainDriver: "Guidatore principale",
+      secondIncluded: "Secondo guidatore incluso",
+      totalEstimated: "Totale stimato",
+      depositNote: "Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo scelto.",
+      stepOf: (current: number, total: number) => `Step ${current} di ${total}`,
+    },
+    mobileBar: {
+      noVehicle: "Nessun veicolo",
+      selectDates: "Seleziona date",
+      perDays: (n: number) => `per ${n} giorn${n !== 1 ? "i" : "o"}`,
+      actionPickVehicle: "Scegli Auto",
+      actionContinue: "Continua",
+      actionVerify: "Verifica",
+      actionPickDates: "Scegli Date",
+      actionChoose: "Scegli",
+      actionConfirm: "Conferma",
+    },
+    validation: {
+      selectBothDates: "Seleziona entrambe le date.",
+      vehicleNotAvailable: "Veicolo non disponibile per queste date.",
+      mainLicenseMissing: "Inserisci le foto della patente del guidatore principale.",
+      secondLicenseMissing: "Inserisci le foto della patente del secondo guidatore.",
+      fillFields: (fields: string) => `Compila tutti i campi: ${fields}`,
+      fillFieldsSecond: (fields: string) => `Compila tutti i campi del secondo guidatore: ${fields}`,
+      fieldEmail: "Email",
+      fieldPhone: "Telefono",
+      fieldLicenseFront: "Foto Patente Fronte",
+      fieldLicenseBack: "Foto Patente Retro",
+    },
+    errors: {
+      availabilityCheck: "Errore verifica disponibilità",
+      availabilityFallback: "Impossibile verificare la disponibilità. Calcolo locale attivo.",
+      bookingCreate: "Errore creazione prenotazione",
+      bookingGeneric: "Errore durante la prenotazione. Riprova.",
+    },
+  },
+  en: {
+    seo: {
+      titleDefault: "Book Car Hire Olbia Airport | KS Rent Costa Smeralda",
+      titleVehicle: (make: string, model: string) => `Hire ${make} ${model} in Olbia — KS Rent`,
+      descDefault:
+        "Book your luxury vehicle in Olbia in 2 minutes. Delivery to airport or hotel. Transparent security deposit and full insurance cover.",
+      descVehicle: (make: string, model: string, rate: number) =>
+        `Hire ${make} ${model} in Costa Smeralda with full protection. From €${rate}/day with KS Rent Olbia.`,
+      breadcrumb: "Book Now",
+    },
+    header: {
+      eyebrow: "Fast Booking",
+      titlePart1: "Book",
+      titlePart2: "Now.",
+      back: "Back",
+    },
+    stepLabels: ["Vehicle", "Dates", "Driver", "Second Driver", "Pickup & Drop-off"],
+    step1: {
+      heading: "Choose your vehicle",
+      categoryAll: "All",
+      soldOut: "Sold out",
+      pricePrefix: "From",
+      pricePerDay: "/day",
+      seats: (n: number) => `${n} Seats`,
+      selectButton: "Select this vehicle",
+      notAvailable: "Not available",
+      prevAria: "Previous vehicle",
+      nextAria: "Next vehicle",
+      goToVehicle: (i: number) => `Go to vehicle ${i}`,
+    },
+    step2: {
+      heading: "Hire period",
+      pickupLabel: "Pickup",
+      returnLabel: "Return",
+      selectDate: "Select date",
+      verifyButton: "Check availability",
+      checking: "Checking availability in real time...",
+      unavailableMsg: "This vehicle is already booked for these dates, but we have other options for you.",
+      changeCar: "Change car",
+      changeDates: "Change dates",
+      availableTitle: "Available!",
+      realTimeRate: "Rate calculated in real time",
+      totalPrice: "Total price",
+      days: (n: number) => `${n} day${n !== 1 ? "s" : ""} · Dynamic rate`,
+      continue: "Continue",
+    },
+    step3: {
+      heading: "Main driver details",
+      continue: "Continue",
+    },
+    step4: {
+      askTitle: "Will you travel with a second driver?",
+      askDesc: "If you plan to share the driving, add the second driver's details.",
+      yes: "Yes, add",
+      no: "No, continue",
+      heading: "Second driver details",
+      cancel: "Cancel",
+      continue: "Continue",
+    },
+    step5: {
+      heading: "Pickup & drop-off",
+      mainIncomplete: "Main driver details incomplete",
+      secondIncomplete: "Second driver details incomplete",
+      completeData: "Complete details",
+      summaryTitle: "Final summary",
+      summaryVehicle: "Vehicle",
+      summaryPeriod: "Period",
+      summaryPickup: "Pickup",
+      summaryTotal: "Total",
+      toBeSet: "To be set",
+      loading: "Loading data...",
+      confirmBooking: "Confirm booking",
+    },
+    driver: {
+      taxCode: "Tax code",
+      optional: "(optional)",
+      email: "Email *",
+      phone: "Phone *",
+      documentsTitle: "Documents (Driving licence)",
+      ocrHint: "📷 Your date and place of birth will be extracted automatically from your driving licence photo via OCR.",
+      photoFront: "Front photo",
+      photoBack: "Back photo",
+      uploadFront: "Upload front",
+      uploadBack: "Upload back",
+    },
+    summary: {
+      categoryNone: "No vehicle",
+      live: "Live summary",
+      noVehicle: "No vehicle",
+      rate: "Rate",
+      seasonalRate: "Dynamic seasonal rate",
+      duration: "Duration",
+      days: (n: number) => `${n} Day${n !== 1 ? "s" : ""}`,
+      updatingPrice: "Updating price...",
+      realTimeRate: "Rate calculated in real time",
+      mainDriver: "Main driver",
+      secondIncluded: "Second driver included",
+      totalEstimated: "Estimated total",
+      depositNote: "The security deposit and excess will be defined at contract stage based on the chosen vehicle.",
+      stepOf: (current: number, total: number) => `Step ${current} of ${total}`,
+    },
+    mobileBar: {
+      noVehicle: "No vehicle",
+      selectDates: "Select dates",
+      perDays: (n: number) => `for ${n} day${n !== 1 ? "s" : ""}`,
+      actionPickVehicle: "Choose car",
+      actionContinue: "Continue",
+      actionVerify: "Check",
+      actionPickDates: "Choose dates",
+      actionChoose: "Choose",
+      actionConfirm: "Confirm",
+    },
+    validation: {
+      selectBothDates: "Please select both dates.",
+      vehicleNotAvailable: "Vehicle not available for these dates.",
+      mainLicenseMissing: "Please upload the main driver's licence photos.",
+      secondLicenseMissing: "Please upload the second driver's licence photos.",
+      fillFields: (fields: string) => `Please complete all fields: ${fields}`,
+      fillFieldsSecond: (fields: string) => `Please complete all second driver fields: ${fields}`,
+      fieldEmail: "Email",
+      fieldPhone: "Phone",
+      fieldLicenseFront: "Licence photo (front)",
+      fieldLicenseBack: "Licence photo (back)",
+    },
+    errors: {
+      availabilityCheck: "Availability check error",
+      availabilityFallback: "Unable to check availability. Local calculation active.",
+      bookingCreate: "Booking creation error",
+      bookingGeneric: "An error occurred during booking. Please try again.",
+    },
+  },
+  de: {
+    seo: {
+      titleDefault: "Autovermietung Olbia Flughafen buchen | KS Rent Costa Smeralda",
+      titleVehicle: (make: string, model: string) => `${make} ${model} in Olbia mieten — KS Rent`,
+      descDefault:
+        "Buchen Sie Ihr Premium-Fahrzeug in Olbia in 2 Minuten. Lieferung zum Flughafen oder Hotel. Transparente Kaution und umfassender Versicherungsschutz.",
+      descVehicle: (make: string, model: string, rate: number) =>
+        `Mieten Sie ${make} ${model} an der Costa Smeralda mit vollem Schutz. Ab €${rate}/Tag bei KS Rent Olbia.`,
+      breadcrumb: "Jetzt buchen",
+    },
+    header: {
+      eyebrow: "Schnellbuchung",
+      titlePart1: "Jetzt",
+      titlePart2: "buchen.",
+      back: "Zurück",
+    },
+    stepLabels: ["Fahrzeug", "Daten", "Fahrer", "Zweiter Fahrer", "Abholung & Rückgabe"],
+    step1: {
+      heading: "Wählen Sie Ihr Fahrzeug",
+      categoryAll: "Alle",
+      soldOut: "Ausverkauft",
+      pricePrefix: "Ab",
+      pricePerDay: "/Tag",
+      seats: (n: number) => `${n} Sitze`,
+      selectButton: "Dieses Fahrzeug wählen",
+      notAvailable: "Nicht verfügbar",
+      prevAria: "Vorheriges Fahrzeug",
+      nextAria: "Nächstes Fahrzeug",
+      goToVehicle: (i: number) => `Zu Fahrzeug ${i}`,
+    },
+    step2: {
+      heading: "Mietzeitraum",
+      pickupLabel: "Abholung",
+      returnLabel: "Rückgabe",
+      selectDate: "Datum auswählen",
+      verifyButton: "Verfügbarkeit prüfen",
+      checking: "Verfügbarkeit wird in Echtzeit geprüft...",
+      unavailableMsg: "Dieses Fahrzeug ist für diese Daten bereits gebucht, wir haben aber andere Lösungen für Sie.",
+      changeCar: "Auto ändern",
+      changeDates: "Daten ändern",
+      availableTitle: "Verfügbar!",
+      realTimeRate: "Tarif in Echtzeit berechnet",
+      totalPrice: "Gesamtpreis",
+      days: (n: number) => `${n} Tag${n !== 1 ? "e" : ""} · Dynamischer Tarif`,
+      continue: "Weiter",
+    },
+    step3: {
+      heading: "Daten des Hauptfahrers",
+      continue: "Weiter",
+    },
+    step4: {
+      askTitle: "Reisen Sie mit einem zweiten Fahrer?",
+      askDesc: "Wenn Sie das Fahren teilen möchten, fügen Sie bitte die Daten des zweiten Fahrers hinzu.",
+      yes: "Ja, hinzufügen",
+      no: "Nein, weiter",
+      heading: "Daten des zweiten Fahrers",
+      cancel: "Abbrechen",
+      continue: "Weiter",
+    },
+    step5: {
+      heading: "Abholung & Rückgabe",
+      mainIncomplete: "Daten des Hauptfahrers unvollständig",
+      secondIncomplete: "Daten des zweiten Fahrers unvollständig",
+      completeData: "Daten vervollständigen",
+      summaryTitle: "Endgültige Zusammenfassung",
+      summaryVehicle: "Fahrzeug",
+      summaryPeriod: "Zeitraum",
+      summaryPickup: "Abholung",
+      summaryTotal: "Gesamt",
+      toBeSet: "Festzulegen",
+      loading: "Daten werden geladen...",
+      confirmBooking: "Buchung bestätigen",
+    },
+    driver: {
+      taxCode: "Steuernummer",
+      optional: "(optional)",
+      email: "E-Mail *",
+      phone: "Telefon *",
+      documentsTitle: "Dokumente (Führerschein)",
+      ocrHint: "📷 Ihr Geburtsdatum und Geburtsort werden automatisch per OCR aus dem Foto Ihres Führerscheins extrahiert.",
+      photoFront: "Vorderseite-Foto",
+      photoBack: "Rückseite-Foto",
+      uploadFront: "Vorderseite hochladen",
+      uploadBack: "Rückseite hochladen",
+    },
+    summary: {
+      categoryNone: "Kein Fahrzeug",
+      live: "Live-Zusammenfassung",
+      noVehicle: "Kein Fahrzeug",
+      rate: "Tarif",
+      seasonalRate: "Dynamischer Saisontarif",
+      duration: "Dauer",
+      days: (n: number) => `${n} Tag${n !== 1 ? "e" : ""}`,
+      updatingPrice: "Preis wird aktualisiert...",
+      realTimeRate: "Tarif in Echtzeit berechnet",
+      mainDriver: "Hauptfahrer",
+      secondIncluded: "Zweiter Fahrer enthalten",
+      totalEstimated: "Geschätzte Gesamtsumme",
+      depositNote: "Kaution und Selbstbeteiligung werden bei Vertragsabschluss je nach gewähltem Fahrzeug festgelegt.",
+      stepOf: (current: number, total: number) => `Schritt ${current} von ${total}`,
+    },
+    mobileBar: {
+      noVehicle: "Kein Fahrzeug",
+      selectDates: "Daten wählen",
+      perDays: (n: number) => `für ${n} Tag${n !== 1 ? "e" : ""}`,
+      actionPickVehicle: "Auto wählen",
+      actionContinue: "Weiter",
+      actionVerify: "Prüfen",
+      actionPickDates: "Daten wählen",
+      actionChoose: "Wählen",
+      actionConfirm: "Bestätigen",
+    },
+    validation: {
+      selectBothDates: "Bitte wählen Sie beide Daten aus.",
+      vehicleNotAvailable: "Fahrzeug für diese Daten nicht verfügbar.",
+      mainLicenseMissing: "Bitte laden Sie die Führerscheinfotos des Hauptfahrers hoch.",
+      secondLicenseMissing: "Bitte laden Sie die Führerscheinfotos des zweiten Fahrers hoch.",
+      fillFields: (fields: string) => `Bitte alle Felder ausfüllen: ${fields}`,
+      fillFieldsSecond: (fields: string) => `Bitte alle Felder des zweiten Fahrers ausfüllen: ${fields}`,
+      fieldEmail: "E-Mail",
+      fieldPhone: "Telefon",
+      fieldLicenseFront: "Führerschein-Foto (Vorderseite)",
+      fieldLicenseBack: "Führerschein-Foto (Rückseite)",
+    },
+    errors: {
+      availabilityCheck: "Fehler bei der Verfügbarkeitsprüfung",
+      availabilityFallback: "Verfügbarkeit kann nicht geprüft werden. Lokale Berechnung aktiv.",
+      bookingCreate: "Fehler beim Erstellen der Buchung",
+      bookingGeneric: "Fehler bei der Buchung. Bitte erneut versuchen.",
+    },
+  },
+  fr: {
+    seo: {
+      titleDefault: "Réserver Location Voiture Aéroport Olbia | KS Rent Costa Smeralda",
+      titleVehicle: (make: string, model: string) => `Louer ${make} ${model} à Olbia — KS Rent`,
+      descDefault:
+        "Réservez votre véhicule de luxe à Olbia en 2 minutes. Livraison à l'aéroport ou à l'hôtel. Caution transparente et couverture d'assurance complète.",
+      descVehicle: (make: string, model: string, rate: number) =>
+        `Louez ${make} ${model} en Costa Smeralda avec protection complète. À partir de €${rate}/jour chez KS Rent Olbia.`,
+      breadcrumb: "Réserver",
+    },
+    header: {
+      eyebrow: "Réservation rapide",
+      titlePart1: "Réserver",
+      titlePart2: "maintenant.",
+      back: "Retour",
+    },
+    stepLabels: ["Véhicule", "Dates", "Conducteur", "Second conducteur", "Prise & Restitution"],
+    step1: {
+      heading: "Choisissez votre véhicule",
+      categoryAll: "Tous",
+      soldOut: "Épuisé",
+      pricePrefix: "À partir de",
+      pricePerDay: "/jour",
+      seats: (n: number) => `${n} Places`,
+      selectButton: "Sélectionner ce véhicule",
+      notAvailable: "Non disponible",
+      prevAria: "Véhicule précédent",
+      nextAria: "Véhicule suivant",
+      goToVehicle: (i: number) => `Aller au véhicule ${i}`,
+    },
+    step2: {
+      heading: "Période de location",
+      pickupLabel: "Prise en charge",
+      returnLabel: "Restitution",
+      selectDate: "Sélectionner la date",
+      verifyButton: "Vérifier la disponibilité",
+      checking: "Vérification de la disponibilité en temps réel...",
+      unavailableMsg: "Ce véhicule est déjà réservé pour ces dates, mais nous avons d'autres solutions pour vous.",
+      changeCar: "Changer de voiture",
+      changeDates: "Changer les dates",
+      availableTitle: "Disponible !",
+      realTimeRate: "Tarif calculé en temps réel",
+      totalPrice: "Prix total",
+      days: (n: number) => `${n} jour${n !== 1 ? "s" : ""} · Tarif dynamique`,
+      continue: "Continuer",
+    },
+    step3: {
+      heading: "Coordonnées du conducteur principal",
+      continue: "Continuer",
+    },
+    step4: {
+      askTitle: "Voyagerez-vous avec un second conducteur ?",
+      askDesc: "Si vous prévoyez de partager la conduite, ajoutez les coordonnées du second conducteur.",
+      yes: "Oui, ajouter",
+      no: "Non, continuer",
+      heading: "Coordonnées du second conducteur",
+      cancel: "Annuler",
+      continue: "Continuer",
+    },
+    step5: {
+      heading: "Prise en charge & restitution",
+      mainIncomplete: "Coordonnées du conducteur principal incomplètes",
+      secondIncomplete: "Coordonnées du second conducteur incomplètes",
+      completeData: "Compléter les coordonnées",
+      summaryTitle: "Récapitulatif final",
+      summaryVehicle: "Véhicule",
+      summaryPeriod: "Période",
+      summaryPickup: "Prise",
+      summaryTotal: "Total",
+      toBeSet: "À définir",
+      loading: "Chargement des données...",
+      confirmBooking: "Confirmer la réservation",
+    },
+    driver: {
+      taxCode: "Code fiscal",
+      optional: "(facultatif)",
+      email: "E-mail *",
+      phone: "Téléphone *",
+      documentsTitle: "Documents (Permis de conduire)",
+      ocrHint: "📷 Votre date et lieu de naissance seront extraits automatiquement de la photo de votre permis via OCR.",
+      photoFront: "Photo recto",
+      photoBack: "Photo verso",
+      uploadFront: "Charger recto",
+      uploadBack: "Charger verso",
+    },
+    summary: {
+      categoryNone: "Aucun véhicule",
+      live: "Récapitulatif en direct",
+      noVehicle: "Aucun véhicule",
+      rate: "Tarif",
+      seasonalRate: "Tarif dynamique saisonnier",
+      duration: "Durée",
+      days: (n: number) => `${n} Jour${n !== 1 ? "s" : ""}`,
+      updatingPrice: "Mise à jour du prix...",
+      realTimeRate: "Tarif calculé en temps réel",
+      mainDriver: "Conducteur principal",
+      secondIncluded: "Second conducteur inclus",
+      totalEstimated: "Total estimé",
+      depositNote: "La caution et la franchise seront définies au moment du contrat selon le véhicule choisi.",
+      stepOf: (current: number, total: number) => `Étape ${current} sur ${total}`,
+    },
+    mobileBar: {
+      noVehicle: "Aucun véhicule",
+      selectDates: "Choisir les dates",
+      perDays: (n: number) => `pour ${n} jour${n !== 1 ? "s" : ""}`,
+      actionPickVehicle: "Choisir voiture",
+      actionContinue: "Continuer",
+      actionVerify: "Vérifier",
+      actionPickDates: "Choisir dates",
+      actionChoose: "Choisir",
+      actionConfirm: "Confirmer",
+    },
+    validation: {
+      selectBothDates: "Veuillez sélectionner les deux dates.",
+      vehicleNotAvailable: "Véhicule non disponible pour ces dates.",
+      mainLicenseMissing: "Veuillez télécharger les photos du permis du conducteur principal.",
+      secondLicenseMissing: "Veuillez télécharger les photos du permis du second conducteur.",
+      fillFields: (fields: string) => `Veuillez remplir tous les champs : ${fields}`,
+      fillFieldsSecond: (fields: string) => `Veuillez remplir tous les champs du second conducteur : ${fields}`,
+      fieldEmail: "E-mail",
+      fieldPhone: "Téléphone",
+      fieldLicenseFront: "Photo permis (recto)",
+      fieldLicenseBack: "Photo permis (verso)",
+    },
+    errors: {
+      availabilityCheck: "Erreur de vérification de disponibilité",
+      availabilityFallback: "Impossible de vérifier la disponibilité. Calcul local actif.",
+      bookingCreate: "Erreur de création de la réservation",
+      bookingGeneric: "Erreur lors de la réservation. Veuillez réessayer.",
+    },
+  },
+} as const;
+
+const DATE_FNS_LOCALES = {
+  it: itLocale,
+  en: enLocale,
+  de: deLocale,
+  fr: frLocale,
+} as const;
+
+const NUMBER_LOCALES = {
+  it: "it-IT",
+  en: "en-GB",
+  de: "de-DE",
+  fr: "fr-FR",
+} as const;
+
+interface Props {
+  lang?: Locale;
+}
 
 // Animated check mark for validated fields
 const FieldCheck = ({ show }: { show: boolean }) => (
@@ -134,11 +681,16 @@ const stepVariants = {
   }),
 };
 
-const PrenotaOra = () => {
+const PrenotaOra = ({ lang = "it" }: Props) => {
+  const t = TRANSLATIONS[lang];
+  const dateLocale = DATE_FNS_LOCALES[lang];
+  const numberLocale = NUMBER_LOCALES[lang];
+  const STEP_LABELS = t.stepLabels;
+
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(1);
   const [vehicles, setVehicles] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("Tutti");
+  const [selectedCategory, setSelectedCategory] = useState<string>(t.step1.categoryAll);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [startDate, setStartDate] = useState<Date>();
@@ -235,29 +787,29 @@ const PrenotaOra = () => {
         end_date: format(endDate, "yyyy-MM-dd"),
       });
       const res = await fetch(`${N8N_BASE}/check-availability?${params}`);
-      if (!res.ok) throw new Error("Errore verifica disponibilità");
+      if (!res.ok) throw new Error(t.errors.availabilityCheck);
       const data = await res.json();
       setAvailabilityResult(data);
       if (!data.available) {
-        toast.error("Veicolo non disponibile per queste date.");
+        toast.error(t.validation.vehicleNotAvailable);
       }
     } catch {
       setAvailabilityResult(null);
-      toast.error("Impossibile verificare la disponibilità. Calcolo locale attivo.");
+      toast.error(t.errors.availabilityFallback);
     } finally {
       setCheckingAvailability(false);
     }
-  }, [selectedVehicle, startDate, endDate]);
+  }, [selectedVehicle, startDate, endDate, t]);
 
   const categories = useMemo(() => {
     const cats = new Set(groupedVehicles.map((g) => g.representative.category));
-    return ["Tutti", ...Array.from(cats)];
-  }, [groupedVehicles]);
+    return [t.step1.categoryAll, ...Array.from(cats)];
+  }, [groupedVehicles, t.step1.categoryAll]);
 
   const filteredGrouped = useMemo(() => {
-    if (selectedCategory === "Tutti") return groupedVehicles;
+    if (selectedCategory === t.step1.categoryAll) return groupedVehicles;
     return groupedVehicles.filter((g) => g.representative.category === selectedCategory);
-  }, [groupedVehicles, selectedCategory]);
+  }, [groupedVehicles, selectedCategory, t.step1.categoryAll]);
 
   // Dynamic pricing engine
   const calculateDynamicPrice = useCallback((vehicle: any, start: Date, end: Date): number => {
@@ -314,7 +866,7 @@ const PrenotaOra = () => {
 
   const handleDatesConfirm = async () => {
     if (!startDate || !endDate) {
-      toast.error("Seleziona entrambe le date.");
+      toast.error(t.validation.selectBothDates);
       return;
     }
     await checkAvailability();
@@ -328,15 +880,15 @@ const PrenotaOra = () => {
   const handleSubmit = async () => {
     if (!selectedVehicle || !startDate || !endDate) return;
     if (!isAvailable) {
-      toast.error("Veicolo non disponibile per queste date.");
+      toast.error(t.validation.vehicleNotAvailable);
       return;
     }
     if (!mainDriver.licenseFront || !mainDriver.licenseBack) {
-      toast.error("Inserisci le foto della patente del guidatore principale.");
+      toast.error(t.validation.mainLicenseMissing);
       return;
     }
     if (hasSecondDriver && (!secondDriver.licenseFront || !secondDriver.licenseBack)) {
-      toast.error("Inserisci le foto della patente del secondo guidatore.");
+      toast.error(t.validation.secondLicenseMissing);
       return;
     }
 
@@ -388,7 +940,7 @@ const PrenotaOra = () => {
         body: JSON.stringify(bookingPayload),
       });
 
-      if (!res.ok) throw new Error("Errore creazione prenotazione");
+      if (!res.ok) throw new Error(t.errors.bookingCreate);
       const result = await res.json();
       const newBookingId = result.booking_id;
 
@@ -402,7 +954,7 @@ const PrenotaOra = () => {
         resetForm();
       }
     } catch {
-      toast.error("Errore durante la prenotazione. Riprova.");
+      toast.error(t.errors.bookingGeneric);
     } finally {
       setLoading(false);
     }
@@ -458,10 +1010,10 @@ const PrenotaOra = () => {
   // Driver validation helper
   const getDriverMissingFields = (driver: typeof initialDriverState): string[] => {
     const missing: string[] = [];
-    if (!driver.email.includes("@") || !driver.email.includes(".")) missing.push("Email");
-    if (driver.phone.length < 8) missing.push("Telefono");
-    if (!driver.licenseFront) missing.push("Foto Patente Fronte");
-    if (!driver.licenseBack) missing.push("Foto Patente Retro");
+    if (!driver.email.includes("@") || !driver.email.includes(".")) missing.push(t.validation.fieldEmail);
+    if (driver.phone.length < 8) missing.push(t.validation.fieldPhone);
+    if (!driver.licenseFront) missing.push(t.validation.fieldLicenseFront);
+    if (!driver.licenseBack) missing.push(t.validation.fieldLicenseBack);
     return missing;
   };
 
@@ -477,7 +1029,7 @@ const PrenotaOra = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Codice Fiscale <span className="text-gray-400 dark:text-white/30 normal-case tracking-normal">(opzionale)</span></Label>
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.driver.taxCode} <span className="text-gray-400 dark:text-white/30 normal-case tracking-normal">{t.driver.optional}</span></Label>
           <div className="relative">
             <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
             <Input
@@ -490,7 +1042,7 @@ const PrenotaOra = () => {
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Email *</Label>
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.driver.email}</Label>
           <div className="relative">
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
             <Input
@@ -504,7 +1056,7 @@ const PrenotaOra = () => {
           </div>
         </div>
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Telefono *</Label>
+          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.driver.phone}</Label>
           <div className="relative">
             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
             <Input
@@ -521,14 +1073,14 @@ const PrenotaOra = () => {
 
       <div className="pt-4 border-t border-gray-200 dark:border-white/5">
         <h3 className="text-sm font-bold text-gold mb-2 flex items-center gap-2">
-          <ShieldCheck size={16} /> Documenti (Patente)
+          <ShieldCheck size={16} /> {t.driver.documentsTitle}
         </h3>
         <p className="text-gray-500 dark:text-white/40 text-xs mb-4 italic">
-          📷 La tua data e luogo di nascita verranno estratti automaticamente dalla foto della patente tramite OCR.
+          {t.driver.ocrHint}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">Foto Fronte</Label>
+            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">{t.driver.photoFront}</Label>
             <label
               className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
               onDragOver={(e) => {
@@ -556,13 +1108,13 @@ const PrenotaOra = () => {
               ) : (
                 <div className="text-center text-gray-400 dark:text-white/40">
                   <UploadCloud className="mx-auto mb-2" size={24} />
-                  <span className="text-xs uppercase font-semibold tracking-wider">Carica Fronte</span>
+                  <span className="text-xs uppercase font-semibold tracking-wider">{t.driver.uploadFront}</span>
                 </div>
               )}
             </label>
           </div>
           <div>
-            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">Foto Retro</Label>
+            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">{t.driver.photoBack}</Label>
             <label
               className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
               onDragOver={(e) => {
@@ -590,7 +1142,7 @@ const PrenotaOra = () => {
               ) : (
                 <div className="text-center text-gray-400 dark:text-white/40">
                   <UploadCloud className="mx-auto mb-2" size={24} />
-                  <span className="text-xs uppercase font-semibold tracking-wider">Carica Retro</span>
+                  <span className="text-xs uppercase font-semibold tracking-wider">{t.driver.uploadBack}</span>
                 </div>
               )}
             </label>
@@ -602,14 +1154,18 @@ const PrenotaOra = () => {
 
   // Mobile sticky bar action text
   const mobileActionLabel = () => {
-    if (currentStep === 1) return "Scegli Auto";
+    if (currentStep === 1) return t.mobileBar.actionPickVehicle;
     if (currentStep === 2)
-      return startDate && endDate ? (availabilityResult?.available ? "Continua" : "Verifica") : "Scegli Date";
-    if (currentStep === 3) return "Continua";
-    if (currentStep === 4 && hasSecondDriver === null) return "Scegli";
-    if (currentStep === 4) return "Continua";
-    if (currentStep === 5) return "Conferma";
-    return "Conferma";
+      return startDate && endDate
+        ? availabilityResult?.available
+          ? t.mobileBar.actionContinue
+          : t.mobileBar.actionVerify
+        : t.mobileBar.actionPickDates;
+    if (currentStep === 3) return t.mobileBar.actionContinue;
+    if (currentStep === 4 && hasSecondDriver === null) return t.mobileBar.actionChoose;
+    if (currentStep === 4) return t.mobileBar.actionContinue;
+    if (currentStep === 5) return t.mobileBar.actionConfirm;
+    return t.mobileBar.actionConfirm;
   };
 
   const handleMobileAction = () => {
@@ -620,7 +1176,7 @@ const PrenotaOra = () => {
     } else if (currentStep === 3) {
       const missing = getDriverMissingFields(mainDriver);
       if (missing.length > 0) {
-        toast.error(`Compila tutti i campi: ${missing.join(", ")}`);
+        toast.error(t.validation.fillFields(missing.join(", ")));
         return;
       }
       goToStep(4);
@@ -630,7 +1186,7 @@ const PrenotaOra = () => {
       } else if (hasSecondDriver === true) {
         const missing = getDriverMissingFields(secondDriver);
         if (missing.length > 0) {
-          toast.error(`Compila tutti i campi del secondo guidatore: ${missing.join(", ")}`);
+          toast.error(t.validation.fillFieldsSecond(missing.join(", ")));
           return;
         }
         goToStep(5);
@@ -640,22 +1196,34 @@ const PrenotaOra = () => {
     }
   };
 
+  // SEO canonical (always points to canonical IT URL — Astro handles alternates)
+  const canonical =
+    lang === "it"
+      ? "https://www.ksrentsardinia.com/prenotaora"
+      : lang === "en"
+        ? "https://www.ksrentsardinia.com/en/book-now"
+        : lang === "de"
+          ? "https://www.ksrentsardinia.com/de/jetzt-buchen"
+          : "https://www.ksrentsardinia.com/fr/reserver";
+  const breadcrumbPath =
+    lang === "it" ? "/prenotaora" : lang === "en" ? "/en/book-now" : lang === "de" ? "/de/jetzt-buchen" : "/fr/reserver";
+
   return (
     <div className="bg-gray-50 dark:bg-[#050505] min-h-screen text-gray-900 dark:text-white pt-24 pb-40 lg:pb-16 selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
         title={
           selectedVehicle
-            ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} a Olbia — KS Rent`
-            : "Prenota Noleggio Auto Olbia Aeroporto | KS Rent Costa Smeralda"
+            ? t.seo.titleVehicle(selectedVehicle.make, selectedVehicle.model)
+            : t.seo.titleDefault
         }
         description={
           selectedVehicle
-            ? `Noleggia ${selectedVehicle.make} ${selectedVehicle.model} in Costa Smeralda con protezione completa. Da €${selectedVehicle.daily_rate}/giorno con KS Rent Olbia.`
-            : "Prenota in 2 minuti il tuo veicolo luxury a Olbia. Consegna in aeroporto o hotel. Deposito cauzionale trasparente e copertura assicurativa completa."
+            ? t.seo.descVehicle(selectedVehicle.make, selectedVehicle.model, selectedVehicle.daily_rate)
+            : t.seo.descDefault
         }
-        canonical="https://www.ksrentsardinia.com/prenotaora"
-        
-        jsonLd={selectedVehicle ? [buildVehicleJsonLd(selectedVehicle), buildBreadcrumb("Prenota Ora", "/prenotaora")] : buildBreadcrumb("Prenota Ora", "/prenotaora")}
+        canonical={canonical}
+
+        jsonLd={selectedVehicle ? [buildVehicleJsonLd(selectedVehicle), buildBreadcrumb(t.seo.breadcrumb, breadcrumbPath)] : buildBreadcrumb(t.seo.breadcrumb, breadcrumbPath)}
       />
 
       {/* PROGRESS BAR */}
@@ -679,11 +1247,11 @@ const PrenotaOra = () => {
           <div className="flex items-center gap-3 md:gap-4 mb-4">
             <div className="w-6 md:w-8 h-[2px] bg-gold" />
             <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold">
-              Fast Booking
+              {t.header.eyebrow}
             </span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-black leading-tight break-words">
-            Prenota <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 dark:from-white to-gray-400 dark:to-white/40">Ora.</span>
+            {t.header.titlePart1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 dark:from-white to-gray-400 dark:to-white/40">{t.header.titlePart2}</span>
           </h1>
 
           {/* Step indicator */}
@@ -727,7 +1295,7 @@ const PrenotaOra = () => {
             onClick={() => goToStep(currentStep - 1)}
             className="flex items-center gap-2 text-gray-500 dark:text-white/50 hover:text-gold text-sm mb-6 transition-colors"
           >
-            <ArrowLeft size={16} /> Indietro
+            <ArrowLeft size={16} /> {t.header.back}
           </motion.button>
         )}
 
@@ -751,7 +1319,7 @@ const PrenotaOra = () => {
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
                       1
                     </span>
-                    Scegli il Veicolo
+                    {t.step1.heading}
                   </h2>
 
                   {/* Category filter pills */}
@@ -773,7 +1341,7 @@ const PrenotaOra = () => {
                                 : "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-white/50 hover:bg-gray-200 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10",
                             )}
                           >
-                            {cat !== "Tutti" && getCategoryIcon(cat)} {cat}
+                            {cat !== t.step1.categoryAll && getCategoryIcon(cat)} {cat}
                           </button>
                         ))}
                       </div>
@@ -800,7 +1368,7 @@ const PrenotaOra = () => {
                                   setCarouselIndex((p) => (p - 1 + filteredGrouped.length) % filteredGrouped.length)
                                 }
                                 className="absolute left-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-gray-300 dark:border-white/20 bg-white/60 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center text-gray-600 dark:text-white/70 hover:text-gold hover:border-gold/50 transition-all"
-                                aria-label="Veicolo precedente"
+                                aria-label={t.step1.prevAria}
                               >
                                 <ChevronLeft size={24} />
                               </button>
@@ -808,7 +1376,7 @@ const PrenotaOra = () => {
                                 type="button"
                                 onClick={() => setCarouselIndex((p) => (p + 1) % filteredGrouped.length)}
                                 className="absolute right-0 top-[30%] -translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-full border border-gray-300 dark:border-white/20 bg-white/60 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center text-gray-600 dark:text-white/70 hover:text-gold hover:border-gold/50 transition-all"
-                                aria-label="Veicolo successivo"
+                                aria-label={t.step1.nextAria}
                               >
                                 <ChevronRight size={24} />
                               </button>
@@ -834,7 +1402,7 @@ const PrenotaOra = () => {
                               {soldOut && (
                                 <div className="absolute inset-0 flex items-center justify-center">
                                   <span className="bg-destructive text-destructive-foreground text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full">
-                                    Esaurito
+                                    {t.step1.soldOut}
                                   </span>
                                 </div>
                               )}
@@ -853,7 +1421,7 @@ const PrenotaOra = () => {
                                     "rounded-full transition-all duration-300",
                                     i === safeIdx ? "w-6 h-2 bg-gold" : "w-2 h-2 bg-gray-300 dark:bg-white/20 hover:bg-gray-400 dark:hover:bg-white/40",
                                   )}
-                                  aria-label={`Vai al veicolo ${i + 1}`}
+                                  aria-label={t.step1.goToVehicle(i + 1)}
                                 />
                               ))}
                             </div>
@@ -878,19 +1446,19 @@ const PrenotaOra = () => {
                                     {getCategoryIcon(v.category)} {v.category}
                                   </span>
                                 )}
-                                {v.seats && <span>{v.seats} Posti</span>}
+                                {v.seats && <span>{t.step1.seats(v.seats)}</span>}
                                 {v.transmission && <span>{v.transmission}</span>}
                               </div>
                               <p className="text-gold font-bold text-lg mt-3">
-                                A partire da €{v.daily_rate}
-                                <span className="text-sm text-muted-foreground font-normal">/giorno</span>
+                                {t.step1.pricePrefix} €{v.daily_rate}
+                                <span className="text-sm text-muted-foreground font-normal">{t.step1.pricePerDay}</span>
                               </p>
                               <Button
                                 onClick={() => handleVehicleSelect(currentGroup)}
                                 disabled={soldOut}
                                 className="mt-5 bg-gold hover:bg-yellow-500 text-white font-bold text-sm uppercase tracking-widest px-8 py-3 h-auto rounded-full transition-all"
                               >
-                                {soldOut ? "Non disponibile" : "Seleziona questo veicolo"}{" "}
+                                {soldOut ? t.step1.notAvailable : t.step1.selectButton}{" "}
                                 <ArrowRight size={16} className="ml-2" />
                               </Button>
                             </motion.div>
@@ -917,11 +1485,11 @@ const PrenotaOra = () => {
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
                       2
                     </span>
-                    Periodo di Noleggio
+                    {t.step2.heading}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div className="space-y-3">
-                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Ritiro</Label>
+                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.step2.pickupLabel}</Label>
                       <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
                         <PopoverTrigger asChild>
                           <Button
@@ -932,7 +1500,7 @@ const PrenotaOra = () => {
                             )}
                           >
                             <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                            {startDate ? format(startDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
+                            {startDate ? format(startDate, "dd MMM yyyy", { locale: dateLocale }) : t.step2.selectDate}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl z-50">
@@ -964,7 +1532,7 @@ const PrenotaOra = () => {
                       </Popover>
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">Riconsegna</Label>
+                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.step2.returnLabel}</Label>
                       <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
                         <PopoverTrigger asChild>
                           <Button
@@ -975,7 +1543,7 @@ const PrenotaOra = () => {
                             )}
                           >
                             <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                            {endDate ? format(endDate, "dd MMM yyyy", { locale: it }) : "Seleziona Data"}
+                            {endDate ? format(endDate, "dd MMM yyyy", { locale: dateLocale }) : t.step2.selectDate}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl z-50">
@@ -1013,14 +1581,14 @@ const PrenotaOra = () => {
                           onClick={handleDatesConfirm}
                           className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
-                          Verifica Disponibilità <ArrowRight size={16} className="ml-2" />
+                          {t.step2.verifyButton} <ArrowRight size={16} className="ml-2" />
                         </Button>
                       )}
 
                       {checkingAvailability && (
                         <div className="flex items-center justify-center gap-3 py-6 text-gray-500 dark:text-white/50">
                           <Loader2 size={20} className="animate-spin text-gold" />
-                          <span>Verifica disponibilità in tempo reale...</span>
+                          <span>{t.step2.checking}</span>
                         </div>
                       )}
 
@@ -1032,7 +1600,7 @@ const PrenotaOra = () => {
                         >
                           <AlertCircle size={32} className="text-red-400 mx-auto" />
                           <p className="text-gray-700 dark:text-white/80">
-                            Questa vettura è già impegnata per queste date, ma abbiamo altre soluzioni per te.
+                            {t.step2.unavailableMsg}
                           </p>
                           <div className="flex gap-3 justify-center">
                             <Button
@@ -1044,7 +1612,7 @@ const PrenotaOra = () => {
                               }}
                               className="border-gray-200 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl"
                             >
-                              <Car size={14} className="mr-2" /> Cambia Auto
+                              <Car size={14} className="mr-2" /> {t.step2.changeCar}
                             </Button>
                             <Button
                               type="button"
@@ -1056,7 +1624,7 @@ const PrenotaOra = () => {
                               }}
                               className="border-gray-200 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl"
                             >
-                              <CalendarIcon size={14} className="mr-2" /> Cambia Date
+                              <CalendarIcon size={14} className="mr-2" /> {t.step2.changeDates}
                             </Button>
                           </div>
                         </motion.div>
@@ -1078,17 +1646,17 @@ const PrenotaOra = () => {
                               <CheckCircle2 size={20} className="text-green-400" />
                             </motion.div>
                             <div>
-                              <p className="text-green-400 font-bold">Disponibile!</p>
-                              <p className="text-gray-500 dark:text-white/50 text-xs">Tariffa calcolata in tempo reale</p>
+                              <p className="text-green-400 font-bold">{t.step2.availableTitle}</p>
+                              <p className="text-gray-500 dark:text-white/50 text-xs">{t.step2.realTimeRate}</p>
                             </div>
                           </div>
                           <div className="flex items-end justify-between pt-2 border-t border-gray-200 dark:border-white/5">
                             <div>
-                              <p className="text-gray-500 dark:text-white/50 text-xs">Prezzo totale</p>
+                              <p className="text-gray-500 dark:text-white/50 text-xs">{t.step2.totalPrice}</p>
                               <p className="text-3xl font-black font-display text-gold">€{total}</p>
                             </div>
                             <p className="text-gray-500 dark:text-white/40 text-sm">
-                              {days} giorn{days !== 1 ? "i" : "o"} · Tariffa dinamica
+                              {t.step2.days(days)}
                             </p>
                           </div>
                           <Button
@@ -1096,7 +1664,7 @@ const PrenotaOra = () => {
                             onClick={() => goToStep(3)}
                             className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                           >
-                            Continua <ArrowRight size={16} className="ml-2" />
+                            {t.step2.continue} <ArrowRight size={16} className="ml-2" />
                           </Button>
                         </motion.div>
                       )}
@@ -1121,7 +1689,7 @@ const PrenotaOra = () => {
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
                       3
                     </span>
-                    Dati Guidatore Principale
+                    {t.step3.heading}
                   </h2>
                   {renderDriverFormFields(mainDriver, setMainDriver)}
 
@@ -1131,14 +1699,14 @@ const PrenotaOra = () => {
                       onClick={() => {
                         const missing = getDriverMissingFields(mainDriver);
                         if (missing.length > 0) {
-                          toast.error(`Compila tutti i campi: ${missing.join(", ")}`);
+                          toast.error(t.validation.fillFields(missing.join(", ")));
                           return;
                         }
                         goToStep(4);
                       }}
                       className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                     >
-                      Continua <ArrowRight size={16} className="ml-2" />
+                      {t.step3.continue} <ArrowRight size={16} className="ml-2" />
                     </Button>
                   </div>
                 </motion.div>
@@ -1163,10 +1731,10 @@ const PrenotaOra = () => {
                         <Users size={28} className="text-gold" />
                       </div>
                       <h2 className="text-xl md:text-2xl font-display font-bold">
-                        Viaggerai con un secondo guidatore?
+                        {t.step4.askTitle}
                       </h2>
                       <p className="text-gray-500 dark:text-white/50 max-w-md mx-auto">
-                        Se prevedi di condividere la guida, aggiungi i dati del secondo guidatore.
+                        {t.step4.askDesc}
                       </p>
                       <div className="flex gap-4 justify-center">
                         <Button
@@ -1174,7 +1742,7 @@ const PrenotaOra = () => {
                           onClick={() => setHasSecondDriver(true)}
                           className="h-14 px-8 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
-                          Sì, Aggiungi
+                          {t.step4.yes}
                         </Button>
                         <Button
                           type="button"
@@ -1185,7 +1753,7 @@ const PrenotaOra = () => {
                           }}
                           className="h-14 px-8 border-gray-300 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
                         >
-                          No, Procedi
+                          {t.step4.no}
                         </Button>
                       </div>
                     </div>
@@ -1199,7 +1767,7 @@ const PrenotaOra = () => {
                           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
                             4
                           </span>
-                          Dati Secondo Guidatore
+                          {t.step4.heading}
                         </h2>
                         <Button
                           type="button"
@@ -1212,7 +1780,7 @@ const PrenotaOra = () => {
                           }}
                         >
                           <X className="w-4 h-4" />
-                          Annulla
+                          {t.step4.cancel}
                         </Button>
                       </div>
                       {renderDriverFormFields(secondDriver, setSecondDriver)}
@@ -1223,14 +1791,14 @@ const PrenotaOra = () => {
                           onClick={() => {
                             const missing = getDriverMissingFields(secondDriver);
                             if (missing.length > 0) {
-                              toast.error(`Compila tutti i campi del secondo guidatore: ${missing.join(", ")}`);
+                              toast.error(t.validation.fillFieldsSecond(missing.join(", ")));
                               return;
                             }
                             goToStep(5);
                           }}
                           className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
-                          Continua <ArrowRight size={16} className="ml-2" />
+                          {t.step4.continue} <ArrowRight size={16} className="ml-2" />
                         </Button>
                       </div>
                     </div>
@@ -1254,7 +1822,7 @@ const PrenotaOra = () => {
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
                       5
                     </span>
-                    Ritiro & Consegna
+                    {t.step5.heading}
                   </h2>
 
                   <LocationStep
@@ -1283,7 +1851,7 @@ const PrenotaOra = () => {
                     >
                       <div className="flex items-center gap-3">
                         <AlertCircle size={20} className="text-red-400 shrink-0" />
-                        <p className="text-sm text-gray-600 dark:text-white/70">Dati del guidatore principale incompleti</p>
+                        <p className="text-sm text-gray-600 dark:text-white/70">{t.step5.mainIncomplete}</p>
                       </div>
                       <Button
                         type="button"
@@ -1292,7 +1860,7 @@ const PrenotaOra = () => {
                         onClick={() => goToStep(3)}
                         className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0"
                       >
-                        Completa Dati
+                        {t.step5.completeData}
                       </Button>
                     </motion.div>
                   )}
@@ -1304,7 +1872,7 @@ const PrenotaOra = () => {
                     >
                       <div className="flex items-center gap-3">
                         <AlertCircle size={20} className="text-red-400 shrink-0" />
-                        <p className="text-sm text-gray-600 dark:text-white/70">Dati del secondo guidatore incompleti</p>
+                        <p className="text-sm text-gray-600 dark:text-white/70">{t.step5.secondIncomplete}</p>
                       </div>
                       <Button
                         type="button"
@@ -1313,7 +1881,7 @@ const PrenotaOra = () => {
                         onClick={() => goToStep(4)}
                         className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0"
                       >
-                        Completa Dati
+                        {t.step5.completeData}
                       </Button>
                     </motion.div>
                   )}
@@ -1322,29 +1890,29 @@ const PrenotaOra = () => {
                   <div className="mt-8 bg-gray-50 dark:bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
                     <h3 className="text-lg font-display font-bold flex items-center gap-3">
                       <CheckCircle2 className="text-gold" size={20} />
-                      Riepilogo Finale
+                      {t.step5.summaryTitle}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                        <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Veicolo</p>
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">{t.step5.summaryVehicle}</p>
                         <p className="font-bold truncate">
                           {selectedVehicle?.make} {selectedVehicle?.model}
                         </p>
                       </div>
                        <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Periodo</p>
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">{t.step5.summaryPeriod}</p>
                         <p className="font-bold truncate">
                           {startDate && format(startDate, "dd/MM")} — {endDate && format(endDate, "dd/MM/yyyy")}
                         </p>
                       </div>
                        <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Ritiro</p>
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">{t.step5.summaryPickup}</p>
                         <p className="font-bold truncate">
-                          {pickupLocation || <span className="text-gray-400 dark:text-white/30 italic">Da impostare</span>}
+                          {pickupLocation || <span className="text-gray-400 dark:text-white/30 italic">{t.step5.toBeSet}</span>}
                         </p>
                       </div>
                        <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
-                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">Totale</p>
+                        <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">{t.step5.summaryTotal}</p>
                         <p className="font-bold text-gold text-lg sm:text-xl">€{total}</p>
                       </div>
                     </div>
@@ -1367,11 +1935,11 @@ const PrenotaOra = () => {
                     >
                       {loading ? (
                         <span className="flex items-center gap-2">
-                          <Loader2 size={16} className="animate-spin" /> Caricamento dati...
+                          <Loader2 size={16} className="animate-spin" /> {t.step5.loading}
                         </span>
                       ) : (
                         <span className="flex items-center">
-                          Conferma Prenotazione <ArrowRight size={18} className="ml-3" />
+                          {t.step5.confirmBooking} <ArrowRight size={18} className="ml-3" />
                         </span>
                       )}
                     </Button>
@@ -1413,9 +1981,9 @@ const PrenotaOra = () => {
                   ) : (
                     <div className="relative z-10 flex flex-col justify-center h-full">
                       <span className="text-gray-500 dark:text-white/50 text-sm font-semibold uppercase tracking-wider mb-2">
-                        Riepilogo Live
+                        {t.summary.live}
                       </span>
-                      <h3 className="text-xl font-display font-bold text-gray-300 dark:text-white/30">Nessun veicolo</h3>
+                      <h3 className="text-xl font-display font-bold text-gray-300 dark:text-white/30">{t.summary.noVehicle}</h3>
                     </div>
                   )}
                 </div>
@@ -1423,32 +1991,32 @@ const PrenotaOra = () => {
                 <div className="p-6 md:p-8 space-y-6">
                   <div className="flex justify-between items-end pb-6 border-b border-gray-200 dark:border-white/5">
                     <div>
-                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">Tariffa</p>
-                      <span className="text-gray-700 dark:text-white text-sm">Tariffa dinamica stagionale</span>
+                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">{t.summary.rate}</p>
+                      <span className="text-gray-700 dark:text-white text-sm">{t.summary.seasonalRate}</span>
                     </div>
                     <div className="text-right">
-                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">Durata</p>
+                      <p className="text-gray-500 dark:text-white/50 text-sm mb-1">{t.summary.duration}</p>
                       <p className="text-gold font-bold text-xl">
-                        {days} Giorn{days !== 1 ? "i" : "o"}
+                        {t.summary.days(days)}
                       </p>
                     </div>
                   </div>
 
                   {checkingAvailability && (
                     <div className="flex items-center justify-center gap-2 py-2 text-gray-500 dark:text-white/40 text-sm">
-                      <Loader2 size={14} className="animate-spin" /> Aggiornamento prezzo...
+                      <Loader2 size={14} className="animate-spin" /> {t.summary.updatingPrice}
                     </div>
                   )}
 
                   {availabilityResult?.available && (
                     <div className="flex items-center gap-2 text-xs text-green-400/70 bg-green-500/5 rounded-lg px-3 py-2">
-                      <Zap size={12} /> Tariffa calcolata in tempo reale
+                      <Zap size={12} /> {t.summary.realTimeRate}
                     </div>
                   )}
 
                   <div className="space-y-3 py-2">
                     <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
-                      <CheckCircle2 className="text-gold shrink-0" size={16} /> Guidatore principale
+                      <CheckCircle2 className="text-gold shrink-0" size={16} /> {t.summary.mainDriver}
                       {mainDriver.name && (
                         <span className="text-gray-400 dark:text-white/40 text-xs ml-auto">
                           {mainDriver.name} {mainDriver.surname}
@@ -1457,13 +2025,13 @@ const PrenotaOra = () => {
                     </div>
                     {hasSecondDriver && (
                       <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
-                        <Users className="text-gold shrink-0" size={16} /> Secondo guidatore incluso
+                        <Users className="text-gold shrink-0" size={16} /> {t.summary.secondIncluded}
                       </div>
                     )}
                   </div>
 
                   <div className="pt-6 border-t border-gray-200 dark:border-white/5 flex flex-wrap justify-between items-center gap-2">
-                    <span className="text-lg text-gray-600 dark:text-white/70">Totale stimato</span>
+                    <span className="text-lg text-gray-600 dark:text-white/70">{t.summary.totalEstimated}</span>
                     <span className="text-2xl sm:text-3xl md:text-4xl font-black font-display text-gold min-w-0 break-words">
                       €{total}
                     </span>
@@ -1472,11 +2040,10 @@ const PrenotaOra = () => {
                   {/* Step indicator in summary */}
                   <div className="pt-4 border-t border-gray-200 dark:border-white/5">
                     <p className="text-xs text-gray-500 dark:text-white/50 leading-relaxed mb-3">
-                      Il deposito cauzionale e la franchigia verranno definiti in fase contrattuale in base al veicolo
-                      scelto.
+                      {t.summary.depositNote}
                     </p>
                     <div className="flex items-center justify-between text-xs text-gray-400 dark:text-white/40">
-                      <span>Step {currentStep} di 5</span>
+                      <span>{t.summary.stepOf(currentStep, 5)}</span>
                       <span className="text-gold">{STEP_LABELS[currentStep - 1]}</span>
                     </div>
                   </div>
@@ -1500,21 +2067,21 @@ const PrenotaOra = () => {
                 {/* LEFT: Vehicle + Price */}
                 <div className="flex flex-col min-w-0">
                   <span className="text-xs text-gray-500 dark:text-white/50 truncate">
-                    {selectedVehicle ? `${selectedVehicle.make} ${selectedVehicle.model}` : "Nessun veicolo"}
+                    {selectedVehicle ? `${selectedVehicle.make} ${selectedVehicle.model}` : t.mobileBar.noVehicle}
                   </span>
                   {total > 0 ? (
                     <div className="flex items-baseline gap-1.5">
                       <span className="text-xl font-black font-display text-gold">
-                        €{total.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        €{total.toLocaleString(numberLocale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                       {days > 0 && (
                         <span className="text-[10px] text-gray-500 dark:text-white/40">
-                          per {days} giorn{days !== 1 ? "i" : "o"}
+                          {t.mobileBar.perDays(days)}
                         </span>
                       )}
                     </div>
                   ) : (
-                    <span className="text-sm text-gray-400 dark:text-white/30 italic">Seleziona date</span>
+                    <span className="text-sm text-gray-400 dark:text-white/30 italic">{t.mobileBar.selectDates}</span>
                   )}
                 </div>
 

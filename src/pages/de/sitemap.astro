@@ -1,0 +1,164 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+
+const SITE = "https://www.ksrentsardinia.com";
+
+const pagineP = [
+  { label: "Startseite", to: "/de/" },
+  { label: "Fuhrpark", to: "/de/fuhrpark" },
+  { label: "Jetzt buchen", to: "/de/jetzt-buchen" },
+  { label: "Über uns", to: "/de/uber-uns" },
+];
+
+const servizi = [
+  { label: "Autovermietung Flughafen Olbia", to: "/de/autovermietung-flughafen-olbia" },
+  { label: "Autovermietung Hafen Olbia", to: "/de/autovermietung-hafen-olbia" },
+  { label: "Autovermietung Costa Smeralda", to: "/de/autovermietung-costa-smeralda" },
+  { label: "Vermietung ohne Kreditkarte", to: "/de/autovermietung-ohne-kreditkarte-olbia" },
+];
+
+const locCostaSmeralda = [
+  { label: "Porto Cervo", to: "/de/noleggio-auto-porto-cervo" },
+  { label: "Baja Sardinia", to: "/de/noleggio-auto-baja-sardinia" },
+  { label: "Poltu Quatu", to: "/de/noleggio-auto-poltu-quatu" },
+  { label: "Porto Rotondo", to: "/de/noleggio-auto-porto-rotondo" },
+  { label: "Marinella", to: "/de/noleggio-auto-marinella" },
+  { label: "Portisco", to: "/de/noleggio-auto-portisco" },
+  { label: "Palau", to: "/de/noleggio-auto-palau" },
+  { label: "Cannigione", to: "/de/noleggio-auto-cannigione" },
+  { label: "Arzachena", to: "/de/noleggio-auto-arzachena" },
+  { label: "Santa Teresa Gallura", to: "/de/noleggio-auto-santa-teresa-gallura" },
+];
+
+const locCostaEst = [
+  { label: "San Teodoro", to: "/de/noleggio-auto-san-teodoro" },
+  { label: "Puntaldia", to: "/de/noleggio-auto-puntaldia" },
+  { label: "Murta Maria", to: "/de/noleggio-auto-murta-maria" },
+  { label: "Porto San Paolo", to: "/de/noleggio-auto-porto-san-paolo" },
+  { label: "Budoni", to: "/de/noleggio-auto-budoni" },
+  { label: "Agrustos", to: "/de/noleggio-auto-agrustos" },
+  { label: "Capo Coda Cavallo", to: "/de/noleggio-auto-capo-coda-cavallo" },
+  { label: "Pittulongu", to: "/de/noleggio-auto-pittulongu" },
+  { label: "Bados", to: "/de/noleggio-auto-bados" },
+  { label: "Golfo Aranci", to: "/de/noleggio-auto-golfo-aranci" },
+];
+
+const spiaggeCS = [
+  { label: "Spiaggia del Principe", to: "/de/spiaggia-del-principe" },
+  { label: "Liscia Ruja", to: "/de/liscia-ruja" },
+  { label: "Capriccioli", to: "/de/capriccioli" },
+  { label: "Romazzino", to: "/de/romazzino" },
+  { label: "Grande Pevero", to: "/de/grande-pevero" },
+  { label: "La Celvia", to: "/de/la-celvia" },
+  { label: "Cala del Faro", to: "/de/cala-del-faro" },
+  { label: "Cala Moresca", to: "/de/cala-moresca" },
+  { label: "Cala Sabina", to: "/de/cala-sabina" },
+  { label: "Spiaggia Marinella", to: "/de/spiaggia-marinella" },
+];
+
+const spiaggeEstNord = [
+  { label: "La Cinta", to: "/de/la-cinta" },
+  { label: "Cala Brandinchi", to: "/de/cala-brandinchi" },
+  { label: "Lu Impostu", to: "/de/lu-impostu" },
+  { label: "Porto Istana", to: "/de/porto-istana" },
+  { label: "Porto Taverna", to: "/de/porto-taverna" },
+  { label: "Spiaggia Bianca", to: "/de/spiaggia-bianca" },
+  { label: "Spiaggia Pittulongu", to: "/de/spiaggia-pittulongu" },
+  { label: "Spiaggia Bados", to: "/de/spiaggia-bados" },
+  { label: "Rena Bianca", to: "/de/rena-bianca" },
+  { label: "Capo Testa", to: "/de/capo-testa" },
+];
+
+const allItems = [
+  ...pagineP,
+  ...servizi,
+  ...locCostaSmeralda,
+  ...locCostaEst,
+  ...spiaggeCS,
+  ...spiaggeEstNord,
+];
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Sitemap KS Rent Sardinia",
+  numberOfItems: allItems.length,
+  itemListElement: allItems.map((it, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: it.label,
+    url: `${SITE}${it.to}`,
+  })),
+};
+
+const sections = [
+  { title: "Hauptseiten", icon: "★", items: pagineP },
+  { title: "Leistungen & Lieferpunkte", icon: "✈", items: servizi },
+  { title: "Standorte Costa Smeralda", icon: "📍", items: locCostaSmeralda },
+  { title: "Standorte Ost- & Nordküste", icon: "📍", items: locCostaEst },
+  { title: "Strände Costa Smeralda", icon: "🌊", items: spiaggeCS },
+  { title: "Strände Ost- & Nordküste", icon: "🌊", items: spiaggeEstNord },
+];
+---
+<BaseLayout
+  title="Sitemap | KS Rent Sardinia — Autovermietung Olbia"
+  description="Vollständige Sitemap von KS Rent Sardinia: alle Seiten zur Autovermietung in Olbia, an der Costa Smeralda, in Gallura und zu den Stränden mit Lieferung an die Haustür."
+  canonical="https://www.ksrentsardinia.com/de/sitemap"
+  jsonLd={[buildBreadcrumb("Sitemap", "/de/sitemap"), itemListJsonLd]}
+>
+  <main class="min-h-screen bg-gray-50 dark:bg-[#050505] text-foreground pt-32 md:pt-40 pb-20">
+    <div class="container mx-auto px-4 max-w-6xl">
+      {/* Hero */}
+      <header class="mb-12 md:mb-16 text-center">
+        <span class="inline-block text-gold font-semibold tracking-[0.3em] uppercase text-[11px] md:text-xs mb-4">
+          Vollständiges Verzeichnis
+        </span>
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-black tracking-tight text-foreground leading-tight mb-4">
+          Sitemap
+        </h1>
+        <p class="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          Alle Seiten von KS Rent Sardinia auf einen Blick: schnelle Navigation,
+          Barrierefreiheit und Index für Suchmaschinen. Olbia, Costa Smeralda, Gallura,
+          Strände und Leistungen.
+        </p>
+      </header>
+
+      {/* Sections */}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {sections.map((sec) => (
+          <section class="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 hover:border-gold/30 transition-colors">
+            <h2 class="text-foreground font-bold text-sm uppercase tracking-[0.18em] mb-5 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-gold flex-shrink-0"></span>
+              <span>{sec.title}</span>
+              <span class="ml-auto text-[11px] font-medium text-muted-foreground tracking-widest">
+                {sec.items.length}
+              </span>
+            </h2>
+            <ul class="flex flex-col gap-1.5">
+              {sec.items.map((it) => (
+                <li>
+                  <a
+                    href={it.to}
+                    class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-white/75 hover:bg-gold/10 hover:text-gold transition-colors group"
+                  >
+                    <span>{it.label}</span>
+                    <span class="text-gold opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      {/* Footer note */}
+      <div class="mt-12 md:mt-16 text-center text-sm text-muted-foreground">
+        <p>
+          {allItems.length} indexierte Seiten ·
+          <a href="/sitemap-index.xml" class="text-gold hover:underline ml-1">XML-Sitemap</a>
+        </p>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

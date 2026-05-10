@@ -15,6 +15,9 @@ import {
   X,
   Printer,
   Folder,
+  LayoutDashboard,
+  MessageSquare,
+  Globe,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
@@ -22,19 +25,25 @@ import { cn } from "@/lib/utils";
 import VehicleModal from "@/components/admin/VehicleModal";
 import MaintenanceModal from "@/components/admin/MaintenanceModal";
 import BookingModal from "@/components/admin/BookingModal";
+import DashboardSection from "@/components/admin/sections/DashboardSection";
+import ReviewsSection from "@/components/admin/sections/ReviewsSection";
+import SEOEditorSection from "@/components/admin/sections/SEOEditorSection";
 
-type Section = "flotta" | "manutenzione" | "contratti";
+type Section = "dashboard" | "flotta" | "manutenzione" | "contratti" | "seo" | "recensioni";
 
 const sidebarItems: { title: string; icon: typeof Car; section: Section }[] = [
+  { title: "Dashboard", icon: LayoutDashboard, section: "dashboard" },
   { title: "Flotta & Prezzi", icon: Car, section: "flotta" },
   { title: "Manutenzione", icon: Wrench, section: "manutenzione" },
   { title: "Noleggi & Contratti", icon: FileText, section: "contratti" },
+  { title: "SEO Editor", icon: Globe, section: "seo" },
+  { title: "Recensioni", icon: MessageSquare, section: "recensioni" },
 ];
 
 const Admin = () => {
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
-  const [section, setSection] = useState<Section>("flotta");
+  const [section, setSection] = useState<Section>("dashboard");
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -282,6 +291,15 @@ const Admin = () => {
         </header>
 
         <div className="flex-1 overflow-y-auto p-4 lg:p-8 custom-scrollbar">
+          {/* DASHBOARD */}
+          {section === "dashboard" && <DashboardSection />}
+
+          {/* SEO EDITOR */}
+          {section === "seo" && <SEOEditorSection />}
+
+          {/* RECENSIONI */}
+          {section === "recensioni" && <ReviewsSection />}
+
           {/* FLOTTA */}
           {section === "flotta" && (
             <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden">

@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehiclePageBody from "@/components/VehiclePageBody.astro";
+import { supabase } from "@/lib/supabase";
+import { buildVehiclePageJsonLd } from "@/lib/jsonLd";
+
+export async function getStaticPaths() {
+  const [seoRes, vehRes] = await Promise.all([
+    supabase.from("seo_vehicles").select("*"),
+    supabase.from("vehicles").select("*").or("is_archived.is.null,is_archived.eq.false"),
+  ]);
+  const seoRows = (seoRes.data || []) as any[];
+  const allVehicles = (vehRes.data || []) as any[];
+
+  return seoRows
+    .filter((s) => s.slug_de && s.title_de)
+    .map((seo) => ({
+      params: { slug: seo.slug_de as string },
+      props: { seo, variants: allVehicles.filter((v) => v.group_slug === seo.group_slug) },
+    }));
+}
+
+const { seo, variants } = Astro.props as { seo: any; variants: any[] };
+const lang = "de" as const;
+
+const primary = variants.find((v) => v.is_primary_variant) || variants[0] || null;
+const heroImage = seo.hero_image_url || primary?.transparent_image_url || primary?.image_url || null;
+const allRates: number[] = [];
+for (const v of variants) {
+  for (const k of ["rate_april","rate_may","rate_june","rate_july","rate_august","rate_september","rate_october"]) {
+    const r = (v as any)[k]; if (typeof r === "number" && r > 0) allRates.push(r);
+  }
+}
+const priceFrom = allRates.length ? Math.min(...allRates) : null;
+const priceTo = allRates.length ? Math.max(...allRates) : null;
+const pageUrl = `https://www.ksrentsardinia.com/${lang}/fuhrpark/${seo.slug_de}`;
+
+const jsonLd = buildVehiclePageJsonLd(
+  {
+    group_slug: seo.group_slug,
+    name: seo.title_de,
+    brand: primary?.make || null,
+    category: primary?.category || null,
+    fuel: primary?.fuel_type || null,
+    description: seo.meta_description_de || null,
+    image: heroImage,
+    priceFrom,
+    priceTo,
+    url: pageUrl,
+  },
+  Array.isArray(seo.faqs) && seo.faqs.length > 0 ? seo.faqs : undefined,
+);
+---
+<BaseLayout
+  title={seo.title_de}
+  description={seo.meta_description_de || ""}
+  canonical={pageUrl}
+  ogImage={seo.og_image_url || heroImage || undefined}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Fuhrpark", path: "/de/fuhrpark" },
+    { name: seo.title_de, path: `/de/fuhrpark/${seo.slug_de}` },
+  ]}
+>
+  <VehiclePageBody seo={seo} variants={variants} lang={lang} />
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioPortoOlbia from "@/views/NoleggioPortoOlbia";
+import {
+  portoAutoRentalJsonLd,
+  portoFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Autovermietung Hafen Olbia Isola Bianca | KS Rent"
+  description="Kommen Sie mit der Fähre nach Olbia? Mieten Sie Supersportwagen, SUVs oder Motorräder am Hafen Isola Bianca. Sitz direkt bei der Ankunft, keine Wartezeit. Online buchen mit KS Rent."
+  canonical="https://www.ksrentsardinia.com/de/autovermietung-hafen-olbia"
+  jsonLd={[
+    portoAutoRentalJsonLd,
+    portoFaqJsonLd,
+    buildBreadcrumb("Autovermietung Hafen Olbia", "/de/autovermietung-hafen-olbia"),
+  ]}
+>
+  <NoleggioPortoOlbia lang="de" />
+</BaseLayout>

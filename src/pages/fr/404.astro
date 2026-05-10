@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NotFound from "@/views/NotFound";
+---
+<BaseLayout
+  title="Page introuvable — KS Rent Sardinia"
+  description="La page que vous recherchez n'existe pas. Retournez à l'accueil de KS Rent Sardinia ou explorez la flotte."
+  noindex={true}
+>
+  <NotFound client:load lang="fr" />
+</BaseLayout>

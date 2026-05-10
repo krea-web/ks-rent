@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ChiSiamo, { chiSiamoFaqJsonLd } from "@/views/ChiSiamo";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="À Propos — KS Rent | Location de Voiture Olbia Sardaigne"
+  description="KS Rent Sardinia : location de voitures haut de gamme avec siège à Olbia. Flotte propriétaire, livraison à domicile en Costa Smeralda, dépôt flexible et sans carte de crédit obligatoire."
+  canonical="https://www.ksrentsardinia.com/fr/a-propos"
+  jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("À Propos", "/fr/a-propos")]}
+>
+  <ChiSiamo client:load lang="fr" />
+</BaseLayout>

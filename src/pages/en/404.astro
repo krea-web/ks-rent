@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NotFound from "@/views/NotFound";
+---
+<BaseLayout
+  title="Page not found — KS Rent Sardinia"
+  description="The page you are looking for does not exist. Return to the KS Rent Sardinia home page or browse the fleet."
+  noindex={true}
+>
+  <NotFound client:load lang="en" />
+</BaseLayout>

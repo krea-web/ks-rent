@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PrenotaOra from "@/views/PrenotaOra";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Book Car Hire Olbia Airport | KS Rent Costa Smeralda"
+  description="Book your luxury vehicle in Olbia in 2 minutes. Delivery to the airport or your hotel. Transparent security deposit and full insurance cover."
+  canonical="https://www.ksrentsardinia.com/en/book-now"
+  jsonLd={buildBreadcrumb("Book Now", "/en/book-now")}
+  hideMobileSticky={true}
+>
+  <PrenotaOra client:load lang="en" />
+</BaseLayout>

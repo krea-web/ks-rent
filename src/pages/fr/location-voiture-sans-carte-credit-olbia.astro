@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioSenzaCartaCredito, {
+  senzaCCJsonLd,
+  senzaCCFaqJsonLd,
+} from "@/views/NoleggioSenzaCartaCredito";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Location de Voiture Sans Carte de Crédit Olbia | KS Rent"
+  description="Louez une voiture à Olbia sans carte de crédit. Nous acceptons les cartes prépayées, la carte de débit et les espèces. Supercars, SUV et motos en Costa Smeralda. Réservez en ligne."
+  canonical="https://www.ksrentsardinia.com/fr/location-voiture-sans-carte-credit-olbia"
+  jsonLd={[
+    senzaCCJsonLd,
+    senzaCCFaqJsonLd,
+    buildBreadcrumb("Location Sans Carte de Crédit", "/fr/location-voiture-sans-carte-credit-olbia"),
+  ]}
+>
+  <NoleggioSenzaCartaCredito lang="fr" />
+</BaseLayout>

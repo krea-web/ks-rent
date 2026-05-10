@@ -7,44 +7,28 @@ import SEOHead from "@/components/SEOHead";
 import { buildBreadcrumb } from "@/lib/jsonLd";
 import GoldKeywordsMarquee from "@/components/GoldKeywordsMarquee";
 import CompanyMap from "@/components/CompanyMap";
+import type { Locale } from "@/lib/i18n";
+import { getDict } from "@/i18n";
 
-const chiSiamoFaqs = [
-  {
-    q: "Chi è KS Rent Sardinia?",
-    a: "KS Rent S.R.L. (P.IVA IT03028900904) è un autonoleggio di lusso con sede a Olbia, Sardegna. Fondata nel 2025, è un'entità al 100% sarda, totalmente indipendente e non affiliata ad altre società omonime operanti nel resto d'Italia.",
-    gold: true,
-  },
-  {
-    q: "Dove si trovano le sedi di KS Rent a Olbia?",
-    a: "Abbiamo due sedi strategiche: la Sede Operativa in Viale Isola Bianca 38 (al Porto di Olbia, ideale per chi arriva in traghetto) e la Sede Legale in Viale Aldo Moro 367, comoda per chi arriva dall'aeroporto. Consegniamo anche a domicilio in tutta la Gallura e Costa Smeralda.",
-    gold: true,
-  },
-  {
-    q: "Quali veicoli offre KS Rent Sardinia?",
-    a: "La nostra flotta comprende supercar (Audi RS3, BMW M2), SUV (Jeep Avenger), premium (Mercedes Classe A), city car (Fiat Panda Hybrid), scooter (Honda SH 125/350) e quad (Yamaha Raptor). Ogni veicolo è di nostra proprietà, preparato maniacalmente e consegnato sanificato.",
-    gold: false,
-  },
-  {
-    q: "KS Rent Sardinia è la stessa azienda di KS Rent Roma?",
-    a: "No. KS Rent Sardinia (ksrentsardinia.com) con sede a Olbia è un'entità completamente distinta e non affiliata rispetto a KS Rent S.r.l. di Roma (ksrent.it), che opera nel noleggio a lungo termine su scala nazionale. Siamo due realtà separate con partite IVA diverse.",
-    gold: false,
-  },
-  {
-    q: "Quali sono gli orari di KS Rent Sardinia?",
-    a: "Siamo operativi dalle 10:00 alle 22:30, 7 giorni su 7, tutti i giorni della settimana inclusi festivi. Consegniamo veicoli all'aeroporto di Olbia, al porto e in tutta la Costa Smeralda.",
-    gold: false,
-  },
-];
+// Mark which FAQs should be highlighted in gold (kept stable across locales by index).
+const FAQ_GOLD_FLAGS = [true, true, false, false, false] as const;
 
-export const chiSiamoFaqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: chiSiamoFaqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
+/** Build the FAQPage JSON-LD using a specific locale's FAQ content. */
+export function buildChiSiamoFaqJsonLd(lang: Locale = "it") {
+  const dict = getDict(lang);
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: dict.about.faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+// Backwards-compatible default export for the Italian version (used by Astro pages).
+export const chiSiamoFaqJsonLd = buildChiSiamoFaqJsonLd("it");
 
 const FLEET_VEHICLES = [
   { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png', text: 'Audi RS3 Grigia' },
@@ -58,7 +42,59 @@ const FLEET_VEHICLES = [
   { image: 'https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png', text: 'Yamaha Raptor' },
 ];
 
-const ChiSiamo = () => {
+/** Localised top-level paths used inside ChiSiamo's internal links. */
+const LOCALISED_PATHS: Record<Locale, {
+  home: string;
+  about: string;
+  airport: string;
+  port: string;
+  costaSmeralda: string;
+  bookNow: string;
+}> = {
+  it: {
+    home: "/",
+    about: "/chisiamo",
+    airport: "/noleggio-auto-aeroporto-olbia",
+    port: "/noleggio-auto-porto-olbia",
+    costaSmeralda: "/noleggio-auto-costa-smeralda",
+    bookNow: "/prenotaora",
+  },
+  en: {
+    home: "/en",
+    about: "/en/about-us",
+    airport: "/en/car-hire-olbia-airport",
+    port: "/en/car-hire-olbia-port",
+    costaSmeralda: "/en/car-hire-costa-smeralda",
+    bookNow: "/en/book-now",
+  },
+  de: {
+    home: "/de",
+    about: "/de/uber-uns",
+    airport: "/de/autovermietung-flughafen-olbia",
+    port: "/de/autovermietung-hafen-olbia",
+    costaSmeralda: "/de/autovermietung-costa-smeralda",
+    bookNow: "/de/jetzt-buchen",
+  },
+  fr: {
+    home: "/fr",
+    about: "/fr/a-propos",
+    airport: "/fr/location-voiture-aeroport-olbia",
+    port: "/fr/location-voiture-port-olbia",
+    costaSmeralda: "/fr/location-voiture-costa-smeralda",
+    bookNow: "/fr/reserver",
+  },
+};
+
+interface ChiSiamoProps {
+  lang?: Locale;
+}
+
+const ChiSiamo = ({ lang = "it" }: ChiSiamoProps) => {
+  const t = getDict(lang);
+  const paths = LOCALISED_PATHS[lang];
+  const canonical = `https://www.ksrentsardinia.com${paths.about}`;
+  const faqJsonLd = buildChiSiamoFaqJsonLd(lang);
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' });
   const scrollPrev = useCallback((e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); emblaApi?.scrollPrev(); }, [emblaApi]);
   const scrollNext = useCallback((e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); emblaApi?.scrollNext(); }, [emblaApi]);
@@ -66,10 +102,10 @@ const ChiSiamo = () => {
   return (
     <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
       <SEOHead
-        title="Chi Siamo — KS Rent | Autonoleggio Olbia Sardegna"
-        description="KS Rent Sardinia: autonoleggio di lusso con sede a Olbia. Flotta di proprietà, consegna a domicilio in Costa Smeralda, deposito flessibile e senza carta di credito obbligatoria."
-        canonical="https://www.ksrentsardinia.com/chisiamo"
-        jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
+        title={t.about.seoTitle}
+        description={t.about.seoDescription}
+        canonical={canonical}
+        jsonLd={[faqJsonLd, buildBreadcrumb(t.about.breadcrumbTitle, paths.about)]}
       />
 
       {/* 1. HERO EDITORIALE */}
@@ -93,15 +129,14 @@ const ChiSiamo = () => {
           >
             <div className="flex items-center justify-center gap-4 mb-6 md:mb-8">
               <span className="text-gold text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] font-semibold">
-                KS Rent S.R.L.
+                {t.about.hero.eyebrow}
               </span>
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black leading-tight md:leading-[1.05] tracking-tight mb-6 md:mb-8 break-words">
-              Autonoleggio Olbia <span className="text-gradient-gold">e Costa Smeralda.</span>
+              {t.about.hero.titlePart1} <span className="text-gradient-gold">{t.about.hero.titleAccent}</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
-              Oltre il semplice noleggio. Un'esperienza di pura libertà, disegnata per esaltare ogni tuo viaggio
-              sull'isola.
+              {t.about.hero.subtitle}
             </p>
             <div className="mt-8 w-full max-w-2xl h-[2px] relative overflow-hidden rounded-full mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
@@ -137,7 +172,7 @@ const ChiSiamo = () => {
             >
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37,0_0_20px_#D4AF37aa] border-2 border-[#D4AF37]" />
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold leading-tight">
-                Siamo nati dall'asfalto sardo e dalla voglia di <span className="text-gold">cambiare le regole.</span>
+                {t.about.mission.headingPart1} <span className="text-gold">{t.about.mission.headingAccent}</span>
               </h2>
             </motion.div>
 
@@ -149,8 +184,7 @@ const ChiSiamo = () => {
             >
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
               <p className="text-lg md:text-2xl font-light text-gray-600 dark:text-white/70 leading-relaxed">
-                Abbiamo vissuto in prima persona la frustrazione dei noleggi tradizionali: code infinite, poca
-                trasparenza e clausole incomprensibili.
+                {t.about.mission.p1}
               </p>
             </motion.div>
 
@@ -162,8 +196,7 @@ const ChiSiamo = () => {
             >
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-2 w-3 h-3 rounded-full bg-[#D4AF37]/60 shadow-[0_0_8px_#D4AF37aa] border-2 border-[#D4AF37]/60" />
               <p className="text-lg md:text-2xl font-light text-gray-600 dark:text-white/70 leading-relaxed">
-                KS Rent è la nostra risposta: un servizio basato sulla fiducia totale e sulla qualità assoluta. Atterri,
-                prendi le chiavi, parti.
+                {t.about.mission.p2}
               </p>
             </motion.div>
 
@@ -176,11 +209,10 @@ const ChiSiamo = () => {
               <div className="absolute -left-[calc(2.5rem+5px)] md:-left-[calc(3rem+5px)] top-6 w-4 h-4 rounded-full bg-[#D4AF37] shadow-[0_0_14px_#D4AF37,0_0_30px_#D4AF37aa] border-2 border-[#D4AF37]" />
               <blockquote className="border-l-0 pl-0">
                 <p className="text-2xl md:text-4xl font-display font-medium italic text-gray-900 dark:text-white leading-snug">
-                  "Non affittiamo semplicemente veicoli, ma ti consegniamo la chiave per vivere l'isola esattamente come
-                  va vissuta: in totale libertà."
+                  {t.about.mission.quote}
                 </p>
                 <span className="block mt-8 text-sm md:text-base font-bold tracking-[0.2em] uppercase text-gold">
-                  I Fondatori
+                  {t.about.mission.quoteAuthor}
                 </span>
               </blockquote>
             </motion.div>
@@ -203,16 +235,16 @@ const ChiSiamo = () => {
               <div className="aspect-[3/4] overflow-hidden rounded-[2rem] border border-gray-200 dark:border-white/5">
                 <img
                   src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80"
-                  alt="Strada panoramica Sardegna noleggio auto KS Rent"
+                  alt={t.about.vision.imgAlt}
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
               </div>
               <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-8 w-36 h-36 md:w-48 md:h-48 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 rounded-3xl flex items-center justify-center p-4 md:p-6 hidden md:flex shadow-2xl">
                 <p className="text-xs text-gold uppercase tracking-widest font-semibold text-center leading-loose">
-                  DAL 2025
+                  {t.about.vision.badgeYear}
                   <br />
-                  In Sardegna
+                  {t.about.vision.badgeIn}
                 </p>
               </div>
             </motion.div>
@@ -224,23 +256,23 @@ const ChiSiamo = () => {
               className="lg:col-span-7"
             >
               <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-6 md:mb-8">
-                La Nostra Visione
+                {t.about.vision.eyebrow}
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 md:mb-8 break-words">
-                Non siamo nati per essere l'ennesima agenzia.
+                {t.about.vision.heading}
               </h2>
               <div className="space-y-5 md:space-y-6 text-gray-600 dark:text-white/60 font-light text-base md:text-lg">
                 <p>
-                  Siamo nati per essere il partner che avremmo sempre voluto incontrare nei nostri viaggi. KS Rent nasce
-                  da una frustrazione comune: la burocrazia infinita del noleggio tradizionale.
+                  {t.about.vision.p1}
                 </p>
                 <p>
-                  Abbiamo deciso di cambiare le regole. Il nostro focus è il{" "}
-                  <Link to="/" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">noleggio auto a Olbia</Link>{" "}
-                  e il nostro obiettivo è farti iniziare la vacanza dal momento esatto in cui atterri all'{" "}
-                  <Link to="/noleggio-auto-aeroporto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Aeroporto di Olbia</Link>{" "}
-                  o sbarchi al{" "}
-                  <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Isola Bianca</Link>.
+                  {t.about.vision.p2Pre}
+                  <Link to={paths.home} className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">{t.about.vision.p2Link1}</Link>
+                  {t.about.vision.p2Mid1}
+                  <Link to={paths.airport} className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">{t.about.vision.p2Link2}</Link>
+                  {t.about.vision.p2Mid2}
+                  <Link to={paths.port} className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">{t.about.vision.p2Link3}</Link>
+                  {t.about.vision.p2Post}
                 </p>
               </div>
             </motion.div>
@@ -259,12 +291,12 @@ const ChiSiamo = () => {
             viewport={{ once: true }}
           >
             <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">
-              Menzionati su
+              {t.about.mentions.eyebrow}
             </span>
             <p className="text-gray-700 dark:text-white/70 text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto">
-              KS Rent Sardinia è inserita tra gli autonoleggi consigliati dal portale turistico
-              ufficiale <span className="font-semibold text-gray-900 dark:text-white">Hello Olbia</span>,
-              riferimento informativo per chi visita Olbia, la Gallura e la Costa Smeralda.
+              {t.about.mentions.text1}
+              <span className="font-semibold text-gray-900 dark:text-white">{t.about.mentions.portalName}</span>
+              {t.about.mentions.text2}
             </p>
           </motion.div>
         </div>
@@ -284,11 +316,10 @@ const ChiSiamo = () => {
                 <Instagram className="text-gold w-6 h-6" />
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 leading-tight">
-                Vivi l'Esperienza.
+                {t.about.social.heading}
               </h2>
               <p className="text-gray-500 dark:text-white/50 font-light text-base md:text-lg">
-                Unisciti alla nostra community. Esplora le bellezze della Sardegna e scopri il dietro le quinte della
-                nostra flotta esclusiva.
+                {t.about.social.subtitle}
               </p>
             </motion.div>
 
@@ -303,7 +334,7 @@ const ChiSiamo = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-6 md:px-8 py-4 rounded-full bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 hover:border-gold/50 hover:bg-gold/10 text-gray-900 dark:text-white hover:text-gold transition-all duration-300 uppercase tracking-widest text-xs font-bold group min-h-[48px] relative z-20"
               >
-                Segui @ksrentsardinia{" "}
+                {t.about.social.followCta}{" "}
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </motion.div>
@@ -327,7 +358,7 @@ const ChiSiamo = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6 md:p-10 pointer-events-none">
                 <Instagram className="text-gold mb-3" size={32} />
-                <p className="text-white font-medium">Esplora la Costa Smeralda con stile.</p>
+                <p className="text-white font-medium">{t.about.social.bigImageCaption}</p>
               </div>
             </motion.a>
 
@@ -383,8 +414,8 @@ const ChiSiamo = () => {
             viewport={{ once: true }}
             className="mb-8"
           >
-            <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Dove Trovarci</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">Le Nostre Sedi a Olbia</h2>
+            <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">{t.about.locations.eyebrow}</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">{t.about.locations.heading}</h2>
           </motion.div>
           <CompanyMap />
         </div>
@@ -400,24 +431,24 @@ const ChiSiamo = () => {
             className="p-8 md:p-12 rounded-[2rem] border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] backdrop-blur-sm"
           >
             <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">
-              La Nostra Identità
+              {t.about.identity.eyebrow}
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-6 leading-tight">
-              Orgogliosamente e Unicamente Sardi.
+              {t.about.identity.heading}
             </h2>
             <div className="space-y-4 text-gray-600 dark:text-white/60 font-light text-base md:text-lg leading-relaxed">
               <p>
-                <strong className="text-gray-900 dark:text-white font-medium">KS Rent S.R.L.</strong> è una realtà orgogliosamente e
-                unicamente sarda, nata per servire il turismo di lusso in{" "}
-                <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>. La nostra sede operativa è
-                fissa al{" "}
-                <Link to="/noleggio-auto-porto-olbia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto di Olbia</Link> (P.IVA 03028900904).
+                <strong className="text-gray-900 dark:text-white font-medium">{t.about.identity.companyName}</strong>
+                {t.about.identity.p1Pre}
+                <Link to={paths.costaSmeralda} className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">{t.about.identity.p1Link1}</Link>
+                {t.about.identity.p1Mid}
+                <Link to={paths.port} className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">{t.about.identity.p1Link2}</Link>
+                {t.about.identity.p1Post}
               </p>
               <p>
-                Ci teniamo a precisare ai nostri clienti che operiamo in totale indipendenza e{" "}
-                <strong className="text-gray-800 dark:text-white/80">non abbiamo alcuna affiliazione</strong> con altre agenzie di noleggio
-                auto omonime presenti nel resto d'Italia. KS Rent Sardinia è un marchio esclusivamente legato al
-                territorio sardo.
+                {t.about.identity.p2Pre}
+                <strong className="text-gray-800 dark:text-white/80">{t.about.identity.p2Strong}</strong>
+                {t.about.identity.p2Post}
               </p>
             </div>
           </motion.div>
@@ -428,37 +459,40 @@ const ChiSiamo = () => {
       <section className="py-16 md:py-24 bg-stone-50 dark:bg-[#050505] border-t border-gray-200 dark:border-white/5">
         <div className="w-full max-w-4xl mx-auto px-4 md:px-12 lg:px-24">
           <div className="text-center mb-12">
-            <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">Trasparenza Totale</span>
+            <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">{t.about.faqHeader.eyebrow}</span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-tight">
-              Domande Frequenti su <span className="text-gold">KS Rent Sardinia</span>
+              {t.about.faqHeader.headingPart1} <span className="text-gold">{t.about.faqHeader.headingAccent}</span>
             </h2>
           </div>
           <div className="space-y-4">
-            {chiSiamoFaqs.map((f, i) => (
-              <details
-                key={i}
-                className={`group rounded-2xl md:rounded-[1.5rem] transition-all ${
-                  f.gold
-                    ? "bg-gold/10 border border-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
-                    : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10"
-                }`}
-              >
-                <summary
-                  className={`px-8 py-6 cursor-pointer list-none text-left font-bold italic uppercase tracking-tight flex items-center justify-between ${
-                    f.gold ? "text-gold" : "text-gray-900 dark:text-white"
+            {t.about.faqs.map((f, i) => {
+              const gold = FAQ_GOLD_FLAGS[i] ?? false;
+              return (
+                <details
+                  key={i}
+                  className={`group rounded-2xl md:rounded-[1.5rem] transition-all ${
+                    gold
+                      ? "bg-gold/10 border border-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                      : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10"
                   }`}
                 >
-                  <div className="flex items-center gap-4">
-                    {f.gold && <Star className="w-4 h-4 fill-gold text-gold" />}
-                    {f.q}
+                  <summary
+                    className={`px-8 py-6 cursor-pointer list-none text-left font-bold italic uppercase tracking-tight flex items-center justify-between ${
+                      gold ? "text-gold" : "text-gray-900 dark:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      {gold && <Star className="w-4 h-4 fill-gold text-gold" />}
+                      {f.q}
+                    </div>
+                    <span className="text-gold transition-transform group-open:rotate-90 shrink-0 ml-4">›</span>
+                  </summary>
+                  <div className="px-10 pt-2 pb-8 text-gray-600 dark:text-white/50 leading-relaxed font-light text-base md:text-lg italic">
+                    {f.a}
                   </div>
-                  <span className="text-gold transition-transform group-open:rotate-90 shrink-0 ml-4">›</span>
-                </summary>
-                <div className="px-10 pt-2 pb-8 text-gray-600 dark:text-white/50 leading-relaxed font-light text-base md:text-lg italic">
-                  {f.a}
-                </div>
-              </details>
-            ))}
+                </details>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -493,17 +527,16 @@ const ChiSiamo = () => {
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                   </svg>
                 ))}
-                <span className="text-gray-700 dark:text-white/80 font-bold text-sm ml-2">La tua opinione è oro</span>
+                <span className="text-gray-700 dark:text-white/80 font-bold text-sm ml-2">{t.about.reviews.badgeText}</span>
               </div>
             </div>
 
             <h3 className="text-3xl md:text-4xl lg:text-5xl font-display font-extrabold text-gold mb-6 leading-tight tracking-tight">
-              Diventa il Nostro <span className="text-gray-900 dark:text-white">Giudice di Fiducia</span>
+              {t.about.reviews.headingPart1} <span className="text-gray-900 dark:text-white">{t.about.reviews.headingAccent}</span>
             </h3>
 
             <p className="text-gray-600 dark:text-white/70 text-lg md:text-xl mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-              Siamo fieri di essere presenti su Pagine Gialle, il portale storico italiano che certifica la qualità
-              delle attività. Aiutaci a mantenere il nostro standard premium condividendo la tua esperienza.
+              {t.about.reviews.subtitle}
             </p>
 
             <div className="bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 mb-12 flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto">
@@ -512,15 +545,14 @@ const ChiSiamo = () => {
               </div>
               <div className="text-center md:text-left flex-grow">
                 <p className="text-gray-800 dark:text-white text-base md:text-lg mb-4 font-light">
-                  Ogni recensione viene verificata e certificata da Pagine Gialle, garantendo la massima trasparenza per
-                  te e per i futuri clienti.
+                  {t.about.reviews.verifyText}
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                   <span className="bg-gold/10 dark:bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
-                    Trasparenza Totale
+                    {t.about.reviews.chip1}
                   </span>
                   <span className="bg-gold/10 dark:bg-black/50 text-gold text-xs px-3 py-1 rounded-full border border-gold/20 font-medium">
-                    Qualità Certificata
+                    {t.about.reviews.chip2}
                   </span>
                 </div>
               </div>
@@ -545,7 +577,7 @@ const ChiSiamo = () => {
               >
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
-              <span>Lascia una recensione certificata</span>
+              <span>{t.about.reviews.cta}</span>
             </a>
           </motion.div>
         </div>
@@ -563,22 +595,22 @@ const ChiSiamo = () => {
           className="max-w-4xl mx-auto relative z-10 flex flex-col items-center"
         >
           <span className="inline-block py-2 px-6 rounded-full bg-black/10 border border-black/20 text-black text-xs md:text-sm uppercase tracking-[0.3em] font-bold mb-6 shadow-sm">
-            Il tuo viaggio inizia qui
+            {t.about.manifest.eyebrow}
           </span>
 
           <h2 className="text-4xl sm:text-6xl md:text-8xl font-display font-black mb-6 leading-tight text-black break-words">
-            Pronto a Partire?
+            {t.about.manifest.heading}
           </h2>
 
           <p className="text-black/80 font-medium text-lg md:text-2xl max-w-2xl mx-auto leading-relaxed">
-            L'asfalto della Costa Smeralda ti aspetta.
+            {t.about.manifest.subtitle}
           </p>
         </motion.div>
       </section>
 
       {/* 6. CTA LINK */}
       <Link
-        to="/prenotaora"
+        to={paths.bookNow}
         className="relative block w-full group overflow-hidden cursor-pointer bg-gradient-to-br from-gold via-yellow-500 to-gold"
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.25)_0%,transparent_70%)] pointer-events-none" />
@@ -592,13 +624,13 @@ const ChiSiamo = () => {
             className="flex-1 text-center lg:text-left"
           >
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black text-black mb-4 leading-tight">
-              Scegli la tua Auto
+              {t.about.ctaSection.heading}
             </h2>
             <p className="text-black/70 uppercase tracking-[0.3em] text-sm md:text-base font-bold mb-8">
-              Prenota in meno di 2 minuti
+              {t.about.ctaSection.subtitle}
             </p>
             <span className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-black text-gold uppercase tracking-widest text-xs font-bold group-hover:bg-black/80 transition-all duration-300">
-              Scopri la Flotta{" "}
+              {t.about.ctaSection.button}{" "}
               <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-500" />
             </span>
           </motion.div>
@@ -610,14 +642,14 @@ const ChiSiamo = () => {
             className="flex-1 overflow-hidden relative"
           >
             <button
-              aria-label="Scorri a sinistra"
+              aria-label={t.about.ctaSection.prevAria}
               onClick={scrollPrev}
               className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-black/60 text-foreground hover:bg-black/80 transition-colors duration-300"
             >
               <ArrowLeft size={20} />
             </button>
             <button
-              aria-label="Scorri a destra"
+              aria-label={t.about.ctaSection.nextAria}
               onClick={scrollNext}
               className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 items-center justify-center rounded-full bg-black/60 text-foreground hover:bg-black/80 transition-colors duration-300"
             >
@@ -630,7 +662,7 @@ const ChiSiamo = () => {
                   <div key={i} className="flex-[0_0_100%] min-w-0 flex items-center justify-center py-4">
                     <img
                       src={vehicle.image}
-                      alt={`Noleggio ${vehicle.text} Olbia — KS Rent Sardinia`}
+                      alt={`${vehicle.text} ${t.about.ctaSection.vehicleAltSuffix}`}
                       loading="lazy"
                       className="max-h-[250px] md:max-h-[320px] w-auto object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.12)]"
                     />
@@ -645,10 +677,10 @@ const ChiSiamo = () => {
       {/* LINK HOMEPAGE SEO */}
       <div className="py-6 text-center bg-stone-50 dark:bg-[#050505]">
         <p className="text-foreground/40 text-sm font-light">
-          <Link to="/" className="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors">
-            Noleggio auto Olbia
+          <Link to={paths.home} className="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors">
+            {t.about.footer.link}
           </Link>
-          {" "}— KS Rent Sardinia, autonoleggio con consegna a domicilio in tutta la Gallura e Costa Smeralda.
+          {t.about.footer.tail}
         </p>
       </div>
     </div>

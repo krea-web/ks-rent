@@ -17,6 +17,10 @@ lerna-debug.log*
 
 # SEO audit script output
 reports
+sql/exports/
+
+# Claude Code locale
+.claude/
 
 # environment variables
 .env

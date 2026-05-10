@@ -1,59 +1,20 @@
 import { Link } from "@/lib/router-shim";
 import { MessageSquare, Star, ShieldCheck, ArrowRight, MapPin } from "lucide-react";
+import { getDict } from "@/i18n";
+import { localizePath, type Locale } from "@/lib/i18n";
 
-const faqs = [
-  {
-    q: "Quali metodi di pagamento accettate?",
-    a: "Offriamo massima flessibilità: accettiamo carte di credito, carte prepagate, bancomat, carte di debito e contanti. Il deposito cauzionale viene gestito in base al veicolo scelto.",
-    isHighlighted: true,
-    icon: Star,
-  },
-  {
-    q: "Fate controlli o richiedete uno Score Bancario?",
-    a: "Nessuno Score Bancario e nessuna burocrazia infinita. Il nostro servizio si basa sulla fiducia e sulla trasparenza verso il cliente.",
-    isHighlighted: true,
-    icon: ShieldCheck,
-  },
-  {
-    q: "Come funziona il deposito cauzionale?",
-    a: "Per garantire la massima cura della nostra flotta luxury, è previsto un deposito cauzionale e una franchigia assicurativa. L'importo varia in base alla categoria del veicolo scelto e viene gestito in modo chiaro e veloce al momento del contratto.",
-    isHighlighted: true,
-    icon: ShieldCheck,
-  },
-  {
-    q: "In quali località effettuate la consegna del veicolo?",
-    a: "Serviamo la Costa Smeralda e la Gallura. Oltre alle nostre sedi di Olbia (Viale Isola Bianca 38 e Viale Aldo Moro 367) e all'Aeroporto Costa Smeralda, consegniamo da Porto Cervo a San Teodoro, passando per Porto Rotondo, Baja Sardinia, Cannigione, Arzachena, Palau, Murta Maria, Porto San Paolo, Puntaldia e San Pantaleo. Consegniamo direttamente in Villa, in Hotel o al Porto.",
-    isHighlighted: true,
-    icon: MapPin,
-  },
-  {
-    q: "Dove posso ritirare il veicolo se vengo in sede?",
-    a: "Abbiamo due sedi strategiche a Olbia: la Sede Legale in Viale Aldo Moro 367 e la Sede Operativa in Viale Isola Bianca 38, perfette per chi arriva dal porto o dall'aeroporto.",
-    isHighlighted: false,
-  },
-  {
-    q: "Quali documenti mi servono al momento del ritiro?",
-    a: "Ti basterà presentare una Patente di guida valida, il tuo Codice Fiscale e un documento d'identità in corso di validità (Carta d'Identità o Passaporto).",
-    isHighlighted: false,
-  },
-  {
-    q: "Come funziona il chilometraggio?",
-    a: "I pacchetti chilometrici variano in base alla categoria del veicolo (City Car, Premium, Scooter o Quad). Contattaci per trovare la soluzione perfetta per il tuo itinerario in Sardegna.",
-    isHighlighted: false,
-  },
-  {
-    q: "Cosa succede in caso di guasto o incidente?",
-    a: "Niente panico. Offriamo un'assistenza attiva 24 ore su 24, 7 giorni su 7. Ti basterà chiamare il nostro numero dedicato per ricevere supporto immediato.",
-    isHighlighted: false,
-  },
-  {
-    q: "Posso cancellare o modificare la mia prenotazione?",
-    a: "Sì, offriamo opzioni di cancellazione flessibili. Contatta il nostro team su WhatsApp per gestire o modificare le date della tua prenotazione.",
-    isHighlighted: false,
-  },
-];
+interface FAQSectionProps {
+  lang?: Locale;
+}
 
-const FAQSection = () => {
+// Indices to highlight (gold) with their associated icons. Mirrors the previous
+// hardcoded structure: items 0..3 are highlighted, the rest are standard.
+const HIGHLIGHTED_ICONS = [Star, ShieldCheck, ShieldCheck, MapPin];
+
+const FAQSection = ({ lang = "it" }: FAQSectionProps) => {
+  const t = getDict(lang);
+  const aboutHref = localizePath("/chisiamo", lang);
+
   return (
     <section className="relative bg-gray-50 dark:bg-[#050505] overflow-hidden">
       {/* PARTE 1: FAQ ACCORDION */}
@@ -68,23 +29,25 @@ const FAQSection = () => {
             </div>
 
             <p className="text-gold text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-semibold mb-4">
-              Trasparenza Totale
+              {t.faq.eyebrow}
             </p>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black mb-6 text-foreground leading-tight">
-              Domande{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">Frequenti</span>
+              {t.faq.headingPart1}{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">
+                {t.faq.headingAccent}
+              </span>
             </h2>
 
             <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-              Tutto ciò che devi sapere sul noleggio auto a Olbia e in Costa Smeralda: termini chiari, protezione completa e servizio
-              d'eccellenza.
+              {t.faq.homepageSubtitle}
             </p>
           </div>
 
           <div className="space-y-3 md:space-y-4">
-            {faqs.map((f, i) => {
-              const isGold = f.isHighlighted;
+            {t.homepageFaqs.map((f, i) => {
+              const isGold = i < HIGHLIGHTED_ICONS.length;
+              const Icon = isGold ? HIGHLIGHTED_ICONS[i] : null;
               return (
                 <details
                   key={i}
@@ -100,9 +63,9 @@ const FAQSection = () => {
                     }`}
                   >
                     <div className="flex items-center gap-3 md:gap-4">
-                      {isGold && f.icon && (
+                      {isGold && Icon && (
                         <span className="flex-shrink-0 p-1.5 md:p-2 bg-gold/20 rounded-lg">
-                          <f.icon className="w-4 h-4 md:w-5 md:h-5 text-gold" />
+                          <Icon className="w-4 h-4 md:w-5 md:h-5 text-gold" />
                         </span>
                       )}
                       <span className="text-sm sm:text-base md:text-lg font-bold tracking-wide">{f.q}</span>
@@ -153,24 +116,23 @@ const FAQSection = () => {
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           <div className="max-w-2xl">
             <span className="inline-block py-1 px-3 rounded-full bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gold text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold mb-4 md:mb-6 backdrop-blur-md">
-              Dietro le Quinte
+              {t.faq.bottomEyebrow}
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black mb-5 md:mb-6 leading-tight text-foreground drop-shadow-xl break-words">
-              Non noleggiamo solo auto. <br />
+              {t.faq.bottomHeadingPart1} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">
-                Consegniamo Libertà.
+                {t.faq.bottomHeadingAccent}
               </span>
             </h2>
             <p className="text-gray-600 dark:text-white/80 text-base md:text-xl mb-8 md:mb-10 max-w-lg leading-relaxed drop-shadow-md">
-              Scopri la filosofia di KS Rent S.R.L. e perché siamo diventati il punto di riferimento per il noleggio
-              auto a Olbia con coperture assicurative complete e termini chiari in Costa Smeralda.
+              {t.faq.bottomSubtitle}
             </p>
 
             <Link
-              to="/chisiamo"
+              to={aboutHref}
               className="inline-flex items-center gap-3 bg-gradient-to-r from-gold to-yellow-500 text-black px-6 md:px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 group/btn min-h-[48px] relative z-20"
             >
-              La Nostra Filosofia
+              {t.faq.bottomCta}
               <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
           </div>

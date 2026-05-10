@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioPortoOlbia from "@/views/NoleggioPortoOlbia";
+import {
+  portoAutoRentalJsonLd,
+  portoFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Car Hire Olbia Port Isola Bianca | KS Rent"
+  description="Arriving in Olbia by ferry? Hire a supercar, SUV or motorbike at Isola Bianca Port. Office right at the ferry terminal — no waiting. Book online with KS Rent."
+  canonical="https://www.ksrentsardinia.com/en/car-hire-olbia-port"
+  jsonLd={[
+    portoAutoRentalJsonLd,
+    portoFaqJsonLd,
+    buildBreadcrumb("Car Hire Olbia Port", "/en/car-hire-olbia-port"),
+  ]}
+>
+  <NoleggioPortoOlbia lang="en" />
+</BaseLayout>

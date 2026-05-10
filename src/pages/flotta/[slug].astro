@@ -1,0 +1,446 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { supabase } from "@/lib/supabase";
+import { buildVehiclePageJsonLd } from "@/lib/jsonLd";
+import {
+  ArrowRight,
+  Calendar,
+  MapPin,
+  CheckCircle2,
+  ShieldCheck,
+  Car,
+} from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
+
+interface SeoVehicle {
+  id: string;
+  group_slug: string;
+  title: string | null;
+  h1: string | null;
+  meta_description: string | null;
+  content_html: string | null;
+  hero_image_url: string | null;
+  og_image_url: string | null;
+  canonical_url: string | null;
+  faqs: { q: string; a: string }[] | null;
+  recommended_locations: string[] | null;
+}
+
+interface Vehicle {
+  id: string;
+  make: string;
+  model: string;
+  year: number | null;
+  fuel_type: string | null;
+  characteristics: string | null;
+  color: string | null;
+  category: string;
+  daily_rate: number | null;
+  image_url: string | null;
+  transparent_image_url: string | null;
+  gallery_urls: string[] | null;
+  group_slug: string | null;
+  is_primary_variant: boolean | null;
+  is_archived: boolean | null;
+  available: boolean | null;
+  rate_april: number | null;
+  rate_may: number | null;
+  rate_june: number | null;
+  rate_july: number | null;
+  rate_august: number | null;
+  rate_september: number | null;
+  rate_october: number | null;
+}
+
+export async function getStaticPaths() {
+  const [seoRes, vehRes] = await Promise.all([
+    supabase.from("seo_vehicles").select("*"),
+    supabase.from("vehicles").select("*").or("is_archived.is.null,is_archived.eq.false"),
+  ]);
+
+  if (seoRes.error) console.warn("[getStaticPaths flotta] seo_vehicles:", seoRes.error.message);
+  if (vehRes.error) console.warn("[getStaticPaths flotta] vehicles:", vehRes.error.message);
+
+  const seoRows = (seoRes.data || []) as SeoVehicle[];
+  const allVehicles = (vehRes.data || []) as Vehicle[];
+
+  return seoRows.map((seo) => {
+    const variants = allVehicles.filter((v) => v.group_slug === seo.group_slug);
+    return {
+      params: { slug: seo.group_slug },
+      props: { seo, variants },
+    };
+  });
+}
+
+const { seo, variants } = Astro.props as { seo: SeoVehicle; variants: Vehicle[] };
+
+const primary = variants.find((v) => v.is_primary_variant) || variants[0] || null;
+const heroImage = seo.hero_image_url || primary?.transparent_image_url || primary?.image_url || null;
+
+const MONTHS = [
+  { key: "rate_april", label: "Aprile" },
+  { key: "rate_may", label: "Maggio" },
+  { key: "rate_june", label: "Giugno" },
+  { key: "rate_july", label: "Luglio" },
+  { key: "rate_august", label: "Agosto" },
+  { key: "rate_september", label: "Settembre" },
+  { key: "rate_october", label: "Ottobre" },
+] as const;
+
+const allRates: number[] = [];
+for (const v of variants) {
+  for (const m of MONTHS) {
+    const r = (v as any)[m.key];
+    if (typeof r === "number" && r > 0) allRates.push(r);
+  }
+  if (typeof v.daily_rate === "number" && v.daily_rate > 0) allRates.push(v.daily_rate);
+}
+const priceFrom = allRates.length ? Math.min(...allRates) : null;
+const priceTo = allRates.length ? Math.max(...allRates) : null;
+
+// Galleria varianti (escludendo l'hero)
+const galleryImages = Array.from(
+  new Set(
+    variants.flatMap((v) => [
+      ...(Array.isArray(v.gallery_urls) ? v.gallery_urls : []),
+      v.image_url,
+    ]).filter((u): u is string => !!u && u !== heroImage),
+  ),
+);
+
+// Località consigliate (lookup multi-tabella)
+const recommendedSlugs = (seo.recommended_locations || []).slice(0, 6);
+let recommendedLocations: { slug: string; title: string; hero_image_url: string | null }[] = [];
+if (recommendedSlugs.length > 0) {
+  const [locRes, beachRes] = await Promise.all([
+    supabase.from("seo_locations").select("slug, title, hero_image_url").in("slug", recommendedSlugs),
+    supabase.from("seo_beaches").select("slug, title, hero_image_url").in("slug", recommendedSlugs),
+  ]);
+  recommendedLocations = [
+    ...((locRes.data || []) as any),
+    ...((beachRes.data || []) as any),
+  ];
+}
+
+const safeContentHtml = seo.content_html
+  ? DOMPurify.sanitize(seo.content_html.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>"))
+  : "";
+
+const pageUrl = seo.canonical_url || `https://www.ksrentsardinia.com/flotta/${seo.group_slug}`;
+const displayTitle = seo.title || (primary ? `${primary.make} ${primary.model}` : seo.group_slug);
+const displayH1 = seo.h1 || (primary ? `Noleggio ${primary.make} ${primary.model}` : seo.group_slug);
+const displayDesc = seo.meta_description || `Noleggia ${displayTitle} a Olbia con KS Rent Sardinia. Consegna a domicilio, senza carta di credito obbligatoria.`;
+const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
+
+const vehicleJsonLd = buildVehiclePageJsonLd(
+  {
+    group_slug: seo.group_slug,
+    name: displayTitle,
+    brand: primary?.make || null,
+    category: primary?.category || null,
+    fuel: primary?.fuel_type || null,
+    description: seo.meta_description || null,
+    image: heroImage,
+    priceFrom,
+    priceTo,
+    url: pageUrl,
+  },
+  faqs.length > 0 ? faqs : undefined,
+);
+
+const jsonLd = vehicleJsonLd;
+
+const specs: { label: string; value: string }[] = [];
+if (primary) {
+  specs.push({ label: "Categoria", value: primary.category });
+  specs.push({ label: "Carburante", value: primary.fuel_type || "—" });
+  if (primary.year) specs.push({ label: "Anno", value: String(primary.year) });
+  specs.push({ label: "Varianti", value: `${variants.length} disponibili` });
+}
+---
+<BaseLayout
+  title={displayTitle}
+  description={displayDesc}
+  canonical={pageUrl}
+  ogImage={seo.og_image_url || heroImage || undefined}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Flotta", path: "/flotta" },
+    { name: displayTitle, path: `/flotta/${seo.group_slug}` },
+  ]}
+>
+  <div class="bg-background min-h-screen">
+    {/* HERO */}
+    <section class="relative overflow-hidden border-b border-border">
+      <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+      <div class="absolute -top-20 -right-20 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 md:px-12 pt-32 pb-16">
+        <nav class="flex items-center gap-2 text-xs text-foreground/50 mb-6 font-light">
+          <a href="/" class="hover:text-gold transition-colors">Home</a>
+          <ArrowRight className="w-3 h-3" />
+          <a href="/flotta" class="hover:text-gold transition-colors">Flotta</a>
+          <ArrowRight className="w-3 h-3" />
+          <span class="text-foreground/80">{displayTitle}</span>
+        </nav>
+
+        <div class="grid lg:grid-cols-[1fr_1.2fr] gap-10 items-center">
+          <div>
+            <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
+              <Car className="w-3.5 h-3.5" />
+              {primary?.category || "Veicolo Premium"}
+            </span>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
+              {displayH1}
+            </h1>
+            <p class="mt-6 text-lg text-foreground/70 font-light leading-relaxed">
+              {displayDesc}
+            </p>
+
+            {priceFrom && (
+              <div class="mt-8 inline-flex items-baseline gap-2 bg-gold/10 border border-gold/30 rounded-2xl px-5 py-3">
+                <span class="text-foreground/60 text-sm uppercase tracking-wider font-bold">da</span>
+                <span class="text-3xl font-black text-gold">€{priceFrom}</span>
+                <span class="text-foreground/60 text-sm">/giorno</span>
+              </div>
+            )}
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a
+                href="/prenotaora"
+                class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-6 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+              >
+                Prenota ora
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <a
+                href="/flotta"
+                class="inline-flex items-center gap-2 border border-foreground/20 text-foreground/80 font-bold uppercase tracking-wider text-xs px-6 py-3 rounded-full hover:border-gold hover:text-gold transition-colors"
+              >
+                ← Tutta la flotta
+              </a>
+            </div>
+          </div>
+
+          {heroImage && (
+            <div class="relative">
+              <div class="relative aspect-[4/3] flex items-center justify-center">
+                <img
+                  src={heroImage}
+                  alt={`Noleggio ${displayTitle} - KS Rent Sardinia`}
+                  class="w-full h-full object-contain drop-shadow-2xl"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    {/* SPECS */}
+    {specs.length > 0 && (
+      <section class="py-12 px-4 md:px-12 border-b border-border">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+          {specs.map((s) => (
+            <div class="bg-card border border-border rounded-2xl p-5 text-center">
+              <p class="text-xs uppercase tracking-wider text-foreground/40 mb-2">{s.label}</p>
+              <p class="text-foreground font-bold text-lg">{s.value}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* GALLERIA VARIANTI */}
+    {galleryImages.length > 0 && (
+      <section class="py-16 px-4 md:px-12 bg-card">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-10">
+            <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">Galleria</span>
+            <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              Tutte le varianti
+            </h2>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {galleryImages.map((url) => (
+              <div class="aspect-square bg-background rounded-2xl overflow-hidden border border-border hover:border-gold/40 transition-colors">
+                <img src={url} alt={displayTitle} class="w-full h-full object-cover" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* CONTENT HTML */}
+    {safeContentHtml && (
+      <section class="py-16 px-4 md:px-12">
+        <div class="max-w-4xl mx-auto">
+          <div
+            class="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold hover:prose-a:text-gold/80"
+            set:html={safeContentHtml}
+          />
+        </div>
+      </section>
+    )}
+
+    {/* TABELLA PREZZI MENSILI */}
+    {priceFrom && (
+      <section class="py-16 px-4 md:px-12 bg-card">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-10">
+            <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+              <Calendar className="w-3.5 h-3.5 inline mr-2" />
+              Tariffe stagionali
+            </span>
+            <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              Prezzi per mese
+            </h2>
+            <p class="text-foreground/60 font-light mt-4 max-w-xl mx-auto leading-relaxed">
+              Tariffe in € per giorno. Prezzi indicativi: i listini definitivi vengono confermati in fase di prenotazione.
+            </p>
+          </div>
+
+          <div class="bg-background border border-border rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-card/50 border-b border-border">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">Variante</th>
+                    {MONTHS.map((m) => (
+                      <th class="px-4 py-3 text-center text-xs uppercase tracking-wider text-foreground/50 font-bold">{m.label}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {variants.map((v) => (
+                    <tr class="border-b border-border/50 last:border-0 hover:bg-card/30 transition-colors">
+                      <td class="px-4 py-3 font-bold text-foreground">
+                        {v.make} {v.model}
+                        {v.color && <span class="text-foreground/50 font-light ml-1">— {v.color}</span>}
+                      </td>
+                      {MONTHS.map((m) => {
+                        const rate = (v as any)[m.key];
+                        return (
+                          <td class="px-4 py-3 text-center">
+                            {rate ? (
+                              <span class="text-gold font-bold">€{rate}</span>
+                            ) : (
+                              <span class="text-foreground/30">—</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* DESTINAZIONI CONSIGLIATE */}
+    {recommendedLocations.length > 0 && (
+      <section class="py-16 px-4 md:px-12">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-10">
+            <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">
+              <MapPin className="w-3.5 h-3.5 inline mr-2" />
+              Ideale per
+            </span>
+            <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              Le destinazioni più adatte
+            </h2>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {recommendedLocations.map((loc) => (
+              <a
+                href={`/${loc.slug}`}
+                class="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-border hover:border-gold/40 transition-colors"
+              >
+                {loc.hero_image_url && (
+                  <img
+                    src={loc.hero_image_url}
+                    alt={loc.title}
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                )}
+                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                  <p class="text-foreground font-bold text-sm leading-tight group-hover:text-gold transition-colors">
+                    {loc.title}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* FAQ */}
+    {faqs.length > 0 && (
+      <section class="py-16 px-4 md:px-12 bg-card">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-10">
+            <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">FAQ</span>
+            <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mt-2">
+              Domande frequenti
+            </h2>
+          </div>
+          <div class="space-y-4">
+            {faqs.map((faq) => (
+              <details class="bg-background border border-border rounded-xl overflow-hidden group">
+                <summary class="px-6 py-5 cursor-pointer text-foreground font-semibold hover:text-gold transition-colors list-none flex items-center justify-between">
+                  {faq.q}
+                  <ArrowRight className="w-4 h-4 text-gold transition-transform group-open:rotate-90 shrink-0 ml-4" />
+                </summary>
+                <div class="px-6 pb-5">
+                  <p class="text-foreground/70 font-light leading-relaxed">{faq.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* CTA */}
+    <section class="py-20 px-4 md:px-12">
+      <div class="max-w-3xl mx-auto text-center">
+        <ShieldCheck className="w-12 h-12 text-gold mx-auto mb-6" />
+        <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+          Pronto a guidare {primary ? `${primary.make} ${primary.model}` : displayTitle}?
+        </h2>
+        <p class="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
+          Consegna a domicilio in tutta la Gallura e Costa Smeralda. Senza carta di credito obbligatoria.
+        </p>
+        <a
+          href="/prenotaora"
+          class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
+        >
+          Prenota Ora
+          <ArrowRight className="w-4 h-4" />
+        </a>
+        <div class="mt-8 flex items-center justify-center gap-6 text-xs text-foreground/40 flex-wrap">
+          <div class="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-gold" /> Consegna gratuita
+          </div>
+          <div class="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-gold" /> Senza carta di credito
+          </div>
+          <div class="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-gold" /> Aperti 7/7
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
