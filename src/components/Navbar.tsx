@@ -30,7 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getDict } from "@/i18n";
-import { localizePath, getFleetPath, type Locale } from "@/lib/i18n";
+import { localizePath, getFleetPath, localizeLocationSlug, localizeVehicleSlug, type Locale } from "@/lib/i18n";
 
 const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
@@ -42,9 +42,15 @@ interface NavbarProps {
   lang?: Locale;
 }
 
-/** Prefix a dynamic SEO slug (locality / beach) with the locale when needed. */
-const localizeSlug = (slug: string, lang: Locale) =>
-  lang === "it" ? `/${slug}` : `/${lang}/${slug}`;
+/**
+ * Costruisce l'URL della pagina location partendo dallo slug IT ("noleggio-auto-X").
+ * Traduce lo slug per la lingua corrente (en: car-hire-X, de: autovermietung-X, fr: location-voiture-X).
+ * Per le spiagge (toponimi invariati) restituisce lo slug originale prefisso lingua.
+ */
+const localizeSlug = (itSlug: string, lang: Locale) => {
+  const slug = localizeLocationSlug(itSlug, lang);
+  return lang === "it" ? `/${slug}` : `/${lang}/${slug}`;
+};
 
 const ThemeToggle = ({ lightLabel, darkLabel }: { lightLabel: string; darkLabel: string }) => {
   const { theme, setTheme } = useTheme();
@@ -193,8 +199,11 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
 
   // Fleet vehicle URLs
   const fleetBase = getFleetPath(lang);
-  const fleetVehicleHref = (slug: string) =>
-    lang === "it" ? `${fleetBase}/${slug}` : `/${lang}${fleetBase}/${slug}`;
+  // `groupSlug` e' lo slug IT (es. "audi-rs3"); viene tradotto per la lingua corrente.
+  const fleetVehicleHref = (groupSlug: string) => {
+    const slug = localizeVehicleSlug(groupSlug, lang);
+    return lang === "it" ? `${fleetBase}/${slug}` : `/${lang}${fleetBase}/${slug}`;
+  };
 
   // Delivery main hubs (use localized service hrefs)
   const PUNTI_PRINCIPALI: DeliveryItem[] = [

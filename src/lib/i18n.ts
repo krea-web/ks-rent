@@ -63,6 +63,61 @@ const FLEET_PREFIX: Record<Locale, string> = {
   fr: "/flotte",
 };
 
+/**
+ * Mappa slug veicoli per lingua. Estratta da sql/translations/13.
+ * Chiave: group_slug (IT). Valore: slug localizzato per lingua.
+ * Da aggiornare se l'admin cambia slug_en/de/fr di un seo_vehicle.
+ */
+const VEHICLE_SLUGS: Record<string, Record<Locale, string>> = {
+  "audi-rs3":           { it: "audi-rs3",           en: "audi-rs3-hire-olbia",          de: "audi-rs3-mieten-olbia",          fr: "audi-rs3-location-olbia" },
+  "bmw-m2":             { it: "bmw-m2",             en: "bmw-m2-coupe-hire-olbia",      de: "bmw-m2-coupe-mieten-olbia",      fr: "bmw-m2-coupe-location-olbia" },
+  "mercedes-classe-a":  { it: "mercedes-classe-a",  en: "mercedes-a-class-hire-olbia",  de: "mercedes-a-klasse-mieten-olbia", fr: "mercedes-classe-a-location-olbia" },
+  "jeep-avenger":       { it: "jeep-avenger",       en: "jeep-avenger-hire-olbia",      de: "jeep-avenger-mieten-olbia",      fr: "jeep-avenger-location-olbia" },
+  "fiat-panda":         { it: "fiat-panda",         en: "fiat-panda-hire-olbia",        de: "fiat-panda-mieten-olbia",        fr: "fiat-panda-location-olbia" },
+  "honda-sh":           { it: "honda-sh",           en: "honda-sh-hire-olbia",          de: "honda-sh-mieten-olbia",          fr: "honda-sh-location-olbia" },
+  "yamaha-quad-raptor": { it: "yamaha-quad-raptor", en: "yamaha-raptor-quad-hire-sardinia", de: "yamaha-raptor-quad-mieten-sardinien", fr: "yamaha-raptor-quad-location-sardaigne" },
+};
+
+/** Mappa inversa per individuare il group_slug IT a partire da uno slug localizzato. */
+const VEHICLE_SLUG_INVERSE: Record<string, string> = (() => {
+  const m: Record<string, string> = {};
+  for (const [it, langMap] of Object.entries(VEHICLE_SLUGS)) {
+    for (const slug of Object.values(langMap)) m[slug] = it;
+  }
+  return m;
+})();
+
+/**
+ * Traduce uno slug veicolo a partire dal group_slug (IT) verso la lingua target.
+ * Fallback: ritorna il group_slug se non trovato (evita rottura su nuovi veicoli).
+ */
+export function localizeVehicleSlug(groupSlug: string, locale: Locale): string {
+  return VEHICLE_SLUGS[groupSlug]?.[locale] ?? groupSlug;
+}
+
+const LOCATION_PREFIX_BY_LOCALE: Record<Locale, string> = {
+  it: "noleggio-auto-",
+  en: "car-hire-",
+  de: "autovermietung-",
+  fr: "location-voiture-",
+};
+
+/**
+ * Traduce uno slug località tra le lingue applicando il pattern regolare:
+ *   noleggio-auto-X  ↔  car-hire-X  ↔  autovermietung-X  ↔  location-voiture-X
+ * Per le pagine top-level (aeroporto/porto/costa-smeralda/senza-carta) usa PATH_MAP_FULL.
+ * Se lo slug non rispetta il pattern, ritorna lo slug invariato (es. spiagge: toponimi).
+ */
+export function localizeLocationSlug(slug: string, locale: Locale): string {
+  for (const fromPrefix of Object.values(LOCATION_PREFIX_BY_LOCALE)) {
+    if (slug.startsWith(fromPrefix)) {
+      const stem = slug.slice(fromPrefix.length);
+      return `${LOCATION_PREFIX_BY_LOCALE[locale]}${stem}`;
+    }
+  }
+  return slug;
+}
+
 /** Estrae la locale dal pathname (gestisce sia `/en/...` che `/flotta` IT default). */
 export function getLocaleFromPath(pathname: string): Locale {
   const match = pathname.match(LOCALE_PREFIX_RE);
@@ -77,12 +132,15 @@ export function stripLocalePrefix(pathname: string): string {
 
 /**
  * Trova la chiave canonica IT del path corrente, indipendentemente dalla lingua.
- * Es. "/en/fleet/audi-rs3" -> { itPath: "/flotta/audi-rs3", isFleetSubpath: "audi-rs3" }
- * Ritorna null se il path non e' riconosciuto (es. pagina dinamica `/[slug]`).
+ * Es. "/en/fleet/audi-rs3-hire-olbia" -> { itPath: "/flotta/audi-rs3", fleetGroupSlug: "audi-rs3" }
+ * Ritorna null se il path non e' riconosciuto.
  */
 function findCanonicalItPath(pathname: string): {
   itPath: string;
-  fleetSlug?: string;
+  /** group_slug IT del veicolo (se path /flotta/[slug] o equivalente per lingua) */
+  fleetGroupSlug?: string;
+  /** slug IT della location/spiaggia (se path /[slug] dinamico riconosciuto) */
+  dynamicItSlug?: string;
 } | null {
   const stripped = stripLocalePrefix(pathname);
   const currentLocale = getLocaleFromPath(pathname);
@@ -94,33 +152,53 @@ function findCanonicalItPath(pathname: string): {
     }
   }
 
-  // 2) Match prefisso /flotta/[slug]
-  for (const [loc, prefix] of Object.entries(FLEET_PREFIX) as [Locale, string][]) {
+  // 2) Match prefisso flotta/fleet/fuhrpark/flotte + slug (anche localizzato)
+  for (const [, prefix] of Object.entries(FLEET_PREFIX) as [Locale, string][]) {
     if (stripped.startsWith(prefix + "/")) {
-      const slug = stripped.slice(prefix.length + 1);
-      return { itPath: `/flotta/${slug}`, fleetSlug: slug };
+      const localSlug = stripped.slice(prefix.length + 1);
+      // Risali al group_slug IT
+      const groupSlug = VEHICLE_SLUG_INVERSE[localSlug] ?? localSlug;
+      return { itPath: `/flotta/${groupSlug}`, fleetGroupSlug: groupSlug };
     }
+  }
+
+  // 3) Match pagina dinamica /[slug] (location o beach) — riconducibile a slug IT
+  if (stripped.startsWith("/") && stripped.length > 1 && !stripped.slice(1).includes("/")) {
+    const localSlug = stripped.slice(1);
+    // Se rispetta il pattern di una location, risali allo slug IT
+    for (const [loc, p] of Object.entries(LOCATION_PREFIX_BY_LOCALE) as [Locale, string][]) {
+      if (loc !== "it" && localSlug.startsWith(p)) {
+        const itSlug = `noleggio-auto-${localSlug.slice(p.length)}`;
+        return { itPath: `/${itSlug}`, dynamicItSlug: itSlug };
+      }
+    }
+    // Default: assumiamo già IT o toponimo invariato (spiagge)
+    return { itPath: `/${localSlug}`, dynamicItSlug: localSlug };
   }
 
   return null;
 }
 
 /**
- * Localizza un path nella lingua target.
- * - Pagine top-level note: usa PATH_MAP_FULL per il path tradotto.
- * - Pagine /flotta/[slug]: usa FLEET_PREFIX per il prefisso, slug invariato.
- * - Pagine sconosciute (es. /[slug] dinamiche da DB): prefissa la lingua e basta
- *   (il fallback potrebbe 404 se il slug nella lingua target non esiste in DB —
- *   il LanguageSwitcher su pagine dinamiche dovrebbe ricevere alternate slug come prop).
+ * Localizza un path nella lingua target. Traduce:
+ * - top-level note (flotta, tariffe, chisiamo, ...) tramite PATH_MAP_FULL
+ * - veicoli /flotta/[slug] tramite VEHICLE_SLUGS
+ * - location /[slug] tramite pattern algoritmico (noleggio-auto-X ↔ car-hire-X ↔ ...)
+ * - spiagge /[slug]: toponimi invariati (slug uguale per tutte le lingue)
  */
 export function localizePath(pathname: string, locale: Locale): string {
   const canonical = findCanonicalItPath(pathname);
 
   if (canonical) {
-    if (canonical.fleetSlug !== undefined) {
+    if (canonical.fleetGroupSlug !== undefined) {
       const prefix = FLEET_PREFIX[locale];
-      const path = `${prefix}/${canonical.fleetSlug}`;
+      const slug = localizeVehicleSlug(canonical.fleetGroupSlug, locale);
+      const path = `${prefix}/${slug}`;
       return locale === DEFAULT_LOCALE ? path : `/${locale}${path}`;
+    }
+    if (canonical.dynamicItSlug !== undefined) {
+      const localizedSlug = localizeLocationSlug(canonical.dynamicItSlug, locale);
+      return locale === DEFAULT_LOCALE ? `/${localizedSlug}` : `/${locale}/${localizedSlug}`;
     }
     const localizedPath = PATH_MAP_FULL[canonical.itPath]?.[locale];
     if (localizedPath !== undefined) {

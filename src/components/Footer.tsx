@@ -1,7 +1,7 @@
 import { Link } from "@/lib/router-shim";
 import { Phone, Mail, MapPin, Map } from "lucide-react";
 import { getDict } from "@/i18n";
-import { localizePath, getFleetPath, type Locale } from "@/lib/i18n";
+import { localizePath, getFleetPath, localizeLocationSlug, localizeVehicleSlug, type Locale } from "@/lib/i18n";
 
 const logo = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png";
 
@@ -26,8 +26,16 @@ const Footer = ({ lang = "it" }: FooterProps) => {
   const adminHref = "/admin";
 
   const fleetBase = getFleetPath(lang);
-  const fleetVehicleHref = (slug: string) =>
-    lang === "it" ? `${fleetBase}/${slug}` : `/${lang}${fleetBase}/${slug}`;
+  // `groupSlug` e' lo slug IT (es. "audi-rs3"); viene tradotto per la lingua corrente.
+  const fleetVehicleHref = (groupSlug: string) => {
+    const slug = localizeVehicleSlug(groupSlug, lang);
+    return lang === "it" ? `${fleetBase}/${slug}` : `/${lang}${fleetBase}/${slug}`;
+  };
+  // `itSlug` e' lo slug IT (es. "noleggio-auto-porto-cervo"); viene tradotto per la lingua corrente.
+  const locationHref = (itSlug: string) => {
+    const slug = localizeLocationSlug(itSlug, lang);
+    return lang === "it" ? `/${slug}` : `/${lang}/${slug}`;
+  };
 
   const portHref = localizePath("/noleggio-auto-porto-olbia", lang);
   const airportHref = localizePath("/noleggio-auto-aeroporto-olbia", lang);
@@ -265,7 +273,7 @@ const Footer = ({ lang = "it" }: FooterProps) => {
               {eastDestinations.map((d) => (
                 <Link
                   key={d.slug}
-                  to={localizeSlug(d.slug, lang)}
+                  to={locationHref(d.slug)}
                   className="px-3 py-1.5 text-[11px] font-medium text-gray-800 dark:text-white/60 bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-full hover:border-gold hover:text-gold dark:hover:bg-gold/10 transition-all duration-200 relative z-20 uppercase tracking-wider"
                 >
                   {d.label}
@@ -282,7 +290,7 @@ const Footer = ({ lang = "it" }: FooterProps) => {
               {csDestinations.map((d) => (
                 <Link
                   key={d.slug}
-                  to={localizeSlug(d.slug, lang)}
+                  to={locationHref(d.slug)}
                   className="px-3 py-1.5 text-[11px] font-medium text-gray-800 dark:text-white/60 bg-gray-200 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-full hover:border-gold hover:text-gold dark:hover:bg-gold/10 transition-all duration-200 relative z-20 uppercase tracking-wider"
                 >
                   {d.label}
