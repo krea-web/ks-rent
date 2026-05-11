@@ -51,22 +51,30 @@ const currentLocale = getLocaleFromPath(Astro.url.pathname);
 const htmlLang = LOCALE_NAMES[currentLocale].htmlLang;
 const alternateLinks = getAlternateLinks(Astro.url.pathname, SITE);
 
-// Se passato aggregateRating, override quello hardcoded nel localBusinessJsonLd
-// Override anche `inLanguage` con la lingua corrente della pagina
+// Se passato aggregateRating, override quello hardcoded nel nodo AutoRental/LocalBusiness.
+// Override anche `inLanguage`. Deep-merge nel primo nodo di @graph: NON sul wrapper
+// esterno, altrimenti Google legge "AggregateRating su parent_node invalido".
 const effectiveLocalBusinessJsonLd = {
   ...localBusinessJsonLd,
-  inLanguage: htmlLang,
-  ...(aggregateRating
-    ? {
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: aggregateRating.ratingValue.toFixed(1),
-          reviewCount: aggregateRating.reviewCount,
-          bestRating: "5",
-          worstRating: "1",
-        },
-      }
-    : {}),
+  "@graph": localBusinessJsonLd["@graph"].map((node: any, i: number) =>
+    i === 0
+      ? {
+          ...node,
+          inLanguage: htmlLang,
+          ...(aggregateRating
+            ? {
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: aggregateRating.ratingValue.toFixed(1),
+                  reviewCount: aggregateRating.reviewCount,
+                  bestRating: "5",
+                  worstRating: "1",
+                },
+              }
+            : {}),
+        }
+      : node,
+  ),
 };
 
 // BreadcrumbList auto-injected
