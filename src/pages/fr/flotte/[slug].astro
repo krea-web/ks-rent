@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import VehiclePageBody from "@/components/VehiclePageBody.astro";
 import { supabase } from "@/lib/supabase";
 import { buildVehiclePageJsonLd } from "@/lib/jsonLd";
+import { getReviewSchemaData } from "@/lib/reviewSchemaData";
 
 export async function getStaticPaths() {
   const [seoRes, vehRes] = await Promise.all([
@@ -35,6 +36,8 @@ const priceFrom = allRates.length ? Math.min(...allRates) : null;
 const priceTo = allRates.length ? Math.max(...allRates) : null;
 const pageUrl = `https://www.ksrentsardinia.com/${lang}/flotte/${seo.slug_fr}`;
 
+const { aggregateRating, reviews: schemaReviews } = await getReviewSchemaData(lang);
+
 const jsonLd = buildVehiclePageJsonLd(
   {
     group_slug: seo.group_slug,
@@ -47,6 +50,8 @@ const jsonLd = buildVehiclePageJsonLd(
     priceFrom,
     priceTo,
     url: pageUrl,
+    aggregateRating,
+    reviews: schemaReviews,
   },
   Array.isArray(seo.faqs) && seo.faqs.length > 0
     ? seo.faqs.map((f: any) => ({ q: f.q_fr || f.q, a: f.a_fr || f.a }))

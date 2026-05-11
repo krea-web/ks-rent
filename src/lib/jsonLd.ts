@@ -641,7 +641,29 @@ interface VehiclePageData {
   priceFrom?: number | null;
   priceTo?: number | null;
   url: string;
+  aggregateRating?: { ratingValue: number; reviewCount: number } | null;
+  reviews?: { author: string; rating: number; text: string; datePublished: string }[] | null;
 }
+
+// "Consegna" gratuita a domicilio in Sardegna: il veicolo è pronto in giornata
+// (handling 0d, transit 0-1d). E' un noleggio, non un acquisto: nessuna policy
+// di reso applicabile (MerchantReturnNotPermitted).
+const RENTAL_SHIPPING_DETAILS = {
+  "@type": "OfferShippingDetails",
+  shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "EUR" },
+  shippingDestination: { "@type": "DefinedRegion", addressCountry: "IT" },
+  deliveryTime: {
+    "@type": "ShippingDeliveryTime",
+    handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+    transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 1, unitCode: "DAY" },
+  },
+};
+
+const RENTAL_RETURN_POLICY = {
+  "@type": "MerchantReturnPolicy",
+  applicableCountry: "IT",
+  returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+};
 
 export const buildVehiclePageJsonLd = (
   v: VehiclePageData,
@@ -684,12 +706,39 @@ export const buildVehiclePageJsonLd = (
                 }
               : undefined,
             availability: "https://schema.org/InStock",
+            hasMerchantReturnPolicy: RENTAL_RETURN_POLICY,
+            shippingDetails: RENTAL_SHIPPING_DETAILS,
             seller: {
               "@type": "AutoRental",
               name: "KS Rent Sardinia",
               url: "https://www.ksrentsardinia.com",
             },
           }
+        : undefined,
+    aggregateRating:
+      v.aggregateRating && v.aggregateRating.reviewCount > 0
+        ? {
+            "@type": "AggregateRating",
+            ratingValue: v.aggregateRating.ratingValue.toFixed(1),
+            reviewCount: v.aggregateRating.reviewCount,
+            bestRating: "5",
+            worstRating: "1",
+          }
+        : undefined,
+    review:
+      v.reviews && v.reviews.length > 0
+        ? v.reviews.map((r) => ({
+            "@type": "Review",
+            author: { "@type": "Person", name: r.author },
+            datePublished: r.datePublished,
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: r.rating,
+              bestRating: "5",
+              worstRating: "1",
+            },
+            reviewBody: r.text,
+          }))
         : undefined,
   };
 

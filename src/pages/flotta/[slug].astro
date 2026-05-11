@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { supabase } from "@/lib/supabase";
 import { buildVehiclePageJsonLd } from "@/lib/jsonLd";
+import { getReviewSchemaData } from "@/lib/reviewSchemaData";
 import {
   ArrowRight,
   Calendar,
@@ -159,6 +160,8 @@ const displayH1 = seo.h1 || (primary ? `Noleggio ${primary.make} ${primary.model
 const displayDesc = seo.meta_description || `Noleggia ${displayTitle} a Olbia con KS Rent Sardinia. Consegna a domicilio, senza carta di credito obbligatoria.`;
 const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
 
+const { aggregateRating, reviews: schemaReviews } = await getReviewSchemaData("it");
+
 const vehicleJsonLd = buildVehiclePageJsonLd(
   {
     group_slug: seo.group_slug,
@@ -171,6 +174,8 @@ const vehicleJsonLd = buildVehiclePageJsonLd(
     priceFrom,
     priceTo,
     url: pageUrl,
+    aggregateRating,
+    reviews: schemaReviews,
   },
   faqs.length > 0 ? faqs : undefined,
 );
