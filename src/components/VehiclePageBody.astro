@@ -185,7 +185,10 @@ if (primary) {
 // Path localizzato per linkare a pagine località nella stessa lingua
 const localityPathPrefix = `/${lang}`;
 
-const faqs = Array.isArray(seo.faqs) ? seo.faqs : [];
+const faqs = (Array.isArray(seo.faqs) ? seo.faqs : []).map((f: any) => ({
+  q: f[`q_${lang}`] || f.q,
+  a: f[`a_${lang}`] || f.a,
+}));
 ---
 <div class="bg-background min-h-screen">
   {/* HERO con foto del veicolo come sfondo + foreground in trasparenza */}

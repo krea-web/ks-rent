@@ -48,7 +48,9 @@ const jsonLd = buildVehiclePageJsonLd(
     priceTo,
     url: pageUrl,
   },
-  Array.isArray(seo.faqs) && seo.faqs.length > 0 ? seo.faqs : undefined,
+  Array.isArray(seo.faqs) && seo.faqs.length > 0
+    ? seo.faqs.map((f: any) => ({ q: f.q_de || f.q, a: f.a_de || f.a }))
+    : undefined,
 );
 ---
 <BaseLayout
