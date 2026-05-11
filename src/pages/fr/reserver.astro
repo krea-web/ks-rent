@@ -10,5 +10,5 @@ import { buildBreadcrumb } from "@/lib/jsonLd";
   jsonLd={buildBreadcrumb("Réserver Maintenant", "/fr/reserver")}
   hideMobileSticky={true}
 >
-  <PrenotaOra client:load lang="fr" />
+  <PrenotaOra client:only="react" lang="fr" />
 </BaseLayout>
