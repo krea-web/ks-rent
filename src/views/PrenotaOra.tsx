@@ -43,8 +43,7 @@ import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LocationStep from "@/components/LocationStep";
-import { useJsApiLoader } from "@react-google-maps/api";
-import { GOOGLE_MAPS_API_KEY, LIBRARIES } from "@/lib/googleMaps";
+import { loadGoogleMaps } from "@/lib/googleMaps";
 import type { Locale } from "@/lib/i18n";
 
 // Code splitting: lazy load heavy components
@@ -725,12 +724,17 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showStickyBar, setShowStickyBar] = useState(true);
 
-  // Load Google Maps API at top level to prevent mount/unmount crashes
-  const { isLoaded: isMapLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    libraries: LIBRARIES,
-  });
+  // Load Google Maps API at top level via singleton loader: evita il
+  // double-load che con StrictMode/Astro client:only rompe useJsApiLoader
+  // di @react-google-maps/api (errori "gmp-internal-* already defined").
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    loadGoogleMaps()
+      .then(() => { if (!cancelled) setIsMapLoaded(true); })
+      .catch((err) => console.error("[PrenotaOra] Google Maps load failed:", err));
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     const el = summaryRef.current;

@@ -2,6 +2,54 @@ export const GOOGLE_MAPS_API_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY ||
 
 export const LIBRARIES: ("places")[] = ["places"];
 
+/**
+ * Singleton loader del Google Maps JS SDK. Evita il double-load che, in React
+ * 18 + StrictMode, rompe `useJsApiLoader` di @react-google-maps/api con
+ * l'errore "Element with name 'gmp-internal-*' already defined" e il crash
+ * "Cannot read properties of undefined (reading 'gK')".
+ *
+ * Riusabile da qualsiasi componente: la promise viene cached al primo invocazione.
+ */
+let mapsPromise: Promise<void> | null = null;
+
+export function loadGoogleMaps(): Promise<void> {
+  if (mapsPromise) return mapsPromise;
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("loadGoogleMaps: window non disponibile (SSR)"));
+  }
+  // Gia' presente sulla pagina (caricato fuori dal nostro flow)
+  if ((window as any).google?.maps?.places) {
+    mapsPromise = Promise.resolve();
+    return mapsPromise;
+  }
+
+  mapsPromise = new Promise<void>((resolve, reject) => {
+    const SCRIPT_ID = "google-maps-js-sdk";
+    const existing = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+    if (existing) {
+      existing.addEventListener("load", () => resolve(), { once: true });
+      existing.addEventListener("error", reject, { once: true });
+      return;
+    }
+    const libs = LIBRARIES.join(",");
+    const script = document.createElement("script");
+    script.id = SCRIPT_ID;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(
+      GOOGLE_MAPS_API_KEY,
+    )}&libraries=${libs}&v=weekly&loading=async`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = () => {
+      mapsPromise = null; // permetti un retry futuro su crash
+      reject(new Error("Failed to load Google Maps JS SDK"));
+    };
+    document.head.appendChild(script);
+  });
+
+  return mapsPromise;
+}
+
 export const OLBIA_CENTER = { lat: 40.9336, lng: 9.5094 };
 
 export const SEDE_OPERATIVA = {
