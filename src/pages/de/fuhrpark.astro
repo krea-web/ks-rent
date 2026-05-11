@@ -11,7 +11,7 @@ import { flottaJsonLd } from "@/lib/jsonLd";
   jsonLd={[flottaJsonLd, flottaFaqJsonLd]}
   breadcrumbs={[{ name: "Fuhrpark", path: "/de/fuhrpark" }]}
 >
-  <Flotta client:load lang="de" />
+  <Flotta client:only="react" lang="de" />
   <FleetGrid
     lang="de"
     heading="Alle unsere Fahrzeuge"
