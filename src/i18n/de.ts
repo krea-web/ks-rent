@@ -481,6 +481,29 @@ export const de: typeof it = {
     },
   },
 
+  // ───── DYNAMISCHE SEITEN ORTE / STRÄNDE ([lang]/[slug].astro) ─────
+  dynamicPage: {
+    eyebrowLocation: "Abhol- & Lieferpunkt",
+    eyebrowBeach: "KS Rent Guide",
+    vehicleEyebrow: "Für Sie ausgewählt",
+    vehicleHeading: "Das ideale Fahrzeug für dieses Ziel",
+    mapEyebrow: "Lage",
+    mapHeadingLocation: "So erreichen Sie uns",
+    mapHeadingBeach: "Wo es liegt",
+    mapIntroLocation: "Entfernung von unseren Standorten in Olbia.",
+    mapIntroBeach: "Berechnen Sie die Route von unseren Standorten in Olbia zu diesem traumhaften Strand.",
+    parkingHeading: "Parken & Anfahrt",
+    seatsLabel: "Sitze",
+    insuredLabel: "Versichert",
+    discoverVehicle: "Fahrzeug entdecken",
+    readyForPrefix: "Bereit für",
+    bookNowCta: "Jetzt buchen",
+    noContent: "Wir aktualisieren diese Seite mit den besten Tipps und Routen. Sie können Ihr Fahrzeug für dieses Ziel trotzdem buchen.",
+    fuel: { Benzina: "Benzin", Diesel: "Diesel" },
+    transmissionAutomatic: "Automatik",
+    transmissionManual: "Schaltgetriebe",
+  },
+
   // ───── ERROR / 404 ─────
   errors: {
     pageNotFound: "Seite nicht gefunden",

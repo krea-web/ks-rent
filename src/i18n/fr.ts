@@ -481,6 +481,29 @@ export const fr: typeof it = {
     },
   },
 
+  // ───── PAGES DYNAMIQUES LOCALITÉS / PLAGES ([lang]/[slug].astro) ─────
+  dynamicPage: {
+    eyebrowLocation: "Point de prise en charge & livraison",
+    eyebrowBeach: "Guide KS Rent",
+    vehicleEyebrow: "Sélectionné pour vous",
+    vehicleHeading: "Le véhicule idéal pour cette destination",
+    mapEyebrow: "Localisation",
+    mapHeadingLocation: "Comment nous rejoindre",
+    mapHeadingBeach: "Où elle se trouve",
+    mapIntroLocation: "Distance depuis nos agences d'Olbia.",
+    mapIntroBeach: "Calculez l'itinéraire depuis nos agences d'Olbia jusqu'à cette magnifique plage.",
+    parkingHeading: "Infos stationnement & accès",
+    seatsLabel: "Places",
+    insuredLabel: "Assurée",
+    discoverVehicle: "Découvrir ce véhicule",
+    readyForPrefix: "Prêt pour",
+    bookNowCta: "Réserver maintenant",
+    noContent: "Nous mettons à jour cette page avec les meilleurs conseils et itinéraires. Vous pouvez toujours réserver votre véhicule pour cette destination.",
+    fuel: { Benzina: "Essence", Diesel: "Diesel" },
+    transmissionAutomatic: "Automatique",
+    transmissionManual: "Manuelle",
+  },
+
   // ───── ERROR / 404 ─────
   errors: {
     pageNotFound: "Page introuvable",

@@ -12,24 +12,9 @@ import CompanyMap from "@/components/CompanyMap";
 import { supabase } from "@/lib/supabase";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
 import { getLocalitySEOContent } from "@/data/locality-content";
-import { getFleetPath } from "@/lib/i18n";
-import {
-  getRecommendedVehicle,
-  pickVariant,
-  tpl,
-  tplGoldHtml,
-  EYEBROW_LOCATION,
-  EYEBROW_BEACH,
-  VEHICLE_EYEBROW,
-  VEHICLE_HEADING,
-  MAP_EYEBROW,
-  MAP_HEADING_LOCATION,
-  MAP_HEADING_BEACH,
-  MAP_INTRO_LOCATION,
-  MAP_INTRO_BEACH,
-  PARKING_HEADING,
-  DISTANCE_LABEL,
-} from "@/lib/dynamic-page-helpers";
+import { getFleetPath, localizeVehicleSlug } from "@/lib/i18n";
+import { getDict } from "@/i18n";
+import { getRecommendedVehicle } from "@/lib/dynamic-page-helpers";
 import { ArrowRight, MapPin, Info, ShieldCheck, Navigation, Users, Gauge, Fuel, Star } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
 
@@ -105,6 +90,7 @@ export async function getStaticPaths() {
 }
 
 const { row, type, lang } = Astro.props as { row: SeoRow; type: "location" | "beach"; lang: Lang };
+const t = getDict(lang).dynamicPage;
 
 const localized = {
   slug: (row as any)[`slug_${lang}`] as string,
@@ -112,10 +98,17 @@ const localized = {
   h1: (row as any)[`h1_${lang}`] || (row as any)[`title_${lang}`],
   meta_description: (row as any)[`meta_description_${lang}`] || row.meta_description,
   content_html: (row as any)[`content_html_${lang}`] || row.content_html || "",
+  parking_info: (row as any)[`parking_info_${lang}`] || row.parking_info || "",
 };
 
 const seoContent = getLocalitySEOContent(row.slug);
 const vehicle = getRecommendedVehicle(row.slug);
+
+// Traduci label tecniche veicolo se in IT (Automatico/Manuale + Benzina/Diesel).
+const localizedTransmission = vehicle.transmission
+  .replace(/^Automatico/, t.transmissionAutomatic)
+  .replace(/^Manuale/, t.transmissionManual);
+const localizedFuel = (t.fuel as Record<string, string>)[vehicle.fuel] || vehicle.fuel;
 
 // JSON-LD basata sui dati IT (con title localizzato come override)
 const jsonLdSource = {
@@ -136,14 +129,14 @@ const safeContentHtml = localized.content_html
     )
   : "";
 
-const eyebrow = pickVariant(row.slug, "eyebrow", type === "location" ? EYEBROW_LOCATION : EYEBROW_BEACH);
-const vehicleEyebrow = pickVariant(row.slug, "vehEyebrow", VEHICLE_EYEBROW);
-const vehicleHeading = pickVariant(row.slug, "vehHead", VEHICLE_HEADING);
-const mapEyebrow = pickVariant(row.slug, "mapEye", MAP_EYEBROW);
-const mapHeading = pickVariant(row.slug, "mapHead", type === "beach" ? MAP_HEADING_BEACH : MAP_HEADING_LOCATION);
-const mapIntro = tpl(pickVariant(row.slug, "mapIntro", type === "beach" ? MAP_INTRO_BEACH : MAP_INTRO_LOCATION), localized.title);
-const parkingHeading = pickVariant(row.slug, "park", PARKING_HEADING);
-const distanceLabel = pickVariant(row.slug, "distLbl", DISTANCE_LABEL);
+const eyebrow = type === "location" ? t.eyebrowLocation : t.eyebrowBeach;
+const vehicleEyebrow = t.vehicleEyebrow;
+const vehicleHeading = t.vehicleHeading;
+const mapEyebrow = t.mapEyebrow;
+const mapHeading = type === "beach" ? t.mapHeadingBeach : t.mapHeadingLocation;
+const mapIntro = type === "beach" ? t.mapIntroBeach : t.mapIntroLocation;
+const parkingHeading = t.parkingHeading;
+const localizedVehicleSlug = localizeVehicleSlug(vehicle.groupSlug, lang);
 
 const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
 ---
@@ -195,20 +188,18 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
       ) : (
         <div class="text-center py-12">
           <p class="text-muted-foreground font-light text-lg leading-relaxed max-w-xl mx-auto">
-            {lang === "en" && "Content for this page is being prepared. You can still book your vehicle for this destination."}
-            {lang === "de" && "Inhalte für diese Seite werden vorbereitet. Sie können trotzdem Ihr Fahrzeug für dieses Ziel buchen."}
-            {lang === "fr" && "Le contenu de cette page est en cours de préparation. Vous pouvez tout de même réserver votre véhicule pour cette destination."}
+            {t.noContent}
           </p>
         </div>
       )}
 
-      {type === "beach" && row.parking_info && (
+      {type === "beach" && localized.parking_info && (
         <div class="mt-12 bg-card border border-border rounded-2xl p-8">
           <div class="flex items-center gap-3 mb-4">
             <Info className="w-5 h-5 text-gold" />
             <h2 class="text-xl font-bold text-foreground">{parkingHeading}</h2>
           </div>
-          <p class="text-foreground/70 font-light leading-relaxed">{row.parking_info}</p>
+          <p class="text-foreground/70 font-light leading-relaxed">{localized.parking_info}</p>
         </div>
       )}
     </section>
@@ -236,32 +227,26 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
               <div class="grid grid-cols-2 gap-4 mt-8">
                 <div class="flex items-center gap-3">
                   <Gauge className="w-4 h-4 text-gold" />
-                  <span class="text-foreground/70 text-sm">{vehicle.transmission}</span>
+                  <span class="text-foreground/70 text-sm">{localizedTransmission}</span>
                 </div>
                 <div class="flex items-center gap-3">
                   <Users className="w-4 h-4 text-gold" />
-                  <span class="text-foreground/70 text-sm">{vehicle.seats}</span>
+                  <span class="text-foreground/70 text-sm">{vehicle.seats} {t.seatsLabel}</span>
                 </div>
                 <div class="flex items-center gap-3">
                   <Fuel className="w-4 h-4 text-gold" />
-                  <span class="text-foreground/70 text-sm">{vehicle.fuel}</span>
+                  <span class="text-foreground/70 text-sm">{localizedFuel}</span>
                 </div>
                 <div class="flex items-center gap-3">
                   <Star className="w-4 h-4 text-gold" />
-                  <span class="text-foreground/70 text-sm">
-                    {lang === "en" && "Insured"}
-                    {lang === "de" && "Versichert"}
-                    {lang === "fr" && "Assurée"}
-                  </span>
+                  <span class="text-foreground/70 text-sm">{t.insuredLabel}</span>
                 </div>
               </div>
               <a
-                href={`/${lang}${getFleetPath(lang)}/${vehicle.groupSlug}`}
+                href={`/${lang}${getFleetPath(lang)}/${localizedVehicleSlug}`}
                 class="mt-10 inline-flex items-center justify-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform"
               >
-                {lang === "en" && "Discover this vehicle"}
-                {lang === "de" && "Fahrzeug entdecken"}
-                {lang === "fr" && "Découvrir ce véhicule"}
+                {t.discoverVehicle}
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>
@@ -292,17 +277,13 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
       <div class="max-w-3xl mx-auto text-center">
         <ShieldCheck className="w-12 h-12 text-gold mx-auto mb-6" />
         <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-          {lang === "en" && `Ready for ${localized.title}?`}
-          {lang === "de" && `Bereit für ${localized.title}?`}
-          {lang === "fr" && `Prêt pour ${localized.title} ?`}
+          {t.readyForPrefix} {localized.title}?
         </h2>
         <a
           href={`/${lang}/${lang === "en" ? "book-now" : lang === "de" ? "jetzt-buchen" : "reserver"}`}
           class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
         >
-          {lang === "en" && "Book Now"}
-          {lang === "de" && "Jetzt buchen"}
-          {lang === "fr" && "Réserver maintenant"}
+          {t.bookNowCta}
           <ArrowRight className="w-4 h-4" />
         </a>
       </div>

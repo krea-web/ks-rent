@@ -481,6 +481,29 @@ export const en: typeof it = {
     },
   },
 
+  // ───── DYNAMIC PAGES LOCATIONS / BEACHES ([lang]/[slug].astro) ─────
+  dynamicPage: {
+    eyebrowLocation: "Pickup & Delivery Point",
+    eyebrowBeach: "KS Rent Guide",
+    vehicleEyebrow: "Picked for you",
+    vehicleHeading: "The ideal vehicle for this destination",
+    mapEyebrow: "Location",
+    mapHeadingLocation: "How to reach us",
+    mapHeadingBeach: "Where it is",
+    mapIntroLocation: "Distance from our Olbia offices.",
+    mapIntroBeach: "Plan the route from our Olbia offices to this stunning beach.",
+    parkingHeading: "Parking & Access Info",
+    seatsLabel: "Seats",
+    insuredLabel: "Insured",
+    discoverVehicle: "Discover this vehicle",
+    readyForPrefix: "Ready for",
+    bookNowCta: "Book Now",
+    noContent: "We are updating this page with the best tips and routes. You can still book your vehicle for this destination.",
+    fuel: { Benzina: "Petrol", Diesel: "Diesel" },
+    transmissionAutomatic: "Automatic",
+    transmissionManual: "Manual",
+  },
+
   // ───── ERROR / 404 ─────
   errors: {
     pageNotFound: "Page not found",

@@ -30,14 +30,19 @@ const LOCATION_OVERRIDES: Record<string, string> = {
   romazzino: "Spiaggia del Romazzino, Arzachena, Sardegna, Italia",
   impostu: "Spiaggia di Lu Impostu, San Teodoro, Sardegna, Italia",
   "porto cervo": "Piazzetta, Porto Cervo, Arzachena, Sardegna, Italia",
+  // "La Celvia" senza "Spiaggia" Google lo geocodifica come quartiere "La Celvia Centro".
+  "la celvia": "Spiaggia La Celvia, Arzachena, Sardegna, Italia",
 };
+
+/** Termini che indicano "spiaggia" in IT/EN/DE/FR — usati per disambiguare il suffix geo. */
+const BEACH_TERMS = ["spiaggia", "cala", "rena", "beach", "strand", "plage", "playa"];
 
 function resolveLocationQuery(cleanLocation: string): string {
   const lower = cleanLocation.toLowerCase();
   for (const [key, override] of Object.entries(LOCATION_OVERRIDES)) {
     if (lower.includes(key)) return override;
   }
-  const isBeach = lower.includes('spiaggia') || lower.includes('cala');
+  const isBeach = BEACH_TERMS.some((term) => lower.includes(term));
   const geoSuffix = isBeach ? ", Sardegna, Italia" : ", Centro, Sardegna, Italia";
   return `${cleanLocation}${geoSuffix}`;
 }

@@ -482,6 +482,29 @@ export const it = {
     },
   },
 
+  // ───── PAGINE DINAMICHE LOCALITÀ / SPIAGGE ([lang]/[slug].astro) ─────
+  dynamicPage: {
+    eyebrowLocation: "Punto di Ritiro & Consegna",
+    eyebrowBeach: "Guida KS Rent",
+    vehicleEyebrow: "Scelto per te",
+    vehicleHeading: "Il veicolo ideale per questa destinazione",
+    mapEyebrow: "Localizzazione",
+    mapHeadingLocation: "Come raggiungerci",
+    mapHeadingBeach: "Dove si trova",
+    mapIntroLocation: "Distanza dalle nostre sedi di Olbia.",
+    mapIntroBeach: "Calcola il percorso dalle nostre sedi di Olbia a questa magnifica spiaggia.",
+    parkingHeading: "Informazioni Parcheggio & Viabilità",
+    seatsLabel: "Posti",
+    insuredLabel: "Assicurata",
+    discoverVehicle: "Scopri il veicolo",
+    readyForPrefix: "Pronto per",
+    bookNowCta: "Prenota Ora",
+    noContent: "Stiamo aggiornando questa pagina con i migliori consigli e percorsi. Puoi comunque prenotare il tuo veicolo per questa destinazione.",
+    fuel: { Benzina: "Benzina", Diesel: "Diesel" },
+    transmissionAutomatic: "Automatico",
+    transmissionManual: "Manuale",
+  },
+
   // ───── ERROR / 404 ─────
   errors: {
     pageNotFound: "Pagina non trovata",
