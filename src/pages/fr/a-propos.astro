@@ -9,5 +9,5 @@ import { buildBreadcrumb } from "@/lib/jsonLd";
   canonical="https://www.ksrentsardinia.com/fr/a-propos"
   jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("À Propos", "/fr/a-propos")]}
 >
-  <ChiSiamo client:load lang="fr" />
+  <ChiSiamo client:only="react" lang="fr" />
 </BaseLayout>
