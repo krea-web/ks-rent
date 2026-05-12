@@ -55,7 +55,6 @@ const Index = () => (
         <Link to="/noleggio-auto-baja-sardinia" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Baja Sardinia</Link>,{" "}
         <Link to="/noleggio-auto-palau" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Palau</Link>,{" "}
         <Link to="/noleggio-auto-porto-rotondo" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Porto Rotondo</Link>,{" "}
-        <Link to="/noleggio-auto-santa-teresa-gallura" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Santa Teresa Gallura</Link>,{" "}
         <Link to="/noleggio-auto-budoni" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Budoni</Link> e la{" "}
         <Link to="/noleggio-auto-costa-smeralda" className="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">Costa Smeralda</Link>.
         Il tuo <strong>noleggio auto a Olbia</strong> inizia dal momento in cui atterri o sbarchi dal traghetto.

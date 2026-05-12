@@ -47,7 +47,7 @@ const TRANSLATIONS = {
       },
       premium: {
         heading: "Premium e Comfort",
-        body: "La <strong>Mercedes Classe A 180d</strong> (automatico 7G-DCT, diesel) unisce eleganza e consumi ridotti. Ideale per soggiorni lunghi tra {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} e {link:santa-teresa-gallura:Santa Teresa Gallura}. Anche la <strong>Fiat Panda Hybrid</strong> è perfetta per muoversi agili in città e parcheggiare ovunque.",
+        body: "La <strong>Mercedes Classe A 180d</strong> (automatico 7G-DCT, diesel) unisce eleganza e consumi ridotti. Ideale per soggiorni lunghi tra {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} e {link:san-teodoro:San Teodoro}. Anche la <strong>Fiat Panda Hybrid</strong> è perfetta per muoversi agili in città e parcheggiare ovunque.",
       },
       twoWheels: {
         heading: "Scooter e Quad",
@@ -119,7 +119,7 @@ const TRANSLATIONS = {
       },
       premium: {
         heading: "Premium and Comfort",
-        body: "The <strong>Mercedes A-Class 180d</strong> (7G-DCT automatic, diesel) combines elegance with low consumption. Ideal for longer stays between {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} and {link:santa-teresa-gallura:Santa Teresa Gallura}. The <strong>Fiat Panda Hybrid</strong> is also perfect for nimble city moves and parking anywhere.",
+        body: "The <strong>Mercedes A-Class 180d</strong> (7G-DCT automatic, diesel) combines elegance with low consumption. Ideal for longer stays between {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} and {link:san-teodoro:San Teodoro}. The <strong>Fiat Panda Hybrid</strong> is also perfect for nimble city moves and parking anywhere.",
       },
       twoWheels: {
         heading: "Scooters and Quads",
@@ -191,7 +191,7 @@ const TRANSLATIONS = {
       },
       premium: {
         heading: "Premium und Komfort",
-        body: "Die <strong>Mercedes A-Klasse 180d</strong> (7G-DCT Automatik, Diesel) verbindet Eleganz mit niedrigem Verbrauch. Ideal für längere Aufenthalte zwischen {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} und {link:santa-teresa-gallura:Santa Teresa Gallura}. Auch der <strong>Fiat Panda Hybrid</strong> ist perfekt für die Stadt und überall einfach zu parken.",
+        body: "Die <strong>Mercedes A-Klasse 180d</strong> (7G-DCT Automatik, Diesel) verbindet Eleganz mit niedrigem Verbrauch. Ideal für längere Aufenthalte zwischen {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} und {link:san-teodoro:San Teodoro}. Auch der <strong>Fiat Panda Hybrid</strong> ist perfekt für die Stadt und überall einfach zu parken.",
       },
       twoWheels: {
         heading: "Roller und Quads",
@@ -263,7 +263,7 @@ const TRANSLATIONS = {
       },
       premium: {
         heading: "Premium et confort",
-        body: "La <strong>Mercedes Classe A 180d</strong> (boîte 7G-DCT, diesel) allie élégance et faible consommation. Idéale pour les longs séjours entre {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} et {link:santa-teresa-gallura:Santa Teresa Gallura}. La <strong>Fiat Panda Hybrid</strong> est aussi parfaite pour circuler en ville et se garer partout.",
+        body: "La <strong>Mercedes Classe A 180d</strong> (boîte 7G-DCT, diesel) allie élégance et faible consommation. Idéale pour les longs séjours entre {link:porto-rotondo:Porto Rotondo}, {link:arzachena:Arzachena} et {link:san-teodoro:San Teodoro}. La <strong>Fiat Panda Hybrid</strong> est aussi parfaite pour circuler en ville et se garer partout.",
       },
       twoWheels: {
         heading: "Scooters et quads",

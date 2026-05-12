@@ -192,6 +192,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
   const siteMapHref = localizePath("/mappa-sito", lang);
 
   // Localized service landing paths
+  const olbiaHref = localizePath("/noleggio-auto-olbia", lang);
   const airportHref = localizePath("/noleggio-auto-aeroporto-olbia", lang);
   const portHref = localizePath("/noleggio-auto-porto-olbia", lang);
   const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
@@ -207,6 +208,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
 
   // Delivery main hubs (use localized service hrefs)
   const PUNTI_PRINCIPALI: DeliveryItem[] = [
+    { label: t.nav.deliveryItems.olbia ?? "Olbia (sede)", to: olbiaHref, Icon: MapPin },
     { label: t.nav.deliveryItems.airport, to: airportHref, Icon: Plane },
     { label: t.nav.deliveryItems.port, to: portHref, Icon: Anchor },
     { label: t.nav.deliveryItems.costaSmeralda, to: costaSmeraldaHref, Icon: Palmtree },
@@ -223,7 +225,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
     { label: "Palau", to: localizeSlug("noleggio-auto-palau", lang) },
     { label: "Cannigione", to: localizeSlug("noleggio-auto-cannigione", lang) },
     { label: "Arzachena", to: localizeSlug("noleggio-auto-arzachena", lang) },
-    { label: "Santa Teresa Gallura", to: localizeSlug("noleggio-auto-santa-teresa-gallura", lang) },
+    { label: "San Teodoro", to: localizeSlug("noleggio-auto-san-teodoro", lang) },
   ];
 
   const LOC_COSTA_EST: DeliveryItem[] = [

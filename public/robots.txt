@@ -32,6 +32,21 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
 # 2. BOT SEO COMPETITOR - BLOCCO TOTALE (Per non farti copiare le 40 rotte)
 User-agent: AhrefsBot
 Disallow: /

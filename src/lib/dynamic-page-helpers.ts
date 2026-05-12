@@ -95,7 +95,6 @@ export const VEHICLE_BY_SLUG: Record<string, keyof typeof VEHICLES> = {
   "noleggio-auto-palau": "elegant",
   "noleggio-auto-cannigione": "elegant",
   "noleggio-auto-arzachena": "elegant",
-  "noleggio-auto-santa-teresa-gallura": "elegant",
 
   // ─── SPIAGGE ───
   "spiaggia-del-principe": "luxuryAlt",

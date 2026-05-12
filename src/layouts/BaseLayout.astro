@@ -65,10 +65,10 @@ const effectiveLocalBusinessJsonLd = {
             ? {
                 aggregateRating: {
                   "@type": "AggregateRating",
-                  ratingValue: aggregateRating.ratingValue.toFixed(1),
+                  ratingValue: Number(aggregateRating.ratingValue.toFixed(1)),
                   reviewCount: aggregateRating.reviewCount,
-                  bestRating: "5",
-                  worstRating: "1",
+                  bestRating: 5,
+                  worstRating: 1,
                 },
               }
             : {}),

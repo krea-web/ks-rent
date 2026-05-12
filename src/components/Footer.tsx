@@ -37,6 +37,7 @@ const Footer = ({ lang = "it" }: FooterProps) => {
     return lang === "it" ? `/${slug}` : `/${lang}/${slug}`;
   };
 
+  const olbiaHref = localizePath("/noleggio-auto-olbia", lang);
   const portHref = localizePath("/noleggio-auto-porto-olbia", lang);
   const airportHref = localizePath("/noleggio-auto-aeroporto-olbia", lang);
   const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
@@ -65,7 +66,7 @@ const Footer = ({ lang = "it" }: FooterProps) => {
     { label: "Palau", slug: "noleggio-auto-palau" },
     { label: "Cannigione", slug: "noleggio-auto-cannigione" },
     { label: "Arzachena", slug: "noleggio-auto-arzachena" },
-    { label: "Santa Teresa Gallura", slug: "noleggio-auto-santa-teresa-gallura" },
+    { label: "San Teodoro", slug: "noleggio-auto-san-teodoro" },
   ];
 
   const beaches = [
@@ -189,6 +190,7 @@ const Footer = ({ lang = "it" }: FooterProps) => {
             </h3>
             <div className="flex flex-col gap-2">
               {[
+                { label: "Noleggio Auto Olbia", to: olbiaHref },
                 { label: t.services.port.title, to: portHref },
                 { label: t.services.airport.title, to: airportHref },
                 { label: t.services.costaSmeralda.title, to: costaSmeraldaHref },

@@ -33,9 +33,20 @@ export default defineConfig({
       configFile: "./tailwind.config.ts",
     }),
     sitemap({
+      i18n: {
+        defaultLocale: "it",
+        locales: {
+          it: "it-IT",
+          en: "en-GB",
+          de: "de-DE",
+          fr: "fr-FR",
+        },
+      },
       filter: (page) =>
         !page.includes("/admin") &&
-        !page.includes("/login"),
+        !page.includes("/login") &&
+        !/\/(en|de|fr)\/404\/?$/.test(page) &&
+        !/\/404\/?$/.test(page),
       serialize: (item) => {
         const url = item.url.replace(/\/$/, "") || `${SITE_URL}/`;
         let priority = 0.7;

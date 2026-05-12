@@ -11,6 +11,7 @@ const SAME_AS = [
   "https://www.paginebianche.it/ksrentsardinia-olbia-a3a5413c-6bb6-4471-91b0-121e05b1a939",
   "https://www.misterimprese.it/sardegna/olbia-tempio/olbia/autonoleggio/2638614.html",
   "https://www.tripadvisor.it/Attraction_Review-g187883-d34295915-Reviews-KS_RENT_SARDINIA-Olbia_Province_of_Olbia_Tempio_Sardinia.html",
+  "https://maps.google.com/?cid=9638199341974199698",
 ];
 
 const AREA_SERVED = [
@@ -45,11 +46,11 @@ export const localBusinessJsonLd = {
       alternateName: "KS Rent",
       vatID: "IT03028900904",
       taxID: "03028900904",
-      foundingDate: "2025",
+      foundingDate: "2025-04-08",
       description:
-        "Autonoleggio premium a breve termine in Sardegna. Consegna a domicilio di auto di lusso, supercar e SUV a Olbia, Costa Smeralda e Porto Cervo. Noleggio senza carta di credito obbligatoria.",
+        "Autonoleggio premium a breve termine in Sardegna. Flotta moderna: dalla city car alla supercar, SUV, scooter e quad. Consegna a domicilio in tutta la Gallura (gratuita a Olbia, su preventivo nelle altre località). Noleggio anche senza carta di credito obbligatoria.",
       disambiguatingDescription:
-        "KS Rent Sardinia è un autonoleggio di lusso con sede a Olbia, Sardegna, con partita IVA IT03028900904. È un'entità locale e indipendente, non affiliata con altre società omonime come KS Rent S.r.l. operanti sul resto del territorio nazionale.",
+        "KS Rent Sardinia è un autonoleggio premium con sede a Olbia, Sardegna, con partita IVA IT03028900904. È un'entità locale e indipendente, non affiliata con altre società omonime come KS Rent S.r.l. operanti sul resto del territorio nazionale.",
       url: "https://www.ksrentsardinia.com",
       telephone: "+393446107071",
       email: "ksrentsrl@gmail.com",
@@ -59,27 +60,28 @@ export const localBusinessJsonLd = {
       inLanguage: "it-IT",
       aggregateRating: {
         "@type": "AggregateRating",
-        ratingValue: "5.0",
-        bestRating: "5",
-        worstRating: "1",
-        ratingCount: "28",
+        ratingValue: 5.0,
+        bestRating: 5,
+        worstRating: 1,
+        ratingCount: 28,
       },
       knowsAbout: [
         "Noleggio auto Olbia",
         "Autonoleggio Olbia",
-        "Noleggio auto di lusso Olbia",
+        "Noleggio auto premium Olbia",
+        "Noleggio auto sportive Costa Smeralda",
         "Noleggio senza carta di credito Sardegna",
         "Consegna auto in Aeroporto Olbia Costa Smeralda",
-        "Consegna auto al Porto di Olbia",
-        "Noleggio supercar Costa Smeralda",
-        "Rent a car Gallura",
+        "Consegna auto al Porto di Olbia Isola Bianca",
         "Noleggio SUV Porto Cervo",
+        "Noleggio moto e quad Gallura",
+        "Rent a car Gallura",
       ],
       logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
       image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Viale Isola Bianca 38",
+        streetAddress: "Viale Aldo Moro 367",
         addressLocality: "Olbia",
         postalCode: "07026",
         addressRegion: "SS",
@@ -87,13 +89,30 @@ export const localBusinessJsonLd = {
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude: 40.923018,
-        longitude: 9.520169,
+        latitude: 40.944573,
+        longitude: 9.497897,
       },
       location: [
         {
           "@type": "Place",
-          name: "KS Rent Sardinia — Sede Operativa Porto Olbia",
+          name: "KS Rent Sardinia — Sede Principale",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Viale Aldo Moro 367",
+            addressLocality: "Olbia",
+            postalCode: "07026",
+            addressRegion: "SS",
+            addressCountry: "IT",
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 40.944573,
+            longitude: 9.497897,
+          },
+        },
+        {
+          "@type": "Place",
+          name: "KS Rent Sardinia — Punto di Consegna Porto Olbia Isola Bianca",
           address: {
             "@type": "PostalAddress",
             streetAddress: "Viale Isola Bianca 38",
@@ -108,32 +127,55 @@ export const localBusinessJsonLd = {
             longitude: 9.520169,
           },
         },
-        {
-          "@type": "Place",
-          name: "KS Rent Sardinia — Sede Legale",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Viale Aldo Moro 367",
-            addressLocality: "Olbia",
-            postalCode: "07026",
-            addressRegion: "SS",
-            addressCountry: "IT",
-          },
-          geo: {
-            "@type": "GeoCoordinates",
-            latitude: 40.94454753561456,
-            longitude: 9.497963852259709,
-          },
-        },
       ],
       areaServed: AREA_SERVED,
-      openingHoursSpecification: {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        opens: "10:00",
-        closes: "22:30",
-      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          opens: "10:00",
+          closes: "13:00",
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          opens: "15:00",
+          closes: "22:30",
+        },
+      ],
+      amenityFeature: [
+        { "@type": "LocationFeatureSpecification", name: "Parcheggio gratuito", value: true },
+        { "@type": "LocationFeatureSpecification", name: "Parcheggio in loco", value: true },
+        { "@type": "LocationFeatureSpecification", name: "Ingresso accessibile in sedia a rotelle", value: true },
+        { "@type": "LocationFeatureSpecification", name: "Parcheggio accessibile in sedia a rotelle", value: true },
+        { "@type": "LocationFeatureSpecification", name: "Pagamenti contactless NFC", value: true },
+        { "@type": "LocationFeatureSpecification", name: "WhatsApp", value: true },
+      ],
       sameAs: SAME_AS,
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.ksrentsardinia.com/#delivery-service",
+      name: "Consegna a domicilio auto, moto e quad",
+      serviceType: "Vehicle delivery",
+      description:
+        "Consegna dei veicoli a noleggio in aeroporto Olbia Costa Smeralda (OLB), porto Isola Bianca, hotel, ville e località della Gallura e Costa Smeralda. Coordinata con l'orario del volo o del traghetto. Gratuita nel comune di Olbia; tariffa trasparente nelle altre località a partire da 5 €, dichiarata in fase di preventivo.",
+      provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      areaServed: AREA_SERVED,
+      hoursAvailable: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          opens: "09:00",
+          closes: "22:30",
+        },
+      ],
+      availableChannel: {
+        "@type": "ServiceChannel",
+        serviceUrl: "https://www.ksrentsardinia.com/prenotaora",
+        servicePhone: "+393446107071",
+        serviceSmsNumber: "+393446107071",
+      },
     },
     {
       "@type": "WebSite",
@@ -142,6 +184,14 @@ export const localBusinessJsonLd = {
       name: "KS Rent Sardinia",
       publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
       inLanguage: "it-IT",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://www.ksrentsardinia.com/flotta?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
     },
   ],
 };
@@ -343,22 +393,24 @@ const carRentalBase = {
   alternateName: "KS Rent",
   vatID: "IT03028900904",
   taxID: "03028900904",
-  foundingDate: "2025",
+  foundingDate: "2025-04-08",
   disambiguatingDescription:
-    "KS Rent Sardinia è un autonoleggio di lusso con sede a Olbia, Sardegna, con partita IVA IT03028900904. È un'entità locale e indipendente, non affiliata con altre società omonime come KS Rent S.r.l. operanti sul resto del territorio nazionale.",
+    "KS Rent Sardinia è un autonoleggio premium con sede a Olbia, Sardegna, con partita IVA IT03028900904. È un'entità locale e indipendente, non affiliata con altre società omonime come KS Rent S.r.l. operanti sul resto del territorio nazionale.",
   url: "https://www.ksrentsardinia.com",
   telephone: "+393446107071",
   email: "ksrentsrl@gmail.com",
-  priceRange: "€€€",
+  priceRange: "€€",
   paymentAccepted: "Cash, Credit Card, Debit Card, Prepaid Card, Bonifico Bancario",
   inLanguage: "it-IT",
   knowsAbout: [
     "Noleggio auto Olbia",
     "Autonoleggio Olbia",
-    "Noleggio auto di lusso Olbia",
+    "Noleggio auto premium Olbia",
+    "Noleggio auto sportive Olbia",
     "Noleggio senza carta di credito Sardegna",
     "Consegna auto a domicilio Gallura",
     "Rent a car aeroporto Olbia",
+    "Noleggio auto porto Olbia Isola Bianca",
   ],
   logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
   address: {
@@ -459,7 +511,7 @@ export const buildLocationJsonLd = (
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: `Noleggio Auto di Lusso a ${page.title}`,
+      name: `Noleggio Auto a ${page.title}`,
       serviceType: "Car Rental",
       description: page.meta_description,
       url: pageUrl,
@@ -571,6 +623,122 @@ export const aeroportoAutoRentalJsonLd = {
   url: "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia",
   image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
   areaServed: { "@type": "Place", name: "Aeroporto Olbia Costa Smeralda" },
+};
+
+export const olbiaAutoRentalJsonLd = {
+  "@context": "https://schema.org",
+  ...carRentalBase,
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-olbia#service",
+  name: "KS Rent Sardinia — Noleggio Auto Olbia",
+  description:
+    "Noleggio auto a Olbia con consegna VIP gratuita in aeroporto Costa Smeralda (OLB), porto Isola Bianca, hotel e ville. Flotta boutique di supercar, SUV premium, auto, moto e quad. Anche senza carta di credito obbligatoria.",
+  url: "https://www.ksrentsardinia.com/noleggio-auto-olbia",
+  image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+  areaServed: [
+    { "@type": "City", name: "Olbia" },
+    { "@type": "Place", name: "Aeroporto di Olbia Costa Smeralda (OLB)" },
+    { "@type": "Place", name: "Porto di Olbia Isola Bianca" },
+    { "@type": "Place", name: "Costa Smeralda" },
+    { "@type": "Place", name: "Porto Cervo" },
+    { "@type": "Place", name: "Porto Rotondo" },
+    { "@type": "City", name: "San Teodoro" },
+  ],
+};
+
+export const olbiaFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-olbia#faq",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Si può noleggiare un'auto a Olbia senza carta di credito?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. KS Rent Sardinia è uno dei pochi autonoleggi a Olbia che permette il noleggio senza carta di credito obbligatoria. Accettiamo contanti, bonifico bancario e carte prepagate ricaricabili come Postepay, Revolut e N26. Il deposito cauzionale può essere versato anche in contanti al momento del ritiro.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Dove si ritira l'auto all'aeroporto di Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "KS Rent Sardinia consegna gratuitamente l'auto direttamente agli Arrivi dell'Aeroporto di Olbia Costa Smeralda (OLB), distante solo 2 km dalla sede. La consegna è coordinata con l'orario del tuo volo ed è disponibile tutti i giorni dalle 10:00 alle 22:30, anche su voli serali e festivi.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Qual è l'età minima per noleggiare un'auto a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "L'età minima è di 21 anni per le utilitarie e i veicoli di categoria standard, e 25 anni per auto sportive, supercar e veicoli premium. È richiesta una patente B in corso di validità da almeno 1 anno.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quanto costa noleggiare un'auto a Olbia con KS Rent Sardinia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le tariffe sono stagionali, valide da aprile a ottobre. Le utilitarie come Fiat Panda Hybrid partono da circa 40€/giorno in bassa stagione; le auto premium come Mercedes Classe A da 90€/giorno; supercar come Audi RS3 e BMW M2 hanno tariffe dedicate. Il listino completo è disponibile su ksrentsardinia.com/tariffe.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso consegnare l'auto fuori orario o in un giorno festivo?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Siamo aperti tutti i giorni dalle 10:00 alle 13:00 e dalle 15:00 alle 22:30, festivi inclusi (Pasqua, 25 aprile, 1 maggio, 2 giugno). Per consegne o restituzioni fuori orario standard, contattaci su WhatsApp al +39 344 6107071 per organizzare un appuntamento dedicato.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Il chilometraggio è illimitato?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La maggior parte dei nostri noleggi a Olbia prevede chilometraggio incluso adeguato alle escursioni in Gallura e Costa Smeralda. Per soggiorni lunghi o tour della Sardegna offriamo formule con chilometraggio illimitato. Verifica la condizione specifica al momento della prenotazione.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso aggiungere un secondo conducente?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, è possibile aggiungere un secondo conducente con un piccolo supplemento. È necessaria una patente valida da almeno 1 anno e il rispetto dell'età minima richiesta per la categoria di veicolo prenotata. Il secondo conducente è sempre indicato nel contratto di noleggio.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "KS Rent Sardinia è uguale a KS Rent S.r.l. di Roma?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. KS Rent Sardinia (società KS Rent SRL — P.IVA IT03028900904 — sede a Olbia) è un'azienda autonoma e indipendente, NON affiliata né collegata a KS Rent S.r.l. di Roma (sito ksrent.it). Per il noleggio in Sardegna fare sempre riferimento a ksrentsardinia.com.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Avete anche moto, scooter e quad in noleggio a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. La nostra flotta include scooter Honda SH 125 e Honda SH 350 (con caschi inclusi) e quad Yamaha Raptor per escursioni in Gallura. Lo scooter 125 si guida con patente A1; il 350 richiede patente A2 o B con almeno 3 anni di possesso. Il quad si guida con patente B.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Consegnate l'auto a Porto Cervo, San Teodoro o in Costa Smeralda?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. Offriamo consegna a domicilio in tutta la Gallura e Costa Smeralda: Porto Cervo, Porto Rotondo, Baja Sardinia, San Teodoro, Palau, Cannigione, Arzachena, San Pantaleo, Golfo Aranci, Puntaldia, Murta Maria, Porto Istana. Tempo di consegna 20-50 minuti dalla nostra sede di Olbia.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quanto costa la consegna a domicilio fuori da Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La consegna è gratuita all'interno del comune di Olbia, incluso aeroporto OLB e porto Isola Bianca. Per le altre località della Gallura e Costa Smeralda il costo parte da 5 € e viene dichiarato in modo trasparente durante il preventivo, in base alla distanza.",
+      },
+    },
+  ],
 };
 
 export const portoAutoRentalJsonLd = {

@@ -143,19 +143,19 @@ const LOCATION_CONTENT: Record<string, LocalitySEOContent> = {
 
   "noleggio-auto-palau": {
     whyUs:
-      "Palau è il punto di partenza per l'Arcipelago della Maddalena e una base strategica per esplorare il nord della Gallura. KS Rent Sardinia consegna l'auto direttamente al porto di Palau, all'hotel o al tuo alloggio, permettendoti di raggiungere anche Santa Teresa Gallura, Capo Testa e le spiagge della costa settentrionale. Il Jeep Avenger è perfetto per le strade dell'entroterra, mentre la Mercedes Classe A offre comfort per i tragitti più lunghi.",
+      "Palau è il punto di partenza per l'Arcipelago della Maddalena e una base strategica per esplorare il nord della Gallura. KS Rent Sardinia consegna l'auto direttamente al porto di Palau, all'hotel o al tuo alloggio, permettendoti di raggiungere le spiagge della costa settentrionale e l'entroterra. Il Jeep Avenger è perfetto per le strade dell'entroterra, mentre la Mercedes Classe A offre comfort per i tragitti più lunghi.",
     noCreditCard:
       "A Palau, dove molti turisti arrivano per imbarcarsi verso La Maddalena, la rapidità è tutto. Con KS Rent non perdi tempo con pre-autorizzazioni su carta di credito: paghi il deposito con bancomat o contanti e parti subito. Un vantaggio reale per chi ha orari stretti tra traghetti e spostamenti.",
     delivery:
       "Palau dista circa 40 km da Olbia, raggiungibile in 40-45 minuti. Consegniamo al porto di Palau (per chi rientra da La Maddalena), agli hotel della zona o direttamente sul lungomare. Se preferisci, puoi ritirare l'auto all'aeroporto o al porto di Olbia e guidare in autonomia fino a Palau.",
     vacation:
-      "Palau è la porta d'accesso all'Arcipelago della Maddalena, con le sue acque cristalline patrimonio UNESCO. Ma anche sulla terraferma non mancano le sorprese: la Roccia dell'Orso, le spiagge di Porto Pollo (paradiso del windsurf) e la vicina Capo d'Orso. Con un'auto a noleggio KS Rent puoi anche raggiungere Santa Teresa Gallura e il suggestivo Capo Testa in meno di 30 minuti.",
+      "Palau è la porta d'accesso all'Arcipelago della Maddalena, con le sue acque cristalline patrimonio UNESCO. Ma anche sulla terraferma non mancano le sorprese: la Roccia dell'Orso, le spiagge di Porto Pollo (paradiso del windsurf) e la vicina Capo d'Orso. Con un'auto a noleggio KS Rent esplori in autonomia tutta la costa nord della Gallura.",
     faqs: [
       { q: "Posso consegnare l'auto al porto di Palau prima di imbarcarmi per La Maddalena?", a: "Sì, organizziamo ritiro e consegna direttamente al porto di Palau, coordinandoci con i tuoi orari del traghetto." },
       { q: "Quanto dista Palau dall'aeroporto di Olbia?", a: "Circa 40 km, percorribili in 40-45 minuti. KS Rent consegna anche all'aeroporto Costa Smeralda." },
       { q: "Quale auto consigliate per Palau e dintorni?", a: "La Mercedes Classe A per comfort su strade principali, il Jeep Avenger per esplorare le calette meno battute della costa nord." },
     ],
-    relatedSlugs: ["rena-bianca", "capo-testa", "noleggio-auto-santa-teresa-gallura"],
+    relatedSlugs: ["rena-bianca", "capo-testa", "noleggio-auto-cannigione"],
   },
 
   "noleggio-auto-cannigione": {
@@ -292,23 +292,6 @@ const LOCATION_CONTENT: Record<string, LocalitySEOContent> = {
       { q: "KS Rent consegna l'auto agli agriturismi di Arzachena?", a: "Sì, consegniamo direttamente alla struttura, anche agli agriturismi dell'entroterra." },
     ],
     relatedSlugs: ["noleggio-auto-porto-cervo", "noleggio-auto-baja-sardinia", "noleggio-auto-cannigione"],
-  },
-
-  "noleggio-auto-santa-teresa-gallura": {
-    whyUs:
-      "Santa Teresa Gallura è l'estremo nord della Sardegna, con le Bocche di Bonifacio che separano l'isola dalla Corsica. KS Rent Sardinia consegna l'auto per esplorare Capo Testa e le sue formazioni rocciose, Rena Bianca (la spiaggia del paese) e le calette selvagge verso Palau. La Mercedes Classe A è perfetta per il lungo trasferimento da Olbia, il Jeep Avenger per le spiagge su sterrato.",
-    noCreditCard:
-      "Santa Teresa è una meta popolare anche per i turisti provenienti dalla Corsica in traghetto. KS Rent Sardinia facilita il noleggio con l'opzione senza carta di credito: deposito in bancomat o contanti e ritiro rapido. Perfetto per chi scende dal traghetto e vuole partire subito alla scoperta della Gallura.",
-    delivery:
-      "Santa Teresa Gallura dista circa 60 km da Olbia, raggiungibile in 55-60 minuti. È la località più lontana che serviamo regolarmente. Consegniamo al porto (per chi arriva in traghetto dalla Corsica), al centro paese o alla tua struttura ricettiva. Per la distanza, consigliamo di programmare la consegna con almeno 2 ore di anticipo.",
-    vacation:
-      "Santa Teresa Gallura offre un mix unico: Rena Bianca nel centro paese, Capo Testa con le sue rocce granitiche scolpite dal vento (a 5 minuti), e le calette selvagge lungo la costa verso Palau. Il paese ha un centro storico vivace con ristoranti, bar e negozi. Con l'auto KS Rent puoi esplorare anche Valle della Luna, La Marmorata e le spiagge nascoste di Capo Falcone.",
-    faqs: [
-      { q: "KS Rent consegna l'auto a Santa Teresa Gallura?", a: "Sì, consegniamo al porto, al centro paese o alla struttura ricettiva. Distanza da Olbia: 60 km, circa 1 ora." },
-      { q: "Arrivo in traghetto dalla Corsica, posso noleggiare a Santa Teresa?", a: "Sì, consegniamo al porto di Santa Teresa. Accettiamo bancomat e contanti — nessuna carta di credito necessaria." },
-      { q: "Cosa vedere a Capo Testa?", a: "Le formazioni rocciose granitiche, la Valle della Luna, le spiagge di Rena di Ponente e Rena di Levante. Un SUV è consigliato per l'ultimo tratto." },
-    ],
-    relatedSlugs: ["capo-testa", "rena-bianca", "noleggio-auto-palau"],
   },
 
   "noleggio-auto-budoni": {
@@ -606,16 +589,16 @@ const BEACH_CONTENT: Record<string, LocalitySEOContent> = {
   },
 
   "rena-bianca": {
-    whyUs: "Rena Bianca è la spiaggia del centro di Santa Teresa Gallura, con sabbia bianchissima e vista sulle Bocche di Bonifacio e la Corsica. KS Rent Sardinia consegna l'auto direttamente a Santa Teresa per raggiungere questa perla del nord Sardegna. La Mercedes Classe A è perfetta per il lungo trasferimento da Olbia.",
-    noCreditCard: "Per Rena Bianca, noleggia senza carta di credito con KS Rent. Deposito con bancomat o contanti. Ideale per chi arriva in traghetto dalla Corsica e vuole esplorare la Gallura.",
-    delivery: "Rena Bianca si trova a Santa Teresa Gallura, circa 60 km da Olbia (55-60 minuti). Il parcheggio è nel centro del paese, a 200 metri dalla spiaggia. Consegniamo al porto o al centro paese.",
-    vacation: "Rena Bianca è la spiaggia bandiera blu di Santa Teresa, con vista sulla Corsica nelle giornate limpide. Il centro paese è a 200 metri con ristoranti, gelaterie e shopping. Da qui puoi raggiungere Capo Testa (5 min) con le sue rocce granitiche e la Valle della Luna, e Palau (25 min) per l'imbarco verso La Maddalena.",
+    whyUs: "Rena Bianca è una spiaggia bandiera blu nell'estremo nord della Sardegna, con sabbia bianchissima e vista sulle Bocche di Bonifacio e la Corsica. Noleggia un'auto a Olbia con KS Rent Sardinia per raggiungere questa zona — la Mercedes Classe A è ideale per i 60 km di trasferimento dalla nostra sede.",
+    noCreditCard: "Noleggia da KS Rent Sardinia a Olbia anche senza carta di credito (deposito con bancomat o contanti) e guida in autonomia fino a Rena Bianca. Distanza 60 km, circa 1 ora di guida lungo la SS133.",
+    delivery: "Rena Bianca si trova nell'estremo nord della Gallura, circa 60 km da Olbia (55-60 minuti). Il parcheggio è a 200 metri dalla spiaggia. Il ritiro auto è dalla nostra sede a Olbia (Viale Aldo Moro 367) o ai punti di consegna in città (aeroporto OLB, porto Isola Bianca).",
+    vacation: "Rena Bianca è la spiaggia bandiera blu del nord Sardegna, con vista sulla Corsica nelle giornate limpide. Il centro paese è a 200 metri con ristoranti, gelaterie e shopping. Da qui puoi raggiungere Capo Testa (5 min) con le sue rocce granitiche e la Valle della Luna, e Palau (25 min) per l'imbarco verso La Maddalena.",
     faqs: [
       { q: "Si vede la Corsica da Rena Bianca?", a: "Sì, nelle giornate limpide si vedono chiaramente le coste della Corsica, distante solo 12 km." },
-      { q: "Rena Bianca è nel centro di Santa Teresa?", a: "Sì, è raggiungibile a piedi dal centro paese. Parcheggio a 200 metri." },
+      { q: "Come si raggiunge Rena Bianca da Olbia?", a: "Noleggia un'auto a Olbia con KS Rent e percorri la SS133 verso nord. 60 km, circa 1 ora di guida." },
       { q: "Quanto dista Rena Bianca da Capo Testa?", a: "Solo 5 km, 7 minuti d'auto. Imperdibile la visita alle rocce granitiche e alla Valle della Luna." },
     ],
-    relatedSlugs: ["capo-testa", "noleggio-auto-santa-teresa-gallura", "noleggio-auto-palau"],
+    relatedSlugs: ["capo-testa", "noleggio-auto-palau", "noleggio-auto-olbia"],
   },
 
   "cala-del-faro": {
@@ -686,14 +669,14 @@ const BEACH_CONTENT: Record<string, LocalitySEOContent> = {
   "capo-testa": {
     whyUs: "Capo Testa è un luogo magico: formazioni di granito scolpite dal vento, la Valle della Luna e due spiagge — Rena di Ponente e Rena di Levante. KS Rent Sardinia ti porta a Capo Testa con il veicolo giusto: il Jeep Avenger per gli sterrati, la Mercedes Classe A per il comfort del lungo trasferimento da Olbia.",
     noCreditCard: "Per Capo Testa, noleggia senza carta di credito con KS Rent. Deposito con bancomat o contanti. Perfetto per gli esploratori che vogliono raggiungere l'estremo nord della Sardegna senza vincoli.",
-    delivery: "Capo Testa dista circa 63 km da Olbia, 60-65 minuti. È la destinazione più lontana che serviamo regolarmente. Consegniamo a Santa Teresa Gallura (5 km da Capo Testa) o programmiamo la consegna con anticipo.",
-    vacation: "Capo Testa è un museo naturale a cielo aperto: rocce granitiche modellate dal vento in forme surreali, la misteriosa Valle della Luna (meta degli hippie dagli anni '60) e due spiagge opposte — Rena di Ponente (tramonto) e Rena di Levante (alba). Il faro è raggiungibile a piedi con una passeggiata panoramica. Santa Teresa Gallura è a 5 minuti per servizi e ristoranti.",
+    delivery: "Capo Testa dista circa 63 km da Olbia, 60-65 minuti di guida. Il ritiro auto è dalla nostra sede di Olbia (Viale Aldo Moro 367) o ai punti di consegna in città (aeroporto OLB, porto Isola Bianca).",
+    vacation: "Capo Testa è un museo naturale a cielo aperto: rocce granitiche modellate dal vento in forme surreali, la misteriosa Valle della Luna (meta degli hippie dagli anni '60) e due spiagge opposte — Rena di Ponente (tramonto) e Rena di Levante (alba). Il faro è raggiungibile a piedi con una passeggiata panoramica.",
     faqs: [
-      { q: "Come si raggiunge Capo Testa?", a: "Da Olbia, SS133 fino a Santa Teresa Gallura, poi strada verso Capo Testa. Circa 63 km, 1 ora." },
+      { q: "Come si raggiunge Capo Testa da Olbia?", a: "Da Olbia, SS133 verso nord per circa 63 km, 1 ora di guida. Noleggia l'auto da KS Rent a Olbia (aeroporto OLB, porto, o sede)." },
       { q: "Cosa è la Valle della Luna?", a: "Un'insenatura rocciosa a Capo Testa, famosa per le formazioni granitiche e la comunità hippie degli anni '60-'70. Raggiungibile a piedi." },
       { q: "Serve un SUV per Capo Testa?", a: "Per la strada principale no, è asfaltata. Per alcuni sentieri secondari verso le calette nascoste, il Jeep Avenger è consigliato." },
     ],
-    relatedSlugs: ["rena-bianca", "noleggio-auto-santa-teresa-gallura", "noleggio-auto-palau"],
+    relatedSlugs: ["rena-bianca", "noleggio-auto-palau", "noleggio-auto-olbia"],
   },
 };
 

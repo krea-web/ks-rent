@@ -160,18 +160,6 @@ const EXTRA_DATA: Record<string, LocalityExtraData> = {
     ],
   },
 
-  "noleggio-auto-santa-teresa-gallura": {
-    snippetBait: "KS Rent Sardinia consegna auto a Santa Teresa Gallura in 55 minuti da Olbia. Esplora Capo Testa, Rena Bianca e le Bocche di Bonifacio. Mercedes Classe A e Jeep Avenger senza carta di credito.",
-    distanceFromOlbia: "60 km, 55-60 minuti",
-    vehicleReason: "Per Santa Teresa consigliamo la Mercedes Classe A: il tragitto di 60 km da Olbia richiede comfort. Il Jeep Avenger è ideale per chi vuole esplorare Capo Testa e le calette su sterrato della costa nord.",
-    localTips: [
-      { icon: "camera", title: "La Corsica all'orizzonte", text: "Da Rena Bianca vedi la Corsica a soli 12 km. In giornate limpide distingui le case di Bonifacio. Il traghetto per la Corsica parte dal porto di Santa Teresa (50 minuti di traversata)." },
-      { icon: "mountain", title: "Valle della Luna", text: "La Valle della Luna a Capo Testa (5 min d'auto) è un anfiteatro di rocce granitiche scolpite dal vento. Meta hippie dagli anni '60, oggi è un luogo magico per camminare al tramonto." },
-      { icon: "wind", title: "Occhio al Maestrale", text: "Santa Teresa è esposta al Maestrale. Quando soffia forte, Rena Bianca diventa impraticabile ma Rena di Levante (Capo Testa, lato est) è riparata. Controlla il vento prima di uscire." },
-      { icon: "food", title: "Il centro storico la sera", text: "Il centro di Santa Teresa è un reticolo di vie pedonali con ristoranti, pizzerie e bar. La piazza principale è il cuore della vita serale. Parcheggia appena fuori dal centro." },
-    ],
-  },
-
   "noleggio-auto-budoni": {
     snippetBait: "KS Rent Sardinia consegna auto a Budoni in 30 minuti da Olbia. Spiagge lunghe e sabbiose ideali per famiglie. Fiat Panda e Jeep Avenger disponibili senza carta di credito.",
     distanceFromOlbia: "35 km, 30-35 minuti",
@@ -415,9 +403,9 @@ const EXTRA_DATA: Record<string, LocalityExtraData> = {
   },
 
   "rena-bianca": {
-    snippetBait: "Raggiungi Rena Bianca con KS Rent Sardinia: 55 minuti da Olbia. Spiaggia bandiera blu nel centro di Santa Teresa Gallura con vista sulla Corsica. Mercedes Classe A consigliata.",
+    snippetBait: "Raggiungi Rena Bianca noleggiando un'auto a Olbia con KS Rent Sardinia: 55 minuti di guida verso nord. Spiaggia bandiera blu del nord Sardegna con vista sulla Corsica. Mercedes Classe A consigliata.",
     distanceFromOlbia: "60 km, 55-60 minuti",
-    vehicleReason: "Per Rena Bianca consigliamo la Mercedes Classe A: il tragitto di 60 km da Olbia richiede comfort. Il parcheggio è nel centro di Santa Teresa, a 200 metri dalla spiaggia.",
+    vehicleReason: "Per Rena Bianca consigliamo la Mercedes Classe A: il tragitto di 60 km da Olbia richiede comfort. Il parcheggio è a 200 metri dalla spiaggia.",
     localTips: [
       { icon: "camera", title: "La Corsica a 12 km", text: "Da Rena Bianca vedi chiaramente Bonifacio e la costa corsa. Il traghetto parte dal porto di Santa Teresa: 50 minuti per un'escursione in Corsica e ritorno." },
       { icon: "swim", title: "Bandiera blu", text: "Rena Bianca è spiaggia bandiera blu da anni: acque pure, servizi eccellenti e accessibilità. Sabbia bianchissima e fondale che degrada dolcemente." },

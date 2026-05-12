@@ -61,10 +61,13 @@ scripts/export-seo-content.mjs
 | **PEC** | ks.rent.srl@pec.it |
 | **Email** | ksrentsrl@gmail.com |
 | **Telefono** | +393446107071 |
-| **Anno fondazione** | 2025 |
+| **Data apertura** | 8 aprile 2025 |
 | **Sede operativa** | Viale Isola Bianca 38, 07026 Olbia (SS) — coord: 40.922967, 9.520115 |
 | **Sede legale** | Viale Aldo Moro 367, 07026 Olbia (SS) — coord: 40.944573, 9.497897 |
-| **Orari** | 10:00 – 22:30, 7 giorni su 7 |
+| **Indirizzo principale GBP** | Viale Aldo Moro 367 (sede legale) ⚠️ decisione pending se spostare a Isola Bianca |
+| **Orari** | 10:00–13:00 + 15:00–22:30 (chiusura pranzo), 7 giorni su 7 |
+| **Place ID (Google Maps)** | `ChIJP6b_YdBL2RIRkp3GdDzDwYU` — CID `9638199341974199698` |
+| **Categoria GBP primaria** | Agenzia di noleggio auto (`car_rental`) |
 | **Entità legale distinta da** | KS Rent S.r.l. (Roma) — sito `ksrent.it` — **NON siamo loro** |
 
 ### Social
@@ -273,7 +276,7 @@ npm run indexnow                      # ping IndexNow ai motori
 
 7. **Veicoli noti** (per citazioni nei contenuti): Audi RS3 (verde + grigia), BMW M2, Jeep Avenger, Fiat Panda Hybrid, Mercedes Classe A, Honda SH 125/350, Yamaha Quad Raptor.
 
-8. **Anno fondazione: 2025.** Verificare coerenza tra `jsonLd.ts` e contenuti.
+8. **Data apertura: 8 aprile 2025** (foundingDate `2025-04-08`). Verificare coerenza tra `jsonLd.ts` e contenuti.
 
 9. **301 redirect**: NON rimuovere quelli da `/localita/:slug` → `/:slug` e `/spiagge/:slug` → `/:slug` in `vercel.json`. Servono per non perdere link equity.
 
