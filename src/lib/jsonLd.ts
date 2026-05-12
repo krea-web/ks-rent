@@ -58,13 +58,9 @@ export const localBusinessJsonLd = {
       currenciesAccepted: "EUR",
       paymentAccepted: "Cash, Credit Card, Debit Card, Prepaid Card, Bonifico Bancario",
       inLanguage: "it-IT",
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: 5.0,
-        bestRating: 5,
-        worstRating: 1,
-        ratingCount: 28,
-      },
+      // aggregateRating viene iniettato dinamicamente da BaseLayout via
+      // getAggregateRating() (lib/reviews.ts) o tramite la prop esplicita
+      // della pagina. Niente valore hardcoded: evita drift con il dato reale.
       knowsAbout: [
         "Noleggio auto Olbia",
         "Autonoleggio Olbia",

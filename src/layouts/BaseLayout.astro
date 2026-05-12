@@ -2,6 +2,7 @@
 import "@/index.css";
 import { localBusinessJsonLd, faqPageJsonLd, buildBreadcrumbJsonLd } from "@/lib/jsonLd";
 import { getAlternateLinks, getLocaleFromPath, LOCALE_NAMES } from "@/lib/i18n";
+import { getAggregateRating } from "@/lib/reviews";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
@@ -51,9 +52,12 @@ const currentLocale = getLocaleFromPath(Astro.url.pathname);
 const htmlLang = LOCALE_NAMES[currentLocale].htmlLang;
 const alternateLinks = getAlternateLinks(Astro.url.pathname, SITE);
 
-// Se passato aggregateRating, override quello hardcoded nel nodo AutoRental/LocalBusiness.
+// AggregateRating: se la pagina passa la prop, usa quella; altrimenti fetch
+// dal helper module-cached (build-time) che legge le reviews reali da Supabase.
+// Niente valore hardcoded in localBusinessJsonLd: il dato resta sempre allineato.
 // Override anche `inLanguage`. Deep-merge nel primo nodo di @graph: NON sul wrapper
 // esterno, altrimenti Google legge "AggregateRating su parent_node invalido".
+const ratingForSchema = aggregateRating ?? (await getAggregateRating());
 const effectiveLocalBusinessJsonLd = {
   ...localBusinessJsonLd,
   "@graph": localBusinessJsonLd["@graph"].map((node: any, i: number) =>
@@ -61,12 +65,12 @@ const effectiveLocalBusinessJsonLd = {
       ? {
           ...node,
           inLanguage: htmlLang,
-          ...(aggregateRating
+          ...(ratingForSchema
             ? {
                 aggregateRating: {
                   "@type": "AggregateRating",
-                  ratingValue: Number(aggregateRating.ratingValue.toFixed(1)),
-                  reviewCount: aggregateRating.reviewCount,
+                  ratingValue: Number(ratingForSchema.ratingValue.toFixed(1)),
+                  reviewCount: ratingForSchema.reviewCount,
                   bestRating: 5,
                   worstRating: 1,
                 },
