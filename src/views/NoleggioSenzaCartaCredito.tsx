@@ -1,9 +1,15 @@
 import { Link } from "@/lib/router-shim";
 import { motion } from "framer-motion";
-import { ArrowRight, CreditCard, ShieldCheck, Banknote, Smartphone, Star } from "lucide-react";
+import { ArrowRight, CreditCard, ShieldCheck, Banknote, Smartphone, Star, MapPin, Car } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { buildBreadcrumb } from "@/lib/jsonLd";
 import type { Locale } from "@/lib/i18n";
+import {
+  getRelatedServices,
+  getTopLocations,
+  getCrossSellVehicles,
+  INTERNAL_LINK_LABELS,
+} from "@/lib/internal-links";
 
 interface Props {
   lang?: Locale;
@@ -452,6 +458,15 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
   const breadcrumbPath = localizeHref("/noleggio-auto-senza-carta-di-credito-olbia", lang);
   const paymentIcons = [CreditCard, Banknote, ShieldCheck, Smartphone];
 
+  // Internal links contestuali (centralizzato in src/lib/internal-links.ts)
+  const linkLabels = INTERNAL_LINK_LABELS[lang];
+  const relatedServices = getRelatedServices(
+    "/noleggio-auto-senza-carta-di-credito-olbia",
+    lang,
+  );
+  const topLocations = getTopLocations(lang, 8);
+  const crossSellVehicles = getCrossSellVehicles(lang, 6);
+
   return (
     <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden">
       <SEOHead
@@ -604,6 +619,69 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
             {t.rich.pHtml.map((p, i) => (
               <p key={i} dangerouslySetInnerHTML={{ __html: renderHtml(p, lang) }} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* INTERNAL LINKING — Coverage hub */}
+      <section className="py-20 px-4 md:px-12 lg:px-24 bg-gray-50 dark:bg-[#050505] border-t border-gray-200 dark:border-white/5">
+        <div className="max-w-6xl mx-auto space-y-14">
+          {/* Servizi */}
+          <div>
+            <span className="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{linkLabels.servicesEyebrow}</span>
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.servicesTitle}</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {relatedServices.map((s) => (
+                <Link
+                  key={s.href}
+                  to={s.href}
+                  className="block p-4 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold/40 transition"
+                >
+                  <strong className="block text-gray-900 dark:text-white font-bold text-sm">{s.label}</strong>
+                  {s.hint && <span className="text-xs text-gray-600 dark:text-white/50">{s.hint}</span>}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Località */}
+          <div>
+            <span className="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3 flex items-center gap-2">
+              <MapPin className="w-3 h-3" /> {linkLabels.locationsEyebrow}
+            </span>
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.locationsTitle}</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {topLocations.map((loc) => (
+                <Link
+                  key={loc.href}
+                  to={loc.href}
+                  className="block p-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold/40 transition text-center"
+                >
+                  <strong className="block text-gray-900 dark:text-white text-sm">{loc.label}</strong>
+                  {loc.hint && <span className="text-xs text-gray-600 dark:text-white/50">{loc.hint}</span>}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Veicoli */}
+          <div>
+            <span className="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3 flex items-center gap-2">
+              <Car className="w-3 h-3" /> {linkLabels.vehiclesEyebrow}
+            </span>
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.vehiclesTitle}</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {crossSellVehicles.map((v) => (
+                <Link
+                  key={v.href}
+                  to={v.href}
+                  className="block p-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold/40 transition text-center"
+                >
+                  <strong className="block text-gray-900 dark:text-white text-sm">{v.label}</strong>
+                  {v.hint && <span className="text-xs text-gray-600 dark:text-white/50">{v.hint}</span>}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
