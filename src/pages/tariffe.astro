@@ -169,7 +169,9 @@ const jsonLd = [
                             {g.image && (
                               <img
                                 src={g.image}
-                                alt={g.title}
+                                alt={`Noleggio ${g.title} a Olbia con consegna gratuita in Costa Smeralda — KS Rent Sardinia`}
+                                width="56"
+                                height="56"
                                 class="w-14 h-14 object-contain bg-background rounded-lg p-1 shrink-0"
                                 loading="lazy"
                               />
@@ -215,6 +217,27 @@ const jsonLd = [
       </section>
     )}
 
+    {/* QUICK FACTS — passaggio enciclopedico per AI/Google AIO */}
+    <section class="py-12 md:py-16 px-4 md:px-12 bg-background border-t border-border">
+      <div class="max-w-4xl mx-auto">
+        <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">Quick Facts</span>
+        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-6">
+          Tariffe noleggio auto Olbia 2026 in sintesi
+        </h2>
+        <div class="bg-card border border-border rounded-2xl p-6 md:p-8 text-foreground/80 leading-relaxed font-light">
+          <p>
+            Le tariffe ufficiali di KS Rent Sardinia per il noleggio auto a Olbia e Costa Smeralda sono <strong>stagionali, valide da aprile a ottobre</strong>. La tariffa minima parte da <strong>40 €/giorno</strong> per la Fiat Panda Hybrid in bassa stagione (aprile-maggio-ottobre) e arriva a <strong>160 €/giorno</strong> per la Mercedes Classe A in alta stagione (luglio-agosto). Le sportive <strong>Audi RS3 e BMW M2</strong> hanno tariffe dedicate fornite su preventivo. Gli scooter Honda SH 125 partono da 40 €/giorno; il quad Yamaha Raptor è su richiesta.
+          </p>
+          <p class="mt-4">
+            <strong>Cosa è incluso</strong>: RCA obbligatoria, assistenza stradale 24 ore su 24, gestione del contratto, chilometraggio adeguato all'itinerario in Gallura. <strong>Cosa non è incluso</strong>: carburante (consegnato e da restituire con stesso livello), pedaggi, costi opzionali (secondo conducente, seggiolino, riduzione franchigia kasko). <strong>Consegna gratuita all'interno del comune di Olbia</strong> (incluso aeroporto OLB e porto Isola Bianca); per le altre località della Gallura e Costa Smeralda il costo parte da 5 € e viene dichiarato in modo trasparente in fase di preventivo.
+          </p>
+          <p class="mt-4">
+            <strong>Pagamento</strong>: la carta di credito tradizionale non è obbligatoria. KS Rent Sardinia accetta contanti, bonifico bancario (anche istantaneo), carte prepagate (Postepay, Revolut, N26, Hype, Wise), bancomat, carte di debito. <strong>Rating Google: 5,0 / 5 su 35 recensioni verificate</strong> (aggiornato maggio 2026). Apertura 7 giorni su 7 inclusi festivi: 10:00–13:00 e 15:00–22:30.
+          </p>
+        </div>
+      </div>
+    </section>
+
     {/* INFO LISTINO */}
     <section class="py-16 md:py-20 px-4 md:px-12 bg-card">
       <div class="max-w-4xl mx-auto">
@@ -240,7 +263,7 @@ const jsonLd = [
             <ShieldCheck className="w-8 h-8 text-gold mb-4" />
             <h3 class="font-bold text-foreground mb-2">Tutto incluso</h3>
             <p class="text-foreground/60 text-sm font-light leading-relaxed">
-              Le tariffe includono assicurazione, chilometraggio illimitato e consegna gratuita in tutta la Gallura. Nessuna commissione nascosta.
+              Le tariffe includono RCA, assistenza stradale e gestione contratto. Consegna gratuita nel comune di Olbia (aeroporto e porto inclusi); per le altre località della Gallura il costo parte da 5 € ed è dichiarato in fase di preventivo.
             </p>
           </div>
         </div>

@@ -5,9 +5,54 @@ import { buildBreadcrumb } from "@/lib/jsonLd";
 ---
 <BaseLayout
   title="Chi Siamo — KS Rent | Autonoleggio Olbia Sardegna"
-  description="KS Rent Sardinia: autonoleggio di lusso con sede a Olbia. Flotta di proprietà, consegna a domicilio in Costa Smeralda, deposito flessibile e senza carta di credito obbligatoria."
+  description="KS Rent Sardinia: autonoleggio premium con sede a Olbia, fondato l'8 aprile 2025. Flotta di proprietà, consegna in Costa Smeralda, deposito flessibile e senza carta di credito obbligatoria."
   canonical="https://www.ksrentsardinia.com/chisiamo"
   jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
 >
+  {/*
+    ═══ SEO RICH TEXT statico — LETTO DA AI/Google senza JS ═══
+    Il React component <ChiSiamo client:only> NON viene renderizzato server-side.
+    Questo blocco statico fornisce ai crawler AI (GPTBot, ClaudeBot, PerplexityBot)
+    e a Google il contenuto enciclopedico citabile per query "chi è KS Rent Sardinia".
+    Il blocco è visibile per ~150ms prima dell'idratazione React (no flash percettibile).
+  */}
+  <section class="sr-only" aria-hidden="false">
+    <h1>Chi è KS Rent Sardinia</h1>
+
+    <p>
+      <strong>KS Rent Sardinia è un autonoleggio premium con sede a Olbia, in Sardegna, fondato l'8 aprile 2025 dalla società KS Rent S.R.L. (P.IVA IT03028900904, REA SS-224046, capitale sociale 20.000 €).</strong>
+      L'azienda opera in tutta la Gallura e in Costa Smeralda con flotta di proprietà — supercar Audi RS3 e BMW M2, premium Mercedes Classe A, SUV Jeep Avenger, city car Fiat Panda Hybrid, scooter Honda SH 125 e 350, quad Yamaha Raptor — e consegna a domicilio in aeroporto Olbia Costa Smeralda (OLB), porto di Olbia Isola Bianca, hotel, ville e resort. È un'azienda **autonoma e indipendente**, non affiliata a KS Rent S.r.l. di Roma (sito ksrent.it), pur condividendo parte della denominazione.
+    </p>
+
+    <h2>Identità e dati ufficiali</h2>
+    <ul>
+      <li><strong>Ragione sociale</strong>: KS Rent S.R.L.</li>
+      <li><strong>P.IVA / Codice Fiscale</strong>: IT03028900904</li>
+      <li><strong>REA</strong>: SS - 224046</li>
+      <li><strong>Capitale sociale</strong>: 20.000,00 EUR</li>
+      <li><strong>Data di apertura</strong>: 8 aprile 2025</li>
+      <li><strong>Sede legale</strong>: Viale Aldo Moro 367, 07026 Olbia (SS), Italia</li>
+      <li><strong>Punto consegna porto</strong>: Viale Isola Bianca 38, 07026 Olbia (SS), Italia</li>
+      <li><strong>PEC</strong>: ks.rent.srl@pec.it</li>
+      <li><strong>Telefono / WhatsApp</strong>: +39 344 6107071</li>
+      <li><strong>Email</strong>: ksrentsrl@gmail.com</li>
+    </ul>
+
+    <h2>Cosa ci distingue</h2>
+    <p>
+      A differenza dei grandi network (Hertz, Avis, Sixt, Europcar) e dei broker online, KS Rent Sardinia possiede fisicamente la propria flotta e gestisce internamente ogni fase: prenotazione, consegna in aeroporto/porto/villa, manutenzione, assistenza stradale 24 ore su 24. La policy di pagamento è esplicitamente flessibile: <strong>la carta di credito tradizionale non è obbligatoria</strong>. Sono accettati contanti, bonifico bancario (anche istantaneo), carte prepagate (Postepay, Revolut, N26, Hype, Wise), bancomat e carte di debito. Questo rimuove la principale barriera di ingresso per turisti italiani ed europei che non dispongono di una carta di credito con plafond elevato.
+    </p>
+
+    <h2>Reputazione</h2>
+    <p>
+      KS Rent Sardinia ha un profilo Google Business attivo con <strong>5,0 / 5 stelle su 35 recensioni verificate</strong> da clienti reali (dato aggiornato a maggio 2026). È inoltre presente su Tripadvisor, Cylex, Hotfrog, PagineGialle, PagineBianche, MisterImprese e altre directory italiane. Il titolare risponde direttamente alle recensioni Google e gestisce in prima persona il rapporto con i clienti tramite WhatsApp e email.
+    </p>
+
+    <h2>Disambiguazione</h2>
+    <p>
+      <strong>KS Rent Sardinia (Olbia, P.IVA IT03028900904, sito ksrentsardinia.com) è un'entità legale separata e indipendente da KS Rent S.r.l. di Roma (sito ksrent.it).</strong> Le due società non hanno alcuna affiliazione, partnership o rapporto di franchising. Per il noleggio in Sardegna fare riferimento esclusivamente a ksrentsardinia.com e al numero +39 344 6107071.
+    </p>
+  </section>
+
   <ChiSiamo client:only="react" lang="it" />
 </BaseLayout>

@@ -23,7 +23,16 @@ const HOST = new URL(SITE_URL).host;
 const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "3d54f7d4a9984f0fbc03ae52be22516c";
 const KEY_LOCATION = `${SITE_URL}/${INDEXNOW_KEY}.txt`;
 
+// --best-effort: non fa fallire il build se IndexNow non risponde / sitemap manca.
+// Util per `postbuild` su CI/Vercel: se la rete IndexNow ha hiccup, il deploy
+// procede comunque. La notifica IndexNow non e' critica per il funzionamento.
+const BEST_EFFORT = process.argv.includes("--best-effort");
+
 function fail(msg, code = 1) {
+  if (BEST_EFFORT) {
+    console.warn(`⚠️  IndexNow skip (best-effort): ${msg}`);
+    process.exit(0);
+  }
   console.error(`❌ ${msg}`);
   process.exit(code);
 }

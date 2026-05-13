@@ -217,7 +217,7 @@ const faqs = [
             >
               <img
                 src={v.image}
-                alt={v.name}
+                alt={`Noleggio ${v.name} a Olbia — ${v.category} disponibile con KS Rent Sardinia`}
                 width="120"
                 height="80"
                 loading="lazy"
@@ -430,6 +430,14 @@ const faqs = [
         <p class="text-sm text-muted-foreground italic">
           Le tariffe indicate sono orientative e possono variare. Cosa è incluso: RCA obbligatoria, assistenza stradale, gestione contratto. Cosa non è incluso: carburante (consegnata e da restituire con stesso livello), pedaggi, costi opzionali (secondo conducente, seggiolini su richiesta, franchigia kasko ridotta).
         </p>
+
+        {/* QUICK FACTS — passaggio enciclopedico AI-citable */}
+        <aside class="mt-8 bg-primary/5 border border-primary/20 rounded-2xl p-6 md:p-8">
+          <p class="text-xs uppercase tracking-widest text-primary font-bold mb-3">Quick facts noleggio auto Olbia 2026</p>
+          <p class="text-foreground/80 leading-relaxed">
+            Tariffa minima <strong>40 €/giorno</strong> (Fiat Panda Hybrid bassa stagione). Tariffa massima <strong>160 €/giorno</strong> (Mercedes Classe A alta stagione). Sportive <strong>Audi RS3 e BMW M2</strong> su preventivo. Stagione attiva <strong>aprile–ottobre</strong>. <strong>Consegna gratuita a Olbia</strong> (aeroporto OLB e porto Isola Bianca inclusi); altre località Gallura da 5 €. Pagamento accettato anche <strong>senza carta di credito</strong>: contanti, prepagate (Postepay, Revolut, N26), bancomat, bonifico. Rating Google verificato: <strong>5,0 / 5 su 35 recensioni</strong>. Apertura 7 giorni su 7: 10:00–13:00 e 15:00–22:30. Chilometraggio incluso adeguato all'itinerario in Gallura.
+          </p>
+        </aside>
 
         <p class="mt-6 text-center">
           <a href="/tariffe" class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition">

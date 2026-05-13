@@ -59,6 +59,7 @@ export default defineConfig({
           url.endsWith("/flotta") ||
           url.endsWith("/tariffe") ||
           url.endsWith("/chisiamo") ||
+          url.endsWith("/noleggio-auto-olbia") ||
           url.includes("/noleggio-auto-aeroporto-olbia") ||
           url.includes("/noleggio-auto-porto-olbia") ||
           url.includes("/noleggio-auto-costa-smeralda") ||
