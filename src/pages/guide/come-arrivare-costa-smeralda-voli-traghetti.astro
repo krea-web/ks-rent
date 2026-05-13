@@ -1,0 +1,296 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("come-arrivare-costa-smeralda-voli-traghetti")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Place",
+    name: "Costa Smeralda",
+    containedInPlace: { "@type": "AdministrativeArea", name: "Sardegna" },
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Come arrivare Costa Smeralda", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Per arrivare in Costa Smeralda esistono tre vie principali: aereo (Olbia o alternative), traghetto (porto Olbia o alternative), o un mix dei due</strong>. Ogni opzione ha tempi, costi e flessibilità diversi. Questa guida riassume le alternative reali nel 2026, con i costi indicativi (in alta e bassa stagione) e i casi in cui ciascuna opzione conviene di più. La maggior parte dei turisti italiani usa il traghetto da Civitavecchia o Genova; europei e USA quasi sempre l'aereo a Olbia. Ma per chi viene da Roma, dipende dal periodo: in luglio i voli low-cost spesso costano di più della cabina in nave.
+    </p>
+
+    <h2>Aereo: aeroporto di Olbia Costa Smeralda (OLB)</h2>
+
+    <p>
+      <strong>Codice IATA: OLB</strong>. Gestito da Geasar. È l'aeroporto principale e quello geograficamente più vicino alla Costa Smeralda (32 km da Porto Cervo). Il traffico è altamente stagionale: in luglio-agosto arrivano oltre 50 voli/giorno; in inverno scende a 5-10/giorno.
+    </p>
+
+    <h3>Compagnie e rotte 2026</h3>
+
+    <ul>
+      <li><strong>Easyjet</strong>: Roma, Milano Malpensa, Londra Gatwick, Berlino, Ginevra, Parigi, Manchester, Amsterdam</li>
+      <li><strong>Ryanair</strong>: Milano Bergamo, Bologna, Pisa, Treviso, Vienna, Budapest, Praga</li>
+      <li><strong>ITA Airways</strong>: Roma Fiumicino (giornaliero), Milano Linate</li>
+      <li><strong>Lufthansa</strong>: Monaco, Francoforte (estivi)</li>
+      <li><strong>Air France</strong>: Parigi CDG (estivi)</li>
+      <li><strong>Volotea</strong>: voli nazionali (Verona, Napoli, Bari, Catania)</li>
+      <li><strong>Vueling</strong>: Barcellona</li>
+      <li><strong>Eurowings</strong>: Düsseldorf, Stoccarda</li>
+      <li><strong>British Airways</strong>: Londra Heathrow (estivi)</li>
+    </ul>
+
+    <h3>Costi voli OLB 2026</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tratta</th>
+          <th>Bassa stagione (apr-mag-ott)</th>
+          <th>Alta stagione (lug-ago)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Roma → Olbia (a/r)</td>
+          <td>50-130 €</td>
+          <td>150-350 €</td>
+        </tr>
+        <tr>
+          <td>Milano → Olbia (a/r)</td>
+          <td>60-150 €</td>
+          <td>180-400 €</td>
+        </tr>
+        <tr>
+          <td>Londra → Olbia (a/r)</td>
+          <td>80-200 €</td>
+          <td>250-600 €</td>
+        </tr>
+        <tr>
+          <td>Parigi → Olbia (a/r)</td>
+          <td>100-220 €</td>
+          <td>250-550 €</td>
+        </tr>
+        <tr>
+          <td>Berlino/Monaco → Olbia (a/r)</td>
+          <td>120-250 €</td>
+          <td>300-650 €</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Tip prenotazione</strong>: per luglio-agosto prenota entro febbraio per avere prezzi accettabili. Da maggio i prezzi schizzano. Per bassa stagione (maggio o ottobre) si trovano tariffe ottime anche prenotando 4-6 settimane prima.
+    </p>
+
+    <h2>Aereo: aeroporti alternativi in Sardegna</h2>
+
+    <p>
+      Se i voli a Olbia sono pieni o troppo cari, valuta:
+    </p>
+
+    <ul>
+      <li><strong>Alghero (AHO)</strong>: 230 km da Porto Cervo (~3h auto). Più economico ma trasferimento lungo</li>
+      <li><strong>Cagliari (CAG)</strong>: 290 km da Porto Cervo (~3h30min auto). Hub più grande, voli più frequenti</li>
+    </ul>
+
+    <p>
+      Volare a Cagliari/Alghero conviene solo se il risparmio supera i 100-150 € di carburante + 3-4 ore di guida. Per chi ha solo 5-7 giorni di vacanza, il tempo perso è significativo.
+    </p>
+
+    <h2>Traghetto: porto Olbia Isola Bianca</h2>
+
+    <p>
+      <strong>Il porto principale è Olbia Isola Bianca</strong>, situato a 6 km dal centro città e a 30-50 minuti dalla Costa Smeralda. È il porto preferito dai turisti italiani che vengono dal continente in auto.
+    </p>
+
+    <h3>Compagnie e rotte 2026</h3>
+
+    <ul>
+      <li><strong>Moby</strong>: Genova, Livorno, Civitavecchia, Piombino</li>
+      <li><strong>Tirrenia</strong> (gruppo Onorato): Genova, Civitavecchia, Napoli</li>
+      <li><strong>Grimaldi Lines</strong>: Civitavecchia, Livorno, Barcellona, Tunisi</li>
+      <li><strong>Corsica Ferries</strong> (Sardinia Ferries): Livorno, Tolone, Nizza</li>
+      <li><strong>GNV (Grandi Navi Veloci)</strong>: Genova, Civitavecchia, Barcellona</li>
+    </ul>
+
+    <h3>Costi traghetti 2026</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tratta</th>
+          <th>Tempo</th>
+          <th>Costo auto + 2 persone (a/r) bassa st.</th>
+          <th>Alta st. (lug-ago)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Civitavecchia → Olbia</td>
+          <td>5-7 ore</td>
+          <td>150-280 €</td>
+          <td>350-650 €</td>
+        </tr>
+        <tr>
+          <td>Genova → Olbia</td>
+          <td>10-12 ore (notturno)</td>
+          <td>200-380 €</td>
+          <td>500-900 €</td>
+        </tr>
+        <tr>
+          <td>Livorno → Olbia</td>
+          <td>8-10 ore</td>
+          <td>180-350 €</td>
+          <td>450-800 €</td>
+        </tr>
+        <tr>
+          <td>Tolone → Porto Torres (poi 2h auto)</td>
+          <td>10 ore (notturno)</td>
+          <td>250-450 €</td>
+          <td>550-950 €</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Cabina vs poltrona</strong>: per le tratte notturne (Genova-Olbia, Tolone-Porto Torres), prenota sempre la cabina (+50-150 €). Le poltrone sono scomode per dormire e i pacchetti famiglia (4 persone in cabina) sono spesso più convenienti del totale di 4 poltrone.
+    </p>
+
+    <h2>Aereo + auto noleggiata vs traghetto + auto propria</h2>
+
+    <p>
+      Confronto pratico per una <strong>famiglia di 4 da Roma in alta stagione</strong>, 7 giorni in Costa Smeralda:
+    </p>
+
+    <h3>Opzione A — aereo + auto a noleggio</h3>
+
+    <ul>
+      <li>Voli Roma-Olbia a/r 4 persone: 600-1.000 €</li>
+      <li>Noleggio auto SUV 7 giorni: 700-1.000 €</li>
+      <li>Carburante: 80-120 €</li>
+      <li><strong>Totale: 1.380-2.120 €</strong></li>
+      <li><strong>Pro</strong>: più veloce (1h volo + 30 min Olbia → Porto Cervo); flessibilità sull'auto (sportiva un giorno, SUV l'altro); zero usura tua auto</li>
+    </ul>
+
+    <h3>Opzione B — traghetto Civitavecchia + tua auto</h3>
+
+    <ul>
+      <li>Civitavecchia-Olbia a/r 4 persone + auto + cabina: 500-900 €</li>
+      <li>Carburante (Roma → Civitavecchia + Sardegna + ritorno): 150-200 €</li>
+      <li>Pedaggi autostradali: 30-50 €</li>
+      <li><strong>Totale: 680-1.150 €</strong></li>
+      <li><strong>Pro</strong>: hai la tua auto, puoi portare bagaglio illimitato + bici/SUP; più economico</li>
+      <li><strong>Contro</strong>: 5-7 ore di nave + 2 ore Roma-Civitavecchia; usura auto; manutenzione</li>
+    </ul>
+
+    <p>
+      <strong>Per chi viene da Milano o Nord Italia</strong>: il traghetto da Genova è quasi sempre più conveniente del volo + noleggio. Per chi viene da <strong>Roma o Sud</strong>, il volo è più rapido ma in alta stagione i prezzi convergono.
+    </p>
+
+    <h2>Distanze dal punto di arrivo alla Costa Smeralda</h2>
+
+    <p>
+      Tempi indicativi in bassa stagione (raddoppia in alta):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Da</th>
+          <th>A Porto Cervo</th>
+          <th>A Baja Sardinia</th>
+          <th>A San Teodoro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Aeroporto Olbia OLB</td>
+          <td>32 km / 35 min</td>
+          <td>38 km / 45 min</td>
+          <td>30 km / 30 min</td>
+        </tr>
+        <tr>
+          <td>Porto Olbia Isola Bianca</td>
+          <td>33 km / 40 min</td>
+          <td>40 km / 50 min</td>
+          <td>32 km / 35 min</td>
+        </tr>
+        <tr>
+          <td>Aeroporto Cagliari CAG</td>
+          <td>290 km / 3h30min</td>
+          <td>295 km / 3h35min</td>
+          <td>250 km / 3h</td>
+        </tr>
+        <tr>
+          <td>Aeroporto Alghero AHO</td>
+          <td>230 km / 3h</td>
+          <td>225 km / 2h55min</td>
+          <td>240 km / 3h05min</td>
+        </tr>
+        <tr>
+          <td>Porto Torres</td>
+          <td>140 km / 1h50min</td>
+          <td>135 km / 1h45min</td>
+          <td>150 km / 2h</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Mix consigliato: aereo + auto noleggiata in aeroporto</h2>
+
+    <p>
+      Per la maggior parte dei turisti che vanno in Costa Smeralda <strong>la combinazione vincente è: volo a Olbia OLB + auto a noleggio in aeroporto</strong> (consegnata direttamente agli arrivi, senza file ai banchi). Questa è esattamente l'esperienza che KS Rent Sardinia offre — vedi la nostra <a href="/guide/noleggio-auto-olbia-aeroporto-guida-pratica">guida noleggio auto aeroporto Olbia</a>. Tempo dal touchdown al volante: 10 minuti. Pagamento flessibile anche senza carta di credito.
+    </p>
+
+    <h2>Per chi arriva in nave: ritiro al porto Isola Bianca</h2>
+
+    <p>
+      Se invece arrivi via traghetto al porto Olbia Isola Bianca, hai due opzioni:
+    </p>
+
+    <ol>
+      <li><strong>Auto tua dalla nave</strong>: scendi e parti</li>
+      <li><strong>Sei venuto come passeggero senza auto, e noleggi una volta sbarcato</strong>: questa è la nostra specialità. Sede operativa KS Rent Sardinia in Viale Isola Bianca 38, esattamente al porto. Ti aspettiamo allo sbarco con il veicolo già pronto. Vedi la <a href="/noleggio-auto-porto-olbia">pagina noleggio auto porto Olbia</a></li>
+    </ol>
+
+    <h2>Tip per minimizzare i tempi morti</h2>
+
+    <ul>
+      <li>Prenota l'auto online con anticipo, non al banco aeroportuale</li>
+      <li>Comunica orario e numero del volo per consegna coordinata</li>
+      <li>Per traghetti notturni, sbarchi alle 6:30-7:00 — ottimo per arrivare in spiaggia per le 9:00</li>
+      <li>In alta stagione, evita di prendere il volo Roma-Olbia delle 19:00-21:00: rischi traffico per arrivare in Costa Smeralda dopo cena</li>
+      <li>Dal porto Isola Bianca a Porto Cervo serve 1 ora in alta stagione (sabato sera/domenica mattina sono i picchi)</li>
+    </ul>
+
+    <p>
+      Dopo aver pianificato il viaggio, leggi il nostro <a href="/guide/itinerario-7-giorni-costa-smeralda-da-olbia">itinerario di 7 giorni in Costa Smeralda</a> per organizzare i giorni in destinazione. Per coordinare consegna del veicolo all'orario esatto del volo o del traghetto, contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

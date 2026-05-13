@@ -1,0 +1,256 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("spiagge-nascoste-gallura-sterrati")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: [
+    { "@type": "Thing", name: "Spiagge nascoste Sardegna" },
+    { "@type": "AdministrativeArea", name: "Gallura" },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Spiagge nascoste Gallura", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>La Gallura ha decine di spiagge nascoste raggiungibili solo via sterrato, sentiero o barca</strong> — calette di sabbia bianca con acqua trasparente che restano semivuote anche in agosto, mentre a 5 km di distanza La Cinta o Spiaggia del Principe sono affollate. Sono le mete preferite di chi vuole un'esperienza meno "cartolina" e più autentica della Sardegna nord-orientale. Questa guida elenca 8 spiagge nascoste della Gallura — coordinate GPS, accesso, parcheggi, raccomandazioni sul veicolo. Sono ordinate per <strong>difficoltà di accesso crescente</strong>: dalle prime adatte a chiunque alle ultime per cui serve davvero un SUV/4x4 o un trekking serio.
+    </p>
+
+    <h2>Premesse importanti</h2>
+
+    <ul>
+      <li><strong>Rispetta i luoghi</strong>: porta via tutta l'immondizia, non lasciare segni, non raccogliere sabbia o conchiglie (è reato in Sardegna)</li>
+      <li><strong>Verifica accesso prima di partire</strong>: alcune di queste spiagge hanno limitazioni stagionali o di accesso veicoli</li>
+      <li><strong>Veicolo</strong>: per molte di queste serve almeno un SUV compatto. Una <a href="/flotta/jeep-avenger">Jeep Avenger</a> con 18 cm di altezza da terra e DCT automatico copre il 95% dei casi</li>
+      <li><strong>Acqua</strong>: niente kiosk, niente bar. Porta acqua, snack, ombrello</li>
+      <li><strong>Cellulare</strong>: in alcune zone non c'è segnale. Scarica le mappe offline (Google Maps o Maps.me)</li>
+    </ul>
+
+    <h2>1. Cala Brandinchi est (zona libera) — San Teodoro</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: bassa · <strong>Veicolo</strong>: qualsiasi · <strong>Distanza Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      Tutti vanno alla Cala Brandinchi "ufficiale" (con prenotazione obbligatoria in alta stagione). Pochi sanno che il <strong>lato est</strong>, sotto promontorio, è una zona libera senza necessità di prenotazione. Sentiero di 5 minuti dal parcheggio gratuito sulla strada secondaria. <strong>Acqua trasparente identica</strong> a quella del lato "ufficiale", senza contingentamento.
+    </p>
+
+    <h2>2. Spiaggia di Suaraccia — Capo Coda Cavallo</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: media · <strong>Veicolo</strong>: SUV consigliato · <strong>Distanza Olbia</strong>: 35 min + 10 min sterrato
+    </p>
+
+    <p>
+      Da San Teodoro, prendi la strada per Capo Coda Cavallo. Negli ultimi 2 km la strada diventa sterrato compatto ma con buche. <strong>Cala Suaraccia</strong> appare dopo l'ultima curva: cala intima, sabbia bianca, acqua turchese, snorkeling tra i pesci. Parcheggio sterrato (~30 posti). Si vede l'Isola di Tavolara dirimpetto.
+    </p>
+
+    <h2>3. Cala Greca — Loiri Porto San Paolo</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: media · <strong>Veicolo</strong>: city car ok · <strong>Distanza Olbia</strong>: 25 min + 5 min a piedi
+    </p>
+
+    <p>
+      Vicino a <a href="/noleggio-auto-porto-san-paolo">Porto San Paolo</a>, prendi il sentiero che parte dal parcheggio di Punta Don Diego. Cammina 5 minuti su sentiero panoramico. <strong>Cala Greca</strong> è una piccola insenatura di sabbia bianca tra rocce di granito. Acqua bassa per 30 metri, snorkeling eccellente. Niente servizi.
+    </p>
+
+    <h2>4. Spiaggia di Porto Quadro — Santa Teresa di Gallura</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: media · <strong>Veicolo</strong>: qualsiasi · <strong>Distanza Olbia</strong>: 1h
+    </p>
+
+    <p>
+      A 5 km da Santa Teresa di Gallura (estremo nord della Sardegna), <strong>Porto Quadro</strong> è una spiaggia di sabbia chiarissima incorniciata da scogli granitici. Vista sulla Corsica all'orizzonte. Parcheggio gratuito a 200 m. Pochi turisti perché in zona è "fuori rotta" rispetto a Costa Smeralda. <strong>Tip</strong>: combina con visita a Capo Testa (10 min in auto), promontorio spettacolare con il faro.
+    </p>
+
+    <h2>5. La Marmorata — Santa Teresa di Gallura</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: bassa · <strong>Veicolo</strong>: qualsiasi · <strong>Distanza Olbia</strong>: 1h05min
+    </p>
+
+    <p>
+      Spiaggia di sabbia bianca finissima divisa in due da un piccolo promontorio. Acqua azzurrissima, fondale basso. Parcheggio gratuito sulla strada. <strong>Conosciuta dai locali ma poco dai turisti italiani</strong> della Costa Smeralda perché è "lontana". Stabilimento "La Marmorata Beach" con noleggio lettini.
+    </p>
+
+    <h2>6. Cala Lunga — Palau (zona promontorio)</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: media · <strong>Veicolo</strong>: qualsiasi + 15 min a piedi · <strong>Distanza Olbia</strong>: 50 min
+    </p>
+
+    <p>
+      Da <a href="/noleggio-auto-palau">Palau</a>, prendi la strada per Capo D'Orso. Parcheggio panoramico, da lì sentiero in discesa di 15 minuti tra le rocce di granito modellate dal vento. <strong>Cala Lunga</strong> è una spiaggia stretta e lunga (come dice il nome) di sabbia chiara tra le scogliere. Vista sull'arcipelago di La Maddalena. Niente servizi, porta tutto. <strong>Tip</strong>: combina con visita a "Roccia dell'Orso" (la roccia naturale a forma di orso, 10 min a piedi dal parcheggio).
+    </p>
+
+    <h2>7. Spiaggia del Relitto — Caprera (richiede traghetto + auto/bici)</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: alta (logistica) · <strong>Veicolo</strong>: serve auto sull'isola o bici · <strong>Distanza Olbia</strong>: 50 min + 15 min traghetto + 30 min Caprera
+    </p>
+
+    <p>
+      Una delle spiagge più belle di tutta la Sardegna. Per arrivarci: traghetto da Palau a La Maddalena, attraversi La Maddalena fino al ponte per Caprera, segui le indicazioni per Cala Coticcio o Spiaggia del Relitto. <strong>L'accesso è regolamentato</strong>: in alta stagione serve guida ambientale obbligatoria + prenotazione (~25 €/persona) per Cala Coticcio. Spiaggia del Relitto invece è libera ma serve raggiungerla a piedi (45 min sentiero). <strong>Acqua color smeraldo, sabbia bianchissima</strong>. Vale il viaggio.
+    </p>
+
+    <h2>8. Cala dei Ginepri — Costa Smeralda nord</h2>
+
+    <p>
+      <strong>Difficoltà</strong>: alta · <strong>Veicolo</strong>: SUV o 4x4 indispensabile · <strong>Distanza Olbia</strong>: 45 min + 20 min sterrato impegnativo
+    </p>
+
+    <p>
+      Tra Liscia di Vacca e Pantogia, parte una strada sterrata privata (libera per non residenti fuori stagione) che porta a una serie di cale poco conosciute, tra cui <strong>Cala dei Ginepri</strong>. Sterrato con buche, sassi, alcune salite ripide. <strong>Indispensabile SUV</strong> con buona altezza da terra. Auto basse rischiano di rompere coppa olio. Una volta arrivato, sei in una caletta di sabbia bianca circondata da ginepri secolari. Acqua trasparente, niente folla mai. <strong>Disclaimer</strong>: percorso reale a tuo rischio, conosci i tuoi limiti.
+    </p>
+
+    <h2>Veicoli consigliati per chi cerca spiagge nascoste</h2>
+
+    <p>
+      Per le spiagge della Gallura accessibili da sterrato, i veicoli del nostro parco più adatti:
+    </p>
+
+    <ul>
+      <li><strong><a href="/flotta/jeep-avenger">Jeep Avenger</a></strong>: il SUV compatto perfetto per il 95% degli sterrati di Gallura. 18 cm da terra, cambio automatico DCT, posizione di guida rialzata. Tariffa 60-110 €/giorno</li>
+      <li><strong><a href="/flotta/yamaha-quad-raptor">Yamaha Raptor Quad</a></strong>: per chi vuole esplorare sterrati profondi senza preoccuparsi dell'auto. Si guida con patente B, casco incluso. Tariffa su preventivo</li>
+    </ul>
+
+    <p>
+      <strong>Vetture che NON sono adatte agli sterrati impegnativi</strong> (rischio danni a coppa olio, paraurti, cerchi):
+    </p>
+    <ul>
+      <li>Audi RS3 (assetto ribassato sportivo)</li>
+      <li>BMW M2 (assetto ribassato sportivo)</li>
+      <li>Mercedes Classe A (assetto medio, ok per sterrati lievi tipo Suaraccia ma NO per Cala dei Ginepri)</li>
+      <li>Fiat Panda Hybrid (city car, può fare sterrati lievi compatti)</li>
+    </ul>
+
+    <p>
+      Per chi vuole supercar + sterrati: <strong>noleggia 2 mezzi</strong> (un giorno Audi RS3 per la Costa Smeralda glam + altri giorni Jeep Avenger per le spiagge nascoste). KS Rent Sardinia offre noleggi multi-veicolo coordinati. Contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+
+    <h2>Tabella rapida</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Spiaggia</th>
+          <th>Da Olbia</th>
+          <th>Veicolo</th>
+          <th>Difficoltà</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cala Brandinchi est libera</td>
+          <td>35 min</td>
+          <td>Qualsiasi</td>
+          <td>Bassa</td>
+        </tr>
+        <tr>
+          <td>Suaraccia (Capo Coda Cavallo)</td>
+          <td>45 min</td>
+          <td>SUV consigliato</td>
+          <td>Media</td>
+        </tr>
+        <tr>
+          <td>Cala Greca (Porto San Paolo)</td>
+          <td>30 min</td>
+          <td>Qualsiasi</td>
+          <td>Media</td>
+        </tr>
+        <tr>
+          <td>Porto Quadro (Santa Teresa)</td>
+          <td>1h</td>
+          <td>Qualsiasi</td>
+          <td>Bassa</td>
+        </tr>
+        <tr>
+          <td>La Marmorata (Santa Teresa)</td>
+          <td>1h05</td>
+          <td>Qualsiasi</td>
+          <td>Bassa</td>
+        </tr>
+        <tr>
+          <td>Cala Lunga (Palau)</td>
+          <td>1h05</td>
+          <td>Qualsiasi + 15 min piedi</td>
+          <td>Media</td>
+        </tr>
+        <tr>
+          <td>Spiaggia del Relitto (Caprera)</td>
+          <td>~3h totali</td>
+          <td>+traghetto + 45 min sentiero</td>
+          <td>Alta logistica</td>
+        </tr>
+        <tr>
+          <td>Cala dei Ginepri (Costa Smeralda)</td>
+          <td>1h05</td>
+          <td>SUV obbligatorio</td>
+          <td>Alta</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Equipaggiamento minimo</h2>
+
+    <ul>
+      <li>Acqua (almeno 2 L/persona)</li>
+      <li>Crema solare 50+ resistente all'acqua</li>
+      <li>Cappellino e occhiali da sole</li>
+      <li>Calzari di gomma (per scogli e sentieri)</li>
+      <li>Snack sostanziosi</li>
+      <li>Sacchetto per l'immondizia</li>
+      <li>Maschera + boccaglio per snorkeling</li>
+      <li>Per sterrati impegnativi: ruota di scorta gonfia, kit pneumatici, segnale stradale di emergenza</li>
+    </ul>
+
+    <h2>Etica del turismo "fuori rotta"</h2>
+
+    <p>
+      Quando vai in queste spiagge, sei un ospite. Comportati di conseguenza:
+    </p>
+
+    <ol>
+      <li>Non parcheggiare sui prati o sulle dune</li>
+      <li>Non accendere fuochi mai (la Sardegna ha regole strette anti-incendio)</li>
+      <li>Non disturbare la fauna locale (gabbiani, geco-tarantole, ragni-lupo)</li>
+      <li>Porta via TUTTA l'immondizia, anche bucce di banana e cartine sigarette</li>
+      <li>Rispetta privacy dei pochi che incontri (non scattare foto di sconosciuti)</li>
+    </ol>
+
+    <p>
+      Per spiagge family-friendly e più accessibili, vedi la nostra guida alle <a href="/guide/spiagge-costa-smeralda-con-bambini">spiagge della Costa Smeralda con bambini</a>. Per organizzare il noleggio di un SUV adatto agli sterrati, contatta Francesco e Salvatore Milo: <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a> o vai direttamente a <a href="/prenotaora">prenota online</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

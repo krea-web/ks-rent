@@ -1,0 +1,271 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("yacht-charter-vs-auto-noleggio-costa-smeralda")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Thing",
+    name: "Yacht charter vs auto noleggio",
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Yacht vs auto noleggio", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Per una vacanza in Costa Smeralda esistono due "logiche" diverse: si vive sull'acqua (yacht charter) o si vive sulla terra (auto a noleggio + hotel/villa)</strong>. La scelta non è sempre netta — molti combinano un giorno di charter giornaliero con base a terra. Ma il punto di partenza determina tutto: budget, esperienza, flessibilità, fatica logistica. In questo articolo mettiamo a confronto i due approcci con costi reali 2026, basati sull'esperienza di Francesco e Salvatore Milo che ogni anno servono entrambi i profili (yachters in transito che noleggiano auto a terra, e clienti hotel che si concedono 1 giorno di barca).
+    </p>
+
+    <h2>Cosa intendiamo per yacht charter</h2>
+
+    <p>
+      Il "yacht charter" può significare cose molto diverse:
+    </p>
+
+    <ul>
+      <li><strong>Day boat (gozzo o piccolo motoscafo)</strong>: 6-12 metri, 4-8 persone, noleggio giornaliero, parti la mattina e torni la sera in porto. Costo 300-1.500 €/giorno</li>
+      <li><strong>Skippered yacht</strong>: 12-20 metri, con skipper professionista, dormi a bordo (tipicamente settimana). Costo 8.000-30.000 €/settimana</li>
+      <li><strong>Crewed luxury yacht</strong>: 24+ metri, equipaggio completo (skipper, hostess, chef, marinaio), settimana intera. Costo 50.000-500.000 €/settimana</li>
+      <li><strong>Super-yacht</strong>: 40+ metri, equipaggio numeroso, vita di lusso totale. 200.000-2.000.000 €/settimana</li>
+    </ul>
+
+    <p>
+      Per il confronto pratico in questa guida assumeremo lo scenario <strong>più tipico</strong>: una coppia o piccolo gruppo che valuta tra un day boat (1-3 giorni) o uno skippered yacht 12-15m (settimana intera) <strong>vs</strong> auto a noleggio 7 giorni con hotel/villa a terra.
+    </p>
+
+    <h2>Confronto costi: 7 giorni in Costa Smeralda</h2>
+
+    <h3>Opzione A — Auto a noleggio + Hotel 4 stelle (coppia)</h3>
+
+    <ul>
+      <li>Voli a/r 2 persone: 200-400 €</li>
+      <li>Auto Mercedes Classe A 7 giorni: 650-900 €</li>
+      <li>Carburante + parcheggi: 150-200 €</li>
+      <li>Hotel 4 stelle 7 notti mezzo pensione: 1.500-2.800 €</li>
+      <li>Pranzi fuori + extra: 400-700 €</li>
+      <li>Spiagge stabilimento + escursioni: 200-500 €</li>
+      <li><strong>TOTALE</strong>: <strong>3.100 - 5.500 €</strong> per coppia</li>
+    </ul>
+
+    <h3>Opzione B — Skippered yacht 14m con cabina cuoco (coppia)</h3>
+
+    <ul>
+      <li>Voli a/r 2 persone: 200-400 €</li>
+      <li>Charter yacht 14m + skipper, 7 notti: 12.000-18.000 €</li>
+      <li>Carburante barca (a parte): 1.500-3.500 €</li>
+      <li>Provviste a bordo (chef o spesa): 1.500-3.000 €</li>
+      <li>Tasse porto / ormeggi: 1.000-3.000 €</li>
+      <li>Cene fuori (occasionali a terra): 300-600 €</li>
+      <li><strong>TOTALE</strong>: <strong>16.500 - 28.500 €</strong> per coppia</li>
+    </ul>
+
+    <p>
+      <strong>La barca costa 5-6x rispetto all'auto + hotel</strong>. Ma l'esperienza è completamente diversa. Vediamo quando ciascuna opzione conviene.
+    </p>
+
+    <h2>Pro e contro yacht charter</h2>
+
+    <h3>Vantaggi del charter</h3>
+
+    <ul>
+      <li><strong>Spiagge raggiungibili solo da mare</strong> (Spiaggia Rosa di Budelli, alcune cale di Caprera, Cala Granara, ecc.) che non vedrai mai da terra</li>
+      <li><strong>Privacy assoluta</strong>: ancori dove vuoi, niente folla, niente parcheggi</li>
+      <li><strong>Esperienza unica</strong>: dormire ancorati in una baia con stelle e silenzio</li>
+      <li><strong>Logistica zero</strong>: niente check-in hotel, niente chiavi, niente spostamenti auto</li>
+      <li><strong>Status / esperienza luxury</strong> innegabile</li>
+    </ul>
+
+    <h3>Svantaggi del charter</h3>
+
+    <ul>
+      <li><strong>Costo</strong>: 5-10x rispetto a hotel + auto</li>
+      <li><strong>Spazio limitato</strong>: una coppia su 14m ha 30-40 m² totali, niente shopping eccessivo, valigie limitate</li>
+      <li><strong>Mal di mare</strong>: anche con skipper esperto, il vento e onde possono rovinare la giornata</li>
+      <li><strong>Dipendenza dal meteo</strong>: con vento >25 nodi resti in porto. In luglio-agosto frequente</li>
+      <li><strong>Niente vita "sociale" notturna</strong>: a 23:00 sei in cabina, non ai locali</li>
+      <li><strong>Risorse limitate</strong>: acqua dolce ridotta (docce brevi), elettricità a generatore, internet limitato</li>
+      <li><strong>Pranzi a bordo</strong>: la prima settimana è romantico, dopo qualche giorno mancano i ristoranti</li>
+    </ul>
+
+    <h2>Pro e contro auto a noleggio + hotel</h2>
+
+    <h3>Vantaggi auto + hotel</h3>
+
+    <ul>
+      <li><strong>Costo accessibile</strong>: budget 1/5 rispetto al charter</li>
+      <li><strong>Vita "completa"</strong>: ristoranti, locali, eventi, shopping, vita notturna</li>
+      <li><strong>Comfort</strong>: hotel con piscina, spa, aria condizionata, doccia abbondante</li>
+      <li><strong>Flessibilità</strong>: cambio piano in 1 ora, vai dove vuoi</li>
+      <li><strong>Indipendente dal meteo del mare</strong> (quasi)</li>
+      <li><strong>Famiglie con bambini</strong>: molto più gestibile</li>
+    </ul>
+
+    <h3>Svantaggi auto + hotel</h3>
+
+    <ul>
+      <li><strong>Spiagge "pubbliche"</strong>: niente accesso a Budelli, Cala Granara via mare</li>
+      <li><strong>Parcheggi e traffico</strong>: in alta stagione, ore perse</li>
+      <li><strong>Folla</strong>: La Cinta o Capriccioli a luglio sono affollate</li>
+      <li><strong>Logistica</strong>: check-in/out, organizzare giornate, prenotare ristoranti</li>
+    </ul>
+
+    <h2>Quando conviene il charter</h2>
+
+    <p>
+      Lo yacht charter è la scelta giusta se:
+    </p>
+
+    <ul>
+      <li>Sei <strong>appassionato di mare</strong>, navigazione, snorkeling, pesca</li>
+      <li>Vuoi <strong>privacy assoluta</strong> e fuga dal turismo di massa</li>
+      <li>Hai <strong>budget &gt; 15.000 € a coppia</strong> per la settimana</li>
+      <li>Vuoi <strong>esperienza una volta nella vita</strong> (anniversario, occasione speciale)</li>
+      <li>Sei in coppia o piccolo gruppo (2-4 persone), no bambini sotto 8 anni</li>
+      <li>Vuoi visitare l'<strong>Arcipelago di La Maddalena in profondità</strong> (Spargi, Razzoli, Budelli)</li>
+    </ul>
+
+    <h2>Quando conviene l'auto a noleggio</h2>
+
+    <p>
+      L'auto a noleggio + hotel/villa è la scelta giusta se:
+    </p>
+
+    <ul>
+      <li>Vuoi <strong>esperienza Costa Smeralda completa</strong> (terra + qualche bagno mare)</li>
+      <li>Sei una <strong>famiglia con bambini</strong> (più sicuro, più comodo, più flessibile)</li>
+      <li>Hai <strong>budget &lt; 10.000 € a settimana</strong></li>
+      <li>Ami <strong>ristoranti, locali, vita sociale</strong></li>
+      <li>Vuoi <strong>esplorare anche Gallura interna</strong> (San Pantaleo, Tempio, vigne)</li>
+      <li>Hai esigenze specifiche (allergie alimentari, pet, anziani)</li>
+    </ul>
+
+    <h2>La soluzione mista: la migliore per la maggior parte</h2>
+
+    <p>
+      Per chi vuole il meglio dei due mondi, la <strong>combinazione vincente</strong> è:
+    </p>
+
+    <ul>
+      <li><strong>Auto a noleggio per 7 giorni</strong> (base in hotel/villa)</li>
+      <li><strong>+ 1 giornata di day boat charter</strong> (300-1.500 €) per visitare l'Arcipelago di La Maddalena via mare</li>
+    </ul>
+
+    <p>
+      Questo ti dà accesso a Spiaggia Rosa, Spargi, Budelli (irraggiungibili da terra) ma mantieni la flessibilità e il comfort. Costo aggiuntivo: 300-1.500 €. <strong>Esperienza guadagnata: enorme</strong>.
+    </p>
+
+    <h2>Combinare i due: yachters che noleggiano auto a terra</h2>
+
+    <p>
+      Una situazione comune: <strong>chi arriva in Costa Smeralda col proprio yacht</strong> (ormeggio a Porto Cervo, Porto Rotondo, Cannigione, Palau) <strong>noleggia comunque un'auto per visitare l'entroterra, fare la spesa, andare a ristoranti specifici a terra</strong>. KS Rent Sardinia consegna direttamente al porto dove sei ormeggiato. Per yachters questa è la soluzione standard. Vedi la nostra <a href="/noleggio-auto-porto-olbia">pagina noleggio porto Olbia</a> per la sede operativa principale al porto.
+    </p>
+
+    <h2>Tabella riassuntiva</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Aspetto</th>
+          <th>Yacht charter</th>
+          <th>Auto + hotel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Budget settimana coppia</td>
+          <td>16.500-28.500 €</td>
+          <td>3.100-5.500 €</td>
+        </tr>
+        <tr>
+          <td>Esperienza unicità</td>
+          <td>Alta</td>
+          <td>Media</td>
+        </tr>
+        <tr>
+          <td>Flessibilità giornaliera</td>
+          <td>Bassa (vincolata meteo)</td>
+          <td>Alta</td>
+        </tr>
+        <tr>
+          <td>Accesso spiagge nascoste</td>
+          <td>Massimo (Budelli, Caprera profondo)</td>
+          <td>Buono via auto + sentieri</td>
+        </tr>
+        <tr>
+          <td>Comfort</td>
+          <td>Limitato (spazi ridotti)</td>
+          <td>Pieno</td>
+        </tr>
+        <tr>
+          <td>Adatto a famiglie con bimbi</td>
+          <td>No (sotto 8 anni)</td>
+          <td>Si</td>
+        </tr>
+        <tr>
+          <td>Vita sociale e ristoranti</td>
+          <td>Limitata</td>
+          <td>Piena</td>
+        </tr>
+        <tr>
+          <td>Esplorazione entroterra</td>
+          <td>No</td>
+          <td>Si (San Pantaleo, Tempio, vigne)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Costo del day boat: il mid-tier accessibile</h2>
+
+    <p>
+      Per chi vuole assaggiare l'esperienza barca senza il budget settimanale, il <strong>day boat charter</strong> è la soluzione:
+    </p>
+
+    <ul>
+      <li><strong>Gozzo 6-7 m</strong> (4 persone, autopilota, niente skipper): 250-450 €/giorno + carburante 80-150 €</li>
+      <li><strong>Motoscafo 8-10 m con skipper</strong> (6-8 persone): 600-1.200 €/giorno + carburante 200-400 €</li>
+      <li><strong>Vela 10-12 m con skipper</strong> (6-8 persone): 800-1.500 €/giorno + carburante 100-250 €</li>
+    </ul>
+
+    <p>
+      Imbarcati a Palau, Cannigione, Porto Rotondo o Olbia. Tour tipico: Arcipelago di La Maddalena, sosta in spiagge incantate, pranzo a bordo o in caletta. <strong>Esperienza top con investimento contenuto</strong>.
+    </p>
+
+    <h2>In sintesi</h2>
+
+    <p>
+      Per la <strong>maggior parte dei turisti in Costa Smeralda l'auto a noleggio + hotel/villa è la scelta razionale</strong>: budget 5-6x più basso, esperienza completa, vita sociale piena, flessibilità totale. Lo <strong>yacht charter ha senso solo se</strong>: hai budget &gt; 15.000 €, sei appassionato di mare, vuoi un'esperienza una-volta-nella-vita. La <strong>soluzione mista (auto base + 1 giornata di day boat)</strong> ti dà il 90% dei benefici di entrambi a un costo ragionevole.
+    </p>
+
+    <p>
+      Per organizzare il noleggio auto per il tuo soggiorno in Costa Smeralda — anche con consegna direttamente al porto se arrivi via yacht — contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Per il budget complessivo della tua vacanza vedi la <a href="/guide/quanto-costa-vacanza-costa-smeralda-budget-2026">guida budget Costa Smeralda 2026</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

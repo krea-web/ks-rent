@@ -83,7 +83,72 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     heroImage:
       "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
     author: "Francesco Milo & Salvatore Milo",
-    related: ["noleggio-auto-olbia-senza-carta-di-credito-guida-completa", "itinerario-7-giorni-costa-smeralda-da-olbia"],
+    related: ["noleggio-auto-olbia-senza-carta-di-credito-guida-completa", "come-arrivare-costa-smeralda-voli-traghetti"],
+  },
+  {
+    slug: "cosa-fare-a-olbia-3-giorni-itinerario",
+    title: "Cosa fare a Olbia in 3 giorni: itinerario breve per il weekend",
+    excerpt:
+      "Itinerario di 3 giorni a Olbia: cosa vedere in città, spiagge vicine, dove mangiare, escursioni mezza giornata. Pensato per weekend lunghi e tappe brevi in Sardegna.",
+    category: "Itinerari",
+    publishedAt: "2026-05-13",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["itinerario-7-giorni-costa-smeralda-da-olbia", "noleggio-auto-olbia-aeroporto-guida-pratica"],
+  },
+  {
+    slug: "come-arrivare-costa-smeralda-voli-traghetti",
+    title: "Come arrivare in Costa Smeralda: voli, traghetti, distanze 2026",
+    excerpt:
+      "La guida completa per arrivare in Costa Smeralda: voli aeroporto Olbia OLB, traghetti porto Isola Bianca, alternative Cagliari/Alghero, distanze, costi reali.",
+    category: "Aeroporto & Porto",
+    publishedAt: "2026-05-13",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["noleggio-auto-olbia-aeroporto-guida-pratica", "cosa-fare-a-olbia-3-giorni-itinerario"],
+  },
+  {
+    slug: "quanto-costa-vacanza-costa-smeralda-budget-2026",
+    title: "Quanto costa una vacanza in Costa Smeralda? Budget reale 2026",
+    excerpt:
+      "Budget completo per una vacanza in Costa Smeralda nel 2026: hotel, ristoranti, spiagge, noleggio auto, attività. Stime reali per coppia, famiglia, gruppo.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-13",
+    readingMinutes: 10,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["itinerario-7-giorni-costa-smeralda-da-olbia", "spiagge-costa-smeralda-con-bambini"],
+  },
+  {
+    slug: "spiagge-nascoste-gallura-sterrati",
+    title: "Spiagge nascoste della Gallura: 8 calette poco conosciute",
+    excerpt:
+      "8 spiagge nascoste della Gallura raggiungibili da sterrato o sentiero: dove sono, come arrivare, perché valgono il viaggio. Guida per chi cerca alternative al turismo di massa.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-13",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["spiagge-costa-smeralda-con-bambini", "itinerario-7-giorni-costa-smeralda-da-olbia"],
+  },
+  {
+    slug: "yacht-charter-vs-auto-noleggio-costa-smeralda",
+    title: "Yacht charter vs auto a noleggio in Costa Smeralda: confronto costi",
+    excerpt:
+      "Vacanza in Costa Smeralda con yacht charter o auto a noleggio? Confronto costi reali 2026, pro e contro, profili adatti, soluzioni miste. Tutti i numeri.",
+    category: "Veicoli",
+    publishedAt: "2026-05-13",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["quanto-costa-vacanza-costa-smeralda-budget-2026", "come-arrivare-costa-smeralda-voli-traghetti"],
   },
 ];
 

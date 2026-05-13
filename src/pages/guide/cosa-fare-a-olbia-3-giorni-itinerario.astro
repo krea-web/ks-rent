@@ -1,0 +1,240 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("cosa-fare-a-olbia-3-giorni-itinerario")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Place",
+    name: "Olbia",
+    containedInPlace: { "@type": "AdministrativeArea", name: "Sardegna" },
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Olbia in 3 giorni", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Tre giorni a Olbia bastano per vedere la città, fare una gita in Costa Smeralda e una in Gallura interna</strong> senza correre. Olbia è spesso vista solo come "punto di transito" per chi arriva in aereo o in traghetto e parte subito verso le mete più note, ma in realtà ha un centro storico vivibile, ottimi ristoranti, spiagge urbane raggiungibili in 10 minuti e una posizione perfetta come base. Questo itinerario è pensato per un weekend lungo (giovedì sera-domenica) o per chi atterra in anticipo prima di trasferirsi in Costa Smeralda. Tutti i tempi sono indicati per stagione bassa-media; in luglio-agosto raddoppia.
+    </p>
+
+    <h2>Premesse logistiche</h2>
+
+    <ul>
+      <li><strong>Da dove partire</strong>: aeroporto Olbia OLB o porto Isola Bianca, entrambi a 10 minuti dal centro</li>
+      <li><strong>Dove dormire</strong>: centro storico (per chi vuole tutto a piedi) o zona Pittulongu (per chi vuole spiaggia + auto)</li>
+      <li><strong>Mezzi</strong>: il centro storico è pedonale e si gira a piedi. Per spiagge ed escursioni serve un'auto. Bus urbano disponibile ma frequenze limitate</li>
+      <li><strong>Veicolo consigliato</strong>: <a href="/flotta/fiat-panda">Fiat Panda Hybrid</a> (40-70 €/giorno, agile in centro) o <a href="/flotta/jeep-avenger">Jeep Avenger</a> (60-110 €/giorno, se prevedi anche escursioni in Gallura interna)</li>
+    </ul>
+
+    <h2>Giorno 1 — Centro storico e tramonto al porto</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 5-10 km · <strong>Tempo</strong>: tutto a piedi
+    </p>
+
+    <p>
+      Mattina: arrivo, ritiro auto (consegna gratuita all'aeroporto OLB o porto Isola Bianca con KS Rent Sardinia), check-in in hotel. Lascia l'auto e parti a piedi per il centro.
+    </p>
+
+    <p>
+      <strong>Visita</strong>:
+    </p>
+    <ul>
+      <li><strong>Corso Umberto I</strong>: la via dello shopping pedonale. Boutique, gelaterie, librerie</li>
+      <li><strong>Piazza Margherita di Savoia</strong> con il municipio</li>
+      <li><strong>Basilica di San Simplicio</strong> (XI secolo, romanica, gratis): la chiesa più antica della Gallura</li>
+      <li><strong>Museo Archeologico di Olbia</strong> (Via Sa Testa Punta, ingresso 5 €): reperti fenici, romani, bizantini, navi romane recuperate dal porto</li>
+      <li><strong>Necropoli di Su Logu de S'Iscultura</strong> (15 min a piedi): tombe nuragiche</li>
+    </ul>
+
+    <p>
+      Pranzo: <strong>"Da Paolo"</strong> in centro (cucina sarda tradizionale, prezzi medi 25-40 €/persona) oppure <strong>"Su Rinconete"</strong> (più caro, 50-70 €/persona, pesce eccellente). Per pizza: <strong>"Aragosta Blu"</strong> sul porto.
+    </p>
+
+    <p>
+      Pomeriggio: passeggiata lungomare al <strong>Porto Vecchio</strong> di Olbia. Vista sull'isola di Tavolara. <strong>Aperitivo</strong> in uno dei locali del molo (caffè e cocktail 8-12 €).
+    </p>
+
+    <p>
+      Cena: <strong>"L'Essenza Bistrot"</strong> (cucina creativa, 60-80 €/persona) o <strong>"Trattoria Lillicu"</strong> (porzioni abbondanti, prezzi medi).
+    </p>
+
+    <h2>Giorno 2 — Spiagge di Olbia + Tavolara</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 30-50 km · <strong>Veicolo</strong>: qualsiasi
+    </p>
+
+    <p>
+      Mattina presto (entro le 9:30): trasferimento alla <strong>Spiaggia di Pittulongu</strong> (10 min in auto). Sabbia chiara, acqua bassa, vista isola di Tavolara, parcheggio gratuito sulle strade laterali. Il <strong>Lido Jenny</strong> è il punto di riferimento per affittare lettini.
+    </p>
+
+    <p>
+      Pranzo veloce in spiaggia oppure rientro a Olbia per pranzo a <strong>"Il Chioschetto"</strong> a Pittulongu.
+    </p>
+
+    <p>
+      Pomeriggio (per chi vuole avventura): <strong>escursione in barca all'isola di Tavolara</strong>. Imbarco da Porto San Paolo (15 min da Olbia), tour 4-5 ore, costo 35-50 €/persona, include sosta a Spalmatore di Terra (spiaggia bianca con acqua trasparente). Prenotazione consigliata in alta stagione.
+    </p>
+
+    <p>
+      Per chi resta in spiaggia: prosegui per <strong>Bados</strong> (10 min da Pittulongu), spiaggia urbana ma più tranquilla. Sabbia bianca, lido con noleggio.
+    </p>
+
+    <p>
+      Cena: rientro in centro Olbia, prova <strong>"Sa Mola"</strong> (pesce, 50-70 €/persona) o <strong>"Da Bartolo"</strong> (cucina tipica gallurese).
+    </p>
+
+    <h2>Giorno 3 — Costa Smeralda mini-tour</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 80-100 km · <strong>Veicolo</strong>: qualsiasi
+    </p>
+
+    <p>
+      Mattina: trasferimento in <a href="/noleggio-auto-porto-cervo">Porto Cervo</a> (35 min). Parcheggia al <strong>P1 Centro Commerciale</strong> (5 €/ora) o nelle strade laterali della zona alta (gratis).
+    </p>
+
+    <p>
+      <strong>Visita</strong>: Promenade del Porto Vecchio (boutique, gallerie d'arte), Piazzetta, vista sui maxi-yacht. Caffè veloce, foto, atmosfera.
+    </p>
+
+    <p>
+      Spostamento alla <strong>Spiaggia del Principe</strong> (10 min in auto + 200 m a piedi su sentiero) o, se hai una city car non adatta agli sterrati, alla spiaggia di <strong>Capriccioli</strong> (10 min, parcheggio asfaltato).
+    </p>
+
+    <p>
+      Pranzo: per pizza vista mare vai a <strong>Poltu Quatu</strong> (5 min da Porto Cervo), il piccolo "fiordo" tra Baja Sardinia e Porto Cervo. Per esperienza alta: <strong>Cala di Volpe</strong> (l'iconico hotel-villaggio a forma di borgo mediterraneo).
+    </p>
+
+    <p>
+      Pomeriggio: ultima spiaggia. Opzioni:
+    </p>
+    <ul>
+      <li><strong>Liscia Ruja</strong>: la spiaggia più lunga della Costa Smeralda</li>
+      <li><strong>Romazzino</strong>: di fronte all'Hotel Romazzino, esclusiva</li>
+      <li><strong>La Celvia</strong>: piccola caletta poco affollata</li>
+    </ul>
+
+    <p>
+      <strong>Tramonto</strong>: torna verso <a href="/noleggio-auto-baja-sardinia">Baja Sardinia</a> per l'aperitivo al <strong>Phi Beach</strong> (cocktail 25-40 €, atmosfera mondana). In alternativa, rientro a Olbia per cena tranquilla.
+    </p>
+
+    <h2>Variante: 1 giorno in Gallura interna</h2>
+
+    <p>
+      Se preferisci sostituire il giorno 3 in Costa Smeralda con un giorno "non spiaggia":
+    </p>
+
+    <ul>
+      <li><strong>San Pantaleo</strong> (30 min da Olbia): vero borgo della Gallura, piazza, gallerie d'arte, ristoranti come "Giagoni"</li>
+      <li><strong>Tomba dei Giganti di Coddu Vecchiu</strong>: sito nuragico vicino Arzachena</li>
+      <li><strong>Tempio Pausania</strong> (1h da Olbia): capoluogo storico della Gallura, città di pietra grigia, cattedrale</li>
+      <li><strong>Cantina Surrau</strong> ad Arzachena: degustazione vermentino di Gallura DOCG</li>
+      <li><strong>Cala Sabina</strong> (Golfo Aranci, 25 min): per un ultimo bagno tranquillo</li>
+    </ul>
+
+    <h2>Dove dormire a Olbia</h2>
+
+    <p>
+      Per 3 giorni le opzioni migliori sono:
+    </p>
+
+    <ul>
+      <li><strong>Hotel Panorama</strong> (centro, 4 stelle, 100-180 €/notte): vista panoramica, ristorante in terrazza</li>
+      <li><strong>Hotel President</strong> (centro, 4 stelle, 90-170 €/notte): comodo, cucina mediterranea</li>
+      <li><strong>Mercure Olbia Hermaea Hotel & Spa</strong> (Pittulongu, 4 stelle, 130-220 €/notte): vicino mare, spa</li>
+      <li><strong>B&B in centro</strong> (60-110 €/notte): "Casa Carlinu", "B&B Centro Storico"</li>
+      <li><strong>Camping/glamping a Pittulongu</strong> (40-90 €/notte): per famiglie con bambini</li>
+    </ul>
+
+    <h2>Quanto costa il weekend lungo a Olbia</h2>
+
+    <p>
+      Stima per coppia, 3 giorni e 3 notti, hotel 4 stelle, ristoranti medi:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Voce</th>
+          <th>Bassa stagione</th>
+          <th>Alta stagione</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hotel 4 stelle (3 notti)</td>
+          <td>300-450 €</td>
+          <td>500-800 €</td>
+        </tr>
+        <tr>
+          <td>Pranzi + cene (3 giorni)</td>
+          <td>250-400 €</td>
+          <td>350-550 €</td>
+        </tr>
+        <tr>
+          <td>Noleggio auto Fiat Panda 3 giorni</td>
+          <td>120-180 €</td>
+          <td>200-280 €</td>
+        </tr>
+        <tr>
+          <td>Carburante + parcheggi</td>
+          <td>50-80 €</td>
+          <td>80-130 €</td>
+        </tr>
+        <tr>
+          <td>Spiagge + escursioni</td>
+          <td>50-150 €</td>
+          <td>100-300 €</td>
+        </tr>
+        <tr>
+          <td><strong>Totale stimato coppia</strong></td>
+          <td><strong>770-1.260 €</strong></td>
+          <td><strong>1.230-2.060 €</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Consigli pratici</h2>
+
+    <ul>
+      <li><strong>Stagione migliore</strong>: maggio-giugno e settembre-ottobre. Acqua già/ancora calda, prezzi più bassi, niente folla</li>
+      <li><strong>Da evitare</strong>: 1-15 agosto se non sei un masochista del traffico</li>
+      <li><strong>Ferragosto a Olbia</strong>: fuochi d'artificio sul porto, festa popolare. Dormi vicino al lungomare</li>
+      <li><strong>Weekend lungo</strong>: prenota auto con consegna in aeroporto OLB e riconsegna in aeroporto OLB. Tempi morti = zero</li>
+    </ul>
+
+    <p>
+      Per un soggiorno più lungo, leggi il nostro <a href="/guide/itinerario-7-giorni-costa-smeralda-da-olbia">itinerario di 7 giorni in Costa Smeralda</a>. Per consegna del veicolo direttamente all'aeroporto Olbia OLB con orario coordinato al volo, contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
