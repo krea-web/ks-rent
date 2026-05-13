@@ -198,6 +198,14 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
   const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
   const noCardHref = localizePath("/noleggio-auto-senza-carta-di-credito-olbia", lang);
 
+  // Sezioni con presenza limitata: /guide esiste in IT + EN; /flotta/confronta solo IT
+  const hasGuides = lang === "it" || lang === "en";
+  const guideHref = lang === "it" ? "/guide" : "/en/guide";
+  const guideLabel = lang === "en" ? "Guides" : "Guide";
+  const hasConfronti = lang === "it";
+  const confrontiHref = "/flotta/confronta";
+  const confrontiLabel = "Confronti";
+
   // Fleet vehicle URLs
   const fleetBase = getFleetPath(lang);
   // `groupSlug` e' lo slug IT (es. "audi-rs3"); viene tradotto per la lingua corrente.
@@ -473,6 +481,8 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
               )}
             </button>
 
+            {hasGuides && renderSimpleLink({ label: guideLabel, to: guideHref })}
+
             {renderSimpleLink({ label: t.nav.aboutUs, to: aboutHref })}
           </div>
 
@@ -614,13 +624,24 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                       {t.nav.fleetDesc}
                     </p>
                   </div>
-                  <Link
-                    to={fleetHref}
-                    onClick={() => setFlottaOpen(false)}
-                    className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold hover:text-gold/80 whitespace-nowrap"
-                  >
-                    {t.nav.seeAll} <ArrowRight size={12} />
-                  </Link>
+                  <div className="hidden md:flex items-center gap-4">
+                    {hasConfronti && (
+                      <Link
+                        to={confrontiHref}
+                        onClick={() => setFlottaOpen(false)}
+                        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-white/60 hover:text-gold whitespace-nowrap"
+                      >
+                        ⇄ {confrontiLabel}
+                      </Link>
+                    )}
+                    <Link
+                      to={fleetHref}
+                      onClick={() => setFlottaOpen(false)}
+                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold hover:text-gold/80 whitespace-nowrap"
+                    >
+                      {t.nav.seeAll} <ArrowRight size={12} />
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 divide-x divide-gray-200 dark:divide-white/10">
@@ -749,6 +770,22 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                   closeMenu={() => setOpen(false)}
                   withIcons
                 />
+
+                {hasConfronti && (
+                  <Link
+                    to={confrontiHref}
+                    onClick={() => setOpen(false)}
+                    className="mt-4 flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-gold text-lg">⇄</span>
+                      <span className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">
+                        {confrontiLabel} veicoli
+                      </span>
+                    </div>
+                    <ArrowRight size={14} className="text-gold" />
+                  </Link>
+                )}
               </motion.div>
 
               {/* DOVE CONSEGNIAMO section (3 accordion invece di 5 per piu' snellezza) */}
@@ -793,6 +830,37 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                   closeMenu={() => setOpen(false)}
                 />
               </motion.div>
+
+              {/* GUIDE section (solo IT + EN dove esistono articoli) */}
+              {hasGuides && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.22, duration: 0.35, ease: "easeOut" }}
+                  className="mt-6 pt-6 border-t border-gray-200 dark:border-white/10"
+                >
+                  <Link
+                    to={guideHref}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "w-full flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-display font-black leading-snug tracking-normal transition-colors min-h-[48px] py-2.5 pr-4 rounded-xl",
+                      location.pathname === guideHref
+                        ? "text-gold"
+                        : "text-gray-800 dark:text-white/75 hover:text-gray-900 dark:hover:text-white",
+                    )}
+                  >
+                    {location.pathname === guideHref && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)] pointer-events-none" />
+                    )}
+                    <span className="pointer-events-none break-words">{guideLabel}</span>
+                  </Link>
+                  <p className="text-gray-600 dark:text-white/60 text-sm font-light mt-1">
+                    {lang === "en"
+                      ? "Practical guides on car hire, itineraries, beaches, costs."
+                      : "Guide pratiche su noleggio, itinerari, spiagge, costi."}
+                  </p>
+                </motion.div>
+              )}
 
               {/* Chi Siamo + Prenota */}
               <motion.div
