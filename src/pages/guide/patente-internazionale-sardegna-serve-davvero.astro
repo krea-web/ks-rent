@@ -1,0 +1,302 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("patente-internazionale-sardegna-serve-davvero")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Thing",
+    name: "Patente internazionale auto",
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "I cittadini UE hanno bisogno della patente internazionale per noleggiare auto in Sardegna?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. I cittadini di Italia e degli altri 27 paesi UE non hanno bisogno della patente internazionale per noleggiare auto in Sardegna. Vale anche per Norvegia, Svizzera, Liechtenstein e Islanda (Spazio Economico Europeo). Basta la patente nazionale in corso di validità.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "I cittadini UK (Regno Unito) hanno bisogno della patente internazionale per la Sardegna dopo Brexit?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Il Regno Unito è parte della Convenzione di Vienna sulla circolazione stradale: la patente UK è valida in Italia senza patente internazionale. Tuttavia per soggiorni lunghi (oltre 1 anno) potrebbe essere richiesta la conversione in patente italiana.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "I cittadini USA hanno bisogno della patente internazionale per noleggiare auto in Sardegna?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Tecnicamente sì: l'Italia richiede l'IDP (International Driving Permit) per cittadini USA, da richiedere all'AAA prima della partenza ($20). In pratica, KS Rent Sardinia accetta la patente USA in originale + IDP, ma alcune compagnie sono più rigide. Per evitare problemi, procurati l'IDP prima del viaggio.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quanto costa la patente internazionale e dove si richiede?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "In Italia si richiede in Motorizzazione Civile, costa circa 30-50 € (marche da bollo + diritti), validità 1 o 3 anni (1947 o 1968). Negli USA all'AAA, costa $20 ed è valida 1 anno. Nel Regno Unito al Post Office, £5.50 valida 12 mesi (anche se per Italia non serve).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Devo presentare la patente internazionale insieme alla patente nazionale?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. La patente internazionale (IDP) NON sostituisce la patente nazionale, è solo una traduzione ufficiale. Devi sempre avere con te entrambi i documenti durante la guida e durante il check-in al noleggio in Sardegna.",
+      },
+    },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Patente internazionale Sardegna", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>La patente internazionale è uno di quei documenti che molti turisti pensano di dover sempre avere ma che, in realtà, serve solo a certe categorie di viaggiatori</strong>. Per chi noleggia auto in Sardegna le regole dipendono dal paese di rilascio della patente: cittadini UE non ne hanno bisogno, alcuni paesi extra-UE sì, altri ancora hanno regole speciali (Brexit, accordi bilaterali). Questa guida pratica chiarisce <strong>chi deve avere la patente internazionale per guidare in Sardegna nel 2026</strong>, dove richiederla, quanto costa e quali documenti accettano gli operatori di noleggio come KS Rent Sardinia a Olbia.
+    </p>
+
+    <h2>Quando NON serve la patente internazionale</h2>
+
+    <p>
+      Per noleggiare auto in Sardegna <strong>non serve la patente internazionale</strong> se sei cittadino di:
+    </p>
+
+    <ul>
+      <li><strong>Italia</strong> (ovviamente)</li>
+      <li><strong>Tutti i 27 paesi dell'Unione Europea</strong>: Francia, Germania, Spagna, Austria, Belgio, Bulgaria, Cipro, Croazia, Danimarca, Estonia, Finlandia, Grecia, Irlanda, Lettonia, Lituania, Lussemburgo, Malta, Paesi Bassi, Polonia, Portogallo, Repubblica Ceca, Romania, Slovacchia, Slovenia, Svezia, Ungheria</li>
+      <li><strong>Spazio Economico Europeo (SEE)</strong>: Norvegia, Islanda, Liechtenstein</li>
+      <li><strong>Svizzera</strong></li>
+      <li><strong>Regno Unito (UK)</strong> dopo Brexit: la patente UK rimane valida in Italia per visite turistiche grazie alla Convenzione di Vienna 1968</li>
+    </ul>
+
+    <p>
+      In tutti questi casi è sufficiente la <strong>patente nazionale in corso di validità</strong>, in originale (non foto, non copia). Per i cittadini UK conviene avere anche il passaporto o documento d'identità (per ovvie esigenze di identificazione post-Brexit).
+    </p>
+
+    <h2>Quando SERVE la patente internazionale</h2>
+
+    <p>
+      Per chi viene da paesi <strong>extra-UE che NON aderiscono alla Convenzione di Vienna 1968</strong> sulla circolazione stradale, la patente internazionale è obbligatoria. Tra questi:
+    </p>
+
+    <ul>
+      <li><strong>Stati Uniti d'America (USA)</strong></li>
+      <li><strong>Canada</strong></li>
+      <li><strong>Australia</strong></li>
+      <li><strong>Nuova Zelanda</strong></li>
+      <li><strong>Cina</strong></li>
+      <li><strong>Russia</strong></li>
+      <li><strong>India</strong></li>
+      <li><strong>Sudafrica</strong></li>
+      <li><strong>Brasile</strong></li>
+      <li><strong>Messico</strong></li>
+      <li><strong>Tutti i paesi africani</strong> (eccetto alcuni nordafricani)</li>
+      <li><strong>Maggior parte dei paesi del Medio Oriente</strong></li>
+    </ul>
+
+    <p>
+      <strong>Eccezione importante</strong>: il <strong>Giappone</strong> richiede la traduzione ufficiale in italiano della patente giapponese da parte dell'Ambasciata italiana o di un traduttore giurato — la patente internazionale rilasciata in Giappone non è riconosciuta in Italia.
+    </p>
+
+    <h2>Cosa è esattamente la patente internazionale (IDP)</h2>
+
+    <p>
+      La <strong>International Driving Permit (IDP)</strong> è un documento che <strong>traduce ufficialmente</strong> la patente nazionale nelle lingue ufficiali di tutti i paesi firmatari della Convenzione di Ginevra 1949 o di Vienna 1968. È un libretto cartaceo con foto del titolare, dati personali e categorie di veicoli abilitati. <strong>NON è una patente autonoma</strong>: va sempre presentata insieme alla patente nazionale originale.
+    </p>
+
+    <p>
+      Esistono <strong>due tipi di IDP</strong>:
+    </p>
+
+    <ul>
+      <li><strong>IDP Convenzione di Vienna 1968</strong>: validità 3 anni (in Italia)</li>
+      <li><strong>IDP Convenzione di Ginevra 1949</strong>: validità 1 anno</li>
+    </ul>
+
+    <p>
+      Per l'Italia (Sardegna inclusa) sono accettati entrambi.
+    </p>
+
+    <h2>Dove richiedere la patente internazionale</h2>
+
+    <h3>In Italia (per residenti italiani che vanno all'estero)</h3>
+
+    <p>
+      Si richiede in <strong>Motorizzazione Civile</strong>:
+    </p>
+
+    <ul>
+      <li>Modulo TT 2112 + 1 marca da bollo da 16 €</li>
+      <li>Diritti motorizzazione: ~10 €</li>
+      <li>2 foto tessera</li>
+      <li>Fotocopia patente nazionale</li>
+      <li>Documento d'identità</li>
+      <li><strong>Costo totale</strong>: 30-50 €</li>
+      <li><strong>Tempo</strong>: rilascio in giornata o entro 1-2 giorni</li>
+    </ul>
+
+    <h3>Negli USA (per turisti americani che vengono in Sardegna)</h3>
+
+    <p>
+      Si richiede esclusivamente all'<strong>American Automobile Association (AAA)</strong> o all'AATA (American Automobile Touring Alliance):
+    </p>
+
+    <ul>
+      <li>Modulo online o in qualsiasi ufficio AAA</li>
+      <li>2 foto tessera</li>
+      <li>Patente USA in corso di validità (originale)</li>
+      <li><strong>Costo</strong>: $20 (membri AAA), $30 non-membri</li>
+      <li><strong>Tempo</strong>: rilascio immediato o spedizione 10-15 giorni</li>
+    </ul>
+
+    <p>
+      <strong>Attenzione truffe</strong>: numerosi siti internet vendono "patenti internazionali" online a 50-200 $: sono <strong>tutti falsi</strong>. Solo AAA e AATA sono autorizzati.
+    </p>
+
+    <h3>Nel Regno Unito (UK)</h3>
+
+    <p>
+      Si richiede al <strong>Post Office (Ufficio Postale)</strong>:
+    </p>
+
+    <ul>
+      <li>Costo: £5.50</li>
+      <li>1 foto tessera + patente UK + documento d'identità</li>
+      <li>Rilascio immediato</li>
+    </ul>
+
+    <p>
+      Tuttavia <strong>per l'Italia non serve</strong> per cittadini UK, quindi può essere risparmiata.
+    </p>
+
+    <h2>Cosa accetta KS Rent Sardinia per il noleggio</h2>
+
+    <p>
+      KS Rent Sardinia, con sede a Olbia, accetta i seguenti documenti per il noleggio auto:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Cittadinanza</th>
+          <th>Documenti richiesti</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>UE / SEE / Svizzera / UK</td>
+          <td>Patente nazionale + documento d'identità (carta d'identità o passaporto)</td>
+        </tr>
+        <tr>
+          <td>USA / Canada / Australia / NZ</td>
+          <td>Patente nazionale + IDP + passaporto</td>
+        </tr>
+        <tr>
+          <td>Cina / Giappone / Russia / India</td>
+          <td>Patente nazionale + IDP (Cina/Russia/India) o traduzione giurata (Giappone) + passaporto</td>
+        </tr>
+        <tr>
+          <td>Altri paesi extra-UE</td>
+          <td>Patente nazionale + IDP + passaporto</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      In tutti i casi:
+    </p>
+    <ul>
+      <li><strong>Patente valida da almeno 1 anno</strong> (3 anni per scooter Honda SH 350 e supercar Audi RS3 / BMW M2)</li>
+      <li><strong>Età minima</strong>: 21 anni per utilitarie, 25 anni per supercar/sportive/premium</li>
+      <li>Patente in originale (non foto, non scansione)</li>
+    </ul>
+
+    <h2>Cosa succede se non hai la patente internazionale ma ti serve</h2>
+
+    <p>
+      Se sei cittadino USA (o altro paese che richiede IDP) e arrivi a Olbia <strong>senza la patente internazionale</strong>:
+    </p>
+
+    <ol>
+      <li>Le grandi compagnie internazionali (Hertz, Avis, Sixt, Europcar) <strong>tipicamente rifiutano il noleggio</strong></li>
+      <li>Alcune compagnie indipendenti possono fare un'eccezione, ma non è garantito e l'eventuale infrazione stradale o incidente potrebbe comportare problemi assicurativi</li>
+      <li>L'unica soluzione legale è <strong>fare richiesta urgente IDP da remoto</strong> tramite AAA online ($30 + spedizione internazionale: 7-10 giorni). Inutile se sei già in vacanza per 7 giorni</li>
+    </ol>
+
+    <p>
+      <strong>Tip</strong>: prepara la patente internazionale 2-3 settimane prima di partire dal tuo paese. Costa poco, occupa pochissimo spazio in valigia, ti evita problemi enormi.
+    </p>
+
+    <h2>Casi particolari</h2>
+
+    <h3>Patente "europea" rosa di vecchia generazione</h3>
+
+    <p>
+      Se la tua patente UE è del modello "rosa" cartaceo (rilasciata prima del 2013), è ancora valida ma alcune compagnie potrebbero chiederti di mostrare anche un'identificazione fotografica aggiuntiva. KS Rent Sardinia la accetta senza problemi.
+    </p>
+
+    <h3>Patente con punti scaduti o ridotti</h3>
+
+    <p>
+      Per il noleggio auto in Italia non viene verificato il saldo punti della patente nazionale. Quello che conta è la <strong>validità</strong>: scadenza, abilitazione (categoria B per auto, A1/A2 per scooter, B per quad).
+    </p>
+
+    <h3>Doppia cittadinanza</h3>
+
+    <p>
+      Se hai doppia cittadinanza (es. Italia + USA), <strong>presenta la patente che preferisci</strong>: se la patente USA, serve IDP; se la patente italiana, no IDP. La scelta è tua.
+    </p>
+
+    <h2>In sintesi</h2>
+
+    <ul>
+      <li><strong>UE / UK / Svizzera</strong>: patente nazionale è sufficiente</li>
+      <li><strong>USA / Canada / Australia / Cina / Russia / etc.</strong>: serve IDP + patente nazionale + passaporto</li>
+      <li><strong>Costo IDP</strong>: 5-50 € a seconda del paese</li>
+      <li><strong>Tempo per ottenerla</strong>: 1-15 giorni</li>
+      <li><strong>Validità</strong>: 1-3 anni</li>
+      <li><strong>Da richiedere PRIMA di partire</strong>: dal tuo paese di residenza, non in Italia</li>
+    </ul>
+
+    <p>
+      Per dubbi specifici sui documenti accettati per il tuo noleggio in Sardegna, contatta direttamente Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a> indicando la tua cittadinanza e il tipo di patente. Per la procedura completa di noleggio, vedi anche la nostra <a href="/guide/noleggio-auto-olbia-aeroporto-guida-pratica">guida noleggio auto aeroporto Olbia</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

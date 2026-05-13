@@ -28,13 +28,70 @@ const articleJsonLd = {
     sameAs: "https://www.geasar.it/",
   },
 };
+
+// FAQ schema separato per le 6 domande del paragrafo "Domande frequenti".
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "È meglio noleggiare l'auto in aeroporto Olbia o in centro città?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Per la maggior parte dei turisti, la consegna in aeroporto Olbia OLB è più conveniente: si evita taxi/navetta verso il centro e poi il pickup. KS Rent Sardinia consegna gratuitamente all'aeroporto. Se invece arrivi via traghetto al porto Isola Bianca, conviene farsi consegnare direttamente al porto (anche questo gratuito).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Devo prenotare l'auto a noleggio con anticipo per Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, soprattutto per luglio e agosto: i veicoli si esauriscono entro maggio. Con KS Rent Sardinia puoi prenotare online fino a 24 ore prima dell'arrivo (verificando disponibilità) e bloccare il veicolo con conferma email immediata.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Devo pagare la pre-autorizzazione sulla carta di credito al banco aeroporto Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Con le grandi compagnie internazionali (Hertz, Avis, Sixt, Europcar) sì: vengono bloccati 1.000-2.500 € sulla carta per tutta la durata del noleggio + 5-15 giorni dopo. Con KS Rent Sardinia no: il deposito cauzionale è un classico bonifico/contanti/prepagata, restituito immediatamente alla riconsegna.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quale veicolo scegliere per la Costa Smeralda?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Dipende dall'itinerario. Se vai solo a Porto Cervo e hai bagaglio leggero, una Mercedes Classe A è perfetta. Se prevedi spiagge nascoste su sterrato come Spiaggia del Principe, meglio una Jeep Avenger. Per esperienza sportiva su pochi giorni, Audi RS3 o BMW M2.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso restituire il veicolo in un punto diverso dall'aeroporto Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, KS Rent Sardinia accetta riconsegne in aeroporto Olbia OLB, porto Isola Bianca, hotel/villa in Costa Smeralda. È sufficiente coordinare orario e luogo via WhatsApp prima della partenza.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Cosa succede se il volo per Olbia è in ritardo o cancellato?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "KS Rent Sardinia monitora lo stato del volo automaticamente (basta comunicare il numero al momento della prenotazione). Se sei in ritardo di 1-2 ore, ti aspettiamo senza costi aggiuntivi. Per ritardi maggiori o cancellazioni, riprogrammiamo la consegna senza penali.",
+      },
+    },
+  ],
+};
 ---
 <BaseLayout
   title={`${meta.title} | KS Rent Sardinia`}
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={articleJsonLd}
+  jsonLd={[articleJsonLd, faqJsonLd]}
   breadcrumbs={[
     { name: "Guide", path: "/guide" },
     { name: "Noleggio auto aeroporto Olbia", path: `/guide/${meta.slug}` },

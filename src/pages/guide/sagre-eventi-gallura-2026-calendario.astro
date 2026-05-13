@@ -1,0 +1,283 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("sagre-eventi-gallura-2026-calendario")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "AdministrativeArea",
+    name: "Gallura",
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Sagre e eventi Gallura 2026", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>La Gallura nel 2026 ospita decine di sagre, feste patronali, eventi enogastronomici e musicali</strong> distribuiti tra Olbia, Arzachena, Tempio Pausania, San Pantaleo e tutti i borghi della Sardegna nord-orientale. Sono occasioni per vivere il territorio come fanno i locali, mangiare prodotti tipici a prezzi contenuti, scoprire tradizioni millenarie. Questa guida raccoglie i principali eventi <strong>aggiornati al 2026</strong>, organizzati per mese. Le date sono indicative — verifica sempre sui canali ufficiali del comune o pro loco prima di partire. Tutti gli eventi qui elencati sono raggiungibili da Olbia in 30-90 minuti di auto.
+    </p>
+
+    <h2>Premessa: come funzionano le sagre sarde</h2>
+
+    <ul>
+      <li><strong>Quasi tutte sono gratuite</strong> all'ingresso. Si paga solo cibo e bevande</li>
+      <li><strong>Cibo</strong>: 5-15 € per piatto tradizionale + 3-5 € per bevanda</li>
+      <li><strong>Orario</strong>: tipicamente dalle 19:00 a mezzanotte</li>
+      <li><strong>Musica dal vivo</strong>: gruppi folk, organetto, balli sardi</li>
+      <li><strong>Parcheggio</strong>: spesso problematico nei piccoli borghi, arriva 1 ora prima dell'inizio</li>
+      <li><strong>Bambini</strong>: benvenuti, atmosfera familiare</li>
+    </ul>
+
+    <h2>Marzo - Aprile 2026</h2>
+
+    <h3>Pasqua a Tempio Pausania (varie date)</h3>
+
+    <p>
+      <strong>Tempio Pausania</strong> è famosa per le processioni della Settimana Santa: le statue dei santi vengono portate per le vie del centro storico in pietra grigia. Atmosfera molto suggestiva. Dura una settimana intera.
+    </p>
+
+    <h3>Festa di San Simplicio (15 maggio)</h3>
+
+    <p>
+      <strong>Olbia</strong>. Patrono della città, festa di 7 giorni. Mercatini, processione, fuochi d'artificio sul porto. Concerto serale gratuito in piazza. Ottima per famiglie.
+    </p>
+
+    <h2>Maggio 2026</h2>
+
+    <h3>Cala Ginepro Music Festival (fine maggio)</h3>
+
+    <p>
+      <strong>Cala Ginepro (San Teodoro)</strong>. Festival di musica live in spiaggia. Artisti internazionali e italiani. Ingresso libero o a pagamento per i concerti principali.
+    </p>
+
+    <h3>Festa del Vermentino (ultimo weekend di maggio)</h3>
+
+    <p>
+      <strong>Berchidda</strong> (40 min da Olbia). Degustazioni gratuite di Vermentino di Gallura DOCG nelle cantine locali (Surrau, Capichera, Piero Mancini). Atmosfera enologica, cibo abbinato, musica.
+    </p>
+
+    <h2>Giugno 2026</h2>
+
+    <h3>Festa di Sant'Antonio Abate (13 giugno)</h3>
+
+    <p>
+      <strong>Diversi borghi della Gallura</strong>. Falò notturni, balli tradizionali, salsiccia arrostita.
+    </p>
+
+    <h3>Sardinia Pride (metà giugno)</h3>
+
+    <p>
+      <strong>Olbia</strong>. Parata e eventi LGBTQ+ in centro storico.
+    </p>
+
+    <h3>Notte Bianca di Olbia (terzo weekend giugno)</h3>
+
+    <p>
+      <strong>Olbia centro</strong>. Negozi aperti fino a mezzanotte, musica dal vivo, animazione, mercatini. Ingresso gratuito. Atmosfera festosa.
+    </p>
+
+    <h2>Luglio 2026</h2>
+
+    <h3>Settimana delle Bocche (inizio luglio)</h3>
+
+    <p>
+      <strong>Porto Cervo / La Maddalena</strong>. Regata internazionale di vela storica organizzata dallo Yacht Club Costa Smeralda. Vista da terra spettacolare. Eventi mondani in Piazzetta. Possibili chiusure parziali della SP59.
+    </p>
+
+    <h3>Festival "Time in Jazz" (1-15 agosto, alcuni concerti già a luglio)</h3>
+
+    <p>
+      <strong>Berchidda + altri borghi della Gallura</strong>. Festival jazz fondato da Paolo Fresu, uno dei più importanti d'Europa. Concerti gratuiti in piazze, chiese, vigne. Atmosfera unica, biglietti per concerti principali ~30-50 €.
+    </p>
+
+    <h3>Festa del Mare (Olbia, terzo weekend luglio)</h3>
+
+    <p>
+      <strong>Olbia, Porto Vecchio</strong>. Processione in barca per la Madonna del Mare, fuochi d'artificio, banchi di pesce fritto e cozze, musica.
+    </p>
+
+    <h3>Sant'Antonio Abate (16 luglio)</h3>
+
+    <p>
+      <strong>Tempio Pausania</strong>. Patrono. Processione, balli, festa popolare in centro storico.
+    </p>
+
+    <h2>Agosto 2026</h2>
+
+    <h3>Time in Jazz (1-15 agosto)</h3>
+
+    <p>
+      Continua il festival jazz a Berchidda e dintorni. Vedi sopra.
+    </p>
+
+    <h3>Faradda di li Candareri / Festa di San Pasquale (vario)</h3>
+
+    <p>
+      <strong>Aglientu</strong>. Antica festa religiosa con processione, candele giganti, balli tradizionali galluresi.
+    </p>
+
+    <h3>Sagra del Pescatore (primo weekend agosto)</h3>
+
+    <p>
+      <strong>Cannigione</strong>. Pesce fresco a prezzi popolari, musica dal vivo, falò sulla spiaggia.
+    </p>
+
+    <h3>Festa di Stella Maris (15 agosto)</h3>
+
+    <p>
+      <strong>Porto San Paolo</strong>. Processione di barche, statue, fuochi sul mare. Cena in trattoria locale.
+    </p>
+
+    <h3>Ferragosto sardo (15 agosto)</h3>
+
+    <p>
+      Festeggiato in tutti i borghi della Gallura. <strong>Olbia</strong> ha fuochi d'artificio sul porto, <strong>Palau</strong> ha festa al porto, <strong>San Teodoro</strong> ha musica in spiaggia. Affollatissimo ovunque.
+    </p>
+
+    <h3>Sagra del Bogamarì / del Riccio (varia, fine agosto)</h3>
+
+    <p>
+      <strong>Alghero ma anche Cannigione</strong>. Stagione del riccio di mare, piatti tipici, vino bianco.
+    </p>
+
+    <h2>Settembre 2026</h2>
+
+    <h3>Cavallinata di Sant'Andrea (primo weekend settembre)</h3>
+
+    <p>
+      <strong>Tempio Pausania</strong>. Cavalieri in costume galluresi tradizionali, sfilata, processione. Spettacolare.
+    </p>
+
+    <h3>Sagra del Pesce (varia)</h3>
+
+    <p>
+      <strong>Olbia, Porto Vecchio</strong>. Pesce fritto e cotto a poco prezzo, musica live, atmosfera familiare.
+    </p>
+
+    <h3>Festa Patronale Beata Vergine di Bonaria (8 settembre)</h3>
+
+    <p>
+      <strong>Olbia, Pittulongu, vari borghi</strong>. Patrona della Sardegna. Processioni, messa solenne, festa popolare.
+    </p>
+
+    <h3>Premio Costa Smeralda (vario settembre)</h3>
+
+    <p>
+      <strong>Porto Cervo</strong>. Premio letterario di prestigio internazionale. Eventi culturali, presentazioni libri, autori italiani e stranieri.
+    </p>
+
+    <h2>Ottobre 2026</h2>
+
+    <h3>Calici di Stelle (varia ottobre)</h3>
+
+    <p>
+      <strong>Vari borghi della Gallura</strong>. Degustazione vini DOCG nelle cantine, abbinato a piatti tipici. Costo modesto (15-25 € a persona).
+    </p>
+
+    <h3>Festa del Cinghiale (varia ottobre)</h3>
+
+    <p>
+      <strong>Padru</strong> (45 min da Olbia, entroterra). Carne di cinghiale, salsicce arrostite, vino rosso, musica folk. Atmosfera autenticissima rurale.
+    </p>
+
+    <h3>Cortes Apertas (vario ottobre-novembre)</h3>
+
+    <p>
+      <strong>Vari borghi della Sardegna interna</strong>. Le case private aprono al pubblico per mostrare antichi mestieri (tessitura, pane carasau, formaggio, vino). Esperienza turistica autentica.
+    </p>
+
+    <h2>Eventi ricorrenti settimanali</h2>
+
+    <h3>Mercati settimanali</h3>
+
+    <ul>
+      <li><strong>Olbia</strong>: martedì mattina, in zona Sa Marinedda</li>
+      <li><strong>Arzachena</strong>: mercoledì mattina, centro</li>
+      <li><strong>Palau</strong>: lunedì mattina, lungomare</li>
+      <li><strong>San Teodoro</strong>: giovedì mattina, centro</li>
+      <li><strong>Tempio Pausania</strong>: venerdì mattina, centro storico</li>
+    </ul>
+
+    <h3>Mercatini serali estivi</h3>
+
+    <ul>
+      <li><strong>San Teodoro</strong>: tutte le sere d'estate, lungomare. Artigianato, gioielli, bibite</li>
+      <li><strong>Porto Rotondo</strong>: weekend estivi in piazza San Marco</li>
+      <li><strong>Cannigione</strong>: tutte le sere d'estate, lungomare</li>
+    </ul>
+
+    <h2>Eventi mondani Costa Smeralda</h2>
+
+    <p>
+      Per chi vuole assaggiare la "vita notturna" leggendaria della Costa Smeralda:
+    </p>
+
+    <ul>
+      <li><strong>Phi Beach</strong> (Baja Sardinia, tutto agosto): aperitivi al tramonto, DJ internazionali</li>
+      <li><strong>Billionaire</strong> (Porto Cervo, varie date estive): club esclusivo, tavoli da 500€+, dress code rigido</li>
+      <li><strong>Cala di Volpe</strong> (varie cene di gala estive): ristoranti stellati, eventi privati</li>
+      <li><strong>Porto Cervo Cervo Hotel</strong> (varie aperitivi e eventi): atmosfera lusso accessibile</li>
+    </ul>
+
+    <h2>Tip pratici per partecipare</h2>
+
+    <ul>
+      <li><strong>Verifica le date</strong> sui siti dei comuni o pro loco prima di partire — alcune sagre cambiano di poco anno per anno</li>
+      <li><strong>Parcheggio</strong>: arriva 1-2 ore prima per i piccoli borghi (limitato)</li>
+      <li><strong>Cash</strong>: molte sagre accettano solo contanti per cibo e bevande</li>
+      <li><strong>Vestiti casual</strong>: niente abito da sera per le sagre tradizionali (eccetto eventi mondani Costa Smeralda)</li>
+      <li><strong>Ritorno tardi</strong>: se rientri dopo cena tarda, attenzione a strade interne (animali selvatici, scarsa illuminazione)</li>
+      <li><strong>Veicolo adatto</strong>: per raggiungere borghi entroterra come Berchidda, Padru, Aglientu è meglio una <a href="/flotta/jeep-avenger">Jeep Avenger</a> o <a href="/flotta/mercedes-classe-a">Mercedes Classe A</a></li>
+    </ul>
+
+    <h2>Combinare eventi e itinerario</h2>
+
+    <p>
+      Programmare la vacanza intorno a un evento può arricchire l'esperienza:
+    </p>
+
+    <ul>
+      <li>Settimana di <strong>Time in Jazz</strong> (1-15 agosto): combina con itinerario completo Costa Smeralda + Berchidda</li>
+      <li><strong>Notte Bianca Olbia</strong> (giugno): perfetta per weekend lungo Olbia, vedi <a href="/guide/cosa-fare-a-olbia-3-giorni-itinerario">cosa fare a Olbia in 3 giorni</a></li>
+      <li><strong>Sagre enogastronomiche</strong> (settembre-ottobre): combina con tour cantine vermentino + Gallura interna</li>
+      <li><strong>Cavallinata Tempio</strong>: perfetta come escursione mezza giornata in Gallura interna</li>
+    </ul>
+
+    <h2>In sintesi</h2>
+
+    <p>
+      Tra <strong>maggio e ottobre</strong> la Gallura ha decine di eventi, sagre, festival che permettono di vivere la cultura locale al di là delle spiagge. Le <strong>sagre enogastronomiche dei borghi</strong> sono le più autentiche e meno turistiche; gli <strong>eventi mondani Costa Smeralda</strong> sono per chi cerca esperienze esclusive. <strong>Time in Jazz</strong> a Berchidda e dintorni è uno degli appuntamenti culturali più importanti d'Europa estate.
+    </p>
+
+    <p>
+      Per noleggiare un'auto comoda per girare i borghi della Gallura — anche con consegna direttamente a Olbia, Palau o Cannigione — contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Per pianificare un soggiorno completo, vedi anche il nostro <a href="/guide/itinerario-7-giorni-costa-smeralda-da-olbia">itinerario di 7 giorni in Costa Smeralda</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

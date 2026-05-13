@@ -1,0 +1,303 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("spiagge-piu-belle-sardegna-nord-orientale")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: [
+    { "@type": "Thing", name: "Spiagge Sardegna nord-orientale" },
+    { "@type": "AdministrativeArea", name: "Gallura, Sardegna" },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Spiagge top Sardegna", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>La Sardegna nord-orientale ha alcune delle spiagge più belle del Mediterraneo</strong>, riconosciute regolarmente nei ranking internazionali (TripAdvisor Travellers' Choice, Lonely Planet, National Geographic). Sabbia bianca finissima, acqua trasparente con sfumature dal turchese al verde smeraldo, fondali bassi che proseguono per decine di metri, scogliere di granito modellate dal vento. Questa è la nostra selezione delle <strong>7 più iconiche</strong> della Gallura e Costa Smeralda — quelle che <strong>non puoi non visitare</strong> se vieni in vacanza tra Olbia e Santa Teresa di Gallura. Ognuna ha caratteristiche uniche, accesso diverso, target di pubblico diverso.
+    </p>
+
+    <h2>I criteri della classifica</h2>
+
+    <p>
+      Per selezionare queste 7 abbiamo considerato: <strong>bellezza scenica</strong> (acqua, sabbia, contesto), <strong>fama internazionale</strong>, <strong>accessibilità</strong> (raggiungibilità con auto), <strong>servizi essenziali</strong>, <strong>esperienza percepita</strong> (ricordi che si portano a casa). Sono ordinate <strong>geograficamente da nord a sud</strong>, non per "preferenza personale" — ognuna è la migliore nel suo genere.
+    </p>
+
+    <h2>1. Spiaggia Rosa di Budelli (Arcipelago di La Maddalena)</h2>
+
+    <p>
+      <strong>Tipo</strong>: spiaggia rosa unica al mondo · <strong>Accesso</strong>: solo da barca (sbarco vietato) · <strong>Da Olbia</strong>: ~3h totale (auto a Palau + barca)
+    </p>
+
+    <p>
+      La <strong>Spiaggia Rosa</strong> dell'isola di Budelli è famosa per la <strong>sabbia di colore rosato</strong> dovuto a microorganismi marini (briozoi e foraminiferi). Lo sbarco è vietato dal 1994 per proteggere la sabbia (chi viene preso a raccoglierla rischia 3.000 € di multa), ma si può ammirare da pochi metri dalla barca.
+    </p>
+
+    <p>
+      <strong>Come arrivare</strong>: traghetto da Palau a La Maddalena, poi escursione barca organizzata dell'Arcipelago. Vedi la nostra <a href="/guide/visitare-arcipelago-la-maddalena-guida-pratica">guida all'Arcipelago di La Maddalena</a>.
+    </p>
+
+    <p>
+      <strong>Impressioni reali</strong>: la sabbia non è "rosa shocking" come nelle foto Photoshop. È un rosa pallido/salmone, comunque unico al mondo. Va vista per dirti "ci sono stato".
+    </p>
+
+    <h2>2. Cala Coticcio "Tahiti" (Caprera)</h2>
+
+    <p>
+      <strong>Tipo</strong>: caletta paradisiaca con prenotazione obbligatoria · <strong>Accesso</strong>: 45 min sentiero da Caprera · <strong>Da Olbia</strong>: ~2h totale
+    </p>
+
+    <p>
+      Soprannominata "<strong>Tahiti della Sardegna</strong>" per il colore dell'acqua. Caletta intima di sabbia bianca incastonata tra rocce di granito. Acqua color smeraldo intenso, fondale che scende dolcemente, snorkeling tra i pesci.
+    </p>
+
+    <p>
+      <strong>Accesso regolamentato dal 2021</strong>: solo con guida ambientale + prenotazione obbligatoria sul portale del Parco Nazionale. 2 turni/giorno (mattino e pomeriggio), ~50 persone/turno, 25 €/persona. <strong>In alta stagione si esauriscono i posti 7-15 giorni prima</strong>.
+    </p>
+
+    <p>
+      <strong>Tip</strong>: se non riesci a prenotare Cala Coticcio, vai alla <strong>Spiaggia del Relitto</strong> sempre a Caprera (libera, accesso da sentiero 45 min, qualità acqua simile, meno trafficata).
+    </p>
+
+    <h2>3. Spiaggia del Principe (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Tipo</strong>: spiaggia iconica di lusso · <strong>Accesso</strong>: parcheggio sterrato + 200 m sentiero · <strong>Da Olbia</strong>: 35 min auto
+    </p>
+
+    <p>
+      Una delle <strong>spiagge più fotografate al mondo</strong>. Si chiama "del Principe" perché era la spiaggia preferita del Principe Aga Khan, fondatore della Costa Smeralda. Sabbia bianchissima finissima, acqua dai colori cangianti (turchese vicino riva, blu intenso più al largo), scogli rossastri sulla sinistra.
+    </p>
+
+    <p>
+      <strong>Accesso</strong>: dal parcheggio sterrato si percorre un sentiero di 200 metri tra ginepri secolari. Sterrato accessibile a tutte le auto ma una <a href="/flotta/jeep-avenger">Jeep Avenger</a> rende il viaggio più sereno. Parcheggio gratuito mattino, a pagamento (5 €/ora) dopo le 10:00.
+    </p>
+
+    <p>
+      <strong>Esperienza</strong>: in alta stagione si riempie entro le 11:00. Vai presto. Stabilimento con noleggio lettini (60-150 €/coppia/giorno).
+    </p>
+
+    <p>
+      Vedi anche la <a href="/spiaggia-del-principe">pagina dedicata Spiaggia del Principe</a>.
+    </p>
+
+    <h2>4. Liscia Ruja (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Tipo</strong>: spiaggia ampia "di tutti" · <strong>Accesso</strong>: strada asfaltata + parcheggio · <strong>Da Olbia</strong>: 30 min
+    </p>
+
+    <p>
+      <strong>La spiaggia più lunga della Costa Smeralda</strong> (1 km). Sabbia bianca, acqua trasparente, fondale basso per 15-20 metri. Tre stabilimenti (Long Beach, Phi Beach, Liscia Ruja Beach) con servizi completi (lettini, ombrelloni, bar, ristorante).
+    </p>
+
+    <p>
+      <strong>Pro</strong>: enorme, c'è sempre posto anche in agosto; perfetta per famiglie; servizi top. <strong>Contro</strong>: meno "selvaggia" di altre, atmosfera più "stabilimento balneare".
+    </p>
+
+    <p>
+      <strong>Tramonto</strong>: il <strong>Phi Beach</strong> qui è leggendario per gli aperitivi al sole calante, con DJ internazionali in stagione (cocktail 25-40 €).
+    </p>
+
+    <p>
+      Vedi anche la <a href="/liscia-ruja">pagina Liscia Ruja</a>.
+    </p>
+
+    <h2>5. Capriccioli (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Tipo</strong>: due calette gemelle · <strong>Accesso</strong>: parcheggio asfaltato + 50 m a piedi · <strong>Da Olbia</strong>: 30 min
+    </p>
+
+    <p>
+      <strong>Capriccioli</strong> è in realtà composta da <strong>due calette separate da un promontorio</strong>: Capriccioli Est (più grande, sabbia bianca, stabilimenti) e Capriccioli Ovest (più piccola, intima, sabbia + scogli). Acqua turchese, fondale che scende dolcemente, snorkeling laterale tra rocce.
+    </p>
+
+    <p>
+      <strong>Pro</strong>: facile accesso, perfetta per famiglie con bimbi 3+ (acqua bassa per 15 m), servizi completi. <strong>Contro</strong>: parcheggio costoso (15-20 €/giorno) e si riempie entro le 10:00 in alta stagione.
+    </p>
+
+    <p>
+      Vedi anche la <a href="/capriccioli">pagina Capriccioli</a>.
+    </p>
+
+    <h2>6. Romazzino (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Tipo</strong>: spiaggia di hotel di lusso · <strong>Accesso</strong>: parcheggio + 100 m a piedi · <strong>Da Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      Davanti al celebre <strong>Hotel Romazzino</strong> 5 stelle. Sabbia bianchissima, acqua incredibilmente trasparente, fondale basso per 15 metri perfetto per famiglie e nuotatori non esperti. Stabilimento esclusivo con lettini e servizio premium.
+    </p>
+
+    <p>
+      <strong>Atmosfera</strong>: elegante, frequentata da clientela hotel + turisti che fanno una giornata di "lusso accessibile". Parcheggio costoso (10-15 €/giorno) e limitato.
+    </p>
+
+    <p>
+      Vedi anche la <a href="/romazzino">pagina Romazzino</a>.
+    </p>
+
+    <h2>7. Cala Brandinchi e Lu Impostu (San Teodoro)</h2>
+
+    <p>
+      <strong>Tipo</strong>: "le Bahamas della Sardegna" · <strong>Accesso</strong>: con prenotazione in alta stagione · <strong>Da Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      Le <strong>spiagge gemelle di San Teodoro</strong> sono soprannominate "le Bahamas della Sardegna" per il colore turchese chiarissimo dell'acqua e la sabbia bianca. <strong>Cala Brandinchi</strong> è più piccola, raccolta; <strong>Lu Impostu</strong> è più ampia. Entrambe hanno fondali bassi che scendono dolcemente — perfette per famiglie con bambini piccolissimi.
+    </p>
+
+    <p>
+      <strong>Prenotazione obbligatoria in alta stagione</strong> per entrambe (sistema regionale Sardegna, max 1.450 persone/giorno). Verifica sul sito ufficiale Regione Sardegna.
+    </p>
+
+    <p>
+      <strong>Esperienza</strong>: ginepri secolari sul retro creano ombra naturale. Acqua trasparente che fa sembrare il fondale a portata di mano anche a 20 m di distanza.
+    </p>
+
+    <p>
+      Vedi anche la <a href="/cala-brandinchi">pagina Cala Brandinchi</a> e <a href="/lu-impostu">Lu Impostu</a>.
+    </p>
+
+    <h2>Bonus: La Cinta (San Teodoro)</h2>
+
+    <p>
+      <strong>5 km di sabbia bianca</strong> di fronte all'isola di Tavolara. La spiaggia "famiglia" per eccellenza della Sardegna nord-orientale. Acqua bassa per 30+ metri, perfetta anche per neonati. Vedi <a href="/la-cinta">pagina La Cinta</a> e la nostra <a href="/guide/spiagge-costa-smeralda-con-bambini">guida spiagge famiglia</a>.
+    </p>
+
+    <h2>Tabella riassuntiva</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Spiaggia</th>
+          <th>Da Olbia</th>
+          <th>Accesso</th>
+          <th>Folla</th>
+          <th>Adatta a famiglie?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Spiaggia Rosa Budelli</td>
+          <td>~3h totale</td>
+          <td>Solo barca, no sbarco</td>
+          <td>Da barca</td>
+          <td>Sì (visita)</td>
+        </tr>
+        <tr>
+          <td>Cala Coticcio Tahiti</td>
+          <td>~2h totale</td>
+          <td>Sentiero 45 min + prenotazione</td>
+          <td>Limitata (50/turno)</td>
+          <td>No (sentiero impegnativo)</td>
+        </tr>
+        <tr>
+          <td>Spiaggia del Principe</td>
+          <td>35 min</td>
+          <td>Parcheggio sterrato + 200 m</td>
+          <td>Alta dopo 11:00</td>
+          <td>Si (con cautela su sentiero)</td>
+        </tr>
+        <tr>
+          <td>Liscia Ruja</td>
+          <td>30 min</td>
+          <td>Strada asfaltata</td>
+          <td>Media (sempre posto)</td>
+          <td>Sì</td>
+        </tr>
+        <tr>
+          <td>Capriccioli</td>
+          <td>30 min</td>
+          <td>Parcheggio asfaltato</td>
+          <td>Alta dopo 10:00</td>
+          <td>Sì (3+ anni)</td>
+        </tr>
+        <tr>
+          <td>Romazzino</td>
+          <td>35 min</td>
+          <td>Parcheggio + 100 m</td>
+          <td>Alta dopo 10:00</td>
+          <td>Sì</td>
+        </tr>
+        <tr>
+          <td>Brandinchi + Lu Impostu</td>
+          <td>35 min</td>
+          <td>Prenotazione obbligatoria</td>
+          <td>Limitata (1.450/giorno)</td>
+          <td>Sì (perfette neonati)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Suggerimento di ordine di visita per 1 settimana</h2>
+
+    <p>
+      Se hai 7 giorni e vuoi vederle tutte:
+    </p>
+
+    <ol>
+      <li><strong>Giorno 1</strong>: Capriccioli (vicino Olbia, accesso facile per "rompere il ghiaccio")</li>
+      <li><strong>Giorno 2</strong>: Liscia Ruja + tramonto Phi Beach</li>
+      <li><strong>Giorno 3</strong>: Spiaggia del Principe + Romazzino (giro Costa Smeralda nord)</li>
+      <li><strong>Giorno 4</strong>: Cala Brandinchi + Lu Impostu (San Teodoro, prenota giorni prima)</li>
+      <li><strong>Giorno 5</strong>: Escursione barca arcipelago (Spiaggia Rosa + Spargi + Santa Maria)</li>
+      <li><strong>Giorno 6</strong>: Cala Coticcio Tahiti (prenota giorni prima)</li>
+      <li><strong>Giorno 7</strong>: Riposo + bagno tranquillo a La Cinta o Pittulongu</li>
+    </ol>
+
+    <h2>Veicolo consigliato per il tour</h2>
+
+    <p>
+      Per visitare queste 7 spiagge, il veicolo ideale è un <strong>SUV compatto come la <a href="/flotta/jeep-avenger">Jeep Avenger</a></strong>: posizione di guida alta, accesso agli sterrati (Spiaggia del Principe), bagagliaio per ombrelloni e attrezzatura beach. In alternativa, una <a href="/flotta/mercedes-classe-a">Mercedes Classe A</a> per chi vuole più comfort autostradale tra Olbia e Costa Smeralda.
+    </p>
+
+    <h2>Quando andare</h2>
+
+    <ul>
+      <li><strong>Maggio-giugno</strong>: stagione perfetta. Prezzi bassi, niente folla, acqua già 19-22°C</li>
+      <li><strong>Luglio-agosto</strong>: top per il bagno (acqua 25-27°C) ma affollatissimo, prezzi alti, prenotazioni obbligatorie a Cala Brandinchi e Cala Coticcio</li>
+      <li><strong>Settembre</strong>: stagione perfetta per chi non ha vincoli scolastici. Acqua 23-25°C, atmosfera tranquilla, prezzi medi</li>
+      <li><strong>Ottobre</strong>: ancora possibile. Servizi ridotti, ma tranquillità garantita</li>
+    </ul>
+
+    <h2>In sintesi</h2>
+
+    <p>
+      Le <strong>7 spiagge top della Sardegna nord-orientale</strong> raccontano un mosaico di esperienze diverse: dalla rarità unica della Spiaggia Rosa al lusso accessibile di Romazzino, dalle famiglie a La Cinta all'avventura di Cala Coticcio. <strong>Tutte sono raggiungibili da Olbia in massimo 1 ora</strong> di auto (più traversata barca per Budelli/Caprera). La strategia migliore è dedicare almeno una settimana e visitarne 4-5, lasciando spazio al riposo e alla scoperta dei borghi interni della Gallura.
+    </p>
+
+    <p>
+      Per noleggio auto adatto a queste spiagge — anche con consegna direttamente al tuo hotel/villa in Costa Smeralda — contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Vedi anche le <a href="/guide/spiagge-costa-smeralda-con-bambini">spiagge family-friendly</a> e le <a href="/guide/spiagge-nascoste-gallura-sterrati">spiagge nascoste della Gallura</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

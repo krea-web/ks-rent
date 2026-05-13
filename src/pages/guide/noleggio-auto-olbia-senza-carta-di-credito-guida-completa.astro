@@ -28,13 +28,71 @@ const articleJsonLd = {
     sameAs: "https://www.ksrentsardinia.com/noleggio-auto-senza-carta-di-credito-olbia",
   },
 };
+
+// FAQ schema separato per le 6 domande del paragrafo "Domande frequenti"
+// dell'articolo. Aiuta passage citation in AI Overviews / ChatGPT.
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Posso davvero pagare tutto in contanti per il noleggio auto a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, è possibile pagare sia il noleggio sia il deposito cauzionale interamente in contanti con KS Rent Sardinia a Olbia. È il metodo più semplice quando non hai carte abilitate. Per importi sopra i 5.000 € richiediamo di concordare modalità e tempi (la legge italiana limita le transazioni in contanti).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Le carte prepagate (Postepay, Revolut, N26) vanno davvero bene per il deposito cauzionale?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. Postepay, Revolut, N26, Hype, Wise sono tutte accettate da KS Rent Sardinia. L'unico requisito è che la carta abbia disponibilità sufficiente per coprire il deposito al momento del ritiro. Non viene fatta pre-autorizzazione: l'importo viene effettivamente prelevato come deposito e restituito alla riconsegna.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Il bonifico istantaneo arriva in tempo per il deposito?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. Il bonifico SEPA Instant arriva in pochi secondi (massimo 10 secondi). KS Rent Sardinia verifica l'accredito sul proprio conto direttamente al momento della consegna del veicolo.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quanto tempo dura il blocco del deposito cauzionale con KS Rent Sardinia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Zero giorni: il deposito viene restituito immediatamente alla riconsegna del veicolo, dopo la verifica del livello carburante e dell'integrità del mezzo. A differenza delle pre-autorizzazioni delle grandi compagnie internazionali (15-30 giorni di 'blocco' sulla carta), con KS Rent Sardinia il deposito torna subito.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Cosa succede in caso di danni al veicolo a noleggio?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "In caso di danno coperto da assicurazione (kasko, RCA), KS Rent Sardinia tratta direttamente con la compagnia. Se c'è una franchigia da addebitare, viene comunicata trasparentemente e detratta dal deposito. Se il deposito non basta a coprire la franchigia (raro), si concordano i tempi di pagamento residuo.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso aggiungere un secondo conducente al contratto di noleggio?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, con un piccolo supplemento. Il secondo conducente deve avere patente valida da almeno 1 anno e rispettare l'età minima richiesta dalla categoria di veicolo. Il secondo conducente è sempre indicato nel contratto di noleggio.",
+      },
+    },
+  ],
+};
 ---
 <BaseLayout
   title={`${meta.title} | KS Rent Sardinia`}
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={articleJsonLd}
+  jsonLd={[articleJsonLd, faqJsonLd]}
   breadcrumbs={[
     { name: "Guide", path: "/guide" },
     { name: meta.title, path: `/guide/${meta.slug}` },

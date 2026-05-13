@@ -1,0 +1,285 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("visitare-arcipelago-la-maddalena-guida-pratica")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Place",
+    name: "Arcipelago di La Maddalena",
+    containedInPlace: { "@type": "AdministrativeArea", name: "Sardegna" },
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Arcipelago La Maddalena", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>L'Arcipelago di La Maddalena è uno dei parchi nazionali marini più importanti d'Europa</strong>: 7 isole principali (La Maddalena, Caprera, Spargi, Budelli, Razzoli, Santo Stefano, Santa Maria) e oltre 50 isolotti, tra Sardegna nord-orientale e Corsica. Acqua trasparente da Caraibi, sabbie bianche o rosa, fondali ricchi di pesci e coralli. Si visita partendo dalla Costa Smeralda — Palau è il punto di imbarco principale. Questa guida pratica spiega come visitare l'arcipelago nel 2026: traghetti, escursioni in barca, isole accessibili, prenotazione obbligatoria per certe spiagge, costi reali. Scritta da Francesco e Salvatore Milo, che ogni anno consigliano clienti su come organizzare la giornata a La Maddalena.
+    </p>
+
+    <h2>Le 3 modalità per visitare l'arcipelago</h2>
+
+    <h3>1. Traghetto + giornata sull'isola di La Maddalena (più economico)</h3>
+
+    <p>
+      Si parte da <a href="/noleggio-auto-palau">Palau</a> con traghetti pubblici che fanno la spola con La Maddalena ogni 30 minuti circa. <strong>Tempo traversata</strong>: 15-20 minuti. <strong>Costi 2026</strong>: 5-8 € a persona andata/ritorno (passeggero a piedi); 25-50 € andata/ritorno per auto + passeggeri.
+    </p>
+
+    <p>
+      Una volta sull'isola di La Maddalena, hai 2 sotto-opzioni:
+    </p>
+
+    <ul>
+      <li><strong>Visitare solo La Maddalena città</strong>: centro storico, Piazza Garibaldi, Cala Gavetta, museo navale. Cibo e shopping</li>
+      <li><strong>Noleggiare auto piccola sull'isola</strong> (o usare la tua sbarcata dal traghetto) per girare le calette: Spalmatore, Bassa Trinita, Monti d'Arena, Cala Lunga, Punta Tegge</li>
+    </ul>
+
+    <p>
+      <strong>Pro</strong>: economico, autonomo, libertà di tempi. <strong>Contro</strong>: vedi solo La Maddalena (la più "civilizzata"), non vedi Spargi, Budelli, Caprera profondo.
+    </p>
+
+    <h3>2. Escursione in barca organizzata (più completa)</h3>
+
+    <p>
+      Imbarchi su una barca turistica da Palau o Cannigione che ti porta in giornata a visitare 3-5 isole con soste in spiagge incantate. Tempo: 8 ore circa (9:00-17:00).
+    </p>
+
+    <p>
+      <strong>Costi 2026</strong>: 40-90 € a persona (include pranzo a bordo o sosta in spiaggia). Per famiglie alcune compagnie offrono pacchetti scontati.
+    </p>
+
+    <p>
+      <strong>Itinerario tipico</strong>:
+    </p>
+
+    <ol>
+      <li>Partenza da Palau ore 9:00</li>
+      <li>Sosta a <strong>Spiaggia Rosa di Budelli</strong> (visione da barca, sbarco vietato dal 1994 per proteggere la sabbia)</li>
+      <li>Sosta a <strong>Cala Corsara di Spargi</strong>: bagno + pranzo a bordo</li>
+      <li>Sosta a <strong>Cala Granara o Cala Lunga di Spargi</strong>: snorkeling</li>
+      <li>Eventuale sosta a <strong>Santa Maria</strong> (acque cristalline)</li>
+      <li>Rientro a Palau ore 17:00-17:30</li>
+    </ol>
+
+    <p>
+      <strong>Pro</strong>: vedi gli scorci più iconici dell'arcipelago in 1 giorno. <strong>Contro</strong>: tempi rigidi, sosta breve in ogni spiaggia, tante persone a bordo.
+    </p>
+
+    <h3>3. Charter privato con skipper (più esclusivo)</h3>
+
+    <p>
+      Noleggi una barca privata (gozzo, motoscafo o vela) con skipper professionista. Decidi tu l'itinerario, i tempi, dove fermarti.
+    </p>
+
+    <p>
+      <strong>Costi 2026</strong>:
+    </p>
+    <ul>
+      <li><strong>Gozzo 6m senza skipper</strong> (4 persone): 250-450 €/giorno + carburante</li>
+      <li><strong>Motoscafo 8-10m con skipper</strong> (6-8 persone): 600-1.200 €/giorno + carburante</li>
+      <li><strong>Vela 10-12m con skipper</strong>: 800-1.500 €/giorno</li>
+      <li><strong>Yacht 15m+ con skipper + hostess</strong>: 2.000-5.000 €/giorno</li>
+    </ul>
+
+    <p>
+      <strong>Pro</strong>: privacy assoluta, itinerario su misura, accesso a calette poco frequentate. <strong>Contro</strong>: costo elevato, dipendi dal vento. Vedi anche la nostra <a href="/guide/yacht-charter-vs-auto-noleggio-costa-smeralda">guida yacht charter vs auto noleggio</a>.
+    </p>
+
+    <h2>Le isole principali da conoscere</h2>
+
+    <h3>La Maddalena (l'unica abitata)</h3>
+
+    <p>
+      <strong>Popolazione</strong>: ~10.000 abitanti. È l'unica con servizi turistici sviluppati: hotel, ristoranti, bar, supermercati, ospedale, polizia. <strong>Da visitare</strong>: centro storico, Cala Gavetta, museo Garibaldino (Caprera è collegata da ponte). <strong>Spiagge top</strong>: Spalmatore, Bassa Trinita, Monti d'Arena.
+    </p>
+
+    <h3>Caprera</h3>
+
+    <p>
+      Collegata a La Maddalena da un ponte stradale (15 min in auto). Famosa per essere stata la <strong>residenza di Giuseppe Garibaldi</strong>: la sua casa è oggi museo nazionale. <strong>Spiagge top</strong>: Cala Coticcio "Tahiti", Spiaggia del Relitto, Cala Brigantina, Cala Andreani. <strong>Attenzione</strong>: Cala Coticcio richiede prenotazione obbligatoria con guida ambientale (2 turni/giorno, 50 persone/turno, ~25 €/persona).
+    </p>
+
+    <h3>Spargi</h3>
+
+    <p>
+      Disabitata. <strong>Cala Corsara</strong> è la sua spiaggia più famosa, con un blocco di granito naturale a forma di "Cervo" (icona). <strong>Cala Granara</strong> e <strong>Cala Lunga</strong> sono altre spiagge incantate. Si visita solo in barca.
+    </p>
+
+    <h3>Budelli</h3>
+
+    <p>
+      Disabitata. Famosa per la <strong>Spiaggia Rosa</strong>, una spiaggia con sabbia di colore rosato dovuto a microorganismi marini. <strong>Sbarco vietato</strong> dal 1994 per proteggere la sabbia: la spiaggia si vede solo dalla barca. Riserva integrale del Parco Nazionale.
+    </p>
+
+    <h3>Razzoli</h3>
+
+    <p>
+      Disabitata, vicino al confine con la Corsica. Faro storico, calette nascoste. Si visita solo in barca privata.
+    </p>
+
+    <h3>Santo Stefano</h3>
+
+    <p>
+      Piccola isola di fronte a Palau con un complesso militare ex-NATO (oggi parzialmente dismesso). <strong>Spiaggia del Pesce</strong> è bellissima. Visite limitate per motivi di sicurezza.
+    </p>
+
+    <h3>Santa Maria</h3>
+
+    <p>
+      Piccolissima, vicino Razzoli. Acque trasparenti, snorkeling top.
+    </p>
+
+    <h2>Cala Coticcio: la spiaggia più desiderata (con prenotazione)</h2>
+
+    <p>
+      <strong>Cala Coticcio</strong> a Caprera è soprannominata <strong>"Tahiti della Sardegna"</strong>. Acqua color smeraldo intensissimo, sabbia bianca finissima, fondale che scende dolcemente. È raggiungibile <strong>solo a piedi</strong> da un sentiero (~45 minuti dall'inizio del sentiero a Caprera).
+    </p>
+
+    <p>
+      Dal 2021 l'accesso è <strong>regolamentato</strong> dal Parco Nazionale per proteggere l'ecosistema:
+    </p>
+
+    <ul>
+      <li><strong>Prenotazione obbligatoria</strong> sul portale Parco Nazionale Arcipelago La Maddalena</li>
+      <li>Solo con <strong>guida ambientale escursionistica autorizzata</strong></li>
+      <li>2 turni/giorno: mattina (9:00-13:00) e pomeriggio (14:30-18:30)</li>
+      <li>Massimo 50 persone/turno</li>
+      <li>Costo: ~25 €/persona</li>
+      <li>In alta stagione si esauriscono i posti 7-15 giorni prima</li>
+    </ul>
+
+    <p>
+      <strong>Tip</strong>: prenota appena confermi il viaggio. Spiaggia del Relitto (Caprera) è alternativa libera con accesso diretto via sentiero (45 minuti) — meno trafficata, qualità acqua simile.
+    </p>
+
+    <h2>Come arrivare a Palau (punto di imbarco)</h2>
+
+    <p>
+      Palau è a:
+    </p>
+
+    <ul>
+      <li><strong>50 minuti da Olbia</strong> (50 km via SS125)</li>
+      <li><strong>50 minuti dall'aeroporto di Olbia OLB</strong></li>
+      <li><strong>15 minuti da Cannigione</strong></li>
+      <li><strong>20 minuti da Baja Sardinia</strong></li>
+      <li><strong>30 minuti da Porto Cervo</strong></li>
+    </ul>
+
+    <p>
+      <strong>Parcheggio a Palau</strong>: il porto ha diversi parcheggi a pagamento (8-15 €/giorno). In alta stagione vai presto (entro le 8:30) o usa i parcheggi più periferici a 5-10 minuti a piedi dal porto.
+    </p>
+
+    <p>
+      Per arrivare a Palau da Olbia con un veicolo a noleggio è ideale una <a href="/flotta/mercedes-classe-a">Mercedes Classe A</a> o <a href="/flotta/jeep-avenger">Jeep Avenger</a>. La <a href="/noleggio-auto-palau">pagina noleggio auto Palau</a> dettaglia il servizio di consegna in zona.
+    </p>
+
+    <h2>Quanto costa la giornata a La Maddalena</h2>
+
+    <h3>Opzione "low budget" (traghetto + La Maddalena a piedi)</h3>
+    <ul>
+      <li>Traghetto a/r passeggero: 8 €</li>
+      <li>Pranzo trattoria locale: 25-40 €</li>
+      <li>Snack/caffè: 10 €</li>
+      <li><strong>Totale a persona: ~50 €</strong></li>
+    </ul>
+
+    <h3>Opzione "completa" (escursione barca tutto incluso)</h3>
+    <ul>
+      <li>Escursione barca con pranzo a bordo: 60-90 €/persona</li>
+      <li>Parcheggio Palau: 10-15 € (per veicolo)</li>
+      <li>Acqua/snack supplementari: 10 €</li>
+      <li><strong>Totale a persona: ~80-115 €</strong></li>
+    </ul>
+
+    <h3>Opzione "esclusiva" (charter privato)</h3>
+    <ul>
+      <li>Charter motoscafo 10m con skipper: 600-1.200 €/giorno</li>
+      <li>Carburante: 200-400 €</li>
+      <li>Pranzo a bordo (catering o ristorante): 50-100 €/persona</li>
+      <li><strong>Totale: 1.000-2.000 € totali per coppia/piccolo gruppo</strong></li>
+    </ul>
+
+    <h2>Periodi migliori per visitare</h2>
+
+    <ul>
+      <li><strong>Maggio - inizio giugno</strong>: stagione perfetta. Acqua già 19-22°C, niente folla, prezzi escursioni ridotti</li>
+      <li><strong>Settembre</strong>: stagione perfetta. Acqua 23-25°C, prezzi medi, atmosfera tranquilla</li>
+      <li><strong>Luglio - agosto</strong>: il top per il bagno (acqua 25-27°C) ma escursioni piene, code, prezzi alti</li>
+      <li><strong>Ottobre</strong>: ancora possibile per chi non teme acqua a 19°C. Meno servizi attivi</li>
+      <li><strong>Novembre - aprile</strong>: alcuni servizi turistici chiusi, traghetti regolari ma escursioni molto ridotte</li>
+    </ul>
+
+    <h2>Consigli pratici</h2>
+
+    <ul>
+      <li><strong>Prenota traghetti online</strong> in alta stagione: in agosto rischi di non trovare posto</li>
+      <li><strong>Porta i tuoi snack/acqua</strong>: a bordo delle escursioni è incluso il pranzo ma extra (acqua) costano</li>
+      <li><strong>Crema solare 50+ resistente all'acqua</strong>: in barca ci si scotta facilmente per il riflesso</li>
+      <li><strong>Cappellino e occhiali</strong>: il vento è costante</li>
+      <li><strong>Maschera + boccaglio</strong>: snorkeling fantastico ovunque, soprattutto a Cala Granara e Spargi</li>
+      <li><strong>Anti-mal-di-mare</strong>: se sei sensibile, prendine 1 ora prima della partenza</li>
+      <li><strong>Cellulare</strong>: in alcune zone dell'arcipelago non c'è segnale</li>
+      <li><strong>Rispetta il Parco</strong>: niente immondizia, no spostare sabbia/conchiglie, niente droni senza autorizzazione</li>
+    </ul>
+
+    <h2>Combinare La Maddalena con il resto della vacanza</h2>
+
+    <p>
+      La giornata a La Maddalena si combina perfettamente con un soggiorno a:
+    </p>
+
+    <ul>
+      <li><strong><a href="/noleggio-auto-palau">Palau</a></strong>: per chi vuole essere vicino al porto d'imbarco</li>
+      <li><strong><a href="/noleggio-auto-cannigione">Cannigione</a></strong>: per ottimi ristoranti di pesce, 15 min da Palau</li>
+      <li><strong><a href="/noleggio-auto-baja-sardinia">Baja Sardinia</a></strong>: vita mondana, 20 min da Palau</li>
+      <li><strong><a href="/noleggio-auto-porto-cervo">Porto Cervo</a></strong>: lusso, 30 min da Palau</li>
+    </ul>
+
+    <p>
+      Per un itinerario completo, vedi il nostro <a href="/guide/itinerario-7-giorni-costa-smeralda-da-olbia">itinerario di 7 giorni in Costa Smeralda</a> che dedica un'intera giornata a La Maddalena.
+    </p>
+
+    <h2>In sintesi</h2>
+
+    <ul>
+      <li><strong>L'arcipelago di La Maddalena merita 1 intera giornata</strong> della tua vacanza in Costa Smeralda</li>
+      <li><strong>Modalità più consigliata</strong>: escursione barca organizzata (60-90 €/persona) per vedere Spargi + Budelli + Santa Maria</li>
+      <li><strong>Punto d'imbarco</strong>: Palau (50 min da Olbia)</li>
+      <li><strong>Cala Coticcio (Caprera)</strong>: prenota con anticipo se vuoi visitarla</li>
+      <li><strong>Stagione ideale</strong>: maggio-giugno o settembre</li>
+    </ul>
+
+    <p>
+      Per organizzare il noleggio dell'auto da Olbia a Palau con orario coordinato al traghetto, contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

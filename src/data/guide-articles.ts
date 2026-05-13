@@ -150,6 +150,71 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     author: "Francesco Milo & Salvatore Milo",
     related: ["quanto-costa-vacanza-costa-smeralda-budget-2026", "come-arrivare-costa-smeralda-voli-traghetti"],
   },
+  {
+    slug: "patente-internazionale-sardegna-serve-davvero",
+    title: "Patente internazionale per noleggiare auto in Sardegna: serve davvero?",
+    excerpt:
+      "Quando serve la patente internazionale per noleggiare auto in Sardegna: regole UE, USA, UK, Cina, Russia. Documenti accettati, alternative, costi.",
+    category: "Noleggio",
+    publishedAt: "2026-05-13",
+    readingMinutes: 6,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["noleggio-auto-olbia-senza-carta-di-credito-guida-completa", "noleggio-auto-olbia-aeroporto-guida-pratica"],
+  },
+  {
+    slug: "noleggio-scooter-quad-sardegna-come-scegliere",
+    title: "Noleggio scooter o quad in Sardegna: come scegliere e quando usarli",
+    excerpt:
+      "Scooter Honda SH 125/350 o quad Yamaha Raptor in Sardegna? Quale serve la patente, quanto costa, dove conviene usarli. Confronto pratico per turisti.",
+    category: "Veicoli",
+    publishedAt: "2026-05-13",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/HONDA/ksrent-hondash125.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["spiagge-nascoste-gallura-sterrati", "come-muoversi-porto-cervo-parcheggi-navette"],
+  },
+  {
+    slug: "visitare-arcipelago-la-maddalena-guida-pratica",
+    title: "Visitare l'Arcipelago di La Maddalena: guida pratica 2026",
+    excerpt:
+      "Come visitare l'Arcipelago di La Maddalena dalla Costa Smeralda: traghetti da Palau, escursioni in barca, spiagge top, isole, costi, prenotazione obbligatoria.",
+    category: "Itinerari",
+    publishedAt: "2026-05-13",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["come-arrivare-costa-smeralda-voli-traghetti", "yacht-charter-vs-auto-noleggio-costa-smeralda"],
+  },
+  {
+    slug: "sagre-eventi-gallura-2026-calendario",
+    title: "Sagre e eventi in Gallura 2026: il calendario completo",
+    excerpt:
+      "Tutte le sagre, feste patronali ed eventi enogastronomici della Gallura nel 2026: Olbia, Arzachena, Tempio Pausania, San Pantaleo. Date, luoghi, accesso.",
+    category: "Itinerari",
+    publishedAt: "2026-05-13",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["cosa-fare-a-olbia-3-giorni-itinerario", "itinerario-7-giorni-costa-smeralda-da-olbia"],
+  },
+  {
+    slug: "spiagge-piu-belle-sardegna-nord-orientale",
+    title: "Le 7 spiagge più belle della Sardegna nord-orientale",
+    excerpt:
+      "Le 7 spiagge più belle della Sardegna nord-orientale: Spiaggia del Principe, La Cinta, Cala Brandinchi, Liscia Ruja, Cala Coticcio, Capriccioli, Romazzino.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-13",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["spiagge-costa-smeralda-con-bambini", "spiagge-nascoste-gallura-sterrati"],
+  },
 ];
 
 export function findArticle(slug: string): GuideArticleMeta | undefined {
