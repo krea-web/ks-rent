@@ -1,0 +1,297 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-aeroporto-guida-pratica")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Place",
+    name: "Aeroporto di Olbia Costa Smeralda",
+    sameAs: "https://www.geasar.it/",
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Noleggio auto aeroporto Olbia", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>L'Aeroporto di Olbia Costa Smeralda (codice IATA: OLB) è la principale porta d'accesso alla Sardegna nord-orientale</strong> e il punto da cui parte la stragrande maggioranza dei noleggi auto verso la Costa Smeralda. Riceve voli da tutta Europa con compagnie come Easyjet, Ryanair, ITA Airways, Lufthansa, Air France, Volotea, Vueling. In alta stagione arrivano oltre 50 voli al giorno. Il terminal è gestito da Geasar e si trova a 4 km dal centro di Olbia. In questa guida pratica spieghiamo tutto ciò che serve sapere per noleggiare un'auto all'aeroporto OLB: dalle compagnie disponibili alle alternative indipendenti, dai prezzi reali ai trucchi per evitare lunghe attese ai banchi.
+    </p>
+
+    <h2>Le compagnie di noleggio in aeroporto OLB</h2>
+
+    <p>
+      All'interno dell'area arrivi dell'aeroporto di Olbia trovi i banchi delle <strong>principali compagnie internazionali</strong>:
+    </p>
+
+    <ul>
+      <li><strong>Hertz</strong> — banco principale, ampia flotta</li>
+      <li><strong>Avis</strong> — sempre presente, prezzi medi</li>
+      <li><strong>Sixt</strong> — gamma premium</li>
+      <li><strong>Europcar</strong> — buon rapporto qualità/prezzo</li>
+      <li><strong>Maggiore / Goldcar / Locauto</strong> — operatori italiani</li>
+      <li><strong>Budget / Enterprise</strong> — economici</li>
+    </ul>
+
+    <p>
+      Tutte queste compagnie hanno un banco fisico dentro al terminal arrivi. Il <strong>flusso tipo</strong> per ritirare l'auto con un grande operatore è:
+    </p>
+
+    <ol>
+      <li>Atterri</li>
+      <li>Ritiri il bagaglio</li>
+      <li>Vai al banco della compagnia (anche se hai già prenotato online)</li>
+      <li>Mostri voucher, patente, carta di credito con plafond</li>
+      <li>Ti pre-autorizzano un blocco di 1.000-2.500 € sulla carta di credito</li>
+      <li>Vai al parcheggio noleggi (5-10 min a piedi o navetta)</li>
+      <li>Stai in coda per il check fisico del veicolo</li>
+      <li>Parti</li>
+    </ol>
+
+    <p>
+      <strong>Tempo medio totale</strong>: 30-90 minuti in alta stagione, anche oltre 2 ore se sei in fondo alla coda. La coda peggiore è solitamente sabato pomeriggio e domenica mattina (cambio settimana).
+    </p>
+
+    <h2>Costi reali del noleggio in aeroporto</h2>
+
+    <p>
+      I prezzi nelle compagnie internazionali variano enormemente in base a periodo, anticipo di prenotazione e categoria veicolo. Range tipici 2026 (tariffa giornaliera, 7 giorni):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Bassa stagione</th>
+          <th>Alta stagione (lug-ago)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mini (Fiat Panda, VW Up)</td>
+          <td>30-50 €/giorno</td>
+          <td>80-150 €/giorno</td>
+        </tr>
+        <tr>
+          <td>Compatta (VW Polo, Fiat 500X)</td>
+          <td>40-60 €/giorno</td>
+          <td>100-180 €/giorno</td>
+        </tr>
+        <tr>
+          <td>Premium (BMW Serie 1, Mercedes A)</td>
+          <td>80-120 €/giorno</td>
+          <td>200-350 €/giorno</td>
+        </tr>
+        <tr>
+          <td>SUV (Jeep Renegade, Range Rover Evoque)</td>
+          <td>70-110 €/giorno</td>
+          <td>200-400 €/giorno</td>
+        </tr>
+        <tr>
+          <td>Sportiva (BMW M2, Audi RS)</td>
+          <td>su preventivo (250-400 €/giorno)</td>
+          <td>su preventivo (450-800 €/giorno)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      A questi vanno aggiunti <strong>extra spesso obbligatori in aeroporto</strong>:
+    </p>
+
+    <ul>
+      <li><strong>Tasse aeroportuali</strong>: 10-15% sulla tariffa</li>
+      <li><strong>Riduzione franchigia / kasko top</strong>: 15-30 €/giorno</li>
+      <li><strong>Secondo conducente</strong>: 5-10 €/giorno</li>
+      <li><strong>Seggiolino bambini</strong>: 5-10 €/giorno</li>
+      <li><strong>Pieno carburante</strong>: spesso pre-fatturato a tariffa maggiorata</li>
+      <li><strong>Riconsegna fuori orario</strong>: 30-50 € flat</li>
+    </ul>
+
+    <p>
+      <strong>Risultato</strong>: la tariffa "mostrata" su Booking, Rentalcars o Discover Cars spesso diventa il 30-50% più cara al banco. È legale ma poco trasparente.
+    </p>
+
+    <h2>Alternative indipendenti ai grandi network</h2>
+
+    <p>
+      Oltre alle compagnie nei banchi del terminal, esistono <strong>operatori indipendenti locali</strong> che consegnano direttamente all'arrivo, fuori dai banchi. KS Rent Sardinia è uno di questi.
+    </p>
+
+    <p>
+      <strong>Come funziona</strong>:
+    </p>
+
+    <ol>
+      <li>Prenoti online direttamente sul nostro sito (<a href="/prenotaora">/prenotaora</a>)</li>
+      <li>Comunichi orario e numero del volo</li>
+      <li>Atterri, ritiri bagaglio</li>
+      <li>Esci dagli arrivi e ci aspettiamo direttamente al marciapiede del terminal con il tuo veicolo già pronto</li>
+      <li>Check rapido del veicolo, firma contratto, parti</li>
+    </ol>
+
+    <p>
+      <strong>Tempo medio</strong>: 10 minuti dal touchdown al volante. Niente file, niente pre-autorizzazioni complicate. Il deposito cauzionale può essere versato in <strong>contanti, prepagata, bancomat o bonifico</strong> — senza obbligo di carta di credito.
+    </p>
+
+    <h2>Distanze dall'aeroporto OLB alle località principali</h2>
+
+    <p>
+      Una volta ritirata l'auto, calcola questi tempi (in alta stagione raddoppia per traffico):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Destinazione</th>
+          <th>Distanza</th>
+          <th>Tempo (bassa stagione)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Olbia centro</td>
+          <td>4 km</td>
+          <td>10 min</td>
+        </tr>
+        <tr>
+          <td>Pittulongu</td>
+          <td>5 km</td>
+          <td>10 min</td>
+        </tr>
+        <tr>
+          <td>Porto Olbia (Isola Bianca, traghetti)</td>
+          <td>6 km</td>
+          <td>10 min</td>
+        </tr>
+        <tr>
+          <td><a href="/noleggio-auto-porto-rotondo">Porto Rotondo</a></td>
+          <td>20 km</td>
+          <td>20 min</td>
+        </tr>
+        <tr>
+          <td><a href="/noleggio-auto-golfo-aranci">Golfo Aranci</a></td>
+          <td>20 km</td>
+          <td>25 min</td>
+        </tr>
+        <tr>
+          <td><a href="/noleggio-auto-san-teodoro">San Teodoro</a></td>
+          <td>30 km</td>
+          <td>30 min</td>
+        </tr>
+        <tr>
+          <td><a href="/noleggio-auto-porto-cervo">Porto Cervo</a></td>
+          <td>32 km</td>
+          <td>35 min</td>
+        </tr>
+        <tr>
+          <td><a href="/noleggio-auto-baja-sardinia">Baja Sardinia</a></td>
+          <td>38 km</td>
+          <td>45 min</td>
+        </tr>
+        <tr>
+          <td><a href="/noleggio-auto-palau">Palau</a></td>
+          <td>43 km</td>
+          <td>50 min</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Orari e voli notturni</h2>
+
+    <p>
+      L'aeroporto di Olbia opera <strong>dalle 06:00 alle 24:00 circa</strong> in alta stagione. In bassa stagione il primo volo del mattino è di solito alle 06:30 e l'ultimo intorno alle 22:30. <strong>I banchi delle grandi compagnie chiudono alle 23:00</strong> — se atterri dopo, devi attendere la mattina dopo per ritirare l'auto, oppure pagare extra per un servizio fuori orario (raro che lo offrano).
+    </p>
+
+    <p>
+      KS Rent Sardinia offre <strong>consegna fino alle 22:30 standard, oltre questo orario su appuntamento</strong>. Se hai un volo serale tardivo (es. arrivo all'una di notte), contatta Francesco e Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a> per organizzare l'incontro fuori orario.
+    </p>
+
+    <h2>Servizi all'aeroporto OLB utili da sapere</h2>
+
+    <ul>
+      <li><strong>Wi-Fi gratuito</strong> in tutto il terminal</li>
+      <li><strong>Bar e ristoranti</strong> open dalle 06:00 a 30 min dopo l'ultimo volo</li>
+      <li><strong>Bancomat (ATM)</strong>: 3 ATM in area arrivi (utili per prelevare cash per il deposito)</li>
+      <li><strong>Cambio valuta</strong>: presente ma con commissioni alte (meglio usare ATM)</li>
+      <li><strong>Farmacia</strong>: presente in area arrivi</li>
+      <li><strong>Sala VIP / Lounge</strong>: a pagamento per voli in partenza</li>
+      <li><strong>Parcheggio breve sosta</strong>: 1.50 €/15 min, per chi ti viene a prendere</li>
+    </ul>
+
+    <h2>Noleggio auto OLB: domande frequenti</h2>
+
+    <h3>È meglio noleggiare in aeroporto o in centro a Olbia?</h3>
+
+    <p>
+      Per la maggior parte dei turisti, la consegna in aeroporto è più conveniente — eviti taxi/navetta verso il centro e poi il pickup. Se invece arrivi via traghetto al porto Isola Bianca, conviene farsi consegnare direttamente al porto (anche questo gratuito da KS Rent Sardinia).
+    </p>
+
+    <h3>Devo prenotare con anticipo?</h3>
+
+    <p>
+      Sì, soprattutto per <strong>luglio e agosto</strong>: i veicoli si esauriscono entro maggio. Con KS Rent Sardinia puoi prenotare online fino a 24 ore prima dell'arrivo (verificando disponibilità) e bloccare il veicolo con conferma email immediata.
+    </p>
+
+    <h3>Devo pagare la pre-autorizzazione sulla carta di credito?</h3>
+
+    <p>
+      Con le grandi compagnie sì (1.000-2.500 € bloccati per tutta la durata + 5-15 giorni dopo). Con KS Rent Sardinia <strong>no</strong>: il deposito cauzionale è un classico bonifico/contanti/prepagata, restituito immediatamente alla riconsegna. Vedi la nostra <a href="/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa">guida noleggio senza carta di credito</a>.
+    </p>
+
+    <h3>Quale veicolo scegliere per la Costa Smeralda?</h3>
+
+    <p>
+      Dipende dall'itinerario. Se vai solo a Porto Cervo e hai bagaglio leggero, una <a href="/flotta/mercedes-classe-a">Mercedes Classe A</a> è perfetta. Se prevedi spiagge nascoste su sterrato (Spiaggia del Principe), meglio una <a href="/flotta/jeep-avenger">Jeep Avenger</a>. Per esperienza sportiva su pochi giorni, <a href="/flotta/audi-rs3">Audi RS3</a> o <a href="/flotta/bmw-m2">BMW M2</a>. Vedi i nostri <a href="/flotta/confronta">confronti veicoli</a>.
+    </p>
+
+    <h3>Posso restituire il veicolo in un altro punto?</h3>
+
+    <p>
+      Sì, KS Rent Sardinia accetta riconsegne in aeroporto, porto Isola Bianca, hotel/villa in Costa Smeralda. Coordinare orario e luogo via WhatsApp prima della partenza.
+    </p>
+
+    <h3>Cosa succede se il volo è in ritardo?</h3>
+
+    <p>
+      Monitoriamo lo stato del tuo volo automaticamente (basta che ci comunichi il numero al momento della prenotazione). Se sei in ritardo di 1-2 ore, ti aspettiamo senza costi aggiuntivi. Per ritardi maggiori o cancellazioni, riprogrammiamo la consegna senza penali.
+    </p>
+
+    <h2>In sintesi</h2>
+
+    <p>
+      <strong>L'aeroporto di Olbia è ben servito da grandi compagnie di noleggio</strong>, ma i tempi di check-in possono essere lunghi e i costi finali (pre-autorizzazione carta + extra obbligatori) spesso superano le aspettative. Le <strong>alternative indipendenti come KS Rent Sardinia</strong> offrono consegna direttamente agli arrivi, niente file, pagamento flessibile senza carta di credito obbligatoria, e tempi di check-out di 10 minuti. La scelta dipende dal tuo profilo: se valorizzi velocità e flessibilità, scegli un operatore locale; se hai esigenze particolari di flotta enorme o soccorso multi-paese, le grandi compagnie sono adeguate.
+    </p>
+
+    <p>
+      Per prenotare la consegna del tuo veicolo all'aeroporto Olbia OLB, vai su <a href="/prenotaora">/prenotaora</a> oppure visita la pagina dedicata <a href="/noleggio-auto-aeroporto-olbia">noleggio auto aeroporto Olbia</a>. Per richieste fuori orario o consegne speciali, contatta Francesco e Salvatore Milo su WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

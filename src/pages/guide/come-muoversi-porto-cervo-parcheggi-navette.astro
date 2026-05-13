@@ -1,0 +1,224 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("come-muoversi-porto-cervo-parcheggi-navette")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Place",
+    name: "Porto Cervo",
+    containedInPlace: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardegna" },
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Come muoversi a Porto Cervo", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Porto Cervo non è una città: è un cluster di marina, hotel di lusso, boutique e ristoranti distribuito su 5 km di costa</strong> tra Punta Capaccia e Liscia di Vacca. Muoversi qui in alta stagione (luglio-agosto) può essere un incubo se non sei preparato: traffico costante sulla SP59, parcheggi a pagamento ovunque (con tariffe dai 5 ai 25 €/ora), navette gratuite poco pubblicizzate e zone pedonali variabili. Questa guida raccoglie l'esperienza pratica di Francesco e Salvatore Milo, che ogni stagione consegnano veicoli a clienti diretti agli hotel e alle ville di Porto Cervo, e contiene gli stessi consigli che diamo via WhatsApp prima di ogni consegna.
+    </p>
+
+    <h2>Come arrivare a Porto Cervo</h2>
+
+    <h3>In auto da Olbia</h3>
+
+    <p>
+      <strong>Distanza Olbia → Porto Cervo</strong>: 32-35 km in 35-50 minuti (in alta stagione anche 1h15min). Strada da prendere: SS125 fino a Arzachena, poi SP59 (Strada Costa Smeralda). La SP59 è una statale tortuosa, panoramica ma a singola corsia per gran parte del tracciato — non si supera, non si va veloci. Se hai noleggiato un'auto a Olbia con consegna in aeroporto OLB o porto Isola Bianca, calcola che la stessa SP59 si percorre prevalentemente al passo della macchina davanti.
+    </p>
+
+    <h3>In navetta o trasporto pubblico</h3>
+
+    <p>
+      <strong>Esiste un servizio bus pubblico (ARST)</strong> da Olbia a Porto Cervo, con corse giornaliere limitate (3-4 al giorno in alta stagione). Tempo di percorrenza ~1h30min, costo ~3-5 €. Frequenza insufficiente per chi vuole muoversi liberamente. Le navette private degli hotel sono riservate ai clienti dell'hotel.
+    </p>
+
+    <h3>In taxi</h3>
+
+    <p>
+      Taxi da aeroporto Olbia a Porto Cervo: <strong>80-120 €</strong> in alta stagione (tariffa fissa). Da Porto Cervo a Olbia per il volo di rientro spesso il prezzo sale a 100-150 €. Per un soggiorno di 5+ giorni, il taxi diventa rapidamente più costoso del noleggio auto.
+    </p>
+
+    <h3>In barca</h3>
+
+    <p>
+      Porto Cervo è un porto turistico di livello internazionale. Se arrivi via mare con il tuo yacht, l'ormeggio nel Porto Vecchio o nella Marina costa <strong>800-3.500 €/notte</strong> (per imbarcazioni 12-24 m, in alta stagione). Niente parcheggio auto da gestire, ma serve comunque un mezzo per raggiungere le spiagge (il pullman privato per il porto è raro).
+    </p>
+
+    <h2>I parcheggi di Porto Cervo</h2>
+
+    <p>
+      Porto Cervo ha 4 zone parcheggio principali. Vediamole una per una con costi reali alta stagione 2026:
+    </p>
+
+    <h3>P1 — Centro Commerciale (Cervo Hub)</h3>
+
+    <p>
+      Il <strong>parcheggio coperto sotto al Centro Commerciale</strong> è il più centrale: da qui in 5 minuti a piedi raggiungi il Porto Vecchio, la Promenade, le boutique e il Cervo Hotel. <strong>Costo</strong>: 5 €/ora, 25 €/giorno. <strong>Pro</strong>: copertura totale, sicuro. <strong>Contro</strong>: spesso pieno entro le 11:00 in alta stagione.
+    </p>
+
+    <h3>P2 — Porto Vecchio</h3>
+
+    <p>
+      Parcheggio scoperto a fianco del Porto Vecchio (Piazzetta). <strong>Costo</strong>: 4 €/ora, 20 €/giorno. <strong>Pro</strong>: a 1 minuto dalla Piazzetta. <strong>Contro</strong>: pochi posti (~50), spesso pieno dalle 10:00.
+    </p>
+
+    <h3>P3 — Marina di Porto Cervo</h3>
+
+    <p>
+      Parcheggio della Marina (Yacht Club Costa Smeralda). <strong>Costo</strong>: 6 €/ora, 30 €/giorno (più caro perché vicino allo Yacht Club). <strong>Pro</strong>: comodo per chi visita yachts e gli eventi del Yacht Club. <strong>Contro</strong>: il più caro.
+    </p>
+
+    <h3>P4 — Liscia di Vacca / strade laterali</h3>
+
+    <p>
+      Parcheggio gratuito disponibile <strong>SOLO</strong> sulle strade secondarie tra Liscia di Vacca e Pantogia (la zona "alta" di Porto Cervo, sopra la SP59). Se trovi posto, sei a 15-25 minuti a piedi dalla Promenade in discesa (e in salita al ritorno). <strong>Pro</strong>: gratuito, sempre posti. <strong>Contro</strong>: cammini, soprattutto al rientro col caldo.
+    </p>
+
+    <h2>Le navette interne di Porto Cervo</h2>
+
+    <p>
+      Pochi sanno che <strong>Porto Cervo ha un servizio di navetta gratuita</strong> in alta stagione (giugno-settembre) gestito dal Consorzio Costa Smeralda. La navetta collega:
+    </p>
+
+    <ul>
+      <li>P1 (Centro Commerciale)</li>
+      <li>P2 (Porto Vecchio / Piazzetta)</li>
+      <li>P3 (Marina / Yacht Club)</li>
+      <li>Spiagge Cala di Volpe e Romazzino (in alcuni periodi)</li>
+    </ul>
+
+    <p>
+      La navetta passa ogni 30-45 minuti dalle 10:00 alle 24:00 in alta stagione. <strong>È gratuita</strong>. La maggior parte dei turisti la ignora perché non è ben pubblicizzata. Ti consigliamo di parcheggiare al P4 gratuito (zona alta) o al P1 e usare la navetta per spostarti tra le zone senza riprendere l'auto.
+    </p>
+
+    <h2>Zone pedonali e accessi limitati</h2>
+
+    <p>
+      <strong>La Piazzetta e la Promenade del Porto Vecchio sono pedonali</strong> tutto l'anno. Non puoi avvicinare l'auto. La zona di Pevero Golf è ad accesso limitato per non residenti. Le ville di Romazzino e Liscia di Vacca sono in proprietà privata ma le strade pubbliche d'accesso sono aperte (parcheggio difficile).
+    </p>
+
+    <p>
+      In <strong>luglio-agosto</strong>, durante eventi specifici (regate Yacht Club, gala Cala di Volpe, eventi Billionaire), alcune strade vengono chiuse al traffico la sera. Verifica sui canali social del Consorzio Costa Smeralda prima di programmare cene.
+    </p>
+
+    <h2>Spiagge raggiungibili da Porto Cervo</h2>
+
+    <p>
+      Da Porto Cervo (intesa come la Promenade) sono raggiungibili in auto le spiagge piu' famose della Costa Smeralda:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Spiaggia</th>
+          <th>Distanza</th>
+          <th>Tempo auto</th>
+          <th>Parcheggio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="/spiaggia-del-principe">Spiaggia del Principe</a></td>
+          <td>4 km</td>
+          <td>10 min + 200 m a piedi</td>
+          <td>Gratuito (sterrato), 5 €/ora a partire da 10:00</td>
+        </tr>
+        <tr>
+          <td><a href="/romazzino">Romazzino</a></td>
+          <td>3 km</td>
+          <td>8 min</td>
+          <td>A pagamento, ~10 €/giorno</td>
+        </tr>
+        <tr>
+          <td><a href="/capriccioli">Capriccioli</a></td>
+          <td>5 km</td>
+          <td>12 min</td>
+          <td>A pagamento, ~15 €/giorno</td>
+        </tr>
+        <tr>
+          <td><a href="/liscia-ruja">Liscia Ruja</a></td>
+          <td>4 km</td>
+          <td>10 min</td>
+          <td>A pagamento, ~12 €/giorno</td>
+        </tr>
+        <tr>
+          <td><a href="/grande-pevero">Grande Pevero</a></td>
+          <td>5 km</td>
+          <td>15 min</td>
+          <td>Limitato, vai presto</td>
+        </tr>
+        <tr>
+          <td><a href="/la-celvia">La Celvia</a></td>
+          <td>3 km</td>
+          <td>10 min</td>
+          <td>A pagamento, ~10 €/giorno</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Tip pratico</strong>: arriva in spiaggia entro le 9:30-10:00. Dopo le 10:30 in alta stagione i parcheggi sono pieni e devi tornare indietro o cercare alternative a 1-2 km a piedi.
+    </p>
+
+    <h2>Costi giornalieri tipici a Porto Cervo</h2>
+
+    <p>
+      Per chi pianifica una giornata "tipo" a Porto Cervo, ecco i costi reali aggiornati 2026:
+    </p>
+
+    <ul>
+      <li><strong>Parcheggio</strong>: 20-30 €/giorno (P1, P2, P3) — gratis al P4 con camminata</li>
+      <li><strong>Caffè in Piazzetta</strong>: 4-6 €</li>
+      <li><strong>Pranzo ristorante</strong>: 60-150 €/persona (piatti tipici), 200-400 €/persona (stellati)</li>
+      <li><strong>Pranzo veloce / pizza</strong>: 25-40 €/persona</li>
+      <li><strong>Spiaggia con stabilimento</strong>: 60-150 €/coppia (lettino + ombrellone)</li>
+      <li><strong>Aperitivo Phi Beach o equivalente</strong>: 25-40 €/persona</li>
+      <li><strong>Cena in centro</strong>: 80-200 €/persona</li>
+    </ul>
+
+    <p>
+      Una giornata "completa" in Porto Cervo per una coppia (parcheggio + colazione + spiaggia + pranzo + aperitivo + cena) può costare facilmente <strong>400-700 €</strong>. Per chi cerca un'esperienza più contenuta, ci sono alternative più economiche a <a href="/noleggio-auto-baja-sardinia">Baja Sardinia</a> e <a href="/noleggio-auto-cannigione">Cannigione</a>.
+    </p>
+
+    <h2>Consigli pratici finali</h2>
+
+    <ul>
+      <li><strong>Veicolo consigliato</strong>: una <a href="/flotta/mercedes-classe-a">Mercedes Classe A</a> o equivalente è sufficiente per la SP59. Una <a href="/flotta/audi-rs3">Audi RS3</a> o BMW M2 è perfetta solo se vuoi uno statement visivo. La <a href="/flotta/jeep-avenger">Jeep Avenger</a> è utile solo se prevedi di accedere a Spiaggia del Principe via sterrato</li>
+      <li><strong>Carburante</strong>: il benzinaio più vicino è ad Arzachena. Fai pieno prima di entrare nella SP59</li>
+      <li><strong>Ricambi monete o EasyPark</strong>: i parcometri di Porto Cervo accettano monete o pagamento app. Tieni 20 € in moneta o scarica EasyPark</li>
+      <li><strong>Eventi</strong>: in luglio si tiene la <strong>Settimana delle Bocche</strong> (regata) e ad agosto vari eventi mondani. Verifica le chiusure stradali prima di programmare la cena</li>
+      <li><strong>Confronto veicoli</strong>: se devi ancora scegliere, vedi il nostro <a href="/flotta/confronta">confronto veicoli</a></li>
+    </ul>
+
+    <p>
+      Per organizzare la consegna del veicolo direttamente al tuo hotel a Porto Cervo (Cervo Hotel, Cala di Volpe, Romazzino, Pitrizza) contatta Francesco e Salvatore Milo su WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Coordiniamo l'orario con il check-in dell'hotel così non devi gestire né taxi né pickup all'arrivo.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
