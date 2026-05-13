@@ -1,7 +1,7 @@
 /**
- * Metadata articoli del mini-blog /guide/.
- * Aggiungere qui ogni nuovo articolo creato in src/pages/guide/.
- * Usato dall'index /guide/ per generare la lista e dai layout per related-links.
+ * Metadata articoli del mini-blog /guide/ (IT) e /en/guide/ (EN).
+ * Aggiungere qui ogni nuovo articolo creato in src/pages/guide/ o src/pages/en/guide/.
+ * Usato dagli index per generare la lista e dai layout per related-links.
  */
 
 export interface GuideArticleMeta {
@@ -17,6 +17,21 @@ export interface GuideArticleMeta {
   author: string;
   /** Related articles (per linking interno) — slug list. */
   related?: string[];
+}
+
+export interface GuideArticleMetaEn {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: "Car hire" | "Itineraries" | "Costa Smeralda" | "Airport & Port" | "Vehicles";
+  publishedAt: string;
+  updatedAt?: string;
+  readingMinutes: number;
+  heroImage: string;
+  author: string;
+  related?: string[];
+  /** Slug IT corrispondente per hreflang. */
+  itEquivalent?: string;
 }
 
 export const GUIDE_ARTICLES: GuideArticleMeta[] = [
@@ -219,4 +234,55 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
 
 export function findArticle(slug: string): GuideArticleMeta | undefined {
   return GUIDE_ARTICLES.find((a) => a.slug === slug);
+}
+
+/* ─── EN articles ─── */
+
+export const GUIDE_ARTICLES_EN: GuideArticleMetaEn[] = [
+  {
+    slug: "car-hire-olbia-without-credit-card-complete-guide",
+    title: "Car hire Olbia without credit card: the complete 2026 guide",
+    excerpt:
+      "How to rent a car in Olbia, Sardinia without a credit card: accepted payments, deposit, documents, real timings. Updated for 2026 by KS Rent Sardinia.",
+    category: "Car hire",
+    publishedAt: "2026-05-13",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["car-hire-olbia-airport-practical-guide", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+  },
+  {
+    slug: "7-day-itinerary-costa-smeralda-from-olbia",
+    title: "7-day itinerary in Costa Smeralda from Olbia: routes, beaches, distances",
+    excerpt:
+      "The complete 7-day plan for Costa Smeralda starting from Olbia: day-by-day stops, distances, parking, vehicle tips for each leg of the trip.",
+    category: "Itineraries",
+    publishedAt: "2026-05-13",
+    readingMinutes: 12,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["car-hire-olbia-airport-practical-guide", "car-hire-olbia-without-credit-card-complete-guide"],
+    itEquivalent: "itinerario-7-giorni-costa-smeralda-da-olbia",
+  },
+  {
+    slug: "car-hire-olbia-airport-practical-guide",
+    title: "Car hire Olbia Airport: practical guide for tourists 2026",
+    excerpt:
+      "Everything about car hire at Olbia Costa Smeralda Airport (OLB): airport delivery, flight times, queues at the desks, independent alternatives, real prices.",
+    category: "Airport & Port",
+    publishedAt: "2026-05-13",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["car-hire-olbia-without-credit-card-complete-guide", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "noleggio-auto-olbia-aeroporto-guida-pratica",
+  },
+];
+
+export function findArticleEn(slug: string): GuideArticleMetaEn | undefined {
+  return GUIDE_ARTICLES_EN.find((a) => a.slug === slug);
 }

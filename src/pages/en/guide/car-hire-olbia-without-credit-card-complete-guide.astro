@@ -1,0 +1,303 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("car-hire-olbia-without-credit-card-complete-guide")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+const itUrl = meta.itEquivalent
+  ? `https://www.ksrentsardinia.com/guide/${meta.itEquivalent}`
+  : null;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+  about: {
+    "@type": "Thing",
+    name: "Car hire without credit card",
+    sameAs: "https://www.ksrentsardinia.com/en/car-hire-no-credit-card-olbia",
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Can I really pay everything in cash for car hire in Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, you can pay both the rental and the security deposit entirely in cash with KS Rent Sardinia in Olbia. It is the simplest method when you do not have suitable cards. For amounts over €5,000, payment terms must be agreed in advance (Italian law limits cash transactions).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do prepaid cards (Revolut, Wise, Postepay) work for the security deposit?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Revolut, Wise, N26, Hype and Postepay are all accepted by KS Rent Sardinia. The only requirement is that the card has sufficient balance to cover the deposit at pick-up. There is no pre-authorisation: the amount is actually charged as deposit and refunded at drop-off.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Does instant bank transfer (SEPA Instant) arrive in time for the deposit?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. SEPA Instant transfers arrive within seconds (10 seconds maximum). KS Rent Sardinia checks the credit on the company account directly at the time of vehicle handover.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long is the deposit blocked with KS Rent Sardinia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Zero days: the deposit is refunded immediately at drop-off, after a quick check of fuel level and vehicle integrity. Unlike pre-authorisations from large international companies (15-30 day card hold), with KS Rent Sardinia your money comes back straight away.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What happens if there is damage to the rental vehicle?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "If the damage is covered by insurance (CDW, third-party liability), KS Rent Sardinia deals directly with the insurance company. If there is an excess to charge, it is communicated transparently and deducted from the deposit. If the deposit doesn't cover the excess (rare), payment terms for the remainder are agreed.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I add a second driver to the rental contract?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, with a small supplement. The second driver must hold a valid licence for at least 1 year and meet the minimum age required by the vehicle category. The second driver is always named on the rental contract.",
+      },
+    },
+  ],
+};
+
+const alternateLinks = itUrl
+  ? [{ hreflang: "it-IT", href: itUrl }, { hreflang: "en-GB", href: pageUrl }, { hreflang: "x-default", href: itUrl }]
+  : undefined;
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: meta.title, path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>Car hire in Olbia without a credit card is possible.</strong> KS Rent Sardinia, based in Olbia, Sardinia, is one of the few car rental companies in Italy that explicitly accepts <strong>cash, debit cards, prepaid cards (Revolut, Wise, N26, Hype, Postepay) and bank transfers</strong> for the security deposit. No minimum credit card limits, no €1,500-2,500 hold that the major international chains insist on. This guide explains exactly how it works, which documents you need, how much deposit is required and how vehicle delivery works at Olbia Costa Smeralda Airport (OLB), Olbia Isola Bianca port or directly at your hotel/villa in Costa Smeralda.
+    </p>
+
+    <h2>Why the big chains require a credit card</h2>
+
+    <p>
+      Hertz, Avis, Sixt, Europcar and the other large international networks require a traditional credit card (Visa, Mastercard, American Express with credit limit) to <strong>pre-authorise</strong> a guarantee hold on your account. The amount ranges from €800 for a city car to €5,000 for a supercar and <strong>remains frozen</strong> on the card for the entire rental duration plus 5-15 days after return. This automatically excludes:
+    </p>
+
+    <ul>
+      <li>Anyone who only has reloadable prepaid cards (Revolut, Wise, N26, Hype, Postepay): they don't have pre-authorisable credit limits</li>
+      <li>Anyone using debit cards linked to a current account (Maestro, V-Pay, Visa Debit)</li>
+      <li>Anyone who wants to pay in cash by choice or for privacy</li>
+      <li>Young people, students, freelancers, or visitors from abroad without a traditional credit card</li>
+      <li>Families who prefer not to lock thousands of euros for days</li>
+    </ul>
+
+    <p>
+      The result is that <strong>millions of European travellers cannot book with the major networks</strong> despite having the cash to pay for the rental. KS Rent Sardinia chose a different approach: vehicle security is handled with a traditional cash deposit, no card pre-authorisation.
+    </p>
+
+    <h2>How the security deposit works without a credit card</h2>
+
+    <p>
+      KS Rent Sardinia's security deposit is an amount proportional to the vehicle category, communicated at booking time (so there are no surprises at pick-up). Indicative examples:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Vehicle category</th>
+          <th>Example</th>
+          <th>Indicative deposit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>City car</td>
+          <td>Fiat Panda Hybrid</td>
+          <td>€500</td>
+        </tr>
+        <tr>
+          <td>Compact SUV</td>
+          <td>Jeep Avenger</td>
+          <td>€800</td>
+        </tr>
+        <tr>
+          <td>Premium</td>
+          <td>Mercedes A-Class</td>
+          <td>€1,200</td>
+        </tr>
+        <tr>
+          <td>Supercar / Sport</td>
+          <td>Audi RS3, BMW M2</td>
+          <td>€2,500 - €5,000</td>
+        </tr>
+        <tr>
+          <td>Scooter</td>
+          <td>Honda SH 125</td>
+          <td>€300</td>
+        </tr>
+        <tr>
+          <td>Quad</td>
+          <td>Yamaha Raptor</td>
+          <td>€800</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      The deposit can be paid via any of these methods — your choice:
+    </p>
+
+    <ul>
+      <li><strong>Cash in euros</strong>: the most immediate and private method</li>
+      <li><strong>Bank transfer</strong>, including SEPA Instant: the amount arrives within seconds and is verified at pick-up</li>
+      <li><strong>Prepaid cards</strong>: Revolut, Wise, N26, Hype, Postepay — they just need sufficient balance</li>
+      <li><strong>Debit cards</strong>: Visa Debit, Maestro, Mastercard Debit, V-Pay</li>
+      <li><strong>Credit cards</strong>: Visa, Mastercard, American Express — if you have one and prefer it</li>
+    </ul>
+
+    <p>
+      <strong>At drop-off</strong>, after a quick vehicle check (fuel level, any damage, traffic fines), the deposit is refunded immediately using the same payment method as deposit. No 15-day waits like the credit card pre-authorisations.
+    </p>
+
+    <h2>Documents required for car hire</h2>
+
+    <p>
+      The required documents are those provided by Italian regulations for car hire — nothing exotic:
+    </p>
+
+    <ol>
+      <li><strong>Valid Category B driving licence</strong> (for cars), held for at least 1 year. For Honda SH 125 scooters you need an A1 or B licence held for at least 1 year; for Honda SH 350 you need an A2 or B licence held for at least 3 years. The Yamaha Raptor quad requires a B licence.</li>
+      <li><strong>Valid identity document</strong> (passport for non-EU citizens; ID card or passport for EU)</li>
+      <li><strong>For non-EU citizens</strong>: International Driving Permit (IDP) is recommended (especially for US, Canada, Australia, Japan, Russia citizens)</li>
+      <li>Minimum age: <strong>21 for utility cars and standard vehicles, 25 for supercars, sports cars and premium vehicles</strong></li>
+    </ol>
+
+    <h2>How to book your no-credit-card car hire</h2>
+
+    <p>
+      Booking is 100% online at ksrentsardinia.com. Complete flow:
+    </p>
+
+    <ol>
+      <li><strong>Go to <a href="/en/book-now">/en/book-now</a></strong> (or use the dedicated <a href="/en/car-hire-no-credit-card-olbia">no credit card car hire page</a>)</li>
+      <li><strong>Choose your vehicle</strong> from the available fleet for your dates</li>
+      <li><strong>Enter email and phone number</strong></li>
+      <li><strong>Upload front and back photo of your driving licence</strong> (and second driver's, if applicable)</li>
+      <li><strong>Pick delivery location and time</strong>: Olbia OLB airport, Isola Bianca port, hotel, villa, restaurant. Coverage across all of Gallura and Costa Smeralda</li>
+      <li><strong>Sign the contract</strong> directly from your smartphone</li>
+      <li><strong>Receive instant confirmation email</strong> with attached contract and deposit instructions</li>
+    </ol>
+
+    <p>
+      At delivery, present your ID document and pay the security deposit using your preferred method. Average check-in time: 10 minutes.
+    </p>
+
+    <h2>Where delivery happens in Olbia</h2>
+
+    <p>
+      KS Rent Sardinia has two operational points in Olbia, both 5 minutes from Olbia Costa Smeralda Airport (OLB):
+    </p>
+
+    <ul>
+      <li><strong>Registered office</strong>: Viale Aldo Moro 367, Olbia (40.944573, 9.497897)</li>
+      <li><strong>Port delivery point</strong>: Viale Isola Bianca 38, directly at Olbia Port (40.923018, 9.520169) — ideal for those arriving by ferry (Moby, Tirrenia, Grimaldi, Corsica Ferries, GNV)</li>
+    </ul>
+
+    <p>
+      For <strong>airport delivery</strong>, we wait for you directly at the Geasar terminal Arrivals — no shuttles, no queues at rental desks. For those staying in Costa Smeralda, we organise <strong>delivery directly to your hotel, villa or resort</strong>: Porto Cervo (35 min), Baja Sardinia (45 min), San Teodoro (30 min), Palau (50 min), Porto Rotondo (20 min) and all locations in Gallura.
+    </p>
+
+    <p>
+      <strong>Delivery cost</strong>: free within the municipality of Olbia (including OLB airport and Isola Bianca port). For other locations in Gallura and Costa Smeralda the cost starts from €5 and is communicated transparently at quotation, depending on distance.
+    </p>
+
+    <h2>Frequently asked questions</h2>
+
+    <h3>Can I really pay everything in cash?</h3>
+
+    <p>
+      Yes, you can pay both the rental and the security deposit entirely in cash. It is the simplest method when you don't have eligible cards. For amounts over €5,000 we ask to agree on terms (Italian law limits cash transactions).
+    </p>
+
+    <h3>Do prepaid cards really work?</h3>
+
+    <p>
+      Yes. <strong>Revolut, Wise, N26, Hype, Postepay</strong> are all accepted. The only requirement is sufficient balance to cover the deposit at pick-up. No pre-authorisation: the amount is actually charged as deposit and refunded at drop-off.
+    </p>
+
+    <h3>Does the SEPA Instant transfer arrive in time?</h3>
+
+    <p>
+      Yes. SEPA Instant arrives within seconds (10 seconds max). We verify the credit to our account directly at the moment of vehicle delivery.
+    </p>
+
+    <h3>How long is the deposit held?</h3>
+
+    <p>
+      Zero days: the deposit is refunded <strong>immediately at drop-off</strong>, after fuel level check and vehicle integrity verification. Unlike the major chains' pre-authorisations (15-30 day "hold" on card), with us your money comes back right away.
+    </p>
+
+    <h3>What about damages?</h3>
+
+    <p>
+      For insurance-covered damage (CDW, third-party), we deal directly with the insurance company. If there's an excess to charge, it is communicated transparently and deducted from the deposit. If the deposit doesn't cover the excess (rare), we agree on payment terms for the remainder. No surprises.
+    </p>
+
+    <h3>Can I add a second driver?</h3>
+
+    <p>
+      Yes, with a small supplement. Valid licence held for at least 1 year and minimum age requirement compliant with the vehicle category. Second driver is always named on the rental contract.
+    </p>
+
+    <h2>When KS Rent Sardinia may say no</h2>
+
+    <p>
+      For transparency: there are cases where we cannot accept a rental even without a credit card requirement. These are:
+    </p>
+
+    <ul>
+      <li>Driving licence not valid or held for less than 1 year (1 year for utility cars, 3 years for SH 350 scooters and supercars)</li>
+      <li>Age below 21 (utility) or 25 (sports/premium)</li>
+      <li>Identity document expired or not legible</li>
+      <li>Rental history with KS Rent or other operators marked by serious unresolved incidents</li>
+      <li>Insufficient deposit funds available at pick-up</li>
+    </ul>
+
+    <h2>Summary</h2>
+
+    <p>
+      Renting a car in Olbia <strong>without a credit card is possible, simple and transparent</strong> with KS Rent Sardinia. The policy is explicit from the moment of booking: no surprises at the desk, no card hold, no pre-authorisation freezing thousands of euros. The deposit is handled like a classic security deposit (cash, transfer, prepaid, debit or credit at your choice) and refunded immediately at drop-off. For more details on payment policy visit the dedicated page: <a href="/en/car-hire-no-credit-card-olbia">Car hire without credit card in Olbia</a>. For specific questions, Francesco and Salvatore Milo answer directly on WhatsApp at <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

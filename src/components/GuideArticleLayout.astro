@@ -1,29 +1,77 @@
 ---
 /**
- * Layout condiviso per ogni articolo /guide/[slug].astro.
- * Riceve metadata + slot HTML body. Renderizza hero + author + reading time +
- * body con prose styling + related articles linker.
+ * Layout condiviso per ogni articolo /guide/[slug].astro (IT) e
+ * /en/guide/[slug].astro (EN). Riceve metadata + slot HTML body.
+ * Renderizza hero + author + reading time + body con prose styling +
+ * related articles linker.
+ *
+ * Backward compatible: se la prop `lang` non viene passata, default IT.
  */
 import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
-import { findArticle, type GuideArticleMeta } from "@/data/guide-articles";
+import {
+  findArticle,
+  findArticleEn,
+  type GuideArticleMeta,
+  type GuideArticleMetaEn,
+} from "@/data/guide-articles";
+
+type Lang = "it" | "en";
 
 interface Props {
-  meta: GuideArticleMeta;
+  meta: GuideArticleMeta | GuideArticleMetaEn;
+  lang?: Lang;
 }
 
-const { meta } = Astro.props;
-const formattedDate = new Date(meta.publishedAt).toLocaleDateString("it-IT", {
+const { meta, lang = "it" } = Astro.props;
+
+const localeStr = lang === "en" ? "en-GB" : "it-IT";
+const formattedDate = new Date(meta.publishedAt).toLocaleDateString(localeStr, {
   year: "numeric",
   month: "long",
   day: "numeric",
 });
 const updatedDate = meta.updatedAt
-  ? new Date(meta.updatedAt).toLocaleDateString("it-IT", { year: "numeric", month: "long", day: "numeric" })
+  ? new Date(meta.updatedAt).toLocaleDateString(localeStr, { year: "numeric", month: "long", day: "numeric" })
   : null;
 
+// Risolvi gli articoli correlati nella lingua corretta
+const relatedFinder = lang === "en" ? findArticleEn : findArticle;
 const relatedArticles = (meta.related || [])
-  .map((slug) => findArticle(slug))
-  .filter((a): a is GuideArticleMeta => !!a);
+  .map((slug) => relatedFinder(slug))
+  .filter((a): a is GuideArticleMeta | GuideArticleMetaEn => !!a);
+
+// URL base per i link articolo (IT senza prefisso, EN con /en)
+const guideBase = lang === "en" ? "/en/guide" : "/guide";
+const bookingHref = lang === "en" ? "/en/book-now" : "/prenotaora";
+
+const labels = {
+  it: {
+    eyebrow: `${meta.category} · Guide KS Rent`,
+    publishedOn: "Pubblicato il",
+    updatedOn: "aggiornato",
+    readingTime: "min di lettura",
+    authoredBy: "A cura di",
+    keepReading: "Continua a leggere",
+    readyTo: "Pronto a partire?",
+    bookTitle: "Prenota il tuo veicolo per la Costa Smeralda",
+    bookSubtitle:
+      "Conferma le date e scegli il veicolo dalla flotta di KS Rent Sardinia. Senza carta di credito obbligatoria.",
+    bookCta: "Verifica disponibilità",
+  },
+  en: {
+    eyebrow: `${meta.category} · KS Rent Guides`,
+    publishedOn: "Published on",
+    updatedOn: "updated",
+    readingTime: "min read",
+    authoredBy: "Written by",
+    keepReading: "Keep reading",
+    readyTo: "Ready to go?",
+    bookTitle: "Book your car for Costa Smeralda",
+    bookSubtitle:
+      "Confirm your dates and pick a vehicle from the KS Rent Sardinia fleet. No mandatory credit card.",
+    bookCta: "Check availability",
+  },
+}[lang];
 ---
 
 <article class="bg-background min-h-screen">
@@ -41,9 +89,9 @@ const relatedArticles = (meta.related || [])
     </div>
 
     <div class="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-32 pb-12">
-      <a href="/guide" class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-6 hover:underline">
+      <a href={guideBase} class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-6 hover:underline">
         <Tag className="w-3 h-3" />
-        {meta.category} · Guide KS Rent
+        {labels.eyebrow}
       </a>
       <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground leading-[1.05] mb-6">
         {meta.title}
@@ -53,15 +101,15 @@ const relatedArticles = (meta.related || [])
       <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-foreground/60">
         <span class="flex items-center gap-2">
           <Calendar className="w-4 h-4 text-gold" />
-          Pubblicato il {formattedDate}
-          {updatedDate && <span class="text-foreground/40"> · aggiornato {updatedDate}</span>}
+          {labels.publishedOn} {formattedDate}
+          {updatedDate && <span class="text-foreground/40"> · {labels.updatedOn} {updatedDate}</span>}
         </span>
         <span class="flex items-center gap-2">
           <Clock className="w-4 h-4 text-gold" />
-          {meta.readingMinutes} min di lettura
+          {meta.readingMinutes} {labels.readingTime}
         </span>
         <span class="text-foreground/60">
-          A cura di <strong class="text-foreground">{meta.author}</strong>
+          {labels.authoredBy} <strong class="text-foreground">{meta.author}</strong>
         </span>
       </div>
     </div>
@@ -77,12 +125,12 @@ const relatedArticles = (meta.related || [])
     <section class="border-t border-border bg-card/30 py-16 px-4 md:px-6">
       <div class="max-w-4xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-8 text-center">
-          Continua a leggere
+          {labels.keepReading}
         </h2>
         <div class="grid md:grid-cols-2 gap-6">
           {relatedArticles.map((rel) => (
             <a
-              href={`/guide/${rel.slug}`}
+              href={`${guideBase}/${rel.slug}`}
               class="group block bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/40 transition shadow-sm hover:shadow-lg"
             >
               <div class="aspect-[16/9] overflow-hidden">
@@ -108,18 +156,18 @@ const relatedArticles = (meta.related || [])
   {/* CTA fine articolo */}
   <section class="py-16 px-4 md:px-6 text-center border-t border-border">
     <div class="max-w-2xl mx-auto">
-      <p class="text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">Pronto a partire?</p>
+      <p class="text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{labels.readyTo}</p>
       <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-        Prenota il tuo veicolo per la Costa Smeralda
+        {labels.bookTitle}
       </h2>
       <p class="text-foreground/60 font-light mb-8">
-        Conferma le date e scegli il veicolo dalla flotta di KS Rent Sardinia. Senza carta di credito obbligatoria.
+        {labels.bookSubtitle}
       </p>
       <a
-        href="/prenotaora"
+        href={bookingHref}
         class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-10 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
       >
-        Verifica disponibilità
+        {labels.bookCta}
         <ArrowRight className="w-4 h-4" />
       </a>
     </div>

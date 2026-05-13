@@ -1,0 +1,353 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("car-hire-olbia-airport-practical-guide")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+  about: {
+    "@type": "Place",
+    name: "Olbia Costa Smeralda Airport",
+    sameAs: "https://www.geasar.it/",
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is it better to rent a car at Olbia airport or in the city centre?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "For most tourists, delivery at Olbia OLB airport is more convenient: it avoids taxi/shuttle transfers to the centre. KS Rent Sardinia delivers free at the airport. If you arrive by ferry at Isola Bianca port, it's better to have delivery directly at the port (also free).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Should I book the rental car in advance for Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, especially for July and August: vehicles sell out by May. With KS Rent Sardinia you can book online up to 24 hours before arrival (subject to availability) and confirm the vehicle with instant email confirmation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I have to pay the credit card pre-authorisation at Olbia airport rental desks?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "With major international companies (Hertz, Avis, Sixt, Europcar) yes: €1,000-2,500 are blocked on the card for the entire rental duration plus 5-15 days. With KS Rent Sardinia no: the security deposit is a classic transfer/cash/prepaid, refunded immediately at drop-off.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Which vehicle should I choose for Costa Smeralda?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It depends on the itinerary. If you only go to Porto Cervo with light luggage, a Mercedes A-Class is perfect. If you plan hidden beaches on dirt roads like Spiaggia del Principe, a Jeep Avenger is better. For sporty experience over a few days, Audi RS3 or BMW M2.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I drop off the vehicle at a different location from Olbia airport?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, KS Rent Sardinia accepts drop-offs at Olbia OLB airport, Isola Bianca port, hotels/villas in Costa Smeralda. Just coordinate timing and location via WhatsApp before departure.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What if my flight to Olbia is delayed or cancelled?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "KS Rent Sardinia automatically monitors flight status (just provide the flight number at booking). If you're delayed by 1-2 hours, we wait without extra charges. For major delays or cancellations, we reschedule delivery without penalties.",
+      },
+    },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: "Car hire Olbia Airport", path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>Olbia Costa Smeralda Airport (IATA code: OLB) is the main gateway to north-eastern Sardinia</strong> and the starting point for the vast majority of car hire trips to Costa Smeralda. It receives flights from across Europe with carriers like Easyjet, Ryanair, ITA, Lufthansa, Air France, British Airways, Eurowings. In high season over 50 flights arrive daily. The terminal is operated by Geasar and is 4 km from Olbia city centre. This practical guide explains everything you need to know about renting a car at OLB airport: which companies are available, independent alternatives, real prices, and tricks to avoid long waits at the desks.
+    </p>
+
+    <h2>Car hire companies at OLB airport</h2>
+
+    <p>
+      Inside the arrivals area of Olbia airport you'll find the desks of the <strong>main international companies</strong>:
+    </p>
+
+    <ul>
+      <li><strong>Hertz</strong> — main desk, wide fleet</li>
+      <li><strong>Avis</strong> — always present, mid-range prices</li>
+      <li><strong>Sixt</strong> — premium range</li>
+      <li><strong>Europcar</strong> — good value for money</li>
+      <li><strong>Maggiore / Goldcar / Locauto</strong> — Italian operators</li>
+      <li><strong>Budget / Enterprise</strong> — economical options</li>
+    </ul>
+
+    <p>
+      All these companies have a physical desk in the arrivals terminal. The <strong>typical flow</strong> for picking up a car with a major operator is:
+    </p>
+
+    <ol>
+      <li>You land</li>
+      <li>Collect baggage</li>
+      <li>Go to the company desk (even if you've booked online)</li>
+      <li>Show voucher, driving licence, credit card with limit</li>
+      <li>They pre-authorise a €1,000-2,500 hold on your credit card</li>
+      <li>Walk to the rental car park (5-10 min walk or shuttle)</li>
+      <li>Queue for the physical vehicle inspection</li>
+      <li>Drive away</li>
+    </ol>
+
+    <p>
+      <strong>Average total time</strong>: 30-90 minutes in high season, even over 2 hours if you're at the back of the queue. The worst queue is usually Saturday afternoon and Sunday morning (week changeover).
+    </p>
+
+    <h2>Real costs for car hire at the airport</h2>
+
+    <p>
+      Prices in international companies vary enormously by period, advance booking and vehicle category. Typical 2026 ranges (daily rate, 7 days):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Low season</th>
+          <th>High season (Jul-Aug)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mini (Fiat Panda, VW Up)</td>
+          <td>€30-50/day</td>
+          <td>€80-150/day</td>
+        </tr>
+        <tr>
+          <td>Compact (VW Polo, Fiat 500X)</td>
+          <td>€40-60/day</td>
+          <td>€100-180/day</td>
+        </tr>
+        <tr>
+          <td>Premium (BMW 1-Series, Mercedes A-Class)</td>
+          <td>€80-120/day</td>
+          <td>€200-350/day</td>
+        </tr>
+        <tr>
+          <td>SUV (Jeep Renegade, Range Rover Evoque)</td>
+          <td>€70-110/day</td>
+          <td>€200-400/day</td>
+        </tr>
+        <tr>
+          <td>Sports (BMW M2, Audi RS)</td>
+          <td>on request (€250-400/day)</td>
+          <td>on request (€450-800/day)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      To these add <strong>extras often required at the airport</strong>:
+    </p>
+
+    <ul>
+      <li><strong>Airport taxes</strong>: 10-15% of the rate</li>
+      <li><strong>CDW reduction / top kasko</strong>: €15-30/day</li>
+      <li><strong>Second driver</strong>: €5-10/day</li>
+      <li><strong>Child seats</strong>: €5-10/day</li>
+      <li><strong>Fuel package</strong>: often pre-charged at higher rate</li>
+      <li><strong>After-hours drop-off</strong>: €30-50 flat fee</li>
+    </ul>
+
+    <p>
+      <strong>Result</strong>: the rate "shown" on Booking, Rentalcars or Discover Cars often becomes 30-50% more expensive at the desk. It's legal but not transparent.
+    </p>
+
+    <h2>Independent alternatives to the big networks</h2>
+
+    <p>
+      Beyond the companies at terminal desks, there are <strong>local independent operators</strong> who deliver directly at arrivals, outside the desks. KS Rent Sardinia is one of these.
+    </p>
+
+    <p>
+      <strong>How it works</strong>:
+    </p>
+
+    <ol>
+      <li>Book online directly on our site (<a href="/en/book-now">/en/book-now</a>)</li>
+      <li>Communicate flight time and number</li>
+      <li>You land, collect baggage</li>
+      <li>Walk out from arrivals — we wait directly at the terminal kerb with your vehicle ready</li>
+      <li>Quick vehicle check, contract signing, drive away</li>
+    </ol>
+
+    <p>
+      <strong>Average time</strong>: 10 minutes from landing to driving. No queues, no complicated pre-authorisations. The security deposit can be paid in <strong>cash, prepaid card, debit card or bank transfer</strong> — no mandatory credit card.
+    </p>
+
+    <h2>Distances from OLB airport to main locations</h2>
+
+    <p>
+      Once you've picked up the car, calculate these times (in high season double for traffic):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>Distance</th>
+          <th>Time (low season)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Olbia city centre</td>
+          <td>4 km</td>
+          <td>10 min</td>
+        </tr>
+        <tr>
+          <td>Pittulongu</td>
+          <td>5 km</td>
+          <td>10 min</td>
+        </tr>
+        <tr>
+          <td>Olbia Port (Isola Bianca, ferries)</td>
+          <td>6 km</td>
+          <td>10 min</td>
+        </tr>
+        <tr>
+          <td><a href="/en/car-hire-porto-rotondo">Porto Rotondo</a></td>
+          <td>20 km</td>
+          <td>20 min</td>
+        </tr>
+        <tr>
+          <td><a href="/en/car-hire-golfo-aranci">Golfo Aranci</a></td>
+          <td>20 km</td>
+          <td>25 min</td>
+        </tr>
+        <tr>
+          <td><a href="/en/car-hire-san-teodoro">San Teodoro</a></td>
+          <td>30 km</td>
+          <td>30 min</td>
+        </tr>
+        <tr>
+          <td><a href="/en/car-hire-porto-cervo">Porto Cervo</a></td>
+          <td>32 km</td>
+          <td>35 min</td>
+        </tr>
+        <tr>
+          <td><a href="/en/car-hire-baja-sardinia">Baja Sardinia</a></td>
+          <td>38 km</td>
+          <td>45 min</td>
+        </tr>
+        <tr>
+          <td><a href="/en/car-hire-palau">Palau</a></td>
+          <td>43 km</td>
+          <td>50 min</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Hours and night flights</h2>
+
+    <p>
+      Olbia airport operates <strong>from approximately 06:00 to 24:00</strong> in high season. In low season the first morning flight is usually 06:30 and the last around 22:30. <strong>Major company desks close at 23:00</strong> — if you land after, you must wait until the next morning to pick up the car, or pay extra for after-hours service (rarely offered).
+    </p>
+
+    <p>
+      KS Rent Sardinia offers <strong>delivery up to 22:30 standard, beyond this by appointment</strong>. If you have a late evening flight (e.g. arrival at 1 a.m.), contact Francesco and Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a> to arrange the meeting after hours.
+    </p>
+
+    <h2>Useful airport services</h2>
+
+    <ul>
+      <li><strong>Free Wi-Fi</strong> throughout the terminal</li>
+      <li><strong>Bars and restaurants</strong> open from 06:00 to 30 min after the last flight</li>
+      <li><strong>ATMs</strong>: 3 in arrivals (useful to withdraw cash for deposit)</li>
+      <li><strong>Currency exchange</strong>: present but with high commissions (better to use ATM)</li>
+      <li><strong>Pharmacy</strong>: in arrivals area</li>
+      <li><strong>VIP Lounge</strong>: paid for departing flights</li>
+      <li><strong>Short-stay parking</strong>: €1.50/15 min, for those picking you up</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+
+    <h3>Is it better to rent at the airport or in the city?</h3>
+
+    <p>
+      For most tourists, airport delivery is more convenient — it avoids taxi/shuttle to the centre and then pick-up. If you arrive by ferry at Isola Bianca port, it's better to have it delivered directly to the port (also free with KS Rent Sardinia).
+    </p>
+
+    <h3>Should I book in advance?</h3>
+
+    <p>
+      Yes, especially for <strong>July and August</strong>: vehicles sell out by May. With KS Rent Sardinia you can book online up to 24 hours before arrival and lock the vehicle with instant email confirmation.
+    </p>
+
+    <h3>Do I need to pay credit card pre-authorisation?</h3>
+
+    <p>
+      With major companies yes (€1,000-2,500 blocked for entire duration plus 5-15 days). With KS Rent Sardinia <strong>no</strong>: the security deposit is a classic transfer/cash/prepaid, refunded immediately at drop-off. See our <a href="/en/guide/car-hire-olbia-without-credit-card-complete-guide">guide on no-credit-card car hire</a>.
+    </p>
+
+    <h3>Which vehicle for Costa Smeralda?</h3>
+
+    <p>
+      Depends on the itinerary. Mercedes A-Class for Porto Cervo + light luggage. Jeep Avenger for hidden beaches on dirt roads (Spiaggia del Principe). Audi RS3 or BMW M2 for sporty experience over a few days. See vehicle pages on the EN site.
+    </p>
+
+    <h3>Can I drop off elsewhere?</h3>
+
+    <p>
+      Yes, KS Rent Sardinia accepts drop-offs at OLB airport, Isola Bianca port, hotels/villas in Costa Smeralda. Coordinate time and place via WhatsApp before departure.
+    </p>
+
+    <h3>What if the flight is delayed?</h3>
+
+    <p>
+      We monitor your flight status automatically (just provide the flight number at booking). If you're delayed by 1-2 hours, we wait at no extra cost. For major delays or cancellations, we reschedule the delivery without penalties.
+    </p>
+
+    <h2>Summary</h2>
+
+    <p>
+      <strong>Olbia airport is well served by major car hire companies</strong>, but check-in times can be long and final costs (card pre-authorisation + mandatory extras) often exceed expectations. <strong>Independent alternatives like KS Rent Sardinia</strong> offer delivery directly at arrivals, no queues, flexible payment without mandatory credit card, and 10-minute check-out times. The choice depends on your profile: if you value speed and flexibility, choose a local operator; if you have specific needs for huge fleet or multi-country roadside assistance, the major chains are adequate.
+    </p>
+
+    <p>
+      To book delivery of your vehicle at Olbia OLB airport, go to <a href="/en/book-now">/en/book-now</a> or visit the dedicated page <a href="/en/car-hire-olbia-airport">car hire Olbia airport</a>. For after-hours requests or special deliveries, contact Francesco and Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
