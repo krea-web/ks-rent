@@ -1,0 +1,127 @@
+---
+/**
+ * Layout condiviso per ogni articolo /guide/[slug].astro.
+ * Riceve metadata + slot HTML body. Renderizza hero + author + reading time +
+ * body con prose styling + related articles linker.
+ */
+import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
+import { findArticle, type GuideArticleMeta } from "@/data/guide-articles";
+
+interface Props {
+  meta: GuideArticleMeta;
+}
+
+const { meta } = Astro.props;
+const formattedDate = new Date(meta.publishedAt).toLocaleDateString("it-IT", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+const updatedDate = meta.updatedAt
+  ? new Date(meta.updatedAt).toLocaleDateString("it-IT", { year: "numeric", month: "long", day: "numeric" })
+  : null;
+
+const relatedArticles = (meta.related || [])
+  .map((slug) => findArticle(slug))
+  .filter((a): a is GuideArticleMeta => !!a);
+---
+
+<article class="bg-background min-h-screen">
+  {/* HERO */}
+  <header class="relative overflow-hidden border-b border-border">
+    <div class="absolute inset-0">
+      <img
+        src={meta.heroImage}
+        alt={meta.title}
+        class="w-full h-full object-cover opacity-25"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/40"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-32 pb-12">
+      <a href="/guide" class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-6 hover:underline">
+        <Tag className="w-3 h-3" />
+        {meta.category} · Guide KS Rent
+      </a>
+      <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground leading-[1.05] mb-6">
+        {meta.title}
+      </h1>
+      <p class="text-lg text-foreground/70 font-light leading-relaxed mb-8">{meta.excerpt}</p>
+
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-foreground/60">
+        <span class="flex items-center gap-2">
+          <Calendar className="w-4 h-4 text-gold" />
+          Pubblicato il {formattedDate}
+          {updatedDate && <span class="text-foreground/40"> · aggiornato {updatedDate}</span>}
+        </span>
+        <span class="flex items-center gap-2">
+          <Clock className="w-4 h-4 text-gold" />
+          {meta.readingMinutes} min di lettura
+        </span>
+        <span class="text-foreground/60">
+          A cura di <strong class="text-foreground">{meta.author}</strong>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  {/* BODY (slot) */}
+  <div class="max-w-3xl mx-auto px-4 md:px-6 py-16 prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold prose-a:no-underline hover:prose-a:underline prose-ul:text-foreground/80 prose-ol:text-foreground/80 prose-li:my-1.5 prose-blockquote:border-l-gold prose-blockquote:bg-card/50 prose-blockquote:not-italic prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-table:my-8 prose-thead:border-border prose-th:text-foreground prose-th:font-semibold prose-td:text-foreground/80 prose-img:rounded-2xl">
+    <slot />
+  </div>
+
+  {/* RELATED ARTICLES */}
+  {relatedArticles.length > 0 && (
+    <section class="border-t border-border bg-card/30 py-16 px-4 md:px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-8 text-center">
+          Continua a leggere
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          {relatedArticles.map((rel) => (
+            <a
+              href={`/guide/${rel.slug}`}
+              class="group block bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/40 transition shadow-sm hover:shadow-lg"
+            >
+              <div class="aspect-[16/9] overflow-hidden">
+                <img
+                  src={rel.heroImage}
+                  alt={rel.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-5">
+                <span class="text-xs uppercase tracking-widest text-gold font-bold">{rel.category}</span>
+                <p class="font-bold text-foreground mt-2 group-hover:text-gold transition">{rel.title}</p>
+                <p class="text-sm text-foreground/60 mt-2 leading-relaxed">{rel.excerpt}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* CTA fine articolo */}
+  <section class="py-16 px-4 md:px-6 text-center border-t border-border">
+    <div class="max-w-2xl mx-auto">
+      <p class="text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">Pronto a partire?</p>
+      <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+        Prenota il tuo veicolo per la Costa Smeralda
+      </h2>
+      <p class="text-foreground/60 font-light mb-8">
+        Conferma le date e scegli il veicolo dalla flotta di KS Rent Sardinia. Senza carta di credito obbligatoria.
+      </p>
+      <a
+        href="/prenotaora"
+        class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-10 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
+      >
+        Verifica disponibilità
+        <ArrowRight className="w-4 h-4" />
+      </a>
+    </div>
+  </section>
+</article>

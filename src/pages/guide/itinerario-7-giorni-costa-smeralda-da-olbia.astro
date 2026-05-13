@@ -1,0 +1,260 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("itinerario-7-giorni-costa-smeralda-da-olbia")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: [
+    { "@type": "Thing", name: "Itinerario Costa Smeralda" },
+    { "@type": "Place", name: "Costa Smeralda", containedInPlace: { "@type": "AdministrativeArea", name: "Gallura, Sardegna" } },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guide KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Itinerario 7 giorni Costa Smeralda", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Sette giorni in Costa Smeralda partendo da Olbia bastano per un'esperienza completa, ma vanno organizzati bene</strong>. La Gallura è grande, le distanze tra le località sembrano brevi sulla mappa ma in alta stagione possono diventare lunghissime per traffico e parcheggi. Questo itinerario è costruito sull'esperienza di Francesco e Salvatore Milo (co-fondatori KS Rent Sardinia, Olbia) che ogni anno consegnano centinaia di veicoli a turisti italiani e stranieri. Indica giorno per giorno: dove andare, quanti chilometri sono, dove parcheggiare, quale veicolo è più adatto e gli orari migliori per evitare il caos.
+    </p>
+
+    <h2>Premesse logistiche</h2>
+
+    <ul>
+      <li><strong>Punto di partenza</strong>: Aeroporto Olbia Costa Smeralda (OLB) o Porto Olbia Isola Bianca. Entrambi hanno consegna gratuita del veicolo da KS Rent Sardinia, distanza 5 minuti dalla nostra sede</li>
+      <li><strong>Veicolo consigliato per l'itinerario completo</strong>: <a href="/flotta/jeep-avenger">Jeep Avenger</a> (SUV compatto, posizione di guida alta, accede agli sterrati) oppure <a href="/flotta/mercedes-classe-a">Mercedes Classe A 180d</a> (consumi diesel 4,5 L/100km su autostrada, comfort tour). Vedi il <a href="/flotta/confronta/mercedes-classe-a-vs-jeep-avenger">confronto Mercedes A vs Jeep Avenger</a> per scegliere</li>
+      <li><strong>Periodo</strong>: itinerario valido da aprile a ottobre. In luglio-agosto raddoppia i tempi di percorrenza per traffico</li>
+      <li><strong>Distanza totale stimata</strong>: 350-450 km in 7 giorni</li>
+      <li><strong>Carburante</strong>: in alta stagione i benzinai dei centri turistici sono cari. Fai rifornimento a Olbia o sulla SS131 prima di entrare in Costa Smeralda</li>
+    </ul>
+
+    <h2>Giorno 1 — Arrivo a Olbia, sistemazione e prima esplorazione</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 10-30 km · <strong>Veicolo</strong>: qualsiasi
+    </p>
+
+    <p>
+      Atterri o sbarchi a Olbia. KS Rent Sardinia ti consegna il veicolo direttamente all'aeroporto OLB o al porto Isola Bianca. Tempo medio dal touchdown al volante: 10 minuti. Da qui, raggiungi la struttura dove alloggi (se sei in Costa Smeralda, calcola 35-50 min in alta stagione; se sei a Olbia stessa, 5-15 min).
+    </p>
+
+    <p>
+      Nel pomeriggio, se l'orario lo permette, fai una passeggiata nel centro storico di Olbia (Corso Umberto, Piazza Margherita di Savoia) e una sosta a <strong>Pittulongu</strong>, la spiaggia più vicina al centro (10 min in auto). Cena in città: prova ristoranti come "Su Rinconete", "Da Paolo" o le pizzerie sul porto.
+    </p>
+
+    <h2>Giorno 2 — Costa Smeralda nord: Porto Cervo + Porto Rotondo</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 60-80 km · <strong>Veicolo</strong>: ideale Mercedes Classe A o Audi RS3 per la statale panoramica
+    </p>
+
+    <p>
+      Mattina: <a href="/noleggio-auto-porto-rotondo">Porto Rotondo</a> (20 min da Olbia). Caffè in piazza San Marco, passeggiata al porto turistico, vista sui maxi-yacht. <strong>Parcheggio</strong>: a pagamento ovunque in alta stagione (5-10 €/ora). Vai presto (entro le 10:00) per trovare posto.
+    </p>
+
+    <p>
+      Pranzo a <a href="/noleggio-auto-porto-cervo">Porto Cervo</a> (25 min da Porto Rotondo via SP59). La Promenade del Porto Vecchio è il cuore mondano: boutique, gallerie d'arte, ristoranti stellati. <strong>Parcheggio</strong>: il P1 sotto il Centro Commerciale è il più comodo ma può essere pieno entro mezzogiorno; alternativa più economica vicino al Porto Vecchio.
+    </p>
+
+    <p>
+      Pomeriggio: spiaggia. Le opzioni vicine a Porto Cervo:
+    </p>
+    <ul>
+      <li><strong>Spiaggia del Principe</strong> — la più iconica della Costa Smeralda. Accesso da SP59, ultimo tratto sterrato (Jeep Avenger consigliata). 200 m di sentiero a piedi dal parcheggio</li>
+      <li><strong>Capriccioli</strong> — due calette gemelle separate da promontorio. Sabbia bianchissima</li>
+      <li><strong>Romazzino</strong> — di fronte all'Hotel Romazzino. Acqua trasparente, parcheggio costoso</li>
+      <li><strong>Liscia Ruja</strong> — la spiaggia più lunga della Costa Smeralda. Stabilimenti e zona libera</li>
+    </ul>
+
+    <p>
+      Cena a Porto Cervo o ritorno a Olbia. Per l'aperitivo al tramonto, il <strong>Phi Beach</strong> a Baja Sardinia è leggendario.
+    </p>
+
+    <h2>Giorno 3 — Arcipelago de La Maddalena</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 100 km · <strong>Veicolo</strong>: qualsiasi (l'auto resta a Palau)
+    </p>
+
+    <p>
+      Mattina presto: trasferimento a <a href="/noleggio-auto-palau">Palau</a> (50 min da Olbia, 35 min da Porto Cervo). Parcheggia in uno dei silos in centro (8-15 €/giorno) e prendi il traghetto per <strong>La Maddalena</strong> (Saremar o Delcomar, 20 minuti, partenze ogni 30 min in alta stagione, 10-15 € andata/ritorno auto + persone).
+    </p>
+
+    <p>
+      A La Maddalena puoi:
+    </p>
+    <ul>
+      <li>Visitare il centro storico (Piazza Garibaldi, Cala Gavetta)</li>
+      <li>Noleggiare un'auto piccola sull'isola per girare le calette (Cala Spalmatore, Cala Coticcio "Tahiti", Spiaggia Rosa di Budelli — quest'ultima visibile solo da barca)</li>
+      <li>Imbarcarti su un'escursione in barca per il Parco Nazionale dell'Arcipelago (40-80 €/persona, 8 ore, include pranzo a bordo, soste a Spargi e Budelli)</li>
+    </ul>
+
+    <p>
+      Rientro a Palau nel tardo pomeriggio. Cena a <strong>Cannigione</strong> (15 min da Palau): ristoranti di pesce come "Sa Mola" o "Il Galletto".
+    </p>
+
+    <h2>Giorno 4 — Costa Smeralda sud: Baja Sardinia, Capriccioli, Pevero</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 50 km · <strong>Veicolo</strong>: ideale Audi RS3 o BMW M2 per le panoramiche
+    </p>
+
+    <p>
+      Mattina: <a href="/noleggio-auto-baja-sardinia">Baja Sardinia</a> (45 min da Olbia, 10 min da Porto Cervo). Spiaggia di Baja Sardinia (sabbia chiara, stabilimenti) o spiaggia del <strong>Grande Pevero</strong>, una delle più belle insenature della Costa Smeralda con acqua turchese.
+    </p>
+
+    <p>
+      Pranzo: per chi vuole un'esperienza alta, prova <strong>Cala di Volpe</strong> (l'iconico hotel a forma di villaggio mediterraneo). Per chi cerca buona pizza vista mare, vai a <strong>Poltu Quatu</strong> (il piccolo "fiordo" tra Baja Sardinia e Porto Cervo).
+    </p>
+
+    <p>
+      Pomeriggio: tornata sui mari più tranquilli, prova <strong>Liscia Ruja</strong> o <strong>La Celvia</strong>. Sera: torna a Baja Sardinia per il tramonto al Phi Beach o pista da ballo dal Billionaire (su prenotazione, dress code rigido).
+    </p>
+
+    <h2>Giorno 5 — Tour interno: Arzachena, Tempio Pausania, San Pantaleo</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 120 km · <strong>Veicolo</strong>: ideale Mercedes Classe A o Jeep Avenger
+    </p>
+
+    <p>
+      Giornata "non spiaggia". Mattina: <a href="/noleggio-auto-arzachena">Arzachena</a> e i suoi <strong>siti nuragici</strong> (Tomba dei Giganti di Coddu Vecchiu, Necropoli di Li Muri). Visita il piccolo borgo di <strong>San Pantaleo</strong>, vera perla della Gallura interna: piazza, gallerie d'arte, ristoranti come "Giagoni" o "La Tana del Gabbiano".
+    </p>
+
+    <p>
+      Pomeriggio: prosegui per <strong>Tempio Pausania</strong> (1h da Olbia), capoluogo storico della Gallura, città di pietra grigia. Visita la cattedrale, le sorgenti di Rinaggiu, il Monte Limbara (in auto fino al rifugio Bono, 1.350 m, panorama sui monti del Limbara).
+    </p>
+
+    <p>
+      Cena: rientro su Olbia o sosta a <strong>Berchidda</strong> per assaggiare il vermentino di Gallura DOCG (cantine come Vigne Surrau, Capichera, Piero Mancini).
+    </p>
+
+    <h2>Giorno 6 — Costa Sud: San Teodoro, Capo Coda Cavallo, La Cinta</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 70 km · <strong>Veicolo</strong>: ideale Jeep Avenger per Capo Coda Cavallo
+    </p>
+
+    <p>
+      Mattina: <a href="/noleggio-auto-san-teodoro">San Teodoro</a> (30 min da Olbia). La spiaggia di <strong>La Cinta</strong> è 5 km di sabbia bianca con vista sull'isola di Tavolara. Parcheggio a pagamento, stabilimenti e zona libera. Spiaggia perfetta per famiglie con bambini (acqua bassa per decine di metri).
+    </p>
+
+    <p>
+      Pranzo a San Teodoro centro: ristoranti di pesce, sushi, pizzerie. Per qualcosa di tipico: "Sa Mola" o "L'Oca Bianca".
+    </p>
+
+    <p>
+      Pomeriggio: <strong>Cala Brandinchi</strong> e <strong>Lu Impostu</strong>, due spiagge gemelle a 10 min da San Teodoro, soprannominate "le Bahamas della Sardegna" per il colore dell'acqua. Da qui puoi noleggiare canoe e SUP.
+    </p>
+
+    <p>
+      Per chi cerca avventura: <strong>Capo Coda Cavallo</strong>. Strada parzialmente sterrata negli ultimi km — qui Jeep Avenger fa la differenza. Spiagge nascoste, snorkeling tra i più belli della Sardegna nord-orientale.
+    </p>
+
+    <h2>Giorno 7 — Olbia, ultimo bagno e rientro</h2>
+
+    <p>
+      <strong>Distanza giornaliera</strong>: 20-50 km · <strong>Veicolo</strong>: qualsiasi
+    </p>
+
+    <p>
+      Ultimo giorno. Se hai il volo o il traghetto in serata, organizza la mattina così:
+    </p>
+    <ul>
+      <li><strong>Pittulongu o Bados</strong> (10-15 min da Olbia): bagno veloce, spiagge urbane ma comode</li>
+      <li>oppure <strong>Porto Istana</strong> (20 min da Olbia, vicinissima all'aeroporto): vista sull'isola di Tavolara, sabbia chiara</li>
+      <li>oppure ultima visita a Porto Cervo/Romazzino se vuoi salutare la Costa Smeralda</li>
+    </ul>
+
+    <p>
+      Pranzo a Olbia. Riconsegna del veicolo direttamente all'aeroporto OLB o al porto Isola Bianca, all'orario concordato con noi (anche fuori orario standard, contattaci su WhatsApp). Tempo medio di check-out: 10 minuti.
+    </p>
+
+    <h2>Quanto costa il noleggio per 7 giorni</h2>
+
+    <p>
+      Stima per il noleggio di un veicolo per 7 giorni in Costa Smeralda da KS Rent Sardinia (tariffe stagionali aprile-ottobre, listino ufficiale su <a href="/tariffe">/tariffe</a>):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Veicolo</th>
+          <th>Bassa stagione (apr-mag-ott)</th>
+          <th>Alta stagione (lug-ago)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fiat Panda Hybrid</td>
+          <td>~ 280 €</td>
+          <td>~ 490 €</td>
+        </tr>
+        <tr>
+          <td>Jeep Avenger</td>
+          <td>~ 420 €</td>
+          <td>~ 770 €</td>
+        </tr>
+        <tr>
+          <td>Mercedes Classe A 180d</td>
+          <td>~ 630 €</td>
+          <td>~ 1.120 €</td>
+        </tr>
+        <tr>
+          <td>Audi RS3 / BMW M2</td>
+          <td>su preventivo</td>
+          <td>su preventivo</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Le tariffe includono <strong>RCA, assistenza stradale 24/7, gestione contratto e chilometraggio adeguato all'itinerario</strong>. Non sono inclusi: carburante (consegnato pieno e da riconsegnare pieno), pedaggi, costi opzionali (secondo conducente, seggiolino bambini, riduzione franchigia kasko).
+    </p>
+
+    <p>
+      <strong>Consegna gratuita</strong> nel comune di Olbia (aeroporto e porto inclusi). Per consegna in hotel/villa fuori Olbia il costo parte da 5 € e dipende dalla distanza.
+    </p>
+
+    <h2>Consigli pratici finali</h2>
+
+    <ul>
+      <li><strong>Prenota presto</strong>: per luglio-agosto i veicoli si esauriscono entro maggio</li>
+      <li><strong>Carburante</strong>: in Costa Smeralda i benzinai sono molto cari (+15-20% rispetto alla SS131). Fai pieno a Olbia o a Loiri Porto San Paolo</li>
+      <li><strong>Parcheggi</strong>: sempre a pagamento nelle zone turistiche, anche le spiagge "libere" hanno parcheggi privati. Porta sempre 10-20 € in moneta o usa app come EasyPark</li>
+      <li><strong>SOS spiagge</strong>: arriva entro le 10:00 nei mesi di punta o non trovi parcheggio</li>
+      <li><strong>Sterrati</strong>: alcune spiagge della Costa Smeralda hanno gli ultimi 200-500 m sterrati. Scegli un SUV compatto se vuoi accedervi senza preoccupazioni</li>
+      <li><strong>Notturno</strong>: la Gallura interna ha pochissime luci stradali. Se torni di sera dalle visite a Tempio Pausania, presta attenzione</li>
+    </ul>
+
+    <p>
+      Per <strong>scegliere il veicolo giusto</strong> in base alla tua composizione di viaggio (coppia, famiglia, gruppo), confronta le opzioni nella nostra <a href="/flotta/confronta">guida ai confronti veicoli</a>. Per dubbi specifici sull'itinerario o per organizzare consegne particolari (orari festivi, punti remoti), contatta Francesco e Salvatore Milo direttamente su WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

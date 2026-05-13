@@ -142,6 +142,22 @@ const Footer = ({ lang = "it" }: FooterProps) => {
               >
                 {t.nav.rates}
               </Link>
+              {lang === "it" && (
+                <>
+                  <Link
+                    to="/flotta/confronta"
+                    className="px-4 py-2 text-xs text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-300 relative z-20"
+                  >
+                    Confronti
+                  </Link>
+                  <Link
+                    to="/guide"
+                    className="px-4 py-2 text-xs text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gold/10 hover:border-gold/30 hover:text-gold transition-all duration-300 relative z-20"
+                  >
+                    Guide
+                  </Link>
+                </>
+              )}
               <Link
                 to={bookHref}
                 className="px-4 py-2 text-xs font-bold text-gold bg-gold/5 border border-gold/20 rounded-xl hover:bg-gold hover:text-black transition-all duration-300 relative z-20"

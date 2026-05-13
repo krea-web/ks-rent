@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { VEHICLE_SPECS } from "@/data/vehicle-specs";
+
+const a = VEHICLE_SPECS["mercedes-classe-a"];
+const b = VEHICLE_SPECS["jeep-avenger"];
+
+const h1 = "Mercedes Classe A vs Jeep Avenger: premium o SUV per la Sardegna?";
+
+const intro =
+  "Mercedes Classe A 180d e Jeep Avenger sono due opzioni intermedie nel noleggio a Olbia, entrambe con cambio automatico e adatte a coppie e famiglie. La Classe A 180d e' una premium compatta diesel da 116 CV con consumo 4,5 L/100km, ideale per tour autostradali confortevoli e per chi cerca eleganza Mercedes. La Jeep Avenger e' un SUV compatto benzina da 100 CV con consumo 6,1 L/100km, posizione di guida rialzata e maggior versatilita' per accedere a spiagge raggiungibili solo da sterrato. Entrambe partono da 60-90 €/giorno bassa stagione e raggiungono 110-160 €/giorno in alta stagione. La scelta dipende dal tipo di itinerario: comfort autostradale e centri storici (Mercedes A) oppure flessibilita' off-road e bagaglio famiglia (Jeep Avenger).";
+
+const pageUrl = "https://www.ksrentsardinia.com/flotta/confronta/mercedes-classe-a-vs-jeep-avenger";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#page`,
+    name: h1,
+    description: intro.slice(0, 220),
+    url: pageUrl,
+    inLanguage: "it-IT",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+    primaryImageOfPage: a.image,
+    about: [
+      {
+        "@type": "Vehicle",
+        name: a.name,
+        brand: { "@type": "Brand", name: a.brand },
+        url: `https://www.ksrentsardinia.com${a.href}`,
+        image: a.image,
+        vehicleConfiguration: a.category,
+      },
+      {
+        "@type": "Vehicle",
+        name: b.name,
+        brand: { "@type": "Brand", name: b.brand },
+        url: `https://www.ksrentsardinia.com${b.href}`,
+        image: b.image,
+        vehicleConfiguration: b.category,
+      },
+    ],
+  },
+];
+---
+<BaseLayout
+  title="Mercedes Classe A vs Jeep Avenger Olbia: premium o SUV?"
+  description="Confronto Mercedes Classe A 180d diesel vs Jeep Avenger SUV: consumi, comfort, off-road, prezzi. Quale veicolo a noleggio scegliere a Olbia."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Flotta", path: "/flotta" },
+    { name: "Mercedes Classe A vs Jeep Avenger", path: "/flotta/confronta/mercedes-classe-a-vs-jeep-avenger" },
+  ]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} />
+</BaseLayout>

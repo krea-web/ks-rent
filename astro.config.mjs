@@ -75,6 +75,9 @@ export default defineConfig({
         } else if (url.includes("/flotta/")) {
           priority = 0.85;
           changefreq = "monthly";
+        } else if (url.includes("/guide")) {
+          priority = 0.7;
+          changefreq = "monthly";
         }
         return {
           ...item,

@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { VEHICLE_SPECS } from "@/data/vehicle-specs";
+
+const a = VEHICLE_SPECS["audi-rs3"];
+const b = VEHICLE_SPECS["jeep-avenger"];
+
+const h1 = "Audi RS3 vs Jeep Avenger: supercar o SUV per esplorare la Sardegna?";
+
+const intro =
+  "Audi RS3 Sportback e Jeep Avenger sono due veicoli pensati per esperienze opposte in Costa Smeralda. La RS3 e' una supercar da 400 CV con trazione integrale quattro: pensata per la guida sportiva su strade asfaltate, eventi mondani a Porto Cervo, esperienza di pochi giorni di alto profilo. La Jeep Avenger e' un SUV compatto da 100 CV con cambio automatico: posizione di guida rialzata, bagagliaio da 380 L, capace di affrontare gli sterrati che portano alle spiagge nascoste come Spiaggia del Principe, Liscia Ruja, Capriccioli. Tariffe diametralmente opposte: la RS3 e' su preventivo (da 250 €/giorno indicativo), la Jeep Avenger parte da 60 €/giorno bassa stagione. La scelta dipende dall'itinerario e dal target dell'esperienza.";
+
+const pageUrl = "https://www.ksrentsardinia.com/flotta/confronta/audi-rs3-vs-jeep-avenger";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#page`,
+    name: h1,
+    description: intro.slice(0, 220),
+    url: pageUrl,
+    inLanguage: "it-IT",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+    primaryImageOfPage: a.image,
+    about: [
+      {
+        "@type": "Vehicle",
+        name: a.name,
+        brand: { "@type": "Brand", name: a.brand },
+        url: `https://www.ksrentsardinia.com${a.href}`,
+        image: a.image,
+        vehicleConfiguration: a.category,
+      },
+      {
+        "@type": "Vehicle",
+        name: b.name,
+        brand: { "@type": "Brand", name: b.brand },
+        url: `https://www.ksrentsardinia.com${b.href}`,
+        image: b.image,
+        vehicleConfiguration: b.category,
+      },
+    ],
+  },
+];
+---
+<BaseLayout
+  title="Audi RS3 vs Jeep Avenger Olbia: supercar o SUV? | KS Rent Sardinia"
+  description="Confronto Audi RS3 supercar 400 CV vs Jeep Avenger SUV: prezzi, prestazioni, sterrati Costa Smeralda. Quale veicolo a noleggio scegliere a Olbia."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Flotta", path: "/flotta" },
+    { name: "Audi RS3 vs Jeep Avenger", path: "/flotta/confronta/audi-rs3-vs-jeep-avenger" },
+  ]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} />
+</BaseLayout>

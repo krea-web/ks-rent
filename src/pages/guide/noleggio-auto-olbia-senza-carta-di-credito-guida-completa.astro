@@ -1,0 +1,241 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-senza-carta-di-credito-guida-completa")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+  about: {
+    "@type": "Thing",
+    name: "Noleggio auto senza carta di credito",
+    sameAs: "https://www.ksrentsardinia.com/noleggio-auto-senza-carta-di-credito-olbia",
+  },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: meta.title, path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Il noleggio auto senza carta di credito a Olbia è possibile.</strong> KS Rent Sardinia, con sede a Olbia in Sardegna, è uno dei pochi autonoleggi in Italia che accetta esplicitamente <strong>contanti, carte di debito (bancomat), carte prepagate (Postepay, Revolut, N26, Hype, Wise) e bonifico bancario</strong> per il deposito cauzionale. Niente plafond minimi sulla carta di credito, niente blocco di 1.500-2.500 € che le grandi compagnie internazionali pretendono. In questa guida spieghiamo esattamente come funziona, quali documenti servono, quanto cauzionale viene richiesto e come si svolge la consegna del veicolo all'Aeroporto Costa Smeralda di Olbia, al Porto di Olbia Isola Bianca o presso il tuo hotel/villa in Costa Smeralda.
+    </p>
+
+    <h2>Perché le grandi compagnie chiedono la carta di credito</h2>
+
+    <p>
+      Hertz, Avis, Sixt, Europcar e gli altri grandi network internazionali richiedono una carta di credito tradizionale (Visa, Mastercard, American Express con plafond) per <strong>pre-autorizzare</strong> un blocco di garanzia sul tuo conto. L'importo varia da 800 € per una city car a 5.000 € per una supercar e <strong>resta congelato</strong> sulla carta per tutta la durata del noleggio più 5-15 giorni dopo la riconsegna. Questo esclude automaticamente:
+    </p>
+
+    <ul>
+      <li>Chi possiede solo carte prepagate ricaricabili (PostePay, Revolut, N26, Hype): non hanno plafond pre-autorizzabile</li>
+      <li>Chi usa carte di debito legate al conto corrente (bancomat circuito Maestro/VPay/Visa Debit)</li>
+      <li>Chi vuole pagare in contanti per scelta o per riservatezza</li>
+      <li>Chi è giovane, studente, freelance o all'estero senza una carta di credito tradizionale</li>
+      <li>Famiglie che preferiscono non bloccare migliaia di euro per giorni</li>
+    </ul>
+
+    <p>
+      Il risultato è che <strong>milioni di viaggiatori europei non possono prenotare con i grandi network</strong> nonostante abbiano la liquidità per pagare il noleggio. KS Rent Sardinia ha scelto un approccio diverso: la garanzia per il veicolo viene gestita con un deposito cauzionale tradizionale, senza pre-autorizzazione su carta.
+    </p>
+
+    <h2>Come funziona il deposito cauzionale senza carta di credito</h2>
+
+    <p>
+      Il deposito cauzionale di KS Rent Sardinia è un importo proporzionato alla categoria del veicolo, comunicato in fase di prenotazione (così non ci sono sorprese al ritiro). Esempi indicativi:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Categoria veicolo</th>
+          <th>Esempio</th>
+          <th>Deposito cauzionale indicativo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>City car</td>
+          <td>Fiat Panda Hybrid</td>
+          <td>500 €</td>
+        </tr>
+        <tr>
+          <td>SUV compatto</td>
+          <td>Jeep Avenger</td>
+          <td>800 €</td>
+        </tr>
+        <tr>
+          <td>Premium</td>
+          <td>Mercedes Classe A</td>
+          <td>1.200 €</td>
+        </tr>
+        <tr>
+          <td>Supercar / Sportiva</td>
+          <td>Audi RS3, BMW M2</td>
+          <td>2.500 - 5.000 €</td>
+        </tr>
+        <tr>
+          <td>Scooter</td>
+          <td>Honda SH 125</td>
+          <td>300 €</td>
+        </tr>
+        <tr>
+          <td>Quad</td>
+          <td>Yamaha Raptor</td>
+          <td>800 €</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Il deposito può essere versato con uno qualsiasi di questi strumenti — a tua scelta:
+    </p>
+
+    <ul>
+      <li><strong>Contanti in euro</strong>: il metodo più immediato e privato</li>
+      <li><strong>Bonifico bancario</strong>, anche istantaneo (Sepa Instant): l'importo arriva in pochi secondi e viene verificato al ritiro</li>
+      <li><strong>Carte prepagate</strong>: Postepay, Revolut, N26, Hype, Wise — basta che abbia disponibilità sufficiente</li>
+      <li><strong>Bancomat / carte di debito</strong>: VISA Debit, Maestro, Mastercard Debit, V-Pay</li>
+      <li><strong>Carte di credito</strong>: Visa, Mastercard, American Express — se le hai e preferisci</li>
+    </ul>
+
+    <p>
+      <strong>Alla riconsegna</strong>, dopo una rapida verifica del veicolo (livello carburante, danni eventuali, sanzioni stradali), il deposito viene restituito immediatamente con lo stesso metodo di versamento. Niente attese di 15 giorni come succede con le pre-autorizzazioni di carta di credito.
+    </p>
+
+    <h2>Documenti richiesti per il noleggio</h2>
+
+    <p>
+      I documenti necessari sono quelli previsti dalla normativa italiana per il noleggio auto, niente di esotico:
+    </p>
+
+    <ol>
+      <li><strong>Patente di guida B in corso di validità</strong> (per auto), valida da almeno 1 anno. Per scooter Honda SH 125 serve la patente A1 o B con almeno 1 anno; per Honda SH 350 serve la patente A2 o B con almeno 3 anni di possesso. Il quad Yamaha Raptor si guida con patente B.</li>
+      <li><strong>Documento d'identità in corso di validità</strong> (carta d'identità o passaporto)</li>
+      <li><strong>Codice fiscale italiano</strong> (per residenti italiani)</li>
+      <li>Per cittadini extra-UE: <strong>patente internazionale</strong> consigliata (in particolare per cittadini USA, Canada, Australia, Giappone, Russia)</li>
+      <li>Età minima: <strong>21 anni per utilitarie e veicoli standard, 25 anni per supercar, sportive e veicoli premium</strong></li>
+    </ol>
+
+    <h2>Come prenotare il noleggio senza carta di credito</h2>
+
+    <p>
+      La prenotazione avviene 100% online sul sito ksrentsardinia.com. Il flusso completo:
+    </p>
+
+    <ol>
+      <li><strong>Vai su <a href="/prenotaora">/prenotaora</a></strong> (oppure usa la pagina <a href="/noleggio-auto-senza-carta-di-credito-olbia">noleggio senza carta di credito</a>)</li>
+      <li><strong>Scegli il veicolo</strong> dalla flotta disponibile per le tue date</li>
+      <li><strong>Inserisci email e numero di telefono</strong></li>
+      <li><strong>Carica una foto fronte e retro della patente</strong> (e di un eventuale secondo conducente)</li>
+      <li><strong>Scegli luogo e orario di consegna</strong>: aeroporto Olbia OLB, porto Isola Bianca, hotel, villa, ristorante. Copertura in tutta la Gallura e Costa Smeralda</li>
+      <li><strong>Firma il contratto</strong> direttamente dal tuo smartphone</li>
+      <li><strong>Ricevi email di conferma</strong> immediata con contratto allegato e istruzioni per il deposito cauzionale</li>
+    </ol>
+
+    <p>
+      Al momento della consegna, presenta il documento d'identità e versa il deposito cauzionale con il metodo che preferisci. Tempo medio di check-in: 10 minuti.
+    </p>
+
+    <h2>Dove avviene la consegna a Olbia</h2>
+
+    <p>
+      KS Rent Sardinia ha due punti operativi a Olbia, entrambi a 5 minuti dall'Aeroporto Costa Smeralda (OLB):
+    </p>
+
+    <ul>
+      <li><strong>Sede legale</strong>: Viale Aldo Moro 367, Olbia (40.944573, 9.497897)</li>
+      <li><strong>Punto consegna porto</strong>: Viale Isola Bianca 38, direttamente al Porto di Olbia (40.923018, 9.520169) — ideale per chi sbarca dai traghetti Moby, Tirrenia, Grimaldi, Corsica Ferries, GNV</li>
+    </ul>
+
+    <p>
+      Per la <strong>consegna in aeroporto</strong>, ti aspettiamo direttamente agli Arrivi del terminal Geasar — niente navette, niente file ai banchi noleggio. Per chi alloggia in Costa Smeralda, organizziamo la <strong>consegna direttamente in hotel, villa o resort</strong>: a Porto Cervo (35 min), Baja Sardinia (45 min), San Teodoro (30 min), Palau (50 min), Porto Rotondo (20 min) e in tutte le località della Gallura.
+    </p>
+
+    <p>
+      <strong>Costo della consegna</strong>: gratuita all'interno del comune di Olbia (incluso aeroporto OLB e porto Isola Bianca). Per le altre località della Gallura e Costa Smeralda il costo parte da 5 € e viene dichiarato in modo trasparente in fase di preventivo, in base alla distanza.
+    </p>
+
+    <h2>Domande frequenti sul noleggio senza carta di credito</h2>
+
+    <h3>Posso davvero pagare tutto in contanti?</h3>
+
+    <p>
+      Sì, è possibile pagare sia il noleggio sia il deposito cauzionale interamente in contanti. È il metodo più semplice quando non hai carte abilitate. Per importi sopra i 5.000 € richiediamo di concordare modalità e tempi (la legge italiana limita le transazioni in contanti).
+    </p>
+
+    <h3>Le carte prepagate vanno davvero bene?</h3>
+
+    <p>
+      Sì. <strong>Postepay, Revolut, N26, Hype, Wise</strong> sono tutte accettate. L'unico requisito è che la carta abbia disponibilità sufficiente per coprire il deposito al momento del ritiro. Non viene fatta pre-autorizzazione: l'importo viene effettivamente prelevato come deposito e restituito alla riconsegna.
+    </p>
+
+    <h3>Il bonifico istantaneo arriva in tempo?</h3>
+
+    <p>
+      Sì. Il bonifico SEPA Instant arriva in pochi secondi (massimo 10 secondi). Verifichiamo l'accredito sul nostro conto direttamente al momento della consegna del veicolo.
+    </p>
+
+    <h3>Quanto tempo dura il blocco del deposito?</h3>
+
+    <p>
+      Zero giorni: il deposito viene restituito <strong>immediatamente alla riconsegna</strong> del veicolo, dopo la verifica del livello carburante e dell'integrità del mezzo. A differenza delle pre-autorizzazioni delle grandi compagnie (15-30 giorni di "blocco" sulla carta), con noi i tuoi soldi tornano subito.
+    </p>
+
+    <h3>Cosa succede in caso di danni?</h3>
+
+    <p>
+      In caso di danno coperto da assicurazione (kasko, RCA), trattiamo direttamente con la compagnia. Se c'è una franchigia da addebitare, viene comunicata trasparentemente e detratta dal deposito. Se il deposito non basta a coprire la franchigia (raro), concordiamo i tempi di pagamento residuo. Niente sorprese.
+    </p>
+
+    <h3>Posso aggiungere un secondo conducente?</h3>
+
+    <p>
+      Sì, con un piccolo supplemento. Patente valida da almeno 1 anno e rispetto dell'età minima richiesta dalla categoria di veicolo. Il secondo conducente è sempre indicato nel contratto di noleggio.
+    </p>
+
+    <h2>Quando KS Rent Sardinia può dire no</h2>
+
+    <p>
+      Per trasparenza: ci sono casi in cui non possiamo accettare un noleggio anche senza carta di credito. Questi sono:
+    </p>
+
+    <ul>
+      <li>Patente non in corso di validità o con meno di 1 anno di possesso (1 anno per utilitarie, 3 anni per scooter 350 e supercar)</li>
+      <li>Età inferiore a 21 anni (utilitarie) o 25 anni (sportive/premium)</li>
+      <li>Documento d'identità scaduto o non leggibile</li>
+      <li>Storico noleggi con KS Rent o altri operatori marcato da incidenti gravi non risarciti</li>
+      <li>Disponibilità del cauzionale non sufficiente al momento del ritiro</li>
+    </ul>
+
+    <h2>In sintesi</h2>
+
+    <p>
+      Noleggiare auto a Olbia <strong>senza carta di credito è possibile, semplice e trasparente</strong> con KS Rent Sardinia. La policy è esplicita sin dalla prenotazione: nessuna sorpresa al banco, nessun blocco fondi sulla carta, nessuna pre-autorizzazione che congela migliaia di euro. La cauzione viene gestita come un classico deposito di garanzia (contanti, bonifico, prepagata, bancomat o credito a scelta) e restituita immediatamente alla riconsegna del veicolo. Per maggiori dettagli sulla policy di pagamento visita la pagina dedicata: <a href="/noleggio-auto-senza-carta-di-credito-olbia">noleggio auto senza carta di credito a Olbia</a>. Per dubbi specifici, Francesco e Salvatore Milo rispondono direttamente su WhatsApp al <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
