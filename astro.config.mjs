@@ -69,6 +69,9 @@ export default defineConfig({
           changefreq = url.endsWith("/prenotaora") || url.endsWith("/flotta") || url.endsWith("/tariffe") ? "weekly" : "monthly";
         } else if (url.includes("/noleggio-auto-")) {
           priority = 0.8;
+        } else if (url.includes("/flotta/confronta")) {
+          priority = 0.75;
+          changefreq = "monthly";
         } else if (url.includes("/flotta/")) {
           priority = 0.85;
           changefreq = "monthly";

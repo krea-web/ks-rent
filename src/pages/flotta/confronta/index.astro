@@ -1,0 +1,152 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ArrowRight, GitCompareArrows } from "lucide-react";
+import { VEHICLE_SPECS } from "@/data/vehicle-specs";
+
+const comparisons = [
+  {
+    a: VEHICLE_SPECS["audi-rs3"],
+    b: VEHICLE_SPECS["bmw-m2"],
+    href: "/flotta/confronta/audi-rs3-vs-bmw-m2",
+    eyebrow: "Sportiva vs sportiva",
+    note: "400 CV trazione integrale vs 460 CV trazione posteriore",
+  },
+  {
+    a: VEHICLE_SPECS["audi-rs3"],
+    b: VEHICLE_SPECS["mercedes-classe-a"],
+    href: "/flotta/confronta/audi-rs3-vs-mercedes-classe-a",
+    eyebrow: "Sportiva vs Premium",
+    note: "Esperienza pura per pochi giorni vs comfort tour Sardegna",
+  },
+  {
+    a: VEHICLE_SPECS["jeep-avenger"],
+    b: VEHICLE_SPECS["fiat-panda"],
+    href: "/flotta/confronta/jeep-avenger-vs-fiat-panda",
+    eyebrow: "SUV vs City car",
+    note: "Spiagge nascoste su sterrato vs centri storici stretti",
+  },
+];
+
+const pageUrl = "https://www.ksrentsardinia.com/flotta/confronta";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${pageUrl}#page`,
+    name: "Confronto veicoli a noleggio Olbia",
+    description: "Confronti tecnici dettagliati tra i veicoli a noleggio di KS Rent Sardinia: supercar, premium, SUV e city car a Olbia e Costa Smeralda.",
+    url: pageUrl,
+    inLanguage: "it-IT",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+    hasPart: comparisons.map((c) => ({
+      "@type": "WebPage",
+      name: `${c.a.name} vs ${c.b.name}`,
+      url: `https://www.ksrentsardinia.com${c.href}`,
+    })),
+  },
+];
+---
+<BaseLayout
+  title="Confronti veicoli a noleggio Olbia | KS Rent Sardinia"
+  description="Confronti dettagliati tra le auto a noleggio di KS Rent Sardinia: Audi RS3 vs BMW M2, Mercedes Classe A vs Audi RS3, Jeep Avenger vs Fiat Panda. Quale scegliere?"
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Flotta", path: "/flotta" },
+    { name: "Confronti", path: "/flotta/confronta" },
+  ]}
+>
+  <div class="bg-background min-h-screen">
+    <section class="relative overflow-hidden border-b border-border">
+      <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+      <div class="relative max-w-5xl mx-auto px-4 md:px-12 pt-32 pb-16">
+        <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
+          <GitCompareArrows className="w-3.5 h-3.5" />
+          Confronti veicoli
+        </span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
+          Quale veicolo scegliere
+        </h1>
+        <p class="mt-6 text-lg text-foreground/70 font-light max-w-2xl leading-relaxed">
+          Confronti tecnici dettagliati tra i veicoli a noleggio di KS Rent Sardinia. Specifiche, prezzi, consigli pratici per scegliere il mezzo giusto per la tua vacanza in Costa Smeralda.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-20 px-4 md:px-12">
+      <div class="max-w-5xl mx-auto grid gap-6">
+        {comparisons.map((c) => (
+          <a
+            href={c.href}
+            class="group block bg-card border border-border rounded-2xl overflow-hidden hover:border-primary transition shadow-sm hover:shadow-lg"
+          >
+            <div class="grid md:grid-cols-[1fr,auto,1fr,auto] items-center gap-4 p-6 md:p-8">
+              <div class="flex items-center gap-4">
+                <img
+                  src={c.a.image}
+                  alt={`${c.a.name} a noleggio Olbia`}
+                  width="100"
+                  height="70"
+                  loading="lazy"
+                  class="h-14 w-20 object-contain shrink-0"
+                />
+                <div>
+                  <p class="font-bold text-foreground">{c.a.name}</p>
+                  <p class="text-xs text-foreground/50">{c.a.category}</p>
+                </div>
+              </div>
+              <span class="text-gold font-black text-3xl text-center">vs</span>
+              <div class="flex items-center gap-4">
+                <img
+                  src={c.b.image}
+                  alt={`${c.b.name} a noleggio Olbia`}
+                  width="100"
+                  height="70"
+                  loading="lazy"
+                  class="h-14 w-20 object-contain shrink-0"
+                />
+                <div>
+                  <p class="font-bold text-foreground">{c.b.name}</p>
+                  <p class="text-xs text-foreground/50">{c.b.category}</p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition" />
+            </div>
+            <div class="px-6 md:px-8 pb-6 md:pb-8 -mt-2">
+              <p class="text-xs uppercase tracking-widest text-gold font-bold mb-1">{c.eyebrow}</p>
+              <p class="text-sm text-foreground/70">{c.note}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section class="py-16 px-4 md:px-12 bg-card/30 border-t border-border">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+          Non sai ancora cosa scegliere?
+        </h2>
+        <p class="text-foreground/60 font-light mb-8">
+          Francesco e Salvatore Milo sono disponibili su WhatsApp +39 344 6107071 per consigliarti il veicolo giusto in base al tuo itinerario.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="/flotta"
+            class="inline-flex items-center gap-2 px-8 py-4 border border-border text-foreground font-bold rounded-full hover:border-gold transition"
+          >
+            Tutta la flotta
+          </a>
+          <a
+            href="/prenotaora"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-gold text-background font-bold rounded-full hover:scale-105 transition-transform shadow-lg"
+          >
+            Verifica disponibilità
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

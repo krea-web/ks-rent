@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { VEHICLE_SPECS } from "@/data/vehicle-specs";
+
+const a = VEHICLE_SPECS["audi-rs3"];
+const b = VEHICLE_SPECS["mercedes-classe-a"];
+
+const h1 = "Audi RS3 vs Mercedes Classe A: sportiva o premium per la Sardegna?";
+
+const intro =
+  "Audi RS3 e Mercedes Classe A 180d rappresentano due filosofie diverse del noleggio premium a Olbia. La RS3 e' una supercar pura: 400 CV, trazione integrale quattro, 0-100 in 3,8 secondi, tariffa su preventivo. La Classe A 180d e' una premium compatta diesel: 116 CV, cambio automatico 7G-DCT, consumo medio 4,5 L/100km, tariffa fissa pubblicata da 90 €/giorno. Su KS Rent Sardinia entrambe sono disponibili con consegna a domicilio in Costa Smeralda. La scelta dipende dall'obiettivo: esperienza sportiva intensa per pochi giorni di Costa Smeralda, oppure tour della Sardegna confortevole per 7-14 giorni con consumi contenuti.";
+
+const pageUrl = "https://www.ksrentsardinia.com/flotta/confronta/audi-rs3-vs-mercedes-classe-a";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#page`,
+    name: h1,
+    description: intro.slice(0, 220),
+    url: pageUrl,
+    inLanguage: "it-IT",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+    primaryImageOfPage: a.image,
+    about: [
+      {
+        "@type": "Vehicle",
+        name: a.name,
+        brand: { "@type": "Brand", name: a.brand },
+        url: `https://www.ksrentsardinia.com${a.href}`,
+        image: a.image,
+        vehicleConfiguration: a.category,
+      },
+      {
+        "@type": "Vehicle",
+        name: b.name,
+        brand: { "@type": "Brand", name: b.brand },
+        url: `https://www.ksrentsardinia.com${b.href}`,
+        image: b.image,
+        vehicleConfiguration: b.category,
+      },
+    ],
+  },
+];
+---
+<BaseLayout
+  title="Audi RS3 vs Mercedes Classe A: noleggio Olbia | KS Rent Sardinia"
+  description="Confronto Audi RS3 supercar vs Mercedes Classe A premium per il noleggio a Olbia. Prezzi, prestazioni, consumi, quando scegliere ciascuna in Costa Smeralda."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Flotta", path: "/flotta" },
+    { name: "Audi RS3 vs Mercedes Classe A", path: "/flotta/confronta/audi-rs3-vs-mercedes-classe-a" },
+  ]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} />
+</BaseLayout>

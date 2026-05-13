@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { VEHICLE_SPECS } from "@/data/vehicle-specs";
+
+const a = VEHICLE_SPECS["audi-rs3"];
+const b = VEHICLE_SPECS["bmw-m2"];
+
+const h1 = "Audi RS3 vs BMW M2 a Olbia: quale supercar scegliere per la Costa Smeralda?";
+
+const intro =
+  "Audi RS3 Sportback e BMW M2 Coupe sono le due supercar piu' richieste nel noleggio premium a Olbia e in Costa Smeralda. La RS3 monta un 5 cilindri 2.5 TFSI da 400 CV con trazione integrale quattro e cambio doppia frizione 7 marce, scatta 0-100 in 3,8 secondi. La M2 ha un 6 cilindri biturbo S58 da 460 CV con trazione posteriore e cambio Steptronic 8 marce, accelerazione 4,1 secondi. Entrambe sono noleggiabili presso KS Rent Sardinia (Olbia, P.IVA IT03028900904) con consegna in aeroporto, porto Isola Bianca, ville e hotel della Costa Smeralda. La differenza piu' importante non e' nei numeri: e' nel carattere di guida.";
+
+const pageUrl = "https://www.ksrentsardinia.com/flotta/confronta/audi-rs3-vs-bmw-m2";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#page`,
+    name: h1,
+    description: intro.slice(0, 220),
+    url: pageUrl,
+    inLanguage: "it-IT",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+    primaryImageOfPage: a.image,
+    about: [
+      {
+        "@type": "Vehicle",
+        name: a.name,
+        brand: { "@type": "Brand", name: a.brand },
+        url: `https://www.ksrentsardinia.com${a.href}`,
+        image: a.image,
+        vehicleConfiguration: a.category,
+      },
+      {
+        "@type": "Vehicle",
+        name: b.name,
+        brand: { "@type": "Brand", name: b.brand },
+        url: `https://www.ksrentsardinia.com${b.href}`,
+        image: b.image,
+        vehicleConfiguration: b.category,
+      },
+    ],
+  },
+];
+---
+<BaseLayout
+  title="Audi RS3 vs BMW M2 Olbia: quale noleggiare in Costa Smeralda? | KS Rent"
+  description="Confronto tecnico Audi RS3 vs BMW M2 a Olbia. Potenza, trazione, prezzi noleggio, quando scegliere ciascuna per la Costa Smeralda. KS Rent Sardinia."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Flotta", path: "/flotta" },
+    { name: "Audi RS3 vs BMW M2", path: "/flotta/confronta/audi-rs3-vs-bmw-m2" },
+  ]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} />
+</BaseLayout>

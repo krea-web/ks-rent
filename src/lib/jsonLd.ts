@@ -47,6 +47,20 @@ export const localBusinessJsonLd = {
       vatID: "IT03028900904",
       taxID: "03028900904",
       foundingDate: "2025-04-08",
+      founder: [
+        {
+          "@type": "Person",
+          name: "Francesco Milo",
+          jobTitle: "Co-fondatore",
+          worksFor: { "@id": "https://www.ksrentsardinia.com/#organization" },
+        },
+        {
+          "@type": "Person",
+          name: "Salvatore Milo",
+          jobTitle: "Co-fondatore",
+          worksFor: { "@id": "https://www.ksrentsardinia.com/#organization" },
+        },
+      ],
       description:
         "Autonoleggio premium a breve termine in Sardegna. Flotta moderna: dalla city car alla supercar, SUV, scooter e quad. Consegna a domicilio in tutta la Gallura (gratuita a Olbia, su preventivo nelle altre località). Noleggio anche senza carta di credito obbligatoria.",
       disambiguatingDescription:
