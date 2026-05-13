@@ -19,6 +19,14 @@ lerna-debug.log*
 reports
 sql/exports/
 
+# Cache locale (reddit monitor seen-thread, ecc.)
+.cache/
+
+# Snapshot HTML temporanei (rigenerati dal build)
+tmpks-*.html
+tmpks-*.txt
+tmpks-*.xml
+
 # Claude Code locale
 .claude/
 

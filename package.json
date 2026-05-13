@@ -12,7 +12,10 @@
     "preview": "astro preview",
     "astro": "astro",
     "indexnow": "node scripts/indexnow-ping.mjs",
-    "sync-reviews": "node scripts/fetch-google-reviews.mjs"
+    "sync-reviews": "node scripts/fetch-google-reviews.mjs",
+    "reddit-monitor": "node scripts/reddit-monitor.mjs --markdown",
+    "reddit-monitor:json": "node scripts/reddit-monitor.mjs --json",
+    "reddit-monitor:7d": "node scripts/reddit-monitor.mjs --markdown --since 7d"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.4",
