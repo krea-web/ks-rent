@@ -11,20 +11,33 @@ import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import {
   findArticle,
   findArticleEn,
+  findArticleDe,
+  findArticleFr,
   type GuideArticleMeta,
   type GuideArticleMetaEn,
+  type GuideArticleMetaDe,
+  type GuideArticleMetaFr,
 } from "@/data/guide-articles";
 
-type Lang = "it" | "en";
+type Lang = "it" | "en" | "de" | "fr";
+type AnyArticleMeta =
+  | GuideArticleMeta
+  | GuideArticleMetaEn
+  | GuideArticleMetaDe
+  | GuideArticleMetaFr;
 
 interface Props {
-  meta: GuideArticleMeta | GuideArticleMetaEn;
+  meta: AnyArticleMeta;
   lang?: Lang;
 }
 
 const { meta, lang = "it" } = Astro.props;
 
-const localeStr = lang === "en" ? "en-GB" : "it-IT";
+const localeStr =
+  lang === "en" ? "en-GB" :
+  lang === "de" ? "de-DE" :
+  lang === "fr" ? "fr-FR" : "it-IT";
+
 const formattedDate = new Date(meta.publishedAt).toLocaleDateString(localeStr, {
   year: "numeric",
   month: "long",
@@ -35,14 +48,22 @@ const updatedDate = meta.updatedAt
   : null;
 
 // Risolvi gli articoli correlati nella lingua corretta
-const relatedFinder = lang === "en" ? findArticleEn : findArticle;
+const relatedFinder =
+  lang === "en" ? findArticleEn :
+  lang === "de" ? findArticleDe :
+  lang === "fr" ? findArticleFr :
+  findArticle;
 const relatedArticles = (meta.related || [])
   .map((slug) => relatedFinder(slug))
-  .filter((a): a is GuideArticleMeta | GuideArticleMetaEn => !!a);
+  .filter((a): a is AnyArticleMeta => !!a);
 
-// URL base per i link articolo (IT senza prefisso, EN con /en)
-const guideBase = lang === "en" ? "/en/guide" : "/guide";
-const bookingHref = lang === "en" ? "/en/book-now" : "/prenotaora";
+// URL base per i link articolo (IT senza prefisso, altrimenti con /lang)
+const guideBase = lang === "it" ? "/guide" : `/${lang}/guide`;
+const bookingHref =
+  lang === "it" ? "/prenotaora" :
+  lang === "en" ? "/en/book-now" :
+  lang === "de" ? "/de/jetzt-buchen" :
+  "/fr/reserver";
 
 const labels = {
   it: {
@@ -70,6 +91,32 @@ const labels = {
     bookSubtitle:
       "Confirm your dates and pick a vehicle from the KS Rent Sardinia fleet. No mandatory credit card.",
     bookCta: "Check availability",
+  },
+  de: {
+    eyebrow: `${meta.category} · KS Rent Anleitungen`,
+    publishedOn: "Veroeffentlicht am",
+    updatedOn: "aktualisiert",
+    readingTime: "Min. Lesezeit",
+    authoredBy: "Von",
+    keepReading: "Weiterlesen",
+    readyTo: "Bereit zur Abfahrt?",
+    bookTitle: "Buchen Sie Ihr Fahrzeug fuer die Costa Smeralda",
+    bookSubtitle:
+      "Bestaetigen Sie die Daten und waehlen Sie das Fahrzeug aus der KS Rent Sardinia Flotte. Keine Kreditkarte erforderlich.",
+    bookCta: "Verfuegbarkeit pruefen",
+  },
+  fr: {
+    eyebrow: `${meta.category} · Guides KS Rent`,
+    publishedOn: "Publie le",
+    updatedOn: "mis a jour",
+    readingTime: "min de lecture",
+    authoredBy: "Par",
+    keepReading: "Continuer la lecture",
+    readyTo: "Pret a partir ?",
+    bookTitle: "Reservez votre vehicule pour la Costa Smeralda",
+    bookSubtitle:
+      "Confirmez les dates et choisissez le vehicule dans la flotte KS Rent Sardinia. Sans carte de credit obligatoire.",
+    bookCta: "Verifier disponibilite",
   },
 }[lang];
 ---

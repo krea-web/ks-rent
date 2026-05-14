@@ -286,3 +286,133 @@ export const GUIDE_ARTICLES_EN: GuideArticleMetaEn[] = [
 export function findArticleEn(slug: string): GuideArticleMetaEn | undefined {
   return GUIDE_ARTICLES_EN.find((a) => a.slug === slug);
 }
+
+/* ─── DE articles ─── */
+
+export interface GuideArticleMetaDe {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: "Autovermietung" | "Reiserouten" | "Costa Smeralda" | "Flughafen & Hafen" | "Fahrzeuge";
+  publishedAt: string;
+  updatedAt?: string;
+  readingMinutes: number;
+  heroImage: string;
+  author: string;
+  related?: string[];
+  itEquivalent?: string;
+}
+
+export const GUIDE_ARTICLES_DE: GuideArticleMetaDe[] = [
+  {
+    slug: "autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung",
+    title: "Autovermietung Olbia ohne Kreditkarte: die vollstaendige Anleitung 2026",
+    excerpt:
+      "Alle echten Schritte fuer die Autovermietung in Olbia ohne Kreditkarte: akzeptierte Zahlungen, Kaution, Dokumente, Zeiten. Aktualisiert Mai 2026.",
+    category: "Autovermietung",
+    publishedAt: "2026-05-13",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["autovermietung-flughafen-olbia-praktische-anleitung", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+  },
+  {
+    slug: "7-tage-reiseroute-costa-smeralda-ab-olbia",
+    title: "7-Tage-Reiseroute Costa Smeralda ab Olbia: Routen, Straende, Distanzen",
+    excerpt:
+      "Der komplette 7-Tage-Plan fuer die Costa Smeralda ab Olbia: Etappen Tag fuer Tag, Distanzen, Parkplaetze, Fahrzeug-Tipps fuer jeden Abschnitt.",
+    category: "Reiserouten",
+    publishedAt: "2026-05-13",
+    readingMinutes: 12,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["autovermietung-flughafen-olbia-praktische-anleitung", "autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung"],
+    itEquivalent: "itinerario-7-giorni-costa-smeralda-da-olbia",
+  },
+  {
+    slug: "autovermietung-flughafen-olbia-praktische-anleitung",
+    title: "Autovermietung Flughafen Olbia: praktische Anleitung fuer Touristen 2026",
+    excerpt:
+      "Alles ueber Autovermietung am Flughafen Olbia Costa Smeralda (OLB): Lieferung an den Ankuenften, Flugzeiten, Schalter-Schlangen, unabhaengige Alternativen.",
+    category: "Flughafen & Hafen",
+    publishedAt: "2026-05-13",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "noleggio-auto-olbia-aeroporto-guida-pratica",
+  },
+];
+
+export function findArticleDe(slug: string): GuideArticleMetaDe | undefined {
+  return GUIDE_ARTICLES_DE.find((a) => a.slug === slug);
+}
+
+/* ─── FR articles ─── */
+
+export interface GuideArticleMetaFr {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: "Location" | "Itineraires" | "Costa Smeralda" | "Aeroport & Port" | "Vehicules";
+  publishedAt: string;
+  updatedAt?: string;
+  readingMinutes: number;
+  heroImage: string;
+  author: string;
+  related?: string[];
+  itEquivalent?: string;
+}
+
+export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
+  {
+    slug: "location-voiture-olbia-sans-carte-credit-guide-complet",
+    title: "Location voiture Olbia sans carte de credit : le guide complet 2026",
+    excerpt:
+      "Toutes les etapes reelles pour louer une voiture a Olbia sans carte de credit : paiements acceptes, caution, documents, delais. Mis a jour mai 2026.",
+    category: "Location",
+    publishedAt: "2026-05-13",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["location-voiture-aeroport-olbia-guide-pratique", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+  },
+  {
+    slug: "itineraire-7-jours-costa-smeralda-depuis-olbia",
+    title: "Itineraire 7 jours en Costa Smeralda depuis Olbia : parcours, plages, distances",
+    excerpt:
+      "Le plan complet d'une semaine en Costa Smeralda depuis Olbia : etapes jour par jour, distances, parkings, conseils sur les vehicules pour chaque parcours.",
+    category: "Itineraires",
+    publishedAt: "2026-05-13",
+    readingMinutes: 12,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["location-voiture-aeroport-olbia-guide-pratique", "location-voiture-olbia-sans-carte-credit-guide-complet"],
+    itEquivalent: "itinerario-7-giorni-costa-smeralda-da-olbia",
+  },
+  {
+    slug: "location-voiture-aeroport-olbia-guide-pratique",
+    title: "Location voiture aeroport Olbia : guide pratique pour touristes 2026",
+    excerpt:
+      "Tout sur la location voiture a l'aeroport Olbia Costa Smeralda (OLB) : livraison aux arrivees, horaires vols, file aux comptoirs, alternatives independantes.",
+    category: "Aeroport & Port",
+    publishedAt: "2026-05-13",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["location-voiture-olbia-sans-carte-credit-guide-complet", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "noleggio-auto-olbia-aeroporto-guida-pratica",
+  },
+];
+
+export function findArticleFr(slug: string): GuideArticleMetaFr | undefined {
+  return GUIDE_ARTICLES_FR.find((a) => a.slug === slug);
+}

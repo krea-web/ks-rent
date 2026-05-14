@@ -1,0 +1,126 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ArrowRight, Calendar, Clock, BookOpen } from "lucide-react";
+import { GUIDE_ARTICLES_DE } from "@/data/guide-articles";
+
+const pageUrl = "https://www.ksrentsardinia.com/de/guide";
+
+const sortedArticles = [...GUIDE_ARTICLES_DE].sort(
+  (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${pageUrl}#page`,
+    name: "KS Rent Sardinia — Anleitungen fuer Autovermietung in Olbia und Costa Smeralda",
+    description:
+      "Praktische Anleitungen von KS Rent Sardinia: Costa Smeralda Reiserouten, Autovermietung ohne Kreditkarte, Fahrzeugwahl, Parkplaetze, Distanzen.",
+    url: pageUrl,
+    inLanguage: "de-DE",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+    hasPart: sortedArticles.map((a) => ({
+      "@type": "Article",
+      headline: a.title,
+      description: a.excerpt,
+      url: `https://www.ksrentsardinia.com/de/guide/${a.slug}`,
+      image: a.heroImage,
+      author: { "@type": "Person", name: a.author },
+      publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      datePublished: a.publishedAt,
+      inLanguage: "de-DE",
+    })),
+  },
+];
+---
+<BaseLayout
+  title="Autovermietung Anleitungen Olbia & Costa Smeralda | KS Rent Sardinia"
+  description="Praktische Anleitungen fuer Autovermietung in Olbia und Costa Smeralda: Reiserouten, Tipps Mietwagen ohne Kreditkarte, Fahrzeugwahl, Distanzen, Parkplaetze."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Anleitungen", path: "/de/guide" }]}
+>
+  <div class="bg-background min-h-screen">
+    <section class="relative overflow-hidden border-b border-border">
+      <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+      <div class="relative max-w-5xl mx-auto px-4 md:px-12 pt-32 pb-16">
+        <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
+          <BookOpen className="w-3.5 h-3.5" />
+          KS Rent Sardinia Anleitungen
+        </span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
+          Praktische Tipps fuer Sardinien
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-foreground/70 font-light max-w-2xl leading-relaxed">
+          Reiserouten, Distanzen, Parkplaetze, Mietwagen-Tipps — alles, was Francesco und Salvatore Milo aus der Betreuung von Kunden gelernt haben, die in Olbia und an der Costa Smeralda mieten.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-20 px-4 md:px-12">
+      <div class="max-w-5xl mx-auto grid gap-8 md:grid-cols-2">
+        {sortedArticles.map((article) => (
+          <a
+            href={`/de/guide/${article.slug}`}
+            class="group block bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/40 transition shadow-sm hover:shadow-xl"
+          >
+            <div class="aspect-[16/9] overflow-hidden">
+              <img
+                src={article.heroImage}
+                alt={article.title}
+                width="640"
+                height="360"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-6">
+              <span class="text-xs uppercase tracking-widest text-gold font-bold">{article.category}</span>
+              <h2 class="text-xl md:text-2xl font-black italic uppercase tracking-tight text-foreground mt-2 group-hover:text-gold transition leading-tight">
+                {article.title}
+              </h2>
+              <p class="text-sm text-foreground/60 mt-3 leading-relaxed line-clamp-3">{article.excerpt}</p>
+              <div class="mt-5 flex items-center justify-between text-xs text-foreground/50">
+                <span class="flex items-center gap-2">
+                  <Calendar className="w-3.5 h-3.5" />
+                  {new Date(article.publishedAt).toLocaleDateString("de-DE", { year: "numeric", month: "short", day: "numeric" })}
+                </span>
+                <span class="flex items-center gap-2">
+                  <Clock className="w-3.5 h-3.5" />
+                  {article.readingMinutes} Min.
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="py-16 px-4 md:px-12 bg-card/30 border-t border-border">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+          Spezifische Frage?
+        </h2>
+        <p class="text-foreground/60 font-light mb-8">
+          Francesco und Salvatore Milo antworten direkt auf WhatsApp +39 344 6107071 — auch ausserhalb der Geschaeftszeiten.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="https://wa.me/393446107071"
+            class="inline-flex items-center gap-2 px-8 py-4 border border-border text-foreground font-bold rounded-full hover:border-gold transition"
+          >
+            Auf WhatsApp fragen
+          </a>
+          <a
+            href="/de/jetzt-buchen"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-gold text-background font-bold rounded-full hover:scale-105 transition-transform shadow-lg"
+          >
+            Verfuegbarkeit pruefen
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

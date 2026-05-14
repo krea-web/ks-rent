@@ -198,13 +198,31 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
   const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
   const noCardHref = localizePath("/noleggio-auto-senza-carta-di-credito-olbia", lang);
 
-  // Sezioni con presenza limitata: /guide esiste in IT + EN; /flotta/confronta solo IT
-  const hasGuides = lang === "it" || lang === "en";
-  const guideHref = lang === "it" ? "/guide" : "/en/guide";
-  const guideLabel = lang === "en" ? "Guides" : "Guide";
-  const hasConfronti = lang === "it";
-  const confrontiHref = "/flotta/confronta";
-  const confrontiLabel = "Confronti";
+  // Sezioni con presenza completa nelle 4 lingue dopo i18n batch.
+  // Hub guide: /guide (IT), /en/guide, /de/guide, /fr/guide
+  // Comparison hub: /flotta/confronta (IT), /en/fleet/compare, /de/fuhrpark/vergleich, /fr/flotte/comparer
+  const hasGuides = true;
+  const guideHref =
+    lang === "it" ? "/guide" :
+    lang === "en" ? "/en/guide" :
+    lang === "de" ? "/de/guide" :
+    "/fr/guide";
+  const guideLabel =
+    lang === "en" ? "Guides" :
+    lang === "de" ? "Anleitungen" :
+    lang === "fr" ? "Guides" :
+    "Guide";
+  const hasConfronti = true;
+  const confrontiHref =
+    lang === "it" ? "/flotta/confronta" :
+    lang === "en" ? "/en/fleet/compare" :
+    lang === "de" ? "/de/fuhrpark/vergleich" :
+    "/fr/flotte/comparer";
+  const confrontiLabel =
+    lang === "en" ? "Compare" :
+    lang === "de" ? "Vergleich" :
+    lang === "fr" ? "Comparer" :
+    "Confronti";
 
   // Fleet vehicle URLs
   const fleetBase = getFleetPath(lang);
@@ -780,7 +798,10 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                     <div className="flex items-center gap-3">
                       <span className="text-gold text-lg">⇄</span>
                       <span className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">
-                        {confrontiLabel} veicoli
+                        {lang === "en" ? "Compare vehicles"
+                          : lang === "de" ? "Fahrzeuge vergleichen"
+                          : lang === "fr" ? "Comparer vehicules"
+                          : "Confronti veicoli"}
                       </span>
                     </div>
                     <ArrowRight size={14} className="text-gold" />
@@ -855,8 +876,9 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
                     <span className="pointer-events-none break-words">{guideLabel}</span>
                   </Link>
                   <p className="text-gray-600 dark:text-white/60 text-sm font-light mt-1">
-                    {lang === "en"
-                      ? "Practical guides on car hire, itineraries, beaches, costs."
+                    {lang === "en" ? "Practical guides on car hire, itineraries, beaches, costs."
+                      : lang === "de" ? "Praktische Anleitungen: Mietwagen, Reiserouten, Straende, Kosten."
+                      : lang === "fr" ? "Guides pratiques sur location, itineraires, plages, couts."
                       : "Guide pratiche su noleggio, itinerari, spiagge, costi."}
                   </p>
                 </motion.div>

@@ -1,0 +1,239 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("itineraire-7-jours-costa-smeralda-depuis-olbia")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: [
+    { "@type": "Thing", name: "Itineraire Costa Smeralda" },
+    { "@type": "Place", name: "Costa Smeralda", containedInPlace: { "@type": "AdministrativeArea", name: "Gallura, Sardaigne" } },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | Guides KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Itineraire 7 jours Costa Smeralda", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>Sept jours en Costa Smeralda depuis Olbia suffisent pour une experience complete, mais doivent etre bien planifies</strong>. La Gallura est grande, les distances entre les localites semblent courtes sur la carte mais peuvent devenir extremement longues en haute saison a cause de la circulation et des parkings. Cet itineraire est construit sur l'experience de Francesco et Salvatore Milo (co-fondateurs KS Rent Sardinia, Olbia), qui livrent chaque annee des centaines de vehicules a des touristes italiens et internationaux. Il indique jour par jour : ou aller, combien de kilometres, ou se garer, quel vehicule est le plus adapte et les meilleurs horaires pour eviter le chaos.
+    </p>
+
+    <h2>Logistique</h2>
+
+    <ul>
+      <li><strong>Point de depart</strong> : aeroport Olbia Costa Smeralda (OLB) ou port Olbia Isola Bianca. Tous deux ont la livraison gratuite du vehicule de KS Rent Sardinia, 5 minutes de notre base</li>
+      <li><strong>Vehicule recommande pour l'itineraire complet</strong> : <a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a> (SUV compact, position de conduite haute, accede aux chemins de terre) ou <a href="/fr/flotte/mercedes-classe-a-location-olbia">Mercedes Classe A 180d</a> (consommation diesel 4,5 L/100km sur autoroute, confort de tour)</li>
+      <li><strong>Periode</strong> : itineraire valable d'avril a octobre. En juillet-aout, doublez les temps de conduite a cause de la circulation</li>
+      <li><strong>Distance totale estimee</strong> : 350-450 km en 7 jours</li>
+      <li><strong>Carburant</strong> : en haute saison, les stations-service dans les centres touristiques sont cheres. Faites le plein a Olbia ou sur la SS131 avant la Costa Smeralda</li>
+    </ul>
+
+    <h2>Jour 1 — Arrivee a Olbia, installation et premiere exploration</h2>
+
+    <p>
+      <strong>Distance journaliere</strong> : 10-30 km · <strong>Vehicule</strong> : n'importe lequel
+    </p>
+
+    <p>
+      Vous atterrissez ou debarquez a Olbia. KS Rent Sardinia livre votre vehicule directement a l'aeroport OLB ou au port Isola Bianca. Temps moyen de l'atterrissage a la conduite : 10 minutes. D'ici, rejoignez votre logement (en Costa Smeralda, comptez 35-50 min en haute saison ; a Olbia meme, 5-15 min).
+    </p>
+
+    <p>
+      L'apres-midi, si l'horaire le permet, faites une promenade dans le centre historique d'Olbia (Corso Umberto, Piazza Margherita di Savoia) et un arret a <strong>Pittulongu</strong>, la plage la plus proche du centre (10 min en voiture). Diner en ville : essayez restaurants comme "Su Rinconete", "Da Paolo" ou les pizzerias du port.
+    </p>
+
+    <h2>Jour 2 — Costa Smeralda nord : Porto Cervo + Porto Rotondo</h2>
+
+    <p>
+      <strong>Distance journaliere</strong> : 60-80 km · <strong>Vehicule</strong> : ideal Mercedes Classe A ou Audi RS3 pour la route panoramique
+    </p>
+
+    <p>
+      Matin : <a href="/fr/location-voiture-porto-rotondo">Porto Rotondo</a> (20 min d'Olbia). Cafe a Piazza San Marco, promenade au port de plaisance, vue sur les mega-yachts. <strong>Parking</strong> : payant partout en haute saison (5-10 €/heure). Allez tot (avant 10h00) pour trouver une place.
+    </p>
+
+    <p>
+      Dejeuner a <a href="/fr/location-voiture-porto-cervo">Porto Cervo</a> (25 min depuis Porto Rotondo via SP59). La Promenade du Vieux Port est le coeur mondain : boutiques, galeries d'art, restaurants etoiles. <strong>Parking</strong> : P1 sous le Centre Commercial est le plus pratique mais peut etre plein vers midi ; alternative moins chere pres du Vieux Port.
+    </p>
+
+    <p>
+      Apres-midi : plage. Options pres de Porto Cervo :
+    </p>
+    <ul>
+      <li><strong>Spiaggia del Principe</strong> — la plage la plus iconique de Costa Smeralda. Acces depuis SP59, dernier troncon sur chemin de terre (Jeep Avenger conseillee). Sentier de 200 m a pied depuis le parking</li>
+      <li><strong>Capriccioli</strong> — deux criques jumelles separees par promontoire. Sable blanc</li>
+      <li><strong>Romazzino</strong> — devant l'Hotel Romazzino. Eau cristalline, parking cher</li>
+      <li><strong>Liscia Ruja</strong> — la plus longue plage de Costa Smeralda</li>
+    </ul>
+
+    <p>
+      Diner a Porto Cervo ou retour a Olbia. Pour l'aperitif coucher de soleil, le <strong>Phi Beach</strong> a Baja Sardinia est legendaire.
+    </p>
+
+    <h2>Jour 3 — Archipel de La Maddalena</h2>
+
+    <p>
+      <strong>Distance journaliere</strong> : 100 km · <strong>Vehicule</strong> : n'importe lequel (la voiture reste a Palau)
+    </p>
+
+    <p>
+      Tot le matin : transfert a <a href="/fr/location-voiture-palau">Palau</a> (50 min d'Olbia, 35 min de Porto Cervo). Garez-vous dans l'un des parkings du centre (8-15 €/jour) et prenez le ferry pour <strong>La Maddalena</strong> (Saremar ou Delcomar, 20 minutes, departs toutes les 30 min en haute saison, 10-15 € aller-retour voiture + personnes).
+    </p>
+
+    <p>
+      A La Maddalena vous pouvez :
+    </p>
+    <ul>
+      <li>Visiter le centre historique (Piazza Garibaldi, Cala Gavetta)</li>
+      <li>Louer une petite voiture sur l'ile pour explorer les criques (Cala Spalmatore, Cala Coticcio "Tahiti", Spiaggia Rosa di Budelli — cette derniere visible uniquement depuis le bateau)</li>
+      <li>Embarquer pour une excursion en bateau au Parc National de l'Archipel (40-80 €/personne, 8 heures, dejeuner a bord, arrets a Spargi et Budelli)</li>
+    </ul>
+
+    <p>
+      Retour a Palau en fin d'apres-midi. Diner a <strong>Cannigione</strong> (15 min de Palau) : restaurants de poisson comme "Sa Mola" ou "Il Galletto".
+    </p>
+
+    <h2>Jour 4 — Costa Smeralda sud : Baja Sardinia, Capriccioli, Pevero</h2>
+
+    <p>
+      <strong>Distance journaliere</strong> : 50 km · <strong>Vehicule</strong> : ideal Audi RS3 ou BMW M2 pour les routes panoramiques
+    </p>
+
+    <p>
+      Matin : <a href="/fr/location-voiture-baja-sardinia">Baja Sardinia</a> (45 min d'Olbia, 10 min de Porto Cervo). Plage de Baja Sardinia (sable clair, etablissements) ou la plage de <strong>Grande Pevero</strong>, l'une des plus belles criques de Costa Smeralda avec eau turquoise.
+    </p>
+
+    <p>
+      Dejeuner : pour une experience haut de gamme, essayez <strong>Cala di Volpe</strong> (l'iconique hotel-village mediterraneen). Pour bonne pizza vue mer, allez a <strong>Poltu Quatu</strong> (le petit "fjord" entre Baja Sardinia et Porto Cervo).
+    </p>
+
+    <p>
+      Apres-midi : plages plus tranquilles — essayez <strong>Liscia Ruja</strong> ou <strong>La Celvia</strong>. Soir : retour a Baja Sardinia pour le coucher de soleil au Phi Beach ou piste de danse au Billionaire (reservation requise, dress code strict).
+    </p>
+
+    <h2>Jour 5 — Tour de l'arriere-pays : Arzachena, Tempio Pausania, San Pantaleo</h2>
+
+    <p>
+      <strong>Distance journaliere</strong> : 120 km · <strong>Vehicule</strong> : ideal Mercedes Classe A ou Jeep Avenger
+    </p>
+
+    <p>
+      Journee "non-plage". Matin : <a href="/fr/location-voiture-arzachena">Arzachena</a> et ses <strong>sites nuragiques</strong> (Tomba dei Giganti di Coddu Vecchiu, Necropoli di Li Muri). Visitez le petit village de <strong>San Pantaleo</strong>, vraie perle de Gallura : place, galeries d'art, restaurants comme "Giagoni" ou "La Tana del Gabbiano".
+    </p>
+
+    <p>
+      Apres-midi : continuez vers <strong>Tempio Pausania</strong> (1h d'Olbia), capitale historique de Gallura, ville de pierre grise. Visitez la cathedrale, les sources Rinaggiu, le Mont Limbara.
+    </p>
+
+    <p>
+      Diner : retour a Olbia ou arret a <strong>Berchidda</strong> pour gouter le Vermentino di Gallura DOCG (caves comme Vigne Surrau, Capichera, Piero Mancini).
+    </p>
+
+    <h2>Jour 6 — Cote sud : San Teodoro, Capo Coda Cavallo, La Cinta</h2>
+
+    <p>
+      <strong>Distance journaliere</strong> : 70 km · <strong>Vehicule</strong> : ideal Jeep Avenger pour Capo Coda Cavallo
+    </p>
+
+    <p>
+      Matin : <a href="/fr/location-voiture-san-teodoro">San Teodoro</a> (30 min d'Olbia). La plage <strong>La Cinta</strong> est 5 km de sable blanc avec vue sur l'ile Tavolara. Parking payant, etablissements et zone libre. Plage parfaite pour familles avec enfants (eau peu profonde sur des dizaines de metres).
+    </p>
+
+    <p>
+      Dejeuner au centre de San Teodoro : restaurants poisson, sushi, pizzerias.
+    </p>
+
+    <p>
+      Apres-midi : <strong>Cala Brandinchi</strong> et <strong>Lu Impostu</strong>, deux plages jumelles a 10 min de San Teodoro, surnommees "les Bahamas de la Sardaigne" pour la couleur de l'eau. Canoes et SUP a louer.
+    </p>
+
+    <p>
+      Pour les aventureux : <strong>Capo Coda Cavallo</strong>. Route partiellement non-asphaltee dans les derniers km — la Jeep Avenger fait la difference ici.
+    </p>
+
+    <h2>Jour 7 — Olbia, derniere baignade et depart</h2>
+
+    <p>
+      <strong>Distance journaliere</strong> : 20-50 km · <strong>Vehicule</strong> : n'importe lequel
+    </p>
+
+    <p>
+      Dernier jour. Si vous avez un vol ou ferry en soiree, organisez le matin ainsi :
+    </p>
+    <ul>
+      <li><strong>Pittulongu ou Bados</strong> (10-15 min d'Olbia) : baignade rapide, plages urbaines mais pratiques</li>
+      <li>ou <strong>Porto Istana</strong> (20 min d'Olbia, tres pres de l'aeroport) : vue sur l'ile Tavolara, sable clair</li>
+    </ul>
+
+    <p>
+      Dejeuner a Olbia. Restitution du vehicule directement a l'aeroport OLB ou au port Isola Bianca, a l'heure convenue avec nous (aussi en dehors des heures standard, contactez-nous via WhatsApp). Temps moyen check-out : 10 minutes.
+    </p>
+
+    <h2>Combien coute la location pour 7 jours</h2>
+
+    <p>
+      Estimation pour la location d'un vehicule pour 7 jours en Costa Smeralda chez KS Rent Sardinia (tarifs saisonniers avril-octobre, liste de prix officielle sur <a href="/fr/tarifs">/fr/tarifs</a>) :
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Vehicule</th><th>Basse saison</th><th>Haute saison (jul-aou)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>~ 280 €</td><td>~ 490 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>~ 420 €</td><td>~ 770 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>~ 630 €</td><td>~ 1 120 €</td></tr>
+        <tr><td>Audi RS3 / BMW M2</td><td>sur devis</td><td>sur devis</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Tarifs incluent <strong>responsabilite civile, assistance routiere 24/7, gestion contrat et kilometrage adapte a l'itineraire Gallura</strong>. Non inclus : carburant, peages, options (second conducteur, siege auto, franchise reduite kasko).
+    </p>
+
+    <p>
+      <strong>Livraison gratuite</strong> dans la commune d'Olbia (aeroport et port inclus). Pour livraison aux hotels/villas hors Olbia, le cout commence a 5 € et depend de la distance.
+    </p>
+
+    <h2>Conseils pratiques finaux</h2>
+
+    <ul>
+      <li><strong>Reservez tot</strong> : pour juillet-aout, les vehicules sont epuises avant mai</li>
+      <li><strong>Carburant</strong> : en Costa Smeralda les stations-service sont tres cheres (+15-20% par rapport a SS131). Faites le plein a Olbia ou Loiri Porto San Paolo</li>
+      <li><strong>Parkings</strong> : toujours payants dans les zones touristiques, meme les plages "libres" ont des parkings prives. Portez toujours 10-20 € en monnaie ou utilisez des apps comme EasyPark</li>
+      <li><strong>SOS plages</strong> : arrivez avant 10h00 dans les mois de pointe ou vous ne trouvez pas de parking</li>
+      <li><strong>Chemins de terre</strong> : certaines plages Costa Smeralda ont les derniers 200-500 m sur chemin de terre. Choisissez un SUV compact pour acceder sans souci</li>
+      <li><strong>Conduite nocturne</strong> : l'arriere-pays Gallura a tres peu d'eclairage. Si vous rentrez tard de Tempio Pausania, faites attention</li>
+    </ul>
+
+    <p>
+      Pour <strong>choisir le bon vehicule</strong> selon votre composition de voyage (couple, famille, groupe), comparez les options dans notre <a href="/fr/flotte/comparer">guide comparaisons vehicules</a>. Pour des questions specifiques sur l'itineraire ou pour organiser des livraisons particulieres (heures de fete, points eloignes), contactez Francesco et Salvatore Milo directement sur WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

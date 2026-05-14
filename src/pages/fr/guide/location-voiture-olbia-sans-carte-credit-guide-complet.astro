@@ -1,0 +1,200 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("location-voiture-olbia-sans-carte-credit-guide-complet")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: {
+    "@type": "Thing",
+    name: "Location voiture sans carte de credit",
+    sameAs: "https://www.ksrentsardinia.com/fr/location-voiture-sans-carte-credit-olbia",
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Puis-je vraiment tout payer en especes pour la location de voiture a Olbia ?",
+      acceptedAnswer: { "@type": "Answer", text: "Oui, vous pouvez payer la location et la caution entierement en especes chez KS Rent Sardinia a Olbia. C'est la methode la plus simple si vous n'avez pas de cartes adaptees. Pour des montants superieurs a 5 000 €, les modalites doivent etre convenues a l'avance (la loi italienne limite les transactions en especes)." },
+    },
+    {
+      "@type": "Question",
+      name: "Les cartes prepayees (Revolut, N26, Wise) fonctionnent-elles pour la caution ?",
+      acceptedAnswer: { "@type": "Answer", text: "Oui. Revolut, Wise, N26, Hype et Postepay sont toutes acceptees par KS Rent Sardinia. Seule exigence : la carte doit avoir un solde suffisant pour couvrir la caution au retrait. Pas de pre-autorisation : le montant est reellement debit comme caution et rembourse au retour." },
+    },
+    {
+      "@type": "Question",
+      name: "Le virement instantane SEPA arrive-t-il a temps pour la caution ?",
+      acceptedAnswer: { "@type": "Answer", text: "Oui. SEPA Instant arrive en quelques secondes (10 secondes maximum). KS Rent Sardinia verifie le credit sur le compte de l'entreprise directement au moment de la livraison du vehicule." },
+    },
+    {
+      "@type": "Question",
+      name: "Combien de temps la caution reste-t-elle bloquee chez KS Rent Sardinia ?",
+      acceptedAnswer: { "@type": "Answer", text: "Zero jours : la caution est remboursee immediatement au retour, apres une verification rapide du niveau de carburant et de l'integrite du vehicule. Contrairement aux pre-autorisations des grandes societes internationales (blocage carte 15-30 jours), avec KS Rent Sardinia votre argent revient tout de suite." },
+    },
+    {
+      "@type": "Question",
+      name: "Que se passe-t-il en cas de dommage au vehicule de location ?",
+      acceptedAnswer: { "@type": "Answer", text: "Pour les dommages couverts par l'assurance (CDW, responsabilite civile), KS Rent Sardinia traite directement avec l'assurance. S'il y a une franchise a debiter, elle est communiquee de maniere transparente et deduite de la caution. Si la caution ne suffit pas (rare), des modalites de paiement pour le solde sont convenues." },
+    },
+    {
+      "@type": "Question",
+      name: "Puis-je ajouter un second conducteur au contrat de location ?",
+      acceptedAnswer: { "@type": "Answer", text: "Oui, avec un petit supplement. Le second conducteur doit avoir un permis valide depuis au moins 1 an et respecter l'age minimum requis par la categorie de vehicule. Le second conducteur est toujours mentionne sur le contrat de location." },
+    },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: meta.title, path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>La location de voiture a Olbia sans carte de credit est possible.</strong> KS Rent Sardinia, base a Olbia en Sardaigne, est l'une des rares societes de location de voitures en Italie qui accepte explicitement <strong>especes, cartes de debit, cartes prepayees (Revolut, Wise, N26, Hype, Postepay) et virements bancaires</strong> pour la caution. Pas de plafonds minimums sur la carte, pas de blocage de 1 500-2 500 € que les grandes chaines internationales exigent. Ce guide explique exactement comment ca marche, quels documents sont necessaires, combien la caution est demandee et comment la livraison du vehicule se deroule a l'aeroport Olbia Costa Smeralda (OLB), au port Olbia Isola Bianca ou directement a votre hotel/villa en Costa Smeralda.
+    </p>
+
+    <h2>Pourquoi les grandes chaines exigent une carte de credit</h2>
+
+    <p>
+      Hertz, Avis, Sixt, Europcar et les autres grands reseaux internationaux exigent une carte de credit traditionnelle (Visa, Mastercard, American Express avec plafond) pour <strong>pre-autoriser</strong> un blocage de garantie sur votre compte. Le montant varie de 800 € pour une citadine a 5 000 € pour une supercar et <strong>reste bloque</strong> sur la carte pour toute la duree de location plus 5-15 jours apres le retour. Cela exclut automatiquement :
+    </p>
+
+    <ul>
+      <li>Ceux qui ont seulement des cartes prepayees rechargeables (Revolut, Wise, N26, Hype, Postepay) : pas de plafond pre-autorisable</li>
+      <li>Ceux qui utilisent des cartes de debit liees au compte courant (Maestro, V-Pay, Visa Debit)</li>
+      <li>Ceux qui veulent payer en especes par choix ou par confidentialite</li>
+      <li>Les jeunes, etudiants, freelances ou visiteurs etrangers sans carte de credit traditionnelle</li>
+      <li>Les familles qui preferent ne pas bloquer des milliers d'euros pendant des jours</li>
+    </ul>
+
+    <p>
+      Le resultat : <strong>des millions de voyageurs europeens ne peuvent pas reserver avec les grands reseaux</strong> bien qu'ils aient l'argent pour la location. KS Rent Sardinia a choisi une approche differente : la garantie du vehicule est geree avec un depot de caution traditionnel, sans pre-autorisation sur carte.
+    </p>
+
+    <h2>Comment fonctionne la caution sans carte de credit</h2>
+
+    <p>
+      La caution KS Rent Sardinia est un montant proportionnel a la categorie de vehicule, communique au moment de la reservation (donc pas de surprises au retrait). Exemples indicatifs :
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Categorie vehicule</th><th>Exemple</th><th>Caution indicative</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Citadine</td><td>Fiat Panda Hybrid</td><td>500 €</td></tr>
+        <tr><td>SUV compact</td><td>Jeep Avenger</td><td>800 €</td></tr>
+        <tr><td>Premium</td><td>Mercedes Classe A</td><td>1 200 €</td></tr>
+        <tr><td>Supercar / Sport</td><td>Audi RS3, BMW M2</td><td>2 500 - 5 000 €</td></tr>
+        <tr><td>Scooter</td><td>Honda SH 125</td><td>300 €</td></tr>
+        <tr><td>Quad</td><td>Yamaha Raptor</td><td>800 €</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      La caution peut etre payee avec l'une de ces methodes — votre choix :
+    </p>
+
+    <ul>
+      <li><strong>Especes en euros</strong> : la methode la plus immediate et privee</li>
+      <li><strong>Virement bancaire</strong>, y compris SEPA Instant : le montant arrive en quelques secondes et est verifie au retrait</li>
+      <li><strong>Cartes prepayees</strong> : Revolut, Wise, N26, Hype, Postepay — il faut juste un solde suffisant</li>
+      <li><strong>Cartes de debit</strong> : Visa Debit, Maestro, Mastercard Debit, V-Pay</li>
+      <li><strong>Cartes de credit</strong> : Visa, Mastercard, American Express — si vous en avez une et la preferez</li>
+    </ul>
+
+    <p>
+      <strong>Au retour</strong>, apres une verification rapide du vehicule (niveau de carburant, dommages eventuels, amendes), la caution est remboursee immediatement avec la meme methode de paiement. Pas d'attentes de 15 jours comme avec les pre-autorisations de carte de credit.
+    </p>
+
+    <h2>Documents requis pour la location</h2>
+
+    <ol>
+      <li><strong>Permis de conduire B valide</strong> (pour voitures), detenu depuis au moins 1 an. Pour scooters Honda SH 125, A1 ou B depuis au moins 1 an ; pour Honda SH 350, A2 ou B depuis au moins 3 ans. Quad Yamaha Raptor : permis B.</li>
+      <li><strong>Document d'identite valide</strong> (passeport pour non-UE ; carte d'identite ou passeport pour UE)</li>
+      <li><strong>Pour les non-UE</strong> : Permis de conduire international (IDP) recommande (surtout pour USA, Canada, Australie, Japon, Russie)</li>
+      <li>Age minimum : <strong>21 ans pour citadines et vehicules standard, 25 ans pour supercars, sport et premium</strong></li>
+    </ol>
+
+    <h2>Comment reserver la location sans carte de credit</h2>
+
+    <ol>
+      <li><strong>Allez sur <a href="/fr/reserver">/fr/reserver</a></strong> (ou utilisez la page dediee <a href="/fr/location-voiture-sans-carte-credit-olbia">location voiture sans carte de credit</a>)</li>
+      <li><strong>Choisissez votre vehicule</strong> dans la flotte disponible pour vos dates</li>
+      <li><strong>Entrez email et numero de telephone</strong></li>
+      <li><strong>Telechargez une photo recto et verso de votre permis</strong> (et du second conducteur, le cas echeant)</li>
+      <li><strong>Choisissez lieu et heure de livraison</strong> : aeroport OLB Olbia, port Isola Bianca, hotel, villa, restaurant. Couverture en Gallura et Costa Smeralda</li>
+      <li><strong>Signez le contrat</strong> directement depuis votre smartphone</li>
+      <li><strong>Recevez un email de confirmation immediat</strong> avec contrat joint et instructions caution</li>
+    </ol>
+
+    <p>
+      A la livraison, presentez votre piece d'identite et payez la caution avec la methode preferee. Temps moyen check-in : 10 minutes.
+    </p>
+
+    <h2>Ou se deroule la livraison a Olbia</h2>
+
+    <p>
+      KS Rent Sardinia a deux points operationnels a Olbia, tous deux a 5 minutes de l'aeroport Olbia Costa Smeralda (OLB) :
+    </p>
+
+    <ul>
+      <li><strong>Siege social</strong> : Viale Aldo Moro 367, Olbia (40,944573 ; 9,497897)</li>
+      <li><strong>Point de livraison port</strong> : Viale Isola Bianca 38, directement au port Olbia (40,923018 ; 9,520169) — ideal pour les ferries (Moby, Tirrenia, Grimaldi, Corsica Ferries, GNV)</li>
+    </ul>
+
+    <p>
+      Pour la <strong>livraison a l'aeroport</strong>, nous vous attendons directement aux Arrivees du terminal Geasar — pas de navettes, pas de files aux comptoirs de location. Pour ceux qui logent en Costa Smeralda, nous organisons la <strong>livraison directement a votre hotel, villa ou resort</strong> : Porto Cervo (35 min), Baja Sardinia (45 min), San Teodoro (30 min), Palau (50 min), Porto Rotondo (20 min) et toutes les localites de Gallura.
+    </p>
+
+    <p>
+      <strong>Cout de la livraison</strong> : gratuite dans la commune d'Olbia (aeroport OLB et port Isola Bianca inclus). Pour les autres localites de Gallura et Costa Smeralda, le cout commence a 5 € et est communique de maniere transparente lors du devis, selon la distance.
+    </p>
+
+    <h2>Quand KS Rent Sardinia peut dire non</h2>
+
+    <ul>
+      <li>Permis non valide ou detenu depuis moins de 1 an (1 an pour citadines, 3 ans pour scooters SH 350 et supercars)</li>
+      <li>Age inferieur a 21 (citadine) ou 25 (sport/premium)</li>
+      <li>Document d'identite expire ou illisible</li>
+      <li>Historique de location avec KS Rent ou autres operateurs marque par des incidents graves non resolus</li>
+      <li>Disponibilite caution insuffisante au retrait</li>
+    </ul>
+
+    <h2>En resume</h2>
+
+    <p>
+      Louer une voiture a Olbia <strong>sans carte de credit est possible, simple et transparent</strong> avec KS Rent Sardinia. La politique est explicite des la reservation : pas de surprises au comptoir, pas de blocage carte, pas de pre-autorisation qui gele des milliers d'euros. La caution est geree comme un classique depot de garantie (especes, virement, prepayee, debit ou credit a votre choix) et remboursee immediatement au retour. Pour plus de details sur la politique de paiement, visitez la page dediee : <a href="/fr/location-voiture-sans-carte-credit-olbia">Location voiture sans carte de credit a Olbia</a>. Pour des questions specifiques, Francesco et Salvatore Milo repondent directement sur WhatsApp au <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
