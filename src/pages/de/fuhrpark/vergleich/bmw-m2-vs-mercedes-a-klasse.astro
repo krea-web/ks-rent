@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "de" as const;
+const a = getTranslatedSpec("bmw-m2", lang);
+const b = getTranslatedSpec("mercedes-classe-a", lang);
+
+const h1 = "BMW M2 vs Mercedes A-Klasse: reiner Sport oder Premium-Tour?";
+const intro =
+  "BMW M2 Coupe und Mercedes A-Klasse 180d sind zwei gegensaetzliche Interpretationen der deutschen Premium-Klasse, beide bei KS Rent Sardinia in Olbia mietbar. Die M2 ist ein Sportwagen mit 460 PS, Hinterradantrieb, 8-Gang-Steptronic und 4,1-Sekunden-Beschleunigung 0-100: gebaut fuer alle, die ein reines Fahrerlebnis fuer einige Tage an der Costa Smeralda suchen, mit Tarif auf Anfrage ab ca. 270 €/Tag. Die A-Klasse 180d ist ein Premium-Diesel-Kompaktwagen mit 116 PS, 7G-DCT-Automatik, 4,5 L/100km Durchschnittsverbrauch und festem veroeffentlichten Tarif ab 90 €/Tag: die rationale Wahl fuer lange Sardinien-Touren (1.000+ km in einer Woche) mit Komfort, Eleganz und niedrigem Verbrauch.";
+
+const pageUrl = "https://www.ksrentsardinia.com/de/fuhrpark/vergleich/bmw-m2-vs-mercedes-a-klasse";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "de-DE",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="BMW M2 vs Mercedes A-Klasse Olbia: Sport oder Premium mieten?"
+  description="Vergleich BMW M2 460 PS Heckantrieb vs Mercedes A-Klasse 180d Diesel: Preise, Leistung, Verbrauch, welches in Olbia fuer Costa Smeralda waehlen."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fuhrpark", path: "/de/fuhrpark" }, { name: "BMW M2 vs Mercedes A-Klasse", path: "/de/fuhrpark/vergleich/bmw-m2-vs-mercedes-a-klasse" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

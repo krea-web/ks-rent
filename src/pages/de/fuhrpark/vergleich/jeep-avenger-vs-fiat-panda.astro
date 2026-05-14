@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "de" as const;
+const a = getTranslatedSpec("jeep-avenger", lang);
+const b = getTranslatedSpec("fiat-panda", lang);
+
+const h1 = "Jeep Avenger vs Fiat Panda Hybrid: SUV oder Kleinwagen fuer die Costa Smeralda?";
+const intro =
+  "Jeep Avenger und Fiat Panda Hybrid sind die zwei beliebtesten Optionen der praktisch-guenstigen Autovermietung in Olbia. Der Jeep Avenger ist ein 100-PS-Kompakt-SUV mit DCT-Automatikgetriebe, erhoehter Sitzposition und 380 L Kofferraum: gedacht fuer Familien und alle, die versteckte Straende per Schotter erreichen wollen (Spiaggia del Principe, Liscia Ruja, Capriccioli). Der Fiat Panda Hybrid 70 PS mit 5-Gang-Schaltgetriebe und 225 L Kofferraum ist der italienische Kleinwagen-Inbegriff: der guenstigste der KS Rent Sardinia Flotte (40 €/Tag Nebensaison), perfekt fuer enge historische Zentren, ueberfuellte Parkplaetze in Porto Cervo in der Hochsaison und Singles/Paare mit wenig Gepaeck. Gleicher Saisonpreis-Zeitraum (April-Oktober), unterschiedliche Prioritaeten.";
+
+const pageUrl = "https://www.ksrentsardinia.com/de/fuhrpark/vergleich/jeep-avenger-vs-fiat-panda";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "de-DE",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="Jeep Avenger vs Fiat Panda: SUV oder Kleinwagen in Olbia? | KS Rent"
+  description="Vergleich Jeep Avenger SUV vs Fiat Panda Hybrid Kleinwagen Mietwagen Olbia. Gepaeck, Verbrauch, Schotter, Preise: was lohnt sich fuer Ihren Urlaub?"
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fuhrpark", path: "/de/fuhrpark" }, { name: "Jeep Avenger vs Fiat Panda", path: "/de/fuhrpark/vergleich/jeep-avenger-vs-fiat-panda" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

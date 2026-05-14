@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "de" as const;
+const a = getTranslatedSpec("audi-rs3", lang);
+const b = getTranslatedSpec("mercedes-classe-a", lang);
+
+const h1 = "Audi RS3 vs Mercedes A-Klasse: Sport oder Premium fuer Sardinien?";
+const intro =
+  "Audi RS3 und Mercedes A-Klasse 180d stehen fuer zwei unterschiedliche Philosophien der Premium-Autovermietung in Olbia. Die RS3 ist ein reiner Supersportwagen: 400 PS, quattro-Allradantrieb, 0-100 in 3,8 Sekunden, Tarif auf Anfrage. Die A-Klasse 180d ist ein Premium-Diesel-Kompaktwagen: 116 PS, 7G-DCT-Automatik, 4,5 L/100km Durchschnittsverbrauch, fester veroeffentlichter Tarif ab 90 €/Tag. Bei KS Rent Sardinia sind beide mit Lieferung an der Costa Smeralda erhaeltlich. Die Wahl haengt vom Ziel ab: intensives Sport-Erlebnis fuer wenige Tage in Costa Smeralda oder komfortable Sardinien-Tour fuer 7-14 Tage mit niedrigem Verbrauch.";
+
+const pageUrl = "https://www.ksrentsardinia.com/de/fuhrpark/vergleich/audi-rs3-vs-mercedes-a-klasse";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "de-DE",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="Audi RS3 vs Mercedes A-Klasse: Mietwagen Olbia | KS Rent Sardinia"
+  description="Vergleich Audi RS3 Supersportwagen vs Mercedes A-Klasse Premium Mietwagen Olbia. Preise, Leistung, Verbrauch, wann welches waehlen in Costa Smeralda."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fuhrpark", path: "/de/fuhrpark" }, { name: "Audi RS3 vs Mercedes A-Klasse", path: "/de/fuhrpark/vergleich/audi-rs3-vs-mercedes-a-klasse" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

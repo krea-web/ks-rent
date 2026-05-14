@@ -1,21 +1,142 @@
 ---
 /**
- * Componente condiviso per pagine /flotta/confronta/[a]-vs-[b].
- * Renderizza l'intero body di una comparison page tra 2 veicoli.
+ * Componente condiviso per pagine /flotta/confronta/[a]-vs-[b] (IT)
+ * e /[lang]/flotta/confronta/[a]-vs-[b] (EN/DE/FR).
+ *
+ * Riceve veicoli a/b gia tradotti via getTranslatedSpec(slug, lang)
+ * piu i testi statici dell'header (h1, intro). Tutte le label UI sono
+ * tradotte in base alla prop lang.
  */
-import { ArrowRight, CheckCircle2, XCircle, Zap, Fuel, Users, Car } from "lucide-react";
+import { ArrowRight, CheckCircle2, XCircle, Zap, Car } from "lucide-react";
 import type { VehicleSpec } from "@/data/vehicle-specs";
+import type { Lang } from "@/data/vehicle-specs-i18n";
 
 interface Props {
   a: VehicleSpec;
   b: VehicleSpec;
-  /** H1 della pagina (es. "Audi RS3 vs BMW M2 a Olbia: quale scegliere?") */
+  /** H1 della pagina */
   h1: string;
   /** Lead introduttivo (passaggio enciclopedico AI-citable, 80-150 parole) */
   intro: string;
+  /** Lingua della pagina; default "it" (backward compatible). */
+  lang?: Lang;
 }
 
-const { a, b, h1, intro } = Astro.props;
+const { a, b, h1, intro, lang = "it" } = Astro.props;
+
+// CTA URLs localizzate
+const bookingHref = lang === "it"
+  ? "/prenotaora"
+  : lang === "en" ? "/en/book-now"
+  : lang === "de" ? "/de/jetzt-buchen"
+  : "/fr/reserver";
+
+// UI labels per lingua
+const labels = {
+  it: {
+    eyebrow: "Confronto veicoli — KS Rent Sardinia",
+    techCompare: "Confronto tecnico",
+    spec: "Specifica",
+    power: "Potenza",
+    transmission: "Cambio + trazione",
+    fuel: "Alimentazione",
+    seats: "Posti",
+    luggage: "Bagagliaio",
+    consumption: "Consumo medio",
+    accel: "0-100 km/h",
+    topSpeed: "Velocità max",
+    lowSeason: "Tariffa bassa stagione",
+    highSeason: "Tariffa alta stagione",
+    whenChoose: "Quando scegliere quale",
+    chooseIf: "Scegli",
+    chooseSuffix: "se:",
+    avoidIf: "Evita se:",
+    discoverPrefix: "Scopri",
+    indecisive: "Indeciso? Ti aiutiamo noi.",
+    indecisiveLead:
+      "Francesco e Salvatore Milo rispondono direttamente su WhatsApp +39 344 6107071 per consigliarti il veicolo migliore in base al tuo itinerario in Costa Smeralda.",
+    checkAvailability: "Verifica disponibilità",
+    askWhatsapp: "Chiedi su WhatsApp",
+  },
+  en: {
+    eyebrow: "Vehicle comparison — KS Rent Sardinia",
+    techCompare: "Technical comparison",
+    spec: "Spec",
+    power: "Power",
+    transmission: "Gearbox + drivetrain",
+    fuel: "Fuel",
+    seats: "Seats",
+    luggage: "Luggage",
+    consumption: "Average consumption",
+    accel: "0-100 km/h",
+    topSpeed: "Top speed",
+    lowSeason: "Low season rate",
+    highSeason: "High season rate",
+    whenChoose: "When to choose which",
+    chooseIf: "Choose",
+    chooseSuffix: "if:",
+    avoidIf: "Avoid if:",
+    discoverPrefix: "Discover",
+    indecisive: "Undecided? We'll help.",
+    indecisiveLead:
+      "Francesco and Salvatore Milo answer directly on WhatsApp +39 344 6107071 to recommend the best vehicle for your Costa Smeralda itinerary.",
+    checkAvailability: "Check availability",
+    askWhatsapp: "Ask on WhatsApp",
+  },
+  de: {
+    eyebrow: "Fahrzeugvergleich — KS Rent Sardinia",
+    techCompare: "Technischer Vergleich",
+    spec: "Spezifikation",
+    power: "Leistung",
+    transmission: "Getriebe + Antrieb",
+    fuel: "Kraftstoff",
+    seats: "Sitze",
+    luggage: "Kofferraum",
+    consumption: "Durchschnittsverbrauch",
+    accel: "0-100 km/h",
+    topSpeed: "Hoechstgeschwindigkeit",
+    lowSeason: "Nebensaison-Tarif",
+    highSeason: "Hochsaison-Tarif",
+    whenChoose: "Wann welches waehlen",
+    chooseIf: "Waehle",
+    chooseSuffix: "wenn:",
+    avoidIf: "Vermeide wenn:",
+    discoverPrefix: "Entdecke",
+    indecisive: "Unentschlossen? Wir helfen.",
+    indecisiveLead:
+      "Francesco und Salvatore Milo antworten direkt auf WhatsApp +39 344 6107071, um Ihnen das beste Fahrzeug fuer Ihre Costa Smeralda-Reise zu empfehlen.",
+    checkAvailability: "Verfuegbarkeit pruefen",
+    askWhatsapp: "Auf WhatsApp fragen",
+  },
+  fr: {
+    eyebrow: "Comparaison vehicules — KS Rent Sardinia",
+    techCompare: "Comparaison technique",
+    spec: "Caracteristique",
+    power: "Puissance",
+    transmission: "Boite + transmission",
+    fuel: "Carburant",
+    seats: "Places",
+    luggage: "Coffre",
+    consumption: "Consommation moyenne",
+    accel: "0-100 km/h",
+    topSpeed: "Vitesse max",
+    lowSeason: "Tarif basse saison",
+    highSeason: "Tarif haute saison",
+    whenChoose: "Quand choisir quoi",
+    chooseIf: "Choisissez",
+    chooseSuffix: "si :",
+    avoidIf: "Evitez si :",
+    discoverPrefix: "Decouvrez",
+    indecisive: "Indecis ? Nous vous aidons.",
+    indecisiveLead:
+      "Francesco et Salvatore Milo repondent directement sur WhatsApp +39 344 6107071 pour vous conseiller le meilleur vehicule pour votre itineraire en Costa Smeralda.",
+    checkAvailability: "Verifier disponibilite",
+    askWhatsapp: "Demander sur WhatsApp",
+  },
+}[lang];
+
+// URL veicoli: usa direttamente a.href / b.href, gia' localizzati da
+// getTranslatedSpec con slug tradotti per lingua (es. EN: audi-rs3-hire-olbia).
 ---
 
 <div class="bg-background min-h-screen">
@@ -25,7 +146,7 @@ const { a, b, h1, intro } = Astro.props;
     <div class="relative max-w-6xl mx-auto px-4 md:px-12 pt-32 pb-16">
       <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
         <Car className="w-3.5 h-3.5" />
-        Confronto veicoli — KS Rent Sardinia
+        {labels.eyebrow}
       </span>
       <h1 class="text-3xl md:text-5xl lg:text-6xl font-black italic uppercase tracking-tighter text-foreground leading-[1] mb-6">
         {h1}
@@ -38,7 +159,7 @@ const { a, b, h1, intro } = Astro.props;
           <span class="text-xs uppercase tracking-widest text-gold font-bold">{a.category}</span>
           <img
             src={a.image}
-            alt={`Noleggio ${a.name} a Olbia con KS Rent Sardinia — confronto con ${b.name}`}
+            alt={`${a.name} — ${labels.eyebrow}`}
             width="400"
             height="280"
             loading="eager"
@@ -51,7 +172,7 @@ const { a, b, h1, intro } = Astro.props;
           <span class="text-xs uppercase tracking-widest text-gold font-bold">{b.category}</span>
           <img
             src={b.image}
-            alt={`Noleggio ${b.name} a Olbia con KS Rent Sardinia — confronto con ${a.name}`}
+            alt={`${b.name} — ${labels.eyebrow}`}
             width="400"
             height="280"
             loading="eager"
@@ -68,69 +189,69 @@ const { a, b, h1, intro } = Astro.props;
   <section class="py-16 md:py-20 px-4 md:px-12 border-b border-border">
     <div class="max-w-5xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-8 text-center">
-        Confronto tecnico
+        {labels.techCompare}
       </h2>
       <div class="overflow-x-auto bg-card border border-border rounded-2xl">
         <table class="w-full text-sm">
           <thead class="bg-background/50 border-b border-border">
             <tr>
-              <th class="px-4 py-4 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">Specifica</th>
+              <th class="px-4 py-4 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">{labels.spec}</th>
               <th class="px-4 py-4 text-center text-xs uppercase tracking-wider text-foreground/50 font-bold">{a.name}</th>
               <th class="px-4 py-4 text-center text-xs uppercase tracking-wider text-foreground/50 font-bold">{b.name}</th>
             </tr>
           </thead>
           <tbody>
             <tr class="border-b border-border/50">
-              <td class="px-4 py-3 font-semibold text-foreground/80">Potenza</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.power}</td>
               <td class="px-4 py-3 text-center">{a.specs.power}</td>
               <td class="px-4 py-3 text-center">{b.specs.power}</td>
             </tr>
             <tr class="border-b border-border/50">
-              <td class="px-4 py-3 font-semibold text-foreground/80">Cambio + trazione</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.transmission}</td>
               <td class="px-4 py-3 text-center">{a.specs.transmission}</td>
               <td class="px-4 py-3 text-center">{b.specs.transmission}</td>
             </tr>
             <tr class="border-b border-border/50">
-              <td class="px-4 py-3 font-semibold text-foreground/80">Alimentazione</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.fuel}</td>
               <td class="px-4 py-3 text-center">{a.specs.fuel}</td>
               <td class="px-4 py-3 text-center">{b.specs.fuel}</td>
             </tr>
             <tr class="border-b border-border/50">
-              <td class="px-4 py-3 font-semibold text-foreground/80">Posti</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.seats}</td>
               <td class="px-4 py-3 text-center">{a.specs.seats}</td>
               <td class="px-4 py-3 text-center">{b.specs.seats}</td>
             </tr>
             <tr class="border-b border-border/50">
-              <td class="px-4 py-3 font-semibold text-foreground/80">Bagagliaio</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.luggage}</td>
               <td class="px-4 py-3 text-center">{a.specs.bagagli}</td>
               <td class="px-4 py-3 text-center">{b.specs.bagagli}</td>
             </tr>
             <tr class="border-b border-border/50">
-              <td class="px-4 py-3 font-semibold text-foreground/80">Consumo medio</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.consumption}</td>
               <td class="px-4 py-3 text-center">{a.specs.consumo}</td>
               <td class="px-4 py-3 text-center">{b.specs.consumo}</td>
             </tr>
             {(a.specs.accelerazione0_100 || b.specs.accelerazione0_100) && (
               <tr class="border-b border-border/50">
-                <td class="px-4 py-3 font-semibold text-foreground/80">0-100 km/h</td>
+                <td class="px-4 py-3 font-semibold text-foreground/80">{labels.accel}</td>
                 <td class="px-4 py-3 text-center">{a.specs.accelerazione0_100 ?? "—"}</td>
                 <td class="px-4 py-3 text-center">{b.specs.accelerazione0_100 ?? "—"}</td>
               </tr>
             )}
             {(a.specs.velocitaMax || b.specs.velocitaMax) && (
               <tr class="border-b border-border/50">
-                <td class="px-4 py-3 font-semibold text-foreground/80">Velocità max</td>
+                <td class="px-4 py-3 font-semibold text-foreground/80">{labels.topSpeed}</td>
                 <td class="px-4 py-3 text-center">{a.specs.velocitaMax ?? "—"}</td>
                 <td class="px-4 py-3 text-center">{b.specs.velocitaMax ?? "—"}</td>
               </tr>
             )}
             <tr class="border-b border-border/50">
-              <td class="px-4 py-3 font-semibold text-foreground/80">Tariffa bassa stagione</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.lowSeason}</td>
               <td class="px-4 py-3 text-center text-gold font-bold">{a.prezzi.bassaStagione}</td>
               <td class="px-4 py-3 text-center text-gold font-bold">{b.prezzi.bassaStagione}</td>
             </tr>
             <tr>
-              <td class="px-4 py-3 font-semibold text-foreground/80">Tariffa alta stagione</td>
+              <td class="px-4 py-3 font-semibold text-foreground/80">{labels.highSeason}</td>
               <td class="px-4 py-3 text-center text-gold font-bold">{a.prezzi.altaStagione}</td>
               <td class="px-4 py-3 text-center text-gold font-bold">{b.prezzi.altaStagione}</td>
             </tr>
@@ -144,14 +265,14 @@ const { a, b, h1, intro } = Astro.props;
   <section class="py-16 md:py-20 px-4 md:px-12 border-b border-border bg-card/30">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-12 text-center">
-        Quando scegliere quale
+        {labels.whenChoose}
       </h2>
       <div class="grid md:grid-cols-2 gap-8">
         {/* Veicolo A */}
         <div class="bg-card border border-border rounded-2xl p-6 md:p-8">
           <h3 class="text-xl md:text-2xl font-bold text-foreground mb-4 flex items-center gap-3">
             <Zap className="w-5 h-5 text-gold" />
-            Scegli {a.name} se:
+            {labels.chooseIf} {a.name} {labels.chooseSuffix}
           </h3>
           <ul class="space-y-3 mb-6">
             {a.ideale.map((item) => (
@@ -161,7 +282,7 @@ const { a, b, h1, intro } = Astro.props;
               </li>
             ))}
           </ul>
-          <h4 class="font-bold text-foreground/70 mb-3 text-sm uppercase tracking-wider">Evita se:</h4>
+          <h4 class="font-bold text-foreground/70 mb-3 text-sm uppercase tracking-wider">{labels.avoidIf}</h4>
           <ul class="space-y-2">
             {a.evitareSe.map((item) => (
               <li class="flex gap-3 text-foreground/60 text-sm leading-relaxed">
@@ -174,7 +295,7 @@ const { a, b, h1, intro } = Astro.props;
             href={a.href}
             class="mt-8 inline-flex items-center gap-2 text-primary font-bold hover:underline"
           >
-            Scopri {a.name} →
+            {labels.discoverPrefix} {a.name} →
           </a>
         </div>
 
@@ -182,7 +303,7 @@ const { a, b, h1, intro } = Astro.props;
         <div class="bg-card border border-border rounded-2xl p-6 md:p-8">
           <h3 class="text-xl md:text-2xl font-bold text-foreground mb-4 flex items-center gap-3">
             <Zap className="w-5 h-5 text-gold" />
-            Scegli {b.name} se:
+            {labels.chooseIf} {b.name} {labels.chooseSuffix}
           </h3>
           <ul class="space-y-3 mb-6">
             {b.ideale.map((item) => (
@@ -192,7 +313,7 @@ const { a, b, h1, intro } = Astro.props;
               </li>
             ))}
           </ul>
-          <h4 class="font-bold text-foreground/70 mb-3 text-sm uppercase tracking-wider">Evita se:</h4>
+          <h4 class="font-bold text-foreground/70 mb-3 text-sm uppercase tracking-wider">{labels.avoidIf}</h4>
           <ul class="space-y-2">
             {b.evitareSe.map((item) => (
               <li class="flex gap-3 text-foreground/60 text-sm leading-relaxed">
@@ -205,7 +326,7 @@ const { a, b, h1, intro } = Astro.props;
             href={b.href}
             class="mt-8 inline-flex items-center gap-2 text-primary font-bold hover:underline"
           >
-            Scopri {b.name} →
+            {labels.discoverPrefix} {b.name} →
           </a>
         </div>
       </div>
@@ -216,24 +337,24 @@ const { a, b, h1, intro } = Astro.props;
   <section class="py-20 px-4 md:px-12">
     <div class="max-w-3xl mx-auto text-center">
       <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
-        Indeciso? Ti aiutiamo noi.
+        {labels.indecisive}
       </h2>
       <p class="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
-        Francesco e Salvatore Milo rispondono direttamente su WhatsApp +39 344 6107071 per consigliarti il veicolo migliore in base al tuo itinerario in Costa Smeralda.
+        {labels.indecisiveLead}
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4">
         <a
-          href="/prenotaora"
+          href={bookingHref}
           class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-10 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
         >
-          Verifica disponibilità
+          {labels.checkAvailability}
           <ArrowRight className="w-4 h-4" />
         </a>
         <a
           href="https://wa.me/393446107071"
           class="inline-flex items-center gap-3 border border-border text-foreground font-bold uppercase tracking-wider text-sm px-10 py-5 rounded-full hover:border-gold transition"
         >
-          Chiedi su WhatsApp
+          {labels.askWhatsapp}
         </a>
       </div>
     </div>

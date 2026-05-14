@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "en" as const;
+const a = getTranslatedSpec("audi-rs3", lang);
+const b = getTranslatedSpec("mercedes-classe-a", lang);
+
+const h1 = "Audi RS3 vs Mercedes A-Class: sport or premium for Sardinia?";
+const intro =
+  "Audi RS3 and Mercedes A-Class 180d represent two different philosophies of premium car hire in Olbia. The RS3 is a pure supercar: 400 hp, quattro all-wheel drive, 0-100 in 3.8 seconds, on-request rate. The A-Class 180d is a premium compact diesel: 116 hp, 7G-DCT automatic, 4.5 L/100km average consumption, fixed published rate from €90/day. With KS Rent Sardinia both are available with home delivery in Costa Smeralda. The choice depends on the goal: intense sport experience for a few days in Costa Smeralda, or a comfortable Sardinia tour for 7-14 days with low fuel consumption.";
+
+const pageUrl = "https://www.ksrentsardinia.com/en/fleet/compare/audi-rs3-vs-mercedes-a-class";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "en-GB",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="Audi RS3 vs Mercedes A-Class: car hire Olbia | KS Rent Sardinia"
+  description="Comparison Audi RS3 supercar vs Mercedes A-Class premium for car hire in Olbia. Prices, performance, fuel economy, when to choose each in Costa Smeralda."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fleet", path: "/en/fleet" }, { name: "Audi RS3 vs Mercedes A-Class", path: "/en/fleet/compare/audi-rs3-vs-mercedes-a-class" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

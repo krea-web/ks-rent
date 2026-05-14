@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "fr" as const;
+const a = getTranslatedSpec("audi-rs3", lang);
+const b = getTranslatedSpec("bmw-m2", lang);
+
+const h1 = "Audi RS3 vs BMW M2 a Olbia : quelle supercar choisir pour la Costa Smeralda ?";
+const intro =
+  "Audi RS3 Sportback et BMW M2 Coupe sont les deux supercars les plus demandees de la location premium a Olbia et en Costa Smeralda. La RS3 monte un 5 cylindres 2.5 TFSI de 400 ch avec transmission integrale quattro et boite a double embrayage 7 vitesses, atteint le 0-100 en 3,8 secondes. La M2 a un 6 cylindres biturbo S58 de 460 ch avec propulsion arriere et Steptronic 8 vitesses, 0-100 en 4,1 secondes. Les deux sont disponibles en location chez KS Rent Sardinia (Olbia, TVA IT03028900904) avec livraison a l'aeroport, au port Isola Bianca, dans les villas et hotels de la Costa Smeralda. La difference la plus importante n'est pas dans les chiffres : elle est dans le caractere de conduite.";
+
+const pageUrl = "https://www.ksrentsardinia.com/fr/flotte/comparer/audi-rs3-vs-bmw-m2";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "fr-FR",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="Audi RS3 vs BMW M2 Olbia : quelle supercar louer pour Costa Smeralda ?"
+  description="Comparaison technique Audi RS3 vs BMW M2 a Olbia. Puissance, transmission, prix location, quand choisir chacune pour la Costa Smeralda."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Flotte", path: "/fr/flotte" }, { name: "Audi RS3 vs BMW M2", path: "/fr/flotte/comparer/audi-rs3-vs-bmw-m2" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

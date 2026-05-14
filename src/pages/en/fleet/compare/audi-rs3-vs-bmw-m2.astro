@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "en" as const;
+const a = getTranslatedSpec("audi-rs3", lang);
+const b = getTranslatedSpec("bmw-m2", lang);
+
+const h1 = "Audi RS3 vs BMW M2 in Olbia: which supercar to choose for Costa Smeralda?";
+const intro =
+  "Audi RS3 Sportback and BMW M2 Coupe are the two most requested supercars in premium car hire in Olbia and Costa Smeralda. The RS3 packs a 5-cylinder 2.5 TFSI engine producing 400 hp with quattro all-wheel drive and a 7-speed dual-clutch gearbox, hitting 0-100 km/h in 3.8 seconds. The M2 has a 6-cylinder biturbo S58 producing 460 hp with rear-wheel drive and an 8-speed Steptronic gearbox, doing 0-100 in 4.1 seconds. Both are available for hire from KS Rent Sardinia (Olbia, VAT IT03028900904) with delivery at the airport, Isola Bianca port, villas and hotels across Costa Smeralda. The most important difference is not in the numbers: it is in the driving character.";
+
+const pageUrl = "https://www.ksrentsardinia.com/en/fleet/compare/audi-rs3-vs-bmw-m2";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "en-GB",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="Audi RS3 vs BMW M2 Olbia: which to hire in Costa Smeralda? | KS Rent"
+  description="Technical comparison Audi RS3 vs BMW M2 in Olbia. Power, drivetrain, hire prices, when to choose each for Costa Smeralda. KS Rent Sardinia."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fleet", path: "/en/fleet" }, { name: "Audi RS3 vs BMW M2", path: "/en/fleet/compare/audi-rs3-vs-bmw-m2" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "en" as const;
+const a = getTranslatedSpec("audi-rs3", lang);
+const b = getTranslatedSpec("jeep-avenger", lang);
+
+const h1 = "Audi RS3 vs Jeep Avenger: supercar or SUV to explore Sardinia?";
+const intro =
+  "Audi RS3 Sportback and Jeep Avenger are two vehicles built for opposite experiences in Costa Smeralda. The RS3 is a 400 hp supercar with quattro all-wheel drive: built for sport driving on paved roads, society events in Porto Cervo, a few-day high-profile experience. The Jeep Avenger is a 100 hp compact SUV with automatic gearbox: raised driving position, 380 L boot, capable of dirt roads to hidden beaches like Spiaggia del Principe, Liscia Ruja, Capriccioli. Diametrically opposite rates: the RS3 is on request (from €250/day indicative), the Jeep Avenger starts from €60/day in low season. The choice depends on the itinerary and the experience goal.";
+
+const pageUrl = "https://www.ksrentsardinia.com/en/fleet/compare/audi-rs3-vs-jeep-avenger";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "en-GB",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="Audi RS3 vs Jeep Avenger Olbia: supercar or SUV? | KS Rent Sardinia"
+  description="Comparison Audi RS3 supercar 400 hp vs Jeep Avenger SUV: prices, performance, dirt roads to Costa Smeralda beaches. Which car hire to choose in Olbia."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fleet", path: "/en/fleet" }, { name: "Audi RS3 vs Jeep Avenger", path: "/en/fleet/compare/audi-rs3-vs-jeep-avenger" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

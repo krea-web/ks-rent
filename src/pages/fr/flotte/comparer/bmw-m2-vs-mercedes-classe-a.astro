@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "fr" as const;
+const a = getTranslatedSpec("bmw-m2", lang);
+const b = getTranslatedSpec("mercedes-classe-a", lang);
+
+const h1 = "BMW M2 vs Mercedes Classe A : sportive pure ou premium pour le tour ?";
+const intro =
+  "BMW M2 Coupe et Mercedes Classe A 180d sont deux interpretations opposees de la classe premium allemande, toutes deux disponibles en location chez KS Rent Sardinia a Olbia. La M2 est une sportive de 460 ch avec propulsion arriere, Steptronic 8 vitesses et acceleration 4,1 secondes : pensee pour ceux qui cherchent une experience de conduite pure pour quelques jours en Costa Smeralda, avec tarif sur devis a partir d'environ 270 €/jour. La Classe A 180d est une compacte premium diesel de 116 ch avec automatique 7G-DCT, consommation moyenne 4,5 L/100km et tarif fixe publie a partir de 90 €/jour : le choix rationnel pour des longs tours de Sardaigne (1 000+ km en une semaine) avec confort, elegance et faible consommation.";
+
+const pageUrl = "https://www.ksrentsardinia.com/fr/flotte/comparer/bmw-m2-vs-mercedes-classe-a";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "fr-FR",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="BMW M2 vs Mercedes Classe A Olbia : location sportive ou premium ?"
+  description="Comparaison BMW M2 460 ch propulsion vs Mercedes Classe A 180d diesel : prix, performances, consommation, quelle choisir a Olbia pour Costa Smeralda."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Flotte", path: "/fr/flotte" }, { name: "BMW M2 vs Mercedes Classe A", path: "/fr/flotte/comparer/bmw-m2-vs-mercedes-classe-a" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

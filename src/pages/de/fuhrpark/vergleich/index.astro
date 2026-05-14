@@ -1,0 +1,120 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { ArrowRight, GitCompareArrows } from "lucide-react";
+import { getTranslatedSpec, compareUrl } from "@/data/vehicle-specs-i18n";
+
+const lang = "de" as const;
+
+const comparisons = [
+  { aSlug: "audi-rs3", bSlug: "bmw-m2", url: compareUrl(lang, "audi-rs3-vs-bmw-m2"), eyebrow: "Sport vs Sport", note: "400 PS Allrad vs 460 PS Heckantrieb" },
+  { aSlug: "audi-rs3", bSlug: "mercedes-classe-a", url: compareUrl(lang, "audi-rs3-vs-mercedes-a-klasse"), eyebrow: "Sport vs Premium", note: "Pure Erfahrung fuer wenige Tage vs komfortable Sardinien-Tour" },
+  { aSlug: "bmw-m2", bSlug: "mercedes-classe-a", url: compareUrl(lang, "bmw-m2-vs-mercedes-a-klasse"), eyebrow: "Sport vs Premium", note: "460 PS fuer Kurztrips vs Diesel-Komfort 7-14 Tage" },
+  { aSlug: "audi-rs3", bSlug: "jeep-avenger", url: compareUrl(lang, "audi-rs3-vs-jeep-avenger"), eyebrow: "Supersportwagen vs SUV", note: "Costa Smeralda Erlebnis vs Flexibilitaet zu Schotterpisten-Straenden" },
+  { aSlug: "mercedes-classe-a", bSlug: "jeep-avenger", url: compareUrl(lang, "mercedes-a-klasse-vs-jeep-avenger"), eyebrow: "Premium vs SUV", note: "Diesel-Autobahnkomfort vs Familie + Offroad-Vielseitigkeit" },
+  { aSlug: "jeep-avenger", bSlug: "fiat-panda", url: compareUrl(lang, "jeep-avenger-vs-fiat-panda"), eyebrow: "SUV vs Kleinwagen", note: "Versteckte Straende per Schotter vs enge Altstadt-Zentren" },
+].map((c) => ({
+  ...c,
+  a: getTranslatedSpec(c.aSlug, lang),
+  b: getTranslatedSpec(c.bSlug, lang),
+}));
+
+const pageUrl = "https://www.ksrentsardinia.com/de/fuhrpark/vergleich";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${pageUrl}#page`,
+    name: "Mietwagen-Vergleiche Olbia",
+    description: "Detaillierte technische Vergleiche der KS Rent Sardinia Mietfahrzeuge: Supersportwagen, Premium, SUVs und Kleinwagen in Olbia und Costa Smeralda.",
+    url: pageUrl,
+    inLanguage: "de-DE",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+    hasPart: comparisons.map((c) => ({
+      "@type": "WebPage",
+      name: `${c.a.name} vs ${c.b.name}`,
+      url: `https://www.ksrentsardinia.com${c.url}`,
+    })),
+  },
+];
+---
+<BaseLayout
+  title="Fahrzeugvergleiche Olbia | KS Rent Sardinia"
+  description="Detaillierte Vergleiche der KS Rent Sardinia Mietfahrzeuge: Audi RS3 vs BMW M2, Mercedes A-Klasse vs Audi RS3, Jeep Avenger vs Fiat Panda. Welches waehlen."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[
+    { name: "Fuhrpark", path: "/de/fuhrpark" },
+    { name: "Vergleich", path: "/de/fuhrpark/vergleich" },
+  ]}
+>
+  <div class="bg-background min-h-screen">
+    <section class="relative overflow-hidden border-b border-border">
+      <div class="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none"></div>
+      <div class="relative max-w-5xl mx-auto px-4 md:px-12 pt-32 pb-16">
+        <span class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-4">
+          <GitCompareArrows className="w-3.5 h-3.5" />
+          Fahrzeugvergleiche
+        </span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter text-foreground leading-[0.95]">
+          Welches Fahrzeug waehlen
+        </h1>
+        <p class="mt-6 text-lg text-foreground/70 font-light max-w-2xl leading-relaxed">
+          Detaillierte technische Vergleiche der KS Rent Sardinia Mietfahrzeuge. Spezifikationen, Preise, praktische Tipps fuer die Wahl des richtigen Fahrzeugs fuer Ihren Costa Smeralda-Urlaub.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-20 px-4 md:px-12">
+      <div class="max-w-5xl mx-auto grid gap-6">
+        {comparisons.map((c) => (
+          <a
+            href={c.url}
+            class="group block bg-card border border-border rounded-2xl overflow-hidden hover:border-primary transition shadow-sm hover:shadow-lg"
+          >
+            <div class="grid md:grid-cols-[1fr,auto,1fr,auto] items-center gap-4 p-6 md:p-8">
+              <div class="flex items-center gap-4">
+                <img src={c.a.image} alt={`${c.a.name} Mietwagen Olbia`} width="100" height="70" loading="lazy" class="h-14 w-20 object-contain shrink-0" />
+                <div>
+                  <p class="font-bold text-foreground">{c.a.name}</p>
+                  <p class="text-xs text-foreground/50">{c.a.category}</p>
+                </div>
+              </div>
+              <span class="text-gold font-black text-3xl text-center">vs</span>
+              <div class="flex items-center gap-4">
+                <img src={c.b.image} alt={`${c.b.name} Mietwagen Olbia`} width="100" height="70" loading="lazy" class="h-14 w-20 object-contain shrink-0" />
+                <div>
+                  <p class="font-bold text-foreground">{c.b.name}</p>
+                  <p class="text-xs text-foreground/50">{c.b.category}</p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition" />
+            </div>
+            <div class="px-6 md:px-8 pb-6 md:pb-8 -mt-2">
+              <p class="text-xs uppercase tracking-widest text-gold font-bold mb-1">{c.eyebrow}</p>
+              <p class="text-sm text-foreground/70">{c.note}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="py-16 px-4 md:px-12 bg-card/30 border-t border-border">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+          Noch unentschlossen?
+        </h2>
+        <p class="text-foreground/60 font-light mb-8">
+          Francesco und Salvatore Milo sind auf WhatsApp +39 344 6107071 erreichbar, um das richtige Fahrzeug fuer Ihre Reise zu empfehlen.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="/de/fuhrpark" class="inline-flex items-center gap-2 px-8 py-4 border border-border text-foreground font-bold rounded-full hover:border-gold transition">Kompletter Fuhrpark</a>
+          <a href="/de/jetzt-buchen" class="inline-flex items-center gap-2 px-8 py-4 bg-gold text-background font-bold rounded-full hover:scale-105 transition-transform shadow-lg">
+            Verfuegbarkeit pruefen
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

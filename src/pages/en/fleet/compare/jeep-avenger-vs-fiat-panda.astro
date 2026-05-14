@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "en" as const;
+const a = getTranslatedSpec("jeep-avenger", lang);
+const b = getTranslatedSpec("fiat-panda", lang);
+
+const h1 = "Jeep Avenger vs Fiat Panda Hybrid: SUV or city car for Costa Smeralda?";
+const intro =
+  "Jeep Avenger and Fiat Panda Hybrid are the two most popular options for affordable, practical car hire in Olbia. The Jeep Avenger is a 100 hp compact SUV with DCT automatic gearbox, raised driving position and 380 L boot: built for families and for those wanting to reach hidden beaches via dirt road (Spiaggia del Principe, Liscia Ruja, Capriccioli). The Fiat Panda Hybrid 70 hp with 5-speed manual and 225 L boot is the symbol of Italian city cars: the cheapest in the KS Rent Sardinia fleet (€40/day low season), perfect for narrow historic centres, crowded Porto Cervo parking in high season, and singles or couples with little luggage. Same seasonal pricing window (April-October), different priorities.";
+
+const pageUrl = "https://www.ksrentsardinia.com/en/fleet/compare/jeep-avenger-vs-fiat-panda";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "en-GB",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="Jeep Avenger vs Fiat Panda: SUV or city car in Olbia? | KS Rent"
+  description="Comparison Jeep Avenger SUV vs Fiat Panda Hybrid city car for hire in Olbia. Luggage, fuel economy, dirt roads, prices: which is best for your holiday."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fleet", path: "/en/fleet" }, { name: "Jeep Avenger vs Fiat Panda", path: "/en/fleet/compare/jeep-avenger-vs-fiat-panda" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>

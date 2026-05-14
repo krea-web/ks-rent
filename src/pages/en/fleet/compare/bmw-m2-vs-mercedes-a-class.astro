@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VehicleComparison from "@/components/VehicleComparison.astro";
+import { getTranslatedSpec } from "@/data/vehicle-specs-i18n";
+
+const lang = "en" as const;
+const a = getTranslatedSpec("bmw-m2", lang);
+const b = getTranslatedSpec("mercedes-classe-a", lang);
+
+const h1 = "BMW M2 vs Mercedes A-Class: pure sport or premium tour?";
+const intro =
+  "BMW M2 Coupe and Mercedes A-Class 180d are two opposite interpretations of the German premium class, both available for hire from KS Rent Sardinia in Olbia. The M2 is a sports car producing 460 hp with rear-wheel drive, 8-speed Steptronic and 4.1 second 0-100 acceleration: built for someone seeking pure driving experience for a few days in Costa Smeralda, with on-request rate starting at around €270/day. The A-Class 180d is a diesel premium compact producing 116 hp with 7G-DCT automatic, 4.5 L/100km average consumption and fixed published rate from €90/day: the rational choice for long Sardinia tours (1,000+ km in a week) with comfort, elegance and low fuel consumption.";
+
+const pageUrl = "https://www.ksrentsardinia.com/en/fleet/compare/bmw-m2-vs-mercedes-a-class";
+const jsonLd = [{
+  "@context": "https://schema.org", "@type": "WebPage", "@id": `${pageUrl}#page`,
+  name: h1, description: intro.slice(0, 220), url: pageUrl, inLanguage: "en-GB",
+  isPartOf: { "@id": "https://www.ksrentsardinia.com/#website" },
+  primaryImageOfPage: a.image,
+  about: [
+    { "@type": "Vehicle", name: a.name, brand: { "@type": "Brand", name: a.brand }, url: `https://www.ksrentsardinia.com${a.href}`, image: a.image, vehicleConfiguration: a.category },
+    { "@type": "Vehicle", name: b.name, brand: { "@type": "Brand", name: b.brand }, url: `https://www.ksrentsardinia.com${b.href}`, image: b.image, vehicleConfiguration: b.category },
+  ],
+}];
+---
+<BaseLayout
+  title="BMW M2 vs Mercedes A-Class Olbia: car hire sport or premium?"
+  description="Comparison BMW M2 460 hp rear-wheel drive vs Mercedes A-Class 180d diesel: prices, performance, fuel economy, which to choose in Olbia for Costa Smeralda."
+  canonical={pageUrl}
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: "Fleet", path: "/en/fleet" }, { name: "BMW M2 vs Mercedes A-Class", path: "/en/fleet/compare/bmw-m2-vs-mercedes-a-class" }]}
+>
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} lang={lang} />
+</BaseLayout>
