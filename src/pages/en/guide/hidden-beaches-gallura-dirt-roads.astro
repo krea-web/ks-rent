@@ -1,0 +1,183 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("hidden-beaches-gallura-dirt-roads")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+  about: [
+    { "@type": "Thing", name: "Hidden beaches Sardinia" },
+    { "@type": "AdministrativeArea", name: "Gallura" },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: "Hidden beaches Gallura", path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>Gallura has dozens of hidden beaches reachable only by dirt road, trail or boat</strong> — coves of white sand with transparent water that remain semi-empty even in August, while 5 km away La Cinta or Spiaggia del Principe are crowded. They're the favourite destinations for those wanting a less "postcard" and more authentic experience of north-east Sardinia. This guide lists 8 hidden beaches of Gallura — GPS-style coordinates, access, parking, vehicle recommendations. They're sorted by <strong>increasing access difficulty</strong>: from those suitable for anyone to those needing a real SUV/4x4 or serious trekking.
+    </p>
+
+    <h2>Important premises</h2>
+
+    <ul>
+      <li><strong>Respect the places</strong>: take all rubbish away, leave no traces, don't take sand or shells (it's a crime in Sardinia)</li>
+      <li><strong>Verify access before going</strong>: some have seasonal limitations or vehicle access restrictions</li>
+      <li><strong>Vehicle</strong>: most need at least a compact SUV. A <a href="/en/fleet/jeep-avenger-hire-olbia">Jeep Avenger</a> with 18 cm ground clearance and DCT automatic covers 95% of cases</li>
+      <li><strong>Water</strong>: no kiosks, no bars. Bring water, snacks, umbrella</li>
+      <li><strong>Phone</strong>: in some zones no signal. Download offline maps (Google Maps or Maps.me)</li>
+    </ul>
+
+    <h2>1. Cala Brandinchi east (free zone) — San Teodoro</h2>
+
+    <p><strong>Difficulty</strong>: low · <strong>Vehicle</strong>: any · <strong>From Olbia</strong>: 35 min</p>
+
+    <p>
+      Everyone goes to "official" Cala Brandinchi (with mandatory booking in high season). Few know that the <strong>east side</strong>, under the headland, is a free zone needing no booking. 5-min trail from free street parking. <strong>Identical clear water</strong> to the "official" side, no rationing.
+    </p>
+
+    <h2>2. Suaraccia beach — Capo Coda Cavallo</h2>
+
+    <p><strong>Difficulty</strong>: medium · <strong>Vehicle</strong>: SUV recommended · <strong>From Olbia</strong>: 35 min + 10 min dirt road</p>
+
+    <p>
+      From San Teodoro, take the road to Capo Coda Cavallo. The last 2 km become compact dirt road with potholes. <strong>Cala Suaraccia</strong> appears after the last bend: intimate cove, white sand, turquoise water, snorkelling among fish. Dirt parking (~30 spaces). You can see Tavolara island opposite.
+    </p>
+
+    <h2>3. Cala Greca — Loiri Porto San Paolo</h2>
+
+    <p><strong>Difficulty</strong>: medium · <strong>Vehicle</strong>: city car ok · <strong>From Olbia</strong>: 25 min + 5 min walk</p>
+
+    <p>
+      Near <a href="/en/car-hire-porto-san-paolo">Porto San Paolo</a>, take the trail starting from Punta Don Diego car park. Walk 5 minutes on scenic trail. <strong>Cala Greca</strong> is a small white-sand cove between granite rocks. Shallow water for 30 metres, excellent snorkelling. No services.
+    </p>
+
+    <h2>4. Porto Quadro beach — Santa Teresa di Gallura</h2>
+
+    <p><strong>Difficulty</strong>: medium · <strong>Vehicle</strong>: any · <strong>From Olbia</strong>: 1h</p>
+
+    <p>
+      5 km from Santa Teresa di Gallura (extreme north of Sardinia), <strong>Porto Quadro</strong> is a beach of very light sand framed by granite rocks. View of Corsica on the horizon. Free parking 200 m away. Few tourists because it's "off-route" from Costa Smeralda. <strong>Tip</strong>: combine with visit to Capo Testa (10 min by car), spectacular headland with lighthouse.
+    </p>
+
+    <h2>5. La Marmorata — Santa Teresa di Gallura</h2>
+
+    <p><strong>Difficulty</strong>: low · <strong>Vehicle</strong>: any · <strong>From Olbia</strong>: 1h05</p>
+
+    <p>
+      Beach of finest white sand divided in two by a small headland. Bluest water, shallow seabed. Free street parking. <strong>Known to locals but little to Italian tourists</strong> from Costa Smeralda because it's "far". "La Marmorata Beach" club with lounger rental.
+    </p>
+
+    <h2>6. Cala Lunga — Palau (headland zone)</h2>
+
+    <p><strong>Difficulty</strong>: medium · <strong>Vehicle</strong>: any + 15 min walk · <strong>From Olbia</strong>: 50 min</p>
+
+    <p>
+      From <a href="/en/car-hire-palau">Palau</a>, take the road to Capo D'Orso. Scenic parking, then 15-min downhill trail among wind-shaped granite rocks. <strong>Cala Lunga</strong> is a long, narrow beach (as the name says) of light sand among cliffs. View of La Maddalena Archipelago. No services, bring everything. <strong>Tip</strong>: combine with visit to "Bear Rock" (the natural rock shaped like a bear, 10 min walk from parking).
+    </p>
+
+    <h2>7. Wreck Beach — Caprera (requires ferry + car/bike)</h2>
+
+    <p><strong>Difficulty</strong>: high (logistics) · <strong>Vehicle</strong>: car or bike on island · <strong>From Olbia</strong>: 50 min + 15 min ferry + 30 min Caprera</p>
+
+    <p>
+      One of the most beautiful beaches in all of Sardinia. To get there: ferry from Palau to La Maddalena, cross La Maddalena to the bridge to Caprera, follow signs to Cala Coticcio or Spiaggia del Relitto. <strong>Access is regulated</strong>: in high season Cala Coticcio requires mandatory environmental guide + booking (~€25/person). Spiaggia del Relitto is free but reached on foot (45-min trail). <strong>Emerald water, whitest sand</strong>. Worth the trip.
+    </p>
+
+    <h2>8. Juniper Cove — Costa Smeralda north</h2>
+
+    <p><strong>Difficulty</strong>: high · <strong>Vehicle</strong>: SUV or 4x4 essential · <strong>From Olbia</strong>: 45 min + 20 min challenging dirt road</p>
+
+    <p>
+      Between Liscia di Vacca and Pantogia, a private dirt road starts (free for non-residents off-season) leading to a series of little-known coves, including <strong>Cala dei Ginepri</strong>. Dirt road with potholes, rocks, some steep climbs. <strong>SUV essential</strong> with good ground clearance. Low cars risk breaking the oil sump. Once arrived, you're in a white-sand cove surrounded by ancient junipers. Transparent water, no crowds ever. <strong>Disclaimer</strong>: real route at your own risk, know your limits.
+    </p>
+
+    <h2>Recommended vehicles for those seeking hidden beaches</h2>
+
+    <p>For Gallura beaches accessible by dirt road, the most suitable vehicles in our fleet:</p>
+
+    <ul>
+      <li><strong><a href="/en/fleet/jeep-avenger-hire-olbia">Jeep Avenger</a></strong>: the perfect compact SUV for 95% of Gallura dirt roads. 18 cm ground clearance, DCT automatic, raised driving position. Rate €60-110/day</li>
+      <li><strong><a href="/en/fleet/yamaha-raptor-quad-hire-sardinia">Yamaha Raptor Quad</a></strong>: for those wanting to explore deep dirt roads without worrying about the car. Driven with B licence, helmet included. Rate on request</li>
+    </ul>
+
+    <p><strong>Vehicles NOT suitable for challenging dirt roads</strong> (risk of damage):</p>
+    <ul>
+      <li>Audi RS3 (low sport setup)</li>
+      <li>BMW M2 (low sport setup)</li>
+      <li>Mercedes A-Class (medium setup, ok for light dirt like Suaraccia but NOT for Cala dei Ginepri)</li>
+      <li>Fiat Panda Hybrid (city car, can do compact light dirt roads)</li>
+    </ul>
+
+    <h2>Quick table</h2>
+
+    <table>
+      <thead>
+        <tr><th>Beach</th><th>From Olbia</th><th>Vehicle</th><th>Difficulty</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cala Brandinchi east free</td><td>35 min</td><td>Any</td><td>Low</td></tr>
+        <tr><td>Suaraccia (Capo Coda Cavallo)</td><td>45 min</td><td>SUV recommended</td><td>Medium</td></tr>
+        <tr><td>Cala Greca (Porto San Paolo)</td><td>30 min</td><td>Any</td><td>Medium</td></tr>
+        <tr><td>Porto Quadro (Santa Teresa)</td><td>1h</td><td>Any</td><td>Low</td></tr>
+        <tr><td>La Marmorata (Santa Teresa)</td><td>1h05</td><td>Any</td><td>Low</td></tr>
+        <tr><td>Cala Lunga (Palau)</td><td>1h05</td><td>Any + 15 min walk</td><td>Medium</td></tr>
+        <tr><td>Wreck Beach (Caprera)</td><td>~3h total</td><td>+ ferry + 45-min trail</td><td>High logistics</td></tr>
+        <tr><td>Juniper Cove (Costa Smeralda)</td><td>1h05</td><td>SUV mandatory</td><td>High</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Minimum equipment</h2>
+
+    <ul>
+      <li>Water (at least 2 L/person)</li>
+      <li>50+ water-resistant sunscreen</li>
+      <li>Hat and sunglasses</li>
+      <li>Rubber shoes (for rocks and trails)</li>
+      <li>Substantial snacks</li>
+      <li>Rubbish bag</li>
+      <li>Mask + snorkel</li>
+      <li>For challenging dirt roads: inflated spare wheel, tyre kit, emergency triangle</li>
+    </ul>
+
+    <h2>"Off-route" tourism ethics</h2>
+
+    <ol>
+      <li>Don't park on grass or dunes</li>
+      <li>Never light fires (Sardinia has strict anti-fire rules)</li>
+      <li>Don't disturb local wildlife (gulls, geckos, wolf-spiders)</li>
+      <li>Take ALL rubbish away, even banana peels and cigarette papers</li>
+      <li>Respect privacy of the few people you meet (no photos of strangers)</li>
+    </ol>
+
+    <p>
+      For more accessible family-friendly beaches see our <a href="/en/guide/family-beaches-costa-smeralda">family Costa Smeralda beaches guide</a>. To organise the hire of an SUV suitable for dirt roads, contact Francesco and Salvatore Milo: <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

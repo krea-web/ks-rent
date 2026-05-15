@@ -1,0 +1,219 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("roller-quad-mieten-sardinien-wie-waehlen")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "de-DE",
+  about: { "@type": "Thing", name: "Roller- und Quad-Vermietung" },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Anleitungen", path: "/de/guide" },
+    { name: "Roller oder Quad Sardinien", path: `/de/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="de">
+    <p>
+      <strong>Roller oder Quad in Sardinien sind zwei Alternativen zur Autovermietung</strong> mit sehr unterschiedlichen Eigenschaften. Der Honda SH Roller (125 oder 350) ist die klassische staedtische und touristische Wahl fuer Olbia, Costa Smeralda und ueber asphaltierte Strassen erreichbare Straende. Das Yamaha Raptor Quad ist fuer alle, die Offroad-Ausfluege im Hinterland der Gallura, anspruchsvolle Schotterpisten und Pfaderkundungen wollen. Sie benoetigen unterschiedliche Fuehrerscheine, kosten unterschiedlich, haben unterschiedliche Grenzen. Diese Anleitung erklaert, welches basierend auf Ihren Beduerfnissen zu waehlen ist, basierend auf der Erfahrung von Francesco und Salvatore Milo, die beide bei KS Rent Sardinia in Olbia vermieten.
+    </p>
+
+    <h2>Die zwei Optionen in der KS Rent Sardinia Flotte</h2>
+
+    <h3>Honda SH 125 und 350</h3>
+
+    <p>Der <a href="/de/fuhrpark/honda-sh-mieten-olbia">Honda SH</a> Roller ist einer der beliebtesten Italiens, ideal fuer staedtischen Gebrauch und leichtes Strand-Hopping.</p>
+
+    <ul>
+      <li><strong>Honda SH 125</strong>: 125 ccm, 13 PS, Automatik, max 100 km/h, 32 km/L Verbrauch, super fuer Olbia Zentrum und urbane Straende</li>
+      <li><strong>Honda SH 350</strong>: 330 ccm, 29 PS, Automatik, max 130 km/h, 25 km/L Verbrauch, auch fuer laengere Reisen geeignet (Olbia → Porto Cervo, Porto Cervo → Straende)</li>
+    </ul>
+
+    <h3>Yamaha Raptor 700</h3>
+
+    <p>Das <a href="/de/fuhrpark/yamaha-raptor-quad-mieten-sardinien">Yamaha Raptor 700</a> ist ein Sport-Quad, entwickelt fuer ernsthaftes Offroad.</p>
+
+    <ul>
+      <li>686 ccm, Einzylinder, 47 PS, manuelles 5-Gang-Getriebe + Rueckwaerts</li>
+      <li>Heckantrieb mit Differential, Aufhaengung mit langem Hub</li>
+      <li>Max Geschwindigkeit 110 km/h aber <strong>NICHT autobahnzugelassen</strong> in Italien</li>
+      <li>Geeignet fuer sardische Schotterpisten, ueber Pisten zugaengliche Straende (z.B. Capo Coda Cavallo, einige Zonen im Hinterland der Gallura)</li>
+    </ul>
+
+    <h2>Erforderliche Fuehrerscheine</h2>
+
+    <table>
+      <thead>
+        <tr><th>Fahrzeug</th><th>Akzeptierte Fuehrerscheine</th><th>Min Alter</th><th>Besitzdauer</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Honda SH 125</td><td>A1, A2, A, B (mit 1+ Jahr)</td><td>16 (A1) oder 18 (B)</td><td>1 Jahr</td></tr>
+        <tr><td>Honda SH 350</td><td>A2, A, B (mit 3+ Jahren)</td><td>18 (A2), 21 (B)</td><td>3 Jahre wenn B</td></tr>
+        <tr><td>Yamaha Quad Raptor</td><td>B (fuer strassenzugelassene Quadricycles)</td><td>21</td><td>1 Jahr</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Helm obligatorisch</strong> fuer Roller (in der Miete enthalten: Klapphelme in verschiedenen Groessen). Fuer das Quad ist der Helm auch im Offroad obligatorisch.
+    </p>
+
+    <h2>Mietkosten 2026</h2>
+
+    <p>Saisonale Tarife, gueltig April-Oktober:</p>
+
+    <table>
+      <thead>
+        <tr><th>Fahrzeug</th><th>Nebensaison</th><th>Hauptsaison</th><th>Kaution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Honda SH 125</td><td>40 €/Tag</td><td>60 €/Tag</td><td>~300 €</td></tr>
+        <tr><td>Honda SH 350</td><td>50 €/Tag</td><td>80 €/Tag</td><td>~500 €</td></tr>
+        <tr><td>Yamaha Quad Raptor</td><td>auf Anfrage (ab 70 €/Tag)</td><td>auf Anfrage (ab 110 €/Tag)</td><td>~800 €</td></tr>
+      </tbody>
+    </table>
+
+    <p>Reduzierte Tarife fuer <strong>Langzeitmieten</strong> (Woche, 10 Tage). Helme inklusive.</p>
+
+    <h2>Wann den Honda SH Roller waehlen</h2>
+
+    <p>Der Roller ist die richtige Wahl, wenn:</p>
+
+    <ul>
+      <li>Sie <strong>allein oder zu zweit</strong> sind (Beifahrer erlaubt) und kein sperriges Gepaeck haben</li>
+      <li>Sie sich zwischen <strong>Olbia Zentrum, Pittulongu, Bados, Promenade</strong> bewegen wollen: sehr einfaches Parken</li>
+      <li>Sie 3-7 Tage bleiben und Straende und Restaurants erreichen wollen, ohne an die teuren Parkplaetze von Porto Cervo zu denken</li>
+      <li><strong>Treibstoff sparen</strong>: mit einem Tank (5-7 Liter) legen Sie 150-200 km zurueck</li>
+      <li>Sie mindestens Erfahrung mit dem Zweiradfahren haben (fuer SH 350 Erfahrung empfohlen)</li>
+      <li><strong>Sommerhitze</strong>: mit dem Roller spueren Sie die Luft, keine Klimaanlage noetig</li>
+    </ul>
+
+    <p><strong>Honda SH 125</strong>: ideal fuer Olbia Zentrum und Umgebung (30 km Radius). Fuer Porto Cervo ist der 350 besser.</p>
+
+    <p><strong>Honda SH 350</strong>: deckt komfortabel die gesamte Costa Smeralda ab, kann bei Bedarf auch auf der Autobahn fahren, perfekt fuer Solo- oder Paartouren in der Gallura.</p>
+
+    <h2>Wann das Yamaha Raptor Quad waehlen</h2>
+
+    <p>Das Quad macht Sinn, wenn:</p>
+
+    <ul>
+      <li>Sie <strong>Schotterpisten und versteckte Straende</strong> im Hinterland der Gallura erkunden wollen</li>
+      <li>Sie ein Offroad/4x4-Liebhaber sind</li>
+      <li>Sie ein anderes, lustiges Fahrerlebnis suchen</li>
+      <li>Sie Erfahrung mit Quad oder Offroad-Motorrad haben</li>
+      <li>Sie ein Paar sind (max 2 Personen) fuer Halbtagesausfluege</li>
+    </ul>
+
+    <p><strong>NICHT geeignet wenn</strong>:</p>
+
+    <ul>
+      <li>Sie lange Asphaltreisen brauchen (unbequem)</li>
+      <li>Sie Porto Cervo zum Abendessen erreichen wollen (das Quad im Zentrum ist nicht ideal)</li>
+      <li>Sie keine Offroad-Erfahrung haben (Unfallrisiko)</li>
+      <li>Sie Gepaeck transportieren muessen (minimale Kapazitaet)</li>
+    </ul>
+
+    <p>Fuer per Quad erreichbare versteckte Straende siehe unsere <a href="/de/guide/versteckte-straende-gallura-schotterpisten">Anleitung versteckte Straende Gallura</a>.</p>
+
+    <h2>Praktischer Vergleich vs Auto</h2>
+
+    <table>
+      <thead>
+        <tr><th>Beduerfnis</th><th>Loesung</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Familie zu 4 mit Kindern</td><td>Auto (siehe <a href="/de/fuhrpark/jeep-avenger-mieten-olbia">Jeep Avenger</a> oder <a href="/de/fuhrpark/mercedes-a-klasse-mieten-olbia">Mercedes A-Klasse</a>)</td></tr>
+        <tr><td>Paar 5-7 Tage Costa Smeralda Mix von allem</td><td>Premium-Auto (Mercedes A) oder Roller SH 350</td></tr>
+        <tr><td>Solo 3 Tage Olbia Stadt + urbane Straende</td><td>Honda SH 125 Roller (guenstiger)</td></tr>
+        <tr><td>Solo 7 Tage komplette Costa Smeralda</td><td>SH 350 Roller (vielseitig) oder Kleinwagen</td></tr>
+        <tr><td>Paar Offroad-Experten, halber Tag im Hinterland</td><td>Yamaha Raptor Quad</td></tr>
+        <tr><td>Schlechtes Wetter / Regen / starker Wind</td><td>Auto (Roller riskant, Quad nass)</td></tr>
+        <tr><td>Nacht / spaete Abendessen</td><td>Auto (Roller nachts riskanter)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Vergleich der Betriebskosten</h2>
+
+    <p>Fuer 7 Tage in Hauptsaison:</p>
+
+    <table>
+      <thead>
+        <tr><th>Fahrzeug</th><th>7-Tage-Miete</th><th>Treibstoff</th><th>Parken</th><th>Gesamt</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Honda SH 125</td><td>~ 400 €</td><td>~ 50 €</td><td>~ 0 € (gratis)</td><td><strong>~ 450 €</strong></td></tr>
+        <tr><td>Honda SH 350</td><td>~ 530 €</td><td>~ 80 €</td><td>~ 0 € (gratis)</td><td><strong>~ 610 €</strong></td></tr>
+        <tr><td>Fiat Panda Auto</td><td>~ 490 €</td><td>~ 100 €</td><td>~ 100-150 €</td><td><strong>~ 690-740 €</strong></td></tr>
+        <tr><td>Mercedes A Auto</td><td>~ 1.120 €</td><td>~ 100 €</td><td>~ 100-200 €</td><td><strong>~ 1.320-1.420 €</strong></td></tr>
+        <tr><td>Yamaha Raptor Quad</td><td>~ 770 €</td><td>~ 100 €</td><td>~ 0 €</td><td><strong>~ 870 €</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>Der <strong>Honda SH 125 Roller ist die wirtschaftlichste Loesung</strong> fuer Singles und Paare ohne Gepaeck.</p>
+
+    <h2>Sicherheit: wichtige Dinge zu wissen</h2>
+
+    <ul>
+      <li><strong>Klapphelm obligatorisch</strong>: KS Rent Sardinia stellt neue, desinfizierte Helme in verschiedenen Groessen zur Verfuegung. Akzeptieren Sie nie einen Roller ohne vorschriftsmaessigen Helm</li>
+      <li><strong>Handschuhe und Kleidung</strong>: bringen Sie Handschuhe und geschlossene Schuhe auch im Sommer mit. Verbrennungen durch heissen Auspuff sind haeufig</li>
+      <li><strong>Mistral / Landwind</strong>: in Sardinien kann der Wind unerwartet aufkommen. Auf dem Roller &gt; 100 km/h ist gefaehrlich</li>
+      <li><strong>Ploetzlicher Regen</strong>: selten aber existiert. Bei Wetteraenderung sofort anhalten</li>
+      <li><strong>Schmale Costa Smeralda Strassen</strong>: die SP59 hat enge Kurven mit ungeduldigen Autos hinter sich. Lassen Sie sie passieren</li>
+      <li><strong>Nachtfahren</strong>: reduzierte Sicht + Wildtiere (Wildschweine, Hirsche) auf Hinterlandstrassen</li>
+      <li><strong>Quad Offroad</strong>: NIE allein auf langen Schotterpisten ohne Telefonsignal fahren. Immer zu zweit oder in Gruppen</li>
+    </ul>
+
+    <h2>Versicherung und Haftung</h2>
+
+    <p>KS Rent Sardinia inkludiert in der Miete:</p>
+
+    <ul>
+      <li>Obligatorische Haftpflicht</li>
+      <li>Diebstahl + Brand</li>
+      <li>24/7 Pannenhilfe</li>
+    </ul>
+
+    <p>
+      <strong>Nicht inkludiert</strong> (auf Anfrage mit Aufpreis): reduzierte Selbstbeteiligung CDW, Fahrerunfall, persoenliche Zubehoerabdeckung.
+    </p>
+
+    <p>
+      Im Falle eines Sturzes oder Unfalls mit Roller/Quad ist die typische Selbstbeteiligung <strong>500-1.500 €</strong> je nach Schaden. Wichtig: <strong>NICHT ohne Erfahrung fahren</strong>. Sardische Strassen sind herrlich aber mit anspruchsvollen Kurven.
+    </p>
+
+    <h2>Zusammenfassung: was waehlen</h2>
+
+    <ul>
+      <li><strong>Honda SH 125 Roller</strong>: fuer Solo/Paar Tour Olbia Stadt + urbane Straende (Pittulongu, Bados). Niedrigster Tarif</li>
+      <li><strong>Honda SH 350 Roller</strong>: fuer Solo/Paar, die auch Costa Smeralda machen (Porto Cervo, Baja Sardinia). Leistungsstaerker, komfortabel fuer lange Strecken</li>
+      <li><strong>Yamaha Raptor Quad</strong>: fuer Offroad-Liebhaber, die das Hinterland der Gallura und ueber Schotter zugaengliche Straende erkunden wollen. NICHT fuer staedtischen Gebrauch</li>
+      <li><strong>Auto</strong>: fuer Familien, Gruppen, schlechtes Wetter, spaete Abendessen, Komfort und Gepaeck. Siehe unsere <a href="/de/fuhrpark/vergleich">Auto-Vergleiche</a></li>
+    </ul>
+
+    <p>
+      Fuer spezifische Beratung zu Ihrem Fall (Gruppenzusammensetzung, Dauer, Reiseroute), kontaktieren Sie Francesco und Salvatore Milo per WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Fuer Echtzeit-Verfuegbarkeit und Buchung gehen Sie zu <a href="/de/jetzt-buchen">/de/jetzt-buchen</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

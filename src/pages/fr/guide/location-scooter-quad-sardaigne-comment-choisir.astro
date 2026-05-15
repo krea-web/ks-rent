@@ -1,0 +1,219 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("location-scooter-quad-sardaigne-comment-choisir")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: { "@type": "Thing", name: "Location scooter et quad" },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Scooter ou quad Sardaigne", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>Scooter ou quad en Sardaigne sont deux alternatives a la location de voiture</strong> aux caracteristiques tres differentes. Le scooter Honda SH (125 ou 350) est le choix urbain et touristique classique pour Olbia, la Costa Smeralda et les plages accessibles par route asphaltee. Le quad Yamaha Raptor est pour ceux qui veulent des excursions hors route dans l'arriere-pays de la Gallura, des pistes exigeantes, l'exploration de sentiers. Ils necessitent des permis differents, coutent differemment, ont des limites differentes. Ce guide explique lequel choisir selon vos besoins, sur la base de l'experience de Francesco et Salvatore Milo qui louent les deux chez KS Rent Sardinia a Olbia.
+    </p>
+
+    <h2>Les deux options dans la flotte KS Rent Sardinia</h2>
+
+    <h3>Honda SH 125 et 350</h3>
+
+    <p>Le scooter <a href="/fr/flotta/location-honda-sh-olbia">Honda SH</a> est l'un des plus populaires d'Italie, ideal pour usage urbain et plages legeres.</p>
+
+    <ul>
+      <li><strong>Honda SH 125</strong> : 125 cc, 13 ch, automatique, max 100 km/h, consommation 32 km/L, super pour le centre d'Olbia et les plages urbaines</li>
+      <li><strong>Honda SH 350</strong> : 330 cc, 29 ch, automatique, max 130 km/h, consommation 25 km/L, adapte aussi pour de plus longs trajets (Olbia → Porto Cervo, Porto Cervo → plages)</li>
+    </ul>
+
+    <h3>Yamaha Raptor 700</h3>
+
+    <p>Le <a href="/fr/flotta/location-yamaha-raptor-quad-sardaigne">Yamaha Raptor 700</a> est un quad sport concu pour le hors route serieux.</p>
+
+    <ul>
+      <li>686 cc, monocylindre, 47 ch, boite manuelle 5 vitesses + marche arriere</li>
+      <li>Traction arriere avec differentiel, suspension a long debattement</li>
+      <li>Vitesse max 110 km/h mais <strong>NON homologue autoroute</strong> en Italie</li>
+      <li>Adapte aux pistes sardes, plages accessibles par piste (ex. Capo Coda Cavallo, certaines zones de l'arriere-pays Gallura)</li>
+    </ul>
+
+    <h2>Permis necessaires</h2>
+
+    <table>
+      <thead>
+        <tr><th>Vehicule</th><th>Permis acceptes</th><th>Age min</th><th>Anciennete</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Honda SH 125</td><td>A1, A2, A, B (avec 1+ an)</td><td>16 (A1) ou 18 (B)</td><td>1 an</td></tr>
+        <tr><td>Honda SH 350</td><td>A2, A, B (avec 3+ ans)</td><td>18 (A2), 21 (B)</td><td>3 ans si B</td></tr>
+        <tr><td>Yamaha Quad Raptor</td><td>B (pour quadricycles homologues route)</td><td>21</td><td>1 an</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Casque obligatoire</strong> pour scooters (inclus dans la location : casques modulables de differentes tailles). Pour le quad, casque obligatoire meme en hors route.
+    </p>
+
+    <h2>Couts de location 2026</h2>
+
+    <p>Tarifs saisonniers, valables avril-octobre :</p>
+
+    <table>
+      <thead>
+        <tr><th>Vehicule</th><th>Basse saison</th><th>Haute saison</th><th>Caution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Honda SH 125</td><td>40 €/jour</td><td>60 €/jour</td><td>~300 €</td></tr>
+        <tr><td>Honda SH 350</td><td>50 €/jour</td><td>80 €/jour</td><td>~500 €</td></tr>
+        <tr><td>Yamaha Quad Raptor</td><td>sur demande (a partir de 70 €/jour)</td><td>sur demande (a partir de 110 €/jour)</td><td>~800 €</td></tr>
+      </tbody>
+    </table>
+
+    <p>Tarifs reduits pour <strong>locations longue duree</strong> (semaine, 10 jours). Casques inclus.</p>
+
+    <h2>Quand choisir le scooter Honda SH</h2>
+
+    <p>Le scooter est le bon choix si :</p>
+
+    <ul>
+      <li>Vous etes <strong>seul ou en couple</strong> (passager autorise) sans bagages encombrants</li>
+      <li>Vous voulez vous deplacer entre <strong>centre d'Olbia, Pittulongu, Bados, front de mer</strong> : stationnement tres facile</li>
+      <li>Vous restez 3-7 jours et voulez atteindre plages et restaurants sans penser aux parkings chers de Porto Cervo</li>
+      <li><strong>Economiser le carburant</strong> : avec un plein (5-7 litres) vous parcourez 150-200 km</li>
+      <li>Vous avez au moins une experience de conduite a deux roues (pour SH 350 experience recommandee)</li>
+      <li><strong>Chaleur estivale</strong> : avec scooter vous sentez l'air, pas besoin de clim</li>
+    </ul>
+
+    <p><strong>Honda SH 125</strong> : ideal pour le centre d'Olbia et environs (rayon 30 km). Pour Porto Cervo, le 350 est mieux.</p>
+
+    <p><strong>Honda SH 350</strong> : couvre confortablement toute la Costa Smeralda, peut aussi aller sur autoroute si necessaire, parfait pour solo ou couple en tour Gallura.</p>
+
+    <h2>Quand choisir le quad Yamaha Raptor</h2>
+
+    <p>Le quad a du sens si :</p>
+
+    <ul>
+      <li>Vous voulez <strong>explorer les pistes et les plages cachees</strong> de l'arriere-pays Gallura</li>
+      <li>Vous etes amateur hors route / 4x4</li>
+      <li>Vous cherchez une experience de conduite differente, fun</li>
+      <li>Vous avez de l'experience quad ou moto hors route</li>
+      <li>Vous etes en couple (max 2 personnes) pour excursions d'une demi-journee</li>
+    </ul>
+
+    <p><strong>NON adapte si</strong> :</p>
+
+    <ul>
+      <li>Vous avez besoin de longs trajets sur asphalte (inconfortable)</li>
+      <li>Vous voulez atteindre Porto Cervo pour diner (le quad au centre n'est pas ideal)</li>
+      <li>Vous etes sans experience hors route (risque d'accident)</li>
+      <li>Vous devez transporter des bagages (capacite minimale)</li>
+    </ul>
+
+    <p>Pour les plages cachees accessibles en quad, voir notre <a href="/fr/guide/plages-cachees-gallura-pistes-terre">guide plages cachees Gallura</a>.</p>
+
+    <h2>Comparaison pratique vs voiture</h2>
+
+    <table>
+      <thead>
+        <tr><th>Besoin</th><th>Solution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Famille de 4 avec enfants</td><td>Voiture (voir <a href="/fr/flotta/location-jeep-avenger-olbia">Jeep Avenger</a> ou <a href="/fr/flotta/location-mercedes-classe-a-olbia">Mercedes Classe A</a>)</td></tr>
+        <tr><td>Couple 5-7 jours Costa Smeralda mix de tout</td><td>Voiture premium (Mercedes A) ou scooter SH 350</td></tr>
+        <tr><td>Solo 3 jours Olbia ville + plages urbaines</td><td>Scooter Honda SH 125 (moins cher)</td></tr>
+        <tr><td>Solo 7 jours Costa Smeralda complete</td><td>Scooter SH 350 (polyvalent) ou petite voiture</td></tr>
+        <tr><td>Couple experts hors route, demi-journee arriere-pays</td><td>Quad Yamaha Raptor</td></tr>
+        <tr><td>Mauvais temps / pluie / vent fort</td><td>Voiture (scooter risque, quad mouille)</td></tr>
+        <tr><td>Nuit / diners tardifs</td><td>Voiture (scooter de nuit plus risque)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Comparaison des couts d'exploitation</h2>
+
+    <p>Pour 7 jours en haute saison :</p>
+
+    <table>
+      <thead>
+        <tr><th>Vehicule</th><th>Location 7 jours</th><th>Carburant</th><th>Parking</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Honda SH 125</td><td>~ 400 €</td><td>~ 50 €</td><td>~ 0 € (gratuit)</td><td><strong>~ 450 €</strong></td></tr>
+        <tr><td>Honda SH 350</td><td>~ 530 €</td><td>~ 80 €</td><td>~ 0 € (gratuit)</td><td><strong>~ 610 €</strong></td></tr>
+        <tr><td>Voiture Fiat Panda</td><td>~ 490 €</td><td>~ 100 €</td><td>~ 100-150 €</td><td><strong>~ 690-740 €</strong></td></tr>
+        <tr><td>Voiture Mercedes A</td><td>~ 1 120 €</td><td>~ 100 €</td><td>~ 100-200 €</td><td><strong>~ 1 320-1 420 €</strong></td></tr>
+        <tr><td>Quad Yamaha Raptor</td><td>~ 770 €</td><td>~ 100 €</td><td>~ 0 €</td><td><strong>~ 870 €</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>Le <strong>scooter Honda SH 125 est la solution la plus economique</strong> pour solos et couples sans bagages.</p>
+
+    <h2>Securite : choses importantes a savoir</h2>
+
+    <ul>
+      <li><strong>Casque modulable obligatoire</strong> : KS Rent Sardinia fournit des casques neufs assainis de differentes tailles. N'acceptez jamais un scooter sans casque reglementaire</li>
+      <li><strong>Gants et vetements</strong> : apportez des gants et des chaussures fermees meme en ete. Les brulures par echappement chaud sont frequentes</li>
+      <li><strong>Mistral / vent de terre</strong> : en Sardaigne le vent peut se lever a l'improviste. En scooter &gt; 100 km/h c'est dangereux</li>
+      <li><strong>Pluie soudaine</strong> : rare mais existe. Si le temps change, arretez-vous immediatement</li>
+      <li><strong>Routes etroites Costa Smeralda</strong> : la SP59 a des virages serres avec des voitures impatientes derriere. Laissez-les passer</li>
+      <li><strong>Conduite de nuit</strong> : visibilite reduite + animaux sauvages (sangliers, cerfs) sur les routes interieures</li>
+      <li><strong>Quad hors route</strong> : NE JAMAIS aller seul sur de longues pistes sans signal telephonique. Toujours en couple ou en groupe</li>
+    </ul>
+
+    <h2>Assurance et responsabilite</h2>
+
+    <p>KS Rent Sardinia inclut dans la location :</p>
+
+    <ul>
+      <li>Responsabilite civile obligatoire</li>
+      <li>Vol + incendie</li>
+      <li>Assistance routiere 24/7</li>
+    </ul>
+
+    <p>
+      <strong>Non inclus</strong> (sur demande avec supplement) : franchise reduite CDW, accident conducteur, couverture accessoires personnels.
+    </p>
+
+    <p>
+      En cas de chute ou d'accident avec scooter/quad, la franchise typique est <strong>500-1 500 €</strong> selon les degats. Important : <strong>NE PAS conduire sans experience</strong>. Les routes sardes sont splendides mais avec des virages exigeants.
+    </p>
+
+    <h2>Recapitulatif : lequel choisir</h2>
+
+    <ul>
+      <li><strong>Scooter Honda SH 125</strong> : pour solo/couple en tour Olbia ville + plages urbaines (Pittulongu, Bados). Tarif le plus bas</li>
+      <li><strong>Scooter Honda SH 350</strong> : pour solo/couple faisant aussi la Costa Smeralda (Porto Cervo, Baja Sardinia). Plus puissant, confortable pour de longs troncons</li>
+      <li><strong>Quad Yamaha Raptor</strong> : pour amateurs de hors route voulant explorer l'arriere-pays Gallura et les plages accessibles par piste. NON pour usage urbain</li>
+      <li><strong>Voiture</strong> : pour familles, groupes, mauvais temps, diners tardifs, confort et bagages. Voir nos <a href="/fr/flotte/comparer">comparaisons voitures</a></li>
+    </ul>
+
+    <p>
+      Pour des conseils specifiques sur votre cas (composition du groupe, duree, itineraire), contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Pour la disponibilite en temps reel et la reservation, allez sur <a href="/fr/reserver">/fr/reserver</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

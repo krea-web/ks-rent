@@ -1,0 +1,183 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("versteckte-straende-gallura-schotterpisten")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "de-DE",
+  about: [
+    { "@type": "Thing", name: "Versteckte Straende Sardinien" },
+    { "@type": "AdministrativeArea", name: "Gallura" },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Anleitungen", path: "/de/guide" },
+    { name: "Versteckte Straende Gallura", path: `/de/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="de">
+    <p>
+      <strong>Die Gallura hat Dutzende versteckte Straende, die nur ueber Schotterpisten, Pfade oder per Boot erreichbar sind</strong> — Buchten mit weissem Sand und transparentem Wasser, die auch im August halb leer bleiben, waehrend 5 km entfernt La Cinta oder Spiaggia del Principe ueberfuellt sind. Sie sind die Lieblingsziele fuer alle, die ein weniger "postkartenmaessiges" und authentischeres Erlebnis Nordost-Sardiniens wollen. Diese Anleitung listet 8 versteckte Straende der Gallura — Zugang, Parkplatz, Fahrzeugempfehlungen. Sortiert nach <strong>steigender Zugangsschwierigkeit</strong>: von solchen, die fuer alle geeignet sind, bis zu solchen, fuer die wirklich ein SUV/4x4 oder ernsthafte Trekking noetig ist.
+    </p>
+
+    <h2>Wichtige Voraussetzungen</h2>
+
+    <ul>
+      <li><strong>Respektieren Sie die Orte</strong>: nehmen Sie allen Muell mit, hinterlassen Sie keine Spuren, sammeln Sie keinen Sand oder Muscheln (in Sardinien ist es eine Straftat)</li>
+      <li><strong>Pruefen Sie den Zugang vor der Abfahrt</strong>: einige haben saisonale oder Fahrzeug-Zugangsbeschraenkungen</li>
+      <li><strong>Fahrzeug</strong>: fuer viele ist mindestens ein Kompakt-SUV noetig. Ein <a href="/de/fuhrpark/jeep-avenger-mieten-olbia">Jeep Avenger</a> mit 18 cm Bodenfreiheit und DCT-Automatik deckt 95% der Faelle</li>
+      <li><strong>Wasser</strong>: keine Kioske, keine Bars. Wasser, Snacks, Sonnenschirm mitnehmen</li>
+      <li><strong>Mobiltelefon</strong>: in einigen Zonen kein Signal. Karten offline laden (Google Maps oder Maps.me)</li>
+    </ul>
+
+    <h2>1. Cala Brandinchi Ost (Freibereich) — San Teodoro</h2>
+
+    <p><strong>Schwierigkeit</strong>: niedrig · <strong>Fahrzeug</strong>: beliebig · <strong>Von Olbia</strong>: 35 min</p>
+
+    <p>
+      Alle gehen zur "offiziellen" Cala Brandinchi (mit obligatorischer Buchung in Hochsaison). Wenige wissen, dass die <strong>Ostseite</strong>, unter dem Vorgebirge, ein Freibereich ohne Buchungspflicht ist. 5-min Pfad vom kostenlosen Strassenparkplatz. <strong>Identisch klares Wasser</strong> wie auf der "offiziellen" Seite, ohne Kontingentierung.
+    </p>
+
+    <h2>2. Suaraccia Strand — Capo Coda Cavallo</h2>
+
+    <p><strong>Schwierigkeit</strong>: mittel · <strong>Fahrzeug</strong>: SUV empfohlen · <strong>Von Olbia</strong>: 35 min + 10 min Schotter</p>
+
+    <p>
+      Von San Teodoro nehmen Sie die Strasse nach Capo Coda Cavallo. Die letzten 2 km werden zu kompaktem Schotter mit Loechern. <strong>Cala Suaraccia</strong> erscheint nach der letzten Kurve: intime Bucht, weisser Sand, tuerkises Wasser, Schnorcheln zwischen Fischen. Schotterparkplatz (~30 Plaetze). Sie sehen die Insel Tavolara gegenueber.
+    </p>
+
+    <h2>3. Cala Greca — Loiri Porto San Paolo</h2>
+
+    <p><strong>Schwierigkeit</strong>: mittel · <strong>Fahrzeug</strong>: Kleinwagen ok · <strong>Von Olbia</strong>: 25 min + 5 min zu Fuss</p>
+
+    <p>
+      Nahe <a href="/de/autovermietung-porto-san-paolo">Porto San Paolo</a> nehmen Sie den Pfad, der vom Parkplatz Punta Don Diego ausgeht. Gehen Sie 5 Minuten auf panoramischem Pfad. <strong>Cala Greca</strong> ist eine kleine weisse Sandbucht zwischen Granitfelsen. Flaches Wasser fuer 30 Meter, hervorragendes Schnorcheln. Keine Services.
+    </p>
+
+    <h2>4. Porto Quadro Strand — Santa Teresa di Gallura</h2>
+
+    <p><strong>Schwierigkeit</strong>: mittel · <strong>Fahrzeug</strong>: beliebig · <strong>Von Olbia</strong>: 1h</p>
+
+    <p>
+      5 km von Santa Teresa di Gallura (extremer Norden Sardiniens), <strong>Porto Quadro</strong> ist ein Strand aus sehr hellem Sand, eingerahmt von Granitfelsen. Blick auf Korsika am Horizont. Kostenloser Parkplatz 200 m entfernt. Wenige Touristen, weil "ausserhalb der Route" der Costa Smeralda. <strong>Tipp</strong>: kombinieren Sie mit Besuch von Capo Testa (10 min mit dem Auto), spektakulaeres Vorgebirge mit Leuchtturm.
+    </p>
+
+    <h2>5. La Marmorata — Santa Teresa di Gallura</h2>
+
+    <p><strong>Schwierigkeit</strong>: niedrig · <strong>Fahrzeug</strong>: beliebig · <strong>Von Olbia</strong>: 1h05</p>
+
+    <p>
+      Strand aus feinstem weissen Sand, in zwei durch ein kleines Vorgebirge geteilt. Tiefblauestes Wasser, flacher Boden. Kostenloser Strassenparkplatz. <strong>Bei Einheimischen bekannt aber wenig bei italienischen Touristen</strong> der Costa Smeralda, weil "weit entfernt". Strandbad "La Marmorata Beach" mit Liegen-Vermietung.
+    </p>
+
+    <h2>6. Cala Lunga — Palau (Vorgebirgszone)</h2>
+
+    <p><strong>Schwierigkeit</strong>: mittel · <strong>Fahrzeug</strong>: beliebig + 15 min zu Fuss · <strong>Von Olbia</strong>: 50 min</p>
+
+    <p>
+      Von <a href="/de/autovermietung-palau">Palau</a> nehmen Sie die Strasse nach Capo D'Orso. Panoramischer Parkplatz, von dort 15-min Pfad bergab zwischen vom Wind geformten Granitfelsen. <strong>Cala Lunga</strong> ist ein langer schmaler Strand aus hellem Sand zwischen den Klippen. Blick auf den La Maddalena Archipel. Keine Services, alles mitnehmen. <strong>Tipp</strong>: kombinieren Sie mit Besuch des "Baerenfelsens" (der Naturfelsen in Baerenform, 10 min zu Fuss vom Parkplatz).
+    </p>
+
+    <h2>7. Spiaggia del Relitto — Caprera (erfordert Faehre + Auto/Fahrrad)</h2>
+
+    <p><strong>Schwierigkeit</strong>: hoch (Logistik) · <strong>Fahrzeug</strong>: Auto auf Insel oder Fahrrad noetig · <strong>Von Olbia</strong>: 50 min + 15 min Faehre + 30 min Caprera</p>
+
+    <p>
+      Einer der schoensten Straende ganz Sardiniens. Um dorthin zu gelangen: Faehre von Palau nach La Maddalena, Sie ueberqueren La Maddalena bis zur Bruecke nach Caprera, folgen Sie den Hinweisen zu Cala Coticcio oder Spiaggia del Relitto. <strong>Der Zugang ist reglementiert</strong>: in Hochsaison erfordert Cala Coticcio obligatorischen Umweltguide + Buchung (~25 €/Person). Spiaggia del Relitto ist hingegen frei aber zu Fuss erreichbar (45 min Pfad). <strong>Smaragdgruenes Wasser, weissester Sand</strong>. Der Reise wert.
+    </p>
+
+    <h2>8. Cala dei Ginepri — Costa Smeralda Nord</h2>
+
+    <p><strong>Schwierigkeit</strong>: hoch · <strong>Fahrzeug</strong>: SUV oder 4x4 unverzichtbar · <strong>Von Olbia</strong>: 45 min + 20 min anspruchsvoller Schotter</p>
+
+    <p>
+      Zwischen Liscia di Vacca und Pantogia beginnt eine private Schotterstrasse (frei fuer Nicht-Anwohner ausserhalb der Saison), die zu mehreren wenig bekannten Buchten fuehrt, darunter <strong>Cala dei Ginepri</strong>. Schotter mit Loechern, Steinen, einigen steilen Anstiegen. <strong>Unverzichtbarer SUV</strong> mit guter Bodenfreiheit. Niedrige Autos riskieren Oelwannen-Bruch. Einmal angekommen, befinden Sie sich in einer weissen Sandbucht, umgeben von jahrhundertealten Wacholdern. Klares Wasser, nie Massen. <strong>Disclaimer</strong>: echter Weg auf eigene Gefahr.
+    </p>
+
+    <h2>Empfohlene Fahrzeuge fuer versteckte Straende</h2>
+
+    <p>Fuer Gallura-Straende per Schotter erreichbar, die geeignetsten Fahrzeuge unserer Flotte:</p>
+
+    <ul>
+      <li><strong><a href="/de/fuhrpark/jeep-avenger-mieten-olbia">Jeep Avenger</a></strong>: der perfekte Kompakt-SUV fuer 95% der Gallura-Schotterstrassen. 18 cm Bodenfreiheit, DCT-Automatik, hohe Sitzposition. Tarif 60-110 €/Tag</li>
+      <li><strong><a href="/de/fuhrpark/yamaha-raptor-quad-mieten-sardinien">Yamaha Raptor Quad</a></strong>: fuer alle, die tiefe Schotterstrassen erkunden wollen, ohne sich um das Auto zu sorgen. Mit B-Fuehrerschein, Helm inklusive. Tarif auf Anfrage</li>
+    </ul>
+
+    <p><strong>Fahrzeuge, die NICHT geeignet sind fuer anspruchsvolle Schotterstrassen</strong> (Schadensrisiko):</p>
+    <ul>
+      <li>Audi RS3 (sportliches Tieferlegen)</li>
+      <li>BMW M2 (sportliches Tieferlegen)</li>
+      <li>Mercedes A-Klasse (mittlere Aufhaengung, ok fuer leichte Schotter wie Suaraccia aber NICHT fuer Cala dei Ginepri)</li>
+      <li>Fiat Panda Hybrid (Kleinwagen, kann leichte kompakte Schotterstrassen)</li>
+    </ul>
+
+    <h2>Schnellubersicht</h2>
+
+    <table>
+      <thead>
+        <tr><th>Strand</th><th>Von Olbia</th><th>Fahrzeug</th><th>Schwierigkeit</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cala Brandinchi Ost frei</td><td>35 min</td><td>Beliebig</td><td>Niedrig</td></tr>
+        <tr><td>Suaraccia (Capo Coda Cavallo)</td><td>45 min</td><td>SUV empfohlen</td><td>Mittel</td></tr>
+        <tr><td>Cala Greca (Porto San Paolo)</td><td>30 min</td><td>Beliebig</td><td>Mittel</td></tr>
+        <tr><td>Porto Quadro (Santa Teresa)</td><td>1h</td><td>Beliebig</td><td>Niedrig</td></tr>
+        <tr><td>La Marmorata (Santa Teresa)</td><td>1h05</td><td>Beliebig</td><td>Niedrig</td></tr>
+        <tr><td>Cala Lunga (Palau)</td><td>1h05</td><td>Beliebig + 15 min zu Fuss</td><td>Mittel</td></tr>
+        <tr><td>Spiaggia del Relitto (Caprera)</td><td>~3h gesamt</td><td>+ Faehre + 45 min Pfad</td><td>Hohe Logistik</td></tr>
+        <tr><td>Cala dei Ginepri (Costa Smeralda)</td><td>1h05</td><td>SUV obligatorisch</td><td>Hoch</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Mindestausruestung</h2>
+
+    <ul>
+      <li>Wasser (mindestens 2 L/Person)</li>
+      <li>Sonnencreme 50+ wasserfest</li>
+      <li>Hut und Sonnenbrille</li>
+      <li>Gummischuhe (fuer Felsen und Pfade)</li>
+      <li>Substantielle Snacks</li>
+      <li>Muellbeutel</li>
+      <li>Maske + Schnorchel</li>
+      <li>Fuer anspruchsvolle Schotter: aufgepumptes Reserverad, Reifenkit, Notfallzeichen</li>
+    </ul>
+
+    <h2>Ethik des "Off-Route"-Tourismus</h2>
+
+    <ol>
+      <li>Nicht auf Wiesen oder Duenen parken</li>
+      <li>Niemals Feuer machen (Sardinien hat strenge Anti-Brand-Regeln)</li>
+      <li>Lokale Fauna nicht stoeren (Moewen, Geckos, Wolfspinnen)</li>
+      <li>ALLEN Muell mitnehmen, auch Bananenschalen und Zigarettenpapier</li>
+      <li>Privatsphaere der wenigen Begegneten respektieren (keine Fotos von Fremden)</li>
+    </ol>
+
+    <p>
+      Fuer familienfreundlichere und besser zugaengliche Straende siehe unsere <a href="/de/guide/familienstraende-costa-smeralda">Anleitung Costa Smeralda Familienstraende</a>. Um die Miete eines fuer Schotterstrassen geeigneten SUV zu organisieren, kontaktieren Sie Francesco und Salvatore Milo: <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

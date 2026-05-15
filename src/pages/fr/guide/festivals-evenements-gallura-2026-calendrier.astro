@@ -1,0 +1,270 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("festivals-evenements-gallura-2026-calendrier")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: { "@type": "AdministrativeArea", name: "Gallura" },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Festivals evenements Gallura 2026", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>La Gallura accueille en 2026 des dizaines de fetes, fetes patronales, evenements gastronomiques et musicaux</strong> repartis entre Olbia, Arzachena, Tempio Pausania, San Pantaleo et tous les villages du nord-est de la Sardaigne. Ce sont des occasions de vivre le territoire comme les locaux, manger des produits typiques a prix abordables, decouvrir des traditions millenaires. Ce guide rassemble les principaux evenements <strong>mis a jour pour 2026</strong>, organises par mois. Les dates sont indicatives — verifiez toujours sur les canaux officiels des municipalites ou pro loco avant d'y aller. Tous les evenements listes sont accessibles depuis Olbia en 30-90 minutes en voiture.
+    </p>
+
+    <h2>Premisse : comment fonctionnent les fetes sardes</h2>
+
+    <ul>
+      <li><strong>Presque toutes ont l'entree gratuite</strong>. Vous payez seulement nourriture et boissons</li>
+      <li><strong>Nourriture</strong> : 5-15 € par plat traditionnel + 3-5 € par boisson</li>
+      <li><strong>Horaire</strong> : typiquement de 19h00 a minuit</li>
+      <li><strong>Musique live</strong> : groupes folk, accordeon, danses sardes</li>
+      <li><strong>Stationnement</strong> : souvent problematique dans les petits villages, arrivez 1 heure avant le debut</li>
+      <li><strong>Enfants</strong> : bienvenus, atmosphere familiale</li>
+    </ul>
+
+    <h2>Mars - Avril 2026</h2>
+
+    <h3>Paques a Tempio Pausania (dates variables)</h3>
+
+    <p>
+      <strong>Tempio Pausania</strong> est celebre pour les processions de la Semaine Sainte : les statues des saints sont portees dans les rues de la vieille ville en pierre grise. Atmosphere tres evocatrice. Dure une semaine entiere.
+    </p>
+
+    <h3>Fete de San Simplicio (15 mai)</h3>
+
+    <p>
+      <strong>Olbia</strong>. Patron de la ville, fete de 7 jours. Marches, procession, feu d'artifice au port. Concert du soir gratuit sur la place. Excellent pour les familles.
+    </p>
+
+    <h2>Mai 2026</h2>
+
+    <h3>Cala Ginepro Music Festival (fin mai)</h3>
+
+    <p>
+      <strong>Cala Ginepro (San Teodoro)</strong>. Festival de musique live sur la plage. Artistes internationaux et italiens. Entree gratuite ou payante pour les concerts principaux.
+    </p>
+
+    <h3>Fete du Vermentino (dernier week-end de mai)</h3>
+
+    <p>
+      <strong>Berchidda</strong> (40 min d'Olbia). Degustations gratuites de Vermentino di Gallura DOCG dans les caves locales (Surrau, Capichera, Piero Mancini). Atmosphere vinicole, plats associes, musique.
+    </p>
+
+    <h2>Juin 2026</h2>
+
+    <h3>Fete de Sant'Antonio Abate (13 juin)</h3>
+
+    <p><strong>Divers villages de la Gallura</strong>. Feux de nuit, danses traditionnelles, saucisse grillee.</p>
+
+    <h3>Sardinia Pride (mi-juin)</h3>
+
+    <p><strong>Olbia</strong>. Defile et evenements LGBTQ+ dans la vieille ville.</p>
+
+    <h3>Nuit Blanche d'Olbia (troisieme week-end de juin)</h3>
+
+    <p>
+      <strong>Centre d'Olbia</strong>. Magasins ouverts jusqu'a minuit, musique live, animations, marches. Entree gratuite. Atmosphere festive.
+    </p>
+
+    <h2>Juillet 2026</h2>
+
+    <h3>Settimana delle Bocche (debut juillet)</h3>
+
+    <p>
+      <strong>Porto Cervo / La Maddalena</strong>. Regate de voile historique internationale organisee par le Yacht Club Costa Smeralda. Vue spectaculaire depuis la terre. Evenements mondains a la Piazzetta. Possibles fermetures partielles de la SP59.
+    </p>
+
+    <h3>Festival "Time in Jazz" (1-15 aout, certains concerts deja en juillet)</h3>
+
+    <p>
+      <strong>Berchidda + autres villages de la Gallura</strong>. Festival de jazz fonde par Paolo Fresu, l'un des plus importants d'Europe. Concerts gratuits sur les places, dans les eglises, vignobles. Atmosphere unique, tickets concert principal ~30-50 €.
+    </p>
+
+    <h3>Fete de la Mer (Olbia, troisieme week-end de juillet)</h3>
+
+    <p>
+      <strong>Olbia, Vieux Port</strong>. Procession de bateaux pour la Madonna del Mare, feu d'artifice, stands de poisson frit et moules, musique.
+    </p>
+
+    <h3>Sant'Antonio Abate (16 juillet)</h3>
+
+    <p>
+      <strong>Tempio Pausania</strong>. Patron. Procession, danses, fete populaire dans la vieille ville.
+    </p>
+
+    <h2>Aout 2026</h2>
+
+    <h3>Time in Jazz (1-15 aout)</h3>
+
+    <p>Le festival de jazz continue a Berchidda et environs. Voir ci-dessus.</p>
+
+    <h3>Faradda di li Candareri / Fete de San Pasquale (variables)</h3>
+
+    <p>
+      <strong>Aglientu</strong>. Ancienne fete religieuse avec procession, bougies geantes, danses traditionnelles galluraises.
+    </p>
+
+    <h3>Fete des Pecheurs (premier week-end d'aout)</h3>
+
+    <p>
+      <strong>Cannigione</strong>. Poisson frais a prix populaires, musique live, feux de plage.
+    </p>
+
+    <h3>Fete Stella Maris (15 aout)</h3>
+
+    <p>
+      <strong>Porto San Paolo</strong>. Procession de bateaux, statues, feu d'artifice en mer. Diner dans la trattoria locale.
+    </p>
+
+    <h3>Ferragosto sarde (15 aout)</h3>
+
+    <p>
+      Celebre dans tous les villages de la Gallura. <strong>Olbia</strong> a un feu d'artifice au port, <strong>Palau</strong> a une fete au port, <strong>San Teodoro</strong> a de la musique sur la plage. Bonde partout.
+    </p>
+
+    <h3>Bogamarì / Fete des Oursins (variable, fin aout)</h3>
+
+    <p>
+      <strong>Alghero mais aussi Cannigione</strong>. Saison des oursins, plats typiques, vin blanc.
+    </p>
+
+    <h2>Septembre 2026</h2>
+
+    <h3>Sant'Andrea Cavalcata (premier week-end de septembre)</h3>
+
+    <p>
+      <strong>Tempio Pausania</strong>. Cavaliers en costumes traditionnels galluraises, defile, procession. Spectaculaire.
+    </p>
+
+    <h3>Fete du Poisson (variable)</h3>
+
+    <p>
+      <strong>Olbia, Vieux Port</strong>. Poisson frit et cuit a bas prix, musique live, atmosphere familiale.
+    </p>
+
+    <h3>Fete patronale Beata Vergine di Bonaria (8 septembre)</h3>
+
+    <p>
+      <strong>Olbia, Pittulongu, divers villages</strong>. Patronne de la Sardaigne. Processions, messe solennelle, fete populaire.
+    </p>
+
+    <h3>Costa Smeralda Award (variable septembre)</h3>
+
+    <p>
+      <strong>Porto Cervo</strong>. Prix litteraire international prestigieux. Evenements culturels, presentations de livres, auteurs italiens et etrangers.
+    </p>
+
+    <h2>Octobre 2026</h2>
+
+    <h3>Calici di Stelle (variable octobre)</h3>
+
+    <p>
+      <strong>Divers villages de la Gallura</strong>. Degustations de vins DOCG dans les caves, accompagnees de plats typiques. Cout modeste (15-25 € par personne).
+    </p>
+
+    <h3>Fete du Sanglier (variable octobre)</h3>
+
+    <p>
+      <strong>Padru</strong> (45 min d'Olbia, arriere-pays). Viande de sanglier, saucisses grillees, vin rouge, musique folk. Atmosphere rurale tres authentique.
+    </p>
+
+    <h3>Cortes Apertas (octobre-novembre)</h3>
+
+    <p>
+      <strong>Divers villages de l'arriere-pays sarde</strong>. Maisons privees ouvertes au public pour montrer les anciens metiers (tissage, pain carasau, fromage, vin). Experience touristique authentique.
+    </p>
+
+    <h2>Evenements hebdomadaires recurrents</h2>
+
+    <h3>Marches hebdomadaires</h3>
+
+    <ul>
+      <li><strong>Olbia</strong> : mardi matin, zone Sa Marinedda</li>
+      <li><strong>Arzachena</strong> : mercredi matin, centre</li>
+      <li><strong>Palau</strong> : lundi matin, front de mer</li>
+      <li><strong>San Teodoro</strong> : jeudi matin, centre</li>
+      <li><strong>Tempio Pausania</strong> : vendredi matin, vieille ville</li>
+    </ul>
+
+    <h3>Marches du soir d'ete</h3>
+
+    <ul>
+      <li><strong>San Teodoro</strong> : tous les soirs d'ete, front de mer. Artisanat, bijoux, boissons</li>
+      <li><strong>Porto Rotondo</strong> : week-ends d'ete sur Piazza San Marco</li>
+      <li><strong>Cannigione</strong> : tous les soirs d'ete, front de mer</li>
+    </ul>
+
+    <h2>Evenements mondains Costa Smeralda</h2>
+
+    <p>Pour qui veut gouter a la legendaire "vie nocturne" Costa Smeralda :</p>
+
+    <ul>
+      <li><strong>Phi Beach</strong> (Baja Sardinia, tout aout) : aperitifs au coucher du soleil, DJ internationaux</li>
+      <li><strong>Billionaire</strong> (Porto Cervo, dates variables d'ete) : club exclusif, tables a partir de 500 €+, dress code strict</li>
+      <li><strong>Cala di Volpe</strong> (divers diners de gala estivaux) : restaurants Michelin, evenements prives</li>
+      <li><strong>Porto Cervo Cervo Hotel</strong> (divers aperitifs et evenements) : atmosphere de luxe accessible</li>
+    </ul>
+
+    <h2>Conseils pratiques pour participer</h2>
+
+    <ul>
+      <li><strong>Verifiez les dates</strong> sur les sites des municipalites ou pro loco avant d'y aller — certaines fetes se decalent legerement chaque annee</li>
+      <li><strong>Stationnement</strong> : arrivez 1-2 heures avant pour les petits villages (limite)</li>
+      <li><strong>Especes</strong> : beaucoup de fetes acceptent uniquement les especes pour nourriture et boissons</li>
+      <li><strong>Vetements casual</strong> : pas de tenue de soiree pour les fetes traditionnelles (sauf evenements mondains Costa Smeralda)</li>
+      <li><strong>Retour tardif</strong> : si vous rentrez apres un diner tardif, attention aux routes interieures (animaux sauvages, mauvais eclairage)</li>
+      <li><strong>Vehicule adapte</strong> : pour atteindre les villages de l'arriere-pays comme Berchidda, Padru, Aglientu, un <a href="/fr/flotta/location-jeep-avenger-olbia">Jeep Avenger</a> ou <a href="/fr/flotta/location-mercedes-classe-a-olbia">Mercedes Classe A</a> est ideal</li>
+    </ul>
+
+    <h2>Combiner evenements et itineraire</h2>
+
+    <p>Planifier les vacances autour d'un evenement peut enrichir l'experience :</p>
+
+    <ul>
+      <li><strong>Semaine Time in Jazz</strong> (1-15 aout) : combiner avec itineraire complet Costa Smeralda + Berchidda</li>
+      <li><strong>Nuit Blanche d'Olbia</strong> (juin) : parfait pour un long week-end a Olbia, voir <a href="/fr/guide/que-faire-a-olbia-3-jours-itineraire">que faire a Olbia 3 jours</a></li>
+      <li><strong>Fetes gastronomiques</strong> (septembre-octobre) : combiner avec tour des caves vermentino + arriere-pays Gallura</li>
+      <li><strong>Tempio Cavalcata</strong> : parfait comme excursion d'une demi-journee dans l'arriere-pays Gallura</li>
+    </ul>
+
+    <h2>Recapitulatif</h2>
+
+    <p>
+      Entre <strong>mai et octobre</strong> la Gallura propose des dizaines d'evenements, fetes et fetes patronales qui vous permettent de vivre la culture locale au-dela des plages. <strong>Les fetes gastronomiques de villages</strong> sont les plus authentiques et les moins touristiques ; <strong>les evenements mondains Costa Smeralda</strong> sont pour ceux qui cherchent des experiences exclusives. <strong>Time in Jazz</strong> a Berchidda et environs est l'un des rendez-vous culturels estivaux les plus importants d'Europe.
+    </p>
+
+    <p>
+      Pour une location de voiture confortable pour visiter les villages de la Gallura — egalement avec livraison directement a Olbia, Palau ou Cannigione — contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Pour planifier un sejour complet, voir aussi notre <a href="/fr/guide/itineraire-7-jours-costa-smeralda-depuis-olbia">itineraire 7 jours Costa Smeralda</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

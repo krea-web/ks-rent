@@ -287,6 +287,54 @@ export function findArticleEn(slug: string): GuideArticleMetaEn | undefined {
   return GUIDE_ARTICLES_EN.find((a) => a.slug === slug);
 }
 
+/* ─── EN articles batch 5 (final) ─── */
+
+const _EN_BATCH_5: GuideArticleMetaEn[] = [
+  {
+    slug: "hidden-beaches-gallura-dirt-roads",
+    title: "Hidden beaches of Gallura: 8 lesser-known coves",
+    excerpt:
+      "8 hidden beaches of Gallura reachable via dirt road or trail: where they are, how to get there, why they're worth the trip. For those seeking alternatives to mass tourism.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["family-beaches-costa-smeralda", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "spiagge-nascoste-gallura-sterrati",
+  },
+  {
+    slug: "scooter-quad-rental-sardinia-how-to-choose",
+    title: "Scooter or quad rental in Sardinia: how to choose and when",
+    excerpt:
+      "Honda SH 125/350 scooter or Yamaha Raptor quad in Sardinia? Which licence you need, costs, when to use them. Practical comparison for tourists.",
+    category: "Vehicles",
+    publishedAt: "2026-05-15",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/HONDA/ksrent-hondash125.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["hidden-beaches-gallura-dirt-roads", "getting-around-porto-cervo-parking-shuttles"],
+    itEquivalent: "noleggio-scooter-quad-sardegna-come-scegliere",
+  },
+  {
+    slug: "festivals-events-gallura-2026-calendar",
+    title: "Festivals and events in Gallura 2026: the complete calendar",
+    excerpt:
+      "All festivals, saint's days and food events of Gallura in 2026: Olbia, Arzachena, Tempio Pausania, San Pantaleo. Dates, locations, access.",
+    category: "Itineraries",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["what-to-do-in-olbia-3-days-itinerary", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "sagre-eventi-gallura-2026-calendario",
+  },
+];
+GUIDE_ARTICLES_EN.push(..._EN_BATCH_5);
+
 /* ─── EN articles batch 4 ─── */
 
 const _EN_BATCH_4: GuideArticleMetaEn[] = [
@@ -495,6 +543,54 @@ export function findArticleDe(slug: string): GuideArticleMetaDe | undefined {
   return GUIDE_ARTICLES_DE.find((a) => a.slug === slug);
 }
 
+/* ─── DE articles batch 5 (final) ─── */
+
+const _DE_BATCH_5: GuideArticleMetaDe[] = [
+  {
+    slug: "versteckte-straende-gallura-schotterpisten",
+    title: "Versteckte Straende der Gallura: 8 wenig bekannte Buchten",
+    excerpt:
+      "8 versteckte Straende der Gallura ueber Schotterpisten oder Pfade erreichbar: wo sie sind, wie hinkommen, warum sie die Reise wert sind. Fuer alle, die Alternativen zum Massentourismus suchen.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["familienstraende-costa-smeralda", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "spiagge-nascoste-gallura-sterrati",
+  },
+  {
+    slug: "roller-quad-mieten-sardinien-wie-waehlen",
+    title: "Roller oder Quad mieten in Sardinien: wie waehlen und wann",
+    excerpt:
+      "Honda SH 125/350 Roller oder Yamaha Raptor Quad in Sardinien? Welcher Fuehrerschein noetig, Kosten, wann nutzen. Praktischer Vergleich fuer Touristen.",
+    category: "Fahrzeuge",
+    publishedAt: "2026-05-15",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/HONDA/ksrent-hondash125.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["versteckte-straende-gallura-schotterpisten", "fortbewegung-porto-cervo-parkplaetze-shuttles"],
+    itEquivalent: "noleggio-scooter-quad-sardegna-come-scegliere",
+  },
+  {
+    slug: "feste-events-gallura-2026-kalender",
+    title: "Feste und Events in der Gallura 2026: der komplette Kalender",
+    excerpt:
+      "Alle Feste, Patronatsfeste und gastronomischen Events in der Gallura 2026: Olbia, Arzachena, Tempio Pausania, San Pantaleo. Daten, Orte, Zugang.",
+    category: "Reiserouten",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["was-tun-in-olbia-3-tage-reiseroute", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "sagre-eventi-gallura-2026-calendario",
+  },
+];
+GUIDE_ARTICLES_DE.push(..._DE_BATCH_5);
+
 /* ─── DE articles batch 4 ─── */
 
 const _DE_BATCH_4: GuideArticleMetaDe[] = [
@@ -702,6 +798,54 @@ export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
 export function findArticleFr(slug: string): GuideArticleMetaFr | undefined {
   return GUIDE_ARTICLES_FR.find((a) => a.slug === slug);
 }
+
+/* ─── FR articles batch 5 (final) ─── */
+
+const _FR_BATCH_5: GuideArticleMetaFr[] = [
+  {
+    slug: "plages-cachees-gallura-pistes-terre",
+    title: "Plages cachees de la Gallura : 8 criques peu connues",
+    excerpt:
+      "8 plages cachees de la Gallura accessibles par piste de terre ou sentier : ou elles sont, comment y aller, pourquoi elles valent le voyage. Pour qui cherche des alternatives au tourisme de masse.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["plages-familles-costa-smeralda", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "spiagge-nascoste-gallura-sterrati",
+  },
+  {
+    slug: "location-scooter-quad-sardaigne-comment-choisir",
+    title: "Location scooter ou quad en Sardaigne : comment choisir et quand",
+    excerpt:
+      "Scooter Honda SH 125/350 ou quad Yamaha Raptor en Sardaigne ? Quel permis necessaire, couts, quand les utiliser. Comparaison pratique pour touristes.",
+    category: "Vehicules",
+    publishedAt: "2026-05-15",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/HONDA/ksrent-hondash125.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["plages-cachees-gallura-pistes-terre", "se-deplacer-porto-cervo-parkings-navettes"],
+    itEquivalent: "noleggio-scooter-quad-sardegna-come-scegliere",
+  },
+  {
+    slug: "festivals-evenements-gallura-2026-calendrier",
+    title: "Festivals et evenements en Gallura 2026 : le calendrier complet",
+    excerpt:
+      "Toutes les fetes, fetes patronales et evenements gastronomiques de la Gallura en 2026 : Olbia, Arzachena, Tempio Pausania, San Pantaleo. Dates, lieux, acces.",
+    category: "Itineraires",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["que-faire-a-olbia-3-jours-itineraire", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "sagre-eventi-gallura-2026-calendario",
+  },
+];
+GUIDE_ARTICLES_FR.push(..._FR_BATCH_5);
 
 /* ─── FR articles batch 4 ─── */
 
