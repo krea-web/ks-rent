@@ -1,0 +1,231 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("most-beautiful-beaches-north-east-sardinia")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+  about: [
+    { "@type": "Thing", name: "Top beaches Sardinia north-east" },
+    { "@type": "AdministrativeArea", name: "Gallura, Sardinia" },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: "Top beaches Sardinia", path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>North-east Sardinia has some of the most beautiful beaches in the Mediterranean</strong>, regularly recognised in international rankings (TripAdvisor Travellers' Choice, Lonely Planet, National Geographic). Powder-fine white sand, transparent water with shades from turquoise to emerald green, shallow seabeds extending for tens of metres, granite cliffs sculpted by wind. This is our selection of the <strong>7 most iconic beaches</strong> in Gallura and Costa Smeralda — the ones <strong>you can't miss</strong> if you're holidaying between Olbia and Santa Teresa di Gallura. Each has unique characteristics, different access, different audience.
+    </p>
+
+    <h2>Selection criteria</h2>
+
+    <p>
+      To select these 7 we considered: <strong>scenic beauty</strong> (water, sand, setting), <strong>international fame</strong>, <strong>accessibility</strong> (reachable by car), <strong>essential services</strong>, <strong>perceived experience</strong> (memories you take home). They are listed <strong>geographically from north to south</strong>, not by "personal preference" — each is the best in its category.
+    </p>
+
+    <h2>1. Pink Beach of Budelli (La Maddalena Archipelago)</h2>
+
+    <p>
+      <strong>Type</strong>: unique pink beach in the world · <strong>Access</strong>: only by boat (no landing) · <strong>From Olbia</strong>: ~3h total (drive to Palau + boat)
+    </p>
+
+    <p>
+      The <strong>Pink Beach</strong> on Budelli island is famous for the <strong>pinkish-coloured sand</strong> caused by marine microorganisms (bryozoans and foraminifera). Landing has been banned since 1994 to protect the sand (those caught taking it risk a €3,000 fine), but you can admire it from a few metres on the boat.
+    </p>
+
+    <p>
+      <strong>How to reach</strong>: ferry from Palau to La Maddalena, then organised Archipelago boat tour. See our <a href="/en/guide/visiting-la-maddalena-archipelago-practical-guide">La Maddalena Archipelago guide</a>.
+    </p>
+
+    <p>
+      <strong>Real impressions</strong>: the sand is not "shocking pink" like in Photoshopped photos. It's a pale pink/salmon — still unique in the world. Worth seeing to say "I've been there".
+    </p>
+
+    <h2>2. Cala Coticcio "Tahiti" (Caprera)</h2>
+
+    <p>
+      <strong>Type</strong>: paradise cove with mandatory booking · <strong>Access</strong>: 45-min trail from Caprera · <strong>From Olbia</strong>: ~2h total
+    </p>
+
+    <p>
+      Nicknamed "<strong>Sardinia's Tahiti</strong>" for the water colour. Intimate cove of white sand set among granite rocks. Intense emerald water, gently sloping seabed, snorkelling among fish.
+    </p>
+
+    <p>
+      <strong>Regulated access since 2021</strong>: only with environmental guide + mandatory booking on the National Park portal. 2 turns/day (morning and afternoon), ~50 people/turn, €25/person. <strong>In high season slots sell out 7-15 days ahead</strong>.
+    </p>
+
+    <p>
+      <strong>Tip</strong>: if you can't book Cala Coticcio, go to <strong>Spiaggia del Relitto</strong> also on Caprera (free, 45-min trail access, similar water quality, less crowded).
+    </p>
+
+    <h2>3. Spiaggia del Principe (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong>: iconic luxury beach · <strong>Access</strong>: dirt-road parking + 200 m trail · <strong>From Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      One of the <strong>most photographed beaches in the world</strong>. Called "del Principe" because it was the favourite beach of Prince Aga Khan, founder of Costa Smeralda. White powder-fine sand, water with shifting colours (turquoise near shore, deep blue further out), reddish rocks on the left.
+    </p>
+
+    <p>
+      <strong>Access</strong>: from the dirt-road car park you walk a 200-metre trail through ancient junipers. Dirt road accessible to all cars but a <a href="/en/fleet/jeep-avenger-hire-olbia">Jeep Avenger</a> makes the journey less stressful. Free parking morning, paid (€5/hour) after 10:00.
+    </p>
+
+    <p>
+      <strong>Experience</strong>: in high season fills by 11:00. Go early. Beach club with lounger rental (€60-150/couple/day).
+    </p>
+
+    <h2>4. Liscia Ruja (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong>: wide "everyone's" beach · <strong>Access</strong>: paved road + parking · <strong>From Olbia</strong>: 30 min
+    </p>
+
+    <p>
+      <strong>The longest beach in Costa Smeralda</strong> (1 km). White sand, transparent water, shallow seabed for 15-20 metres. Three beach clubs (Long Beach, Phi Beach, Liscia Ruja Beach) with full services.
+    </p>
+
+    <p>
+      <strong>Pros</strong>: huge, always space even in August; perfect for families; top services. <strong>Cons</strong>: less "wild" than others, more "beach club" atmosphere.
+    </p>
+
+    <p>
+      <strong>Sunset</strong>: the <strong>Phi Beach</strong> here is legendary for sunset aperitifs with international DJs in season (cocktails €25-40).
+    </p>
+
+    <h2>5. Capriccioli (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong>: two twin coves · <strong>Access</strong>: paved parking + 50 m walk · <strong>From Olbia</strong>: 30 min
+    </p>
+
+    <p>
+      <strong>Capriccioli</strong> is actually composed of <strong>two coves separated by a promontory</strong>: Capriccioli East (larger, white sand, beach clubs) and Capriccioli West (smaller, intimate, sand + rocks). Turquoise water, gently sloping seabed, side snorkelling among rocks.
+    </p>
+
+    <p>
+      <strong>Pros</strong>: easy access, perfect for families with kids 3+ (shallow water for 15 m), full services. <strong>Cons</strong>: parking expensive (€15-20/day) and fills by 10:00 in high season.
+    </p>
+
+    <h2>6. Romazzino (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong>: luxury hotel beach · <strong>Access</strong>: parking + 100 m walk · <strong>From Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      In front of the famous <strong>5-star Hotel Romazzino</strong>. Whitest sand, incredibly clear water, shallow seabed for 15 m perfect for families and non-expert swimmers. Exclusive beach club with premium service.
+    </p>
+
+    <p>
+      <strong>Atmosphere</strong>: elegant, frequented by hotel guests + tourists making an "accessible luxury" day. Expensive parking (€10-15/day) and limited.
+    </p>
+
+    <h2>7. Cala Brandinchi and Lu Impostu (San Teodoro)</h2>
+
+    <p>
+      <strong>Type</strong>: "Sardinia's Bahamas" · <strong>Access</strong>: with booking in high season · <strong>From Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      The <strong>twin beaches of San Teodoro</strong> are nicknamed "Sardinia's Bahamas" for the brilliant turquoise water and white sand. <strong>Cala Brandinchi</strong> is smaller, intimate; <strong>Lu Impostu</strong> is wider. Both have shallow seabeds — perfect for families with very young children.
+    </p>
+
+    <p>
+      <strong>Mandatory booking in high season</strong> for both (Sardinia regional system, max 1,450 people/day). Check the official Sardinia Region website.
+    </p>
+
+    <p>
+      <strong>Experience</strong>: ancient junipers behind create natural shade. Water so clear it looks like the seabed is within reach even at 20 m.
+    </p>
+
+    <h2>Bonus: La Cinta (San Teodoro)</h2>
+
+    <p>
+      <strong>5 km of white sand</strong> facing Tavolara island. The "family" beach par excellence in north-east Sardinia. Shallow water for 30+ metres, perfect even for newborns. See our <a href="/en/guide/family-beaches-costa-smeralda">family beaches guide</a>.
+    </p>
+
+    <h2>Summary table</h2>
+
+    <table>
+      <thead>
+        <tr><th>Beach</th><th>From Olbia</th><th>Access</th><th>Crowds</th><th>Family-friendly</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Pink Beach Budelli</td><td>~3h total</td><td>Boat only, no landing</td><td>From boat</td><td>Yes (visit)</td></tr>
+        <tr><td>Cala Coticcio Tahiti</td><td>~2h total</td><td>45-min trail + booking</td><td>Limited (50/turn)</td><td>No (challenging trail)</td></tr>
+        <tr><td>Spiaggia del Principe</td><td>35 min</td><td>Dirt-road parking + 200 m</td><td>High after 11:00</td><td>Yes (with caution)</td></tr>
+        <tr><td>Liscia Ruja</td><td>30 min</td><td>Paved road</td><td>Medium (always space)</td><td>Yes</td></tr>
+        <tr><td>Capriccioli</td><td>30 min</td><td>Paved parking</td><td>High after 10:00</td><td>Yes (3+ years)</td></tr>
+        <tr><td>Romazzino</td><td>35 min</td><td>Parking + 100 m</td><td>High after 10:00</td><td>Yes</td></tr>
+        <tr><td>Brandinchi + Lu Impostu</td><td>35 min</td><td>Mandatory booking</td><td>Limited (1,450/day)</td><td>Yes (perfect for newborns)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Suggested visit order for 1 week</h2>
+
+    <ol>
+      <li><strong>Day 1</strong>: Capriccioli (close to Olbia, easy access to "break the ice")</li>
+      <li><strong>Day 2</strong>: Liscia Ruja + Phi Beach sunset</li>
+      <li><strong>Day 3</strong>: Spiaggia del Principe + Romazzino (north Costa Smeralda tour)</li>
+      <li><strong>Day 4</strong>: Cala Brandinchi + Lu Impostu (San Teodoro, book days ahead)</li>
+      <li><strong>Day 5</strong>: Boat trip archipelago (Pink Beach + Spargi + Santa Maria)</li>
+      <li><strong>Day 6</strong>: Cala Coticcio Tahiti (book days ahead)</li>
+      <li><strong>Day 7</strong>: Rest + relaxed swim at La Cinta or Pittulongu</li>
+    </ol>
+
+    <h2>Recommended vehicle for the tour</h2>
+
+    <p>
+      To visit these 7 beaches, the ideal vehicle is a <strong>compact SUV like the <a href="/en/fleet/jeep-avenger-hire-olbia">Jeep Avenger</a></strong>: high driving position, dirt-road access (Spiaggia del Principe), boot for umbrellas and beach gear. Alternatively a <a href="/en/fleet/mercedes-a-class-hire-olbia">Mercedes A-Class</a> for those wanting more motorway comfort.
+    </p>
+
+    <h2>When to go</h2>
+
+    <ul>
+      <li><strong>May-June</strong>: perfect season. Low prices, no crowds, water already 19-22°C</li>
+      <li><strong>July-August</strong>: top for swimming (water 25-27°C) but very crowded, high prices, mandatory booking at Cala Brandinchi and Cala Coticcio</li>
+      <li><strong>September</strong>: perfect season for those without school constraints. Water 23-25°C, calm atmosphere, mid prices</li>
+      <li><strong>October</strong>: still possible. Reduced services but tranquillity guaranteed</li>
+    </ul>
+
+    <h2>Summary</h2>
+
+    <p>
+      The <strong>top 7 beaches of north-east Sardinia</strong> tell a mosaic of different experiences: from the unique rarity of Pink Beach to the accessible luxury of Romazzino, from family at La Cinta to adventure at Cala Coticcio. <strong>All are reachable from Olbia in maximum 1 hour</strong> by car (plus boat crossing for Budelli/Caprera). The best strategy is to dedicate at least a week and visit 4-5, leaving room for rest and discovery of inland Gallura villages.
+    </p>
+
+    <p>
+      For car hire suitable for these beaches — also with delivery directly to your hotel/villa in Costa Smeralda — contact Francesco and Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Also see the <a href="/en/guide/family-beaches-costa-smeralda">family-friendly beaches</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

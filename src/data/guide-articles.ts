@@ -287,7 +287,55 @@ export function findArticleEn(slug: string): GuideArticleMetaEn | undefined {
   return GUIDE_ARTICLES_EN.find((a) => a.slug === slug);
 }
 
-/* ─── EN articles batch 2 ─── */
+/* ─── EN articles batch 3 ─── */
+
+const _EN_BATCH_3: GuideArticleMetaEn[] = [
+  {
+    slug: "international-driving-permit-sardinia-do-i-need-it",
+    title: "International Driving Permit for Sardinia: do you really need it?",
+    excerpt:
+      "When you need an IDP to rent a car in Sardinia: rules for EU, UK, USA, Canada, Australia. Documents accepted, alternatives, costs.",
+    category: "Car hire",
+    publishedAt: "2026-05-15",
+    readingMinutes: 6,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["car-hire-olbia-without-credit-card-complete-guide", "car-hire-olbia-airport-practical-guide"],
+    itEquivalent: "patente-internazionale-sardegna-serve-davvero",
+  },
+  {
+    slug: "most-beautiful-beaches-north-east-sardinia",
+    title: "The 7 most beautiful beaches in north-east Sardinia",
+    excerpt:
+      "The 7 most beautiful beaches in north-east Sardinia: Spiaggia del Principe, La Cinta, Cala Brandinchi, Liscia Ruja, Cala Coticcio, Capriccioli, Romazzino.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["family-beaches-costa-smeralda", "visiting-la-maddalena-archipelago-practical-guide"],
+    itEquivalent: "spiagge-piu-belle-sardegna-nord-orientale",
+  },
+  {
+    slug: "family-beaches-costa-smeralda",
+    title: "Costa Smeralda beaches with kids: the 10 best for families",
+    excerpt:
+      "The 10 most family-friendly beaches in Costa Smeralda: shallow water, fine sand, parking, services, shade. KS Rent Sardinia 2026 selection.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 11,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["most-beautiful-beaches-north-east-sardinia", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "spiagge-costa-smeralda-con-bambini",
+  },
+];
+GUIDE_ARTICLES_EN.push(..._EN_BATCH_3);
+
+/* ─── EN articles batch 2 (legacy push pattern) ─── */
 
 GUIDE_ARTICLES_EN.push(
   {
@@ -399,7 +447,55 @@ export function findArticleDe(slug: string): GuideArticleMetaDe | undefined {
   return GUIDE_ARTICLES_DE.find((a) => a.slug === slug);
 }
 
-/* ─── DE articles batch 2 ─── */
+/* ─── DE articles batch 3 ─── */
+
+const _DE_BATCH_3: GuideArticleMetaDe[] = [
+  {
+    slug: "internationaler-fuehrerschein-sardinien-ist-er-noetig",
+    title: "Internationaler Fuehrerschein fuer Sardinien: ist er wirklich noetig?",
+    excerpt:
+      "Wann der internationale Fuehrerschein zum Mietwagen in Sardinien noetig ist: Regeln EU, USA, Schweiz, Russland. Akzeptierte Dokumente, Alternativen, Kosten.",
+    category: "Autovermietung",
+    publishedAt: "2026-05-15",
+    readingMinutes: 6,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung", "autovermietung-flughafen-olbia-praktische-anleitung"],
+    itEquivalent: "patente-internazionale-sardegna-serve-davvero",
+  },
+  {
+    slug: "schoenste-straende-nordost-sardinien",
+    title: "Die 7 schoensten Straende Nordost-Sardiniens",
+    excerpt:
+      "Die 7 schoensten Straende Nordost-Sardiniens: Spiaggia del Principe, La Cinta, Cala Brandinchi, Liscia Ruja, Cala Coticcio, Capriccioli, Romazzino.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["familienstraende-costa-smeralda", "la-maddalena-archipel-besuchen-praktische-anleitung"],
+    itEquivalent: "spiagge-piu-belle-sardegna-nord-orientale",
+  },
+  {
+    slug: "familienstraende-costa-smeralda",
+    title: "Costa Smeralda Straende mit Kindern: die 10 besten fuer Familien",
+    excerpt:
+      "Die 10 familienfreundlichsten Straende der Costa Smeralda: flaches Wasser, feiner Sand, Parkplatz, Services, Schatten. KS Rent Sardinia Auswahl 2026.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 11,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["schoenste-straende-nordost-sardinien", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "spiagge-costa-smeralda-con-bambini",
+  },
+];
+GUIDE_ARTICLES_DE.push(..._DE_BATCH_3);
+
+/* ─── DE articles batch 2 (legacy push pattern) ─── */
 
 GUIDE_ARTICLES_DE.push(
   {
@@ -511,7 +607,55 @@ export function findArticleFr(slug: string): GuideArticleMetaFr | undefined {
   return GUIDE_ARTICLES_FR.find((a) => a.slug === slug);
 }
 
-/* ─── FR articles batch 2 ─── */
+/* ─── FR articles batch 3 ─── */
+
+const _FR_BATCH_3: GuideArticleMetaFr[] = [
+  {
+    slug: "permis-international-sardaigne-est-il-necessaire",
+    title: "Permis international pour la Sardaigne : est-il vraiment necessaire ?",
+    excerpt:
+      "Quand le permis international est necessaire pour louer une voiture en Sardaigne : regles UE, USA, Suisse, Russie. Documents acceptes, alternatives, couts.",
+    category: "Location",
+    publishedAt: "2026-05-15",
+    readingMinutes: 6,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["location-voiture-olbia-sans-carte-credit-guide-complet", "location-voiture-aeroport-olbia-guide-pratique"],
+    itEquivalent: "patente-internazionale-sardegna-serve-davvero",
+  },
+  {
+    slug: "plus-belles-plages-nord-est-sardaigne",
+    title: "Les 7 plus belles plages du nord-est de la Sardaigne",
+    excerpt:
+      "Les 7 plus belles plages du nord-est de la Sardaigne : Spiaggia del Principe, La Cinta, Cala Brandinchi, Liscia Ruja, Cala Coticcio, Capriccioli, Romazzino.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["plages-familles-costa-smeralda", "visiter-archipel-la-maddalena-guide-pratique"],
+    itEquivalent: "spiagge-piu-belle-sardegna-nord-orientale",
+  },
+  {
+    slug: "plages-familles-costa-smeralda",
+    title: "Plages de la Costa Smeralda avec enfants : les 10 meilleures pour familles",
+    excerpt:
+      "Les 10 plages les plus adaptees aux familles avec enfants en Costa Smeralda : eau peu profonde, sable fin, parking, services, ombre. Selection KS Rent 2026.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 11,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["plus-belles-plages-nord-est-sardaigne", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "spiagge-costa-smeralda-con-bambini",
+  },
+];
+GUIDE_ARTICLES_FR.push(..._FR_BATCH_3);
+
+/* ─── FR articles batch 2 (legacy push pattern) ─── */
 
 GUIDE_ARTICLES_FR.push(
   {

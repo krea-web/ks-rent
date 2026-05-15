@@ -1,0 +1,248 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("internationaler-fuehrerschein-sardinien-ist-er-noetig")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "de-DE",
+  about: { "@type": "Thing", name: "Internationaler Fuehrerschein" },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Brauchen EU-Buerger einen internationalen Fuehrerschein zum Mietwagen in Sardinien?",
+      acceptedAnswer: { "@type": "Answer", text: "Nein. Buerger Italiens und der anderen 27 EU-Laender brauchen keinen IDP zur Autovermietung in Sardinien. Gleiches gilt fuer Norwegen, Schweiz, Liechtenstein und Island (Europaeischer Wirtschaftsraum). Der nationale Fuehrerschein reicht." },
+    },
+    {
+      "@type": "Question",
+      name: "Brauchen Schweizer einen IDP fuer Sardinien?",
+      acceptedAnswer: { "@type": "Answer", text: "Nein. Der Schweizer Fuehrerschein ist in Italien gueltig ohne IDP. Empfohlen wird das Mitfuehren des Reisepasses zur Identifikation." },
+    },
+    {
+      "@type": "Question",
+      name: "Brauchen US-Buerger einen IDP zum Mietwagen in Sardinien?",
+      acceptedAnswer: { "@type": "Answer", text: "Technisch ja: Italien verlangt einen IDP fuer US-Buerger, vor der Abreise bei AAA zu beantragen ($20). KS Rent Sardinia akzeptiert den US-Originalschein + IDP, aber einige Firmen sind strenger. Um Probleme zu vermeiden, IDP vor der Reise besorgen." },
+    },
+    {
+      "@type": "Question",
+      name: "Wieviel kostet der internationale Fuehrerschein und wo bekomme ich ihn?",
+      acceptedAnswer: { "@type": "Answer", text: "In Deutschland bei der Fuehrerscheinstelle, ca. 16-20 €, sofortige Ausstellung, gueltig 3 Jahre. In Oesterreich beim OAeMTC ca. 17 €. In der Schweiz beim Strassenverkehrsamt ca. 30 CHF. In den USA bei AAA, $20." },
+    },
+    {
+      "@type": "Question",
+      name: "Muss ich den IDP zusammen mit dem nationalen Fuehrerschein vorzeigen?",
+      acceptedAnswer: { "@type": "Answer", text: "Ja. Der IDP ersetzt NICHT den nationalen Fuehrerschein, sondern ist nur eine offizielle Uebersetzung. Sie muessen immer beide Dokumente beim Fahren und beim Check-in der Autovermietung dabei haben." },
+    },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Anleitungen", path: "/de/guide" },
+    { name: "Internationaler Fuehrerschein Sardinien", path: `/de/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="de">
+    <p>
+      <strong>Der internationale Fuehrerschein (IDP) ist eines jener Dokumente, von denen viele Touristen denken, sie braeuchten es immer, das aber tatsaechlich nur fuer bestimmte Reisende notwendig ist</strong>. Fuer die Autovermietung in Sardinien haengen die Regeln vom Ausstellungsland des Fuehrerscheins ab: EU-Buerger brauchen ihn nicht, manche Nicht-EU-Buerger schon, andere haben Sonderregelungen (Brexit, bilaterale Abkommen). Diese praktische Anleitung klaert, <strong>wer 2026 einen IDP zum Fahren in Sardinien braucht</strong>, wo man ihn beantragt, wieviel er kostet und welche Dokumente Mietwagenfirmen wie KS Rent Sardinia in Olbia akzeptieren.
+    </p>
+
+    <h2>Wann Sie KEINEN IDP brauchen</h2>
+
+    <p>Fuer die Autovermietung in Sardinien <strong>brauchen Sie KEINEN IDP</strong>, wenn Sie Buerger sind von:</p>
+
+    <ul>
+      <li><strong>Italien</strong> (offensichtlich)</li>
+      <li><strong>Allen 27 EU-Laendern</strong>: Frankreich, Deutschland, Spanien, Oesterreich, Belgien, Bulgarien, Zypern, Kroatien, Daenemark, Estland, Finnland, Griechenland, Irland, Lettland, Litauen, Luxemburg, Malta, Niederlande, Polen, Portugal, Tschechien, Rumaenien, Slowakei, Slowenien, Schweden, Ungarn</li>
+      <li><strong>Europaeischem Wirtschaftsraum (EWR)</strong>: Norwegen, Island, Liechtenstein</li>
+      <li><strong>Schweiz</strong></li>
+      <li><strong>Vereinigtem Koenigreich (UK)</strong> nach Brexit: der UK-Fuehrerschein bleibt in Italien fuer Touristen gueltig dank Wiener Konvention 1968</li>
+    </ul>
+
+    <p>
+      In all diesen Faellen reicht der <strong>nationale Fuehrerschein im Original</strong> (kein Foto, keine Kopie). Schweizer und Oesterreicher: zusammen mit Reisepass oder Personalausweis fuer offensichtliche Identifikation.
+    </p>
+
+    <h2>Wann Sie EINEN IDP brauchen</h2>
+
+    <p>
+      Fuer Buerger aus <strong>Nicht-EU-Laendern, die der Wiener Konvention 1968</strong> ueber Strassenverkehr nicht beigetreten sind, ist der IDP obligatorisch. Darunter:
+    </p>
+
+    <ul>
+      <li><strong>Vereinigte Staaten von Amerika (USA)</strong></li>
+      <li><strong>Kanada</strong></li>
+      <li><strong>Australien</strong></li>
+      <li><strong>Neuseeland</strong></li>
+      <li><strong>China</strong></li>
+      <li><strong>Russland</strong></li>
+      <li><strong>Indien</strong></li>
+      <li><strong>Suedafrika</strong></li>
+      <li><strong>Brasilien</strong></li>
+      <li><strong>Mexiko</strong></li>
+      <li><strong>Die meisten afrikanischen Laender</strong> (mit Ausnahme einiger nordafrikanischer)</li>
+      <li><strong>Die meisten Laender des Nahen Ostens</strong></li>
+    </ul>
+
+    <p>
+      <strong>Wichtige Ausnahme</strong>: <strong>Japan</strong> verlangt eine offizielle Uebersetzung des japanischen Fuehrerscheins ins Italienische durch die italienische Botschaft oder einen vereidigten Uebersetzer — der in Japan ausgestellte IDP wird in Italien NICHT anerkannt.
+    </p>
+
+    <h2>Was genau ist ein IDP</h2>
+
+    <p>
+      Der <strong>Internationale Fuehrerschein (IDP)</strong> ist ein Dokument, das den nationalen Fuehrerschein <strong>offiziell uebersetzt</strong> in die offiziellen Sprachen aller Unterzeichnerstaaten der Genfer Konvention 1949 oder Wiener Konvention 1968. Es ist ein Papierheft mit Foto, persoenlichen Daten und Fahrzeugkategorien. Er ist <strong>KEIN eigenstaendiger Fuehrerschein</strong>: muss immer mit dem originalen nationalen Fuehrerschein vorgelegt werden.
+    </p>
+
+    <p>Es gibt <strong>zwei Typen IDP</strong>:</p>
+
+    <ul>
+      <li><strong>IDP Wiener Konvention 1968</strong>: 3 Jahre gueltig (in Italien)</li>
+      <li><strong>IDP Genfer Konvention 1949</strong>: 1 Jahr gueltig</li>
+    </ul>
+
+    <p>Fuer Italien (Sardinien inklusive) werden beide akzeptiert.</p>
+
+    <h2>Wo den IDP beantragen</h2>
+
+    <h3>In Deutschland</h3>
+
+    <p>Bei der <strong>Fuehrerscheinstelle</strong> Ihres Wohnsitzes:</p>
+
+    <ul>
+      <li>Antragsformular + 1 biometrisches Foto</li>
+      <li>Personalausweis oder Reisepass</li>
+      <li>Originalfuehrerschein</li>
+      <li><strong>Kosten</strong>: 16-20 €</li>
+      <li><strong>Zeit</strong>: sofortige Ausstellung am Schalter</li>
+      <li><strong>Gueltigkeit</strong>: 3 Jahre</li>
+    </ul>
+
+    <h3>In Oesterreich</h3>
+
+    <p>Beim <strong>OEAMTC, ARBOe oder bei der Fuehrerscheinbehoerde</strong>: Kosten ca. 17 €, sofortige Ausstellung, gueltig 1 oder 3 Jahre.</p>
+
+    <h3>In der Schweiz</h3>
+
+    <p>Beim <strong>Strassenverkehrsamt</strong> des Kantons: Kosten ca. 30 CHF, gueltig 3 Jahre.</p>
+
+    <h3>In den USA (fuer amerikanische Touristen)</h3>
+
+    <p>
+      Ausschliesslich bei der <strong>American Automobile Association (AAA)</strong> oder AATA:
+    </p>
+
+    <ul>
+      <li>Kosten: $20 (AAA-Mitglieder), $30 Nicht-Mitglieder</li>
+      <li>2 Passfotos</li>
+      <li>Gueltige US-Fahrerlaubnis (Original)</li>
+      <li>Sofortige Ausstellung oder 10-15 Tage Versand</li>
+    </ul>
+
+    <p>
+      <strong>Vorsicht vor Betrug</strong>: zahlreiche Internetseiten verkaufen "internationale Fuehrerscheine" online fuer $50-200 — sie sind <strong>alle gefaelscht</strong>. Nur AAA und AATA sind autorisiert.
+    </p>
+
+    <h2>Was KS Rent Sardinia fuer die Autovermietung akzeptiert</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Staatsangehoerigkeit</th>
+          <th>Erforderliche Dokumente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>EU / EWR / Schweiz / UK</td><td>Nationaler Fuehrerschein + Ausweisdokument (Reisepass)</td></tr>
+        <tr><td>USA / Kanada / Australien / NZ</td><td>Nationaler Fuehrerschein + IDP + Reisepass</td></tr>
+        <tr><td>China / Japan / Russland / Indien</td><td>Nationaler Fuehrerschein + IDP (China/Russland/Indien) oder vereidigte Uebersetzung (Japan) + Reisepass</td></tr>
+        <tr><td>Andere Nicht-EU-Laender</td><td>Nationaler Fuehrerschein + IDP + Reisepass</td></tr>
+      </tbody>
+    </table>
+
+    <p>In allen Faellen:</p>
+    <ul>
+      <li><strong>Fuehrerschein seit mindestens 1 Jahr besessen</strong> (3 Jahre fuer Honda SH 350 und Audi RS3 / BMW M2 Supersportwagen)</li>
+      <li><strong>Mindestalter</strong>: 21 Jahre fuer Kleinwagen, 25 Jahre fuer Supersportwagen/Sport/Premium</li>
+      <li>Originalfuehrerschein (kein Foto, kein Scan)</li>
+    </ul>
+
+    <h2>Was passiert, wenn Sie keinen IDP haben, ihn aber brauchen</h2>
+
+    <p>
+      Wenn Sie US-Buerger (oder anderes Land mit IDP-Pflicht) sind und in Olbia <strong>ohne IDP</strong> ankommen:
+    </p>
+
+    <ol>
+      <li>Grosse internationale Firmen (Hertz, Avis, Sixt, Europcar) <strong>verweigern typischerweise die Vermietung</strong></li>
+      <li>Einige unabhaengige Firmen koennen Ausnahmen machen, aber es ist nicht garantiert und ein eventueller Verkehrsverstoss oder Unfall koennte Versicherungsprobleme bedeuten</li>
+      <li>Die einzige rechtliche Loesung ist ein <strong>dringender IDP-Antrag aus der Ferne</strong> ueber AAA online ($30 + internationaler Versand: 7-10 Tage). Nutzlos, wenn Sie schon im 7-Tage-Urlaub sind</li>
+    </ol>
+
+    <p>
+      <strong>Tipp</strong>: bereiten Sie den IDP 2-3 Wochen vor der Abreise aus Ihrem Land vor. Er kostet wenig, nimmt sehr wenig Platz im Koffer ein, vermeidet riesige Probleme.
+    </p>
+
+    <h2>Sonderfaelle</h2>
+
+    <h3>Alter rosa EU-Papierfuehrerschein</h3>
+
+    <p>
+      Wenn Ihr EU-Fuehrerschein vom alten rosa Papiermodell ist (vor 2013 ausgestellt), ist er noch gueltig, aber einige Firmen koennten zusaetzliche Foto-ID verlangen. KS Rent Sardinia akzeptiert ihn problemlos.
+    </p>
+
+    <h3>Fuehrerschein mit reduzierten oder abgelaufenen Punkten</h3>
+
+    <p>
+      Fuer die Autovermietung in Italien wird der Punktestand des nationalen Fuehrerscheins nicht ueberprueft. Was zaehlt ist die <strong>Gueltigkeit</strong>: Ablauf, Klassenberechtigung (B fuer Autos, A1/A2 fuer Roller, B fuer Quads).
+    </p>
+
+    <h3>Doppelte Staatsbuergerschaft</h3>
+
+    <p>
+      Bei doppelter Staatsbuergerschaft (z.B. Deutschland + USA), <strong>zeigen Sie den von Ihnen bevorzugten Fuehrerschein</strong>: bei US-Schein, IDP noetig; bei deutschem Schein, kein IDP. Ihre Wahl.
+    </p>
+
+    <h2>Zusammenfassung</h2>
+
+    <ul>
+      <li><strong>EU / UK / Schweiz</strong>: nationaler Fuehrerschein reicht</li>
+      <li><strong>USA / Kanada / Australien / China / Russland / etc.</strong>: IDP + nationaler Fuehrerschein + Reisepass noetig</li>
+      <li><strong>IDP-Kosten</strong>: 16-50 € je nach Land</li>
+      <li><strong>Bearbeitungszeit</strong>: 1-15 Tage</li>
+      <li><strong>Gueltigkeit</strong>: 1-3 Jahre</li>
+      <li><strong>VOR der Abreise besorgen</strong>: aus Ihrem Wohnsitzland, nicht in Italien</li>
+    </ul>
+
+    <p>
+      Bei spezifischen Zweifeln zu akzeptierten Dokumenten fuer Ihre Vermietung in Sardinien kontaktieren Sie Francesco und Salvatore Milo direkt per WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a> mit Angabe Ihrer Staatsbuergerschaft und Fuehrerscheintyp. Fuer den kompletten Mietablauf siehe unsere <a href="/de/guide/autovermietung-flughafen-olbia-praktische-anleitung">Anleitung Mietwagen Flughafen Olbia</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

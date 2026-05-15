@@ -1,0 +1,250 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("international-driving-permit-sardinia-do-i-need-it")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+  about: { "@type": "Thing", name: "International Driving Permit" },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Do EU citizens need an International Driving Permit to rent a car in Sardinia?",
+      acceptedAnswer: { "@type": "Answer", text: "No. Citizens of Italy and the other 27 EU countries do not need an IDP to rent a car in Sardinia. The same applies to Norway, Switzerland, Liechtenstein and Iceland (European Economic Area). The national driving licence is sufficient." },
+    },
+    {
+      "@type": "Question",
+      name: "Do UK citizens need an IDP for Sardinia after Brexit?",
+      acceptedAnswer: { "@type": "Answer", text: "No. The United Kingdom is part of the Vienna Convention on road traffic: the UK driving licence is valid in Italy without an IDP for tourist visits. For long stays (over 1 year) the licence may need to be converted to an Italian one." },
+    },
+    {
+      "@type": "Question",
+      name: "Do US citizens need an IDP to rent a car in Sardinia?",
+      acceptedAnswer: { "@type": "Answer", text: "Technically yes: Italy requires an IDP for US citizens, to be obtained from AAA before departure ($20). In practice, KS Rent Sardinia accepts a US licence in original + IDP, but some companies are stricter. To avoid issues, get the IDP before your trip." },
+    },
+    {
+      "@type": "Question",
+      name: "How much does an IDP cost and where do I get it?",
+      acceptedAnswer: { "@type": "Answer", text: "In Italy at the Motorizzazione Civile, around €30-50 (stamps + fees), valid 1 or 3 years. In the USA at AAA, $20, valid 1 year. In the UK at the Post Office, £5.50 valid 12 months (though for Italy not needed)." },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need to present the IDP together with the national licence?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes. The International Driving Permit (IDP) does NOT replace the national licence — it is just an official translation. You must always carry both documents while driving and at car rental check-in." },
+    },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: "International Driving Permit Sardinia", path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>The International Driving Permit (IDP) is one of those documents many tourists assume they always need, but actually only certain travellers do</strong>. For renting a car in Sardinia the rules depend on the country that issued your licence: EU citizens don't need it, some non-EU citizens do, others have special arrangements (Brexit, bilateral agreements). This practical guide clarifies <strong>who needs an IDP to drive in Sardinia in 2026</strong>, where to get one, how much it costs and what documents car rental companies like KS Rent Sardinia in Olbia accept.
+    </p>
+
+    <h2>When you DO NOT need an IDP</h2>
+
+    <p>
+      For renting a car in Sardinia <strong>you do NOT need an IDP</strong> if you are a citizen of:
+    </p>
+
+    <ul>
+      <li><strong>Italy</strong> (obviously)</li>
+      <li><strong>All 27 EU countries</strong>: France, Germany, Spain, Austria, Belgium, Bulgaria, Cyprus, Croatia, Denmark, Estonia, Finland, Greece, Ireland, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Czech Republic, Romania, Slovakia, Slovenia, Sweden, Hungary</li>
+      <li><strong>European Economic Area (EEA)</strong>: Norway, Iceland, Liechtenstein</li>
+      <li><strong>Switzerland</strong></li>
+      <li><strong>United Kingdom (UK)</strong> after Brexit: the UK licence remains valid in Italy for tourist visits thanks to the Vienna Convention 1968</li>
+    </ul>
+
+    <p>
+      In all these cases the <strong>national licence in original</strong> is sufficient (not photo, not copy). UK citizens should also carry passport or ID for obvious post-Brexit identification needs.
+    </p>
+
+    <h2>When you DO need an IDP</h2>
+
+    <p>
+      For citizens from <strong>non-EU countries that do NOT adhere to the Vienna Convention 1968</strong> on road traffic, the IDP is mandatory. These include:
+    </p>
+
+    <ul>
+      <li><strong>United States of America (USA)</strong></li>
+      <li><strong>Canada</strong></li>
+      <li><strong>Australia</strong></li>
+      <li><strong>New Zealand</strong></li>
+      <li><strong>China</strong></li>
+      <li><strong>Russia</strong></li>
+      <li><strong>India</strong></li>
+      <li><strong>South Africa</strong></li>
+      <li><strong>Brazil</strong></li>
+      <li><strong>Mexico</strong></li>
+      <li><strong>Most African countries</strong> (except some North African)</li>
+      <li><strong>Most Middle Eastern countries</strong></li>
+    </ul>
+
+    <p>
+      <strong>Important exception</strong>: <strong>Japan</strong> requires an official translation of the Japanese licence into Italian by the Italian Embassy or a sworn translator — the IDP issued in Japan is NOT recognised in Italy.
+    </p>
+
+    <h2>What exactly is an IDP</h2>
+
+    <p>
+      The <strong>International Driving Permit (IDP)</strong> is a document that <strong>officially translates</strong> the national licence into the official languages of all signatories of the Geneva Convention 1949 or Vienna Convention 1968. It is a paper booklet with photo, personal data and vehicle categories. It is <strong>NOT a stand-alone licence</strong>: it must always be presented together with the original national licence.
+    </p>
+
+    <p>There are <strong>two types of IDP</strong>:</p>
+
+    <ul>
+      <li><strong>IDP Vienna Convention 1968</strong>: 3-year validity (in Italy)</li>
+      <li><strong>IDP Geneva Convention 1949</strong>: 1-year validity</li>
+    </ul>
+
+    <p>For Italy (Sardinia included) both are accepted.</p>
+
+    <h2>Where to obtain the IDP</h2>
+
+    <h3>In the USA (for American tourists)</h3>
+
+    <p>
+      Obtained <strong>only from the American Automobile Association (AAA)</strong> or AATA (American Automobile Touring Alliance):
+    </p>
+
+    <ul>
+      <li>Online form or any AAA office</li>
+      <li>2 passport photos</li>
+      <li>Valid US driving licence (original)</li>
+      <li><strong>Cost</strong>: $20 (AAA members), $30 non-members</li>
+      <li><strong>Time</strong>: immediate or 10-15 day shipping</li>
+    </ul>
+
+    <p>
+      <strong>Beware of scams</strong>: many internet sites sell "international driving permits" online for $50-200 — they are <strong>all fake</strong>. Only AAA and AATA are authorised.
+    </p>
+
+    <h3>In Canada (for Canadian tourists)</h3>
+
+    <p>
+      Obtained at <strong>CAA (Canadian Automobile Association)</strong>. Cost ~CAD$25, valid 1 year. 1 passport photo + valid Canadian licence required.
+    </p>
+
+    <h3>In Australia (for Australian tourists)</h3>
+
+    <p>
+      Obtained at <strong>your local automobile club</strong> (NRMA, RACV, RACQ, RAA, RAC, etc.). Cost ~AUD$42, valid 1 year. Valid Australian full licence required (not learner or provisional).
+    </p>
+
+    <h3>In the UK (for UK citizens)</h3>
+
+    <p>
+      Obtained at the <strong>Post Office</strong>: cost £5.50, immediate issue. <strong>However for Italy it's not needed</strong> for UK citizens.
+    </p>
+
+    <h2>What KS Rent Sardinia accepts for car hire</h2>
+
+    <p>KS Rent Sardinia, based in Olbia, accepts the following documents for car hire:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Citizenship</th>
+          <th>Required documents</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>EU / EEA / Switzerland / UK</td><td>National licence + ID document (passport)</td></tr>
+        <tr><td>USA / Canada / Australia / NZ</td><td>National licence + IDP + passport</td></tr>
+        <tr><td>China / Japan / Russia / India</td><td>National licence + IDP (China/Russia/India) or sworn translation (Japan) + passport</td></tr>
+        <tr><td>Other non-EU countries</td><td>National licence + IDP + passport</td></tr>
+      </tbody>
+    </table>
+
+    <p>In all cases:</p>
+    <ul>
+      <li><strong>Licence held for at least 1 year</strong> (3 years for Honda SH 350 scooters and Audi RS3 / BMW M2 supercars)</li>
+      <li><strong>Minimum age</strong>: 21 for utility cars, 25 for supercars/sports/premium</li>
+      <li>Original licence (not photo, not scan)</li>
+    </ul>
+
+    <h2>What happens if you don't have the IDP and need it</h2>
+
+    <p>
+      If you are a US citizen (or other country requiring IDP) and arrive in Olbia <strong>without the IDP</strong>:
+    </p>
+
+    <ol>
+      <li>Major international companies (Hertz, Avis, Sixt, Europcar) <strong>typically refuse the rental</strong></li>
+      <li>Some independent companies may make exceptions, but it's not guaranteed and any traffic offence or accident could create insurance issues</li>
+      <li>The only legal solution is <strong>urgent IDP request remotely</strong> via AAA online ($30 + international shipping: 7-10 days). Useless if you're already on a 7-day vacation</li>
+    </ol>
+
+    <p>
+      <strong>Tip</strong>: prepare the IDP 2-3 weeks before leaving your country. It's cheap, takes minimal space in the suitcase, and avoids huge problems.
+    </p>
+
+    <h2>Special cases</h2>
+
+    <h3>Old "pink" EU paper licence</h3>
+
+    <p>
+      If your EU licence is the old "pink" paper model (issued before 2013), it's still valid but some companies may ask for additional photo ID. KS Rent Sardinia accepts it without issues.
+    </p>
+
+    <h3>Licence with reduced or expired points</h3>
+
+    <p>
+      For car hire in Italy the points balance of the national licence is not checked. What matters is <strong>validity</strong>: expiry, category authorisation (B for cars, A1/A2 for scooters, B for quads).
+    </p>
+
+    <h3>Dual citizenship</h3>
+
+    <p>
+      With dual citizenship (e.g. Italy + USA), <strong>present whichever licence you prefer</strong>: if US licence, IDP needed; if Italian, no IDP. Your choice.
+    </p>
+
+    <h2>Summary</h2>
+
+    <ul>
+      <li><strong>EU / UK / Switzerland</strong>: national licence is sufficient</li>
+      <li><strong>USA / Canada / Australia / China / Russia / etc.</strong>: IDP + national licence + passport needed</li>
+      <li><strong>IDP cost</strong>: $20-50 depending on country</li>
+      <li><strong>Time to obtain</strong>: 1-15 days</li>
+      <li><strong>Validity</strong>: 1-3 years</li>
+      <li><strong>Get it BEFORE leaving</strong>: from your country of residence, not in Italy</li>
+    </ul>
+
+    <p>
+      For specific doubts about documents accepted for your hire in Sardinia, contact Francesco and Salvatore Milo directly via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a> indicating your citizenship and licence type. For the complete rental procedure, see our <a href="/en/guide/car-hire-olbia-airport-practical-guide">Olbia airport car hire guide</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

@@ -1,0 +1,203 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("plus-belles-plages-nord-est-sardaigne")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: [
+    { "@type": "Thing", name: "Top plages Sardaigne nord-est" },
+    { "@type": "AdministrativeArea", name: "Gallura, Sardaigne" },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Plus belles plages Sardaigne", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>Le nord-est de la Sardaigne abrite certaines des plus belles plages de la Mediterranee</strong>, regulierement reconnues dans les classements internationaux (TripAdvisor Travellers' Choice, Lonely Planet, National Geographic). Sable blanc tres fin, eau transparente avec des nuances du turquoise au vert emeraude, fonds marins peu profonds qui s'etendent sur des dizaines de metres, falaises de granit modelees par le vent. Voici notre selection des <strong>7 plus iconiques</strong> de Gallura et Costa Smeralda — celles que <strong>vous ne pouvez pas manquer</strong> en vacances entre Olbia et Santa Teresa di Gallura.
+    </p>
+
+    <h2>Criteres de selection</h2>
+
+    <p>
+      Pour selectionner ces 7 nous avons considere : <strong>beaute scenique</strong> (eau, sable, contexte), <strong>renommee internationale</strong>, <strong>accessibilite</strong> (joignable en voiture), <strong>services essentiels</strong>, <strong>experience percue</strong> (souvenirs ramenes a la maison). Elles sont ordonnees <strong>geographiquement du nord au sud</strong>, pas par "preference personnelle".
+    </p>
+
+    <h2>1. Plage Rose de Budelli (Archipel La Maddalena)</h2>
+
+    <p>
+      <strong>Type</strong> : plage rose unique au monde · <strong>Acces</strong> : seulement par bateau (debarquement interdit) · <strong>Depuis Olbia</strong> : ~3h total
+    </p>
+
+    <p>
+      La <strong>Plage Rose</strong> de l'ile Budelli est celebre pour le <strong>sable de couleur rose</strong> du a des micro-organismes marins (bryozoaires et foraminiferes). Le debarquement est interdit depuis 1994 pour proteger le sable (qui est pris a en ramener risque 3 000 € d'amende), mais on peut l'admirer depuis quelques metres en bateau.
+    </p>
+
+    <p>
+      <strong>Comment y aller</strong> : ferry depuis Palau a La Maddalena, puis excursion en bateau organisee de l'Archipel. Voir notre <a href="/fr/guide/visiter-archipel-la-maddalena-guide-pratique">guide Archipel La Maddalena</a>.
+    </p>
+
+    <h2>2. Cala Coticcio "Tahiti" (Caprera)</h2>
+
+    <p>
+      <strong>Type</strong> : crique paradisiaque avec reservation obligatoire · <strong>Acces</strong> : 45 min sentier depuis Caprera · <strong>Depuis Olbia</strong> : ~2h total
+    </p>
+
+    <p>
+      Surnommee "<strong>Tahiti de Sardaigne</strong>" pour la couleur de l'eau. Crique intime de sable blanc nichee entre rochers de granit. Eau couleur emeraude intense, fond qui descend doucement, snorkeling parmi les poissons.
+    </p>
+
+    <p>
+      <strong>Acces reglemente depuis 2021</strong> : seulement avec guide environnemental + reservation obligatoire sur le portail du Parc National. 2 tours/jour (matin et apres-midi), ~50 personnes/tour, 25 €/personne. <strong>En haute saison les places s'epuisent 7-15 jours avant</strong>.
+    </p>
+
+    <h2>3. Spiaggia del Principe (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong> : plage iconique de luxe · <strong>Acces</strong> : parking de terre + 200 m sentier · <strong>Depuis Olbia</strong> : 35 min
+    </p>
+
+    <p>
+      Une des <strong>plages les plus photographiees au monde</strong>. Elle s'appelle "del Principe" parce qu'etait la plage preferee du Prince Aga Khan, fondateur de la Costa Smeralda. Sable blanc tres fin, eau aux couleurs changeantes (turquoise pres du rivage, bleu intense plus loin), rochers rougeatres a gauche.
+    </p>
+
+    <p>
+      <strong>Acces</strong> : du parking de terre on parcourt un sentier de 200 metres entre genevriers seculaires. Acces possible a toutes les voitures mais une <a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a> rend le voyage plus serein. Parking gratuit le matin, payant (5 €/heure) apres 10:00.
+    </p>
+
+    <h2>4. Liscia Ruja (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong> : plage ample "de tous" · <strong>Acces</strong> : route asphaltee + parking · <strong>Depuis Olbia</strong> : 30 min
+    </p>
+
+    <p>
+      <strong>La plage la plus longue de la Costa Smeralda</strong> (1 km). Sable blanc, eau transparente, fond peu profond pour 15-20 metres. Trois etablissements (Long Beach, Phi Beach, Liscia Ruja Beach) avec services complets.
+    </p>
+
+    <p>
+      <strong>Pour</strong> : enorme, toujours de la place meme en aout ; parfaite pour familles ; services top. <strong>Contre</strong> : moins "sauvage" que d'autres, plus d'atmosphere "etablissement balneaire".
+    </p>
+
+    <p>
+      <strong>Coucher de soleil</strong> : le <strong>Phi Beach</strong> ici est legendaire pour les aperitifs au soleil couchant avec DJ internationaux en saison (cocktails 25-40 €).
+    </p>
+
+    <h2>5. Capriccioli (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong> : deux criques jumelles · <strong>Acces</strong> : parking asphalte + 50 m a pied · <strong>Depuis Olbia</strong> : 30 min
+    </p>
+
+    <p>
+      <strong>Capriccioli</strong> est en realite compose de <strong>deux criques separees par un promontoire</strong> : Capriccioli Est (plus grande, sable blanc, etablissements) et Capriccioli Ouest (plus petite, intime, sable + rochers). Eau turquoise, fond qui descend doucement, snorkeling lateral entre rochers.
+    </p>
+
+    <p>
+      <strong>Pour</strong> : acces facile, parfaite pour familles avec enfants 3+ (eau peu profonde pour 15 m), services complets. <strong>Contre</strong> : parking cher (15-20 €/jour) et plein avant 10:00 en haute saison.
+    </p>
+
+    <h2>6. Romazzino (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Type</strong> : plage d'hotel de luxe · <strong>Acces</strong> : parking + 100 m a pied · <strong>Depuis Olbia</strong> : 35 min
+    </p>
+
+    <p>
+      Devant le celebre <strong>Hotel Romazzino 5 etoiles</strong>. Sable tres blanc, eau incroyablement transparente, fond peu profond pour 15 m parfait pour familles et nageurs non experts. Etablissement exclusif avec service premium.
+    </p>
+
+    <p>
+      <strong>Atmosphere</strong> : elegante, frequentee par clientele hotel + touristes faisant une journee de "luxe accessible". Parking cher (10-15 €/jour) et limite.
+    </p>
+
+    <h2>7. Cala Brandinchi et Lu Impostu (San Teodoro)</h2>
+
+    <p>
+      <strong>Type</strong> : "les Bahamas de la Sardaigne" · <strong>Acces</strong> : avec reservation en haute saison · <strong>Depuis Olbia</strong> : 35 min
+    </p>
+
+    <p>
+      Les <strong>plages jumelles de San Teodoro</strong> sont surnommees "les Bahamas de la Sardaigne" pour la couleur turquoise tres claire de l'eau et le sable blanc. <strong>Cala Brandinchi</strong> est plus petite, intime ; <strong>Lu Impostu</strong> est plus ample. Toutes deux ont des fonds qui descendent doucement — parfaites pour familles avec tout-petits.
+    </p>
+
+    <p>
+      <strong>Reservation obligatoire en haute saison</strong> pour les deux (systeme regional Sardaigne, max 1 450 personnes/jour). Verifier sur le site officiel Region Sardaigne.
+    </p>
+
+    <h2>Bonus : La Cinta (San Teodoro)</h2>
+
+    <p>
+      <strong>5 km de sable blanc</strong> face a l'ile Tavolara. La plage "famille" par excellence du nord-est de la Sardaigne. Eau peu profonde pour 30+ metres, parfaite meme pour nouveau-nes. Voir notre <a href="/fr/guide/plages-familles-costa-smeralda">guide plages familles</a>.
+    </p>
+
+    <h2>Tableau recapitulatif</h2>
+
+    <table>
+      <thead>
+        <tr><th>Plage</th><th>Depuis Olbia</th><th>Acces</th><th>Foule</th><th>Adapte aux familles</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Plage Rose Budelli</td><td>~3h total</td><td>Bateau seul, pas debarquement</td><td>Du bateau</td><td>Oui (visite)</td></tr>
+        <tr><td>Cala Coticcio Tahiti</td><td>~2h total</td><td>Sentier 45 min + reservation</td><td>Limite (50/tour)</td><td>Non (sentier exigeant)</td></tr>
+        <tr><td>Spiaggia del Principe</td><td>35 min</td><td>Parking de terre + 200 m</td><td>Forte apres 11:00</td><td>Oui (avec prudence)</td></tr>
+        <tr><td>Liscia Ruja</td><td>30 min</td><td>Route asphaltee</td><td>Moyenne (toujours place)</td><td>Oui</td></tr>
+        <tr><td>Capriccioli</td><td>30 min</td><td>Parking asphalte</td><td>Forte apres 10:00</td><td>Oui (3+ ans)</td></tr>
+        <tr><td>Romazzino</td><td>35 min</td><td>Parking + 100 m</td><td>Forte apres 10:00</td><td>Oui</td></tr>
+        <tr><td>Brandinchi + Lu Impostu</td><td>35 min</td><td>Reservation obligatoire</td><td>Limitee (1 450/jour)</td><td>Oui (parfaites nouveau-nes)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Vehicule recommande pour la tournee</h2>
+
+    <p>
+      Pour visiter ces 7 plages, le vehicule ideal est un <strong>SUV compact comme la <a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a></strong> : position de conduite haute, acces aux pistes (Spiaggia del Principe), coffre pour parasols et equipement plage. En alternative, une <a href="/fr/flotte/mercedes-classe-a-location-olbia">Mercedes Classe A</a> pour ceux qui veulent plus de confort autoroutier.
+    </p>
+
+    <h2>Quand y aller</h2>
+
+    <ul>
+      <li><strong>Mai-juin</strong> : saison parfaite. Prix bas, pas de foule, eau deja 19-22°C</li>
+      <li><strong>Juillet-aout</strong> : top pour la baignade (eau 25-27°C) mais bondee, prix eleves, reservations obligatoires Cala Brandinchi et Cala Coticcio</li>
+      <li><strong>Septembre</strong> : saison parfaite pour ceux sans contraintes scolaires. Eau 23-25°C, atmosphere tranquille, prix moyens</li>
+      <li><strong>Octobre</strong> : encore possible. Services reduits mais tranquillite garantie</li>
+    </ul>
+
+    <h2>Resume</h2>
+
+    <p>
+      Les <strong>top 7 plages du nord-est de la Sardaigne</strong> racontent une mosaique d'experiences differentes : de la rarete unique de la Plage Rose au luxe accessible de Romazzino, des familles a La Cinta a l'aventure de Cala Coticcio. <strong>Toutes sont joignables depuis Olbia en maximum 1 heure</strong> en voiture (plus traversee bateau pour Budelli/Caprera). La meilleure strategie est de dedier au moins une semaine et d'en visiter 4-5, en laissant de l'espace pour le repos et la decouverte des villages interieurs de Gallura.
+    </p>
+
+    <p>
+      Pour location voiture adaptee a ces plages — aussi avec livraison directement a votre hotel/villa en Costa Smeralda — contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Voir aussi <a href="/fr/guide/plages-familles-costa-smeralda">plages family-friendly</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

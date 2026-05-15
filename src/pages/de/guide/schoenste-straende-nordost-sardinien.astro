@@ -1,0 +1,203 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("schoenste-straende-nordost-sardinien")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "de-DE",
+  about: [
+    { "@type": "Thing", name: "Top Straende Nordost-Sardinien" },
+    { "@type": "AdministrativeArea", name: "Gallura, Sardinien" },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Anleitungen", path: "/de/guide" },
+    { name: "Schoenste Straende Sardinien", path: `/de/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="de">
+    <p>
+      <strong>Nordost-Sardinien hat einige der schoensten Straende des Mittelmeers</strong>, regelmaessig in internationalen Ranglisten anerkannt (TripAdvisor Travellers' Choice, Lonely Planet, National Geographic). Feinster weisser Sand, transparentes Wasser mit Schattierungen von tuerkis bis smaragdgruen, niedrige Meeresboeden, die sich ueber Dutzende von Metern erstrecken, vom Wind geformte Granitklippen. Dies ist unsere Auswahl der <strong>7 ikonischsten Straende</strong> in Gallura und Costa Smeralda — die, <strong>die man nicht verpassen darf</strong>, wenn man zwischen Olbia und Santa Teresa di Gallura urlaubt. Jeder hat einzigartige Eigenschaften, unterschiedlichen Zugang, unterschiedliches Publikum.
+    </p>
+
+    <h2>Auswahlkriterien</h2>
+
+    <p>
+      Zur Auswahl dieser 7 haben wir beruecksichtigt: <strong>landschaftliche Schoenheit</strong> (Wasser, Sand, Umgebung), <strong>internationale Bekanntheit</strong>, <strong>Erreichbarkeit</strong> (mit dem Auto), <strong>essentielle Services</strong>, <strong>wahrgenommenes Erlebnis</strong> (Erinnerungen, die man mitnimmt). Sie sind <strong>geografisch von Nord nach Sued</strong> sortiert, nicht nach "persoenlicher Praeferenz" — jeder ist in seiner Kategorie der beste.
+    </p>
+
+    <h2>1. Rosa Strand von Budelli (La Maddalena Archipel)</h2>
+
+    <p>
+      <strong>Typ</strong>: einzigartiger rosa Strand der Welt · <strong>Zugang</strong>: nur per Boot (kein Aussteigen) · <strong>Von Olbia</strong>: ~3h gesamt
+    </p>
+
+    <p>
+      Der <strong>Rosa Strand</strong> auf der Insel Budelli ist beruehmt fuer den <strong>rosafarbenen Sand</strong> durch marine Mikroorganismen (Bryozoen und Foraminiferen). Aussteigen seit 1994 verboten zum Schutz des Sandes (wer beim Mitnehmen erwischt wird, riskiert 3.000 € Strafe), aber man kann ihn aus wenigen Metern vom Boot bewundern.
+    </p>
+
+    <p>
+      <strong>Wie hinkommen</strong>: Faehre von Palau nach La Maddalena, dann organisierte Archipel-Bootsfahrt. Siehe unsere <a href="/de/guide/la-maddalena-archipel-besuchen-praktische-anleitung">Anleitung La Maddalena Archipel</a>.
+    </p>
+
+    <h2>2. Cala Coticcio "Tahiti" (Caprera)</h2>
+
+    <p>
+      <strong>Typ</strong>: paradiesische Bucht mit obligatorischer Buchung · <strong>Zugang</strong>: 45 min Pfad ab Caprera · <strong>Von Olbia</strong>: ~2h gesamt
+    </p>
+
+    <p>
+      "<strong>Sardiniens Tahiti</strong>" wegen der Wasserfarbe genannt. Intime Bucht aus weissem Sand zwischen Granitfelsen. Intensives smaragdgruenes Wasser, sanft abfallender Meeresboden, Schnorcheln zwischen Fischen.
+    </p>
+
+    <p>
+      <strong>Reglementierter Zugang seit 2021</strong>: nur mit Umweltguide + obligatorische Buchung auf dem Nationalpark-Portal. 2 Touren/Tag, ~50 Personen/Tour, 25 €/Person. <strong>In Hochsaison sind Plaetze 7-15 Tage im Voraus ausverkauft</strong>.
+    </p>
+
+    <h2>3. Spiaggia del Principe (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Typ</strong>: ikonischer Luxusstrand · <strong>Zugang</strong>: Schotterparkplatz + 200 m Pfad · <strong>Von Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      Einer der <strong>meistfotografierten Straende der Welt</strong>. Heisst "del Principe", weil er der Lieblingsstrand von Prinz Aga Khan war, dem Gruender der Costa Smeralda. Weissester feiner Sand, Wasser mit wechselnden Farben (tuerkis am Ufer, tiefblau weiter draussen), rote Felsen links.
+    </p>
+
+    <p>
+      <strong>Zugang</strong>: vom Schotterparkplatz geht ein 200-Meter-Pfad zwischen jahrhundertealten Wacholdern. Schotterstrasse fuer alle Autos zugaenglich, aber ein <a href="/de/fuhrpark/jeep-avenger-mieten-olbia">Jeep Avenger</a> macht die Reise entspannter. Kostenloses Parken morgens, kostenpflichtig (5 €/Stunde) ab 10:00.
+    </p>
+
+    <h2>4. Liscia Ruja (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Typ</strong>: weiter "Strand fuer alle" · <strong>Zugang</strong>: asphaltierte Strasse + Parkplatz · <strong>Von Olbia</strong>: 30 min
+    </p>
+
+    <p>
+      <strong>Der laengste Strand der Costa Smeralda</strong> (1 km). Weisser Sand, klares Wasser, niedriger Meeresboden fuer 15-20 Meter. Drei Strandbaeder (Long Beach, Phi Beach, Liscia Ruja Beach) mit kompletten Services.
+    </p>
+
+    <p>
+      <strong>Vorteile</strong>: riesig, immer Platz auch im August; perfekt fuer Familien; Top-Services. <strong>Nachteile</strong>: weniger "wild" als andere, mehr "Strandbad"-Atmosphaere.
+    </p>
+
+    <p>
+      <strong>Sonnenuntergang</strong>: das <strong>Phi Beach</strong> ist legendaer fuer Sonnenuntergangsaperitifs mit internationalen DJs in Saison (Cocktails 25-40 €).
+    </p>
+
+    <h2>5. Capriccioli (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Typ</strong>: zwei Zwillingsbuchten · <strong>Zugang</strong>: asphaltierter Parkplatz + 50 m zu Fuss · <strong>Von Olbia</strong>: 30 min
+    </p>
+
+    <p>
+      <strong>Capriccioli</strong> besteht eigentlich aus <strong>zwei durch ein Vorgebirge getrennten Buchten</strong>: Capriccioli Ost (groesser, weisser Sand, Strandbaeder) und Capriccioli West (kleiner, intim, Sand + Felsen). Tuerkises Wasser, sanft abfallender Meeresboden, seitliches Schnorcheln zwischen Felsen.
+    </p>
+
+    <p>
+      <strong>Vorteile</strong>: einfacher Zugang, perfekt fuer Familien mit Kindern 3+ (flaches Wasser fuer 15 m), komplette Services. <strong>Nachteile</strong>: teurer Parkplatz (15-20 €/Tag) und in Hochsaison bis 10:00 voll.
+    </p>
+
+    <h2>6. Romazzino (Costa Smeralda)</h2>
+
+    <p>
+      <strong>Typ</strong>: Strand des Luxushotels · <strong>Zugang</strong>: Parkplatz + 100 m zu Fuss · <strong>Von Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      Vor dem beruehmten <strong>5-Sterne Hotel Romazzino</strong>. Weissester Sand, unglaublich klares Wasser, niedriger Meeresboden fuer die ersten 15 m perfekt fuer Familien und nicht-erfahrene Schwimmer. Exklusives Strandbad mit Premium-Service.
+    </p>
+
+    <p>
+      <strong>Atmosphaere</strong>: elegant, frequentiert von Hotelgaesten + Touristen, die einen "zugaenglichen Luxus"-Tag machen. Teurer Parkplatz (10-15 €/Tag) und begrenzt.
+    </p>
+
+    <h2>7. Cala Brandinchi und Lu Impostu (San Teodoro)</h2>
+
+    <p>
+      <strong>Typ</strong>: "Sardiniens Bahamas" · <strong>Zugang</strong>: mit Buchung in Hochsaison · <strong>Von Olbia</strong>: 35 min
+    </p>
+
+    <p>
+      Die <strong>Zwillingsstraende von San Teodoro</strong> heissen "Sardiniens Bahamas" wegen der hellen tuerkisen Wasserfarbe und des weissen Sandes. <strong>Cala Brandinchi</strong> ist kleiner, intim; <strong>Lu Impostu</strong> ist weiter. Beide haben flache Meeresboeden — perfekt fuer Familien mit kleinsten Kindern.
+    </p>
+
+    <p>
+      <strong>Obligatorische Buchung in Hochsaison</strong> fuer beide (Sardinien-Regionalsystem, max 1.450 Personen/Tag). Pruefen Sie die offizielle Region Sardinien Website.
+    </p>
+
+    <h2>Bonus: La Cinta (San Teodoro)</h2>
+
+    <p>
+      <strong>5 km weisser Sand</strong> mit Blick auf die Insel Tavolara. Der "Familien"-Strand par excellence in Nordost-Sardinien. Flaches Wasser fuer 30+ Meter, perfekt auch fuer Neugeborene. Siehe unsere <a href="/de/guide/familienstraende-costa-smeralda">Anleitung Familienstraende</a>.
+    </p>
+
+    <h2>Uebersichtstabelle</h2>
+
+    <table>
+      <thead>
+        <tr><th>Strand</th><th>Von Olbia</th><th>Zugang</th><th>Andrang</th><th>Familienfreundlich</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Rosa Strand Budelli</td><td>~3h gesamt</td><td>Nur Boot, kein Aussteigen</td><td>Vom Boot</td><td>Ja (Besuch)</td></tr>
+        <tr><td>Cala Coticcio Tahiti</td><td>~2h gesamt</td><td>45-min Pfad + Buchung</td><td>Begrenzt (50/Tour)</td><td>Nein (anspruchsvoller Pfad)</td></tr>
+        <tr><td>Spiaggia del Principe</td><td>35 min</td><td>Schotterparkplatz + 200 m</td><td>Hoch nach 11:00</td><td>Ja (mit Vorsicht)</td></tr>
+        <tr><td>Liscia Ruja</td><td>30 min</td><td>Asphaltierte Strasse</td><td>Mittel (immer Platz)</td><td>Ja</td></tr>
+        <tr><td>Capriccioli</td><td>30 min</td><td>Asphaltierter Parkplatz</td><td>Hoch nach 10:00</td><td>Ja (3+ Jahre)</td></tr>
+        <tr><td>Romazzino</td><td>35 min</td><td>Parkplatz + 100 m</td><td>Hoch nach 10:00</td><td>Ja</td></tr>
+        <tr><td>Brandinchi + Lu Impostu</td><td>35 min</td><td>Obligatorische Buchung</td><td>Begrenzt (1.450/Tag)</td><td>Ja (perfekt fuer Neugeborene)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Empfohlenes Fahrzeug fuer die Tour</h2>
+
+    <p>
+      Um diese 7 Straende zu besuchen, ist das ideale Fahrzeug ein <strong>Kompakt-SUV wie der <a href="/de/fuhrpark/jeep-avenger-mieten-olbia">Jeep Avenger</a></strong>: hohe Sitzposition, Schotterzugang (Spiaggia del Principe), Kofferraum fuer Sonnenschirme und Strandausruestung. Alternativ eine <a href="/de/fuhrpark/mercedes-a-klasse-mieten-olbia">Mercedes A-Klasse</a> fuer alle, die mehr Autobahnkomfort wollen.
+    </p>
+
+    <h2>Wann hinfahren</h2>
+
+    <ul>
+      <li><strong>Mai-Juni</strong>: perfekte Saison. Niedrige Preise, keine Massen, Wasser bereits 19-22°C</li>
+      <li><strong>Juli-August</strong>: top zum Schwimmen (Wasser 25-27°C) aber sehr ueberlaufen, hohe Preise, obligatorische Buchungen Cala Brandinchi und Cala Coticcio</li>
+      <li><strong>September</strong>: perfekte Saison fuer alle ohne Schulbindungen. Wasser 23-25°C, ruhige Atmosphaere, mittlere Preise</li>
+      <li><strong>Oktober</strong>: noch moeglich. Reduzierte Services aber Ruhe garantiert</li>
+    </ul>
+
+    <h2>Zusammenfassung</h2>
+
+    <p>
+      Die <strong>Top 7 Straende Nordost-Sardiniens</strong> erzaehlen ein Mosaik unterschiedlicher Erlebnisse: von der einzigartigen Seltenheit des Rosa Strandes bis zum zugaenglichen Luxus von Romazzino, von Familien an La Cinta bis zum Abenteuer Cala Coticcio. <strong>Alle sind von Olbia in maximal 1 Stunde</strong> mit dem Auto erreichbar (plus Bootsueberfahrt fuer Budelli/Caprera). Die beste Strategie ist, mindestens eine Woche zu widmen und 4-5 zu besuchen, mit Raum fuer Erholung und Entdeckung der inneren Gallura-Doerfer.
+    </p>
+
+    <p>
+      Fuer geeigneten Mietwagen fuer diese Straende — auch mit Lieferung direkt an Ihr Hotel/Villa in Costa Smeralda — kontaktieren Sie Francesco und Salvatore Milo per WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Siehe auch <a href="/de/guide/familienstraende-costa-smeralda">familienfreundliche Straende</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

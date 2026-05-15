@@ -1,0 +1,183 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("plages-familles-costa-smeralda")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: [
+    { "@type": "Thing", name: "Plages family-friendly" },
+    { "@type": "Place", name: "Costa Smeralda", containedInPlace: { "@type": "AdministrativeArea", name: "Sardaigne" } },
+  ],
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Plages familles Costa Smeralda", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>Toutes les plages de la Costa Smeralda ne sont pas adaptees aux enfants</strong>. Certaines ont de l'eau profonde, un acces difficile, un parking eloigne ou aucune ombre naturelle. D'autres, en revanche, sont parfaites pour familles avec petits enfants : eau peu profonde sur des dizaines de metres, sable fin sans rochers, parking en plat, services essentiels (toilettes, douches, kiosques). Voici la selection de Francesco et Salvatore Milo, basee sur les retours des clients famille qui louent des voitures pour la Costa Smeralda chaque annee. Triees par age recommande : des plus adaptees aux nouveau-nes aux plus adaptees aux ados.
+    </p>
+
+    <h2>Criteres de selection "family-friendly"</h2>
+
+    <p>Une plage adaptee aux enfants doit avoir :</p>
+
+    <ul>
+      <li><strong>Eau peu profonde sur au moins 20-30 metres du rivage</strong> (pour nouveau-nes et enfants 0-5)</li>
+      <li><strong>Sable fin, sans cailloux ni rochers tranchants</strong></li>
+      <li><strong>Parking joignable a pied en 5-10 min max</strong>, sans troncons escarpes</li>
+      <li><strong>Possibilite d'etablissement</strong> avec location parasol (essentiel pour ombre famille)</li>
+      <li><strong>Toilettes et douches</strong> a proximite (au moins chimiques)</li>
+      <li><strong>Vagues basses ou absentes</strong> (pas exposition au mistral fort)</li>
+    </ul>
+
+    <h2>Les 10 meilleures plages familles en Costa Smeralda</h2>
+
+    <h3>1. La Cinta — San Teodoro (top choix nouveau-nes)</h3>
+
+    <p>
+      <strong>5 km de sable blanc tres fin</strong>, eau peu profonde pour 30+ metres, vue sur l'ile Tavolara. La plage famille par excellence du nord-est de la Sardaigne. Parking payant (8-12 €/jour) mais tres proche. Etablissements Il Pirata, La Stella, Sa Linnamosa avec service complet (transats, parasols, snack-bar, toilettes, douches chaudes, aire de jeux). Distance d'Olbia : 30 minutes.
+    </p>
+
+    <h3>2. Cala Brandinchi — San Teodoro ("les Bahamas de la Sardaigne")</h3>
+
+    <p>
+      Surnommee <strong>"les Bahamas de la Sardaigne"</strong> pour la couleur turquoise de l'eau et le sable blanc. Eau peu profonde sur 50 metres, parfaite pour enfants 1-6 voulant marcher dans l'eau. <strong>En haute saison reservation obligatoire</strong> (systeme regional, max 1 450 personnes/jour). Parking payant.
+    </p>
+
+    <h3>3. Lu Impostu — San Teodoro</h3>
+
+    <p>
+      Adjacente a Cala Brandinchi, <strong>meme qualite d'eau et sable mais plus ample</strong> — plus facile de trouver de la place. Reservation aussi conseillee en haute saison. Eau transparente, fond qui descend tres graduellement, bonne ombre naturelle des genevriers derriere. <strong>Note famille 10/10</strong>.
+    </p>
+
+    <h3>4. Capriccioli — Costa Smeralda (mieux pour enfants 3+)</h3>
+
+    <p>
+      Deux criques jumelles (Est et Ouest) separees par promontoire. <strong>L'eau descend legerement plus rapidement</strong> qu'a La Cinta, donc conseillee a partir de 3 ans. Sable blanc, rochers lateraux pour snorkeling avec masque pour les plus grands. Parking payant (~15 €/jour). Etablissements, bar, toilettes.
+    </p>
+
+    <h3>5. Pittulongu — Olbia (tres proche)</h3>
+
+    <p>
+      <strong>10 minutes du centre d'Olbia</strong>, parfaite si vous logez pres de l'aeroport/port et voulez une baignade rapide avec petits enfants. Sable clair, eau peu profonde pour 15-20 metres, vue ile Tavolara. Parking gratuit dans les rues laterales. Lido Jenny et autres etablissements familiaux. <strong>Conseil</strong> : ideale comme "plage pratique" le jour d'arrivee ou de depart, quand le temps est limite.
+    </p>
+
+    <h3>6. Romazzino — Costa Smeralda (exclusive mais family-friendly)</h3>
+
+    <p>
+      Plage devant le celebre Hotel Romazzino. Sable tres blanc, eau transparente, fond peu profond pour les premiers 15 metres. <strong>Parking cher</strong> (10-15 €/jour) et souvent plein avant 10:00. Etablissement avec service premium. <strong>Adaptee aux familles voulant mix luxe + enfants</strong>.
+    </p>
+
+    <h3>7. Liscia Ruja — Costa Smeralda (la plus ample)</h3>
+
+    <p>
+      <strong>La plage la plus longue de la Costa Smeralda</strong> (1 km). Trois etablissements differents (Long Beach, Phi Beach, Liscia Ruja Beach). Espace enorme = toujours de la place, meme en aout. Sable clair, eau peu profonde pour 15-20 metres. Toilettes, douches, snack-bar. <strong>Adaptee aux familles avec plusieurs enfants d'ages differents</strong> car il y a de l'espace pour tout.
+    </p>
+
+    <h3>8. Spiaggia Bianca — Golfo Aranci</h3>
+
+    <p>
+      Pres d'Olbia, <strong>30 min de voiture</strong>. Sable blanc, eau transparente, fond qui descend doucement. Parking payant. <strong>Moins frequentee</strong> que la Costa Smeralda, parfaite si vous cherchez la tranquillite avec enfants. Bar et etablissement.
+    </p>
+
+    <h3>9. Cala Sabina — Golfo Aranci</h3>
+
+    <p>
+      Petite crique de sable blanc joignable en quelques minutes a pied de la gare ferroviaire de Cala Sabina (train touristique estival). <strong>Eau incroyablement transparente</strong>, fond peu profond pour 20 metres. Pas d'etablissements — apportez tout (eau, sandwiches, parasol). <strong>Pour familles aimant l'aventure</strong> qui veulent eviter la foule.
+    </p>
+
+    <h3>10. Bados — Olbia (la plus proche du centre)</h3>
+
+    <p>
+      <strong>15 min du centre d'Olbia</strong>, sable blanc, eau peu profonde, parfaite pour familles logeant en ville. Etablissements varies, restos, parking. <strong>Note depuis Olbia city</strong> : 8/10 pour familles avec petits enfants ne voulant pas trop se deplacer.
+    </p>
+
+    <h2>Plages a EVITER avec petits enfants</h2>
+
+    <p>Pour honnetete : ces plages sont spectaculaires mais <strong>NON adaptees aux enfants de moins de 6 ans</strong> :</p>
+
+    <ul>
+      <li><strong>Spiaggia del Principe</strong> : magnifique mais acces depuis sentier escarpe de 200 m du parking de terre. Difficile avec poussettes ou petits enfants</li>
+      <li><strong>Cala di Volpe (plage)</strong> : rochers plus que sable, eau profonde immediatement</li>
+      <li><strong>Cala del Faro</strong> : roches tranchantes au fond</li>
+      <li><strong>Capo Coda Cavallo / Cala Suaraccia</strong> : acces seulement par longue piste, parking peu pratique pour familles</li>
+      <li><strong>Plages exposees au Nord-Est pendant mistral</strong> : vagues hautes, deconseillees. Verifiez toujours la meteo du jour</li>
+    </ul>
+
+    <h2>Que apporter pour la journee a la plage avec enfants</h2>
+
+    <ol>
+      <li><strong>Parasol</strong> (meme si vous prevoyez etablissement, en haute saison les parasols s'epuisent)</li>
+      <li><strong>Eau en abondance</strong> — les kiosques vendent eau a 3-5 €/litre</li>
+      <li><strong>Creme solaire resistante a l'eau, facteur 50+</strong></li>
+      <li><strong>Casquette mouillee</strong> pour les enfants (rafraichit)</li>
+      <li><strong>Chaussons en caoutchouc</strong> (crique avec rochers tranchants meme ou inattendu)</li>
+      <li><strong>Lingettes</strong> pour nettoyer mains sableuses</li>
+      <li><strong>Snacks proteines / fruits</strong></li>
+      <li><strong>Vetements de rechange</strong> pour le retour en voiture</li>
+    </ol>
+
+    <h2>Vehicule recommande pour familles</h2>
+
+    <p>Pour les familles parcourant la Costa Smeralda avec petits enfants, les vehicules les plus adaptes de notre flotte sont :</p>
+
+    <ul>
+      <li><strong><a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a></strong> — SUV compact avec boite automatique DCT, position de conduite haute (meilleur controle avec enfants en voiture), coffre 380 L pour poussettes, parasols et sacs plage. Capable d'affronter les pistes des plages les plus cachees. <strong>Tarif</strong> : 60-110 €/jour</li>
+      <li><strong><a href="/fr/flotte/mercedes-classe-a-location-olbia">Mercedes Classe A 180d</a></strong> — premium compacte diesel, confort autoroutier pour les longs trajets vers La Cinta ou Cala Brandinchi, isolation acoustique (les enfants dorment mieux en voiture). Boite automatique 7G-DCT. <strong>Tarif</strong> : 90-160 €/jour</li>
+      <li><strong><a href="/fr/flotte/fiat-panda-location-olbia">Fiat Panda Hybrid</a></strong> — la moins chere (40-70 €/jour), parfaite si vous voyagez avec UN enfant et peu de bagages. Manuelle, agile dans centres etroits</li>
+    </ul>
+
+    <h2>Sieges enfants</h2>
+
+    <p>
+      KS Rent Sardinia fournit des sieges enfants <strong>sur demande</strong> avec un petit supplement journalier. Trois categories disponibles :
+    </p>
+
+    <ul>
+      <li><strong>Coque nourrisson</strong> (0-12 mois, max 13 kg)</li>
+      <li><strong>Siege enfant</strong> (9 mois - 4 ans, 9-18 kg)</li>
+      <li><strong>Rehausseur</strong> (4-12 ans, 15-36 kg)</li>
+    </ul>
+
+    <p>
+      Specifiez au moment de la reservation le nombre, le type et l'age/poids des enfants. Nous pouvons aussi fournir des accessoires specifiques (pare-soleil arriere, retroviseur baby) sur demande.
+    </p>
+
+    <h2>Resume</h2>
+
+    <p>
+      La Costa Smeralda offre des plages extraordinaires pour familles, mais <strong>le bon choix depend de l'age des enfants</strong> : pour nouveau-nes et enfants 0-3 ans allez a <strong>La Cinta, Cala Brandinchi, Lu Impostu</strong> (San Teodoro). Pour enfants 4-8 ans ajoutez <strong>Capriccioli, Romazzino, Liscia Ruja</strong>. Pour ados 9+ toute la Costa Smeralda est accessible avec quelques precautions. Pour livraisons organisees a votre hotel/villa avec sieges deja montes, contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+
+    <p>
+      Si vous devez planifier une semaine entiere, lisez aussi notre <a href="/fr/guide/itineraire-7-jours-costa-smeralda-depuis-olbia">itineraire 7 jours Costa Smeralda</a> et les <a href="/fr/guide/plus-belles-plages-nord-est-sardaigne">top 7 plages du nord-est de la Sardaigne</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
