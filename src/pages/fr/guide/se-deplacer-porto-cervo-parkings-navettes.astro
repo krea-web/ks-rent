@@ -1,0 +1,179 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("se-deplacer-porto-cervo-parkings-navettes")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: { "@type": "Place", name: "Porto Cervo", containedInPlace: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardaigne" } },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Se deplacer Porto Cervo", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>Porto Cervo n'est pas une ville : c'est un cluster de marina, hotels de luxe, boutiques et restaurants distribues sur 5 km de cote</strong> entre Punta Capaccia et Liscia di Vacca. Se deplacer ici en haute saison (juillet-aout) peut etre un cauchemar sans preparation : circulation constante sur la SP59, parkings payants partout (5-25 €/heure), navettes gratuites peu publicisees, zones pietonnes variables. Ce guide rassemble l'experience pratique de Francesco et Salvatore Milo, qui livrent chaque saison des vehicules aux hotels et villas de Porto Cervo, et contient les memes conseils que nous donnons par WhatsApp avant chaque livraison.
+    </p>
+
+    <h2>Comment arriver a Porto Cervo</h2>
+
+    <h3>En voiture depuis Olbia</h3>
+
+    <p>
+      <strong>Distance Olbia → Porto Cervo</strong> : 32-35 km en 35-50 minutes (en haute saison meme 1h15min). Route : SS125 jusqu'a Arzachena, puis SP59 (Route Costa Smeralda). La SP59 est une route nationale tortueuse, panoramique mais a voie unique pour la majeure partie du parcours — pas de depassements, pas de vitesse.
+    </p>
+
+    <h3>En navette ou transport public</h3>
+
+    <p>
+      <strong>Il existe un service bus public (ARST)</strong> d'Olbia a Porto Cervo, avec courses quotidiennes limitees (3-4 par jour en haute saison). Temps de trajet ~1h30min, cout ~3-5 €. Frequence insuffisante pour bouger librement. Les navettes privees des hotels sont reservees aux clients de l'hotel.
+    </p>
+
+    <h3>En taxi</h3>
+
+    <p>
+      Taxi de l'aeroport Olbia a Porto Cervo : <strong>80-120 €</strong> en haute saison (tarif fixe). De Porto Cervo a Olbia pour le vol retour le prix monte souvent a 100-150 €. Pour un sejour de 5+ jours, le taxi devient rapidement plus cher que la location voiture.
+    </p>
+
+    <h3>En bateau</h3>
+
+    <p>
+      Porto Cervo est un port touristique de niveau international. Si vous arrivez par mer avec votre yacht, l'amarrage au Porto Vecchio ou a la Marina coute <strong>800-3 500 €/nuit</strong> (pour bateaux 12-24 m, en haute saison). Pas de parking voiture a gerer, mais il faut quand meme un moyen pour atteindre les plages.
+    </p>
+
+    <h2>Les parkings de Porto Cervo</h2>
+
+    <p>Porto Cervo a 4 zones parking principales. Couts reels haute saison 2026 :</p>
+
+    <h3>P1 — Centre Commercial (Cervo Hub)</h3>
+
+    <p>
+      Le <strong>parking couvert sous le Centre Commercial</strong> est le plus central : d'ici en 5 minutes a pied vous rejoignez le Vieux Port, la Promenade, les boutiques et le Cervo Hotel. <strong>Cout</strong> : 5 €/heure, 25 €/jour. <strong>Pour</strong> : couverture totale, sur. <strong>Contre</strong> : souvent plein avant 11:00 en haute saison.
+    </p>
+
+    <h3>P2 — Vieux Port</h3>
+
+    <p>
+      Parking decouvert a cote du Vieux Port (Piazzetta). <strong>Cout</strong> : 4 €/heure, 20 €/jour. <strong>Pour</strong> : 1 minute de la Piazzetta. <strong>Contre</strong> : peu de places (~50), souvent plein des 10:00.
+    </p>
+
+    <h3>P3 — Marina di Porto Cervo</h3>
+
+    <p>
+      Parking de la Marina (Yacht Club Costa Smeralda). <strong>Cout</strong> : 6 €/heure, 30 €/jour (plus cher car proche du Yacht Club). <strong>Pour</strong> : pratique pour visiter yachts et evenements YC. <strong>Contre</strong> : le plus cher.
+    </p>
+
+    <h3>P4 — Liscia di Vacca / rues laterales</h3>
+
+    <p>
+      Parking gratuit disponible <strong>UNIQUEMENT</strong> sur les rues secondaires entre Liscia di Vacca et Pantogia (la zone "haute" de Porto Cervo, au-dessus de la SP59). Si vous trouvez une place, vous etes a 15-25 minutes a pied en descente de la Promenade (en montee au retour). <strong>Pour</strong> : gratuit, toujours des places. <strong>Contre</strong> : marcher, surtout au retour avec la chaleur.
+    </p>
+
+    <h2>Les navettes internes de Porto Cervo</h2>
+
+    <p>
+      Peu savent que <strong>Porto Cervo a un service de navette gratuit</strong> en haute saison (juin-septembre) gere par le Consortium Costa Smeralda. La navette relie :
+    </p>
+
+    <ul>
+      <li>P1 (Centre Commercial)</li>
+      <li>P2 (Vieux Port / Piazzetta)</li>
+      <li>P3 (Marina / Yacht Club)</li>
+      <li>Plages Cala di Volpe et Romazzino (en certaines periodes)</li>
+    </ul>
+
+    <p>
+      La navette passe toutes les 30-45 minutes de 10h00 a 24h00 en haute saison. <strong>Elle est gratuite</strong>. La majorite des touristes l'ignore car elle n'est pas bien publicisee. Nous conseillons de garer au P4 gratuit (zone haute) ou au P1 et utiliser la navette pour vous deplacer entre les zones sans reprendre la voiture.
+    </p>
+
+    <h2>Zones pietonnes et acces limites</h2>
+
+    <p>
+      <strong>La Piazzetta et la Promenade du Vieux Port sont pietonnes</strong> toute l'annee. Vous ne pouvez pas approcher la voiture. La zone Pevero Golf est a acces limite pour non-residents. Les villas de Romazzino et Liscia di Vacca sont propriete privee mais les routes publiques d'acces sont ouvertes (parking difficile).
+    </p>
+
+    <p>
+      En <strong>juillet-aout</strong>, lors d'evenements specifiques (regates Yacht Club, gala Cala di Volpe, evenements Billionaire), certaines routes sont fermees a la circulation le soir. Verifiez sur les canaux sociaux du Consortium Costa Smeralda avant de programmer des diners.
+    </p>
+
+    <h2>Plages joignables depuis Porto Cervo</h2>
+
+    <p>De Porto Cervo (entendue comme la Promenade) sont joignables en voiture les plages les plus celebres de la Costa Smeralda :</p>
+
+    <table>
+      <thead>
+        <tr><th>Plage</th><th>Distance</th><th>Temps voiture</th><th>Parking</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Spiaggia del Principe</td><td>4 km</td><td>10 min + 200 m a pied</td><td>Gratuit (terre), 5 €/h apres 10:00</td></tr>
+        <tr><td>Romazzino</td><td>3 km</td><td>8 min</td><td>Payant, ~10 €/jour</td></tr>
+        <tr><td>Capriccioli</td><td>5 km</td><td>12 min</td><td>Payant, ~15 €/jour</td></tr>
+        <tr><td>Liscia Ruja</td><td>4 km</td><td>10 min</td><td>Payant, ~12 €/jour</td></tr>
+        <tr><td>Grande Pevero</td><td>5 km</td><td>15 min</td><td>Limite, allez tot</td></tr>
+        <tr><td>La Celvia</td><td>3 km</td><td>10 min</td><td>Payant, ~10 €/jour</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Conseil pratique</strong> : arrivez a la plage avant 9h30-10h00. Apres 10h30 en haute saison les parkings sont pleins et vous devez revenir ou chercher des alternatives a 1-2 km a pied.
+    </p>
+
+    <h2>Couts journaliers typiques a Porto Cervo</h2>
+
+    <p>Pour ceux qui planifient une journee "type" a Porto Cervo, voici les couts reels mis a jour 2026 :</p>
+
+    <ul>
+      <li><strong>Parking</strong> : 20-30 €/jour (P1, P2, P3) — gratuit au P4 avec marche</li>
+      <li><strong>Cafe en Piazzetta</strong> : 4-6 €</li>
+      <li><strong>Dejeuner restaurant</strong> : 60-150 €/personne (typique), 200-400 €/personne (etoiles)</li>
+      <li><strong>Dejeuner rapide / pizza</strong> : 25-40 €/personne</li>
+      <li><strong>Plage avec etablissement</strong> : 60-150 €/couple (transat + parasol)</li>
+      <li><strong>Aperitif Phi Beach ou equivalent</strong> : 25-40 €/personne</li>
+      <li><strong>Diner au centre</strong> : 80-200 €/personne</li>
+    </ul>
+
+    <p>
+      Une journee "complete" a Porto Cervo pour un couple (parking + petit-dejeuner + plage + dejeuner + aperitif + diner) peut facilement couter <strong>400-700 €</strong>. Pour une experience plus contenue, il existe des alternatives plus economiques a <a href="/fr/location-voiture-baja-sardinia">Baja Sardinia</a> et <a href="/fr/location-voiture-cannigione">Cannigione</a>.
+    </p>
+
+    <h2>Conseils pratiques finaux</h2>
+
+    <ul>
+      <li><strong>Vehicule conseille</strong> : une <a href="/fr/flotte/mercedes-classe-a-location-olbia">Mercedes Classe A</a> ou equivalent suffit pour la SP59. Une <a href="/fr/flotte/audi-rs3-location-olbia">Audi RS3</a> ou BMW M2 est parfaite seulement si vous voulez une signature visuelle. La <a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a> est utile seulement si vous prevoyez d'acceder a Spiaggia del Principe par chemin de terre</li>
+      <li><strong>Carburant</strong> : la station-service la plus proche est a Arzachena. Faites le plein avant d'entrer dans la SP59</li>
+      <li><strong>Monnaie ou EasyPark</strong> : les horodateurs de Porto Cervo acceptent monnaie ou paiement app. Gardez 20 € en monnaie ou telechargez EasyPark</li>
+      <li><strong>Evenements</strong> : en juillet a lieu la <strong>Settimana delle Bocche</strong> (regate) et en aout divers evenements mondains. Verifiez les fermetures de routes avant de programmer le diner</li>
+      <li><strong>Comparaison vehicules</strong> : si vous devez encore choisir, voir notre <a href="/fr/flotte/comparer">comparaison vehicules</a></li>
+    </ul>
+
+    <p>
+      Pour organiser la livraison du vehicule directement a votre hotel a Porto Cervo (Cervo Hotel, Cala di Volpe, Romazzino, Pitrizza), contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Nous coordonnons l'horaire avec le check-in de l'hotel pour que vous n'ayez ni taxi ni pickup a gerer a l'arrivee.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

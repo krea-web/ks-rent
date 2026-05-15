@@ -287,6 +287,54 @@ export function findArticleEn(slug: string): GuideArticleMetaEn | undefined {
   return GUIDE_ARTICLES_EN.find((a) => a.slug === slug);
 }
 
+/* ─── EN articles batch 4 ─── */
+
+const _EN_BATCH_4: GuideArticleMetaEn[] = [
+  {
+    slug: "getting-around-porto-cervo-parking-shuttles",
+    title: "Getting around Porto Cervo: parking, shuttles, costs 2026",
+    excerpt:
+      "Practical guide to reach and move around Porto Cervo: car parks (P1, Shopping Centre, Marina), free shuttles, costs, opening hours, alternatives. 2026 update.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["family-beaches-costa-smeralda", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "come-muoversi-porto-cervo-parcheggi-navette",
+  },
+  {
+    slug: "yacht-charter-vs-car-hire-costa-smeralda",
+    title: "Yacht charter vs car hire in Costa Smeralda: cost comparison",
+    excerpt:
+      "Costa Smeralda holiday with yacht charter or car hire? Real cost comparison 2026, pros and cons, suitable profiles, mixed solutions. All the numbers.",
+    category: "Vehicles",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["costa-smeralda-holiday-cost-real-budget-2026", "how-to-get-to-costa-smeralda-flights-ferries"],
+    itEquivalent: "yacht-charter-vs-auto-noleggio-costa-smeralda",
+  },
+  {
+    slug: "what-to-do-in-olbia-3-days-itinerary",
+    title: "What to do in Olbia in 3 days: short itinerary for the weekend",
+    excerpt:
+      "3-day itinerary in Olbia: what to see in town, nearby beaches, where to eat, half-day excursions. Designed for long weekends and short Sardinia stops.",
+    category: "Itineraries",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["7-day-itinerary-costa-smeralda-from-olbia", "car-hire-olbia-airport-practical-guide"],
+    itEquivalent: "cosa-fare-a-olbia-3-giorni-itinerario",
+  },
+];
+GUIDE_ARTICLES_EN.push(..._EN_BATCH_4);
+
 /* ─── EN articles batch 3 ─── */
 
 const _EN_BATCH_3: GuideArticleMetaEn[] = [
@@ -447,6 +495,54 @@ export function findArticleDe(slug: string): GuideArticleMetaDe | undefined {
   return GUIDE_ARTICLES_DE.find((a) => a.slug === slug);
 }
 
+/* ─── DE articles batch 4 ─── */
+
+const _DE_BATCH_4: GuideArticleMetaDe[] = [
+  {
+    slug: "fortbewegung-porto-cervo-parkplaetze-shuttles",
+    title: "Fortbewegung in Porto Cervo: Parkplaetze, Shuttles, Kosten 2026",
+    excerpt:
+      "Praktische Anleitung zum Erreichen und Bewegen in Porto Cervo: Parkplaetze (P1, Einkaufszentrum, Marina), kostenlose Shuttles, Kosten, Oeffnungszeiten, Alternativen.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["familienstraende-costa-smeralda", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "come-muoversi-porto-cervo-parcheggi-navette",
+  },
+  {
+    slug: "yacht-charter-vs-mietwagen-costa-smeralda",
+    title: "Yacht-Charter vs Mietwagen in Costa Smeralda: Kostenvergleich",
+    excerpt:
+      "Costa Smeralda Urlaub mit Yacht-Charter oder Mietwagen? Realer Kostenvergleich 2026, Pro und Kontra, passende Profile, Mix-Loesungen. Alle Zahlen.",
+    category: "Fahrzeuge",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["kosten-urlaub-costa-smeralda-realistisches-budget-2026", "anfahrt-costa-smeralda-fluege-faehren"],
+    itEquivalent: "yacht-charter-vs-auto-noleggio-costa-smeralda",
+  },
+  {
+    slug: "was-tun-in-olbia-3-tage-reiseroute",
+    title: "Was tun in Olbia in 3 Tagen: Kurzreiseroute fuers Wochenende",
+    excerpt:
+      "3-Tage-Reiseroute in Olbia: was in der Stadt sehen, nahe Straende, wo essen, halbtaegige Ausfluege. Fuer lange Wochenenden und kurze Sardinien-Stopps gedacht.",
+    category: "Reiserouten",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["7-tage-reiseroute-costa-smeralda-ab-olbia", "autovermietung-flughafen-olbia-praktische-anleitung"],
+    itEquivalent: "cosa-fare-a-olbia-3-giorni-itinerario",
+  },
+];
+GUIDE_ARTICLES_DE.push(..._DE_BATCH_4);
+
 /* ─── DE articles batch 3 ─── */
 
 const _DE_BATCH_3: GuideArticleMetaDe[] = [
@@ -606,6 +702,54 @@ export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
 export function findArticleFr(slug: string): GuideArticleMetaFr | undefined {
   return GUIDE_ARTICLES_FR.find((a) => a.slug === slug);
 }
+
+/* ─── FR articles batch 4 ─── */
+
+const _FR_BATCH_4: GuideArticleMetaFr[] = [
+  {
+    slug: "se-deplacer-porto-cervo-parkings-navettes",
+    title: "Se deplacer a Porto Cervo : parkings, navettes, couts 2026",
+    excerpt:
+      "Guide pratique pour arriver et se deplacer a Porto Cervo : parkings (P1, Centre Commercial, Marina), navettes gratuites, couts, horaires, alternatives.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["plages-familles-costa-smeralda", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "come-muoversi-porto-cervo-parcheggi-navette",
+  },
+  {
+    slug: "yacht-charter-vs-location-voiture-costa-smeralda",
+    title: "Yacht charter vs location voiture en Costa Smeralda : comparaison couts",
+    excerpt:
+      "Vacances en Costa Smeralda avec yacht charter ou voiture en location ? Comparaison couts reels 2026, pour et contre, profils adaptes, solutions mixtes.",
+    category: "Vehicules",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["budget-vacances-costa-smeralda-cout-reel-2026", "comment-arriver-costa-smeralda-vols-ferries"],
+    itEquivalent: "yacht-charter-vs-auto-noleggio-costa-smeralda",
+  },
+  {
+    slug: "que-faire-a-olbia-3-jours-itineraire",
+    title: "Que faire a Olbia en 3 jours : itineraire court pour le week-end",
+    excerpt:
+      "Itineraire de 3 jours a Olbia : que voir en ville, plages proches, ou manger, excursions demi-journee. Pense pour week-ends longs et courts sejours en Sardaigne.",
+    category: "Itineraires",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["itineraire-7-jours-costa-smeralda-depuis-olbia", "location-voiture-aeroport-olbia-guide-pratique"],
+    itEquivalent: "cosa-fare-a-olbia-3-giorni-itinerario",
+  },
+];
+GUIDE_ARTICLES_FR.push(..._FR_BATCH_4);
 
 /* ─── FR articles batch 3 ─── */
 

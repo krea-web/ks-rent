@@ -1,0 +1,222 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("yacht-charter-vs-mietwagen-costa-smeralda")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "de-DE",
+  about: { "@type": "Thing", name: "Yacht-Charter vs Mietwagen" },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Anleitungen", path: "/de/guide" },
+    { name: "Yacht vs Mietwagen", path: `/de/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="de">
+    <p>
+      <strong>Fuer einen Costa Smeralda Urlaub gibt es zwei verschiedene "Logiken": man lebt auf dem Wasser (Yacht-Charter) oder man lebt an Land (Mietwagen + Hotel/Villa)</strong>. Die Wahl ist nicht immer eindeutig — viele kombinieren einen Tagestrip-Charter mit einer Landbasis. Aber der Ausgangspunkt entscheidet alles: Budget, Erlebnis, Flexibilitaet, logistischer Aufwand. In diesem Artikel vergleichen wir die zwei Ansaetze mit echten Kosten 2026, basierend auf der Erfahrung von Francesco und Salvatore Milo, die jedes Jahr beide Profile bedienen.
+    </p>
+
+    <h2>Was wir unter Yacht-Charter verstehen</h2>
+
+    <p>"Yacht-Charter" kann sehr unterschiedliche Dinge bedeuten:</p>
+
+    <ul>
+      <li><strong>Tagesboot (Gozzo oder kleines Motorboot)</strong>: 6-12 m, 4-8 Personen, Tagesmiete. Kosten 300-1.500 €/Tag</li>
+      <li><strong>Skippered Yacht</strong>: 12-20 m, mit professionellem Skipper, an Bord schlafen (typisch eine Woche). Kosten 8.000-30.000 €/Woche</li>
+      <li><strong>Crewed Luxus-Yacht</strong>: 24+ m, komplette Crew (Skipper, Hostess, Chef), ganze Woche. Kosten 50.000-500.000 €/Woche</li>
+      <li><strong>Super-Yacht</strong>: 40+ m, grosse Crew, totaler Luxus. 200.000-2.000.000 €/Woche</li>
+    </ul>
+
+    <p>
+      Fuer den praktischen Vergleich nehmen wir das <strong>typischste Szenario</strong> an: ein Paar oder kleine Gruppe, die zwischen einem Tagesboot (1-3 Tage) oder einer 12-15m skippered Yacht (ganze Woche) <strong>vs</strong> Mietwagen 7 Tage mit Hotel/Villa an Land entscheidet.
+    </p>
+
+    <h2>Kostenvergleich: 7 Tage in Costa Smeralda</h2>
+
+    <h3>Option A — Mietwagen + 4-Sterne Hotel (Paar)</h3>
+
+    <ul>
+      <li>Hin/Rueckfluege 2 Personen: 200-400 €</li>
+      <li>Mercedes A-Klasse Miete 7 Tage: 650-900 €</li>
+      <li>Treibstoff + Parken: 150-200 €</li>
+      <li>4-Sterne Hotel 7 Naechte Halbpension: 1.500-2.800 €</li>
+      <li>Mittagessen draussen + Extras: 400-700 €</li>
+      <li>Strandbaeder + Ausfluege: 200-500 €</li>
+      <li><strong>GESAMT</strong>: <strong>3.100 - 5.500 €</strong> pro Paar</li>
+    </ul>
+
+    <h3>Option B — 14m Skippered Yacht mit Chef-Kabine (Paar)</h3>
+
+    <ul>
+      <li>Hin/Rueckfluege 2 Personen: 200-400 €</li>
+      <li>Charter Yacht 14m + Skipper, 7 Naechte: 12.000-18.000 €</li>
+      <li>Boot-Treibstoff (separat): 1.500-3.500 €</li>
+      <li>Bord-Provisionen (Chef oder Einkauf): 1.500-3.000 €</li>
+      <li>Hafengebuehren / Anlegestellen: 1.000-3.000 €</li>
+      <li>Abendessen draussen (gelegentlich an Land): 300-600 €</li>
+      <li><strong>GESAMT</strong>: <strong>16.500 - 28.500 €</strong> pro Paar</li>
+    </ul>
+
+    <p>
+      <strong>Das Boot kostet 5-6x verglichen mit Auto + Hotel</strong>. Aber das Erlebnis ist komplett anders. Schauen wir, wann jede Option passt.
+    </p>
+
+    <h2>Yacht-Charter Vor- und Nachteile</h2>
+
+    <h3>Charter-Vorteile</h3>
+
+    <ul>
+      <li><strong>Straende nur vom Meer aus erreichbar</strong> (Rosa Strand Budelli, einige Caprera-Buchten, Cala Granara) die Sie nie von Land sehen werden</li>
+      <li><strong>Absolute Privatsphaere</strong>: ankern, wo Sie wollen, keine Massen, keine Parkplaetze</li>
+      <li><strong>Einzigartige Erfahrung</strong>: in einer Bucht ankern mit Sternen und Stille schlafen</li>
+      <li><strong>Null Logistik</strong>: kein Hotel-Check-in, keine Schluessel, keine Auto-Bewegungen</li>
+      <li><strong>Status / Luxus-Erlebnis</strong> unbestreitbar</li>
+    </ul>
+
+    <h3>Charter-Nachteile</h3>
+
+    <ul>
+      <li><strong>Kosten</strong>: 5-10x verglichen mit Hotel + Auto</li>
+      <li><strong>Begrenzter Platz</strong>: ein Paar auf 14m hat 30-40 m² insgesamt, kein uebermaessiges Shopping, begrenzte Koffer</li>
+      <li><strong>Seekrankheit</strong>: auch mit erfahrenem Skipper koennen Wind und Wellen den Tag ruinieren</li>
+      <li><strong>Wetterabhaengig</strong>: bei Wind &gt; 25 Knoten bleiben Sie im Hafen. In Juli-August haeufig</li>
+      <li><strong>Kein Nachtleben</strong>: um 23:00 sind Sie in der Kabine, nicht in den Bars</li>
+      <li><strong>Begrenzte Ressourcen</strong>: reduziertes Suesswasser (kurze Duschen), Generator-Strom, begrenztes Internet</li>
+      <li><strong>Bord-Mittagessen</strong>: die erste Woche ist romantisch, nach einigen Tagen vermisst man Restaurants</li>
+    </ul>
+
+    <h2>Mietwagen + Hotel Vor- und Nachteile</h2>
+
+    <h3>Auto + Hotel Vorteile</h3>
+
+    <ul>
+      <li><strong>Erschwingliche Kosten</strong>: Budget 1/5 verglichen mit Charter</li>
+      <li><strong>"Komplettes" Leben</strong>: Restaurants, Bars, Events, Shopping, Nachtleben</li>
+      <li><strong>Komfort</strong>: Hotel mit Pool, Spa, Klimaanlage, reichliche Dusche</li>
+      <li><strong>Flexibilitaet</strong>: Plan in 1 Stunde aendern, gehen Sie wohin Sie wollen</li>
+      <li><strong>Unabhaengig vom Meereswetter</strong> (fast)</li>
+      <li><strong>Familien mit Kindern</strong>: viel handhabbarer</li>
+    </ul>
+
+    <h3>Auto + Hotel Nachteile</h3>
+
+    <ul>
+      <li><strong>"Oeffentliche" Straende</strong>: kein Zugang zu Budelli, Cala Granara per Meer</li>
+      <li><strong>Parkplaetze und Verkehr</strong>: in Hochsaison verlorene Stunden</li>
+      <li><strong>Massen</strong>: La Cinta oder Capriccioli im Juli sind ueberfuellt</li>
+      <li><strong>Logistik</strong>: Check-in/out, Tagesplanung, Restaurants buchen</li>
+    </ul>
+
+    <h2>Wann Charter sinnvoll ist</h2>
+
+    <p>Yacht-Charter ist die richtige Wahl, wenn:</p>
+
+    <ul>
+      <li>Sie <strong>meeresbegeistert sind</strong>, segeln, schnorcheln, fischen</li>
+      <li>Sie <strong>absolute Privatsphaere</strong> und Flucht aus Massentourismus wollen</li>
+      <li>Sie <strong>Budget &gt; 15.000 € pro Paar</strong> fuer die Woche haben</li>
+      <li>Sie ein <strong>einmaliges Erlebnis</strong> wollen (Jubilaeum, besonderer Anlass)</li>
+      <li>Sie zu zweit oder kleine Gruppe (2-4 Personen) sind, keine Kinder unter 8</li>
+      <li>Sie <strong>La Maddalena Archipel tief</strong> besuchen wollen (Spargi, Razzoli, Budelli)</li>
+    </ul>
+
+    <h2>Wann Mietwagen sinnvoll ist</h2>
+
+    <p>Mietwagen + Hotel/Villa ist die richtige Wahl, wenn:</p>
+
+    <ul>
+      <li>Sie <strong>komplettes Costa Smeralda Erlebnis</strong> wollen (Land + einige Meereschwimmen)</li>
+      <li>Sie eine <strong>Familie mit Kindern</strong> sind (sicherer, bequemer, flexibler)</li>
+      <li>Sie <strong>Budget &lt; 10.000 € pro Woche</strong> haben</li>
+      <li>Sie <strong>Restaurants, Bars, Sozialleben</strong> lieben</li>
+      <li>Sie auch <strong>Hinterland Gallura erkunden</strong> wollen (San Pantaleo, Tempio, Weingueter)</li>
+      <li>Sie spezifische Beduerfnisse haben (Allergien, Haustiere, Senioren)</li>
+    </ul>
+
+    <h2>Die Mischloesung: die beste fuer die meisten</h2>
+
+    <p>Fuer alle, die das Beste aus beiden Welten wollen, ist die <strong>Gewinnerkombination</strong>:</p>
+
+    <ul>
+      <li><strong>Mietwagen fuer 7 Tage</strong> (Basis im Hotel/Villa)</li>
+      <li><strong>+ 1 Tag Tagesboot-Charter</strong> (300-1.500 €) zum Besuch des La Maddalena Archipels per Meer</li>
+    </ul>
+
+    <p>
+      Dies gibt Ihnen Zugang zu Rosa Strand, Spargi, Budelli (vom Land unerreichbar) aber Sie behalten Flexibilitaet und Komfort. Zusatzkosten: 300-1.500 €. <strong>Gewonnenes Erlebnis: enorm</strong>.
+    </p>
+
+    <h2>Die zwei kombinieren: Yachters, die Auto an Land mieten</h2>
+
+    <p>
+      Eine haeufige Situation: <strong>wer in Costa Smeralda mit eigenem Yacht ankommt</strong> (Anlegestelle in Porto Cervo, Porto Rotondo, Cannigione, Palau) <strong>mietet trotzdem ein Auto, um das Hinterland zu besuchen, einkaufen zu gehen, zu spezifischen Restaurants an Land zu fahren</strong>. KS Rent Sardinia liefert direkt an den Hafen, an dem Sie liegen. Fuer Yachters ist das die Standardloesung. Siehe unsere <a href="/de/autovermietung-hafen-olbia">Mietwagen-Seite Hafen Olbia</a> fuer die Hauptbasis am Hafen.
+    </p>
+
+    <h2>Uebersichtstabelle</h2>
+
+    <table>
+      <thead>
+        <tr><th>Aspekt</th><th>Yacht-Charter</th><th>Auto + Hotel</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Wochenbudget Paar</td><td>16.500-28.500 €</td><td>3.100-5.500 €</td></tr>
+        <tr><td>Erlebnis-Einzigartigkeit</td><td>Hoch</td><td>Mittel</td></tr>
+        <tr><td>Tagesflexibilitaet</td><td>Niedrig (wettergebunden)</td><td>Hoch</td></tr>
+        <tr><td>Zugang versteckte Straende</td><td>Maximal (Budelli, tieferes Caprera)</td><td>Gut per Auto + Pfade</td></tr>
+        <tr><td>Komfort</td><td>Begrenzt (kleine Raeume)</td><td>Voll</td></tr>
+        <tr><td>Geeignet fuer Familien mit Kindern</td><td>Nein (unter 8)</td><td>Ja</td></tr>
+        <tr><td>Sozialleben und Restaurants</td><td>Begrenzt</td><td>Voll</td></tr>
+        <tr><td>Hinterland-Erkundung</td><td>Nein</td><td>Ja (San Pantaleo, Tempio, Weingueter)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Tagesboot-Kosten: die zugaengliche Mid-Tier</h2>
+
+    <p>Fuer alle, die das Boot-Erlebnis ohne Wochenbudget probieren wollen, ist das <strong>Tagesboot-Charter</strong> die Loesung:</p>
+
+    <ul>
+      <li><strong>6-7 m Gozzo</strong> (4 Personen, Autopilot, kein Skipper): 250-450 €/Tag + Treibstoff 80-150 €</li>
+      <li><strong>8-10 m Motorboot mit Skipper</strong> (6-8 Personen): 600-1.200 €/Tag + Treibstoff 200-400 €</li>
+      <li><strong>10-12 m Segelboot mit Skipper</strong> (6-8 Personen): 800-1.500 €/Tag + Treibstoff 100-250 €</li>
+    </ul>
+
+    <p>
+      Einschiffung in Palau, Cannigione, Porto Rotondo oder Olbia. Typische Tour: La Maddalena Archipel, Stopps an traumhaften Straenden, Mittagessen an Bord oder in Bucht. <strong>Top-Erlebnis mit gemaessigter Investition</strong>.
+    </p>
+
+    <h2>Zusammenfassung</h2>
+
+    <p>
+      Fuer die <strong>meisten Touristen in Costa Smeralda ist Mietwagen + Hotel/Villa die rationale Wahl</strong>: Budget 5-6x niedriger, komplettes Erlebnis, volles Sozialleben, totale Flexibilitaet. Yacht-Charter macht <strong>nur Sinn, wenn</strong>: Sie Budget &gt; 15.000 € haben, meeresbegeistert sind, ein einmaliges Erlebnis wollen. Die <strong>Mischloesung (Auto-Basis + 1 Tag Tagesboot-Charter)</strong> gibt Ihnen 90% der Vorteile beider zu vernuenftigen Kosten.
+    </p>
+
+    <p>
+      Um den Mietwagen fuer Ihren Costa Smeralda Aufenthalt zu organisieren — auch mit Lieferung direkt am Hafen, falls Sie per Yacht ankommen — kontaktieren Sie Francesco und Salvatore Milo per WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>. Fuer das gesamte Urlaubsbudget siehe die <a href="/de/guide/kosten-urlaub-costa-smeralda-realistisches-budget-2026">Costa Smeralda Budget-Anleitung 2026</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
