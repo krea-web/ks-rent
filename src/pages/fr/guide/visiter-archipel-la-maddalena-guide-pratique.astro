@@ -1,0 +1,238 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("visiter-archipel-la-maddalena-guide-pratique")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: { "@type": "Place", name: "Archipel de La Maddalena", containedInPlace: { "@type": "AdministrativeArea", name: "Sardaigne" } },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Visiter La Maddalena", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>L'Archipel de La Maddalena est l'un des plus importants parcs marins nationaux d'Europe</strong> : 7 iles principales (La Maddalena, Caprera, Spargi, Budelli, Razzoli, Santo Stefano, Santa Maria) et plus de 50 ilots, entre Sardaigne nord-orientale et Corse. Eau transparente caribeenne, sables blancs ou roses, fonds riches en poissons. On le visite depuis la Costa Smeralda — Palau est le principal point d'embarquement. Ce guide pratique explique comment visiter l'archipel en 2026 : ferries, excursions en bateau, iles accessibles, reservation obligatoire pour certaines plages, couts reels.
+    </p>
+
+    <h2>3 modalites pour visiter l'archipel</h2>
+
+    <h3>1. Ferry + journee sur l'ile La Maddalena (le moins cher)</h3>
+
+    <p>
+      On part de <a href="/fr/location-voiture-palau">Palau</a> avec ferries publics qui font la navette vers La Maddalena toutes les 30 minutes. <strong>Temps de traversee</strong> : 15-20 minutes. <strong>Couts 2026</strong> : 5-8 €/personne aller-retour (passager pied) ; 25-50 € aller-retour voiture + passagers.
+    </p>
+
+    <p>Une fois sur l'ile La Maddalena, vous avez 2 sous-options :</p>
+
+    <ul>
+      <li><strong>Visiter seulement La Maddalena ville</strong> : centre historique, Piazza Garibaldi, Cala Gavetta, musee naval. Cuisine et shopping</li>
+      <li><strong>Louer une petite voiture sur l'ile</strong> (ou utiliser la votre du ferry) pour explorer les criques : Spalmatore, Bassa Trinita, Monti d'Arena, Cala Lunga, Punta Tegge</li>
+    </ul>
+
+    <p><strong>Avantages</strong> : economique, autonome, liberte de temps. <strong>Inconvenients</strong> : vous voyez seulement La Maddalena ("la plus civilisee"), vous ne voyez pas Spargi, Budelli, Caprera profond.</p>
+
+    <h3>2. Excursion en bateau organisee (la plus complete)</h3>
+
+    <p>Vous embarquez sur un bateau touristique depuis Palau ou Cannigione qui vous emmene en journee visiter 3-5 iles avec arrets dans des plages enchantees. Temps : environ 8 heures (09h00-17h00).</p>
+
+    <p><strong>Couts 2026</strong> : 40-90 € par personne (inclut dejeuner a bord ou arret plage). Certaines compagnies offrent des forfaits famille.</p>
+
+    <p><strong>Itineraire typique</strong> :</p>
+
+    <ol>
+      <li>Depart de Palau a 09h00</li>
+      <li>Arret a <strong>Spiaggia Rosa di Budelli</strong> (vue depuis bateau, debarquement interdit depuis 1994)</li>
+      <li>Arret a <strong>Cala Corsara di Spargi</strong> : baignade + dejeuner a bord</li>
+      <li>Arret a <strong>Cala Granara ou Cala Lunga di Spargi</strong> : snorkeling</li>
+      <li>Arret eventuel a <strong>Santa Maria</strong> (eaux cristallines)</li>
+      <li>Retour a Palau a 17h00-17h30</li>
+    </ol>
+
+    <h3>3. Charter prive avec skipper (le plus exclusif)</h3>
+
+    <p>Vous louez un bateau prive (motoscaff, voilier) avec skipper professionnel. Vous decidez l'itineraire, les temps, ou vous arreter.</p>
+
+    <p><strong>Couts 2026</strong> :</p>
+
+    <ul>
+      <li><strong>Bateau auto-pilote 6m</strong> (4 personnes) : 250-450 €/jour + carburant</li>
+      <li><strong>Motoscaff 8-10m avec skipper</strong> (6-8 personnes) : 600-1 200 €/jour + carburant</li>
+      <li><strong>Voilier 10-12m avec skipper</strong> : 800-1 500 €/jour</li>
+      <li><strong>Yacht 15m+ avec skipper + hotesse</strong> : 2 000-5 000 €/jour</li>
+    </ul>
+
+    <h2>Les iles principales a connaitre</h2>
+
+    <h3>La Maddalena (la seule habitee)</h3>
+
+    <p>
+      <strong>Population</strong> : ~10 000 habitants. La seule avec services touristiques developpes : hotels, restaurants, bars, supermarches, hopital, police. <strong>Plages top</strong> : Spalmatore, Bassa Trinita, Monti d'Arena.
+    </p>
+
+    <h3>Caprera</h3>
+
+    <p>
+      Reliee a La Maddalena par un pont routier (15 min en voiture). Celebre pour avoir ete la <strong>residence de Garibaldi</strong> : sa maison est aujourd'hui un musee national. <strong>Plages top</strong> : Cala Coticcio "Tahiti", Spiaggia del Relitto, Cala Brigantina, Cala Andreani. <strong>Attention</strong> : Cala Coticcio necessite une reservation obligatoire avec guide environnemental (2 creneaux/jour, 50 personnes/creneau, ~25 €/personne).
+    </p>
+
+    <h3>Spargi</h3>
+
+    <p>Inhabitee. <strong>Cala Corsara</strong> est sa plage la plus celebre, avec un bloc de granite naturel en forme de "Cerf". <strong>Cala Granara</strong> et <strong>Cala Lunga</strong> sont d'autres plages enchantees. Visitee uniquement en bateau.</p>
+
+    <h3>Budelli</h3>
+
+    <p>
+      Inhabitee. Celebre pour la <strong>Spiaggia Rosa</strong>, plage avec sable rose du a des micro-organismes marins. <strong>Debarquement interdit</strong> depuis 1994 pour proteger le sable : visible uniquement depuis le bateau. Reserve integrale du Parc National.
+    </p>
+
+    <h3>Razzoli, Santo Stefano, Santa Maria</h3>
+
+    <p>Plus petites, moins touristiques. Razzoli a un phare historique pres de la frontiere corse. Santa Maria a top snorkeling. Visitees surtout en charter prive.</p>
+
+    <h2>Cala Coticcio : la plage la plus desiree (avec reservation)</h2>
+
+    <p>
+      <strong>Cala Coticcio</strong> a Caprera est surnommee <strong>"Tahiti de la Sardaigne"</strong>. Eau couleur emeraude intense, sable blanc finissime, fond qui descend doucement. Atteignable <strong>uniquement a pied</strong> via un sentier (~45 minutes).
+    </p>
+
+    <p>Depuis 2021, l'acces est <strong>regule</strong> :</p>
+
+    <ul>
+      <li><strong>Reservation obligatoire</strong> sur le portail Parc National</li>
+      <li>Uniquement avec <strong>guide environnemental autorise</strong></li>
+      <li>2 creneaux/jour : matin (09h00-13h00) et apres-midi (14h30-18h30)</li>
+      <li>Maximum 50 personnes/creneau</li>
+      <li>Cout : ~25 €/personne</li>
+      <li>En haute saison, les places s'epuisent 7-15 jours avant</li>
+    </ul>
+
+    <p>
+      <strong>Conseil</strong> : si vous ne pouvez pas reserver Cala Coticcio, allez a la <strong>Spiaggia del Relitto</strong> toujours sur Caprera (libre, acces direct via sentier 45 minutes, qualite eau similaire, moins frequente).
+    </p>
+
+    <h2>Comment arriver a Palau (point d'embarquement)</h2>
+
+    <p>Palau est a :</p>
+
+    <ul>
+      <li><strong>50 minutes d'Olbia</strong> (50 km via SS125)</li>
+      <li><strong>50 minutes de l'aeroport Olbia OLB</strong></li>
+      <li><strong>15 minutes de Cannigione</strong></li>
+      <li><strong>20 minutes de Baja Sardinia</strong></li>
+      <li><strong>30 minutes de Porto Cervo</strong></li>
+    </ul>
+
+    <p>
+      <strong>Parking a Palau</strong> : le port a plusieurs parkings payants (8-15 €/jour). En haute saison, allez tot (avant 8h30) ou utilisez les parkings peripheriques a 5-10 minutes a pied du port.
+    </p>
+
+    <p>
+      Pour arriver a Palau depuis Olbia avec un vehicule de location, ideal est une <a href="/fr/flotte/mercedes-classe-a-location-olbia">Mercedes Classe A</a> ou <a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a>. La page <a href="/fr/location-voiture-palau">location voiture Palau</a> detaille le service de livraison.
+    </p>
+
+    <h2>Cout journalier a La Maddalena</h2>
+
+    <h3>"Petit budget" (ferry + La Maddalena a pied)</h3>
+    <ul>
+      <li>Ferry a/r passager : 8 €</li>
+      <li>Dejeuner trattoria locale : 25-40 €</li>
+      <li>Snack/cafe : 10 €</li>
+      <li><strong>Total par personne : ~50 €</strong></li>
+    </ul>
+
+    <h3>"Complete" (excursion bateau tout inclus)</h3>
+    <ul>
+      <li>Excursion bateau avec dejeuner a bord : 60-90 €/personne</li>
+      <li>Parking Palau : 10-15 € (par vehicule)</li>
+      <li>Eau/snacks supplementaires : 10 €</li>
+      <li><strong>Total par personne : ~80-115 €</strong></li>
+    </ul>
+
+    <h3>"Exclusive" (charter prive)</h3>
+    <ul>
+      <li>Charter motoscaff 10m avec skipper : 600-1 200 €/jour</li>
+      <li>Carburant : 200-400 €</li>
+      <li>Dejeuner a bord : 50-100 €/personne</li>
+      <li><strong>Total : 1 000-2 000 € total pour couple/petit groupe</strong></li>
+    </ul>
+
+    <h2>Meilleures periodes pour visiter</h2>
+
+    <ul>
+      <li><strong>Mai - debut juin</strong> : saison parfaite. Eau deja 19-22°C, pas de foule, prix excursions reduits</li>
+      <li><strong>Septembre</strong> : saison parfaite. Eau 23-25°C, prix moyens, atmosphere tranquille</li>
+      <li><strong>Juillet - aout</strong> : top pour la baignade (eau 25-27°C) mais excursions pleines, files, prix eleves</li>
+      <li><strong>Octobre</strong> : encore possible. Services reduits mais tranquillite garantie</li>
+      <li><strong>Novembre - avril</strong> : nombreux services touristiques fermes, ferries reguliers mais excursions tres limitees</li>
+    </ul>
+
+    <h2>Conseils pratiques</h2>
+
+    <ul>
+      <li><strong>Reservez ferries en ligne</strong> en haute saison : en aout vous risquez de ne pas trouver de place</li>
+      <li><strong>Apportez vos snacks/eau</strong> : a bord des excursions le dejeuner est inclus mais les extras (eau) coutent</li>
+      <li><strong>Creme solaire 50+ resistante a l'eau</strong> : on se brule facilement par reflexion du bateau</li>
+      <li><strong>Chapeau et lunettes</strong> : le vent est constant</li>
+      <li><strong>Masque + tuba</strong> : snorkeling fantastique partout, surtout Cala Granara et Spargi</li>
+      <li><strong>Anti-mal de mer</strong> : si sensible, prenez 1 heure avant le depart</li>
+      <li><strong>Telephone</strong> : dans certaines zones de l'archipel il n'y a pas de signal</li>
+      <li><strong>Respectez le Parc</strong> : pas de dechets, ne deplacez pas sable/coquillages, pas de drones sans autorisation</li>
+    </ul>
+
+    <h2>Combiner La Maddalena avec le reste du sejour</h2>
+
+    <p>La journee a La Maddalena se combine parfaitement avec un sejour a :</p>
+
+    <ul>
+      <li><strong><a href="/fr/location-voiture-palau">Palau</a></strong> : pour ceux qui veulent etre pres du port d'embarquement</li>
+      <li><strong><a href="/fr/location-voiture-cannigione">Cannigione</a></strong> : pour excellents restaurants poisson, 15 min de Palau</li>
+      <li><strong><a href="/fr/location-voiture-baja-sardinia">Baja Sardinia</a></strong> : vie mondaine, 20 min de Palau</li>
+      <li><strong><a href="/fr/location-voiture-porto-cervo">Porto Cervo</a></strong> : luxe, 30 min de Palau</li>
+    </ul>
+
+    <p>
+      Pour un itineraire complet, voir notre <a href="/fr/guide/itineraire-7-jours-costa-smeralda-depuis-olbia">itineraire de 7 jours en Costa Smeralda</a> qui dedie une journee entiere a La Maddalena.
+    </p>
+
+    <h2>En resume</h2>
+
+    <ul>
+      <li><strong>L'archipel de La Maddalena merite 1 journee complete</strong> de votre sejour Costa Smeralda</li>
+      <li><strong>Modalite la plus conseillee</strong> : excursion bateau organisee (60-90 €/personne) pour voir Spargi + Budelli + Santa Maria</li>
+      <li><strong>Point d'embarquement</strong> : Palau (50 min d'Olbia)</li>
+      <li><strong>Cala Coticcio (Caprera)</strong> : reservez en avance si vous voulez la visiter</li>
+      <li><strong>Saison ideale</strong> : mai-juin ou septembre</li>
+    </ul>
+
+    <p>
+      Pour organiser la location de la voiture d'Olbia a Palau coordonnee avec l'horaire ferry, contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

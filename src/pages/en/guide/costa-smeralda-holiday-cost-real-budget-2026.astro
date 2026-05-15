@@ -1,0 +1,213 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("costa-smeralda-holiday-cost-real-budget-2026")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+  about: { "@type": "Thing", name: "Costa Smeralda holiday budget" },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: "Costa Smeralda holiday cost", path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>Costa Smeralda has a reputation for being "very expensive"</strong>, and indeed July-August peaks can be prohibitive. But a Costa Smeralda holiday <strong>can cost from €700 to €7,000 per person</strong> for a week, depending on season, accommodation, restaurants and activities. This guide collects real 2026 numbers — seen by Francesco and Salvatore Milo who manage clients with very different budgets every year — divided by profile (solo backpacker, average couple, family, luxury group). All prices are <strong>per person, 7 days</strong>, unless otherwise indicated.
+    </p>
+
+    <h2>The 5 main expense categories</h2>
+
+    <ol>
+      <li><strong>Transport</strong>: flight or ferry + car</li>
+      <li><strong>Accommodation</strong>: hotel, B&B, villa, agriturismo</li>
+      <li><strong>Food</strong>: restaurants, supermarkets, bars</li>
+      <li><strong>Beaches</strong>: loungers, umbrellas, parking, beach clubs</li>
+      <li><strong>Activities</strong>: boat trips, events, nightlife</li>
+    </ol>
+
+    <h2>Profile 1 — Low-budget backpacker (solo, low season)</h2>
+
+    <p><strong>Season</strong>: May or October · <strong>Accommodation</strong>: hostel/cheap B&B</p>
+
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Rome-Olbia return flight</td><td>€50-100</td></tr>
+        <tr><td>Fiat Panda car hire 7 days</td><td>€280</td></tr>
+        <tr><td>Fuel</td><td>€50</td></tr>
+        <tr><td>Hostel/B&B 7 nights (shared room)</td><td>€200-350</td></tr>
+        <tr><td>Food (supermarket + 2 restaurants)</td><td>€150-200</td></tr>
+        <tr><td>Free beaches + 1 beach club</td><td>€40-80</td></tr>
+        <tr><td>Activities zero or 1 cheap boat trip</td><td>€0-50</td></tr>
+        <tr><td><strong>TOTAL 1 person, 7 days</strong></td><td><strong>€770 - €1,110</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>What you can do</strong>: tour the free beaches (Pittulongu, Bados, Cala Sabina, La Cinta free area, Spiaggia del Principe), visit centres (Olbia, San Pantaleo, Tempio Pausania), have 1-2 dinners out. <strong>What you CAN'T do</strong>: lunch at Piazzetta in Porto Cervo, stay in Costa Smeralda (only Olbia or inland), drink at exclusive venues.
+    </p>
+
+    <h2>Profile 2 — Average couple (September, 3-4 star hotel)</h2>
+
+    <p><strong>Season</strong>: September · <strong>Accommodation</strong>: 3-4 star hotel in Olbia or Cannigione</p>
+
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Couple cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Return flights 2 people</td><td>€200-400</td></tr>
+        <tr><td>Mercedes A-Class car hire 7 days</td><td>€650-900</td></tr>
+        <tr><td>Fuel + parking</td><td>€150-200</td></tr>
+        <tr><td>3-4 star hotel 7 nights (half board)</td><td>€800-1,300</td></tr>
+        <tr><td>Food (various restaurants)</td><td>€500-800</td></tr>
+        <tr><td>Beach club + entries</td><td>€200-400</td></tr>
+        <tr><td>1 boat trip + some aperitifs</td><td>€150-300</td></tr>
+        <tr><td><strong>TOTAL couple, 7 days</strong></td><td><strong>€2,650 - €4,300</strong></td></tr>
+        <tr><td><strong>Per person</strong></td><td><strong>€1,325 - €2,150</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Profile 3 — Family of 4 (July, 4-star hotel)</h2>
+
+    <p><strong>Season</strong>: July · <strong>Accommodation</strong>: family 4-star hotel</p>
+
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Family of 4 cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Return flights 4 people (high season)</td><td>€800-1,500</td></tr>
+        <tr><td>Jeep Avenger car hire 7 days</td><td>€770-900</td></tr>
+        <tr><td>Fuel + parking</td><td>€200-300</td></tr>
+        <tr><td>4-star family hotel 7 nights (half board)</td><td>€2,500-4,500</td></tr>
+        <tr><td>Food (various restaurants)</td><td>€1,000-1,700</td></tr>
+        <tr><td>Beach club + parking</td><td>€500-900</td></tr>
+        <tr><td>2 family excursions (boat + Tavolara)</td><td>€400-600</td></tr>
+        <tr><td>Various (souvenirs, ice creams, snacks)</td><td>€200-400</td></tr>
+        <tr><td><strong>TOTAL family of 4, 7 days</strong></td><td><strong>€6,370 - €10,800</strong></td></tr>
+        <tr><td><strong>Per person</strong></td><td><strong>€1,590 - €2,700</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Profile 4 — Luxury (August, 5-star Cala di Volpe hotel)</h2>
+
+    <p><strong>Season</strong>: August · <strong>Accommodation</strong>: 5-star hotel (Cala di Volpe, Romazzino, Pitrizza, Cervo Hotel)</p>
+
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Couple cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Business class return flights</td><td>€800-1,500</td></tr>
+        <tr><td>BMW M2 car hire 7 days</td><td>€2,800-3,500</td></tr>
+        <tr><td>5-star hotel 7 nights</td><td>€10,000-25,000</td></tr>
+        <tr><td>Michelin restaurants / gourmet experiences</td><td>€2,500-5,000</td></tr>
+        <tr><td>Exclusive beach club + spa</td><td>€1,500-3,500</td></tr>
+        <tr><td>1-day yacht charter</td><td>€2,000-5,000</td></tr>
+        <tr><td>Nightclubs / Billionaire</td><td>€1,000-3,000</td></tr>
+        <tr><td><strong>TOTAL couple, 7 days</strong></td><td><strong>€20,600 - €46,500</strong></td></tr>
+        <tr><td><strong>Per person</strong></td><td><strong>€10,300 - €23,250</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Single costs to keep in mind</h2>
+
+    <h3>Restaurants</h3>
+
+    <ul>
+      <li><strong>Pizza in normal pizzeria</strong>: €12-20 (Olbia), €18-30 (Costa Smeralda)</li>
+      <li><strong>Trattoria fish dinner</strong>: €50-80/person</li>
+      <li><strong>Average restaurant Porto Cervo dinner</strong>: €80-150/person</li>
+      <li><strong>Michelin restaurant dinner</strong>: €200-400/person</li>
+      <li><strong>Coffee</strong>: €1.50-2 (Olbia), €4-7 (Piazzetta Porto Cervo)</li>
+      <li><strong>Spritz/cocktail</strong>: €5-8 (Olbia), €15-30 (Costa Smeralda venues)</li>
+    </ul>
+
+    <h3>Accommodation (per night, high season)</h3>
+
+    <ul>
+      <li><strong>Camping/Glamping at Pittulongu</strong>: €60-130</li>
+      <li><strong>Olbia B&B</strong>: €80-180</li>
+      <li><strong>3-star hotel Olbia/Cannigione</strong>: €120-250</li>
+      <li><strong>4-star hotel Costa Smeralda</strong>: €250-600</li>
+      <li><strong>5-star hotel Costa Smeralda</strong>: €1,500-4,000</li>
+      <li><strong>Private villa Costa Smeralda 6 people</strong>: €600-3,000/night</li>
+    </ul>
+
+    <h3>Beaches</h3>
+
+    <ul>
+      <li><strong>Free beach</strong>: €0 (parking €5-15)</li>
+      <li><strong>Lounger + umbrella average beach club</strong>: €30-60/day</li>
+      <li><strong>Lounger + umbrella Costa Smeralda beach club</strong>: €60-150/day</li>
+      <li><strong>Exclusive cabana Phi Beach / Cala di Volpe</strong>: €200-800/day</li>
+    </ul>
+
+    <h2>How to save without sacrificing</h2>
+
+    <ol>
+      <li><strong>Go in May or September</strong>: same places, prices -40/-50%</li>
+      <li><strong>Stay in Olbia or Cannigione, not in Costa Smeralda</strong>: save 60-70% on accommodation, lose 30-40 min/day driving</li>
+      <li><strong>Eat 1-2 times/day out, other meals at supermarket</strong>: easily save €200-400/couple/week</li>
+      <li><strong>Free beach in the morning, beach club afternoon</strong>: some beach clubs have reduced rates after 15:00</li>
+      <li><strong>Coffee at local bar, not in Piazzetta</strong>: difference of €5/day × 7 days = €35 saved</li>
+      <li><strong>Adequate vehicle category</strong>: a <a href="/en/fleet/jeep-avenger-hire-olbia">Jeep Avenger</a> at €60-110/day covers 95% of needs. A Mercedes A-Class costs €30/day more (€210/week) — assess if it's worth it</li>
+    </ol>
+
+    <h2>Quick comparison: 7 days in Costa Smeralda</h2>
+
+    <table>
+      <thead>
+        <tr><th>Profile</th><th>People</th><th>Season</th><th>Total spend</th><th>Per person</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Backpacker</td><td>1</td><td>May/October</td><td>€770-1,110</td><td>€770-1,110</td></tr>
+        <tr><td>Average couple</td><td>2</td><td>September</td><td>€2,650-4,300</td><td>€1,325-2,150</td></tr>
+        <tr><td>Family of 4</td><td>4</td><td>July</td><td>€6,370-10,800</td><td>€1,590-2,700</td></tr>
+        <tr><td>Luxury couple</td><td>2</td><td>August</td><td>€20,600-46,500</td><td>€10,300-23,250</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Final budget tips</h2>
+
+    <ul>
+      <li><strong>Book car and flights in advance</strong>: in February for July, 60 days before for other seasons</li>
+      <li><strong>Watch for hidden surcharges</strong>: large rental networks add €100-300 in non-visible extras (see <a href="/en/guide/car-hire-olbia-airport-practical-guide">Olbia airport car hire guide</a>)</li>
+      <li><strong>Consider hotel half board</strong>: in Costa Smeralda 2 daily restaurants are +€100/person. Half board often pays</li>
+      <li><strong>Don't underestimate parking</strong>: €15-30/day × 7 days = €100-200. Often ignored in budgets</li>
+    </ul>
+
+    <p>
+      To choose the right vehicle for your budget, see the <a href="/en/rates">rates page</a> and our <a href="/en/fleet/compare">vehicle comparisons</a>. For a personalised quote (also for long-term rentals with discounts), contact Francesco and Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

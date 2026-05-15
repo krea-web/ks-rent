@@ -1,0 +1,201 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("budget-vacances-costa-smeralda-cout-reel-2026")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: { "@type": "Thing", name: "Budget vacances Costa Smeralda" },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Budget vacances Costa Smeralda", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>La Costa Smeralda a la reputation d'etre "tres chere"</strong>, et en effet les pics de juillet-aout peuvent etre prohibitifs. Mais des vacances en Costa Smeralda <strong>peuvent couter de 700 € a 7 000 € par personne</strong> pour une semaine, selon la saison, l'hebergement, les restaurants et les activites. Ce guide rassemble les chiffres reels 2026 — vus par Francesco et Salvatore Milo qui gerent chaque annee des clients aux budgets tres differents — divises par profil (backpacker solo, couple moyen, famille, groupe luxe). Tous les prix sont <strong>par personne, 7 jours</strong>, sauf indication contraire.
+    </p>
+
+    <h2>Les 5 principaux postes de depense</h2>
+
+    <ol>
+      <li><strong>Transport</strong> : vol ou ferry + voiture</li>
+      <li><strong>Hebergement</strong> : hotel, B&B, villa, agriturismo</li>
+      <li><strong>Nourriture</strong> : restaurants, supermarches, bars</li>
+      <li><strong>Plages</strong> : transats, parasols, parking, etablissements</li>
+      <li><strong>Activites</strong> : excursions en bateau, evenements, vie nocturne</li>
+    </ol>
+
+    <h2>Profil 1 — Backpacker petit budget (solo, basse saison)</h2>
+
+    <p><strong>Saison</strong> : mai ou octobre · <strong>Hebergement</strong> : auberge/B&B economique</p>
+
+    <table>
+      <thead><tr><th>Poste</th><th>Cout</th></tr></thead>
+      <tbody>
+        <tr><td>Vol Paris-Olbia a/r</td><td>100-180 €</td></tr>
+        <tr><td>Location Fiat Panda 7 jours</td><td>280 €</td></tr>
+        <tr><td>Carburant</td><td>50 €</td></tr>
+        <tr><td>Auberge/B&B 7 nuits (chambre partagee)</td><td>200-350 €</td></tr>
+        <tr><td>Nourriture (supermarche + 2 restaurants)</td><td>150-200 €</td></tr>
+        <tr><td>Plages libres + 1 etablissement</td><td>40-80 €</td></tr>
+        <tr><td>Activites zero ou 1 excursion bateau eco</td><td>0-50 €</td></tr>
+        <tr><td><strong>TOTAL 1 personne, 7 jours</strong></td><td><strong>820 - 1 190 €</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Profil 2 — Couple moyen (septembre, hotel 3-4 etoiles)</h2>
+
+    <p><strong>Saison</strong> : septembre · <strong>Hebergement</strong> : hotel 3-4 etoiles a Olbia ou Cannigione</p>
+
+    <table>
+      <thead><tr><th>Poste</th><th>Cout couple</th></tr></thead>
+      <tbody>
+        <tr><td>Vols a/r 2 personnes</td><td>250-450 €</td></tr>
+        <tr><td>Location Mercedes Classe A 7 jours</td><td>650-900 €</td></tr>
+        <tr><td>Carburant + parkings</td><td>150-200 €</td></tr>
+        <tr><td>Hotel 3-4 etoiles 7 nuits (demi-pension)</td><td>800-1 300 €</td></tr>
+        <tr><td>Nourriture (divers restaurants)</td><td>500-800 €</td></tr>
+        <tr><td>Plage etablissement + entrees</td><td>200-400 €</td></tr>
+        <tr><td>1 excursion bateau + quelques aperitifs</td><td>150-300 €</td></tr>
+        <tr><td><strong>TOTAL couple, 7 jours</strong></td><td><strong>2 700 - 4 350 €</strong></td></tr>
+        <tr><td><strong>Par personne</strong></td><td><strong>1 350 - 2 175 €</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Profil 3 — Famille 4 personnes (juillet, hotel 4 etoiles)</h2>
+
+    <p><strong>Saison</strong> : juillet · <strong>Hebergement</strong> : hotel famille 4 etoiles</p>
+
+    <table>
+      <thead><tr><th>Poste</th><th>Cout famille de 4</th></tr></thead>
+      <tbody>
+        <tr><td>Vols a/r 4 personnes (haute saison)</td><td>1 000-1 800 €</td></tr>
+        <tr><td>Location Jeep Avenger 7 jours</td><td>770-900 €</td></tr>
+        <tr><td>Carburant + parkings</td><td>200-300 €</td></tr>
+        <tr><td>Hotel famille 4 etoiles 7 nuits (DP)</td><td>2 500-4 500 €</td></tr>
+        <tr><td>Nourriture (divers restaurants)</td><td>1 000-1 700 €</td></tr>
+        <tr><td>Plage etablissement + parkings</td><td>500-900 €</td></tr>
+        <tr><td>2 excursions famille (bateau + Tavolara)</td><td>400-600 €</td></tr>
+        <tr><td>Divers (souvenirs, glaces, snacks)</td><td>200-400 €</td></tr>
+        <tr><td><strong>TOTAL famille 4, 7 jours</strong></td><td><strong>6 570 - 11 100 €</strong></td></tr>
+        <tr><td><strong>Par personne</strong></td><td><strong>1 640 - 2 775 €</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Profil 4 — Luxe (aout, hotel 5 etoiles Cala di Volpe)</h2>
+
+    <p><strong>Saison</strong> : aout · <strong>Hebergement</strong> : hotel 5 etoiles</p>
+
+    <table>
+      <thead><tr><th>Poste</th><th>Cout couple</th></tr></thead>
+      <tbody>
+        <tr><td>Vols business class a/r</td><td>1 000-2 000 €</td></tr>
+        <tr><td>Location BMW M2 7 jours</td><td>2 800-3 500 €</td></tr>
+        <tr><td>Hotel 5 etoiles 7 nuits</td><td>10 000-25 000 €</td></tr>
+        <tr><td>Restaurants etoiles / experiences gourmet</td><td>2 500-5 000 €</td></tr>
+        <tr><td>Etablissement exclusif + spa</td><td>1 500-3 500 €</td></tr>
+        <tr><td>Yacht 1 journee</td><td>2 000-5 000 €</td></tr>
+        <tr><td>Boites de nuit / Billionaire</td><td>1 000-3 000 €</td></tr>
+        <tr><td><strong>TOTAL couple, 7 jours</strong></td><td><strong>20 800 - 47 000 €</strong></td></tr>
+        <tr><td><strong>Par personne</strong></td><td><strong>10 400 - 23 500 €</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Couts unitaires a retenir</h2>
+
+    <h3>Restaurants</h3>
+
+    <ul>
+      <li><strong>Pizza en pizzeria normale</strong> : 12-20 € (Olbia), 18-30 € (Costa Smeralda)</li>
+      <li><strong>Diner trattoria poisson</strong> : 50-80 €/personne</li>
+      <li><strong>Diner restaurant moyen Porto Cervo</strong> : 80-150 €/personne</li>
+      <li><strong>Diner restaurant etoile</strong> : 200-400 €/personne</li>
+      <li><strong>Cafe</strong> : 1,50-2 € (Olbia), 4-7 € (Piazzetta Porto Cervo)</li>
+      <li><strong>Spritz/cocktail</strong> : 5-8 € (Olbia), 15-30 € (Costa Smeralda)</li>
+    </ul>
+
+    <h3>Hebergement (par nuit, haute saison)</h3>
+
+    <ul>
+      <li><strong>Camping/Glamping a Pittulongu</strong> : 60-130 €</li>
+      <li><strong>B&B a Olbia</strong> : 80-180 €</li>
+      <li><strong>Hotel 3 etoiles Olbia/Cannigione</strong> : 120-250 €</li>
+      <li><strong>Hotel 4 etoiles Costa Smeralda</strong> : 250-600 €</li>
+      <li><strong>Hotel 5 etoiles Costa Smeralda</strong> : 1 500-4 000 €</li>
+      <li><strong>Villa privee Costa Smeralda 6 personnes</strong> : 600-3 000 €/nuit</li>
+    </ul>
+
+    <h3>Plages</h3>
+
+    <ul>
+      <li><strong>Plage libre</strong> : 0 € (parking 5-15 €)</li>
+      <li><strong>Transat + parasol etablissement moyen</strong> : 30-60 €/jour</li>
+      <li><strong>Transat + parasol etablissement Costa Smeralda</strong> : 60-150 €/jour</li>
+      <li><strong>Cabana exclusive Phi Beach / Cala di Volpe</strong> : 200-800 €/jour</li>
+    </ul>
+
+    <h2>Comment economiser sans renoncer</h2>
+
+    <ol>
+      <li><strong>Allez en mai ou septembre</strong> : memes lieux, prix -40/-50%</li>
+      <li><strong>Logez a Olbia ou Cannigione, pas en Costa Smeralda</strong> : economisez 60-70% sur l'hebergement, perdez 30-40 min/jour en voiture</li>
+      <li><strong>Mangez 1-2 fois/jour dehors, autres repas au supermarche</strong> : economisez facilement 200-400 €/couple/semaine</li>
+      <li><strong>Plage libre le matin, etablissement l'apres-midi</strong> : certains etablissements ont des tarifs reduits apres 15h00</li>
+      <li><strong>Cafe au bar local, pas en Piazzetta</strong> : difference 5 €/jour × 7 jours = 35 € economises</li>
+      <li><strong>Categorie de vehicule adequate</strong> : une <a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a> a 60-110 €/jour couvre 95% des besoins</li>
+    </ol>
+
+    <h2>Comparaison rapide : 7 jours en Costa Smeralda</h2>
+
+    <table>
+      <thead>
+        <tr><th>Profil</th><th>Personnes</th><th>Saison</th><th>Depense totale</th><th>Par personne</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Backpacker</td><td>1</td><td>Mai/Octobre</td><td>820-1 190 €</td><td>820-1 190 €</td></tr>
+        <tr><td>Couple moyen</td><td>2</td><td>Septembre</td><td>2 700-4 350 €</td><td>1 350-2 175 €</td></tr>
+        <tr><td>Famille 4</td><td>4</td><td>Juillet</td><td>6 570-11 100 €</td><td>1 640-2 775 €</td></tr>
+        <tr><td>Couple luxe</td><td>2</td><td>Aout</td><td>20 800-47 000 €</td><td>10 400-23 500 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Conseils budget finaux</h2>
+
+    <ul>
+      <li><strong>Reservez voiture et vols en avance</strong> : en fevrier pour juillet, 60 jours avant pour autres saisons</li>
+      <li><strong>Verifiez les supplements caches</strong> : les grands reseaux de location ajoutent 100-300 € d'extras non visibles (voir <a href="/fr/guide/location-voiture-aeroport-olbia-guide-pratique">guide location voiture aeroport Olbia</a>)</li>
+      <li><strong>Considerez la demi-pension hotel</strong> : en Costa Smeralda 2 restaurants par jour sont +100 €/personne. La demi-pension est souvent avantageuse</li>
+      <li><strong>Ne sous-estimez pas les parkings</strong> : 15-30 €/jour × 7 jours = 100-200 €. Souvent ignores dans le budget</li>
+    </ul>
+
+    <p>
+      Pour choisir le bon vehicule selon votre budget, voir la <a href="/fr/tarifs">page tarifs</a> et nos <a href="/fr/flotte/comparer">comparaisons vehicules</a>. Pour un devis personnalise (aussi pour locations longue duree avec remises), contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

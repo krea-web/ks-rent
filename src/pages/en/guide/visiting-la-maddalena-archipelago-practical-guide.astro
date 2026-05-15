@@ -1,0 +1,242 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("visiting-la-maddalena-archipelago-practical-guide")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+  about: { "@type": "Place", name: "La Maddalena Archipelago", containedInPlace: { "@type": "AdministrativeArea", name: "Sardinia" } },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: "Visiting La Maddalena", path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>La Maddalena Archipelago is one of Europe's most important marine national parks</strong>: 7 main islands (La Maddalena, Caprera, Spargi, Budelli, Razzoli, Santo Stefano, Santa Maria) and over 50 islets, between north-eastern Sardinia and Corsica. Caribbean-clear water, white or pink sands, fish-rich seabeds. It is visited from Costa Smeralda — Palau is the main embarkation point. This practical guide explains how to visit the archipelago in 2026: ferries, boat trips, accessible islands, mandatory booking for certain beaches, real costs.
+    </p>
+
+    <h2>3 ways to visit the archipelago</h2>
+
+    <h3>1. Ferry + day on La Maddalena island (cheapest)</h3>
+
+    <p>
+      Departure from <a href="/en/car-hire-palau">Palau</a> with public ferries shuttling to La Maddalena every 30 minutes. <strong>Crossing time</strong>: 15-20 minutes. <strong>2026 costs</strong>: €5-8/person return (foot passenger); €25-50 return car + passengers.
+    </p>
+
+    <p>Once on La Maddalena island, you have 2 sub-options:</p>
+
+    <ul>
+      <li><strong>Visit only La Maddalena town</strong>: old town, Piazza Garibaldi, Cala Gavetta, naval museum. Food and shopping</li>
+      <li><strong>Hire a small car on the island</strong> (or use yours off the ferry) to tour the coves: Spalmatore, Bassa Trinita, Monti d'Arena, Cala Lunga, Punta Tegge</li>
+    </ul>
+
+    <p><strong>Pros</strong>: cheap, autonomous, freedom of timing. <strong>Cons</strong>: you only see La Maddalena (most "civilised"), you don't see Spargi, Budelli, deep Caprera.</p>
+
+    <h3>2. Organised boat trip (most complete)</h3>
+
+    <p>
+      Board a tourist boat from Palau or Cannigione that takes you on a day trip visiting 3-5 islands with stops at enchanting beaches. Time: about 8 hours (09:00-17:00).
+    </p>
+
+    <p><strong>2026 costs</strong>: €40-90 per person (includes lunch on board or beach stop). Some companies offer family discount packages.</p>
+
+    <p><strong>Typical itinerary</strong>:</p>
+
+    <ol>
+      <li>Departure from Palau at 09:00</li>
+      <li>Stop at <strong>Spiaggia Rosa di Budelli</strong> (view from boat, landing prohibited since 1994 to protect the sand)</li>
+      <li>Stop at <strong>Cala Corsara di Spargi</strong>: swim + lunch on board</li>
+      <li>Stop at <strong>Cala Granara or Cala Lunga di Spargi</strong>: snorkelling</li>
+      <li>Possible stop at <strong>Santa Maria</strong> (crystal waters)</li>
+      <li>Return to Palau at 17:00-17:30</li>
+    </ol>
+
+    <p><strong>Pros</strong>: see the most iconic spots in 1 day. <strong>Cons</strong>: rigid timing, brief stops at each beach, many people on board.</p>
+
+    <h3>3. Private skippered charter (most exclusive)</h3>
+
+    <p>You hire a private boat (motor boat, sailboat) with professional skipper. You decide the route, timing, where to stop.</p>
+
+    <p><strong>2026 costs</strong>:</p>
+
+    <ul>
+      <li><strong>Self-drive 6m motorboat</strong> (4 people): €250-450/day + fuel</li>
+      <li><strong>8-10m motorboat with skipper</strong> (6-8 people): €600-1,200/day + fuel</li>
+      <li><strong>10-12m sailboat with skipper</strong>: €800-1,500/day</li>
+      <li><strong>15m+ yacht with skipper + hostess</strong>: €2,000-5,000/day</li>
+    </ul>
+
+    <h2>Main islands to know</h2>
+
+    <h3>La Maddalena (the only inhabited)</h3>
+
+    <p>
+      <strong>Population</strong>: ~10,000 inhabitants. The only one with developed tourist services: hotels, restaurants, bars, supermarkets, hospital, police. <strong>Top beaches</strong>: Spalmatore, Bassa Trinita, Monti d'Arena.
+    </p>
+
+    <h3>Caprera</h3>
+
+    <p>
+      Connected to La Maddalena by a road bridge (15 min by car). Famous as <strong>Garibaldi's residence</strong>: his house is now a national museum. <strong>Top beaches</strong>: Cala Coticcio "Tahiti", Spiaggia del Relitto, Cala Brigantina, Cala Andreani. <strong>Note</strong>: Cala Coticcio requires mandatory booking with environmental guide (2 shifts/day, 50 people/shift, ~€25/person).
+    </p>
+
+    <h3>Spargi</h3>
+
+    <p>Uninhabited. <strong>Cala Corsara</strong> is its most famous beach, with a natural granite block shaped like a "Deer" (icon). <strong>Cala Granara</strong> and <strong>Cala Lunga</strong> are other enchanting beaches. Visited only by boat.</p>
+
+    <h3>Budelli</h3>
+
+    <p>
+      Uninhabited. Famous for <strong>Spiaggia Rosa</strong>, with pink sand from marine microorganisms. <strong>Landing prohibited</strong> since 1994 to protect the sand: visible only from boats. National Park integral reserve.
+    </p>
+
+    <h3>Razzoli, Santo Stefano, Santa Maria</h3>
+
+    <p>Smaller, less touristy. Razzoli has a historic lighthouse near Corsica border. Santa Maria has top snorkelling. Visited mostly by private charter.</p>
+
+    <h2>Cala Coticcio: the most desired beach (with booking)</h2>
+
+    <p>
+      <strong>Cala Coticcio</strong> on Caprera is nicknamed <strong>"Tahiti of Sardinia"</strong>. Intensely emerald water, finest white sand, gradually descending seabed. Reachable <strong>only on foot</strong> from a trail (~45 minutes).
+    </p>
+
+    <p>Since 2021 access is <strong>regulated</strong>:</p>
+
+    <ul>
+      <li><strong>Mandatory booking</strong> on the National Park portal</li>
+      <li>Only with <strong>authorised environmental hiking guide</strong></li>
+      <li>2 shifts/day: morning (09:00-13:00) and afternoon (14:30-18:30)</li>
+      <li>Maximum 50 people/shift</li>
+      <li>Cost: ~€25/person</li>
+      <li>In high season slots sell out 7-15 days in advance</li>
+    </ul>
+
+    <p>
+      <strong>Tip</strong>: if you can't book Cala Coticcio, try <strong>Spiaggia del Relitto</strong> on Caprera (free, direct trail access 45 minutes, similar water quality, less crowded).
+    </p>
+
+    <h2>How to reach Palau (embarkation point)</h2>
+
+    <p>Palau is at:</p>
+
+    <ul>
+      <li><strong>50 minutes from Olbia</strong> (50 km via SS125)</li>
+      <li><strong>50 minutes from Olbia OLB Airport</strong></li>
+      <li><strong>15 minutes from Cannigione</strong></li>
+      <li><strong>20 minutes from Baja Sardinia</strong></li>
+      <li><strong>30 minutes from Porto Cervo</strong></li>
+    </ul>
+
+    <p>
+      <strong>Parking in Palau</strong>: the port has several paid car parks (€8-15/day). In high season arrive early (by 08:30) or use peripheral car parks 5-10 minutes walk from the port.
+    </p>
+
+    <p>
+      To reach Palau from Olbia with a rental vehicle, ideal is a <a href="/en/fleet/mercedes-a-class-hire-olbia">Mercedes A-Class</a> or <a href="/en/fleet/jeep-avenger-hire-olbia">Jeep Avenger</a>. The <a href="/en/car-hire-palau">Palau car hire page</a> details the area delivery service.
+    </p>
+
+    <h2>Daily cost at La Maddalena</h2>
+
+    <h3>"Low budget" (ferry + La Maddalena on foot)</h3>
+    <ul>
+      <li>Return ferry passenger: €8</li>
+      <li>Local trattoria lunch: €25-40</li>
+      <li>Snack/coffee: €10</li>
+      <li><strong>Total per person: ~€50</strong></li>
+    </ul>
+
+    <h3>"Complete" (boat trip all-inclusive)</h3>
+    <ul>
+      <li>Boat trip with lunch on board: €60-90/person</li>
+      <li>Palau parking: €10-15 (per vehicle)</li>
+      <li>Extra water/snacks: €10</li>
+      <li><strong>Total per person: ~€80-115</strong></li>
+    </ul>
+
+    <h3>"Exclusive" (private charter)</h3>
+    <ul>
+      <li>10m motorboat charter with skipper: €600-1,200/day</li>
+      <li>Fuel: €200-400</li>
+      <li>Lunch on board (catering or restaurant): €50-100/person</li>
+      <li><strong>Total: €1,000-2,000 total for couple/small group</strong></li>
+    </ul>
+
+    <h2>Best times to visit</h2>
+
+    <ul>
+      <li><strong>May - early June</strong>: perfect season. Water already 19-22°C, no crowds, reduced tour prices</li>
+      <li><strong>September</strong>: perfect season. Water 23-25°C, average prices, calm atmosphere</li>
+      <li><strong>July - August</strong>: top for swimming (water 25-27°C) but tours are full, queues, high prices</li>
+      <li><strong>October</strong>: still possible. Reduced services but guaranteed tranquility</li>
+      <li><strong>November - April</strong>: many tourist services closed, regular ferries but very limited tours</li>
+    </ul>
+
+    <h2>Practical tips</h2>
+
+    <ul>
+      <li><strong>Book ferries online</strong> in high season: in August you risk no spot</li>
+      <li><strong>Bring your own snacks/water</strong>: lunch is included on tours but extras cost</li>
+      <li><strong>50+ waterproof sunscreen</strong>: easy to burn from boat reflection</li>
+      <li><strong>Hat and sunglasses</strong>: constant wind</li>
+      <li><strong>Mask + snorkel</strong>: fantastic snorkelling everywhere, especially Cala Granara and Spargi</li>
+      <li><strong>Anti-seasickness</strong>: if sensitive, take 1 hour before departure</li>
+      <li><strong>Phone</strong>: in some archipelago areas there is no signal</li>
+      <li><strong>Respect the Park</strong>: no litter, don't move sand/shells, no drones without authorisation</li>
+    </ul>
+
+    <h2>Combining La Maddalena with the rest of the holiday</h2>
+
+    <p>The day at La Maddalena combines perfectly with a stay in:</p>
+
+    <ul>
+      <li><strong><a href="/en/car-hire-palau">Palau</a></strong>: for those who want to be near the embarkation port</li>
+      <li><strong><a href="/en/car-hire-cannigione">Cannigione</a></strong>: for excellent fish restaurants, 15 min from Palau</li>
+      <li><strong><a href="/en/car-hire-baja-sardinia">Baja Sardinia</a></strong>: nightlife, 20 min from Palau</li>
+      <li><strong><a href="/en/car-hire-porto-cervo">Porto Cervo</a></strong>: luxury, 30 min from Palau</li>
+    </ul>
+
+    <p>
+      For a complete itinerary, see our <a href="/en/guide/7-day-itinerary-costa-smeralda-from-olbia">7-day Costa Smeralda itinerary</a> which dedicates a whole day to La Maddalena.
+    </p>
+
+    <h2>In summary</h2>
+
+    <ul>
+      <li><strong>La Maddalena Archipelago deserves 1 full day</strong> of your Costa Smeralda holiday</li>
+      <li><strong>Most recommended mode</strong>: organised boat trip (€60-90/person) to see Spargi + Budelli + Santa Maria</li>
+      <li><strong>Embarkation point</strong>: Palau (50 min from Olbia)</li>
+      <li><strong>Cala Coticcio (Caprera)</strong>: book in advance if you want to visit</li>
+      <li><strong>Ideal season</strong>: May-June or September</li>
+    </ul>
+
+    <p>
+      To organise car hire from Olbia to Palau coordinated with the ferry time, contact Francesco and Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

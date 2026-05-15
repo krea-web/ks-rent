@@ -287,6 +287,53 @@ export function findArticleEn(slug: string): GuideArticleMetaEn | undefined {
   return GUIDE_ARTICLES_EN.find((a) => a.slug === slug);
 }
 
+/* ─── EN articles batch 2 ─── */
+
+GUIDE_ARTICLES_EN.push(
+  {
+    slug: "how-to-get-to-costa-smeralda-flights-ferries",
+    title: "How to get to Costa Smeralda: flights, ferries, distances 2026",
+    excerpt:
+      "Complete guide to reaching Costa Smeralda: flights to Olbia OLB airport, ferries to Isola Bianca port, alternatives Cagliari/Alghero, distances, real costs.",
+    category: "Airport & Port",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["car-hire-olbia-airport-practical-guide", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "come-arrivare-costa-smeralda-voli-traghetti",
+  },
+  {
+    slug: "costa-smeralda-holiday-cost-real-budget-2026",
+    title: "How much does a Costa Smeralda holiday cost? Real budget 2026",
+    excerpt:
+      "Complete budget for a Costa Smeralda holiday in 2026: hotels, restaurants, beaches, car hire, activities. Real estimates for couple, family, group.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 10,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["7-day-itinerary-costa-smeralda-from-olbia", "how-to-get-to-costa-smeralda-flights-ferries"],
+    itEquivalent: "quanto-costa-vacanza-costa-smeralda-budget-2026",
+  },
+  {
+    slug: "visiting-la-maddalena-archipelago-practical-guide",
+    title: "Visiting La Maddalena Archipelago: practical guide 2026",
+    excerpt:
+      "How to visit La Maddalena Archipelago from Costa Smeralda: ferries from Palau, boat tours, top beaches, islands, costs, mandatory booking.",
+    category: "Itineraries",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["how-to-get-to-costa-smeralda-flights-ferries", "7-day-itinerary-costa-smeralda-from-olbia"],
+    itEquivalent: "visitare-arcipelago-la-maddalena-guida-pratica",
+  },
+);
+
 /* ─── DE articles ─── */
 
 export interface GuideArticleMetaDe {
@@ -352,6 +399,53 @@ export function findArticleDe(slug: string): GuideArticleMetaDe | undefined {
   return GUIDE_ARTICLES_DE.find((a) => a.slug === slug);
 }
 
+/* ─── DE articles batch 2 ─── */
+
+GUIDE_ARTICLES_DE.push(
+  {
+    slug: "anfahrt-costa-smeralda-fluege-faehren",
+    title: "Anfahrt Costa Smeralda: Fluege, Faehren, Distanzen 2026",
+    excerpt:
+      "Komplette Anleitung zur Anreise an die Costa Smeralda: Fluege zum Olbia OLB Flughafen, Faehren zum Isola Bianca Hafen, Alternativen Cagliari/Alghero.",
+    category: "Flughafen & Hafen",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["autovermietung-flughafen-olbia-praktische-anleitung", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "come-arrivare-costa-smeralda-voli-traghetti",
+  },
+  {
+    slug: "kosten-urlaub-costa-smeralda-realistisches-budget-2026",
+    title: "Wieviel kostet ein Costa Smeralda Urlaub? Realistisches Budget 2026",
+    excerpt:
+      "Komplettes Budget fuer einen Costa Smeralda Urlaub 2026: Hotels, Restaurants, Straende, Mietwagen, Aktivitaeten. Schaetzungen fuer Paar, Familie, Gruppe.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 10,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["7-tage-reiseroute-costa-smeralda-ab-olbia", "anfahrt-costa-smeralda-fluege-faehren"],
+    itEquivalent: "quanto-costa-vacanza-costa-smeralda-budget-2026",
+  },
+  {
+    slug: "la-maddalena-archipel-besuchen-praktische-anleitung",
+    title: "La Maddalena Archipel besuchen: praktische Anleitung 2026",
+    excerpt:
+      "Wie La Maddalena Archipel von Costa Smeralda besuchen: Faehren ab Palau, Bootsausfluege, Top-Straende, Inseln, Kosten, obligatorische Buchung.",
+    category: "Reiserouten",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["anfahrt-costa-smeralda-fluege-faehren", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
+    itEquivalent: "visitare-arcipelago-la-maddalena-guida-pratica",
+  },
+);
+
 /* ─── FR articles ─── */
 
 export interface GuideArticleMetaFr {
@@ -416,3 +510,50 @@ export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
 export function findArticleFr(slug: string): GuideArticleMetaFr | undefined {
   return GUIDE_ARTICLES_FR.find((a) => a.slug === slug);
 }
+
+/* ─── FR articles batch 2 ─── */
+
+GUIDE_ARTICLES_FR.push(
+  {
+    slug: "comment-arriver-costa-smeralda-vols-ferries",
+    title: "Comment arriver en Costa Smeralda : vols, ferries, distances 2026",
+    excerpt:
+      "Guide complet pour arriver en Costa Smeralda : vols vers aeroport Olbia OLB, ferries vers port Isola Bianca, alternatives Cagliari/Alghero, distances.",
+    category: "Aeroport & Port",
+    publishedAt: "2026-05-15",
+    readingMinutes: 8,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["location-voiture-aeroport-olbia-guide-pratique", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "come-arrivare-costa-smeralda-voli-traghetti",
+  },
+  {
+    slug: "budget-vacances-costa-smeralda-cout-reel-2026",
+    title: "Combien coute un sejour en Costa Smeralda ? Budget reel 2026",
+    excerpt:
+      "Budget complet pour des vacances en Costa Smeralda en 2026 : hotels, restaurants, plages, location voiture, activites. Estimations pour couple, famille, groupe.",
+    category: "Costa Smeralda",
+    publishedAt: "2026-05-15",
+    readingMinutes: 10,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["itineraire-7-jours-costa-smeralda-depuis-olbia", "comment-arriver-costa-smeralda-vols-ferries"],
+    itEquivalent: "quanto-costa-vacanza-costa-smeralda-budget-2026",
+  },
+  {
+    slug: "visiter-archipel-la-maddalena-guide-pratique",
+    title: "Visiter l'Archipel de La Maddalena : guide pratique 2026",
+    excerpt:
+      "Comment visiter l'Archipel de La Maddalena depuis la Costa Smeralda : ferries depuis Palau, excursions en bateau, plages top, iles, couts, reservation obligatoire.",
+    category: "Itineraires",
+    publishedAt: "2026-05-15",
+    readingMinutes: 9,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["comment-arriver-costa-smeralda-vols-ferries", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
+    itEquivalent: "visitare-arcipelago-la-maddalena-guida-pratica",
+  },
+);

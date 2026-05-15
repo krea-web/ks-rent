@@ -1,0 +1,172 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("comment-arriver-costa-smeralda-vols-ferries")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+  about: { "@type": "Place", name: "Costa Smeralda", containedInPlace: { "@type": "AdministrativeArea", name: "Sardaigne" } },
+};
+---
+<BaseLayout
+  title={`${meta.title} | KS Rent Sardinia`}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={articleJsonLd}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Comment arriver Costa Smeralda", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>Pour arriver en Costa Smeralda, il existe trois voies principales : avion (Olbia ou alternatives), ferry (port d'Olbia ou alternatives), ou un mix des deux</strong>. Chaque option a des temps, couts et flexibilites differents. Ce guide resume les alternatives reelles en 2026, avec les couts indicatifs (haute et basse saison) et les cas ou chaque option convient le mieux. La plupart des touristes italiens utilisent le ferry depuis Civitavecchia ou Genes ; les Europeens et Americains volent presque toujours a Olbia. Mais pour ceux venant de Paris, cela depend de la periode : en juillet les vols low-cost coutent souvent plus qu'une cabine de ferry.
+    </p>
+
+    <h2>En avion : aeroport d'Olbia Costa Smeralda (OLB)</h2>
+
+    <p>
+      <strong>Code IATA : OLB</strong>. Gere par Geasar. C'est l'aeroport principal et le plus proche geographiquement de la Costa Smeralda (32 km de Porto Cervo). Trafic tres saisonnier : en juillet-aout plus de 50 vols/jour arrivent ; en hiver cela descend a 5-10/jour.
+    </p>
+
+    <h3>Compagnies et routes 2026</h3>
+
+    <ul>
+      <li><strong>Air France</strong> : Paris CDG (ete)</li>
+      <li><strong>Easyjet</strong> : Paris, Geneve, Londres Gatwick, Berlin, Bordeaux</li>
+      <li><strong>Volotea</strong> : Nantes, Bordeaux, Lyon, Strasbourg (saisonniers)</li>
+      <li><strong>Vueling</strong> : Barcelone</li>
+      <li><strong>Ryanair</strong> : Marseille, Vienne, Budapest, Prague</li>
+      <li><strong>ITA Airways</strong> : Rome Fiumicino (quotidien), Milan Linate</li>
+      <li><strong>Lufthansa</strong> : Munich, Francfort (ete)</li>
+      <li><strong>British Airways</strong> : Londres Heathrow (ete)</li>
+    </ul>
+
+    <h3>Couts vols OLB 2026</h3>
+
+    <table>
+      <thead>
+        <tr><th>Trajet</th><th>Basse saison (avr-mai-oct)</th><th>Haute saison (jul-aou)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Paris → Olbia (a/r)</td><td>100-220 €</td><td>250-550 €</td></tr>
+        <tr><td>Lyon → Olbia (a/r)</td><td>140-260 €</td><td>300-600 €</td></tr>
+        <tr><td>Marseille → Olbia (a/r)</td><td>120-240 €</td><td>280-580 €</td></tr>
+        <tr><td>Bordeaux/Toulouse → Olbia (a/r)</td><td>150-280 €</td><td>320-650 €</td></tr>
+        <tr><td>Nantes → Olbia (a/r)</td><td>140-260 €</td><td>300-620 €</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Conseil reservation</strong> : pour juillet-aout, reservez avant fevrier pour des prix acceptables. A partir de mai, les prix flambent. En basse saison (mai ou octobre), excellents tarifs aussi en reservant 4-6 semaines avant.
+    </p>
+
+    <h2>En avion : aeroports alternatifs en Sardaigne</h2>
+
+    <ul>
+      <li><strong>Alghero (AHO)</strong> : 230 km de Porto Cervo (~3h route). Moins cher mais long transfert</li>
+      <li><strong>Cagliari (CAG)</strong> : 290 km de Porto Cervo (~3h30 route). Hub plus grand, vols plus frequents</li>
+    </ul>
+
+    <p>
+      Voler a Cagliari/Alghero ne convient que si l'economie depasse 100-150 € de carburant + 3-4 heures de route. Pour ceux qui ont seulement 5-7 jours de vacances, le temps perdu est significatif.
+    </p>
+
+    <h2>En ferry : port Olbia Isola Bianca</h2>
+
+    <p>
+      <strong>Le port principal est Olbia Isola Bianca</strong>, situe a 6 km du centre-ville et 30-50 minutes de la Costa Smeralda. C'est le port prefere des touristes italiens venant en voiture du continent.
+    </p>
+
+    <h3>Compagnies et routes 2026</h3>
+
+    <ul>
+      <li><strong>Corsica Ferries</strong> (Sardinia Ferries) : Toulon, Nice, Livourne</li>
+      <li><strong>Moby</strong> : Genes, Livourne, Civitavecchia, Piombino</li>
+      <li><strong>Tirrenia</strong> (groupe Onorato) : Genes, Civitavecchia, Naples</li>
+      <li><strong>Grimaldi Lines</strong> : Civitavecchia, Livourne, Barcelone, Tunis</li>
+      <li><strong>GNV (Grandi Navi Veloci)</strong> : Genes, Civitavecchia, Barcelone</li>
+    </ul>
+
+    <h3>Couts ferries 2026</h3>
+
+    <table>
+      <thead>
+        <tr><th>Trajet</th><th>Temps</th><th>Voiture + 2 pers (a/r) basse st.</th><th>Haute st. (jul-aou)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Toulon → Porto Torres (puis 2h route)</td><td>10 heures (nuit)</td><td>250-450 €</td><td>550-950 €</td></tr>
+        <tr><td>Nice → Olbia</td><td>9-10 heures</td><td>280-480 €</td><td>580-980 €</td></tr>
+        <tr><td>Livourne → Olbia</td><td>8-10 heures</td><td>180-350 €</td><td>450-800 €</td></tr>
+        <tr><td>Civitavecchia → Olbia</td><td>5-7 heures</td><td>150-280 €</td><td>350-650 €</td></tr>
+        <tr><td>Genes → Olbia</td><td>10-12 heures (nuit)</td><td>200-380 €</td><td>500-900 €</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Cabine vs siege</strong> : pour les traversees de nuit (Toulon-Porto Torres, Genes-Olbia), reservez toujours la cabine (+50-150 €). Les sieges sont inconfortables pour dormir et les forfaits famille (4 personnes en cabine) sont souvent plus avantageux que 4 sieges separes.
+    </p>
+
+    <h2>Distances du point d'arrivee a la Costa Smeralda</h2>
+
+    <table>
+      <thead>
+        <tr><th>De</th><th>A Porto Cervo</th><th>A Baja Sardinia</th><th>A San Teodoro</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Aeroport Olbia OLB</td><td>32 km / 35 min</td><td>38 km / 45 min</td><td>30 km / 30 min</td></tr>
+        <tr><td>Port Olbia Isola Bianca</td><td>33 km / 40 min</td><td>40 km / 50 min</td><td>32 km / 35 min</td></tr>
+        <tr><td>Aeroport Cagliari CAG</td><td>290 km / 3h30</td><td>295 km / 3h35</td><td>250 km / 3h</td></tr>
+        <tr><td>Aeroport Alghero AHO</td><td>230 km / 3h</td><td>225 km / 2h55</td><td>240 km / 3h05</td></tr>
+        <tr><td>Porto Torres</td><td>140 km / 1h50</td><td>135 km / 1h45</td><td>150 km / 2h</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Mix recommande : avion + voiture de location en aeroport</h2>
+
+    <p>
+      Pour la plupart des touristes vers la Costa Smeralda, <strong>la combinaison gagnante est : vol vers Olbia OLB + location voiture en aeroport</strong> (livree directement aux arrivees, sans files aux comptoirs). C'est exactement ce que KS Rent Sardinia offre — voir notre <a href="/fr/guide/location-voiture-aeroport-olbia-guide-pratique">guide location voiture aeroport Olbia</a>. Temps de l'atterrissage a la conduite : 10 minutes. Paiement flexible sans carte de credit obligatoire.
+    </p>
+
+    <h2>Pour ceux qui arrivent en bateau : retrait au port Isola Bianca</h2>
+
+    <p>Si vous arrivez par ferry au port Olbia Isola Bianca, vous avez deux options :</p>
+
+    <ol>
+      <li><strong>Votre voiture du ferry</strong> : descendez et partez</li>
+      <li><strong>Vous etes venu en passager pieton et louez une fois debarque</strong> : c'est notre specialite. Base operationnelle KS Rent Sardinia a Viale Isola Bianca 38, exactement au port. Nous vous attendons au debarquement avec le vehicule pret. Voir la page <a href="/fr/location-voiture-port-olbia">location voiture port Olbia</a></li>
+    </ol>
+
+    <h2>Conseils pour minimiser les attentes</h2>
+
+    <ul>
+      <li>Reservez la voiture en ligne a l'avance, pas au comptoir aeroport</li>
+      <li>Communiquez horaire et numero de vol pour livraison coordonnee</li>
+      <li>Pour ferries de nuit, vous debarquez 06:30-07:00 — ideal pour arriver a la plage vers 09:00</li>
+      <li>En haute saison, evitez le vol Paris-Olbia 19:00-21:00 : vous risquez la circulation pour arriver en Costa Smeralda apres le diner</li>
+      <li>Du port Isola Bianca a Porto Cervo, il faut 1 heure en haute saison (samedi soir/dimanche matin sont les pics)</li>
+    </ul>
+
+    <p>
+      Apres avoir planifie le voyage, lisez notre <a href="/fr/guide/itineraire-7-jours-costa-smeralda-depuis-olbia">itineraire de 7 jours en Costa Smeralda</a> pour organiser les jours sur place. Pour coordonner la livraison du vehicule a l'horaire exact du vol ou ferry, contactez Francesco et Salvatore Milo via WhatsApp <a href="https://wa.me/393446107071">+39 344 6107071</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
