@@ -14,6 +14,8 @@
 import { Calendar, Clock, ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 import GuideReadingProgress from "./GuideReadingProgress.tsx";
 import GuideTOC from "./GuideTOC.tsx";
+import VehicleSidebarCard from "./VehicleSidebarCard.astro";
+import GuideVehicleStrip from "./GuideVehicleStrip.astro";
 import {
   findArticle,
   findArticleEn,
@@ -238,19 +240,8 @@ const whatsappUrl = "https://wa.me/393446107071";
       {/* SIDEBAR sticky desktop */}
       <aside class="hidden lg:block">
         <div class="sticky top-28 space-y-4">
-          {/* CTA flotta */}
-          <div class="bg-card border border-border rounded-xl p-5">
-            <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-2">{labels.sidebarKicker}</p>
-            <p class="font-semibold text-foreground mb-2 leading-snug">{labels.sidebarTitle}</p>
-            <p class="text-sm text-foreground/60 leading-relaxed mb-4">{labels.sidebarText}</p>
-            <a
-              href={labels.sidebarFleetHref}
-              class="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-gold transition"
-            >
-              {labels.sidebarCta}
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-          </div>
+          {/* Card veicolo consigliato con immagine trasparente */}
+          <VehicleSidebarCard category={meta.category} lang={lang} />
 
           {/* CTA WhatsApp */}
           <a
@@ -276,8 +267,11 @@ const whatsappUrl = "https://wa.me/393446107071";
     </div>
   </div>
 
+  {/* ───────────── STRIP VEICOLI (immagini trasparenti) ───────────── */}
+  <GuideVehicleStrip lang={lang} />
+
   {/* ───────────── BIO AUTORI ───────────── */}
-  <section class="border-t border-border bg-card/20">
+  <section class="bg-card/20">
     <div class="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-16">
       <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-3">{labels.aboutAuthors}</p>
       <div class="flex flex-col md:flex-row gap-6 md:items-start">

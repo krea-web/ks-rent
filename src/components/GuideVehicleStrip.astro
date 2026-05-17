@@ -1,0 +1,139 @@
+---
+/**
+ * Strip orizzontale di 7 veicoli con immagine trasparente.
+ * Mostra l'intera flotta come grid visual ricco tra body articolo e bio autori.
+ * Usato in GuideArticleLayout per "rompere" la lunghezza del testo.
+ */
+type Lang = "it" | "en" | "de" | "fr";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const BUCKET = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza";
+
+interface V {
+  name: string;
+  transparent: string;
+  href: Record<Lang, string>;
+}
+
+const VEHICLES: V[] = [
+  {
+    name: "Audi RS3",
+    transparent: `${BUCKET}/ksrent-audirs3supercar-verde.png`,
+    href: {
+      it: "/flotta/audi-rs3",
+      en: "/en/fleet/audi-rs3-hire-olbia",
+      de: "/de/fuhrpark/audi-rs3-mieten-olbia",
+      fr: "/fr/flotte/audi-rs3-location-olbia",
+    },
+  },
+  {
+    name: "BMW M2",
+    transparent: `${BUCKET}/ksrent-bmwm2-maschera.png`,
+    href: {
+      it: "/flotta/bmw-m2",
+      en: "/en/fleet/bmw-m2-coupe-hire-olbia",
+      de: "/de/fuhrpark/bmw-m2-coupe-mieten-olbia",
+      fr: "/fr/flotte/bmw-m2-coupe-location-olbia",
+    },
+  },
+  {
+    name: "Mercedes Classe A",
+    transparent: `${BUCKET}/ksrent-mercedessupercarclassea180d.png`,
+    href: {
+      it: "/flotta/mercedes-classe-a",
+      en: "/en/fleet/mercedes-a-class-hire-olbia",
+      de: "/de/fuhrpark/mercedes-a-klasse-mieten-olbia",
+      fr: "/fr/flotte/mercedes-classe-a-location-olbia",
+    },
+  },
+  {
+    name: "Jeep Avenger",
+    transparent: `${BUCKET}/ksrent-jeepsuvavenger.webp`,
+    href: {
+      it: "/flotta/jeep-avenger",
+      en: "/en/fleet/jeep-avenger-hire-olbia",
+      de: "/de/fuhrpark/jeep-avenger-mieten-olbia",
+      fr: "/fr/flotte/jeep-avenger-location-olbia",
+    },
+  },
+  {
+    name: "Fiat Panda",
+    transparent: `${BUCKET}/ksrent-fiatpandacitycar.webp`,
+    href: {
+      it: "/flotta/fiat-panda",
+      en: "/en/fleet/fiat-panda-hire-olbia",
+      de: "/de/fuhrpark/fiat-panda-mieten-olbia",
+      fr: "/fr/flotte/fiat-panda-location-olbia",
+    },
+  },
+  {
+    name: "Honda SH",
+    transparent: `${BUCKET}/ksrent-hondascooter125.png`,
+    href: {
+      it: "/flotta/honda-sh",
+      en: "/en/fleet/honda-sh-hire-olbia",
+      de: "/de/fuhrpark/honda-sh-mieten-olbia",
+      fr: "/fr/flotte/honda-sh-location-olbia",
+    },
+  },
+  {
+    name: "Yamaha Raptor",
+    transparent: `${BUCKET}/ksrent-yamahaquadraptor.png`,
+    href: {
+      it: "/flotta/yamaha-quad-raptor",
+      en: "/en/fleet/yamaha-raptor-quad-hire-sardinia",
+      de: "/de/fuhrpark/yamaha-raptor-quad-mieten-sardinien",
+      fr: "/fr/flotte/yamaha-raptor-quad-location-sardaigne",
+    },
+  },
+];
+
+const labels = {
+  it: { kicker: "La nostra flotta", heading: "Quale veicolo si adatta a questo itinerario?" },
+  en: { kicker: "Our fleet", heading: "Which vehicle suits this itinerary?" },
+  de: { kicker: "Unsere Flotte", heading: "Welches Fahrzeug passt zu dieser Reiseroute?" },
+  fr: { kicker: "Notre flotte", heading: "Quel véhicule pour cet itinéraire ?" },
+}[lang];
+
+const fleetHref =
+  lang === "it" ? "/flotta" : lang === "en" ? "/en/fleet" : lang === "de" ? "/de/fuhrpark" : "/fr/flotte";
+---
+
+<section class="border-y border-border bg-gradient-to-b from-card/40 via-background to-card/20">
+  <div class="max-w-6xl mx-auto px-4 md:px-8 py-12 md:py-16">
+    <div class="text-center mb-8 md:mb-10">
+      <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-3">{labels.kicker}</p>
+      <h2 class="font-serif text-2xl md:text-3xl text-foreground font-medium leading-tight max-w-2xl mx-auto">
+        {labels.heading}
+      </h2>
+    </div>
+
+    <ul class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3 md:gap-4">
+      {VEHICLES.map((v) => (
+        <li>
+          <a
+            href={v.href[lang]}
+            class="group flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-card transition"
+          >
+            <div class="relative w-full aspect-[3/2] flex items-center justify-center">
+              <img
+                src={v.transparent}
+                alt={v.name}
+                class="max-h-full w-auto object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_10px_15px_rgba(0,0,0,0.25)]"
+                loading="lazy"
+              />
+            </div>
+            <p class="text-[11px] md:text-xs font-semibold text-foreground/70 group-hover:text-gold transition text-center leading-snug">
+              {v.name}
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -44,7 +44,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["noleggio-auto-olbia-aeroporto-guida-pratica", "itinerario-7-giorni-costa-smeralda-da-olbia"],
   },
@@ -57,7 +57,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 12,
     heroImage:
-      "/seo-images/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["come-muoversi-porto-cervo-parcheggi-navette", "spiagge-costa-smeralda-con-bambini"],
   },
@@ -70,7 +70,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["spiagge-costa-smeralda-con-bambini", "itinerario-7-giorni-costa-smeralda-da-olbia"],
   },
@@ -83,7 +83,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 11,
     heroImage:
-      "/seo-images/guide/spiagge-costa-smeralda-con-bambini.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-costa-smeralda-con-bambini.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["itinerario-7-giorni-costa-smeralda-da-olbia", "come-muoversi-porto-cervo-parcheggi-navette"],
   },
@@ -96,7 +96,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["noleggio-auto-olbia-senza-carta-di-credito-guida-completa", "come-arrivare-costa-smeralda-voli-traghetti"],
   },
@@ -109,7 +109,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["itinerario-7-giorni-costa-smeralda-da-olbia", "noleggio-auto-olbia-aeroporto-guida-pratica"],
   },
@@ -122,7 +122,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["noleggio-auto-olbia-aeroporto-guida-pratica", "cosa-fare-a-olbia-3-giorni-itinerario"],
   },
@@ -135,7 +135,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 10,
     heroImage:
-      "/seo-images/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["itinerario-7-giorni-costa-smeralda-da-olbia", "spiagge-costa-smeralda-con-bambini"],
   },
@@ -148,7 +148,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/spiagge-nascoste-gallura-sterrati.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-nascoste-gallura-sterrati.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["spiagge-costa-smeralda-con-bambini", "itinerario-7-giorni-costa-smeralda-da-olbia"],
   },
@@ -161,7 +161,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["quanto-costa-vacanza-costa-smeralda-budget-2026", "come-arrivare-costa-smeralda-voli-traghetti"],
   },
@@ -174,7 +174,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 6,
     heroImage:
-      "/seo-images/guide/patente-internazionale-sardegna-serve-davvero.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/patente-internazionale-sardegna-serve-davvero.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["noleggio-auto-olbia-senza-carta-di-credito-guida-completa", "noleggio-auto-olbia-aeroporto-guida-pratica"],
   },
@@ -187,7 +187,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["spiagge-nascoste-gallura-sterrati", "come-muoversi-porto-cervo-parcheggi-navette"],
   },
@@ -200,7 +200,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["come-arrivare-costa-smeralda-voli-traghetti", "yacht-charter-vs-auto-noleggio-costa-smeralda"],
   },
@@ -213,7 +213,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/sagre-eventi-gallura-2026-calendario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/sagre-eventi-gallura-2026-calendario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["cosa-fare-a-olbia-3-giorni-itinerario", "itinerario-7-giorni-costa-smeralda-da-olbia"],
   },
@@ -226,7 +226,7 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["spiagge-costa-smeralda-con-bambini", "spiagge-nascoste-gallura-sterrati"],
   },
@@ -248,7 +248,7 @@ export const GUIDE_ARTICLES_EN: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["car-hire-olbia-airport-practical-guide", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
@@ -262,7 +262,7 @@ export const GUIDE_ARTICLES_EN: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 12,
     heroImage:
-      "/seo-images/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["car-hire-olbia-airport-practical-guide", "car-hire-olbia-without-credit-card-complete-guide"],
     itEquivalent: "itinerario-7-giorni-costa-smeralda-da-olbia",
@@ -276,7 +276,7 @@ export const GUIDE_ARTICLES_EN: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["car-hire-olbia-without-credit-card-complete-guide", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "noleggio-auto-olbia-aeroporto-guida-pratica",
@@ -299,7 +299,7 @@ const _EN_BATCH_5: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/spiagge-nascoste-gallura-sterrati.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-nascoste-gallura-sterrati.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["family-beaches-costa-smeralda", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "spiagge-nascoste-gallura-sterrati",
@@ -313,7 +313,7 @@ const _EN_BATCH_5: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["hidden-beaches-gallura-dirt-roads", "getting-around-porto-cervo-parking-shuttles"],
     itEquivalent: "noleggio-scooter-quad-sardegna-come-scegliere",
@@ -327,7 +327,7 @@ const _EN_BATCH_5: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/sagre-eventi-gallura-2026-calendario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/sagre-eventi-gallura-2026-calendario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["what-to-do-in-olbia-3-days-itinerary", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "sagre-eventi-gallura-2026-calendario",
@@ -347,7 +347,7 @@ const _EN_BATCH_4: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["family-beaches-costa-smeralda", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "come-muoversi-porto-cervo-parcheggi-navette",
@@ -361,7 +361,7 @@ const _EN_BATCH_4: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["costa-smeralda-holiday-cost-real-budget-2026", "how-to-get-to-costa-smeralda-flights-ferries"],
     itEquivalent: "yacht-charter-vs-auto-noleggio-costa-smeralda",
@@ -375,7 +375,7 @@ const _EN_BATCH_4: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["7-day-itinerary-costa-smeralda-from-olbia", "car-hire-olbia-airport-practical-guide"],
     itEquivalent: "cosa-fare-a-olbia-3-giorni-itinerario",
@@ -395,7 +395,7 @@ const _EN_BATCH_3: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 6,
     heroImage:
-      "/seo-images/guide/patente-internazionale-sardegna-serve-davvero.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/patente-internazionale-sardegna-serve-davvero.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["car-hire-olbia-without-credit-card-complete-guide", "car-hire-olbia-airport-practical-guide"],
     itEquivalent: "patente-internazionale-sardegna-serve-davvero",
@@ -409,7 +409,7 @@ const _EN_BATCH_3: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["family-beaches-costa-smeralda", "visiting-la-maddalena-archipelago-practical-guide"],
     itEquivalent: "spiagge-piu-belle-sardegna-nord-orientale",
@@ -423,7 +423,7 @@ const _EN_BATCH_3: GuideArticleMetaEn[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 11,
     heroImage:
-      "/seo-images/guide/spiagge-costa-smeralda-con-bambini.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-costa-smeralda-con-bambini.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["most-beautiful-beaches-north-east-sardinia", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "spiagge-costa-smeralda-con-bambini",
@@ -443,7 +443,7 @@ GUIDE_ARTICLES_EN.push(
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["car-hire-olbia-airport-practical-guide", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "come-arrivare-costa-smeralda-voli-traghetti",
@@ -457,7 +457,7 @@ GUIDE_ARTICLES_EN.push(
     publishedAt: "2026-05-15",
     readingMinutes: 10,
     heroImage:
-      "/seo-images/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["7-day-itinerary-costa-smeralda-from-olbia", "how-to-get-to-costa-smeralda-flights-ferries"],
     itEquivalent: "quanto-costa-vacanza-costa-smeralda-budget-2026",
@@ -471,7 +471,7 @@ GUIDE_ARTICLES_EN.push(
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["how-to-get-to-costa-smeralda-flights-ferries", "7-day-itinerary-costa-smeralda-from-olbia"],
     itEquivalent: "visitare-arcipelago-la-maddalena-guida-pratica",
@@ -504,7 +504,7 @@ export const GUIDE_ARTICLES_DE: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["autovermietung-flughafen-olbia-praktische-anleitung", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
@@ -518,7 +518,7 @@ export const GUIDE_ARTICLES_DE: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 12,
     heroImage:
-      "/seo-images/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["autovermietung-flughafen-olbia-praktische-anleitung", "autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung"],
     itEquivalent: "itinerario-7-giorni-costa-smeralda-da-olbia",
@@ -532,7 +532,7 @@ export const GUIDE_ARTICLES_DE: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "noleggio-auto-olbia-aeroporto-guida-pratica",
@@ -555,7 +555,7 @@ const _DE_BATCH_5: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/spiagge-nascoste-gallura-sterrati.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-nascoste-gallura-sterrati.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["familienstraende-costa-smeralda", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "spiagge-nascoste-gallura-sterrati",
@@ -569,7 +569,7 @@ const _DE_BATCH_5: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["versteckte-straende-gallura-schotterpisten", "fortbewegung-porto-cervo-parkplaetze-shuttles"],
     itEquivalent: "noleggio-scooter-quad-sardegna-come-scegliere",
@@ -583,7 +583,7 @@ const _DE_BATCH_5: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/sagre-eventi-gallura-2026-calendario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/sagre-eventi-gallura-2026-calendario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["was-tun-in-olbia-3-tage-reiseroute", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "sagre-eventi-gallura-2026-calendario",
@@ -603,7 +603,7 @@ const _DE_BATCH_4: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["familienstraende-costa-smeralda", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "come-muoversi-porto-cervo-parcheggi-navette",
@@ -617,7 +617,7 @@ const _DE_BATCH_4: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["kosten-urlaub-costa-smeralda-realistisches-budget-2026", "anfahrt-costa-smeralda-fluege-faehren"],
     itEquivalent: "yacht-charter-vs-auto-noleggio-costa-smeralda",
@@ -631,7 +631,7 @@ const _DE_BATCH_4: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["7-tage-reiseroute-costa-smeralda-ab-olbia", "autovermietung-flughafen-olbia-praktische-anleitung"],
     itEquivalent: "cosa-fare-a-olbia-3-giorni-itinerario",
@@ -651,7 +651,7 @@ const _DE_BATCH_3: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 6,
     heroImage:
-      "/seo-images/guide/patente-internazionale-sardegna-serve-davvero.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/patente-internazionale-sardegna-serve-davvero.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung", "autovermietung-flughafen-olbia-praktische-anleitung"],
     itEquivalent: "patente-internazionale-sardegna-serve-davvero",
@@ -665,7 +665,7 @@ const _DE_BATCH_3: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["familienstraende-costa-smeralda", "la-maddalena-archipel-besuchen-praktische-anleitung"],
     itEquivalent: "spiagge-piu-belle-sardegna-nord-orientale",
@@ -679,7 +679,7 @@ const _DE_BATCH_3: GuideArticleMetaDe[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 11,
     heroImage:
-      "/seo-images/guide/spiagge-costa-smeralda-con-bambini.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-costa-smeralda-con-bambini.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["schoenste-straende-nordost-sardinien", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "spiagge-costa-smeralda-con-bambini",
@@ -699,7 +699,7 @@ GUIDE_ARTICLES_DE.push(
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["autovermietung-flughafen-olbia-praktische-anleitung", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "come-arrivare-costa-smeralda-voli-traghetti",
@@ -713,7 +713,7 @@ GUIDE_ARTICLES_DE.push(
     publishedAt: "2026-05-15",
     readingMinutes: 10,
     heroImage:
-      "/seo-images/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["7-tage-reiseroute-costa-smeralda-ab-olbia", "anfahrt-costa-smeralda-fluege-faehren"],
     itEquivalent: "quanto-costa-vacanza-costa-smeralda-budget-2026",
@@ -727,7 +727,7 @@ GUIDE_ARTICLES_DE.push(
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["anfahrt-costa-smeralda-fluege-faehren", "7-tage-reiseroute-costa-smeralda-ab-olbia"],
     itEquivalent: "visitare-arcipelago-la-maddalena-guida-pratica",
@@ -760,7 +760,7 @@ export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["location-voiture-aeroport-olbia-guide-pratique", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
@@ -774,7 +774,7 @@ export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 12,
     heroImage:
-      "/seo-images/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/itinerario-7-giorni-costa-smeralda-da-olbia.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["location-voiture-aeroport-olbia-guide-pratique", "location-voiture-olbia-sans-carte-credit-guide-complet"],
     itEquivalent: "itinerario-7-giorni-costa-smeralda-da-olbia",
@@ -788,7 +788,7 @@ export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-13",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-auto-olbia-aeroporto-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["location-voiture-olbia-sans-carte-credit-guide-complet", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "noleggio-auto-olbia-aeroporto-guida-pratica",
@@ -811,7 +811,7 @@ const _FR_BATCH_5: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/spiagge-nascoste-gallura-sterrati.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-nascoste-gallura-sterrati.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["plages-familles-costa-smeralda", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "spiagge-nascoste-gallura-sterrati",
@@ -825,7 +825,7 @@ const _FR_BATCH_5: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 7,
     heroImage:
-      "/seo-images/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["plages-cachees-gallura-pistes-terre", "se-deplacer-porto-cervo-parkings-navettes"],
     itEquivalent: "noleggio-scooter-quad-sardegna-come-scegliere",
@@ -839,7 +839,7 @@ const _FR_BATCH_5: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/sagre-eventi-gallura-2026-calendario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/sagre-eventi-gallura-2026-calendario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["que-faire-a-olbia-3-jours-itineraire", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "sagre-eventi-gallura-2026-calendario",
@@ -859,7 +859,7 @@ const _FR_BATCH_4: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-muoversi-porto-cervo-parcheggi-navette.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["plages-familles-costa-smeralda", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "come-muoversi-porto-cervo-parcheggi-navette",
@@ -873,7 +873,7 @@ const _FR_BATCH_4: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/yacht-charter-vs-auto-noleggio-costa-smeralda.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["budget-vacances-costa-smeralda-cout-reel-2026", "comment-arriver-costa-smeralda-vols-ferries"],
     itEquivalent: "yacht-charter-vs-auto-noleggio-costa-smeralda",
@@ -887,7 +887,7 @@ const _FR_BATCH_4: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/cosa-fare-a-olbia-3-giorni-itinerario.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["itineraire-7-jours-costa-smeralda-depuis-olbia", "location-voiture-aeroport-olbia-guide-pratique"],
     itEquivalent: "cosa-fare-a-olbia-3-giorni-itinerario",
@@ -907,7 +907,7 @@ const _FR_BATCH_3: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 6,
     heroImage:
-      "/seo-images/guide/patente-internazionale-sardegna-serve-davvero.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/patente-internazionale-sardegna-serve-davvero.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["location-voiture-olbia-sans-carte-credit-guide-complet", "location-voiture-aeroport-olbia-guide-pratique"],
     itEquivalent: "patente-internazionale-sardegna-serve-davvero",
@@ -921,7 +921,7 @@ const _FR_BATCH_3: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-piu-belle-sardegna-nord-orientale.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["plages-familles-costa-smeralda", "visiter-archipel-la-maddalena-guide-pratique"],
     itEquivalent: "spiagge-piu-belle-sardegna-nord-orientale",
@@ -935,7 +935,7 @@ const _FR_BATCH_3: GuideArticleMetaFr[] = [
     publishedAt: "2026-05-15",
     readingMinutes: 11,
     heroImage:
-      "/seo-images/guide/spiagge-costa-smeralda-con-bambini.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-costa-smeralda-con-bambini.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["plus-belles-plages-nord-est-sardaigne", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "spiagge-costa-smeralda-con-bambini",
@@ -955,7 +955,7 @@ GUIDE_ARTICLES_FR.push(
     publishedAt: "2026-05-15",
     readingMinutes: 8,
     heroImage:
-      "/seo-images/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/come-arrivare-costa-smeralda-voli-traghetti.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["location-voiture-aeroport-olbia-guide-pratique", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "come-arrivare-costa-smeralda-voli-traghetti",
@@ -969,7 +969,7 @@ GUIDE_ARTICLES_FR.push(
     publishedAt: "2026-05-15",
     readingMinutes: 10,
     heroImage:
-      "/seo-images/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/quanto-costa-vacanza-costa-smeralda-budget-2026.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["itineraire-7-jours-costa-smeralda-depuis-olbia", "comment-arriver-costa-smeralda-vols-ferries"],
     itEquivalent: "quanto-costa-vacanza-costa-smeralda-budget-2026",
@@ -983,7 +983,7 @@ GUIDE_ARTICLES_FR.push(
     publishedAt: "2026-05-15",
     readingMinutes: 9,
     heroImage:
-      "/seo-images/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/visitare-arcipelago-la-maddalena-guida-pratica.webp",
     author: "Francesco Milo & Salvatore Milo",
     related: ["comment-arriver-costa-smeralda-vols-ferries", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "visitare-arcipelago-la-maddalena-guida-pratica",

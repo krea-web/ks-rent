@@ -1,0 +1,184 @@
+---
+/**
+ * Mini-card sidebar per articolo guide. Mostra il veicolo consigliato
+ * con l'immagine trasparente del listino, su sfondo gradient brand.
+ * Sceglie il veicolo in base alla categoria dell'articolo.
+ */
+import { ArrowUpRight } from "lucide-react";
+
+type Lang = "it" | "en" | "de" | "fr";
+
+interface Props {
+  category: string;
+  lang: Lang;
+}
+
+const { category, lang } = Astro.props;
+
+const BUCKET = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza";
+
+const VEHICLES: Record<
+  string,
+  {
+    name: string;
+    transparent: string;
+    /** Slug IT per costruire link */
+    slug: string;
+    /** Link interno localizzato */
+    href: Record<Lang, string>;
+    /** Categoria/etichetta */
+    tag: Record<Lang, string>;
+  }
+> = {
+  "audi-rs3": {
+    name: "Audi RS3",
+    transparent: `${BUCKET}/ksrent-audirs3supercar-verde.png`,
+    slug: "audi-rs3",
+    href: {
+      it: "/flotta/audi-rs3",
+      en: "/en/fleet/audi-rs3-hire-olbia",
+      de: "/de/fuhrpark/audi-rs3-mieten-olbia",
+      fr: "/fr/flotte/audi-rs3-location-olbia",
+    },
+    tag: { it: "Sportiva premium", en: "Premium sports", de: "Premium-Sportwagen", fr: "Sportive premium" },
+  },
+  "bmw-m2": {
+    name: "BMW M2 Coupé",
+    transparent: `${BUCKET}/ksrent-bmwm2-maschera.png`,
+    slug: "bmw-m2",
+    href: {
+      it: "/flotta/bmw-m2",
+      en: "/en/fleet/bmw-m2-coupe-hire-olbia",
+      de: "/de/fuhrpark/bmw-m2-coupe-mieten-olbia",
+      fr: "/fr/flotte/bmw-m2-coupe-location-olbia",
+    },
+    tag: { it: "Coupé sportiva", en: "Sports coupé", de: "Sport-Coupé", fr: "Coupé sportive" },
+  },
+  "mercedes-classe-a": {
+    name: "Mercedes Classe A",
+    transparent: `${BUCKET}/ksrent-mercedessupercarclassea180d.png`,
+    slug: "mercedes-classe-a",
+    href: {
+      it: "/flotta/mercedes-classe-a",
+      en: "/en/fleet/mercedes-a-class-hire-olbia",
+      de: "/de/fuhrpark/mercedes-a-klasse-mieten-olbia",
+      fr: "/fr/flotte/mercedes-classe-a-location-olbia",
+    },
+    tag: { it: "Berlina premium", en: "Premium saloon", de: "Premium-Limousine", fr: "Berline premium" },
+  },
+  "jeep-avenger": {
+    name: "Jeep Avenger",
+    transparent: `${BUCKET}/ksrent-jeepsuvavenger.webp`,
+    slug: "jeep-avenger",
+    href: {
+      it: "/flotta/jeep-avenger",
+      en: "/en/fleet/jeep-avenger-hire-olbia",
+      de: "/de/fuhrpark/jeep-avenger-mieten-olbia",
+      fr: "/fr/flotte/jeep-avenger-location-olbia",
+    },
+    tag: { it: "SUV compatto", en: "Compact SUV", de: "Kompakt-SUV", fr: "SUV compact" },
+  },
+  "fiat-panda": {
+    name: "Fiat Panda Hybrid",
+    transparent: `${BUCKET}/ksrent-fiatpandacitycar.webp`,
+    slug: "fiat-panda",
+    href: {
+      it: "/flotta/fiat-panda",
+      en: "/en/fleet/fiat-panda-hire-olbia",
+      de: "/de/fuhrpark/fiat-panda-mieten-olbia",
+      fr: "/fr/flotte/fiat-panda-location-olbia",
+    },
+    tag: { it: "City car ibrida", en: "Hybrid city car", de: "Hybrid-Kleinwagen", fr: "Citadine hybride" },
+  },
+  "honda-sh": {
+    name: "Honda SH 125",
+    transparent: `${BUCKET}/ksrent-hondascooter125.png`,
+    slug: "honda-sh",
+    href: {
+      it: "/flotta/honda-sh",
+      en: "/en/fleet/honda-sh-hire-olbia",
+      de: "/de/fuhrpark/honda-sh-mieten-olbia",
+      fr: "/fr/flotte/honda-sh-location-olbia",
+    },
+    tag: { it: "Scooter urbano", en: "Urban scooter", de: "Stadtroller", fr: "Scooter urbain" },
+  },
+  "yamaha-quad-raptor": {
+    name: "Yamaha Raptor 700",
+    transparent: `${BUCKET}/ksrent-yamahaquadraptor.png`,
+    slug: "yamaha-quad-raptor",
+    href: {
+      it: "/flotta/yamaha-quad-raptor",
+      en: "/en/fleet/yamaha-raptor-quad-hire-sardinia",
+      de: "/de/fuhrpark/yamaha-raptor-quad-mieten-sardinien",
+      fr: "/fr/flotte/yamaha-raptor-quad-location-sardaigne",
+    },
+    tag: { it: "Quad sportivo", en: "Sport quad", de: "Sport-Quad", fr: "Quad sportif" },
+  },
+};
+
+const CATEGORY_TO_VEHICLE: Record<string, string> = {
+  // IT
+  "Noleggio": "fiat-panda",
+  "Itinerari": "jeep-avenger",
+  "Costa Smeralda": "audi-rs3",
+  "Aeroporto & Porto": "mercedes-classe-a",
+  "Veicoli": "bmw-m2",
+  // EN
+  "Car hire": "fiat-panda",
+  "Itineraries": "jeep-avenger",
+  "Airport & Port": "mercedes-classe-a",
+  "Vehicles": "bmw-m2",
+  // DE
+  "Autovermietung": "fiat-panda",
+  "Reiserouten": "jeep-avenger",
+  "Flughafen & Hafen": "mercedes-classe-a",
+  "Fahrzeuge": "bmw-m2",
+  // FR
+  "Location": "fiat-panda",
+  "Itineraires": "jeep-avenger",
+  "Aeroport & Port": "mercedes-classe-a",
+  "Vehicules": "bmw-m2",
+};
+
+const labels = {
+  it: { kicker: "Consigliato per questo articolo", cta: "Scopri il veicolo" },
+  en: { kicker: "Recommended for this article", cta: "Discover the vehicle" },
+  de: { kicker: "Empfohlen fuer diesen Artikel", cta: "Fahrzeug entdecken" },
+  fr: { kicker: "Recommandé pour cet article", cta: "Découvrir le véhicule" },
+}[lang];
+
+const vehicleSlug = CATEGORY_TO_VEHICLE[category] ?? "jeep-avenger";
+const v = VEHICLES[vehicleSlug];
+const href = v.href[lang];
+---
+
+<a
+  href={href}
+  class="group block relative bg-gradient-to-br from-card via-card to-background border border-border rounded-xl overflow-hidden hover:border-gold/50 hover:shadow-2xl transition-all"
+>
+  {/* gradient deco */}
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,hsl(var(--gold)/0.15),transparent_60%)] pointer-events-none"></div>
+
+  {/* Image */}
+  <div class="relative px-4 pt-5 pb-2 h-44 flex items-center justify-center">
+    <img
+      src={v.transparent}
+      alt={v.name}
+      class="max-h-full w-auto object-contain drop-shadow-[0_15px_15px_rgba(0,0,0,0.35)] group-hover:scale-[1.04] transition-transform duration-500"
+      loading="lazy"
+    />
+  </div>
+
+  {/* Text */}
+  <div class="relative px-5 pb-5 pt-3 border-t border-border/60">
+    <p class="text-[10px] uppercase tracking-[0.28em] font-bold text-gold mb-2">
+      {labels.kicker}
+    </p>
+    <p class="font-serif text-lg text-foreground font-medium leading-tight">{v.name}</p>
+    <p class="text-xs text-foreground/55 mt-1">{v.tag[lang]}</p>
+    <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground mt-4 group-hover:text-gold transition">
+      {labels.cta}
+      <ArrowUpRight class="w-3.5 h-3.5" />
+    </span>
+  </div>
+</a>
