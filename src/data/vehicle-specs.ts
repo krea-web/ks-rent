@@ -37,7 +37,7 @@ export const VEHICLE_SPECS: Record<string, VehicleSpec> = {
     name: "Audi RS3 Sportback",
     brand: "Audi",
     category: "Supercar sportiva",
-    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png",
     href: "/flotta/audi-rs3",
     specs: {
       power: "400 CV (294 kW)",
@@ -72,7 +72,7 @@ export const VEHICLE_SPECS: Record<string, VehicleSpec> = {
     name: "BMW M2 Coupe",
     brand: "BMW",
     category: "Supercar sportiva",
-    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png",
     href: "/flotta/bmw-m2",
     specs: {
       power: "460 CV (338 kW)",
@@ -107,7 +107,7 @@ export const VEHICLE_SPECS: Record<string, VehicleSpec> = {
     name: "Mercedes Classe A 180d",
     brand: "Mercedes-Benz",
     category: "Premium",
-    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png",
     href: "/flotta/mercedes-classe-a",
     specs: {
       power: "116 CV (85 kW)",
@@ -141,7 +141,7 @@ export const VEHICLE_SPECS: Record<string, VehicleSpec> = {
     name: "Jeep Avenger",
     brand: "Jeep",
     category: "SUV compatto",
-    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp",
     href: "/flotta/jeep-avenger",
     specs: {
       power: "100 CV (74 kW)",
@@ -175,7 +175,7 @@ export const VEHICLE_SPECS: Record<string, VehicleSpec> = {
     name: "Fiat Panda Hybrid",
     brand: "Fiat",
     category: "City car",
-    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-fiatpandacitycar.webp",
     href: "/flotta/fiat-panda",
     specs: {
       power: "70 CV (52 kW)",

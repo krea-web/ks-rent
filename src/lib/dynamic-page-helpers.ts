@@ -20,7 +20,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
   luxury: {
     name: "Audi RS3 Sportback",
     image:
-      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3supercar-verde.png",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png",
     tagline: "Potenza e prestigio sulla Costa Smeralda",
     transmission: "Automatico S-Tronic",
     seats: 5,
@@ -31,7 +31,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
   luxuryAlt: {
     name: "BMW M2 Coupé",
     image:
-      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png",
     tagline: "Sportività pura per le strade della Gallura",
     transmission: "Automatico Steptronic",
     seats: 4,
@@ -42,7 +42,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
   elegant: {
     name: "Mercedes Classe A 180d",
     image:
-      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png",
     tagline: "Comfort ed eleganza per ogni percorso",
     transmission: "Automatico 7G-DCT",
     seats: 5,
@@ -53,7 +53,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
   offroad: {
     name: "Jeep Avenger",
     image:
-      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/JEEP/ksrent-jeepsuvavenger.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp",
     tagline: "Perfetto per spiagge nascoste e strade sterrate",
     transmission: "Automatico 6 marce",
     seats: 5,
@@ -64,7 +64,7 @@ export const VEHICLES: Record<string, RecommendedVehicle> = {
   city: {
     name: "Fiat Panda",
     image:
-      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/FIAT/ksrent-fiatpandacitycar.webp",
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-fiatpandacitycar.webp",
     tagline: "Agile e pratica, ideale per la città e il litorale",
     transmission: "Manuale 5 marce",
     seats: 5,

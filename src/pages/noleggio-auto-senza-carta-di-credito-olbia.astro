@@ -4,6 +4,7 @@ import NoleggioSenzaCartaCredito, {
   senzaCCJsonLd,
   senzaCCFaqJsonLd,
 } from "@/views/NoleggioSenzaCartaCredito";
+import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
 import { buildBreadcrumb } from "@/lib/jsonLd";
 ---
 <BaseLayout
@@ -17,4 +18,5 @@ import { buildBreadcrumb } from "@/lib/jsonLd";
   ]}
 >
   <NoleggioSenzaCartaCredito lang="it" />
+  <GuideVehicleStrip lang="it" />
 </BaseLayout>

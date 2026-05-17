@@ -620,7 +620,7 @@ const NoleggioCostaSmeralda = ({ lang = "it" }: Props) => {
             initial={{ scale: 1.15, opacity: 0 }}
             animate={{ scale: 1, opacity: 0.4 }}
             transition={{ duration: 1.8 }}
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-noleggio-bmwm2.webp"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png"
             alt={t.altBmwHero}
             className="w-full h-full object-cover"
             loading="eager"
@@ -695,7 +695,7 @@ const NoleggioCostaSmeralda = ({ lang = "it" }: Props) => {
               whileInView={{ x: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 1.2 }}
               viewport={{ once: true, amount: 0.3 }}
-              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-bmwm2-maschera.webp"
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png"
               className="relative z-10 w-full h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.9)]"
               alt={t.altBmwSpotlight}
             />

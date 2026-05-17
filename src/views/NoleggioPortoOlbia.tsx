@@ -540,7 +540,7 @@ const NoleggioPortoOlbia = ({ lang = "it" }: Props) => {
       <section className="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24 overflow-hidden bg-background">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-noleggio-mercedesclassea180d.webp"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png"
             alt={t.altMercHero}
             className="w-full h-full object-cover opacity-40 scale-105"
             loading="eager"
@@ -612,7 +612,7 @@ const NoleggioPortoOlbia = ({ lang = "it" }: Props) => {
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 1 }}
               viewport={{ once: true }}
-              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/MERCEDES/ksrent-mercedessupercarclassea180d.png"
+              src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png"
               className="relative z-10 w-full h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)]"
               alt={t.altMercSpotlight}
             />

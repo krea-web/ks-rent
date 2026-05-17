@@ -351,7 +351,7 @@ const ChiSiamo = ({ lang = "it" }: ChiSiamoProps) => {
               className="md:col-span-8 md:row-span-2 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-gray-200 dark:bg-[#111] border border-gray-200 dark:border-white/5 block"
             >
               <img
-                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-audirs3grigia.webp"
+                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-grigia.png"
                 alt="KS Rent Audi RS3 noleggio supercar Olbia"
                 loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -372,7 +372,7 @@ const ChiSiamo = ({ lang = "it" }: ChiSiamoProps) => {
               className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-gray-200 dark:bg-[#111] border border-gray-200 dark:border-white/5 block"
             >
               <img
-                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/AUDI/ksrent-noleggio-audirs3-verde.webp"
+                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png"
                 alt="Audi RS3 verde noleggio Costa Smeralda KS Rent"
                 loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -392,7 +392,7 @@ const ChiSiamo = ({ lang = "it" }: ChiSiamoProps) => {
               className="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-2xl md:rounded-[2rem] bg-gray-200 dark:bg-[#111] border border-gray-200 dark:border-white/5 block"
             >
               <img
-                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/BMW/ksrent-noleggio-bmwm2.webp"
+                src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png"
                 alt="BMW M2 noleggio Olbia Sardegna KS Rent"
                 loading="lazy"
                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
