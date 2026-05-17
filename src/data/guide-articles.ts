@@ -989,3 +989,36 @@ GUIDE_ARTICLES_FR.push(
     itEquivalent: "visitare-arcipelago-la-maddalena-guida-pratica",
   },
 );
+
+/* ─── i18n helpers per LanguageSwitcher / hreflang ─── */
+
+export type GuideLocale = "it" | "en" | "de" | "fr";
+
+/**
+ * Risale allo slug IT di un articolo guide dato uno slug in qualsiasi lingua.
+ * Permette al LanguageSwitcher e a getAlternateLinks di funzionare anche quando
+ * l'utente si trova su /en/guide/[slug-en] e clicca su altre lingue.
+ */
+export function findItSlugForGuide(anySlug: string): string | undefined {
+  if (GUIDE_ARTICLES.some((a) => a.slug === anySlug)) return anySlug;
+  const en = GUIDE_ARTICLES_EN.find((a) => a.slug === anySlug);
+  if (en?.itEquivalent) return en.itEquivalent;
+  const de = GUIDE_ARTICLES_DE.find((a) => a.slug === anySlug);
+  if (de?.itEquivalent) return de.itEquivalent;
+  const fr = GUIDE_ARTICLES_FR.find((a) => a.slug === anySlug);
+  if (fr?.itEquivalent) return fr.itEquivalent;
+  return undefined;
+}
+
+/**
+ * Dato uno slug IT e una lingua target, ritorna lo slug nella lingua richiesta.
+ * Se non esiste traduzione, ritorna lo slug IT (così il LanguageSwitcher fa fallback
+ * a /[lang]/guide/[slug-it] che almeno mostra index/404 friendly invece di pagina vuota).
+ */
+export function getGuideSlugForLocale(itSlug: string, locale: GuideLocale): string {
+  if (locale === "it") return itSlug;
+  const collection =
+    locale === "en" ? GUIDE_ARTICLES_EN : locale === "de" ? GUIDE_ARTICLES_DE : GUIDE_ARTICLES_FR;
+  const found = collection.find((a) => a.itEquivalent === itSlug);
+  return found?.slug ?? itSlug;
+}

@@ -1,13 +1,19 @@
 ---
 /**
- * Layout condiviso per ogni articolo /guide/[slug].astro (IT) e
- * /en/guide/[slug].astro (EN). Riceve metadata + slot HTML body.
- * Renderizza hero + author + reading time + body con prose styling +
- * related articles linker.
+ * Layout magazine editoriale per ogni articolo /guide/[slug].astro in 4 lingue.
+ * Riceve metadata + slot HTML body.
  *
- * Backward compatible: se la prop `lang` non viene passata, default IT.
+ * Struttura:
+ *  1. Reading progress bar fissa
+ *  2. Hero full-width con immagine grande, eyebrow, titolo serif, lead, meta autori
+ *  3. Body: 3 colonne desktop (TOC sticky | testo serif con drop-cap | sidebar CTA sticky)
+ *  4. Bio autori in fondo articolo
+ *  5. Related "More from the guide" come carousel orizzontale
+ *  6. CTA finale prenotazione
  */
-import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
+import { Calendar, Clock, ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
+import GuideReadingProgress from "./GuideReadingProgress.tsx";
+import GuideTOC from "./GuideTOC.tsx";
 import {
   findArticle,
   findArticleEn,
@@ -47,7 +53,6 @@ const updatedDate = meta.updatedAt
   ? new Date(meta.updatedAt).toLocaleDateString(localeStr, { year: "numeric", month: "long", day: "numeric" })
   : null;
 
-// Risolvi gli articoli correlati nella lingua corretta
 const relatedFinder =
   lang === "en" ? findArticleEn :
   lang === "de" ? findArticleDe :
@@ -57,7 +62,6 @@ const relatedArticles = (meta.related || [])
   .map((slug) => relatedFinder(slug))
   .filter((a): a is AnyArticleMeta => !!a);
 
-// URL base per i link articolo (IT senza prefisso, altrimenti con /lang)
 const guideBase = lang === "it" ? "/guide" : `/${lang}/guide`;
 const bookingHref =
   lang === "it" ? "/prenotaora" :
@@ -67,131 +71,274 @@ const bookingHref =
 
 const labels = {
   it: {
-    eyebrow: `${meta.category} · Guide KS Rent`,
-    publishedOn: "Pubblicato il",
+    eyebrow: meta.category,
+    publishedOn: "Pubblicato",
     updatedOn: "aggiornato",
     readingTime: "min di lettura",
-    authoredBy: "A cura di",
+    inThisGuide: "In questa guida",
+    aboutAuthors: "Gli autori",
+    authorsBio:
+      "Francesco e Salvatore Milo, fratelli, hanno fondato KS Rent Sardinia ad aprile 2025. Con sede operativa al porto Isola Bianca di Olbia, gestiscono personalmente la flotta e ogni consegna ai clienti. Hanno passato la vita in Gallura: queste guide raccolgono ciò che consigliano ogni giorno a chi ritira un'auto da loro.",
+    whatsappTitle: "Hai una domanda specifica?",
+    whatsappCta: "Scrivi su WhatsApp",
     keepReading: "Continua a leggere",
+    moreFromGuide: "Altri articoli dalla guida",
     readyTo: "Pronto a partire?",
     bookTitle: "Prenota il tuo veicolo per la Costa Smeralda",
-    bookSubtitle:
-      "Conferma le date e scegli il veicolo dalla flotta di KS Rent Sardinia. Senza carta di credito obbligatoria.",
+    bookSubtitle: "Conferma le date e scegli il veicolo dalla flotta di KS Rent Sardinia. Senza carta di credito obbligatoria.",
     bookCta: "Verifica disponibilità",
+    sidebarKicker: "Pronto al ritiro",
+    sidebarTitle: "Auto, scooter e quad in Gallura",
+    sidebarText: "Tutta la flotta è consegnabile direttamente a Olbia porto, aeroporto o hotel.",
+    sidebarCta: "Vedi la flotta",
+    sidebarFleetHref: "/flotta",
   },
   en: {
-    eyebrow: `${meta.category} · KS Rent Guides`,
-    publishedOn: "Published on",
+    eyebrow: meta.category,
+    publishedOn: "Published",
     updatedOn: "updated",
     readingTime: "min read",
-    authoredBy: "Written by",
+    inThisGuide: "In this guide",
+    aboutAuthors: "The authors",
+    authorsBio:
+      "Francesco and Salvatore Milo, brothers, founded KS Rent Sardinia in April 2025. Based at Olbia's Isola Bianca port, they personally run the fleet and every customer delivery. They've spent their lives in Gallura: these guides collect what they tell every customer who picks up a car from them.",
+    whatsappTitle: "Got a specific question?",
+    whatsappCta: "Message us on WhatsApp",
     keepReading: "Keep reading",
+    moreFromGuide: "More from the guide",
     readyTo: "Ready to go?",
     bookTitle: "Book your car for Costa Smeralda",
-    bookSubtitle:
-      "Confirm your dates and pick a vehicle from the KS Rent Sardinia fleet. No mandatory credit card.",
+    bookSubtitle: "Confirm your dates and pick a vehicle from the KS Rent Sardinia fleet. No mandatory credit card.",
     bookCta: "Check availability",
+    sidebarKicker: "Ready when you are",
+    sidebarTitle: "Cars, scooters and quads in Gallura",
+    sidebarText: "The whole fleet can be delivered to Olbia port, airport or your hotel.",
+    sidebarCta: "See the fleet",
+    sidebarFleetHref: "/en/fleet",
   },
   de: {
-    eyebrow: `${meta.category} · KS Rent Anleitungen`,
-    publishedOn: "Veroeffentlicht am",
+    eyebrow: meta.category,
+    publishedOn: "Veroeffentlicht",
     updatedOn: "aktualisiert",
     readingTime: "Min. Lesezeit",
-    authoredBy: "Von",
+    inThisGuide: "In dieser Anleitung",
+    aboutAuthors: "Die Autoren",
+    authorsBio:
+      "Francesco und Salvatore Milo, Brueder, haben KS Rent Sardinia im April 2025 gegruendet. Mit Sitz am Hafen Isola Bianca in Olbia kuemmern sie sich persoenlich um die Flotte und jede Fahrzeuguebergabe. Sie haben ihr ganzes Leben in Gallura verbracht: diese Anleitungen sammeln das, was sie jedem Kunden mit auf den Weg geben.",
+    whatsappTitle: "Eine konkrete Frage?",
+    whatsappCta: "Schreiben Sie auf WhatsApp",
     keepReading: "Weiterlesen",
+    moreFromGuide: "Mehr aus der Anleitung",
     readyTo: "Bereit zur Abfahrt?",
     bookTitle: "Buchen Sie Ihr Fahrzeug fuer die Costa Smeralda",
-    bookSubtitle:
-      "Bestaetigen Sie die Daten und waehlen Sie das Fahrzeug aus der KS Rent Sardinia Flotte. Keine Kreditkarte erforderlich.",
+    bookSubtitle: "Bestaetigen Sie die Daten und waehlen Sie das Fahrzeug aus der KS Rent Sardinia Flotte. Keine Kreditkarte erforderlich.",
     bookCta: "Verfuegbarkeit pruefen",
+    sidebarKicker: "Sofort verfuegbar",
+    sidebarTitle: "Autos, Roller und Quads in Gallura",
+    sidebarText: "Die gesamte Flotte wird direkt zum Hafen, Flughafen oder Hotel in Olbia geliefert.",
+    sidebarCta: "Zur Flotte",
+    sidebarFleetHref: "/de/fuhrpark",
   },
   fr: {
-    eyebrow: `${meta.category} · Guides KS Rent`,
-    publishedOn: "Publie le",
+    eyebrow: meta.category,
+    publishedOn: "Publie",
     updatedOn: "mis a jour",
     readingTime: "min de lecture",
-    authoredBy: "Par",
+    inThisGuide: "Dans ce guide",
+    aboutAuthors: "Les auteurs",
+    authorsBio:
+      "Francesco et Salvatore Milo, freres, ont fonde KS Rent Sardinia en avril 2025. Bases au port d'Isola Bianca a Olbia, ils gerent personnellement la flotte et chaque livraison. Ils ont passe toute leur vie en Gallura : ces guides reunissent ce qu'ils conseillent chaque jour aux clients.",
+    whatsappTitle: "Une question specifique ?",
+    whatsappCta: "Ecrire sur WhatsApp",
     keepReading: "Continuer la lecture",
+    moreFromGuide: "Autres articles du guide",
     readyTo: "Pret a partir ?",
     bookTitle: "Reservez votre vehicule pour la Costa Smeralda",
-    bookSubtitle:
-      "Confirmez les dates et choisissez le vehicule dans la flotte KS Rent Sardinia. Sans carte de credit obligatoire.",
+    bookSubtitle: "Confirmez les dates et choisissez le vehicule dans la flotte KS Rent Sardinia. Sans carte de credit obligatoire.",
     bookCta: "Verifier disponibilite",
+    sidebarKicker: "Pret au retrait",
+    sidebarTitle: "Voitures, scooters et quads en Gallura",
+    sidebarText: "Toute la flotte peut etre livree directement au port, a l'aeroport ou a l'hotel d'Olbia.",
+    sidebarCta: "Voir la flotte",
+    sidebarFleetHref: "/fr/flotte",
   },
 }[lang];
+
+const whatsappUrl = "https://wa.me/393446107071";
 ---
 
-<article class="bg-background min-h-screen">
-  {/* HERO */}
-  <header class="relative overflow-hidden border-b border-border">
-    <div class="absolute inset-0">
-      <img
-        src={meta.heroImage}
-        alt={meta.title}
-        class="w-full h-full object-cover opacity-25"
-        loading="eager"
-        fetchpriority="high"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/40"></div>
-    </div>
+<GuideReadingProgress client:idle />
 
-    <div class="relative z-10 max-w-3xl mx-auto px-4 md:px-6 pt-32 pb-12">
-      <a href={guideBase} class="inline-flex items-center gap-2 text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-6 hover:underline">
-        <Tag className="w-3 h-3" />
+<article class="bg-background">
+  {/* ───────────── HERO MAGAZINE ───────────── */}
+  <header class="relative bg-card/30 border-b border-border">
+    <div class="max-w-6xl mx-auto px-4 md:px-8 pt-28 md:pt-32 pb-10 md:pb-16">
+      <a
+        href={guideBase}
+        class="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-bold text-gold hover:opacity-80 transition mb-6"
+      >
+        <span class="w-6 h-px bg-gold"></span>
         {labels.eyebrow}
       </a>
-      <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground leading-[1.05] mb-6">
+
+      <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl font-medium text-foreground leading-[1.1] tracking-tight mb-6 max-w-4xl">
         {meta.title}
       </h1>
-      <p class="text-lg text-foreground/70 font-light leading-relaxed mb-8">{meta.excerpt}</p>
 
-      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-foreground/60">
-        <span class="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-gold" />
+      <p class="font-serif text-lg md:text-xl text-foreground/70 leading-relaxed max-w-3xl mb-8 font-light">
+        {meta.excerpt}
+      </p>
+
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-foreground/60 border-t border-border pt-5">
+        <span class="text-foreground font-semibold">{meta.author}</span>
+        <span class="text-foreground/30">·</span>
+        <span class="inline-flex items-center gap-1.5">
+          <Calendar className="w-3.5 h-3.5 text-gold" />
           {labels.publishedOn} {formattedDate}
-          {updatedDate && <span class="text-foreground/40"> · {labels.updatedOn} {updatedDate}</span>}
+          {updatedDate && <span class="text-foreground/40 ml-1">({labels.updatedOn} {updatedDate})</span>}
         </span>
-        <span class="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-gold" />
+        <span class="text-foreground/30">·</span>
+        <span class="inline-flex items-center gap-1.5">
+          <Clock className="w-3.5 h-3.5 text-gold" />
           {meta.readingMinutes} {labels.readingTime}
-        </span>
-        <span class="text-foreground/60">
-          {labels.authoredBy} <strong class="text-foreground">{meta.author}</strong>
         </span>
       </div>
     </div>
+
+    {/* hero image full-width sotto al titolo, in cinematic ratio */}
+    <div class="max-w-6xl mx-auto px-4 md:px-8 pb-10 md:pb-14">
+      <figure class="relative w-full aspect-[16/8] md:aspect-[21/9] overflow-hidden rounded-xl shadow-2xl ring-1 ring-border">
+        <img
+          src={meta.heroImage}
+          alt={meta.title}
+          class="w-full h-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
   </header>
 
-  {/* BODY (slot) */}
-  <div class="max-w-3xl mx-auto px-4 md:px-6 py-16 prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-foreground/80 prose-p:font-light prose-p:leading-relaxed prose-strong:text-foreground prose-strong:font-semibold prose-a:text-gold prose-a:no-underline hover:prose-a:underline prose-ul:text-foreground/80 prose-ol:text-foreground/80 prose-li:my-1.5 prose-blockquote:border-l-gold prose-blockquote:bg-card/50 prose-blockquote:not-italic prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-table:my-8 prose-thead:border-border prose-th:text-foreground prose-th:font-semibold prose-td:text-foreground/80 prose-img:rounded-2xl">
-    <slot />
+  {/* ───────────── BODY GRID (TOC | TESTO | SIDEBAR) ───────────── */}
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-[200px_minmax(0,1fr)_260px] gap-8 lg:gap-12">
+      {/* TOC sticky desktop */}
+      <aside>
+        <GuideTOC client:visible label={labels.inThisGuide} />
+      </aside>
+
+      {/* COLONNA TESTO — magazine reading column */}
+      <div
+        data-article-body
+        class="guide-prose font-serif text-foreground/85 leading-[1.75] text-[17px] md:text-[19px] max-w-[68ch]"
+      >
+        <slot />
+      </div>
+
+      {/* SIDEBAR sticky desktop */}
+      <aside class="hidden lg:block">
+        <div class="sticky top-28 space-y-4">
+          {/* CTA flotta */}
+          <div class="bg-card border border-border rounded-xl p-5">
+            <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-2">{labels.sidebarKicker}</p>
+            <p class="font-semibold text-foreground mb-2 leading-snug">{labels.sidebarTitle}</p>
+            <p class="text-sm text-foreground/60 leading-relaxed mb-4">{labels.sidebarText}</p>
+            <a
+              href={labels.sidebarFleetHref}
+              class="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-gold transition"
+            >
+              {labels.sidebarCta}
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* CTA WhatsApp */}
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener"
+            class="block bg-[#25D366]/10 border border-[#25D366]/30 hover:border-[#25D366]/60 rounded-xl p-5 transition group"
+          >
+            <div class="flex items-center gap-2 mb-2">
+              <MessageCircle className="w-4 h-4 text-[#25D366]" />
+              <p class="font-semibold text-foreground text-sm">{labels.whatsappTitle}</p>
+            </div>
+            <p class="text-sm text-foreground/70 leading-relaxed mb-3">
+              Francesco & Salvatore Milo
+            </p>
+            <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-[#25D366] group-hover:gap-2 transition-all">
+              {labels.whatsappCta}
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </a>
+        </div>
+      </aside>
+    </div>
   </div>
 
-  {/* RELATED ARTICLES */}
+  {/* ───────────── BIO AUTORI ───────────── */}
+  <section class="border-t border-border bg-card/20">
+    <div class="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-16">
+      <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-3">{labels.aboutAuthors}</p>
+      <div class="flex flex-col md:flex-row gap-6 md:items-start">
+        <div class="flex -space-x-3">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gold/40 to-gold/10 ring-2 ring-background flex items-center justify-center text-gold font-bold text-lg">FM</div>
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gold/30 to-gold/5 ring-2 ring-background flex items-center justify-center text-gold font-bold text-lg">SM</div>
+        </div>
+        <div class="flex-1">
+          <p class="font-serif text-xl text-foreground font-medium mb-2">Francesco & Salvatore Milo</p>
+          <p class="font-serif text-foreground/70 leading-relaxed text-[16px] md:text-[17px] mb-4">
+            {labels.authorsBio}
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-1.5 text-sm font-semibold text-gold hover:underline"
+          >
+            {labels.whatsappCta}
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ───────────── RELATED / MORE FROM THE GUIDE ───────────── */}
   {relatedArticles.length > 0 && (
-    <section class="border-t border-border bg-card/30 py-16 px-4 md:px-6">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-8 text-center">
-          {labels.keepReading}
-        </h2>
-        <div class="grid md:grid-cols-2 gap-6">
+    <section class="border-t border-border py-14 md:py-20">
+      <div class="max-w-6xl mx-auto px-4 md:px-8">
+        <div class="flex items-end justify-between mb-8 md:mb-10">
+          <h2 class="font-serif text-2xl md:text-3xl text-foreground font-medium tracking-tight">
+            {labels.moreFromGuide}
+          </h2>
+          <a
+            href={guideBase}
+            class="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold text-foreground/70 hover:text-gold transition"
+          >
+            {labels.keepReading}
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {relatedArticles.map((rel) => (
             <a
               href={`${guideBase}/${rel.slug}`}
-              class="group block bg-card border border-border rounded-2xl overflow-hidden hover:border-gold/40 transition shadow-sm hover:shadow-lg"
+              class="group block bg-card border border-border rounded-xl overflow-hidden hover:border-gold/40 transition shadow-sm hover:shadow-xl"
             >
-              <div class="aspect-[16/9] overflow-hidden">
+              <div class="aspect-[16/10] overflow-hidden">
                 <img
                   src={rel.heroImage}
                   alt={rel.title}
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
               </div>
               <div class="p-5">
-                <span class="text-xs uppercase tracking-widest text-gold font-bold">{rel.category}</span>
-                <p class="font-bold text-foreground mt-2 group-hover:text-gold transition">{rel.title}</p>
-                <p class="text-sm text-foreground/60 mt-2 leading-relaxed">{rel.excerpt}</p>
+                <span class="text-[10px] uppercase tracking-[0.25em] text-gold font-bold">{rel.category}</span>
+                <p class="font-serif text-lg text-foreground mt-2 leading-snug group-hover:text-gold transition">{rel.title}</p>
+                <p class="text-sm text-foreground/60 mt-2 leading-relaxed line-clamp-2">{rel.excerpt}</p>
+                <p class="text-[12px] text-foreground/40 mt-3">{rel.readingMinutes} {labels.readingTime}</p>
               </div>
             </a>
           ))}
@@ -200,19 +347,19 @@ const labels = {
     </section>
   )}
 
-  {/* CTA fine articolo */}
-  <section class="py-16 px-4 md:px-6 text-center border-t border-border">
+  {/* ───────────── CTA FINALE ───────────── */}
+  <section class="border-t border-border bg-card/30 py-14 md:py-20 text-center px-4 md:px-8">
     <div class="max-w-2xl mx-auto">
-      <p class="text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{labels.readyTo}</p>
-      <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+      <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-3">{labels.readyTo}</p>
+      <h2 class="font-serif text-2xl md:text-4xl text-foreground font-medium mb-4 leading-tight">
         {labels.bookTitle}
       </h2>
-      <p class="text-foreground/60 font-light mb-8">
+      <p class="font-serif text-foreground/65 text-[17px] leading-relaxed mb-8">
         {labels.bookSubtitle}
       </p>
       <a
         href={bookingHref}
-        class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-10 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
+        class="inline-flex items-center gap-2 bg-gold text-background font-semibold tracking-wide text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform shadow-lg"
       >
         {labels.bookCta}
         <ArrowRight className="w-4 h-4" />
@@ -220,3 +367,189 @@ const labels = {
     </div>
   </section>
 </article>
+
+<style is:global>
+  /* ─── Magazine prose ─── */
+  .guide-prose > p,
+  .guide-prose > ul,
+  .guide-prose > ol,
+  .guide-prose > blockquote,
+  .guide-prose > table,
+  .guide-prose > figure {
+    margin: 1.4em 0;
+  }
+
+  /* Drop cap sul primo paragrafo */
+  .guide-prose > p:first-of-type::first-letter {
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    float: left;
+    font-size: 4.5em;
+    line-height: 0.9;
+    margin: 0.08em 0.12em 0 0;
+    font-weight: 600;
+    color: hsl(var(--gold, 38 65% 50%));
+  }
+
+  /* Lead paragraph */
+  .guide-prose > p:first-of-type {
+    font-size: 1.15em;
+    line-height: 1.65;
+  }
+
+  .guide-prose h2 {
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-size: 1.85em;
+    line-height: 1.2;
+    font-weight: 500;
+    margin: 2.2em 0 0.6em;
+    color: hsl(var(--foreground));
+    letter-spacing: -0.015em;
+    scroll-margin-top: 6rem;
+  }
+
+  .guide-prose h2::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: hsl(var(--gold, 38 65% 50%));
+    margin-bottom: 0.7em;
+  }
+
+  .guide-prose h3 {
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-size: 1.35em;
+    line-height: 1.3;
+    font-weight: 600;
+    margin: 1.8em 0 0.5em;
+    color: hsl(var(--foreground));
+    scroll-margin-top: 6rem;
+  }
+
+  .guide-prose strong {
+    color: hsl(var(--foreground));
+    font-weight: 600;
+  }
+
+  .guide-prose a {
+    color: hsl(var(--gold, 38 65% 50%));
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: hsl(var(--gold, 38 65% 50%) / 0.4);
+    transition: text-decoration-color 0.2s;
+  }
+  .guide-prose a:hover {
+    text-decoration-color: hsl(var(--gold, 38 65% 50%));
+  }
+
+  .guide-prose ul,
+  .guide-prose ol {
+    padding-left: 1.5em;
+  }
+  .guide-prose ul > li {
+    list-style-type: none;
+    position: relative;
+    margin: 0.5em 0;
+    padding-left: 0.2em;
+  }
+  .guide-prose ul > li::before {
+    content: "";
+    position: absolute;
+    left: -1.1em;
+    top: 0.85em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: hsl(var(--gold, 38 65% 50%));
+  }
+  .guide-prose ol > li {
+    margin: 0.5em 0;
+  }
+
+  .guide-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92em;
+    margin: 2em 0;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  .guide-prose thead {
+    background: hsl(var(--card));
+  }
+  .guide-prose th {
+    text-align: left;
+    padding: 0.75em 1em;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    border-bottom: 2px solid hsl(var(--border));
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 0.88em;
+    letter-spacing: 0.02em;
+  }
+  .guide-prose td {
+    padding: 0.7em 1em;
+    border-bottom: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground) / 0.8);
+  }
+  .guide-prose tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .guide-prose tbody tr:hover {
+    background: hsl(var(--card) / 0.5);
+  }
+
+  .guide-prose blockquote {
+    border-left: 3px solid hsl(var(--gold, 38 65% 50%));
+    padding: 0.4em 0 0.4em 1.5em;
+    margin: 1.8em 0;
+    font-style: italic;
+    color: hsl(var(--foreground) / 0.85);
+    font-size: 1.1em;
+    line-height: 1.55;
+  }
+
+  .guide-prose img {
+    border-radius: 0.75rem;
+    margin: 2em 0;
+    width: 100%;
+    height: auto;
+  }
+
+  .guide-prose figure {
+    margin: 2em 0;
+  }
+  .guide-prose figcaption {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 0.82em;
+    color: hsl(var(--foreground) / 0.55);
+    text-align: center;
+    margin-top: 0.6em;
+    font-style: italic;
+  }
+
+  .guide-prose code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: hsl(var(--card));
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.88em;
+    color: hsl(var(--gold, 38 65% 50%));
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 768px) {
+    .guide-prose {
+      font-size: 17px;
+      line-height: 1.7;
+    }
+    .guide-prose > p:first-of-type::first-letter {
+      font-size: 3.5em;
+    }
+    .guide-prose h2 {
+      font-size: 1.6em;
+    }
+  }
+</style>

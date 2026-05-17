@@ -23,6 +23,8 @@
  * quando lo slug della lingua di destinazione non e' disponibile a render time.
  */
 
+import { findItSlugForGuide, getGuideSlugForLocale } from "@/data/guide-articles";
+
 export const LOCALES = ["it", "en", "de", "fr"] as const;
 export type Locale = (typeof LOCALES)[number];
 
@@ -63,6 +65,17 @@ const FLEET_PREFIX: Record<Locale, string> = {
   fr: "/flotte",
 };
 
+/** Path-prefix per `/flotta/confronta/[pair]` -> `/en/fleet/compare/[pair]`, ecc. */
+const COMPARE_PREFIX: Record<Locale, string> = {
+  it: "/flotta/confronta",
+  en: "/fleet/compare",
+  de: "/fuhrpark/vergleich",
+  fr: "/flotte/comparer",
+};
+
+/** Path-prefix per `/guide` (identico in tutte le lingue). */
+const GUIDE_PREFIX = "/guide";
+
 /**
  * Mappa slug veicoli per lingua. Estratta da sql/translations/13.
  * Chiave: group_slug (IT). Valore: slug localizzato per lingua.
@@ -86,6 +99,32 @@ const VEHICLE_SLUG_INVERSE: Record<string, string> = (() => {
   }
   return m;
 })();
+
+/**
+ * Slug brevi usati nei file pair `/flotta/confronta/[a]-vs-[b]`.
+ * Diversi dai long slug delle pagine veicolo (es. `mercedes-a-class` vs `mercedes-a-class-hire-olbia`).
+ */
+const COMPARE_SHORT_SLUGS: Record<string, Record<Locale, string>> = {
+  "audi-rs3":           { it: "audi-rs3",           en: "audi-rs3",           de: "audi-rs3",           fr: "audi-rs3" },
+  "bmw-m2":             { it: "bmw-m2",             en: "bmw-m2",             de: "bmw-m2",             fr: "bmw-m2" },
+  "mercedes-classe-a":  { it: "mercedes-classe-a",  en: "mercedes-a-class",   de: "mercedes-a-klasse",  fr: "mercedes-classe-a" },
+  "jeep-avenger":       { it: "jeep-avenger",       en: "jeep-avenger",       de: "jeep-avenger",       fr: "jeep-avenger" },
+  "fiat-panda":         { it: "fiat-panda",         en: "fiat-panda",         de: "fiat-panda",         fr: "fiat-panda" },
+  "honda-sh":           { it: "honda-sh",           en: "honda-sh",           de: "honda-sh",           fr: "honda-sh" },
+  "yamaha-quad-raptor": { it: "yamaha-quad-raptor", en: "yamaha-quad-raptor", de: "yamaha-quad-raptor", fr: "yamaha-quad-raptor" },
+};
+
+const COMPARE_SHORT_INVERSE: Record<string, string> = (() => {
+  const m: Record<string, string> = {};
+  for (const [it, langMap] of Object.entries(COMPARE_SHORT_SLUGS)) {
+    for (const slug of Object.values(langMap)) m[slug] = it;
+  }
+  return m;
+})();
+
+function localizeCompareShortSlug(itGroupSlug: string, locale: Locale): string {
+  return COMPARE_SHORT_SLUGS[itGroupSlug]?.[locale] ?? itGroupSlug;
+}
 
 /**
  * Traduce uno slug veicolo a partire dal group_slug (IT) verso la lingua target.
@@ -141,6 +180,14 @@ function findCanonicalItPath(pathname: string): {
   fleetGroupSlug?: string;
   /** slug IT della location/spiaggia (se path /[slug] dinamico riconosciuto) */
   dynamicItSlug?: string;
+  /** slug IT dell'articolo guide (se path /guide/[slug] o /[lang]/guide/[slug]) */
+  guideItSlug?: string;
+  /** indice /guide (lista articoli) — path identico in tutte le lingue */
+  isGuideIndex?: boolean;
+  /** pair group_slug IT separati da "vs" (es. "audi-rs3-vs-bmw-m2") per /flotta/confronta/[pair] */
+  comparePairIt?: string;
+  /** indice /flotta/confronta */
+  isCompareIndex?: boolean;
 } | null {
   const stripped = stripLocalePrefix(pathname);
   const currentLocale = getLocaleFromPath(pathname);
@@ -149,6 +196,31 @@ function findCanonicalItPath(pathname: string): {
   for (const [itPath, langMap] of Object.entries(PATH_MAP_FULL)) {
     if (langMap[currentLocale] === stripped || langMap.it === stripped) {
       return { itPath };
+    }
+  }
+
+  // 1bis) /guide e /guide/[slug]
+  if (stripped === GUIDE_PREFIX || stripped === GUIDE_PREFIX + "/") {
+    return { itPath: GUIDE_PREFIX, isGuideIndex: true };
+  }
+  if (stripped.startsWith(GUIDE_PREFIX + "/")) {
+    const localSlug = stripped.slice(GUIDE_PREFIX.length + 1).replace(/\/$/, "");
+    const itSlug = findItSlugForGuide(localSlug) ?? localSlug;
+    return { itPath: `${GUIDE_PREFIX}/${itSlug}`, guideItSlug: itSlug };
+  }
+
+  // 1ter) /flotta/confronta e /flotta/confronta/[pair] (incl. varianti per lingua)
+  for (const [, prefix] of Object.entries(COMPARE_PREFIX) as [Locale, string][]) {
+    if (stripped === prefix || stripped === prefix + "/") {
+      return { itPath: COMPARE_PREFIX.it, isCompareIndex: true };
+    }
+    if (stripped.startsWith(prefix + "/")) {
+      const localPair = stripped.slice(prefix.length + 1).replace(/\/$/, "");
+      // Pair tipo "mercedes-a-class-vs-jeep-avenger" → riconverti a group_slug IT
+      const parts = localPair.split("-vs-");
+      const groupParts = parts.map((p) => COMPARE_SHORT_INVERSE[p] ?? p);
+      const pairIt = groupParts.join("-vs-");
+      return { itPath: `${COMPARE_PREFIX.it}/${pairIt}`, comparePairIt: pairIt };
     }
   }
 
@@ -195,6 +267,25 @@ export function localizePath(pathname: string, locale: Locale): string {
       const slug = localizeVehicleSlug(canonical.fleetGroupSlug, locale);
       const path = `${prefix}/${slug}`;
       return locale === DEFAULT_LOCALE ? path : `/${locale}${path}`;
+    }
+    if (canonical.guideItSlug !== undefined) {
+      const slug = getGuideSlugForLocale(canonical.guideItSlug, locale as "it" | "en" | "de" | "fr");
+      const path = `${GUIDE_PREFIX}/${slug}`;
+      return locale === DEFAULT_LOCALE ? path : `/${locale}${path}`;
+    }
+    if (canonical.isGuideIndex) {
+      return locale === DEFAULT_LOCALE ? GUIDE_PREFIX : `/${locale}${GUIDE_PREFIX}`;
+    }
+    if (canonical.comparePairIt !== undefined) {
+      const prefix = COMPARE_PREFIX[locale];
+      const parts = canonical.comparePairIt.split("-vs-");
+      const localized = parts.map((p) => localizeCompareShortSlug(p, locale)).join("-vs-");
+      const path = `${prefix}/${localized}`;
+      return locale === DEFAULT_LOCALE ? path : `/${locale}${path}`;
+    }
+    if (canonical.isCompareIndex) {
+      const prefix = COMPARE_PREFIX[locale];
+      return locale === DEFAULT_LOCALE ? prefix : `/${locale}${prefix}`;
     }
     if (canonical.dynamicItSlug !== undefined) {
       const localizedSlug = localizeLocationSlug(canonical.dynamicItSlug, locale);
