@@ -582,9 +582,9 @@ const NoleggioAeroportoOlbia = ({ lang = "it" }: Props) => {
       <section className="relative min-h-[85vh] flex flex-col justify-center pt-32 pb-16 px-4 md:px-12 lg:px-24 overflow-hidden bg-background">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/vehicles-context/audi-rs3-grey-airport.webp"
             alt={t.altRs3Hero}
-            className="w-full h-full object-cover opacity-40 scale-105"
+            className="w-full h-full object-cover opacity-55 scale-105"
             loading="eager"
             fetchPriority="high"
           />
@@ -764,21 +764,22 @@ const NoleggioAeroportoOlbia = ({ lang = "it" }: Props) => {
         <p dangerouslySetInnerHTML={{ __html: t.keyword.pHtml2 }} />
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-32 px-4 text-center bg-gray-50 dark:bg-[#050505]">
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-8xl font-black mb-10 italic uppercase tracking-tighter leading-none text-gray-900 dark:text-white">
+      {/* FINAL CTA su sfondo ORO */}
+      <section className="relative py-24 md:py-28 px-4 text-center bg-gold text-background overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="relative max-w-4xl mx-auto">
+          <h2 className="font-serif text-4xl md:text-6xl text-background font-medium mb-8 leading-tight">
             {t.finalCta.title1} <br />
-            <span className="text-gold">{t.finalCta.title2}</span>
+            <span className="opacity-90">{t.finalCta.title2}</span>
           </h2>
           <Link
             to={bookHref}
-            className="inline-flex items-center gap-4 bg-gold text-white px-12 py-6 rounded-full font-black uppercase tracking-widest hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all duration-500 text-lg shadow-2xl"
+            className="inline-flex items-center gap-3 bg-background text-foreground px-10 py-4 rounded-full font-semibold tracking-wide text-sm md:text-base hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20"
           >
-            {t.finalCta.cta} <ArrowRight />
+            {t.finalCta.cta} <ArrowRight className="w-4 h-4" />
           </Link>
-          <p className="text-foreground/40 text-sm mt-6 font-light">
-            <Link to={homeHref} className="text-gold/70 hover:text-gold underline underline-offset-4 transition-colors">
+          <p className="text-background/70 text-sm mt-6 font-light">
+            <Link to={homeHref} className="text-background hover:underline underline-offset-4 font-semibold">
               {t.finalCta.footerLinkText}
             </Link>
             {t.finalCta.footerTail}

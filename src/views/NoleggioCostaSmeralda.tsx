@@ -618,9 +618,9 @@ const NoleggioCostaSmeralda = ({ lang = "it" }: Props) => {
         <div className="absolute inset-0 z-0">
           <motion.img
             initial={{ scale: 1.15, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.4 }}
+            animate={{ scale: 1, opacity: 0.55 }}
             transition={{ duration: 1.8 }}
-            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png"
+            src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/vehicles-context/bmw-m2-costa-smeralda-road.webp"
             alt={t.altBmwHero}
             className="w-full h-full object-cover"
             loading="eager"
@@ -852,27 +852,27 @@ const NoleggioCostaSmeralda = ({ lang = "it" }: Props) => {
         <p dangerouslySetInnerHTML={{ __html: t.keyword.pHtml2 }} />
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-36 px-4 text-center bg-gradient-to-t from-gold/15 to-gray-50 dark:to-[#050505] relative overflow-hidden">
-        <div className="absolute inset-0 bg-gold/5 blur-[150px] rounded-full translate-y-1/2" />
+      {/* FINAL CTA su sfondo ORO */}
+      <section className="relative py-24 md:py-28 px-4 text-center bg-gold text-background overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-4xl mx-auto relative z-10"
+          className="relative max-w-4xl mx-auto"
         >
-          <h2 className="text-6xl md:text-9xl font-black mb-12 italic uppercase tracking-tighter leading-none text-gray-900 dark:text-white outline-text">
+          <h2 className="font-serif text-4xl md:text-6xl text-background font-medium mb-6 leading-tight">
             {t.finalCta.title1} <br />
-            <span className="text-gold">{t.finalCta.title2}</span>
+            <span className="opacity-90">{t.finalCta.title2}</span>
           </h2>
-          <p className="text-gray-600 dark:text-white/70 text-xl md:text-2xl max-w-2xl mx-auto mb-16 font-light leading-relaxed">
+          <p className="font-serif text-background/85 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
             {t.finalCta.lead}
           </p>
           <Link
             to={bookHref}
-            className="inline-flex items-center gap-4 bg-gold text-white px-14 py-6 rounded-full font-black uppercase tracking-widest hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all duration-500 text-xl shadow-2xl hover:scale-105"
+            className="inline-flex items-center gap-3 bg-background text-foreground px-10 py-4 rounded-full font-semibold tracking-wide text-sm md:text-base hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20"
           >
-            {t.finalCta.cta} <ArrowRight size={24} />
+            {t.finalCta.cta} <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
       </section>

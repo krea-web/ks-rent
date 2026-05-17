@@ -541,28 +541,29 @@ const faqs = [
       client:visible
     />
 
-    {/* ───── CTA FINALE / CONTATTI ───── */}
-    <section class="py-16 md:py-20 bg-gradient-to-br from-primary/10 via-background to-background">
-      <div class="container mx-auto px-4 max-w-4xl text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+    {/* ───── CTA FINALE su sfondo ORO ───── */}
+    <section class="relative bg-gold text-background py-20 md:py-24 px-4 overflow-hidden">
+      <div class="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
+      <div class="relative container mx-auto max-w-4xl text-center">
+        <h2 class="font-serif text-3xl md:text-5xl text-background font-medium mb-5 leading-tight">
           Pronto a prenotare la tua auto a Olbia?
         </h2>
-        <p class="text-lg text-muted-foreground mb-8">
+        <p class="font-serif text-background/85 text-[17px] md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
           Sede legale: Viale Aldo Moro 367, 07026 Olbia (SS) · Punto consegna porto: Viale Isola Bianca 38<br/>
           Aperti tutti i giorni 10:00–13:00 e 15:00–22:30, festivi inclusi.
         </p>
 
-        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-          <a href="/prenotaora" class="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary/90 transition shadow-lg">
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+          <a href="/prenotaora" class="inline-flex items-center justify-center px-10 py-4 bg-background text-foreground rounded-full font-semibold text-sm md:text-base hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20">
             Prenota la tua auto
           </a>
-          <a href="https://wa.me/393446107071" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-8 py-4 bg-[#25D366] text-white rounded-full font-semibold text-lg hover:bg-[#1ebe57] transition">
+          <a href="https://wa.me/393446107071" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-10 py-4 bg-[#25D366] text-white rounded-full font-semibold text-sm md:text-base hover:scale-105 transition-transform shadow-xl">
             💬 Scrivici su WhatsApp
           </a>
         </div>
 
-        <p class="text-sm text-muted-foreground">
-          KS Rent S.R.L. · P.IVA <strong>IT03028900904</strong> · REA <strong>SS-224046</strong> · Capitale sociale 20.000 €<br/>
+        <p class="text-xs md:text-sm text-background/70 leading-relaxed">
+          KS Rent S.R.L. · P.IVA <strong class="text-background">IT03028900904</strong> · REA <strong class="text-background">SS-224046</strong> · Capitale sociale 20.000 €<br/>
           PEC: ks.rent.srl@pec.it · Email: ksrentsrl@gmail.com
         </p>
       </div>
