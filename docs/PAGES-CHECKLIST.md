@@ -201,8 +201,7 @@ _Nessuna._ Tradotto `/noleggio-auto-olbia` nella sessione (e) — vedi storia ag
 _Nessuna._ Sessione (f): aggiunta `font-display` (Playfair Display serif) a tutti i 7 h2 spotlight/internal-link section nei 4 React service views (NoleggioAero/Porto/CS/Senza) → titoli hero ora coerenti col font Playfair come le guide. Resta solo il body copy lungo (`<p>`) ancora in Montserrat, che è OK per leggibilità UI non-editoriale.
 
 ### 🟢 PRIORITÀ BASSA
-3. **i18n delle service top-level**: alcune sezioni dei 4 React views hanno traduzioni parziali (es. variants/varianti, alt-text immagini).
-4. **`ChiSiamo` bio fondatori**: aggiungere foto reali Francesco + Salvatore Milo (oggi sono iniziali "FM" "SM" in cerchio). Mantenere cerchi come fallback.
+_Nessuna._ Sessione (g): audit i18n service top-level confermato OK — tutte le 4 React views hanno TRANSLATIONS dict 4 lingue complete (hero, spotlight, services, FAQ, rich.pHtml, keyword.pHtml, alt-text, finalCta). Foto fondatori ChiSiamo: SKIP per scelta utente (preferisce avatar cerchi FM/SM al posto di foto reali).
 
 ### ⛔️ SKIP MOTIVATI (non da fare)
 - **CTA gold dopo form in `PrenotaOra`**: il form è uno stepped wizard 2100 righe; aggiungere un secondo CTA distrarrebbe dal flow del primo (Conferma prenotazione). Skip definitivo.
@@ -229,3 +228,4 @@ _Ultimo aggiornamento: 2026-05-17 (sessione b)_
 - **2026-05-17 (d)**: completato 4 MEDIA priority: skip motivato CTA PrenotaOra + RelatedGuides cross-sell in /tariffe × 4 lingue + Editorial body homepage SEO rich text × 4 lingue (drop-cap dorato, h2 con barra dorata, serif Georgia, link gold). Audit: 326 pagine, 4662 immagini (+136 da prima), similarity max 0.276 invariata.
 - **2026-05-17 (e)**: completato ULTIMO 🔴 ALTA pending. Refactor di /noleggio-auto-olbia (572 righe) in componente shared `<NoleggioOlbiaContent>` con TRANSLATIONS dict 4 lingue (~50 chiavi × IT/EN/DE/FR). Creati 3 wrapper EN/DE/FR (/en/car-hire-olbia, /de/autovermietung-olbia, /fr/location-voiture-olbia) con title/meta/canonical localizzati. Rimossi i 3 redirect Vercel temporanei. Audit: 329 pagine (+3), 4771 immagini (+109), similarity max 0.276 invariata.
 - **2026-05-17 (f)**: completato 🟡 MEDIA Editorial typography hero/spotlight 4 React service views. 7 h2 (4 spotlight + 3 internal-link section) ora hanno class `font-display` (Playfair Display serif) → coerenza tipografica con le guide. Resta solo body Montserrat per leggibilità UI.
+- **2026-05-17 (g)**: completati 🟢 BASSA. Audit i18n service top-level OK — tutte le 4 React views hanno TRANSLATIONS 4 lingue complete (verificate hero, spotlight, services, FAQ, rich.pHtml, keyword.pHtml, alt-text, finalCta). Foto fondatori ChiSiamo: SKIP per scelta utente. **Checklist ora ha ZERO task pending** — sito completamente in linea con i criteri stabiliti.
