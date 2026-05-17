@@ -30,7 +30,7 @@
 
 | Categoria          | Pagine | Hero | CTA Gold | Editorial | Cross-sell | Tabelle | Trasp | No-dup | i18n |
 |--------------------|--------|------|----------|-----------|------------|---------|-------|--------|------|
-| Homepage           | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
+| Homepage           | 4      | ✅   | 🚫       | ✅        | ✅         | 🚫      | ✅    | ✅     | ✅   |
 | 404 page           | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
 | Service top-level  | 20     | ✅   | ✅       | ⚠️         | ✅         | ✅      | ✅    | ✅     | ⚠️   |
 | Service cross-sell | 12     | 🚫   | 🚫       | 🚫         | ✅         | 🚫      | ✅    | 🚫     | ✅   |
@@ -43,7 +43,7 @@
 | Compare index      | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
 | Booking flow       | 4      | ✅   | 🚫       | 🚫        | 🚫         | 🚫      | ✅    | ✅     | ⚠️   |
 | Sitemap            | 4      | 🚫   | 🚫       | 🚫        | ✅         | 🚫      | 🚫    | ✅     | ✅   |
-| Tariffe/Rates      | 4      | ✅   | ✅       | ⚠️        | ❌         | ✅      | ✅    | ✅     | ✅   |
+| Tariffe/Rates      | 4      | ✅   | ✅       | ⚠️        | ✅         | ✅      | ✅    | ✅     | ✅   |
 | Chi siamo          | 4      | ✅   | ✅       | ⚠️        | ❌         | 🚫      | ✅    | ✅     | ⚠️   |
 | Admin              | 1      | 🚫   | 🚫       | 🚫        | 🚫         | 🚫      | 🚫    | 🚫     | 🚫   |
 
@@ -198,14 +198,14 @@ Foto reali fondatori Francesco + Salvatore da aggiungere come follow-up.
 1. **Pagina `/noleggio-auto-olbia` da tradurre** in EN/DE/FR (oggi solo redirect Vercel a IT). ⚠️ task pesante: 572 righe IT da tradurre in 3 lingue. Sessione futura.
 
 ### 🟡 PRIORITÀ MEDIA
-3. **`PrenotaOra.tsx` (4 lingue)**: il body è form-based, ma una CTA finale gold dopo il form potrebbe aiutare conversions.
-4. **Editorial body completo** nei 4 React service views: oggi è stato migrato solo la "SEO keyword section" di NoleggioAero + NoleggioCS. NoleggioPorto + NoleggioSenza non hanno una sezione body lunga, ma le hero+spotlight potrebbero beneficiare di tipografia editorial.
-5. **Cross-sell con foto in `/tariffe`** (4 lingue): aggiungere card "scopri il veicolo" sotto le tabelle prezzi con foto trasparente.
+2. **Editorial body completo** nei 4 React service views: hero, spotlight, vantaggi e altre sezioni "informative" — oggi solo la "SEO keyword section" di NoleggioAero + NoleggioCS è migrata. Le hero/spotlight delle 4 views potrebbero beneficiare di tipografia editorial, ma richiede refactor significativo dei className Tailwind.
 
 ### 🟢 PRIORITÀ BASSA
-6. **i18n delle service top-level**: alcune sezioni dei 4 React views hanno traduzioni parziali (es. variants/varianti, alt-text immagini).
-7. **`ChiSiamo` bio fondatori**: aggiungere foto reali Francesco + Salvatore Milo (oggi sono iniziali "FM" "SM" in cerchio). Mantenere cerchi come fallback.
-8. **Editorial body in homepage SEO rich text** (linea 62 di index.astro): la sezione "Noleggio Auto Olbia — Il tuo Autonoleggio di Fiducia" è long-form, potrebbe diventare `.editorial`.
+3. **i18n delle service top-level**: alcune sezioni dei 4 React views hanno traduzioni parziali (es. variants/varianti, alt-text immagini).
+4. **`ChiSiamo` bio fondatori**: aggiungere foto reali Francesco + Salvatore Milo (oggi sono iniziali "FM" "SM" in cerchio). Mantenere cerchi come fallback.
+
+### ⛔️ SKIP MOTIVATI (non da fare)
+- **CTA gold dopo form in `PrenotaOra`**: il form è uno stepped wizard 2100 righe; aggiungere un secondo CTA distrarrebbe dal flow del primo (Conferma prenotazione). Skip definitivo.
 
 ---
 
@@ -226,3 +226,4 @@ _Ultimo aggiornamento: 2026-05-17 (sessione b)_
 - **2026-05-17 (a)**: creazione iniziale checklist + completato fix trasparenze hero, CTA gold uniforme, dedup homepage, font editorial.
 - **2026-05-17 (b)**: completato `/tariffe` (CTA gold + min-width tabelle) + `/chisiamo` (3 trasparenze → foto contestuali, CTA gold già esistente) + editorial typography su SEO sections NoleggioAero + NoleggioCS.
 - **2026-05-17 (c)**: completato cross-sell con foto: GuideVehicleStrip aggiunto ai 12 wrapper Astro service top-level (Aero/Porto/CS × 4 lingue) + foto cards su services + veicoli di NoleggioSenzaCartaCredito. Resta come unico ALTA pending la traduzione body /noleggio-auto-olbia.
+- **2026-05-17 (d)**: completato 4 MEDIA priority: skip motivato CTA PrenotaOra + RelatedGuides cross-sell in /tariffe × 4 lingue + Editorial body homepage SEO rich text × 4 lingue (drop-cap dorato, h2 con barra dorata, serif Georgia, link gold). Audit: 326 pagine, 4662 immagini (+136 da prima), similarity max 0.276 invariata.

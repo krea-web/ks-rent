@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { supabase } from "@/lib/supabase";
+import RelatedGuides from "@/components/RelatedGuides.astro";
 import { ArrowRight, ShieldCheck, Calendar, CreditCard, CheckCircle2 } from "lucide-react";
 
 interface VehicleRow {
@@ -246,6 +247,8 @@ const jsonLd = [
         </div>
       </div>
     </section>
+    <RelatedGuides lang="en" itSlugs={["quanto-costa-vacanza-costa-smeralda-budget-2026", "noleggio-auto-olbia-senza-carta-di-credito-guida-completa", "noleggio-scooter-quad-sardegna-come-scegliere"]} />
+
 
     {/* CTA FINALE su sfondo ORO */}
     <section class="relative bg-gold text-background py-20 md:py-24 text-center px-4 md:px-12 overflow-hidden">
