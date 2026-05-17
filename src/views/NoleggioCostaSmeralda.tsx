@@ -845,11 +845,13 @@ const NoleggioCostaSmeralda = ({ lang = "it" }: Props) => {
         </div>
       </section>
 
-      {/* SEO KEYWORD SECTION */}
-      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto text-gray-700 dark:text-white/80 font-light leading-relaxed">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">{t.keyword.heading}</h2>
-        <p className="mb-4" dangerouslySetInnerHTML={{ __html: t.keyword.pHtml1 }} />
-        <p dangerouslySetInnerHTML={{ __html: t.keyword.pHtml2 }} />
+      {/* SEO KEYWORD SECTION — editorial */}
+      <section className="py-20 px-4 md:px-12">
+        <div className="editorial mx-auto">
+          <h2>{t.keyword.heading}</h2>
+          <p dangerouslySetInnerHTML={{ __html: t.keyword.pHtml1 }} />
+          <p dangerouslySetInnerHTML={{ __html: t.keyword.pHtml2 }} />
+        </div>
       </section>
 
       {/* FINAL CTA su sfondo ORO */}

@@ -145,7 +145,7 @@ const jsonLd = [
 
           <div class="bg-card border border-border rounded-2xl overflow-hidden">
             <div class="overflow-x-auto">
-              <table class="w-full text-sm">
+              <table class="w-full text-sm min-w-[680px]">
                 <thead class="bg-background/50 border-b border-border">
                   <tr>
                     <th class="px-4 py-4 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold min-w-[200px]">
@@ -247,18 +247,19 @@ const jsonLd = [
       </div>
     </section>
 
-    {/* CTA */}
-    <section class="py-20 px-4 md:px-12">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-foreground mb-4">
+    {/* CTA FINALE su sfondo ORO */}
+    <section class="relative bg-gold text-background py-20 md:py-24 text-center px-4 md:px-12 overflow-hidden">
+      <div class="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
+      <div class="relative max-w-3xl mx-auto">
+        <h2 class="font-serif text-3xl md:text-5xl text-background font-medium mb-5 leading-tight">
           Ready to book?
         </h2>
-        <p class="text-foreground/60 font-light max-w-xl mx-auto mb-10 leading-relaxed">
+        <p class="font-serif text-background/85 text-[17px] md:text-lg leading-relaxed max-w-xl mx-auto mb-10">
           Confirm the rates for your dates and choose the perfect vehicle for your Costa Smeralda holiday.
         </p>
         <a
           href="/en/book-now"
-          class="inline-flex items-center gap-3 bg-gold text-background font-bold uppercase tracking-wider text-sm px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lg"
+          class="inline-flex items-center gap-2 bg-background text-foreground font-semibold tracking-wide text-sm px-10 py-4 rounded-full hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20"
         >
           Check availability
           <ArrowRight className="w-4 h-4" />

@@ -32,7 +32,7 @@
 |--------------------|--------|------|----------|-----------|------------|---------|-------|--------|------|
 | Homepage           | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
 | 404 page           | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
-| Service top-level  | 20     | ✅   | ✅       | ⚠️        | ✅         | ✅      | ✅    | ⚠️     | ⚠️   |
+| Service top-level  | 20     | ✅   | ✅       | ⚠️         | ✅         | ✅      | ✅    | ✅     | ⚠️   |
 | Location           | 80     | ✅   | ✅       | ✅        | ✅         | ✅      | ✅    | ✅     | ✅   |
 | Spiagge            | 80     | ✅   | ✅       | ✅        | ✅         | ✅      | ✅    | ✅     | ✅   |
 | Veicoli /flotta    | 32     | ✅   | ✅       | ✅        | ✅         | ✅      | ✅    | ✅     | ✅   |
@@ -42,8 +42,8 @@
 | Compare index      | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
 | Booking flow       | 4      | ✅   | 🚫       | 🚫        | 🚫         | 🚫      | ✅    | ✅     | ⚠️   |
 | Sitemap            | 4      | 🚫   | 🚫       | 🚫        | ✅         | 🚫      | 🚫    | ✅     | ✅   |
-| Tariffe/Rates      | 4      | ⚠️   | ❌       | ⚠️        | ❌         | ⚠️      | ✅    | ✅     | ✅   |
-| Chi siamo          | 4      | ⚠️   | ❌       | ⚠️        | ❌         | 🚫      | ✅    | ✅     | ⚠️   |
+| Tariffe/Rates      | 4      | ✅   | ✅       | ⚠️        | ❌         | ✅      | ✅    | ✅     | ✅   |
+| Chi siamo          | 4      | ✅   | ✅       | ⚠️        | ❌         | 🚫      | ✅    | ✅     | ⚠️   |
 | Admin              | 1      | 🚫   | 🚫       | 🚫        | 🚫         | 🚫      | 🚫    | 🚫     | 🚫   |
 
 ---
@@ -155,28 +155,34 @@ Veicoli: `audi-rs3`, `bmw-m2`, `mercedes-classe-a`, `jeep-avenger`, `fiat-panda`
 | `/de/sitemap`     | ✅ |
 | `/fr/plan-du-site`| ✅ |
 
-### 13. Tariffe / Rates (4 lingue) — DA CONTROLLARE
+### 13. Tariffe / Rates (4 lingue) — ✅ COMPLETATO 2026-05-17
 | Rotta | Hero | CTA Gold | Editorial | Cross-sell | Tabelle | Trasp | No-dup | i18n |
 |-------|------|----------|-----------|------------|---------|-------|--------|------|
-| `/tariffe`     | ⚠️ | ❌ | ⚠️ | ❌ | ⚠️ | ✅ | ✅ | ✅ |
-| `/en/rates`    | ⚠️ | ❌ | ⚠️ | ❌ | ⚠️ | ✅ | ✅ | ✅ |
-| `/de/preise`   | ⚠️ | ❌ | ⚠️ | ❌ | ⚠️ | ✅ | ✅ | ✅ |
-| `/fr/tarifs`   | ⚠️ | ❌ | ⚠️ | ❌ | ⚠️ | ✅ | ✅ | ✅ |
+| `/tariffe`     | ✅ | ✅ | ⚠️ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| `/en/rates`    | ✅ | ✅ | ⚠️ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| `/de/preise`   | ✅ | ✅ | ⚠️ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| `/fr/tarifs`   | ✅ | ✅ | ⚠️ | ❌ | ✅ | ✅ | ✅ | ✅ |
 
-**Note**: pagine listino prezzi con tabella veicoli + tariffe stagionali. Da
-verificare scroll responsive tabella + applicazione `.editorial` + CTA gold finale.
+**Note**: CTA finale ora su sfondo oro pieno con tratto granito (uniforme al
+resto del sito). Tabelle prezzi ora hanno `min-w-[680px]` per scroll
+orizzontale evidente su mobile. Editorial typography non applicata perché la
+pagina è prevalentemente tabellare (non long-form copy). Cross-sell con foto
+verso /flotta da implementare.
 
-### 14. Chi siamo / About (4 lingue) — DA CONTROLLARE
+### 14. Chi siamo / About (4 lingue) — ✅ COMPLETATO 2026-05-17
 | Rotta | Hero | CTA Gold | Editorial | Cross-sell | Tabelle | Trasp | No-dup | i18n |
 |-------|------|----------|-----------|------------|---------|-------|--------|------|
-| `/chisiamo`    | ⚠️ | ❌ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
-| `/en/about-us` | ⚠️ | ❌ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
-| `/de/uber-uns` | ⚠️ | ❌ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
-| `/fr/a-propos` | ⚠️ | ❌ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
+| `/chisiamo`    | ✅ | ✅ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
+| `/en/about-us` | ✅ | ✅ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
+| `/de/uber-uns` | ✅ | ✅ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
+| `/fr/a-propos` | ✅ | ✅ | ⚠️ | ❌ | 🚫 | ✅ | ✅ | ⚠️ |
 
-**Note**: `ChiSiamo.tsx` è un React component pesante con copy hardcoded.
-Hero/about-text/founder-bio possono essere migliorate con editorial typography
-+ CTA gold finale.
+**Note**: ChiSiamo aveva 3 trasparenze veicolo in griglia Instagram-style con
+`object-cover` → sostituite con foto contestuali AI (audi-rs3-grey-airport,
+audi-rs3-porto-cervo, bmw-m2-costa-smeralda-road). La pagina ha già 2 sezioni
+gold (manifesto + CTA link), entrambe a posto. Editorial typography body non
+applicata perché ChiSiamo è prevalentemente brand/visual (no long-form copy).
+Foto reali fondatori Francesco + Salvatore da aggiungere come follow-up.
 
 ### 15. Admin
 | Rotta | Note |
@@ -188,20 +194,18 @@ Hero/about-text/founder-bio possono essere migliorate con editorial typography
 ## PUNTI DA SISTEMARE NELLE PROSSIME SESSIONI
 
 ### 🔴 PRIORITÀ ALTA
-1. **Pagina `/noleggio-auto-olbia` da tradurre** in EN/DE/FR (oggi solo redirect Vercel a IT).
-2. **Service top-level (4 React views: Aeroporto/Porto/CS/Senza)**:
-   - Body copy non usa `.editorial` typography → migrare a serif editorial.
-   - Cross-sell senza foto → aggiungere foto contestuali.
-3. **`/tariffe` (4 lingue)**: verificare scroll responsive tabelle prezzi + CTA gold finale + applicare `.editorial` se ha testo SEO.
-4. **`/chisiamo` (4 lingue)**: aggiungere CTA gold finale + applicare editorial typography + verificare hero (ha trasparenze in 3 sezioni, controllare uso).
+1. **Pagina `/noleggio-auto-olbia` da tradurre** in EN/DE/FR (oggi solo redirect Vercel a IT). ⚠️ task pesante: 572 righe IT da tradurre in 3 lingue.
+2. **Service top-level — cross-sell senza foto**: i 4 React views (NoleggioAero/Porto/CS/Senza) hanno cross-sell ad altri servizi/veicoli ma senza thumbnail. Da arricchire con foto contestuali AI.
 
 ### 🟡 PRIORITÀ MEDIA
-5. **`PrenotaOra.tsx` (4 lingue)**: il body è form-based, ma una CTA finale gold dopo il form potrebbe aiutare conversions.
-6. **Editorial copy migrato a service top-level**: oggi sono Montserrat sans-serif, dovrebbero essere serif Georgia come le guide.
+3. **`PrenotaOra.tsx` (4 lingue)**: il body è form-based, ma una CTA finale gold dopo il form potrebbe aiutare conversions.
+4. **Editorial body completo** nei 4 React service views: oggi è stato migrato solo la "SEO keyword section" di NoleggioAero + NoleggioCS. NoleggioPorto + NoleggioSenza non hanno una sezione body lunga, ma le hero+spotlight potrebbero beneficiare di tipografia editorial.
+5. **Cross-sell con foto in `/tariffe`** (4 lingue): aggiungere card "scopri il veicolo" sotto le tabelle prezzi con foto trasparente.
 
 ### 🟢 PRIORITÀ BASSA
-7. **i18n delle service top-level**: alcune sezioni hanno traduzioni parziali.
-8. **`ChiSiamo` bio fondatori**: aggiungere foto reali Francesco + Salvatore Milo (oggi sono iniziali "FM" "SM" in cerchio).
+6. **i18n delle service top-level**: alcune sezioni dei 4 React views hanno traduzioni parziali (es. variants/varianti, alt-text immagini).
+7. **`ChiSiamo` bio fondatori**: aggiungere foto reali Francesco + Salvatore Milo (oggi sono iniziali "FM" "SM" in cerchio). Mantenere cerchi come fallback.
+8. **Editorial body in homepage SEO rich text** (linea 62 di index.astro): la sezione "Noleggio Auto Olbia — Il tuo Autonoleggio di Fiducia" è long-form, potrebbe diventare `.editorial`.
 
 ---
 
@@ -215,4 +219,9 @@ Hero/about-text/founder-bio possono essere migliorate con editorial typography
 
 ---
 
-_Ultimo aggiornamento: 2026-05-17_
+_Ultimo aggiornamento: 2026-05-17 (sessione b)_
+
+### Storia aggiornamenti
+
+- **2026-05-17 (a)**: creazione iniziale checklist + completato fix trasparenze hero, CTA gold uniforme, dedup homepage, font editorial.
+- **2026-05-17 (b)**: completato `/tariffe` (CTA gold + min-width tabelle) + `/chisiamo` (3 trasparenze → foto contestuali, CTA gold già esistente) + editorial typography su SEO sections NoleggioAero + NoleggioCS.
