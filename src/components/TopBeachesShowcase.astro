@@ -1,0 +1,156 @@
+---
+/**
+ * Sezione "Le spiagge più belle del nord-est Sardegna" per homepage.
+ * Sostituisce la duplicazione FleetShowcase + FleetGrid (entrambe mostravano
+ * le stesse auto). Ora homepage ha:
+ *  - FleetGrid: auto del listino
+ *  - TopBeachesShowcase: 8 spiagge top con foto reali (vere foto AI generate)
+ *  - GuideSpotlight: articoli editoriali
+ *
+ * Le foto provengono da seo_beaches.hero_image_url (Supabase storage).
+ */
+import { ArrowRight, Waves } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { localizeLocationSlug, type Locale } from "@/lib/i18n";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+interface Beach {
+  slug: string;
+  slug_en?: string | null;
+  slug_de?: string | null;
+  slug_fr?: string | null;
+  title: string;
+  title_en?: string | null;
+  title_de?: string | null;
+  title_fr?: string | null;
+  hero_image_url: string | null;
+}
+
+// Selezione editoriale delle 8 spiagge "top" (icone della Costa Smeralda + Nord-Est)
+const FEATURED_SLUGS = [
+  "cala-brandinchi",
+  "spiaggia-del-principe",
+  "la-cinta",
+  "capriccioli",
+  "liscia-ruja",
+  "grande-pevero",
+  "romazzino",
+  "lu-impostu",
+];
+
+let beaches: Beach[] = [];
+try {
+  const { data } = await supabase
+    .from("seo_beaches")
+    .select("slug, slug_en, slug_de, slug_fr, title, title_en, title_de, title_fr, hero_image_url")
+    .in("slug", FEATURED_SLUGS);
+  beaches = (data ?? []).filter((b) => b.hero_image_url) as Beach[];
+  // Riordina secondo FEATURED_SLUGS
+  beaches.sort((a, b) => FEATURED_SLUGS.indexOf(a.slug) - FEATURED_SLUGS.indexOf(b.slug));
+} catch {
+  beaches = [];
+}
+
+function localTitle(b: Beach): string {
+  if (lang === "en") return b.title_en || b.title;
+  if (lang === "de") return b.title_de || b.title;
+  if (lang === "fr") return b.title_fr || b.title;
+  return b.title;
+}
+
+// Estrai il nome "pulito" dalla title (rimuove " | ..." e " — ...")
+function cleanName(s: string): string {
+  return s.split(/[|—–]/)[0].trim();
+}
+
+function hrefFor(b: Beach): string {
+  // I toponimi spiaggia usano lo stesso slug in tutte le lingue (vedi i18n.ts)
+  const localSlug =
+    lang === "en" && b.slug_en ? b.slug_en :
+    lang === "de" && b.slug_de ? b.slug_de :
+    lang === "fr" && b.slug_fr ? b.slug_fr :
+    b.slug;
+  return lang === "it" ? `/${localSlug}` : `/${lang}/${localSlug}`;
+}
+
+const labels = {
+  it: {
+    eyebrow: "Le spiagge da non perdere",
+    heading: "Costa Smeralda e Nord-Est: 8 spiagge iconiche",
+    intro: "Da Cala Brandinchi a Liscia Ruja, le destinazioni più richieste dai nostri clienti. Clicca per scoprire come arrivarci e dove parcheggiare.",
+    cta: "Tutte le spiagge",
+    href: "/flotta",
+  },
+  en: {
+    eyebrow: "Beaches not to miss",
+    heading: "Costa Smeralda and the North-East: 8 iconic beaches",
+    intro: "From Cala Brandinchi to Liscia Ruja, the destinations most requested by our customers. Click to discover how to get there and where to park.",
+    cta: "All beaches",
+    href: "/en/fleet",
+  },
+  de: {
+    eyebrow: "Straende, die man nicht verpassen darf",
+    heading: "Costa Smeralda und Nordosten: 8 ikonische Straende",
+    intro: "Von Cala Brandinchi bis Liscia Ruja, die von unseren Kunden meistgewuenschten Ziele. Klicken Sie, um zu entdecken, wie man hinkommt und wo man parkt.",
+    cta: "Alle Straende",
+    href: "/de/fuhrpark",
+  },
+  fr: {
+    eyebrow: "Les plages à ne pas manquer",
+    heading: "Costa Smeralda et Nord-Est : 8 plages emblématiques",
+    intro: "De Cala Brandinchi à Liscia Ruja, les destinations les plus demandées par nos clients. Cliquez pour découvrir comment y arriver et où se garer.",
+    cta: "Toutes les plages",
+    href: "/fr/flotte",
+  },
+}[lang];
+---
+
+{beaches.length > 0 && (
+  <section class="bg-card/30 border-y border-border py-14 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-10 md:mb-14 max-w-2xl mx-auto">
+        <p class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-3">
+          <Waves className="w-3.5 h-3.5" />
+          {labels.eyebrow}
+        </p>
+        <h2 class="font-serif text-3xl md:text-4xl text-foreground font-medium leading-tight mb-3">
+          {labels.heading}
+        </h2>
+        <p class="font-serif text-foreground/65 text-[16px] leading-relaxed">{labels.intro}</p>
+      </div>
+
+      <ul class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
+        {beaches.slice(0, 8).map((b) => (
+          <li>
+            <a
+              href={hrefFor(b)}
+              class="group block relative overflow-hidden rounded-xl shadow-sm hover:shadow-2xl transition-shadow aspect-[3/4]"
+            >
+              <img
+                src={b.hero_image_url!}
+                alt={cleanName(localTitle(b))}
+                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
+              />
+              {/* gradient overlay per leggibilità testo */}
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none"></div>
+              <div class="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p class="font-serif text-white text-base md:text-lg font-medium leading-snug drop-shadow-lg">
+                  {cleanName(localTitle(b))}
+                </p>
+                <span class="inline-flex items-center gap-1 mt-1 text-[11px] text-gold font-semibold opacity-0 group-hover:opacity-100 transition">
+                  <ArrowRight class="w-3 h-3" />
+                </span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}

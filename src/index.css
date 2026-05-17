@@ -123,6 +123,279 @@
   h1, h2, h3 {
     font-family: 'Playfair Display', serif;
   }
+
+  /* ───────────── TABELLE RESPONSIVE (mobile-first) ───────────── */
+  /* Tutte le table di contenuto si trasformano in container scrollabili
+     orizzontalmente quando lo schermo è stretto, prevenendo overflow e
+     accavallamento di scrittura. */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 100%;
+  }
+  /* Wrapper "table-responsive" + tabelle dentro contenuti .editorial /
+     .guide-prose ricevono il comportamento mobile-first di scroll. */
+  .table-responsive,
+  .editorial > table,
+  .guide-prose > table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+  .table-responsive table,
+  .editorial > table,
+  .guide-prose > table {
+    min-width: 100%;
+  }
+  /* Su desktop le tabelle tornano fluide (no scroll) */
+  @media (min-width: 768px) {
+    .editorial > table,
+    .guide-prose > table {
+      display: table;
+      white-space: normal;
+      overflow-x: visible;
+    }
+  }
+  /* Tabelle inside React components UI (Card/Comparison) - wrap responsivo */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   EDITORIAL PROSE — stile magazine usato in /guide articoli
+   Esportato qui per essere riutilizzabile su QUALSIASI pagina del sito.
+   Applica .editorial (o .guide-prose, alias) al container body testuale.
+   ═══════════════════════════════════════════════════════════════════ */
+.editorial,
+.guide-prose {
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.75;
+  color: hsl(var(--foreground) / 0.85);
+  max-width: 68ch;
+}
+@media (min-width: 768px) {
+  .editorial,
+  .guide-prose {
+    font-size: 19px;
+  }
+}
+
+.editorial > p,
+.editorial > ul,
+.editorial > ol,
+.editorial > blockquote,
+.editorial > table,
+.editorial > figure,
+.guide-prose > p,
+.guide-prose > ul,
+.guide-prose > ol,
+.guide-prose > blockquote,
+.guide-prose > figure {
+  margin: 1.4em 0;
+}
+
+/* Drop cap sul primo paragrafo */
+.editorial > p:first-of-type::first-letter,
+.guide-prose > p:first-of-type::first-letter {
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  float: left;
+  font-size: 4.5em;
+  line-height: 0.9;
+  margin: 0.08em 0.12em 0 0;
+  font-weight: 600;
+  color: hsl(var(--gold));
+}
+@media (max-width: 768px) {
+  .editorial > p:first-of-type::first-letter,
+  .guide-prose > p:first-of-type::first-letter {
+    font-size: 3.5em;
+  }
+}
+
+.editorial > p:first-of-type,
+.guide-prose > p:first-of-type {
+  font-size: 1.15em;
+  line-height: 1.65;
+}
+
+.editorial h2,
+.guide-prose h2 {
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size: 1.85em;
+  line-height: 1.2;
+  font-weight: 500;
+  margin: 2.2em 0 0.6em;
+  color: hsl(var(--foreground));
+  letter-spacing: -0.015em;
+  scroll-margin-top: 6rem;
+  text-transform: none;
+  font-style: normal;
+}
+@media (max-width: 768px) {
+  .editorial h2,
+  .guide-prose h2 {
+    font-size: 1.6em;
+  }
+}
+.editorial h2::before,
+.guide-prose h2::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: hsl(var(--gold));
+  margin-bottom: 0.7em;
+}
+
+.editorial h3,
+.guide-prose h3 {
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size: 1.35em;
+  line-height: 1.3;
+  font-weight: 600;
+  margin: 1.8em 0 0.5em;
+  color: hsl(var(--foreground));
+  scroll-margin-top: 6rem;
+  text-transform: none;
+  font-style: normal;
+}
+
+.editorial strong,
+.guide-prose strong {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.editorial a,
+.guide-prose a {
+  color: hsl(var(--gold));
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: hsl(var(--gold) / 0.4);
+  transition: text-decoration-color 0.2s;
+}
+.editorial a:hover,
+.guide-prose a:hover {
+  text-decoration-color: hsl(var(--gold));
+}
+
+.editorial ul,
+.editorial ol,
+.guide-prose ul,
+.guide-prose ol {
+  padding-left: 1.5em;
+}
+.editorial ul > li,
+.guide-prose ul > li {
+  list-style-type: none;
+  position: relative;
+  margin: 0.5em 0;
+  padding-left: 0.2em;
+}
+.editorial ul > li::before,
+.guide-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1em;
+  top: 0.85em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--gold));
+}
+.editorial ol > li,
+.guide-prose ol > li {
+  margin: 0.5em 0;
+}
+
+.editorial table,
+.guide-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+  margin: 2em 0;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.editorial thead,
+.guide-prose thead {
+  background: hsl(var(--card));
+}
+.editorial th,
+.guide-prose th {
+  text-align: left;
+  padding: 0.75em 1em;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  border-bottom: 2px solid hsl(var(--border));
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.88em;
+  letter-spacing: 0.02em;
+}
+.editorial td,
+.guide-prose td {
+  padding: 0.7em 1em;
+  border-bottom: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground) / 0.8);
+}
+.editorial tbody tr:last-child td,
+.guide-prose tbody tr:last-child td {
+  border-bottom: none;
+}
+.editorial tbody tr:hover,
+.guide-prose tbody tr:hover {
+  background: hsl(var(--card) / 0.5);
+}
+
+.editorial blockquote,
+.guide-prose blockquote {
+  border-left: 3px solid hsl(var(--gold));
+  padding: 0.4em 0 0.4em 1.5em;
+  margin: 1.8em 0;
+  font-style: italic;
+  color: hsl(var(--foreground) / 0.85);
+  font-size: 1.1em;
+  line-height: 1.55;
+}
+
+.editorial img,
+.guide-prose img {
+  border-radius: 0.75rem;
+  margin: 2em 0;
+  width: 100%;
+  height: auto;
+}
+
+.editorial figure,
+.guide-prose figure {
+  margin: 2em 0;
+}
+.editorial figcaption,
+.guide-prose figcaption {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.82em;
+  color: hsl(var(--foreground) / 0.55);
+  text-align: center;
+  margin-top: 0.6em;
+  font-style: italic;
+}
+
+.editorial code,
+.guide-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: hsl(var(--card));
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.88em;
+  color: hsl(var(--gold));
 }
 
 @layer utilities {

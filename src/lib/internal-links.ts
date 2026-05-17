@@ -22,6 +22,10 @@ export interface InternalLink {
   label: string;
   /** Sotto-label opzionale (categoria/distanza/etichetta secondaria) */
   hint?: string;
+  /** Immagine opzionale per rendere visivamente coinvolgente la card */
+  image?: string;
+  /** Hint per il rendering: "transparent" usa contain bg-card, "photo" usa cover */
+  imageKind?: "transparent" | "photo";
 }
 
 /* ─── Service pages (le 5 rotte commerciali principali) ─── */
@@ -117,6 +121,8 @@ export function getRelatedServices(
     href: localizePath(itPath, lang),
     label: SERVICE_LABELS[itPath][lang],
     hint: SERVICE_HINTS[itPath][lang],
+    image: SERVICE_IMAGES[itPath],
+    imageKind: "photo" as const,
   }));
 }
 
@@ -168,15 +174,28 @@ function slugForLocale(itSlug: string, lang: Locale): string {
 
 /* ─── Veicoli top (cross-sell) ─── */
 
+const TRASP = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza";
+
 const TOP_VEHICLES = [
-  { groupSlug: "audi-rs3", label: "Audi RS3", hint: { it: "Sportiva 400 CV", en: "Sport 400 HP", de: "Sport 400 PS", fr: "Sportive 400 CV" } },
-  { groupSlug: "bmw-m2", label: "BMW M2", hint: { it: "Coupé sportiva", en: "Sport coupé", de: "Sport-Coupé", fr: "Coupé sport" } },
-  { groupSlug: "mercedes-classe-a", label: "Mercedes Classe A", hint: { it: "Premium compatta", en: "Premium compact", de: "Premium kompakt", fr: "Premium compacte" } },
-  { groupSlug: "jeep-avenger", label: "Jeep Avenger", hint: { it: "SUV compatto", en: "Compact SUV", de: "Kompakt-SUV", fr: "SUV compact" } },
-  { groupSlug: "fiat-panda", label: "Fiat Panda Hybrid", hint: { it: "City car", en: "City car", de: "Kleinwagen", fr: "Citadine" } },
-  { groupSlug: "honda-sh", label: "Honda SH", hint: { it: "Scooter 125/350", en: "Scooter 125/350", de: "Roller 125/350", fr: "Scooter 125/350" } },
-  { groupSlug: "yamaha-quad-raptor", label: "Yamaha Raptor", hint: { it: "Quad off-road", en: "Off-road quad", de: "Off-road Quad", fr: "Quad tout-terrain" } },
+  { groupSlug: "audi-rs3", label: "Audi RS3", image: `${TRASP}/ksrent-audirs3supercar-verde.png`, hint: { it: "Sportiva 400 CV", en: "Sport 400 HP", de: "Sport 400 PS", fr: "Sportive 400 CV" } },
+  { groupSlug: "bmw-m2", label: "BMW M2", image: `${TRASP}/ksrent-bmwm2-maschera.png`, hint: { it: "Coupé sportiva", en: "Sport coupé", de: "Sport-Coupé", fr: "Coupé sport" } },
+  { groupSlug: "mercedes-classe-a", label: "Mercedes Classe A", image: `${TRASP}/ksrent-mercedessupercarclassea180d.png`, hint: { it: "Premium compatta", en: "Premium compact", de: "Premium kompakt", fr: "Premium compacte" } },
+  { groupSlug: "jeep-avenger", label: "Jeep Avenger", image: `${TRASP}/ksrent-jeepsuvavenger.webp`, hint: { it: "SUV compatto", en: "Compact SUV", de: "Kompakt-SUV", fr: "SUV compact" } },
+  { groupSlug: "fiat-panda", label: "Fiat Panda Hybrid", image: `${TRASP}/ksrent-fiatpandacitycar.webp`, hint: { it: "City car", en: "City car", de: "Kleinwagen", fr: "Citadine" } },
+  { groupSlug: "honda-sh", label: "Honda SH", image: `${TRASP}/ksrent-hondascooter125.png`, hint: { it: "Scooter 125/350", en: "Scooter 125/350", de: "Roller 125/350", fr: "Scooter 125/350" } },
+  { groupSlug: "yamaha-quad-raptor", label: "Yamaha Raptor", image: `${TRASP}/ksrent-yamahaquadraptor.png`, hint: { it: "Quad off-road", en: "Off-road quad", de: "Off-road Quad", fr: "Quad tout-terrain" } },
 ] as const;
+
+/** Foto contestuali AI (auto in scenari reali) per le service pages. */
+const SEO_CTX = "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/vehicles-context";
+
+const SERVICE_IMAGES: Record<string, string> = {
+  "/noleggio-auto-olbia": `${SEO_CTX}/fiat-panda-olbia-old-town.webp`,
+  "/noleggio-auto-aeroporto-olbia": `${SEO_CTX}/audi-rs3-grey-airport.webp`,
+  "/noleggio-auto-porto-olbia": `${SEO_CTX}/mercedes-a-olbia-port.webp`,
+  "/noleggio-auto-costa-smeralda": `${SEO_CTX}/audi-rs3-porto-cervo.webp`,
+  "/noleggio-auto-senza-carta-di-credito-olbia": `${SEO_CTX}/honda-sh-pittulongu-beach-road.webp`,
+};
 
 /**
  * Ritorna i top veicoli come InternalLink localizzati per pagina /flotta/[slug].
@@ -196,6 +215,8 @@ export function getCrossSellVehicles(
       href: lang === "it" ? path : `/${lang}${path}`,
       label: v.label,
       hint: v.hint[lang],
+      image: v.image,
+      imageKind: "transparent" as const,
     };
   });
 }

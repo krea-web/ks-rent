@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import HeroSection from "@/components/HeroSection";
 import TrustMarquee from "@/components/TrustMarquee";
-import FleetShowcase from "@/components/FleetShowcase";
+import TopBeachesShowcase from "@/components/TopBeachesShowcase.astro";
 import FleetGrid from "@/components/FleetGrid.astro";
 import GuideSpotlight from "@/components/GuideSpotlight.astro";
 import FAQSection from "@/components/FAQSection";
@@ -45,12 +45,12 @@ const averageRating = avgData && avgData.length > 0
 >
   <HeroSection lang="it" />
   <TrustMarquee lang="it" />
-  <FleetShowcase lang="it" client:visible />
   <FleetGrid
     lang="it"
     heading="La nostra flotta"
     intro="Ogni veicolo ha la sua pagina con tariffe stagionali, varianti disponibili e destinazioni consigliate."
   />
+  <TopBeachesShowcase lang="it" />
   <GuideSpotlight lang="it" />
   <FAQSection lang="it" />
   <GoogleReviews
