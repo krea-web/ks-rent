@@ -572,7 +572,7 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <span className="block text-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-4 italic">{t.faq.eyebrow}</span>
-            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-gray-900 dark:text-white">
+            <h2 className="font-display text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-gray-900 dark:text-white">
               {t.faq.title1} <span className="text-gold">{t.faq.title2}</span>
             </h2>
           </div>
@@ -629,7 +629,7 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
           {/* Servizi */}
           <div>
             <span className="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{linkLabels.servicesEyebrow}</span>
-            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.servicesTitle}</h2>
+            <h2 className="font-display text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.servicesTitle}</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {relatedServices.map((s) => (
                 <Link
@@ -662,7 +662,7 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
             <span className="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3 flex items-center gap-2">
               <MapPin className="w-3 h-3" /> {linkLabels.locationsEyebrow}
             </span>
-            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.locationsTitle}</h2>
+            <h2 className="font-display text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.locationsTitle}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {topLocations.map((loc) => (
                 <Link
@@ -682,7 +682,7 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
             <span className="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3 flex items-center gap-2">
               <Car className="w-3 h-3" /> {linkLabels.vehiclesEyebrow}
             </span>
-            <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.vehiclesTitle}</h2>
+            <h2 className="font-display text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.vehiclesTitle}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {crossSellVehicles.map((v) => (
                 <Link
