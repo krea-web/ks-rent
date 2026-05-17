@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
 import NoleggioCostaSmeralda, {
   costaSmeraldaJsonLd,
   costaSmeraldaFaqJsonLd,
@@ -17,4 +18,5 @@ import { buildBreadcrumb } from "@/lib/jsonLd";
   ]}
 >
   <NoleggioCostaSmeralda lang="fr" />
+  <GuideVehicleStrip lang="fr" />
 </BaseLayout>

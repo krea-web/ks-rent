@@ -33,6 +33,7 @@
 | Homepage           | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
 | 404 page           | 4      | ✅   | 🚫       | 🚫        | ✅         | 🚫      | ✅    | ✅     | ✅   |
 | Service top-level  | 20     | ✅   | ✅       | ⚠️         | ✅         | ✅      | ✅    | ✅     | ⚠️   |
+| Service cross-sell | 12     | 🚫   | 🚫       | 🚫         | ✅         | 🚫      | ✅    | 🚫     | ✅   |
 | Location           | 80     | ✅   | ✅       | ✅        | ✅         | ✅      | ✅    | ✅     | ✅   |
 | Spiagge            | 80     | ✅   | ✅       | ✅        | ✅         | ✅      | ✅    | ✅     | ✅   |
 | Veicoli /flotta    | 32     | ✅   | ✅       | ✅        | ✅         | ✅      | ✅    | ✅     | ✅   |
@@ -194,8 +195,7 @@ Foto reali fondatori Francesco + Salvatore da aggiungere come follow-up.
 ## PUNTI DA SISTEMARE NELLE PROSSIME SESSIONI
 
 ### 🔴 PRIORITÀ ALTA
-1. **Pagina `/noleggio-auto-olbia` da tradurre** in EN/DE/FR (oggi solo redirect Vercel a IT). ⚠️ task pesante: 572 righe IT da tradurre in 3 lingue.
-2. **Service top-level — cross-sell senza foto**: i 4 React views (NoleggioAero/Porto/CS/Senza) hanno cross-sell ad altri servizi/veicoli ma senza thumbnail. Da arricchire con foto contestuali AI.
+1. **Pagina `/noleggio-auto-olbia` da tradurre** in EN/DE/FR (oggi solo redirect Vercel a IT). ⚠️ task pesante: 572 righe IT da tradurre in 3 lingue. Sessione futura.
 
 ### 🟡 PRIORITÀ MEDIA
 3. **`PrenotaOra.tsx` (4 lingue)**: il body è form-based, ma una CTA finale gold dopo il form potrebbe aiutare conversions.
@@ -225,3 +225,4 @@ _Ultimo aggiornamento: 2026-05-17 (sessione b)_
 
 - **2026-05-17 (a)**: creazione iniziale checklist + completato fix trasparenze hero, CTA gold uniforme, dedup homepage, font editorial.
 - **2026-05-17 (b)**: completato `/tariffe` (CTA gold + min-width tabelle) + `/chisiamo` (3 trasparenze → foto contestuali, CTA gold già esistente) + editorial typography su SEO sections NoleggioAero + NoleggioCS.
+- **2026-05-17 (c)**: completato cross-sell con foto: GuideVehicleStrip aggiunto ai 12 wrapper Astro service top-level (Aero/Porto/CS × 4 lingue) + foto cards su services + veicoli di NoleggioSenzaCartaCredito. Resta come unico ALTA pending la traduzione body /noleggio-auto-olbia.

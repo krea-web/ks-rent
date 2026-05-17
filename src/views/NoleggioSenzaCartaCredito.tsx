@@ -630,15 +630,28 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
           <div>
             <span className="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{linkLabels.servicesEyebrow}</span>
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.servicesTitle}</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {relatedServices.map((s) => (
                 <Link
                   key={s.href}
                   to={s.href}
-                  className="block p-4 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold/40 transition"
+                  className="group block rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold/50 hover:shadow-xl transition overflow-hidden"
                 >
-                  <strong className="block text-gray-900 dark:text-white font-bold text-sm">{s.label}</strong>
-                  {s.hint && <span className="text-xs text-gray-600 dark:text-white/50">{s.hint}</span>}
+                  {s.image && (
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <img
+                        src={s.image}
+                        alt={s.label}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <strong className="block text-gray-900 dark:text-white font-bold text-sm group-hover:text-gold transition">{s.label}</strong>
+                    {s.hint && <span className="text-xs text-gray-600 dark:text-white/50 mt-1 block">{s.hint}</span>}
+                  </div>
                 </Link>
               ))}
             </div>
@@ -670,15 +683,27 @@ const NoleggioSenzaCartaCredito = ({ lang = "it" }: Props) => {
               <Car className="w-3 h-3" /> {linkLabels.vehiclesEyebrow}
             </span>
             <h2 className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">{linkLabels.vehiclesTitle}</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {crossSellVehicles.map((v) => (
                 <Link
                   key={v.href}
                   to={v.href}
-                  className="block p-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gold/40 transition text-center"
+                  className="group block rounded-xl bg-gradient-to-br from-white via-white to-gray-50 dark:from-white/10 dark:via-white/5 dark:to-transparent border border-gray-200 dark:border-white/10 hover:border-gold/50 hover:shadow-xl transition overflow-hidden text-center"
                 >
-                  <strong className="block text-gray-900 dark:text-white text-sm">{v.label}</strong>
-                  {v.hint && <span className="text-xs text-gray-600 dark:text-white/50">{v.hint}</span>}
+                  {v.image && (
+                    <div className="relative h-28 md:h-32 p-3 flex items-center justify-center">
+                      <img
+                        src={v.image}
+                        alt={v.label}
+                        loading="lazy"
+                        className="max-h-full w-auto object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.3)] group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  )}
+                  <div className="px-3 pb-3 border-t border-gray-200/50 dark:border-white/10 pt-2">
+                    <strong className="block text-gray-900 dark:text-white text-sm group-hover:text-gold transition">{v.label}</strong>
+                    {v.hint && <span className="text-xs text-gray-600 dark:text-white/50 mt-0.5 block">{v.hint}</span>}
+                  </div>
                 </Link>
               ))}
             </div>
