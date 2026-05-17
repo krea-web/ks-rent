@@ -205,46 +205,111 @@ export function getCrossSellVehicles(
 export const INTERNAL_LINK_LABELS: Record<Locale, {
   servicesEyebrow: string;
   servicesTitle: string;
+  servicesTitleVariants: readonly string[];
   locationsEyebrow: string;
   locationsTitle: string;
   vehiclesEyebrow: string;
   vehiclesTitle: string;
+  vehiclesTitleVariants: readonly string[];
   exploreMore: string;
 }> = {
   it: {
     servicesEyebrow: "Servizi consigliati",
     servicesTitle: "Esplora anche questi servizi di noleggio",
+    servicesTitleVariants: [
+      "Altri servizi che potrebbero servirti",
+      "I servizi che usano i nostri clienti",
+      "Punti di consegna e formule di noleggio",
+      "Da Olbia ai porti, all'aeroporto, ovunque",
+      "Esplora gli altri formati di consegna",
+    ],
     locationsEyebrow: "Località servite",
     locationsTitle: "Consegniamo in tutta la Gallura",
     vehiclesEyebrow: "Altri veicoli",
     vehiclesTitle: "Cerchi qualcos'altro? Guarda gli altri veicoli",
+    vehiclesTitleVariants: [
+      "Forse cerchi un veicolo diverso",
+      "Sfoglia il resto della flotta KS Rent",
+      "Auto, scooter, quad: c'è la formula per te",
+      "Altri modelli della nostra flotta",
+      "Trova il veicolo perfetto per il tuo viaggio",
+    ],
     exploreMore: "Tutta la flotta →",
   },
   en: {
     servicesEyebrow: "Recommended services",
     servicesTitle: "Explore our other car hire services",
+    servicesTitleVariants: [
+      "Other services you might need",
+      "What our customers also use",
+      "Delivery points and hire formats",
+      "From Olbia to the ports and beyond",
+      "Browse the other hire options",
+    ],
     locationsEyebrow: "Service area",
     locationsTitle: "We deliver across Gallura",
     vehiclesEyebrow: "Other vehicles",
     vehiclesTitle: "Looking for something else? Browse other vehicles",
+    vehiclesTitleVariants: [
+      "Maybe you need a different vehicle",
+      "See the rest of the KS Rent fleet",
+      "Cars, scooters, quads — pick your style",
+      "Other models in our fleet",
+      "Find the perfect vehicle for your trip",
+    ],
     exploreMore: "Full fleet →",
   },
   de: {
     servicesEyebrow: "Empfohlene Services",
     servicesTitle: "Entdecken Sie unsere anderen Autovermietungs-Services",
+    servicesTitleVariants: [
+      "Weitere Services, die Sie brauchen koennten",
+      "Was unsere Kunden ebenfalls nutzen",
+      "Lieferpunkte und Mietformate",
+      "Von Olbia bis zu den Haefen, ueberall",
+      "Stoebern Sie durch unsere anderen Optionen",
+    ],
     locationsEyebrow: "Liefergebiet",
     locationsTitle: "Wir liefern in ganz Gallura",
     vehiclesEyebrow: "Andere Fahrzeuge",
     vehiclesTitle: "Suchen Sie etwas anderes? Andere Fahrzeuge ansehen",
+    vehiclesTitleVariants: [
+      "Vielleicht moechten Sie ein anderes Fahrzeug",
+      "Sehen Sie sich die restliche KS Rent Flotte an",
+      "Autos, Roller, Quads — finden Sie Ihren Stil",
+      "Weitere Modelle unserer Flotte",
+      "Finden Sie das perfekte Fahrzeug fuer Ihre Reise",
+    ],
     exploreMore: "Komplette Flotte →",
   },
   fr: {
     servicesEyebrow: "Services recommandés",
     servicesTitle: "Découvrez nos autres services de location",
+    servicesTitleVariants: [
+      "D'autres services qui pourraient vous servir",
+      "Ce que nos clients utilisent aussi",
+      "Points de livraison et formules de location",
+      "D'Olbia aux ports, à l'aéroport, partout",
+      "Découvrez les autres options de location",
+    ],
     locationsEyebrow: "Zone de livraison",
     locationsTitle: "Nous livrons dans toute la Gallura",
     vehiclesEyebrow: "Autres véhicules",
     vehiclesTitle: "Vous cherchez autre chose ? Voir les autres véhicules",
+    vehiclesTitleVariants: [
+      "Peut-être cherchez-vous un autre véhicule",
+      "Parcourez le reste de la flotte KS Rent",
+      "Voitures, scooters, quads — trouvez votre style",
+      "D'autres modèles dans notre flotte",
+      "Trouvez le véhicule parfait pour votre voyage",
+    ],
     exploreMore: "Flotte complète →",
   },
 };
+
+/** Helper deterministico per scegliere una variante in base al slug della pagina. */
+export function pickLabelVariant(slug: string, salt: string, variants: readonly string[]): string {
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) | 0;
+  return variants[Math.abs(h + salt.charCodeAt(0)) % variants.length];
+}

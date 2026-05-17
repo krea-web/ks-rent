@@ -18,7 +18,7 @@ import { getDict } from "@/i18n";
 import { getRecommendedVehicle } from "@/lib/dynamic-page-helpers";
 import { ArrowRight, MapPin, Info, ShieldCheck, Navigation, Users, Gauge, Fuel, Star, Car } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
-import { getRelatedServices, getCrossSellVehicles, INTERNAL_LINK_LABELS } from "@/lib/internal-links";
+import { getRelatedServices, getCrossSellVehicles, INTERNAL_LINK_LABELS, pickLabelVariant } from "@/lib/internal-links";
 
 interface SeoRow {
   slug: string;
@@ -284,7 +284,7 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
       <div class="max-w-6xl mx-auto space-y-12">
         <div>
           <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{linkLabels.servicesEyebrow}</span>
-          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-6">{linkLabels.servicesTitle}</h2>
+          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-6">{pickLabelVariant(row.slug, "services", linkLabels.servicesTitleVariants)}</h2>
           <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {relatedServices.map((s) => (
               <a
@@ -302,7 +302,7 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
           <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3 inline-flex items-center gap-2">
             <Car className="w-3 h-3" /> {linkLabels.vehiclesEyebrow}
           </span>
-          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-6">{linkLabels.vehiclesTitle}</h2>
+          <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-6">{pickLabelVariant(row.slug, "vehicles", linkLabels.vehiclesTitleVariants)}</h2>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {crossSellVehicles.map((v) => (
               <a
