@@ -1,0 +1,74 @@
+---
+/**
+ * Banner CTA su sfondo ORO con tratto granito decorativo.
+ * Riutilizzabile in qualsiasi pagina per spezzare la piattezza visiva.
+ *
+ * Es. uso:
+ *   <GoldCtaBanner
+ *     kicker="Pronto a partire?"
+ *     title="Prenota la tua auto in Costa Smeralda"
+ *     subtitle="Conferma le date e ritira il veicolo a Olbia."
+ *     ctaLabel="Verifica disponibilità"
+ *     ctaHref="/prenotaora"
+ *   />
+ */
+import { ArrowRight } from "lucide-react";
+
+interface Props {
+  kicker?: string;
+  title: string;
+  subtitle?: string;
+  ctaLabel: string;
+  ctaHref: string;
+  /** Variante: full (default) = sfondo oro pieno; outline = bordo oro su card */
+  variant?: "full" | "outline";
+}
+
+const { kicker, title, subtitle, ctaLabel, ctaHref, variant = "full" } = Astro.props;
+---
+
+{variant === "full" ? (
+  <section class="relative bg-gold text-background py-16 md:py-20 text-center px-4 md:px-8 overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
+
+    <div class="relative max-w-2xl mx-auto">
+      {kicker && (
+        <p class="text-[10px] uppercase tracking-[0.35em] font-bold text-background/70 mb-4">{kicker}</p>
+      )}
+      <h2 class="font-serif text-2xl md:text-4xl text-background font-medium mb-4 leading-tight">
+        {title}
+      </h2>
+      {subtitle && (
+        <p class="font-serif text-background/85 text-[16px] md:text-lg leading-relaxed mb-8 max-w-xl mx-auto">
+          {subtitle}
+        </p>
+      )}
+      <a
+        href={ctaHref}
+        class="inline-flex items-center gap-2 bg-background text-foreground font-semibold tracking-wide text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20"
+      >
+        {ctaLabel}
+        <ArrowRight className="w-4 h-4" />
+      </a>
+    </div>
+  </section>
+) : (
+  <section class="px-4 md:px-8 py-10 md:py-14">
+    <div class="max-w-5xl mx-auto bg-gradient-to-br from-gold/15 via-card to-card border-2 border-gold/40 rounded-2xl p-8 md:p-12 text-center">
+      {kicker && (
+        <p class="text-[10px] uppercase tracking-[0.35em] font-bold text-gold mb-3">{kicker}</p>
+      )}
+      <h2 class="font-serif text-2xl md:text-3xl text-foreground font-medium mb-3">{title}</h2>
+      {subtitle && (
+        <p class="font-serif text-foreground/65 text-[16px] leading-relaxed mb-6 max-w-xl mx-auto">{subtitle}</p>
+      )}
+      <a
+        href={ctaHref}
+        class="inline-flex items-center gap-2 bg-gold text-background font-semibold tracking-wide text-sm px-8 py-3.5 rounded-full hover:scale-105 transition-transform shadow-lg"
+      >
+        {ctaLabel}
+        <ArrowRight className="w-4 h-4" />
+      </a>
+    </div>
+  </section>
+)}

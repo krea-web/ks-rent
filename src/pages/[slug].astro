@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import CompanyMap from "@/components/CompanyMap";
+import RelatedGuides from "@/components/RelatedGuides.astro";
 import { supabase } from "@/lib/supabase";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
 import { getLocalitySEOContent } from "@/data/locality-content";
@@ -511,4 +512,6 @@ const crossSellVehicles = getCrossSellVehicles("it", 4, vehicle?.groupSlug);
       </div>
     </section>
   </div>
+
+  <RelatedGuides lang="it" pageSlug={data.slug} />
 </BaseLayout>

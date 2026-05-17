@@ -9,6 +9,7 @@
  */
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import CompanyMap from "@/components/CompanyMap";
+import RelatedGuides from "@/components/RelatedGuides.astro";
 import { supabase } from "@/lib/supabase";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
 import { getLocalitySEOContent } from "@/data/locality-content";
@@ -334,4 +335,6 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
       </div>
     </section>
   </div>
+
+  <RelatedGuides lang={lang} pageSlug={row.slug} />
 </BaseLayout>

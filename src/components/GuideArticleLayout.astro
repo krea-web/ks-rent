@@ -341,19 +341,22 @@ const whatsappUrl = "https://wa.me/393446107071";
     </section>
   )}
 
-  {/* ───────────── CTA FINALE ───────────── */}
-  <section class="border-t border-border bg-card/30 py-14 md:py-20 text-center px-4 md:px-8">
-    <div class="max-w-2xl mx-auto">
-      <p class="text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-3">{labels.readyTo}</p>
-      <h2 class="font-serif text-2xl md:text-4xl text-foreground font-medium mb-4 leading-tight">
+  {/* ───────────── CTA FINALE su sfondo ORO ───────────── */}
+  <section class="relative bg-gold text-background py-16 md:py-24 text-center px-4 md:px-8 overflow-hidden">
+    {/* deco granito (background trama) */}
+    <div class="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
+
+    <div class="relative max-w-2xl mx-auto">
+      <p class="text-[10px] uppercase tracking-[0.35em] font-bold text-background/70 mb-4">{labels.readyTo}</p>
+      <h2 class="font-serif text-3xl md:text-5xl text-background font-medium mb-5 leading-tight">
         {labels.bookTitle}
       </h2>
-      <p class="font-serif text-foreground/65 text-[17px] leading-relaxed mb-8">
+      <p class="font-serif text-background/85 text-[17px] md:text-lg leading-relaxed mb-10 max-w-xl mx-auto">
         {labels.bookSubtitle}
       </p>
       <a
         href={bookingHref}
-        class="inline-flex items-center gap-2 bg-gold text-background font-semibold tracking-wide text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform shadow-lg"
+        class="inline-flex items-center gap-2 bg-background text-foreground font-semibold tracking-wide text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20"
       >
         {labels.bookCta}
         <ArrowRight className="w-4 h-4" />

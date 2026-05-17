@@ -1,0 +1,189 @@
+---
+/**
+ * Sezione "Approfondisci" — mostra 3 articoli guide pertinenti alla pagina
+ * corrente. Usata in [slug].astro (location/beach) e in altre service pages
+ * per dare internal linking dalle 100+ pagine al hub guide.
+ *
+ * Logica di scelta:
+ *  - slug location → guide su itinerari/Costa Smeralda/parcheggi
+ *  - slug spiaggia → guide spiagge famiglie/nascoste
+ *  - slug aeroporto → guide aeroporto
+ *  - default → 3 articoli piu' recenti
+ */
+import { ArrowRight, Clock, BookOpen } from "lucide-react";
+import {
+  GUIDE_ARTICLES,
+  GUIDE_ARTICLES_EN,
+  GUIDE_ARTICLES_DE,
+  GUIDE_ARTICLES_FR,
+} from "@/data/guide-articles";
+
+type Lang = "it" | "en" | "de" | "fr";
+
+interface Props {
+  lang: Lang;
+  /** Slug della pagina corrente (es. "noleggio-auto-porto-cervo", "cala-brandinchi") */
+  pageSlug?: string;
+  /** Override esplicito: 3 slug IT degli articoli da mostrare */
+  itSlugs?: string[];
+}
+
+const { lang, pageSlug, itSlugs } = Astro.props;
+
+const collection =
+  lang === "en" ? GUIDE_ARTICLES_EN :
+  lang === "de" ? GUIDE_ARTICLES_DE :
+  lang === "fr" ? GUIDE_ARTICLES_FR :
+  GUIDE_ARTICLES;
+
+function localSlugFor(itSlug: string): string | null {
+  if (lang === "it") {
+    return GUIDE_ARTICLES.some((a) => a.slug === itSlug) ? itSlug : null;
+  }
+  const found = (collection as { slug: string; itEquivalent?: string }[]).find(
+    (a) => a.itEquivalent === itSlug,
+  );
+  return found?.slug ?? null;
+}
+
+// Mappa pattern slug → array di 3 slug IT articoli guide pertinenti
+function pickItSlugs(slug: string | undefined): string[] {
+  if (!slug) return ["itinerario-7-giorni-costa-smeralda-da-olbia", "come-muoversi-porto-cervo-parcheggi-navette", "spiagge-piu-belle-sardegna-nord-orientale"];
+
+  // Pulizia: rimuovi prefissi noleggio-auto- / car-hire- / autovermietung- / location-voiture-
+  const cleaned = slug
+    .replace(/^(noleggio-auto-|car-hire-|autovermietung-|location-voiture-)/, "");
+
+  if (/porto-cervo|baja-sardinia|poltu-quatu|porto-rotondo|costa-smeralda|liscia|romazzino|capriccioli|pevero|principe|celvia/i.test(cleaned)) {
+    return [
+      "come-muoversi-porto-cervo-parcheggi-navette",
+      "spiagge-costa-smeralda-con-bambini",
+      "itinerario-7-giorni-costa-smeralda-da-olbia",
+    ];
+  }
+  if (/san-teodoro|brandinchi|cinta|impostu|capo-coda-cavallo|porto-istana|porto-taverna/i.test(cleaned)) {
+    return [
+      "spiagge-piu-belle-sardegna-nord-orientale",
+      "spiagge-nascoste-gallura-sterrati",
+      "spiagge-costa-smeralda-con-bambini",
+    ];
+  }
+  if (/aeroporto|airport|flughafen|aeroport/i.test(cleaned)) {
+    return [
+      "noleggio-auto-olbia-aeroporto-guida-pratica",
+      "come-arrivare-costa-smeralda-voli-traghetti",
+      "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+    ];
+  }
+  if (/porto-olbia|isola-bianca|port-olbia|hafen|port/i.test(cleaned)) {
+    return [
+      "come-arrivare-costa-smeralda-voli-traghetti",
+      "noleggio-auto-olbia-aeroporto-guida-pratica",
+      "cosa-fare-a-olbia-3-giorni-itinerario",
+    ];
+  }
+  if (/senza-carta|no-credit-card|ohne-kreditkarte|sans-carte/i.test(cleaned)) {
+    return [
+      "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+      "patente-internazionale-sardegna-serve-davvero",
+      "quanto-costa-vacanza-costa-smeralda-budget-2026",
+    ];
+  }
+  if (/palau|cannigione|santa-teresa|capo-testa|rena-bianca|maddalena/i.test(cleaned)) {
+    return [
+      "visitare-arcipelago-la-maddalena-guida-pratica",
+      "spiagge-nascoste-gallura-sterrati",
+      "itinerario-7-giorni-costa-smeralda-da-olbia",
+    ];
+  }
+  if (/olbia|pittulongu|bados|sabina|moresca|golfo-aranci/i.test(cleaned)) {
+    return [
+      "cosa-fare-a-olbia-3-giorni-itinerario",
+      "noleggio-auto-olbia-aeroporto-guida-pratica",
+      "sagre-eventi-gallura-2026-calendario",
+    ];
+  }
+  if (/arzachena|tempio|berchidda|san-pantaleo/i.test(cleaned)) {
+    return [
+      "sagre-eventi-gallura-2026-calendario",
+      "spiagge-nascoste-gallura-sterrati",
+      "itinerario-7-giorni-costa-smeralda-da-olbia",
+    ];
+  }
+  // default
+  return [
+    "itinerario-7-giorni-costa-smeralda-da-olbia",
+    "spiagge-piu-belle-sardegna-nord-orientale",
+    "come-muoversi-porto-cervo-parcheggi-navette",
+  ];
+}
+
+const chosen = (itSlugs && itSlugs.length > 0 ? itSlugs : pickItSlugs(pageSlug))
+  .map((itSlug) => {
+    const slug = localSlugFor(itSlug);
+    return slug ? collection.find((a) => a.slug === slug) : null;
+  })
+  .filter(Boolean) as typeof collection;
+
+const guideBase = lang === "it" ? "/guide" : `/${lang}/guide`;
+
+const labels = {
+  it: { eyebrow: "Approfondisci", heading: "Le guide da leggere prima di partire", minRead: "min", seeAll: "Tutte le guide" },
+  en: { eyebrow: "Read more", heading: "Guides to read before you leave", minRead: "min", seeAll: "All guides" },
+  de: { eyebrow: "Mehr erfahren", heading: "Anleitungen vor der Abreise", minRead: "Min.", seeAll: "Alle Anleitungen" },
+  fr: { eyebrow: "Approfondir", heading: "Les guides à lire avant de partir", minRead: "min", seeAll: "Tous les guides" },
+}[lang];
+---
+
+{chosen.length > 0 && (
+  <section class="bg-card/30 border-t border-border py-12 md:py-16 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-8">
+        <div>
+          <p class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-bold text-gold mb-2">
+            <BookOpen className="w-3.5 h-3.5" />
+            {labels.eyebrow}
+          </p>
+          <h2 class="font-serif text-2xl md:text-3xl text-foreground font-medium leading-tight">
+            {labels.heading}
+          </h2>
+        </div>
+        <a
+          href={guideBase}
+          class="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-gold transition whitespace-nowrap"
+        >
+          {labels.seeAll}
+          <ArrowRight className="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+        {chosen.slice(0, 3).map((a) => (
+          <a
+            href={`${guideBase}/${a.slug}`}
+            class="group block bg-background border border-border rounded-xl overflow-hidden hover:border-gold/40 transition shadow-sm hover:shadow-lg"
+          >
+            <div class="aspect-[16/10] overflow-hidden">
+              <img
+                src={a.heroImage}
+                alt={a.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-4 md:p-5">
+              <span class="text-[9px] uppercase tracking-[0.25em] text-gold font-bold">{a.category}</span>
+              <p class="font-serif text-[16px] md:text-lg text-foreground mt-2 leading-snug line-clamp-2 group-hover:text-gold transition">
+                {a.title}
+              </p>
+              <p class="inline-flex items-center gap-1.5 text-[11px] text-foreground/45 mt-3">
+                <Clock className="w-3 h-3" />
+                {a.readingMinutes} {labels.minRead}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
