@@ -70,10 +70,10 @@
 ### 3. Service top-level (5 servizi × 4 lingue = 20 pagine)
 | Rotta | Hero | CTA Gold | Editorial | Cross-sell | Tabelle | Trasp | No-dup | i18n |
 |-------|------|----------|-----------|------------|---------|-------|--------|------|
-| `/noleggio-auto-olbia`                            | ✅ | ✅ | ❌ | ⚠️ | ✅ | ✅ | ⚠️ | ✅ |
-| `/en/car-hire-olbia` *(redirect a IT)*            | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | ❌ |
-| `/de/autovermietung-olbia` *(redirect a IT)*      | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | ❌ |
-| `/fr/location-voiture-olbia` *(redirect a IT)*    | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | 🚫 | ❌ |
+| `/noleggio-auto-olbia`                            | ✅ | ✅ | ❌ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
+| `/en/car-hire-olbia`                              | ✅ | ✅ | ❌ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
+| `/de/autovermietung-olbia`                        | ✅ | ✅ | ❌ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
+| `/fr/location-voiture-olbia`                      | ✅ | ✅ | ❌ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
 | `/noleggio-auto-aeroporto-olbia`                  | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ⚠️ | ✅ |
 | `/en/car-hire-olbia-airport`                      | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ⚠️ | ✅ |
 | `/de/autovermietung-flughafen-olbia`              | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ⚠️ | ✅ |
@@ -92,7 +92,7 @@
 | `/fr/location-voiture-sans-carte-credit-olbia`    | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 **Note service top-level**:
-- `/noleggio-auto-olbia` mancano traduzioni EN/DE/FR del body (redirect Vercel a IT come stopgap).
+- `/noleggio-auto-olbia` ora tradotto integralmente in EN/DE/FR (refactor in componente shared `<NoleggioOlbiaContent>` con TRANSLATIONS dict).
 - Tutte le service pages React (NoleggioAeroporto/Porto/CS/Senza) hanno copy hardcoded in `TRANSLATIONS` object, **non usano** ancora `.editorial` typography.
 - Cross-sell con foto: implementato in pagine /[slug] e /flotta/[slug] ma NON nelle service top-level React.
 
@@ -195,7 +195,7 @@ Foto reali fondatori Francesco + Salvatore da aggiungere come follow-up.
 ## PUNTI DA SISTEMARE NELLE PROSSIME SESSIONI
 
 ### 🔴 PRIORITÀ ALTA
-1. **Pagina `/noleggio-auto-olbia` da tradurre** in EN/DE/FR (oggi solo redirect Vercel a IT). ⚠️ task pesante: 572 righe IT da tradurre in 3 lingue. Sessione futura.
+_Nessuna._ Tradotto `/noleggio-auto-olbia` nella sessione (e) — vedi storia aggiornamenti.
 
 ### 🟡 PRIORITÀ MEDIA
 2. **Editorial body completo** nei 4 React service views: hero, spotlight, vantaggi e altre sezioni "informative" — oggi solo la "SEO keyword section" di NoleggioAero + NoleggioCS è migrata. Le hero/spotlight delle 4 views potrebbero beneficiare di tipografia editorial, ma richiede refactor significativo dei className Tailwind.
@@ -227,3 +227,4 @@ _Ultimo aggiornamento: 2026-05-17 (sessione b)_
 - **2026-05-17 (b)**: completato `/tariffe` (CTA gold + min-width tabelle) + `/chisiamo` (3 trasparenze → foto contestuali, CTA gold già esistente) + editorial typography su SEO sections NoleggioAero + NoleggioCS.
 - **2026-05-17 (c)**: completato cross-sell con foto: GuideVehicleStrip aggiunto ai 12 wrapper Astro service top-level (Aero/Porto/CS × 4 lingue) + foto cards su services + veicoli di NoleggioSenzaCartaCredito. Resta come unico ALTA pending la traduzione body /noleggio-auto-olbia.
 - **2026-05-17 (d)**: completato 4 MEDIA priority: skip motivato CTA PrenotaOra + RelatedGuides cross-sell in /tariffe × 4 lingue + Editorial body homepage SEO rich text × 4 lingue (drop-cap dorato, h2 con barra dorata, serif Georgia, link gold). Audit: 326 pagine, 4662 immagini (+136 da prima), similarity max 0.276 invariata.
+- **2026-05-17 (e)**: completato ULTIMO 🔴 ALTA pending. Refactor di /noleggio-auto-olbia (572 righe) in componente shared `<NoleggioOlbiaContent>` con TRANSLATIONS dict 4 lingue (~50 chiavi × IT/EN/DE/FR). Creati 3 wrapper EN/DE/FR (/en/car-hire-olbia, /de/autovermietung-olbia, /fr/location-voiture-olbia) con title/meta/canonical localizzati. Rimossi i 3 redirect Vercel temporanei. Audit: 329 pagine (+3), 4771 immagini (+109), similarity max 0.276 invariata.

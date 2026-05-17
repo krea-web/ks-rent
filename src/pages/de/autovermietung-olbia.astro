@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioOlbiaContent from "@/components/NoleggioOlbiaContent.astro";
+import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+import {
+  olbiaAutoRentalJsonLd,
+  olbiaFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+
+<BaseLayout
+  title="Autovermietung Olbia | KS Rent Sardinia — Ohne Kreditkarte"
+  description="Auto-, Motorrad- und Quadvermietung in Olbia mit kostenloser Lieferung am Flughafen OLB und am Hafen Isola Bianca. Moderne Flotte, auch ohne obligatorische Kreditkarte."
+  canonical="https://www.ksrentsardinia.com/de/autovermietung-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    olbiaAutoRentalJsonLd,
+    olbiaFaqJsonLd,
+    buildBreadcrumb("Autovermietung Olbia", "/de/autovermietung-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Autovermietung Olbia", path: "/de/autovermietung-olbia" }]}
+>
+  <NoleggioOlbiaContent lang="de" />
+  <GuideVehicleStrip lang="de" />
+</BaseLayout>

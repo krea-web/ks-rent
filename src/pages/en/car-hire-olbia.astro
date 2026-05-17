@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioOlbiaContent from "@/components/NoleggioOlbiaContent.astro";
+import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+import {
+  olbiaAutoRentalJsonLd,
+  olbiaFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+
+<BaseLayout
+  title="Car Hire Olbia | KS Rent Sardinia — No Credit Card Required"
+  description="Car, motorbike and quad hire in Olbia with free home delivery at OLB airport and Isola Bianca port. Modern fleet, no mandatory credit card required."
+  canonical="https://www.ksrentsardinia.com/en/car-hire-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    olbiaAutoRentalJsonLd,
+    olbiaFaqJsonLd,
+    buildBreadcrumb("Car Hire Olbia", "/en/car-hire-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Car Hire Olbia", path: "/en/car-hire-olbia" }]}
+>
+  <NoleggioOlbiaContent lang="en" />
+  <GuideVehicleStrip lang="en" />
+</BaseLayout>

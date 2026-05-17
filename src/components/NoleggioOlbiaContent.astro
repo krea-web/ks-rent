@@ -1,0 +1,966 @@
+---
+/**
+ * Content shared della pagina "Noleggio Auto Olbia" / "Car Hire Olbia" /
+ * "Autovermietung Olbia" / "Location Voiture Olbia" — usato dai 4 wrapper
+ * .astro nelle rispettive lingue.
+ *
+ * Tutte le stringhe localizzate vivono in TRANSLATIONS qui sotto. I link
+ * interni vengono prefissati con la lingua corrente per puntare alle
+ * versioni localizzate di /prenotaora, /flotta, /tariffe, /noleggio-auto-*.
+ */
+import FleetGrid from "@/components/FleetGrid.astro";
+import FAQSection from "@/components/FAQSection";
+
+type Lang = "it" | "en" | "de" | "fr";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const VEHICLE_ASSETS: Record<string, { name: string; image: string; categoryKey: string }> = {
+  "audi-rs3": {
+    name: "Audi RS3 Sportback",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png",
+    categoryKey: "sport400",
+  },
+  "bmw-m2": {
+    name: "BMW M2 Coupé",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png",
+    categoryKey: "sportCoupe",
+  },
+  "mercedes-classe-a": {
+    name: "Mercedes Classe A",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png",
+    categoryKey: "premium",
+  },
+  "jeep-avenger": {
+    name: "Jeep Avenger",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-jeepsuvavenger.webp",
+    categoryKey: "suv",
+  },
+  "fiat-panda": {
+    name: "Fiat Panda Hybrid",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-fiatpandacitycar.webp",
+    categoryKey: "cityCar",
+  },
+  "honda-sh": {
+    name: "Honda SH 125",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png",
+    categoryKey: "scooter",
+  },
+  "yamaha-quad-raptor": {
+    name: "Yamaha Raptor",
+    image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
+    categoryKey: "quad",
+  },
+};
+
+// ────────────────────────────────────────────────────────────────────
+// PATH LOCALIZED HELPERS
+// ────────────────────────────────────────────────────────────────────
+
+const FLEET_PREFIX: Record<Lang, string> = {
+  it: "/flotta",
+  en: "/en/fleet",
+  de: "/de/fuhrpark",
+  fr: "/fr/flotte",
+};
+
+const VEHICLE_SLUGS: Record<string, Record<Lang, string>> = {
+  "audi-rs3":           { it: "audi-rs3",          en: "audi-rs3-hire-olbia",          de: "audi-rs3-mieten-olbia",          fr: "audi-rs3-location-olbia" },
+  "bmw-m2":             { it: "bmw-m2",            en: "bmw-m2-coupe-hire-olbia",      de: "bmw-m2-coupe-mieten-olbia",      fr: "bmw-m2-coupe-location-olbia" },
+  "mercedes-classe-a":  { it: "mercedes-classe-a", en: "mercedes-a-class-hire-olbia",  de: "mercedes-a-klasse-mieten-olbia", fr: "mercedes-classe-a-location-olbia" },
+  "jeep-avenger":       { it: "jeep-avenger",      en: "jeep-avenger-hire-olbia",      de: "jeep-avenger-mieten-olbia",      fr: "jeep-avenger-location-olbia" },
+  "fiat-panda":         { it: "fiat-panda",        en: "fiat-panda-hire-olbia",        de: "fiat-panda-mieten-olbia",        fr: "fiat-panda-location-olbia" },
+  "honda-sh":           { it: "honda-sh",          en: "honda-sh-hire-olbia",          de: "honda-sh-mieten-olbia",          fr: "honda-sh-location-olbia" },
+  "yamaha-quad-raptor": { it: "yamaha-quad-raptor",en: "yamaha-raptor-quad-hire-sardinia", de: "yamaha-raptor-quad-mieten-sardinien", fr: "yamaha-raptor-quad-location-sardaigne" },
+};
+
+function fleetHref(slug: string): string {
+  return `${FLEET_PREFIX[lang]}/${VEHICLE_SLUGS[slug][lang]}`;
+}
+
+const SERVICE_PATHS: Record<string, Record<Lang, string>> = {
+  airport: {
+    it: "/noleggio-auto-aeroporto-olbia",
+    en: "/en/car-hire-olbia-airport",
+    de: "/de/autovermietung-flughafen-olbia",
+    fr: "/fr/location-voiture-aeroport-olbia",
+  },
+  port: {
+    it: "/noleggio-auto-porto-olbia",
+    en: "/en/car-hire-olbia-port",
+    de: "/de/autovermietung-hafen-olbia",
+    fr: "/fr/location-voiture-port-olbia",
+  },
+  noCard: {
+    it: "/noleggio-auto-senza-carta-di-credito-olbia",
+    en: "/en/car-hire-no-credit-card-olbia",
+    de: "/de/autovermietung-ohne-kreditkarte-olbia",
+    fr: "/fr/location-voiture-sans-carte-credit-olbia",
+  },
+  costaSmeralda: {
+    it: "/noleggio-auto-costa-smeralda",
+    en: "/en/car-hire-costa-smeralda",
+    de: "/de/autovermietung-costa-smeralda",
+    fr: "/fr/location-voiture-costa-smeralda",
+  },
+};
+
+const LOCATION_PREFIX: Record<Lang, string> = {
+  it: "/noleggio-auto-",
+  en: "/en/car-hire-",
+  de: "/de/autovermietung-",
+  fr: "/fr/location-voiture-",
+};
+
+function locHref(loc: string): string {
+  return `${LOCATION_PREFIX[lang]}${loc}`;
+}
+
+const FLEET_HUB: Record<Lang, string> = {
+  it: "/flotta",
+  en: "/en/fleet",
+  de: "/de/fuhrpark",
+  fr: "/fr/flotte",
+};
+const RATES_HUB: Record<Lang, string> = {
+  it: "/tariffe",
+  en: "/en/rates",
+  de: "/de/preise",
+  fr: "/fr/tarifs",
+};
+const BOOK_HUB: Record<Lang, string> = {
+  it: "/prenotaora",
+  en: "/en/book-now",
+  de: "/de/jetzt-buchen",
+  fr: "/fr/reserver",
+};
+
+// ────────────────────────────────────────────────────────────────────
+// TRANSLATIONS — tutte le stringhe in 4 lingue
+// ────────────────────────────────────────────────────────────────────
+
+const TRANSLATIONS = {
+  it: {
+    categoryLabels: {
+      sport400: "Sportiva 400 CV",
+      sportCoupe: "Coupé sportiva",
+      premium: "Premium",
+      suv: "SUV compatto",
+      cityCar: "City car",
+      scooter: "Scooter",
+      quad: "Quad",
+    },
+    hero: {
+      eyebrow: "Noleggio Auto, Moto e Quad — Olbia, Sardegna",
+      titleLine1: "Noleggio Auto a Olbia",
+      titleLine2: "Consegna in Aeroporto e Porto, Anche Senza Carta di Credito",
+      lead: "Una flotta moderna che va dalla city car alla sportiva, dal SUV allo scooter, dal quad alla supercar. Ritiro a 5 minuti dall'aeroporto di Olbia Costa Smeralda. Aperti 7 giorni su 7 con orario esteso.",
+      badge1: "Senza carta di credito obbligatoria",
+      badge2: "Consegna gratuita a Olbia (aeroporto e porto)",
+      badge3: "Consegna a domicilio 9:00–22:30",
+      ctaBook: "Prenota Ora",
+      ratingLabel: "5 stelle",
+      ratingText: "su 35 recensioni Google",
+    },
+    why: {
+      heading: "Perché scegliere KS Rent Sardinia per il noleggio auto a Olbia",
+      lead: "KS Rent Sardinia è un autonoleggio indipendente con sede legale in Viale Aldo Moro 367 a Olbia e punto di consegna operativo al Porto Isola Bianca. La nostra società è KS Rent SRL (P.IVA IT03028900904), un'azienda sarda autonoma fondata l'8 aprile 2025, <strong>non affiliata a KS Rent S.r.l. di Roma</strong>. La flotta è di nostra proprietà e curata internamente: non siamo un broker né un comparatore.",
+      bullets: [
+        { icon: "📍", title: "Doppia presenza a Olbia.", text: "Sede principale in Viale Aldo Moro 367 e punto consegna al Porto Isola Bianca 38, a 5 minuti dall'Aeroporto di Olbia Costa Smeralda e dall'imbarco traghetti." },
+        { icon: "⭐", title: "5,0/5 stelle Google.", text: "35 recensioni verificate da clienti reali. Profilo Google Business attivo con risposta diretta del titolare." },
+        { icon: "🕙", title: "Orario esteso 7 giorni su 7.", text: "Aperti tutti i giorni dalle 10:00 alle 13:00 e dalle 15:00 alle 22:30, festivi inclusi (Pasqua, 25 aprile, 1 maggio, 2 giugno e ricorrenze locali)." },
+        { icon: "🚗", title: "Flotta moderna per tutti.", text: "Dalla Fiat Panda Hybrid per il city tour alle sportive Audi RS3 e BMW M2 per il weekend in Costa Smeralda, fino a SUV Jeep Avenger, Mercedes Classe A, scooter Honda SH e quad Yamaha. Tutti veicoli recenti, controllati prima di ogni noleggio." },
+      ],
+      altTpl: (name: string, cat: string) => `Noleggio ${name} a Olbia — ${cat} disponibile con KS Rent Sardinia`,
+      titleAttrTpl: (name: string) => `Noleggia ${name} a Olbia`,
+    },
+    delivery: {
+      heading: "Servizio di consegna auto a Olbia: aeroporto, porto, hotel e villa",
+      lead: 'La consegna a domicilio è disponibile <strong>tutti i giorni dalle 9:00 alle 22:30</strong> — anche prima dell\'apertura dell\'ufficio, perché coordiniamo l\'orario di consegna con quello del tuo volo o traghetto in modo che il veicolo sia pronto quando arrivi. <strong>Gratuita all\'interno del comune di Olbia</strong> (incluso aeroporto OLB e porto Isola Bianca). Per le altre località della Gallura e Costa Smeralda il costo è trasparente e dichiarato in fase di preventivo, a partire da 5 €.',
+      card1Title: "✈️ Aeroporto di Olbia Costa Smeralda (OLB)",
+      card1Text: "Il principale scalo della Sardegna nord-orientale, a soli 2 km dalla nostra sede. Riceviamo voli da tutta Europa: Easyjet, Ryanair, ITA, Lufthansa, Air France. La consegna avviene direttamente agli Arrivi, dopo il ritiro bagagli. Tempo medio dal touchdown al volante: 10 minuti.",
+      card1Cta: "Maggiori dettagli sul servizio aeroporto →",
+      card2Title: "⚓ Porto di Olbia Isola Bianca",
+      card2Text: "La nostra postazione operativa è proprio al Porto Isola Bianca, dove sbarcano i traghetti Moby, Tirrenia, Grimaldi, Corsica Ferries e GNV. Appena lasci la nave, ti aspettiamo a pochi metri: nessuna navetta, nessuna fila. Particolarmente comodo per chi arriva da Civitavecchia, Livorno, Genova e Tolone.",
+      card2Cta: "Maggiori dettagli sul servizio porto →",
+      card3Title: "🏨 Hotel, ville e Costa Smeralda",
+      card3Text: "Consegna porto-a-porto in tutta la Gallura: Porto Cervo, Porto Rotondo, Baja Sardinia, Cannigione, Palau, Arzachena, San Teodoro, San Pantaleo, Golfo Aranci. Coordiniamo orario e luogo direttamente con la struttura. Il tempo di consegna varia da 20 a 50 minuti dalla nostra sede. Costo trasparente dichiarato in preventivo.",
+      card3Cta: "Vedi Porto Cervo →",
+    },
+    fleet: {
+      heading: "La nostra flotta a noleggio a Olbia",
+      lead: "Veicoli di proprietà, recenti e controllati prima di ogni consegna. Dalla city car alla sportiva, dal SUV al quad, ogni mezzo è disponibile per pickup ad Olbia e consegna in Gallura.",
+      mostRequested: "I veicoli più richiesti a Olbia",
+      exploreAll: "Esplora tutta la flotta →",
+      altTpl: (name: string) => `Noleggio ${name} a Olbia con KS Rent Sardinia`,
+    },
+    rates: {
+      heading: "Tariffe noleggio auto a Olbia da aprile a ottobre",
+      lead: "KS Rent Sardinia applica tariffe stagionali trasparenti, valide da aprile a ottobre, allineate alle stagioni del turismo in Costa Smeralda. La bassa stagione (aprile, maggio, ottobre) ha prezzi ridotti rispetto all'alta stagione (luglio, agosto). Tutte le tariffe includono RCA, assistenza stradale e gestione del contratto.",
+      thCategory: "Categoria",
+      thVehicle: "Esempio veicolo",
+      thLow: "Da €/giorno (bassa)",
+      thHigh: "Da €/giorno (alta)",
+      rows: [
+        { catLabel: "Utilitaria", slug: "fiat-panda", low: "40 €", high: "70 €" },
+        { catLabel: "SUV compatto", slug: "jeep-avenger", low: "60 €", high: "110 €" },
+        { catLabel: "Premium", slug: "mercedes-classe-a", low: "90 €", high: "160 €" },
+        { catLabel: "Sportiva", slug: "audi-rs3+bmw-m2", low: "su richiesta", high: "su richiesta" },
+        { catLabel: "Scooter", slug: "honda-sh", low: "40 €", high: "60 €" },
+        { catLabel: "Quad", slug: "yamaha-quad-raptor", low: "su richiesta", high: "su richiesta" },
+      ],
+      disclaimer: "Le tariffe indicate sono orientative e possono variare. Cosa è incluso: RCA obbligatoria, assistenza stradale, gestione contratto. Cosa non è incluso: carburante (consegnata e da restituire con stesso livello), pedaggi, costi opzionali (secondo conducente, seggiolini su richiesta, franchigia kasko ridotta).",
+      quickFactsEyebrow: "Quick facts noleggio auto Olbia 2026",
+      quickFactsText: 'Tariffa minima <strong>40 €/giorno</strong> (Fiat Panda Hybrid bassa stagione). Tariffa massima <strong>160 €/giorno</strong> (Mercedes Classe A alta stagione). Sportive <strong>Audi RS3 e BMW M2</strong> su preventivo. Stagione attiva <strong>aprile–ottobre</strong>. <strong>Consegna gratuita a Olbia</strong> (aeroporto OLB e porto Isola Bianca inclusi); altre località Gallura da 5 €. Pagamento accettato anche <strong>senza carta di credito</strong>: contanti, prepagate (Postepay, Revolut, N26), bancomat, bonifico. Rating Google verificato: <strong>5,0 / 5 su 35 recensioni</strong>. Apertura 7 giorni su 7: 10:00–13:00 e 15:00–22:30. Chilometraggio incluso adeguato all\'itinerario in Gallura.',
+      seeFull: "Vedi il listino completo mese per mese →",
+    },
+    usp: {
+      eyebrow: "Quello che ci rende diversi",
+      heading: "Noleggio auto a Olbia senza carta di credito",
+      lead: "La carta di credito tradizionale è una barriera che ferma molti viaggiatori al banco degli aggregatori. Da KS Rent Sardinia non è obbligatoria: scegliamo la flessibilità del cliente reale, non la rigidità del back-office.",
+      paymentTitle: "Cosa accettiamo come pagamento",
+      paymentList: [
+        "<strong>Contanti</strong> (in euro)",
+        "<strong>Carte prepagate ricaricabili</strong>: Postepay, Revolut, N26, Hype, Wise",
+        "<strong>Carte di debito</strong> e bancomat circuiti VISA / Maestro / Mastercard",
+        "<strong>Carte di credito</strong> tradizionali (se preferisci)",
+        "<strong>Bonifico bancario</strong> (anche istantaneo)",
+        "<strong>Pagamenti contactless NFC</strong> (Apple Pay, Google Pay)",
+      ],
+      depositTitle: "Come funziona il deposito cauzionale",
+      depositText: "L'importo del deposito varia per categoria di veicolo e viene comunicato in fase di prenotazione. Può essere versato in contanti, prepagata o carta di credito a scelta del cliente. Al termine del noleggio, se non ci sono danni o sanzioni, il deposito viene restituito con lo stesso metodo di versamento.",
+      docsTitle: "Documenti richiesti",
+      docsText: "Patente B (o A1/A2 per scooter) in corso di validità da almeno 1 anno e un documento di identità (carta d'identità o passaporto). Per i clienti extra-UE è consigliata la patente internazionale.",
+      cta: "Approfondisci il noleggio senza carta di credito →",
+    },
+    hub: {
+      heading: "Olbia come base per esplorare Gallura, Costa Smeralda e nord Sardegna",
+      leadHtml: 'Noleggiare a Olbia significa partire dal cuore della Gallura. Da qui si raggiungono in meno di un\'ora le località più richieste della <a href="HREF_CS" class="text-primary font-medium hover:underline">Costa Smeralda</a> e le spiagge del nord Sardegna, oltre agli imbarchi per La Maddalena. Ecco le mete più gettonate dai nostri clienti.',
+      locations: [
+        { label: "Porto Cervo", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Porto Rotondo", slug: "porto-rotondo", time: "~ 20 min" },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 min" },
+        { label: "San Teodoro", slug: "san-teodoro", time: "~ 30 min" },
+        { label: "Palau", slug: "palau", time: "~ 50 min" },
+        { label: "Golfo Aranci", slug: "golfo-aranci", time: "~ 25 min" },
+      ],
+      disclaimer: "Tempi di percorrenza indicativi dalla sede di Olbia con traffico standard. In alta stagione (luglio-agosto) e in concomitanza di eventi a Porto Cervo possono variare.",
+    },
+    faq: {
+      heading: "Domande frequenti sul noleggio auto a Olbia",
+      items: [
+        { q: "Si può noleggiare un'auto a Olbia senza carta di credito?", a: "Sì. KS Rent Sardinia è uno dei pochi autonoleggi a Olbia che permette il noleggio senza carta di credito obbligatoria. Accettiamo contanti, bonifico bancario e carte prepagate ricaricabili come Postepay, Revolut e N26. Il deposito cauzionale può essere versato anche in contanti al momento del ritiro." },
+        { q: "Dove si ritira l'auto all'aeroporto di Olbia?", a: "KS Rent Sardinia consegna gratuitamente l'auto direttamente agli Arrivi dell'Aeroporto di Olbia Costa Smeralda (OLB), distante solo 2 km dalla sede. La consegna è coordinata con l'orario del tuo volo, disponibile tutti i giorni dalle 10:00 alle 22:30, anche su voli serali e festivi." },
+        { q: "Qual è l'età minima per noleggiare un'auto a Olbia?", a: "L'età minima è 21 anni per le utilitarie e i veicoli standard, 25 anni per auto sportive, supercar e veicoli premium. È richiesta una patente B in corso di validità da almeno 1 anno." },
+        { q: "Quanto costa noleggiare un'auto a Olbia con KS Rent Sardinia?", a: "Le tariffe sono stagionali, valide da aprile a ottobre. Le utilitarie come Fiat Panda Hybrid partono da circa 40€/giorno in bassa stagione; auto premium come Mercedes Classe A da 90€/giorno; supercar Audi RS3 e BMW M2 hanno tariffe dedicate. Listino completo su /tariffe." },
+        { q: "Posso consegnare l'auto fuori orario o in un giorno festivo?", a: "Siamo aperti tutti i giorni 10:00-13:00 e 15:00-22:30, festivi inclusi (Pasqua, 25 aprile, 1 maggio, 2 giugno). Per consegne fuori orario contattaci su WhatsApp al +39 344 6107071 per un appuntamento dedicato." },
+        { q: "Il chilometraggio è illimitato?", a: "La maggior parte dei nostri noleggi a Olbia prevede chilometraggio incluso adeguato alle escursioni in Gallura e Costa Smeralda. Per soggiorni lunghi o tour della Sardegna offriamo formule con chilometraggio illimitato. Verifica la condizione specifica al momento della prenotazione." },
+        { q: "Posso aggiungere un secondo conducente?", a: "Sì, con un piccolo supplemento. Patente valida da almeno 1 anno e rispetto dell'età minima per la categoria. Il secondo conducente è sempre indicato nel contratto di noleggio." },
+        { q: "KS Rent Sardinia è uguale a KS Rent S.r.l. di Roma?", a: "No. KS Rent Sardinia (KS Rent SRL — P.IVA IT03028900904 — sede a Olbia) è azienda autonoma e indipendente, NON affiliata né collegata a KS Rent S.r.l. di Roma (sito ksrent.it). Per il noleggio in Sardegna fare riferimento solo a ksrentsardinia.com." },
+        { q: "Avete anche moto, scooter e quad in noleggio a Olbia?", a: "Sì. La flotta include scooter Honda SH 125 e Honda SH 350 (caschi inclusi) e quad Yamaha Raptor per escursioni in Gallura. Lo scooter 125 si guida con patente A1; il 350 richiede patente A2 o B con almeno 3 anni di possesso. Il quad si guida con patente B." },
+        { q: "Consegnate l'auto a Porto Cervo, San Teodoro o in Costa Smeralda?", a: "Sì. Consegna a domicilio in tutta la Gallura e Costa Smeralda: Porto Cervo, Porto Rotondo, Baja Sardinia, San Teodoro, Palau, Cannigione, Arzachena, San Pantaleo, Golfo Aranci, Puntaldia, Murta Maria, Porto Istana, Loiri Porto San Paolo. Tempo di consegna 20-50 minuti dalla sede di Olbia." },
+        { q: "Quanto costa la consegna a domicilio fuori da Olbia?", a: "La consegna è gratuita all'interno del comune di Olbia, incluso l'aeroporto OLB e il porto Isola Bianca. Per le altre località della Gallura e della Costa Smeralda il costo parte da 5 € e viene dichiarato in modo trasparente durante il preventivo, in base alla distanza. Le località fuori dalla nostra area di copertura standard sono valutate caso per caso." },
+      ],
+    },
+    cta: {
+      heading: "Pronto a prenotare la tua auto a Olbia?",
+      addressLine1: "Sede legale: Viale Aldo Moro 367, 07026 Olbia (SS) · Punto consegna porto: Viale Isola Bianca 38",
+      addressLine2: "Aperti tutti i giorni 10:00–13:00 e 15:00–22:30, festivi inclusi.",
+      bookCta: "Prenota la tua auto",
+      whatsappCta: "💬 Scrivici su WhatsApp",
+    },
+  },
+
+  en: {
+    categoryLabels: {
+      sport400: "Sport 400 HP",
+      sportCoupe: "Sports coupé",
+      premium: "Premium",
+      suv: "Compact SUV",
+      cityCar: "City car",
+      scooter: "Scooter",
+      quad: "Quad",
+    },
+    hero: {
+      eyebrow: "Car, Motorbike and Quad Hire — Olbia, Sardinia",
+      titleLine1: "Car Hire in Olbia",
+      titleLine2: "Airport and Port Delivery, No Credit Card Required",
+      lead: "A modern fleet from city cars to sports cars, SUVs, scooters, quads and supercars. Pick-up 5 minutes from Olbia Costa Smeralda airport. Open 7 days a week with extended hours.",
+      badge1: "No credit card required",
+      badge2: "Free delivery in Olbia (airport and port)",
+      badge3: "Home delivery 9:00–22:30",
+      ctaBook: "Book Now",
+      ratingLabel: "5 stars",
+      ratingText: "on 35 Google reviews",
+    },
+    why: {
+      heading: "Why choose KS Rent Sardinia for car hire in Olbia",
+      lead: "KS Rent Sardinia is an independent car hire company with registered office in Viale Aldo Moro 367, Olbia, and an operational delivery point at Isola Bianca port. Our company is KS Rent SRL (VAT IT03028900904), an independent Sardinian business founded on April 8, 2025, <strong>not affiliated with KS Rent S.r.l. of Rome</strong>. Our fleet is owned and managed in-house: we are not a broker or comparison site.",
+      bullets: [
+        { icon: "📍", title: "Double presence in Olbia.", text: "Main office in Viale Aldo Moro 367 and delivery point at Isola Bianca port 38, 5 minutes from Olbia Costa Smeralda airport and the ferry terminal." },
+        { icon: "⭐", title: "5.0/5 stars on Google.", text: "35 verified reviews from real customers. Active Google Business profile with direct replies from the owner." },
+        { icon: "🕙", title: "Extended hours 7 days a week.", text: "Open every day from 10:00 to 13:00 and from 15:00 to 22:30, public holidays included (Easter, April 25, May 1, June 2 and local holidays)." },
+        { icon: "🚗", title: "A modern fleet for everyone.", text: "From the Fiat Panda Hybrid for city tours to the sporty Audi RS3 and BMW M2 for a Costa Smeralda weekend, plus the Jeep Avenger SUV, Mercedes A-Class, Honda SH scooters and Yamaha quad. All recent vehicles, checked before every rental." },
+      ],
+      altTpl: (name: string, cat: string) => `${name} hire in Olbia — ${cat} available with KS Rent Sardinia`,
+      titleAttrTpl: (name: string) => `Hire the ${name} in Olbia`,
+    },
+    delivery: {
+      heading: "Car delivery service in Olbia: airport, port, hotel and villa",
+      lead: 'Home delivery is available <strong>every day from 9:00 to 22:30</strong> — even before office opening hours, because we coordinate the delivery time with your flight or ferry so that the vehicle is ready when you arrive. <strong>Free within the municipality of Olbia</strong> (including OLB airport and Isola Bianca port). For other locations in Gallura and Costa Smeralda, the cost is transparent and declared in the quote, starting from €5.',
+      card1Title: "✈️ Olbia Costa Smeralda Airport (OLB)",
+      card1Text: "The main hub of north-east Sardinia, just 2 km from our office. We welcome flights from all over Europe: Easyjet, Ryanair, ITA, Lufthansa, Air France. Delivery happens directly at Arrivals, after baggage claim. Average time from touchdown to wheel: 10 minutes.",
+      card1Cta: "More details about the airport service →",
+      card2Title: "⚓ Olbia Isola Bianca Port",
+      card2Text: "Our operational base is right at the Isola Bianca port, where Moby, Tirrenia, Grimaldi, Corsica Ferries and GNV ferries dock. As soon as you disembark, we are waiting just a few metres away: no shuttle, no queue. Particularly convenient for travellers from Civitavecchia, Livorno, Genoa and Toulon.",
+      card2Cta: "More details about the port service →",
+      card3Title: "🏨 Hotel, villas and Costa Smeralda",
+      card3Text: "Door-to-door delivery throughout Gallura: Porto Cervo, Porto Rotondo, Baja Sardinia, Cannigione, Palau, Arzachena, San Teodoro, San Pantaleo, Golfo Aranci. We coordinate time and place directly with your accommodation. Delivery time ranges from 20 to 50 minutes from our office. Transparent cost declared in the quote.",
+      card3Cta: "See Porto Cervo →",
+    },
+    fleet: {
+      heading: "Our car hire fleet in Olbia",
+      lead: "Owned vehicles, recent and inspected before every delivery. From city cars to sports cars, SUVs to quads, every vehicle is available for pickup in Olbia and delivery in Gallura.",
+      mostRequested: "Most requested vehicles in Olbia",
+      exploreAll: "Explore the full fleet →",
+      altTpl: (name: string) => `${name} hire in Olbia with KS Rent Sardinia`,
+    },
+    rates: {
+      heading: "Car hire rates in Olbia from April to October",
+      lead: "KS Rent Sardinia applies transparent seasonal rates, valid from April to October, aligned with Costa Smeralda tourism seasons. Low season (April, May, October) has reduced prices compared to high season (July, August). All rates include third-party insurance, roadside assistance and contract management.",
+      thCategory: "Category",
+      thVehicle: "Example vehicle",
+      thLow: "From €/day (low)",
+      thHigh: "From €/day (high)",
+      rows: [
+        { catLabel: "City car", slug: "fiat-panda", low: "€40", high: "€70" },
+        { catLabel: "Compact SUV", slug: "jeep-avenger", low: "€60", high: "€110" },
+        { catLabel: "Premium", slug: "mercedes-classe-a", low: "€90", high: "€160" },
+        { catLabel: "Sports", slug: "audi-rs3+bmw-m2", low: "on request", high: "on request" },
+        { catLabel: "Scooter", slug: "honda-sh", low: "€40", high: "€60" },
+        { catLabel: "Quad", slug: "yamaha-quad-raptor", low: "on request", high: "on request" },
+      ],
+      disclaimer: "The listed rates are indicative and may vary. What's included: mandatory third-party insurance, roadside assistance, contract management. What's not included: fuel (delivered and to be returned at the same level), tolls, optional costs (second driver, child seats on request, reduced excess kasko).",
+      quickFactsEyebrow: "Quick facts car hire Olbia 2026",
+      quickFactsText: 'Minimum rate <strong>€40/day</strong> (Fiat Panda Hybrid low season). Maximum rate <strong>€160/day</strong> (Mercedes A-Class high season). Sports cars <strong>Audi RS3 and BMW M2</strong> on quote. Active season <strong>April–October</strong>. <strong>Free delivery in Olbia</strong> (OLB airport and Isola Bianca port included); other Gallura locations from €5. Payment accepted also <strong>without credit card</strong>: cash, prepaid cards (Postepay, Revolut, N26), debit cards, bank transfer. Verified Google rating: <strong>5.0 / 5 on 35 reviews</strong>. Open 7 days a week: 10:00–13:00 and 15:00–22:30. Mileage included suitable for Gallura itinerary.',
+      seeFull: "See the full month-by-month price list →",
+    },
+    usp: {
+      eyebrow: "What makes us different",
+      heading: "Car hire in Olbia without a credit card",
+      lead: "Traditional credit cards are a barrier that stops many travellers at the desk of aggregators. With KS Rent Sardinia it is not mandatory: we choose real customer flexibility, not back-office rigidity.",
+      paymentTitle: "What we accept as payment",
+      paymentList: [
+        "<strong>Cash</strong> (in euros)",
+        "<strong>Reloadable prepaid cards</strong>: Postepay, Revolut, N26, Hype, Wise",
+        "<strong>Debit cards</strong> and bancomat on VISA / Maestro / Mastercard circuits",
+        "<strong>Traditional credit cards</strong> (if you prefer)",
+        "<strong>Bank transfer</strong> (also instant)",
+        "<strong>Contactless NFC payments</strong> (Apple Pay, Google Pay)",
+      ],
+      depositTitle: "How the security deposit works",
+      depositText: "The deposit amount varies by vehicle category and is communicated at booking. It can be paid in cash, with a prepaid card or with a credit card at the customer's choice. At the end of the rental, if there are no damages or fines, the deposit is returned via the same payment method.",
+      docsTitle: "Required documents",
+      docsText: "Valid category B licence (or A1/A2 for scooters) held for at least 1 year, plus an ID document (identity card or passport). For non-EU customers, an international driving permit is recommended.",
+      cta: "Read more about car hire without a credit card →",
+    },
+    hub: {
+      heading: "Olbia as a base to explore Gallura, Costa Smeralda and northern Sardinia",
+      leadHtml: 'Hiring in Olbia means starting from the heart of Gallura. From here you can reach the most popular destinations of the <a href="HREF_CS" class="text-primary font-medium hover:underline">Costa Smeralda</a> in less than an hour, plus the beaches of northern Sardinia and the ferries to La Maddalena. Here are the most popular destinations chosen by our customers.',
+      locations: [
+        { label: "Porto Cervo", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Porto Rotondo", slug: "porto-rotondo", time: "~ 20 min" },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 min" },
+        { label: "San Teodoro", slug: "san-teodoro", time: "~ 30 min" },
+        { label: "Palau", slug: "palau", time: "~ 50 min" },
+        { label: "Golfo Aranci", slug: "golfo-aranci", time: "~ 25 min" },
+      ],
+      disclaimer: "Travel times are indicative from our Olbia office with standard traffic. In high season (July–August) and during Porto Cervo events they may vary.",
+    },
+    faq: {
+      heading: "Frequently asked questions about car hire in Olbia",
+      items: [
+        { q: "Can I hire a car in Olbia without a credit card?", a: "Yes. KS Rent Sardinia is one of the few car hire companies in Olbia that allows rental without a mandatory credit card. We accept cash, bank transfer and reloadable prepaid cards like Postepay, Revolut and N26. The security deposit can also be paid in cash at pickup." },
+        { q: "Where do I pick up the car at Olbia airport?", a: "KS Rent Sardinia delivers the car free of charge directly at Olbia Costa Smeralda Airport Arrivals (OLB), just 2 km from our office. Delivery is coordinated with your flight time and available every day from 10:00 to 22:30, including evening and holiday flights." },
+        { q: "What is the minimum age to hire a car in Olbia?", a: "Minimum age is 21 for city cars and standard vehicles, 25 for sports cars, supercars and premium vehicles. A valid category B licence held for at least 1 year is required." },
+        { q: "How much does it cost to hire a car in Olbia with KS Rent Sardinia?", a: "Rates are seasonal, valid from April to October. City cars like the Fiat Panda Hybrid start at around €40/day in low season; premium cars like the Mercedes A-Class from €90/day; supercars Audi RS3 and BMW M2 have dedicated rates. Full price list at /en/rates." },
+        { q: "Can I pick up the car outside business hours or on a public holiday?", a: "We are open every day 10:00-13:00 and 15:00-22:30, public holidays included (Easter, April 25, May 1, June 2). For after-hours deliveries contact us on WhatsApp at +39 344 6107071 for a dedicated appointment." },
+        { q: "Is mileage unlimited?", a: "Most of our rentals in Olbia include mileage suitable for excursions in Gallura and Costa Smeralda. For long stays or tours of Sardinia we offer unlimited mileage formulas. Check the specific condition at booking." },
+        { q: "Can I add a second driver?", a: "Yes, with a small supplement. Valid licence held for at least 1 year and respect of minimum age for the category. The second driver is always indicated in the rental contract." },
+        { q: "Is KS Rent Sardinia the same as KS Rent S.r.l. of Rome?", a: "No. KS Rent Sardinia (KS Rent SRL — VAT IT03028900904 — based in Olbia) is an autonomous and independent company, NOT affiliated nor connected to KS Rent S.r.l. of Rome (ksrent.it). For car hire in Sardinia refer only to ksrentsardinia.com." },
+        { q: "Do you also rent motorbikes, scooters and quads in Olbia?", a: "Yes. The fleet includes Honda SH 125 and Honda SH 350 scooters (helmets included) and Yamaha Raptor quads for excursions in Gallura. The 125 scooter is driven with an A1 licence; the 350 requires an A2 licence or B held for at least 3 years. The quad is driven with a B licence." },
+        { q: "Do you deliver the car to Porto Cervo, San Teodoro or Costa Smeralda?", a: "Yes. Home delivery throughout Gallura and Costa Smeralda: Porto Cervo, Porto Rotondo, Baja Sardinia, San Teodoro, Palau, Cannigione, Arzachena, San Pantaleo, Golfo Aranci, Puntaldia, Murta Maria, Porto Istana, Loiri Porto San Paolo. Delivery time 20-50 minutes from our Olbia office." },
+        { q: "How much does home delivery outside Olbia cost?", a: "Delivery is free within the municipality of Olbia, including OLB airport and Isola Bianca port. For other locations in Gallura and Costa Smeralda the cost starts from €5 and is transparently declared during the quote, based on distance. Locations outside our standard coverage area are evaluated case by case." },
+      ],
+    },
+    cta: {
+      heading: "Ready to book your car in Olbia?",
+      addressLine1: "Registered office: Viale Aldo Moro 367, 07026 Olbia (SS) · Port delivery point: Viale Isola Bianca 38",
+      addressLine2: "Open every day 10:00–13:00 and 15:00–22:30, public holidays included.",
+      bookCta: "Book your car",
+      whatsappCta: "💬 Message us on WhatsApp",
+    },
+  },
+
+  de: {
+    categoryLabels: {
+      sport400: "Sportwagen 400 PS",
+      sportCoupe: "Sportcoupé",
+      premium: "Premium",
+      suv: "Kompakt-SUV",
+      cityCar: "Kleinwagen",
+      scooter: "Roller",
+      quad: "Quad",
+    },
+    hero: {
+      eyebrow: "Auto-, Motorrad- und Quadvermietung — Olbia, Sardinien",
+      titleLine1: "Autovermietung in Olbia",
+      titleLine2: "Lieferung am Flughafen und Hafen, auch ohne Kreditkarte",
+      lead: "Eine moderne Flotte von Kleinwagen bis Sportwagen, von SUVs zu Rollern, Quads und Supersportwagen. Abholung 5 Minuten vom Flughafen Olbia Costa Smeralda. 7 Tage die Woche mit erweiterten Öffnungszeiten geöffnet.",
+      badge1: "Ohne obligatorische Kreditkarte",
+      badge2: "Kostenlose Lieferung in Olbia (Flughafen und Hafen)",
+      badge3: "Lieferung an die Haustür 9:00–22:30",
+      ctaBook: "Jetzt buchen",
+      ratingLabel: "5 Sterne",
+      ratingText: "bei 35 Google-Bewertungen",
+    },
+    why: {
+      heading: "Warum KS Rent Sardinia für die Autovermietung in Olbia wählen",
+      lead: "KS Rent Sardinia ist eine unabhängige Autovermietung mit Sitz in Viale Aldo Moro 367 in Olbia und einem operativen Lieferpunkt am Hafen Isola Bianca. Unser Unternehmen ist KS Rent SRL (USt-IdNr. IT03028900904), ein unabhängiges sardisches Unternehmen, gegründet am 8. April 2025, <strong>nicht verbunden mit KS Rent S.r.l. aus Rom</strong>. Unsere Flotte gehört uns selbst und wird intern gepflegt: wir sind weder Broker noch Vergleichsportal.",
+      bullets: [
+        { icon: "📍", title: "Doppelpräsenz in Olbia.", text: "Hauptsitz in Viale Aldo Moro 367 und Lieferpunkt am Hafen Isola Bianca 38, 5 Minuten vom Flughafen Olbia Costa Smeralda und der Fähranlegestelle entfernt." },
+        { icon: "⭐", title: "5,0/5 Sterne bei Google.", text: "35 verifizierte Bewertungen von echten Kunden. Aktives Google Business Profil mit direkter Antwort des Inhabers." },
+        { icon: "🕙", title: "Erweiterte Öffnungszeiten 7 Tage die Woche.", text: "Täglich geöffnet von 10:00 bis 13:00 und von 15:00 bis 22:30 Uhr, Feiertage inklusive (Ostern, 25. April, 1. Mai, 2. Juni und lokale Feiertage)." },
+        { icon: "🚗", title: "Moderne Flotte für alle.", text: "Vom Fiat Panda Hybrid für die City-Tour bis zu den sportlichen Audi RS3 und BMW M2 für das Wochenende an der Costa Smeralda, dazu SUV Jeep Avenger, Mercedes A-Klasse, Honda SH Roller und Yamaha Quad. Alle Fahrzeuge sind aktuell und vor jeder Vermietung kontrolliert." },
+      ],
+      altTpl: (name: string, cat: string) => `${name} Miete in Olbia — ${cat} verfügbar bei KS Rent Sardinia`,
+      titleAttrTpl: (name: string) => `${name} in Olbia mieten`,
+    },
+    delivery: {
+      heading: "Lieferservice in Olbia: Flughafen, Hafen, Hotel und Villa",
+      lead: 'Die Lieferung an die Haustür ist <strong>täglich von 9:00 bis 22:30</strong> verfügbar — auch vor Öffnung des Büros, weil wir die Lieferzeit mit Ihrem Flug oder Ihrer Fähre koordinieren, damit das Fahrzeug bei Ihrer Ankunft bereit ist. <strong>Kostenlos innerhalb der Gemeinde Olbia</strong> (Flughafen OLB und Hafen Isola Bianca inklusive). Für andere Orte in Gallura und an der Costa Smeralda sind die Kosten transparent und im Angebot ausgewiesen, ab 5 €.',
+      card1Title: "✈️ Flughafen Olbia Costa Smeralda (OLB)",
+      card1Text: "Der wichtigste Flughafen Nordost-Sardiniens, nur 2 km von unserem Standort entfernt. Wir empfangen Flüge aus ganz Europa: Easyjet, Ryanair, ITA, Lufthansa, Air France. Die Lieferung erfolgt direkt am Ankunftsbereich nach der Gepäckabholung. Durchschnittliche Zeit von der Landung bis zum Lenkrad: 10 Minuten.",
+      card1Cta: "Mehr Details zum Flughafenservice →",
+      card2Title: "⚓ Hafen Olbia Isola Bianca",
+      card2Text: "Unser Standort befindet sich direkt am Hafen Isola Bianca, wo die Fähren von Moby, Tirrenia, Grimaldi, Corsica Ferries und GNV anlegen. Sobald Sie das Schiff verlassen, warten wir wenige Meter entfernt: kein Shuttle, keine Warteschlange. Besonders praktisch für Reisende aus Civitavecchia, Livorno, Genua und Toulon.",
+      card2Cta: "Mehr Details zum Hafenservice →",
+      card3Title: "🏨 Hotel, Villen und Costa Smeralda",
+      card3Text: "Tür-zu-Tür-Lieferung in ganz Gallura: Porto Cervo, Porto Rotondo, Baja Sardinia, Cannigione, Palau, Arzachena, San Teodoro, San Pantaleo, Golfo Aranci. Wir koordinieren Zeit und Ort direkt mit der Unterkunft. Die Lieferzeit beträgt 20 bis 50 Minuten von unserem Standort. Transparente Kosten im Angebot ausgewiesen.",
+      card3Cta: "Siehe Porto Cervo →",
+    },
+    fleet: {
+      heading: "Unsere Mietflotte in Olbia",
+      lead: "Eigene Fahrzeuge, aktuell und vor jeder Lieferung kontrolliert. Vom Kleinwagen bis zum Sportwagen, vom SUV bis zum Quad, jedes Fahrzeug ist für die Abholung in Olbia und Lieferung in Gallura verfügbar.",
+      mostRequested: "Meistgefragte Fahrzeuge in Olbia",
+      exploreAll: "Gesamten Fuhrpark erkunden →",
+      altTpl: (name: string) => `${name} Miete in Olbia mit KS Rent Sardinia`,
+    },
+    rates: {
+      heading: "Mietpreise in Olbia von April bis Oktober",
+      lead: "KS Rent Sardinia wendet transparente Saisonpreise an, gültig von April bis Oktober, abgestimmt auf die Tourismus-Saisons der Costa Smeralda. Die Nebensaison (April, Mai, Oktober) hat reduzierte Preise im Vergleich zur Hochsaison (Juli, August). Alle Tarife beinhalten Haftpflicht, Pannenhilfe und Vertragsverwaltung.",
+      thCategory: "Kategorie",
+      thVehicle: "Beispielfahrzeug",
+      thLow: "Ab €/Tag (Nebensaison)",
+      thHigh: "Ab €/Tag (Hochsaison)",
+      rows: [
+        { catLabel: "Kleinwagen", slug: "fiat-panda", low: "40 €", high: "70 €" },
+        { catLabel: "Kompakt-SUV", slug: "jeep-avenger", low: "60 €", high: "110 €" },
+        { catLabel: "Premium", slug: "mercedes-classe-a", low: "90 €", high: "160 €" },
+        { catLabel: "Sportwagen", slug: "audi-rs3+bmw-m2", low: "auf Anfrage", high: "auf Anfrage" },
+        { catLabel: "Roller", slug: "honda-sh", low: "40 €", high: "60 €" },
+        { catLabel: "Quad", slug: "yamaha-quad-raptor", low: "auf Anfrage", high: "auf Anfrage" },
+      ],
+      disclaimer: "Die angegebenen Tarife sind Richtwerte und können variieren. Was inkludiert ist: Haftpflichtversicherung, Pannenhilfe, Vertragsverwaltung. Was nicht inkludiert ist: Kraftstoff (geliefert und mit gleichem Stand zurückzugeben), Mautgebühren, optionale Kosten (Zweitfahrer, Kindersitze auf Anfrage, reduzierte Kasko-Selbstbeteiligung).",
+      quickFactsEyebrow: "Quick Facts Autovermietung Olbia 2026",
+      quickFactsText: 'Mindesttarif <strong>40 €/Tag</strong> (Fiat Panda Hybrid Nebensaison). Höchsttarif <strong>160 €/Tag</strong> (Mercedes A-Klasse Hochsaison). Sportwagen <strong>Audi RS3 und BMW M2</strong> auf Anfrage. Aktive Saison <strong>April–Oktober</strong>. <strong>Kostenlose Lieferung in Olbia</strong> (Flughafen OLB und Hafen Isola Bianca inklusive); andere Orte in Gallura ab 5 €. Zahlung auch <strong>ohne Kreditkarte</strong> akzeptiert: Bargeld, Prepaid (Postepay, Revolut, N26), EC-Karte, Überweisung. Verifiziertes Google-Rating: <strong>5,0 / 5 bei 35 Bewertungen</strong>. 7 Tage die Woche geöffnet: 10:00–13:00 und 15:00–22:30. Kilometer angemessen für die Gallura-Reiseroute inklusive.',
+      seeFull: "Vollständige Monatspreisliste ansehen →",
+    },
+    usp: {
+      eyebrow: "Was uns auszeichnet",
+      heading: "Autovermietung in Olbia ohne Kreditkarte",
+      lead: "Die traditionelle Kreditkarte ist eine Barriere, die viele Reisende am Schalter der Vermittler stoppt. Bei KS Rent Sardinia ist sie nicht obligatorisch: wir wählen die Flexibilität des echten Kunden, nicht die Starrheit des Back-Office.",
+      paymentTitle: "Welche Zahlungen wir akzeptieren",
+      paymentList: [
+        "<strong>Bargeld</strong> (in Euro)",
+        "<strong>Aufladbare Prepaid-Karten</strong>: Postepay, Revolut, N26, Hype, Wise",
+        "<strong>Debitkarten</strong> und EC-Karten der Kreise VISA / Maestro / Mastercard",
+        "<strong>Traditionelle Kreditkarten</strong> (wenn Sie es vorziehen)",
+        "<strong>Banküberweisung</strong> (auch sofort)",
+        "<strong>Kontaktlose NFC-Zahlungen</strong> (Apple Pay, Google Pay)",
+      ],
+      depositTitle: "Wie die Kaution funktioniert",
+      depositText: "Der Kautionsbetrag variiert je nach Fahrzeugkategorie und wird bei der Buchung mitgeteilt. Er kann nach Wahl des Kunden in bar, mit Prepaid- oder Kreditkarte hinterlegt werden. Am Ende der Mietzeit wird die Kaution, sofern keine Schäden oder Strafen vorliegen, mit derselben Methode zurückerstattet.",
+      docsTitle: "Erforderliche Dokumente",
+      docsText: "Gültiger Führerschein Klasse B (oder A1/A2 für Roller), seit mindestens 1 Jahr im Besitz, und ein Ausweisdokument (Personalausweis oder Reisepass). Für Kunden außerhalb der EU wird der internationale Führerschein empfohlen.",
+      cta: "Mehr über die Vermietung ohne Kreditkarte →",
+    },
+    hub: {
+      heading: "Olbia als Basis zur Erkundung von Gallura, Costa Smeralda und Nordsardinien",
+      leadHtml: 'Die Anmietung in Olbia bedeutet, vom Herzen Galluras zu starten. Von hier aus erreichen Sie in weniger als einer Stunde die meistgefragten Orte der <a href="HREF_CS" class="text-primary font-medium hover:underline">Costa Smeralda</a> und die Strände Nordsardiniens, dazu die Einschiffungen nach La Maddalena. Hier die beliebtesten Ziele unserer Kunden.',
+      locations: [
+        { label: "Porto Cervo", slug: "porto-cervo", time: "~ 35 Min." },
+        { label: "Porto Rotondo", slug: "porto-rotondo", time: "~ 20 Min." },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 Min." },
+        { label: "San Teodoro", slug: "san-teodoro", time: "~ 30 Min." },
+        { label: "Palau", slug: "palau", time: "~ 50 Min." },
+        { label: "Golfo Aranci", slug: "golfo-aranci", time: "~ 25 Min." },
+      ],
+      disclaimer: "Fahrzeiten sind Richtwerte vom Sitz in Olbia mit normalem Verkehr. In der Hochsaison (Juli–August) und bei Veranstaltungen in Porto Cervo können sie variieren.",
+    },
+    faq: {
+      heading: "Häufig gestellte Fragen zur Autovermietung in Olbia",
+      items: [
+        { q: "Kann ich in Olbia ein Auto ohne Kreditkarte mieten?", a: "Ja. KS Rent Sardinia ist eine der wenigen Autovermietungen in Olbia, die die Miete ohne obligatorische Kreditkarte ermöglicht. Wir akzeptieren Bargeld, Überweisung und aufladbare Prepaid-Karten wie Postepay, Revolut und N26. Die Kaution kann auch bar bei Abholung hinterlegt werden." },
+        { q: "Wo wird das Auto am Flughafen Olbia abgeholt?", a: "KS Rent Sardinia liefert das Auto kostenlos direkt am Ankunftsbereich des Flughafens Olbia Costa Smeralda (OLB), nur 2 km vom Sitz entfernt. Die Lieferung ist mit Ihrer Flugzeit koordiniert, täglich verfügbar von 10:00 bis 22:30, auch bei Abend- und Feiertagsflügen." },
+        { q: "Wie hoch ist das Mindestalter für die Anmietung in Olbia?", a: "Das Mindestalter beträgt 21 Jahre für Kleinwagen und Standardfahrzeuge, 25 Jahre für Sportwagen, Supersportwagen und Premiumfahrzeuge. Erforderlich ist ein seit mindestens 1 Jahr gültiger Führerschein Klasse B." },
+        { q: "Was kostet die Anmietung in Olbia mit KS Rent Sardinia?", a: "Die Tarife sind saisonal, gültig von April bis Oktober. Kleinwagen wie der Fiat Panda Hybrid starten bei etwa 40 €/Tag in der Nebensaison; Premiumautos wie die Mercedes A-Klasse ab 90 €/Tag; Supersportwagen Audi RS3 und BMW M2 haben dedizierte Tarife. Komplette Preisliste auf /de/preise." },
+        { q: "Kann ich das Auto außerhalb der Geschäftszeiten oder an Feiertagen abholen?", a: "Wir sind täglich geöffnet von 10:00 bis 13:00 und 15:00 bis 22:30, Feiertage inklusive (Ostern, 25. April, 1. Mai, 2. Juni). Für Lieferungen außerhalb der Öffnungszeiten kontaktieren Sie uns auf WhatsApp unter +39 344 6107071 für einen dedizierten Termin." },
+        { q: "Sind die Kilometer unbegrenzt?", a: "Die meisten unserer Anmietungen in Olbia beinhalten Kilometer angemessen für Ausflüge in Gallura und an der Costa Smeralda. Für lange Aufenthalte oder Sardinien-Touren bieten wir Formeln mit unbegrenzten Kilometern. Überprüfen Sie die spezifische Bedingung bei der Buchung." },
+        { q: "Kann ich einen Zweitfahrer hinzufügen?", a: "Ja, mit kleinem Aufpreis. Seit mindestens 1 Jahr gültiger Führerschein und Einhaltung des Mindestalters für die Kategorie. Der Zweitfahrer ist immer im Mietvertrag angegeben." },
+        { q: "Ist KS Rent Sardinia identisch mit KS Rent S.r.l. aus Rom?", a: "Nein. KS Rent Sardinia (KS Rent SRL — USt-IdNr. IT03028900904 — Sitz in Olbia) ist ein autonomes und unabhängiges Unternehmen, NICHT verbunden oder zugehörig zu KS Rent S.r.l. aus Rom (ksrent.it). Für die Anmietung in Sardinien verweisen Sie nur auf ksrentsardinia.com." },
+        { q: "Vermieten Sie auch Motorräder, Roller und Quads in Olbia?", a: "Ja. Die Flotte umfasst Honda SH 125 und Honda SH 350 Roller (Helme inklusive) und Yamaha Raptor Quads für Ausflüge in Gallura. Der 125er Roller wird mit Führerschein A1 gefahren; der 350er erfordert Führerschein A2 oder B seit mindestens 3 Jahren im Besitz. Das Quad wird mit Führerschein B gefahren." },
+        { q: "Liefern Sie das Auto nach Porto Cervo, San Teodoro oder an die Costa Smeralda?", a: "Ja. Lieferung an die Haustür in ganz Gallura und an der Costa Smeralda: Porto Cervo, Porto Rotondo, Baja Sardinia, San Teodoro, Palau, Cannigione, Arzachena, San Pantaleo, Golfo Aranci, Puntaldia, Murta Maria, Porto Istana, Loiri Porto San Paolo. Lieferzeit 20-50 Minuten vom Sitz in Olbia." },
+        { q: "Was kostet die Lieferung an die Haustür außerhalb von Olbia?", a: "Die Lieferung ist innerhalb der Gemeinde Olbia kostenlos, inklusive Flughafen OLB und Hafen Isola Bianca. Für andere Orte in Gallura und an der Costa Smeralda starten die Kosten bei 5 € und werden im Angebot transparent ausgewiesen, basierend auf der Entfernung. Orte außerhalb unseres Standard-Liefergebiets werden fallweise bewertet." },
+      ],
+    },
+    cta: {
+      heading: "Bereit, Ihr Auto in Olbia zu buchen?",
+      addressLine1: "Sitz: Viale Aldo Moro 367, 07026 Olbia (SS) · Hafen-Lieferpunkt: Viale Isola Bianca 38",
+      addressLine2: "Täglich geöffnet 10:00–13:00 und 15:00–22:30 Uhr, Feiertage inklusive.",
+      bookCta: "Ihr Auto buchen",
+      whatsappCta: "💬 Auf WhatsApp schreiben",
+    },
+  },
+
+  fr: {
+    categoryLabels: {
+      sport400: "Sportive 400 CV",
+      sportCoupe: "Coupé sportif",
+      premium: "Premium",
+      suv: "SUV compact",
+      cityCar: "Citadine",
+      scooter: "Scooter",
+      quad: "Quad",
+    },
+    hero: {
+      eyebrow: "Location Voiture, Moto et Quad — Olbia, Sardaigne",
+      titleLine1: "Location Voiture à Olbia",
+      titleLine2: "Livraison à l'Aéroport et au Port, Aussi Sans Carte de Crédit",
+      lead: "Une flotte moderne de la citadine à la sportive, du SUV au scooter, du quad à la supercar. Retrait à 5 minutes de l'aéroport d'Olbia Costa Smeralda. Ouvert 7 jours sur 7 avec horaires étendus.",
+      badge1: "Sans carte de crédit obligatoire",
+      badge2: "Livraison gratuite à Olbia (aéroport et port)",
+      badge3: "Livraison à domicile 9h00–22h30",
+      ctaBook: "Réserver maintenant",
+      ratingLabel: "5 étoiles",
+      ratingText: "sur 35 avis Google",
+    },
+    why: {
+      heading: "Pourquoi choisir KS Rent Sardinia pour la location de voiture à Olbia",
+      lead: "KS Rent Sardinia est une agence de location indépendante avec siège social à Viale Aldo Moro 367 à Olbia et un point de livraison opérationnel au port Isola Bianca. Notre société est KS Rent SRL (TVA IT03028900904), une entreprise sarde autonome fondée le 8 avril 2025, <strong>non affiliée à KS Rent S.r.l. de Rome</strong>. Notre flotte nous appartient et est gérée en interne : nous ne sommes ni un courtier ni un comparateur.",
+      bullets: [
+        { icon: "📍", title: "Double présence à Olbia.", text: "Siège principal à Viale Aldo Moro 367 et point de livraison au port Isola Bianca 38, à 5 minutes de l'aéroport d'Olbia Costa Smeralda et de l'embarquement des ferries." },
+        { icon: "⭐", title: "5,0/5 étoiles sur Google.", text: "35 avis vérifiés de vrais clients. Profil Google Business actif avec réponse directe du propriétaire." },
+        { icon: "🕙", title: "Horaires étendus 7 jours sur 7.", text: "Ouvert tous les jours de 10h00 à 13h00 et de 15h00 à 22h30, jours fériés inclus (Pâques, 25 avril, 1er mai, 2 juin et fêtes locales)." },
+        { icon: "🚗", title: "Flotte moderne pour tous.", text: "De la Fiat Panda Hybrid pour la city tour aux sportives Audi RS3 et BMW M2 pour le week-end en Costa Smeralda, jusqu'aux SUV Jeep Avenger, Mercedes Classe A, scooters Honda SH et quad Yamaha. Tous véhicules récents, contrôlés avant chaque location." },
+      ],
+      altTpl: (name: string, cat: string) => `Location ${name} à Olbia — ${cat} disponible avec KS Rent Sardinia`,
+      titleAttrTpl: (name: string) => `Louer ${name} à Olbia`,
+    },
+    delivery: {
+      heading: "Service de livraison voiture à Olbia : aéroport, port, hôtel et villa",
+      lead: 'La livraison à domicile est disponible <strong>tous les jours de 9h00 à 22h30</strong> — même avant l\'ouverture du bureau, car nous coordonnons l\'horaire de livraison avec celui de votre vol ou ferry afin que le véhicule soit prêt à votre arrivée. <strong>Gratuite dans la commune d\'Olbia</strong> (aéroport OLB et port Isola Bianca inclus). Pour les autres localités de Gallura et Costa Smeralda, le coût est transparent et déclaré dans le devis, à partir de 5 €.',
+      card1Title: "✈️ Aéroport d'Olbia Costa Smeralda (OLB)",
+      card1Text: "Le principal aéroport du nord-est de la Sardaigne, à seulement 2 km de notre siège. Nous recevons des vols de toute l'Europe : Easyjet, Ryanair, ITA, Lufthansa, Air France. La livraison se fait directement aux Arrivées, après la récupération des bagages. Temps moyen de l'atterrissage au volant : 10 minutes.",
+      card1Cta: "Plus de détails sur le service aéroport →",
+      card2Title: "⚓ Port d'Olbia Isola Bianca",
+      card2Text: "Notre poste opérationnel se trouve directement au port Isola Bianca, où débarquent les ferries Moby, Tirrenia, Grimaldi, Corsica Ferries et GNV. Dès que vous quittez le navire, nous vous attendons à quelques mètres : pas de navette, pas de file. Particulièrement pratique pour ceux qui arrivent de Civitavecchia, Livourne, Gênes et Toulon.",
+      card2Cta: "Plus de détails sur le service port →",
+      card3Title: "🏨 Hôtel, villas et Costa Smeralda",
+      card3Text: "Livraison porte-à-porte dans toute la Gallura : Porto Cervo, Porto Rotondo, Baja Sardinia, Cannigione, Palau, Arzachena, San Teodoro, San Pantaleo, Golfo Aranci. Nous coordonnons l'heure et le lieu directement avec la structure. Le temps de livraison varie de 20 à 50 minutes depuis notre siège. Coût transparent déclaré dans le devis.",
+      card3Cta: "Voir Porto Cervo →",
+    },
+    fleet: {
+      heading: "Notre flotte de location à Olbia",
+      lead: "Véhicules en propriété, récents et contrôlés avant chaque livraison. De la citadine à la sportive, du SUV au quad, chaque véhicule est disponible pour le retrait à Olbia et la livraison en Gallura.",
+      mostRequested: "Les véhicules les plus demandés à Olbia",
+      exploreAll: "Explorer toute la flotte →",
+      altTpl: (name: string) => `Location ${name} à Olbia avec KS Rent Sardinia`,
+    },
+    rates: {
+      heading: "Tarifs location voiture à Olbia d'avril à octobre",
+      lead: "KS Rent Sardinia applique des tarifs saisonniers transparents, valables d'avril à octobre, alignés sur les saisons touristiques de la Costa Smeralda. La basse saison (avril, mai, octobre) a des prix réduits par rapport à la haute saison (juillet, août). Tous les tarifs incluent la RC obligatoire, l'assistance routière et la gestion du contrat.",
+      thCategory: "Catégorie",
+      thVehicle: "Véhicule exemple",
+      thLow: "À partir de €/jour (basse)",
+      thHigh: "À partir de €/jour (haute)",
+      rows: [
+        { catLabel: "Citadine", slug: "fiat-panda", low: "40 €", high: "70 €" },
+        { catLabel: "SUV compact", slug: "jeep-avenger", low: "60 €", high: "110 €" },
+        { catLabel: "Premium", slug: "mercedes-classe-a", low: "90 €", high: "160 €" },
+        { catLabel: "Sportive", slug: "audi-rs3+bmw-m2", low: "sur demande", high: "sur demande" },
+        { catLabel: "Scooter", slug: "honda-sh", low: "40 €", high: "60 €" },
+        { catLabel: "Quad", slug: "yamaha-quad-raptor", low: "sur demande", high: "sur demande" },
+      ],
+      disclaimer: "Les tarifs indiqués sont indicatifs et peuvent varier. Ce qui est inclus : RC obligatoire, assistance routière, gestion du contrat. Ce qui n'est pas inclus : carburant (livré et à restituer au même niveau), péages, coûts optionnels (second conducteur, sièges enfants sur demande, franchise kasko réduite).",
+      quickFactsEyebrow: "Quick facts location voiture Olbia 2026",
+      quickFactsText: 'Tarif minimum <strong>40 €/jour</strong> (Fiat Panda Hybrid basse saison). Tarif maximum <strong>160 €/jour</strong> (Mercedes Classe A haute saison). Sportives <strong>Audi RS3 et BMW M2</strong> sur devis. Saison active <strong>avril–octobre</strong>. <strong>Livraison gratuite à Olbia</strong> (aéroport OLB et port Isola Bianca inclus) ; autres localités Gallura à partir de 5 €. Paiement accepté aussi <strong>sans carte de crédit</strong> : espèces, prépayées (Postepay, Revolut, N26), carte de débit, virement. Note Google vérifiée : <strong>5,0 / 5 sur 35 avis</strong>. Ouvert 7 jours sur 7 : 10h00–13h00 et 15h00–22h30. Kilométrage inclus adapté à l\'itinéraire en Gallura.',
+      seeFull: "Voir la grille complète mois par mois →",
+    },
+    usp: {
+      eyebrow: "Ce qui nous rend différents",
+      heading: "Location voiture à Olbia sans carte de crédit",
+      lead: "La carte de crédit traditionnelle est une barrière qui arrête de nombreux voyageurs au comptoir des agrégateurs. Chez KS Rent Sardinia, elle n'est pas obligatoire : nous choisissons la flexibilité du client réel, pas la rigidité du back-office.",
+      paymentTitle: "Ce que nous acceptons comme paiement",
+      paymentList: [
+        "<strong>Espèces</strong> (en euros)",
+        "<strong>Cartes prépayées rechargeables</strong> : Postepay, Revolut, N26, Hype, Wise",
+        "<strong>Cartes de débit</strong> et carte bleue circuits VISA / Maestro / Mastercard",
+        "<strong>Cartes de crédit</strong> traditionnelles (si vous préférez)",
+        "<strong>Virement bancaire</strong> (aussi instantané)",
+        "<strong>Paiements sans contact NFC</strong> (Apple Pay, Google Pay)",
+      ],
+      depositTitle: "Comment fonctionne le dépôt de garantie",
+      depositText: "Le montant du dépôt varie selon la catégorie de véhicule et est communiqué lors de la réservation. Il peut être versé en espèces, par carte prépayée ou carte de crédit au choix du client. À la fin de la location, en l'absence de dommages ou de sanctions, le dépôt est restitué avec la même méthode de versement.",
+      docsTitle: "Documents requis",
+      docsText: "Permis B (ou A1/A2 pour scooter) en cours de validité depuis au moins 1 an et une pièce d'identité (carte d'identité ou passeport). Pour les clients hors UE, le permis international est recommandé.",
+      cta: "Approfondir la location sans carte de crédit →",
+    },
+    hub: {
+      heading: "Olbia comme base pour explorer Gallura, Costa Smeralda et nord Sardaigne",
+      leadHtml: 'Louer à Olbia signifie partir du cœur de la Gallura. D\'ici, vous rejoignez en moins d\'une heure les destinations les plus demandées de la <a href="HREF_CS" class="text-primary font-medium hover:underline">Costa Smeralda</a> et les plages du nord de la Sardaigne, en plus des embarquements pour La Maddalena. Voici les destinations préférées de nos clients.',
+      locations: [
+        { label: "Porto Cervo", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Porto Rotondo", slug: "porto-rotondo", time: "~ 20 min" },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 min" },
+        { label: "San Teodoro", slug: "san-teodoro", time: "~ 30 min" },
+        { label: "Palau", slug: "palau", time: "~ 50 min" },
+        { label: "Golfo Aranci", slug: "golfo-aranci", time: "~ 25 min" },
+      ],
+      disclaimer: "Temps de parcours indicatifs depuis le siège d'Olbia avec trafic standard. En haute saison (juillet-août) et lors d'événements à Porto Cervo, ils peuvent varier.",
+    },
+    faq: {
+      heading: "Questions fréquentes sur la location voiture à Olbia",
+      items: [
+        { q: "Peut-on louer une voiture à Olbia sans carte de crédit ?", a: "Oui. KS Rent Sardinia est l'une des rares agences de location à Olbia qui permet la location sans carte de crédit obligatoire. Nous acceptons les espèces, virement bancaire et cartes prépayées rechargeables comme Postepay, Revolut et N26. Le dépôt de garantie peut aussi être versé en espèces au moment du retrait." },
+        { q: "Où retire-t-on la voiture à l'aéroport d'Olbia ?", a: "KS Rent Sardinia livre gratuitement la voiture directement aux Arrivées de l'aéroport d'Olbia Costa Smeralda (OLB), à seulement 2 km du siège. La livraison est coordonnée avec l'horaire de votre vol, disponible tous les jours de 10h00 à 22h30, même sur les vols du soir et jours fériés." },
+        { q: "Quel est l'âge minimum pour louer une voiture à Olbia ?", a: "L'âge minimum est de 21 ans pour les citadines et véhicules standards, 25 ans pour les voitures sportives, supercars et véhicules premium. Un permis B en cours de validité depuis au moins 1 an est requis." },
+        { q: "Combien coûte la location à Olbia avec KS Rent Sardinia ?", a: "Les tarifs sont saisonniers, valables d'avril à octobre. Les citadines comme la Fiat Panda Hybrid partent d'environ 40 €/jour en basse saison ; les voitures premium comme la Mercedes Classe A à partir de 90 €/jour ; les supercars Audi RS3 et BMW M2 ont des tarifs dédiés. Liste complète sur /fr/tarifs." },
+        { q: "Puis-je récupérer la voiture en dehors des horaires ou un jour férié ?", a: "Nous sommes ouverts tous les jours 10h00-13h00 et 15h00-22h30, jours fériés inclus (Pâques, 25 avril, 1er mai, 2 juin). Pour les livraisons hors horaires, contactez-nous sur WhatsApp au +39 344 6107071 pour un rendez-vous dédié." },
+        { q: "Le kilométrage est-il illimité ?", a: "La plupart de nos locations à Olbia incluent un kilométrage adapté aux excursions en Gallura et Costa Smeralda. Pour de longs séjours ou tours de la Sardaigne, nous offrons des formules avec kilométrage illimité. Vérifiez la condition spécifique au moment de la réservation." },
+        { q: "Puis-je ajouter un second conducteur ?", a: "Oui, avec un petit supplément. Permis valide depuis au moins 1 an et respect de l'âge minimum pour la catégorie. Le second conducteur est toujours indiqué dans le contrat de location." },
+        { q: "KS Rent Sardinia est-elle la même chose que KS Rent S.r.l. de Rome ?", a: "Non. KS Rent Sardinia (KS Rent SRL — TVA IT03028900904 — siège à Olbia) est une entreprise autonome et indépendante, NON affiliée ni liée à KS Rent S.r.l. de Rome (ksrent.it). Pour la location en Sardaigne, référez-vous uniquement à ksrentsardinia.com." },
+        { q: "Louez-vous aussi motos, scooters et quads à Olbia ?", a: "Oui. La flotte comprend les scooters Honda SH 125 et Honda SH 350 (casques inclus) et le quad Yamaha Raptor pour les excursions en Gallura. Le scooter 125 se conduit avec le permis A1 ; le 350 nécessite le permis A2 ou B avec au moins 3 ans d'ancienneté. Le quad se conduit avec le permis B." },
+        { q: "Livrez-vous la voiture à Porto Cervo, San Teodoro ou en Costa Smeralda ?", a: "Oui. Livraison à domicile dans toute la Gallura et la Costa Smeralda : Porto Cervo, Porto Rotondo, Baja Sardinia, San Teodoro, Palau, Cannigione, Arzachena, San Pantaleo, Golfo Aranci, Puntaldia, Murta Maria, Porto Istana, Loiri Porto San Paolo. Temps de livraison 20-50 minutes depuis le siège d'Olbia." },
+        { q: "Combien coûte la livraison à domicile en dehors d'Olbia ?", a: "La livraison est gratuite dans la commune d'Olbia, incluant l'aéroport OLB et le port Isola Bianca. Pour les autres localités de Gallura et de la Costa Smeralda, le coût part de 5 € et est déclaré de manière transparente lors du devis, selon la distance. Les localités hors de notre zone de couverture standard sont évaluées au cas par cas." },
+      ],
+    },
+    cta: {
+      heading: "Prêt à réserver votre voiture à Olbia ?",
+      addressLine1: "Siège : Viale Aldo Moro 367, 07026 Olbia (SS) · Point de livraison port : Viale Isola Bianca 38",
+      addressLine2: "Ouvert tous les jours 10h00–13h00 et 15h00–22h30, jours fériés inclus.",
+      bookCta: "Réserver votre voiture",
+      whatsappCta: "💬 Écrire sur WhatsApp",
+    },
+  },
+} as const;
+
+const T = TRANSLATIONS[lang];
+const csHref = SERVICE_PATHS.costaSmeralda[lang];
+const hubLeadHtml = T.hub.leadHtml.replace("HREF_CS", csHref);
+
+// Mappa FAQ in formato richiesto da FAQSection
+const faqsForComponent = T.faq.items.map((it) => ({ question: it.q, answer: it.a }));
+---
+
+<main class="bg-background text-foreground">
+
+  {/* ───── HERO ───── */}
+  <section class="relative overflow-hidden border-b border-border/40 bg-gradient-to-br from-background via-background to-primary/5">
+    <div class="container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-sm uppercase tracking-widest text-primary/80 font-semibold mb-4">{T.hero.eyebrow}</p>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+          {T.hero.titleLine1}<br/>
+          <span class="text-primary">{T.hero.titleLine2}</span>
+        </h1>
+        <p class="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">{T.hero.lead}</p>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-10 text-sm">
+          <span class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">✓ {T.hero.badge1}</span>
+          <span class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">✓ {T.hero.badge2}</span>
+          <span class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">✓ {T.hero.badge3}</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href={BOOK_HUB[lang]} class="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary/90 transition shadow-lg">{T.hero.ctaBook}</a>
+          <a href="tel:+393446107071" class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur border border-border text-foreground rounded-full font-semibold text-lg hover:bg-white/20 transition">📞 +39 344 6107071</a>
+        </div>
+
+        <p class="mt-6 text-sm text-muted-foreground">
+          <span aria-label={T.hero.ratingLabel}>⭐⭐⭐⭐⭐</span> <strong>5,0/5</strong> {T.hero.ratingText}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ───── WHY ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.why.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-8 leading-relaxed" set:html={T.why.lead} />
+      <ul class="grid md:grid-cols-2 gap-6 text-base">
+        {T.why.bullets.map((b) => (
+          <li class="flex gap-3">
+            <span class="text-primary text-2xl">{b.icon}</span>
+            <div>
+              <strong>{b.title}</strong> {b.text}
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-10 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+        {Object.entries(VEHICLE_ASSETS).map(([slug, v]) => {
+          const catLabel = T.categoryLabels[v.categoryKey as keyof typeof T.categoryLabels];
+          return (
+            <a
+              href={fleetHref(slug)}
+              class="group flex flex-col items-center gap-2 p-3 bg-card border border-border rounded-xl hover:border-primary transition"
+              title={T.why.titleAttrTpl(v.name)}
+            >
+              <img
+                src={v.image}
+                alt={T.why.altTpl(v.name, catLabel)}
+                width="120"
+                height="80"
+                loading="lazy"
+                class="h-16 w-full object-contain group-hover:scale-110 transition-transform duration-300"
+              />
+              <span class="text-[11px] font-semibold text-foreground text-center leading-tight">{v.name}</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  {/* ───── DELIVERY ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-muted/20">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.delivery.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-8 leading-relaxed" set:html={T.delivery.lead} />
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <article class="bg-card border border-border rounded-2xl p-6">
+          <h3 class="text-xl font-semibold mb-3">{T.delivery.card1Title}</h3>
+          <p class="text-muted-foreground">{T.delivery.card1Text}</p>
+          <p class="mt-3 text-sm">
+            <a href={SERVICE_PATHS.airport[lang]} class="text-primary font-medium hover:underline">{T.delivery.card1Cta}</a>
+          </p>
+        </article>
+
+        <article class="bg-card border border-border rounded-2xl p-6">
+          <h3 class="text-xl font-semibold mb-3">{T.delivery.card2Title}</h3>
+          <p class="text-muted-foreground">{T.delivery.card2Text}</p>
+          <p class="mt-3 text-sm">
+            <a href={SERVICE_PATHS.port[lang]} class="text-primary font-medium hover:underline">{T.delivery.card2Cta}</a>
+          </p>
+        </article>
+
+        <article class="bg-card border border-border rounded-2xl p-6">
+          <h3 class="text-xl font-semibold mb-3">{T.delivery.card3Title}</h3>
+          <p class="text-muted-foreground">{T.delivery.card3Text}</p>
+          <p class="mt-3 text-sm">
+            <a href={locHref("porto-cervo")} class="text-primary font-medium hover:underline">{T.delivery.card3Cta}</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {/* ───── FLEET ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{T.fleet.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-10 text-center max-w-3xl mx-auto">{T.fleet.lead}</p>
+
+      <FleetGrid lang={lang} />
+
+      <div class="mt-12">
+        <p class="text-sm uppercase tracking-widest text-primary font-semibold mb-6 text-center">{T.fleet.mostRequested}</p>
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {(["audi-rs3", "bmw-m2", "mercedes-classe-a", "fiat-panda"] as const).map((slug) => {
+            const v = VEHICLE_ASSETS[slug];
+            const catLabel = T.categoryLabels[v.categoryKey as keyof typeof T.categoryLabels];
+            return (
+              <a href={fleetHref(slug)} class="group block bg-card border border-border rounded-2xl overflow-hidden hover:border-primary transition shadow-sm hover:shadow-lg">
+                <div class="aspect-[4/3] flex items-center justify-center bg-gradient-to-br from-muted/40 to-muted/10 p-4 overflow-hidden">
+                  <img
+                    src={v.image}
+                    alt={T.fleet.altTpl(v.name)}
+                    class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    width="240"
+                    height="180"
+                  />
+                </div>
+                <div class="p-4 text-center border-t border-border">
+                  <strong class="block text-foreground">{v.name}</strong>
+                  <span class="text-xs text-muted-foreground">{catLabel}</span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      <p class="text-center mt-8">
+        <a href={FLEET_HUB[lang]} class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition">{T.fleet.exploreAll}</a>
+      </p>
+    </div>
+  </section>
+
+  {/* ───── RATES ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-muted/20">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.rates.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-6 leading-relaxed">{T.rates.lead}</p>
+
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full border-collapse min-w-[680px]">
+          <thead>
+            <tr class="border-b border-border">
+              <th class="text-left py-3 px-4 font-semibold">{T.rates.thCategory}</th>
+              <th class="text-left py-3 px-4 font-semibold">{T.rates.thVehicle}</th>
+              <th class="text-left py-3 px-4 font-semibold">{T.rates.thLow}</th>
+              <th class="text-left py-3 px-4 font-semibold">{T.rates.thHigh}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {T.rates.rows.map((r) => (
+              <tr class="border-b border-border/40">
+                <td class="py-3 px-4">{r.catLabel}</td>
+                <td class="py-3 px-4">
+                  {r.slug === "audi-rs3+bmw-m2" ? (
+                    <div class="flex items-center gap-3 flex-wrap">
+                      <a href={fleetHref("audi-rs3")} class="inline-flex items-center gap-2 hover:text-primary transition">
+                        <img src={VEHICLE_ASSETS["audi-rs3"].image} alt="Audi RS3" width="56" height="42" loading="lazy" class="h-10 w-14 object-contain shrink-0" />
+                        <span>Audi RS3</span>
+                      </a>
+                      <span class="text-muted-foreground">/</span>
+                      <a href={fleetHref("bmw-m2")} class="inline-flex items-center gap-2 hover:text-primary transition">
+                        <img src={VEHICLE_ASSETS["bmw-m2"].image} alt="BMW M2" width="56" height="42" loading="lazy" class="h-10 w-14 object-contain shrink-0" />
+                        <span>BMW M2</span>
+                      </a>
+                    </div>
+                  ) : (
+                    <a href={fleetHref(r.slug)} class="inline-flex items-center gap-3 hover:text-primary transition">
+                      <img src={VEHICLE_ASSETS[r.slug].image} alt={VEHICLE_ASSETS[r.slug].name} width="56" height="42" loading="lazy" class="h-10 w-14 object-contain shrink-0" />
+                      <span>{VEHICLE_ASSETS[r.slug].name}</span>
+                    </a>
+                  )}
+                </td>
+                <td class="py-3 px-4">{r.low}</td>
+                <td class="py-3 px-4">{r.high}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-sm text-muted-foreground italic">{T.rates.disclaimer}</p>
+
+      <aside class="mt-8 bg-primary/5 border border-primary/20 rounded-2xl p-6 md:p-8">
+        <p class="text-xs uppercase tracking-widest text-primary font-bold mb-3">{T.rates.quickFactsEyebrow}</p>
+        <p class="text-foreground/80 leading-relaxed" set:html={T.rates.quickFactsText} />
+      </aside>
+
+      <p class="mt-6 text-center">
+        <a href={RATES_HUB[lang]} class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition">{T.rates.seeFull}</a>
+      </p>
+    </div>
+  </section>
+
+  {/* ───── USP: NO CREDIT CARD ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <div class="bg-primary/5 border border-primary/20 rounded-3xl p-8 md:p-12">
+        <p class="text-sm uppercase tracking-widest text-primary font-semibold mb-3">{T.usp.eyebrow}</p>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.usp.heading}</h2>
+        <p class="text-lg text-muted-foreground mb-6 leading-relaxed">{T.usp.lead}</p>
+
+        <h3 class="text-xl font-semibold mb-3">{T.usp.paymentTitle}</h3>
+        <ul class="space-y-2 mb-6 text-muted-foreground">
+          {T.usp.paymentList.map((p) => (
+            <li set:html={`✓ ${p}`} />
+          ))}
+        </ul>
+
+        <h3 class="text-xl font-semibold mb-3">{T.usp.depositTitle}</h3>
+        <p class="text-muted-foreground mb-6">{T.usp.depositText}</p>
+
+        <h3 class="text-xl font-semibold mb-3">{T.usp.docsTitle}</h3>
+        <p class="text-muted-foreground mb-6">{T.usp.docsText}</p>
+
+        <p class="text-center">
+          <a href={SERVICE_PATHS.noCard[lang]} class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition">{T.usp.cta}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ───── HUB: LOCATIONS ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-muted/20">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.hub.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-6 leading-relaxed" set:html={hubLeadHtml} />
+
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+        {T.hub.locations.map((l) => (
+          <a href={locHref(l.slug)} class="px-4 py-3 bg-card border border-border rounded-xl hover:border-primary transition">
+            <strong>{l.label}</strong><br/>
+            <span class="text-muted-foreground">{l.time}</span>
+          </a>
+        ))}
+      </div>
+
+      <p class="mt-6 text-sm text-muted-foreground">{T.hub.disclaimer}</p>
+    </div>
+  </section>
+
+  {/* ───── FAQ ───── */}
+  <FAQSection
+    title={T.faq.heading}
+    faqs={faqsForComponent}
+    lang={lang}
+    client:visible
+  />
+
+  {/* ───── CTA FINALE su sfondo ORO ───── */}
+  <section class="relative bg-gold text-background py-20 md:py-24 px-4 overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
+    <div class="relative container mx-auto max-w-4xl text-center">
+      <h2 class="font-serif text-3xl md:text-5xl text-background font-medium mb-5 leading-tight">{T.cta.heading}</h2>
+      <p class="font-serif text-background/85 text-[17px] md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+        {T.cta.addressLine1}<br/>
+        {T.cta.addressLine2}
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+        <a href={BOOK_HUB[lang]} class="inline-flex items-center justify-center px-10 py-4 bg-background text-foreground rounded-full font-semibold text-sm md:text-base hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20">{T.cta.bookCta}</a>
+        <a href="https://wa.me/393446107071" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-10 py-4 bg-[#25D366] text-white rounded-full font-semibold text-sm md:text-base hover:scale-105 transition-transform shadow-xl">{T.cta.whatsappCta}</a>
+      </div>
+
+      <p class="text-xs md:text-sm text-background/70 leading-relaxed">
+        KS Rent S.R.L. · P.IVA <strong class="text-background">IT03028900904</strong> · REA <strong class="text-background">SS-224046</strong> · Capitale sociale 20.000 €<br/>
+        PEC: ks.rent.srl@pec.it · Email: ksrentsrl@gmail.com
+      </p>
+    </div>
+  </section>
+
+</main>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NoleggioOlbiaContent from "@/components/NoleggioOlbiaContent.astro";
+import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+import {
+  olbiaAutoRentalJsonLd,
+  olbiaFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+
+<BaseLayout
+  title="Location Voiture Olbia | KS Rent Sardinia — Sans Carte de Crédit"
+  description="Location voiture, moto et quad à Olbia avec livraison à domicile gratuite à l'aéroport OLB et au port Isola Bianca. Flotte moderne, sans carte de crédit obligatoire."
+  canonical="https://www.ksrentsardinia.com/fr/location-voiture-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    olbiaAutoRentalJsonLd,
+    olbiaFaqJsonLd,
+    buildBreadcrumb("Location Voiture Olbia", "/fr/location-voiture-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Location Voiture Olbia", path: "/fr/location-voiture-olbia" }]}
+>
+  <NoleggioOlbiaContent lang="fr" />
+  <GuideVehicleStrip lang="fr" />
+</BaseLayout>
