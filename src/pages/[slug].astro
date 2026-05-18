@@ -4,6 +4,7 @@ import CompanyMap from "@/components/CompanyMap";
 import RelatedGuides from "@/components/RelatedGuides.astro";
 import { supabase } from "@/lib/supabase";
 import { buildLocationJsonLd, buildBeachJsonLd } from "@/lib/jsonLd";
+import { buildSrcset, SIZES_HERO_FULL } from "@/lib/imageSrcset";
 import { getLocalitySEOContent } from "@/data/locality-content";
 import {
   getRecommendedVehicle,
@@ -192,10 +193,15 @@ const crossSellVehicles = getCrossSellVehicles("it", 4, vehicle?.groupSlug);
         <div class="absolute inset-0">
           <img
             src={data.hero_image_url}
+            srcset={buildSrcset(data.hero_image_url)}
+            sizes={SIZES_HERO_FULL}
             alt={data.h1}
+            width="1600"
+            height="900"
             class="w-full h-full object-cover"
             loading="eager"
             fetchpriority="high"
+            decoding="async"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent"></div>
         </div>

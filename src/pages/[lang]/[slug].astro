@@ -19,6 +19,7 @@ import { getRecommendedVehicle } from "@/lib/dynamic-page-helpers";
 import { ArrowRight, MapPin, Info, ShieldCheck, Navigation, Users, Gauge, Fuel, Star, Car } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
 import { getRelatedServices, getCrossSellVehicles, INTERNAL_LINK_LABELS, pickLabelVariant } from "@/lib/internal-links";
+import { buildSrcset, SIZES_HERO_FULL } from "@/lib/imageSrcset";
 
 interface SeoRow {
   slug: string;
@@ -162,10 +163,15 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
         <div class="absolute inset-0">
           <img
             src={row.hero_image_url}
+            srcset={buildSrcset(row.hero_image_url)}
+            sizes={SIZES_HERO_FULL}
             alt={localized.h1}
+            width="1600"
+            height="900"
             class="w-full h-full object-cover"
             loading="eager"
             fetchpriority="high"
+            decoding="async"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent"></div>
         </div>
