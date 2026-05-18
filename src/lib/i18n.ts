@@ -56,6 +56,9 @@ const PATH_MAP_FULL: Record<string, Record<Locale, string>> = {
   "/noleggio-auto-porto-olbia":                    { it: "/noleggio-auto-porto-olbia",                       en: "/car-hire-olbia-port",                    de: "/autovermietung-hafen-olbia",             fr: "/location-voiture-port-olbia" },
   "/noleggio-auto-costa-smeralda":                 { it: "/noleggio-auto-costa-smeralda",                    en: "/car-hire-costa-smeralda",                de: "/autovermietung-costa-smeralda",          fr: "/location-voiture-costa-smeralda" },
   "/noleggio-auto-senza-carta-di-credito-olbia":   { it: "/noleggio-auto-senza-carta-di-credito-olbia",      en: "/car-hire-no-credit-card-olbia",          de: "/autovermietung-ohne-kreditkarte-olbia",  fr: "/location-voiture-sans-carte-credit-olbia" },
+  "/termini-e-condizioni":                         { it: "/termini-e-condizioni",                            en: "/terms-conditions",                       de: "/agb",                                    fr: "/conditions-generales" },
+  "/diritto-recesso":                              { it: "/diritto-recesso",                                 en: "/withdrawal-rights",                      de: "/widerrufsrecht",                         fr: "/droit-de-retractation" },
+  "/informativa-fornitore":                        { it: "/informativa-fornitore",                           en: "/supplier-info",                          de: "/anbieterinformationen",                  fr: "/informations-fournisseur" },
 };
 
 /** Path-prefix per `/flotta/[slug]` -> `/en/fleet/[slug]`, ecc. */

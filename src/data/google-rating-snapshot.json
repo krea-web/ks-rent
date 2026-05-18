@@ -1,0 +1,7 @@
+{
+  "ratingValue": 5.0,
+  "reviewCount": 35,
+  "fetchedAt": "2026-05-18",
+  "source": "google-places-api",
+  "note": "Aggiornato automaticamente da scripts/fetch-google-reviews.mjs ad ogni prebuild. Il count e' user_ratings_total (totale GBP), non solo le 5-10 review che l'API restituisce nel dettaglio."
+}

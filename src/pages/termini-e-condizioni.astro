@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Termini e Condizioni di Noleggio | KS Rent Sardinia"
+  description="Termini e Condizioni di noleggio auto KS Rent S.R.L. Olbia: tariffe, deposito cauzionale, franchigia kasko, documenti richiesti, recesso, foro competente."
+  canonical="https://www.ksrentsardinia.com/termini-e-condizioni"
+  jsonLd={[buildBreadcrumb("Termini e Condizioni", "/termini-e-condizioni")]}
+>
+  <LegalPageContent pageType="terms" lang="it" />
+</BaseLayout>

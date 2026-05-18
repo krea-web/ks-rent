@@ -1,0 +1,823 @@
+---
+/**
+ * Componente shared per le 3 legal pages × 4 lingue (12 wrapper sottili):
+ *  - Termini e Condizioni di Noleggio
+ *  - Diritto di Recesso
+ *  - Informativa Fornitore AGCM
+ *
+ * Tutto il copy è in TRANSLATIONS dict gerarchico per [pageType][lang].
+ * Il container wrappa con .editorial (tipografia magazine).
+ *
+ * DISCLAIMER: contenuto generato come template standard noleggio auto
+ * italiano basato su Codice del Consumo (D.Lgs 206/2005) e AGCM. È
+ * consigliata revisione da parte di avvocato specializzato prima del
+ * launch pubblico per validazione finale.
+ */
+
+type Lang = "it" | "en" | "de" | "fr";
+type PageType = "terms" | "withdrawal" | "supplier-info";
+
+interface Props {
+  pageType: PageType;
+  lang: Lang;
+}
+
+const { pageType, lang } = Astro.props;
+
+const TRANSLATIONS: Record<PageType, Record<Lang, { title: string; html: string }>> = {
+  // ─── TERMINI E CONDIZIONI DI NOLEGGIO ───
+  terms: {
+    it: {
+      title: "Termini e Condizioni di Noleggio",
+      html: `
+<p><strong>Ultimo aggiornamento:</strong> 17 maggio 2026</p>
+<p>I presenti Termini e Condizioni regolano il contratto di noleggio tra <strong>KS Rent S.R.L.</strong> (di seguito "Locatore") e il Cliente (di seguito "Conduttore") che noleggia un veicolo della flotta. Sottoscrivendo il contratto di noleggio o confermando la prenotazione online il Conduttore dichiara di aver letto e accettato le presenti condizioni.</p>
+
+<h2>1. Oggetto del contratto</h2>
+<p>Il presente contratto ha per oggetto il noleggio temporaneo di un autoveicolo, motoveicolo o quad di proprietà del Locatore, identificato per modello, targa e categoria nel modulo di prenotazione. La consegna avviene presso la sede operativa di Viale Isola Bianca 38, 07026 Olbia (SS) o nel luogo concordato. Il Conduttore prende il veicolo nello stato in cui si trova, verificato in contraddittorio al momento della consegna.</p>
+
+<h2>2. Tariffe e modalità di pagamento</h2>
+<p>Le tariffe applicate sono quelle pubblicate sul sito www.ksrentsardinia.com alla pagina <a href="/tariffe">Tariffe</a> e confermate in fase di prenotazione. Le tariffe sono <strong>stagionali</strong>, valide da aprile a ottobre, e includono RCA obbligatoria, assistenza stradale 24/7 e gestione contrattuale. Sono escluse: carburante (consegnato e da restituire con stesso livello), pedaggi autostradali, multe, opzionali (secondo conducente, seggiolino, riduzione franchigia).</p>
+<p>Il Locatore accetta i seguenti metodi di pagamento per saldo e deposito: contanti (in euro), bonifico bancario (anche istantaneo), carte prepagate ricaricabili (Postepay, Revolut, N26, Hype, Wise), carte di debito e bancomat (VISA/Maestro/Mastercard), carte di credito tradizionali, pagamenti contactless NFC (Apple Pay, Google Pay). <strong>La carta di credito tradizionale non è obbligatoria.</strong></p>
+
+<h2>3. Deposito cauzionale</h2>
+<p>Al momento della consegna del veicolo il Conduttore versa un deposito cauzionale proporzionato alla categoria del veicolo. L'importo esatto viene comunicato in fase di prenotazione, prima della conferma. Il deposito può essere versato in contanti, carta prepagata, debito o credito. Al termine del noleggio, se il veicolo viene riconsegnato integro, senza danni o sanzioni pendenti, il deposito viene restituito con la stessa modalità di versamento entro 24 ore.</p>
+
+<h2>4. Franchigia kasko e responsabilità danni</h2>
+<p>In caso di sinistro o danno al veicolo, il Conduttore risponde fino al massimo della franchigia kasko prevista per la categoria del veicolo. Il Locatore offre la possibilità di sottoscrivere una riduzione franchigia opzionale al momento del noleggio, con costo aggiuntivo dichiarato trasparentemente. La franchigia non si applica in caso di colpa grave, guida sotto effetto di alcol/sostanze, uso del veicolo per finalità vietate dal presente contratto.</p>
+
+<h2>5. Documenti richiesti</h2>
+<p>Per il ritiro del veicolo il Conduttore deve presentare:</p>
+<ul>
+  <li>Patente di guida in corso di validità da almeno 1 anno (categoria B per autoveicoli, A1/A2 per scooter, B per quad)</li>
+  <li>Documento d'identità in corso di validità (carta d'identità o passaporto)</li>
+  <li>Codice fiscale italiano (per residenti italiani)</li>
+  <li>Per cittadini extra-UE: patente internazionale consigliata</li>
+</ul>
+
+<h2>6. Età minima conducente</h2>
+<p>L'età minima del conducente principale è:</p>
+<ul>
+  <li><strong>21 anni</strong> per utilitarie e veicoli standard (Fiat Panda, Jeep Avenger, Mercedes Classe A)</li>
+  <li><strong>25 anni</strong> per veicoli sportivi, supercar e premium (Audi RS3, BMW M2)</li>
+  <li><strong>21 anni</strong> per quad (con patente B valida da 1+ anno)</li>
+</ul>
+
+<h2>7. Uso del veicolo</h2>
+<p>Il veicolo può essere condotto solo dal Conduttore e dall'eventuale secondo conducente indicato nel contratto. Sono vietati: uso per gare o competizioni, traino di rimorchi non concordati, viaggio fuori dal territorio della Sardegna senza autorizzazione scritta del Locatore, sub-noleggio a terzi. Il Conduttore è obbligato a custodire il veicolo con la diligenza del buon padre di famiglia.</p>
+
+<h2>8. Multe e sanzioni</h2>
+<p>Eventuali multe, sanzioni amministrative o pedaggi maturati durante il periodo di noleggio sono integralmente a carico del Conduttore, che si impegna a rimborsarle al Locatore. Il Locatore comunica i dati del Conduttore alle autorità competenti come previsto dal Codice della Strada (art. 196), addebitando un costo gestione pratica di €25 per ogni notifica.</p>
+
+<h2>9. Consegna e riconsegna</h2>
+<p>La consegna avviene presso la sede operativa di Olbia (Viale Isola Bianca 38) o nel luogo concordato (consegna gratuita all'interno del comune di Olbia, costo variabile per altre località della Gallura e Costa Smeralda secondo preventivo). Orari standard: 10:00–13:00 e 15:00–22:30, 7 giorni su 7, festivi inclusi. Per consegne fuori orario è necessario accordo scritto.</p>
+<p>La riconsegna avviene nello stesso luogo e orario concordati. Il Conduttore deve restituire il veicolo nelle medesime condizioni in cui l'ha ricevuto, salvo normale usura, con lo stesso livello di carburante. Ritardo nella riconsegna comporta addebito di un giorno aggiuntivo di noleggio per ogni 3 ore di ritardo.</p>
+
+<h2>10. Recesso e annullamento</h2>
+<p>Il Conduttore può recedere dal contratto secondo i termini indicati nella pagina <a href="/diritto-recesso">Diritto di Recesso</a>. Annullamenti effettuati con preavviso superiore a 7 giorni non comportano penali; tra 7 e 2 giorni comportano una penale del 30% del totale; meno di 48 ore comporta penale del 100%.</p>
+
+<h2>11. Foro competente</h2>
+<p>Per ogni controversia derivante dal presente contratto è competente in via esclusiva il <strong>Foro di Sassari</strong>. La legge applicabile è quella italiana.</p>
+
+<h2>12. Contatti e reclami</h2>
+<p>Per assistenza, chiarimenti o reclami il Conduttore può contattare il Locatore ai seguenti recapiti:</p>
+<ul>
+  <li>Email: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li>PEC: <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>Telefono / WhatsApp: <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li>Sede legale: Viale Aldo Moro 367, 07026 Olbia (SS)</li>
+</ul>
+
+<p><em>Per la Privacy Policy e la Cookie Policy fare riferimento ai documenti pubblicati su Iubenda, accessibili dal footer del sito.</em></p>
+      `,
+    },
+    en: {
+      title: "Rental Terms and Conditions",
+      html: `
+<p><strong>Last updated:</strong> 17 May 2026</p>
+<p>These Terms and Conditions govern the rental contract between <strong>KS Rent S.R.L.</strong> (the "Lessor") and the customer (the "Renter") hiring a vehicle from the fleet. By signing the rental contract or confirming the booking online, the Renter declares to have read and accepted these conditions.</p>
+
+<h2>1. Subject of the contract</h2>
+<p>The contract covers the temporary rental of a car, motorbike or quad owned by the Lessor, identified by model, plate and category in the booking form. Delivery takes place at the operational office in Viale Isola Bianca 38, 07026 Olbia (SS) or at the agreed location. The Renter takes the vehicle as found, verified jointly at delivery.</p>
+
+<h2>2. Rates and payment methods</h2>
+<p>Rates applied are those published on www.ksrentsardinia.com at the <a href="/en/rates">Rates</a> page and confirmed at booking. Rates are <strong>seasonal</strong>, valid from April to October, and include compulsory third-party insurance, 24/7 roadside assistance and contract management. Excluded: fuel (delivered and to be returned at the same level), tolls, fines, optional extras (second driver, child seat, reduced excess).</p>
+<p>The Lessor accepts the following payment methods for both balance and deposit: cash (in euros), bank transfer (also instant), reloadable prepaid cards (Postepay, Revolut, N26, Hype, Wise), debit and bancomat cards (VISA/Maestro/Mastercard), traditional credit cards, contactless NFC payments (Apple Pay, Google Pay). <strong>A traditional credit card is not required.</strong></p>
+
+<h2>3. Security deposit</h2>
+<p>On vehicle delivery the Renter pays a security deposit proportionate to the vehicle category. The exact amount is communicated at booking, before confirmation. The deposit may be paid in cash, prepaid, debit or credit card. At the end of the rental, if the vehicle is returned intact, without damage or pending fines, the deposit is refunded through the same payment method within 24 hours.</p>
+
+<h2>4. Insurance excess and damage liability</h2>
+<p>In the event of an accident or vehicle damage, the Renter is liable up to the maximum kasko excess defined for the vehicle category. The Lessor offers an optional excess reduction at rental time, with the additional cost transparently declared. The excess does not apply in case of gross negligence, driving under influence of alcohol/drugs, or use of the vehicle for purposes forbidden by this contract.</p>
+
+<h2>5. Required documents</h2>
+<p>To pick up the vehicle, the Renter must present:</p>
+<ul>
+  <li>Valid driving licence held for at least 1 year (category B for cars, A1/A2 for scooters, B for quads)</li>
+  <li>Valid ID document (national ID card or passport)</li>
+  <li>Italian fiscal code (for Italian residents)</li>
+  <li>For non-EU citizens: international driving permit recommended</li>
+</ul>
+
+<h2>6. Minimum driver age</h2>
+<p>Minimum age for the main driver:</p>
+<ul>
+  <li><strong>21 years</strong> for city cars and standard vehicles (Fiat Panda, Jeep Avenger, Mercedes A-Class)</li>
+  <li><strong>25 years</strong> for sports cars, supercars and premium vehicles (Audi RS3, BMW M2)</li>
+  <li><strong>21 years</strong> for quads (with B licence held for 1+ year)</li>
+</ul>
+
+<h2>7. Use of the vehicle</h2>
+<p>The vehicle may be driven only by the Renter and the optional second driver indicated in the contract. Forbidden: use in races or competitions, towing trailers not agreed, travel outside Sardinia without written authorisation, sub-renting to third parties. The Renter must keep the vehicle with the diligence of a good father of family.</p>
+
+<h2>8. Fines and penalties</h2>
+<p>Any fines, administrative penalties or tolls accrued during the rental period are entirely at the Renter's expense, who undertakes to reimburse the Lessor. The Lessor communicates the Renter's details to competent authorities as required by Italian Highway Code (art. 196), charging an administrative handling fee of €25 for each notice.</p>
+
+<h2>9. Delivery and return</h2>
+<p>Delivery happens at the Olbia operational office (Viale Isola Bianca 38) or at the agreed location (free delivery inside Olbia municipality, variable cost for other Gallura and Costa Smeralda locations per quote). Standard hours: 10:00–13:00 and 15:00–22:30, 7 days a week, holidays included. For after-hours deliveries a written agreement is required.</p>
+<p>Return happens at the same place and time agreed. The Renter must return the vehicle in the same condition as received, normal wear and tear excluded, with the same fuel level. Late return incurs an additional rental day charge for every 3 hours of delay.</p>
+
+<h2>10. Withdrawal and cancellation</h2>
+<p>The Renter may withdraw from the contract per the terms indicated on the <a href="/en/withdrawal-rights">Right of Withdrawal</a> page. Cancellations made with more than 7 days notice incur no penalty; between 7 and 2 days incur a 30% penalty of the total; less than 48 hours incur a 100% penalty.</p>
+
+<h2>11. Competent court</h2>
+<p>For any dispute arising from this contract, the <strong>Court of Sassari</strong> has exclusive jurisdiction. Italian law applies.</p>
+
+<h2>12. Contacts and complaints</h2>
+<p>For assistance, clarifications or complaints the Renter may contact the Lessor at:</p>
+<ul>
+  <li>Email: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li>PEC (certified email): <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>Phone / WhatsApp: <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li>Registered office: Viale Aldo Moro 367, 07026 Olbia (SS), Italy</li>
+</ul>
+
+<p><em>For Privacy Policy and Cookie Policy please refer to the documents published on Iubenda, accessible from the site footer.</em></p>
+      `,
+    },
+    de: {
+      title: "Mietbedingungen",
+      html: `
+<p><strong>Zuletzt aktualisiert:</strong> 17. Mai 2026</p>
+<p>Diese Allgemeinen Geschaeftsbedingungen regeln den Mietvertrag zwischen <strong>KS Rent S.R.L.</strong> (im Folgenden "Vermieter") und dem Kunden (im Folgenden "Mieter"), der ein Fahrzeug aus der Flotte mietet. Mit Unterzeichnung des Mietvertrags oder Bestaetigung der Online-Buchung erklaert der Mieter, diese Bedingungen gelesen und akzeptiert zu haben.</p>
+
+<h2>1. Vertragsgegenstand</h2>
+<p>Vertragsgegenstand ist die zeitweise Vermietung eines Pkw, Motorrads oder Quads im Eigentum des Vermieters, identifiziert nach Modell, Kennzeichen und Kategorie im Buchungsformular. Die Uebergabe erfolgt am Betriebssitz Viale Isola Bianca 38, 07026 Olbia (SS) oder am vereinbarten Ort. Der Mieter uebernimmt das Fahrzeug im vorgefundenen Zustand, gemeinsam bei Uebergabe geprueft.</p>
+
+<h2>2. Tarife und Zahlungsmethoden</h2>
+<p>Es gelten die auf www.ksrentsardinia.com auf der Seite <a href="/de/preise">Preise</a> veroeffentlichten und bei der Buchung bestaetigten Tarife. Tarife sind <strong>saisonal</strong>, gueltig von April bis Oktober, und beinhalten obligatorische Haftpflichtversicherung, 24/7-Pannenhilfe und Vertragsverwaltung. Ausgeschlossen: Kraftstoff (geliefert und mit gleichem Stand zurueckzugeben), Mautgebuehren, Bussgelder, optionale Extras (Zweitfahrer, Kindersitz, reduzierte Selbstbeteiligung).</p>
+<p>Der Vermieter akzeptiert folgende Zahlungsmethoden fuer Saldo und Kaution: Bargeld (in Euro), Bankueberweisung (auch sofort), aufladbare Prepaid-Karten (Postepay, Revolut, N26, Hype, Wise), Debit- und Bankomatkarten (VISA/Maestro/Mastercard), traditionelle Kreditkarten, kontaktlose NFC-Zahlungen (Apple Pay, Google Pay). <strong>Eine traditionelle Kreditkarte ist nicht erforderlich.</strong></p>
+
+<h2>3. Kaution</h2>
+<p>Bei Fahrzeuguebergabe zahlt der Mieter eine Kaution proportional zur Fahrzeugkategorie. Der genaue Betrag wird bei der Buchung vor Bestaetigung mitgeteilt. Die Kaution kann in bar, mit Prepaid-, Debit- oder Kreditkarte hinterlegt werden. Am Ende der Mietzeit wird die Kaution, falls das Fahrzeug intakt und ohne Schaeden oder ausstehende Strafen zurueckgegeben wird, mit derselben Zahlungsmethode innerhalb von 24 Stunden zurueckerstattet.</p>
+
+<h2>4. Kasko-Selbstbeteiligung und Schadenhaftung</h2>
+<p>Bei einem Unfall oder Fahrzeugschaden haftet der Mieter bis zur maximalen Kasko-Selbstbeteiligung der Fahrzeugkategorie. Der Vermieter bietet optional eine Reduktion der Selbstbeteiligung bei Anmietung an, mit transparent angegebenen Zusatzkosten. Die Selbstbeteiligung gilt nicht bei grober Fahrlaessigkeit, Fahren unter Alkohol-/Drogeneinfluss oder Nutzung des Fahrzeugs fuer durch diesen Vertrag verbotene Zwecke.</p>
+
+<h2>5. Erforderliche Dokumente</h2>
+<p>Zur Fahrzeugabholung muss der Mieter vorlegen:</p>
+<ul>
+  <li>Gueltiger Fuehrerschein, seit mindestens 1 Jahr im Besitz (Klasse B fuer Pkw, A1/A2 fuer Roller, B fuer Quads)</li>
+  <li>Gueltiges Ausweisdokument (Personalausweis oder Reisepass)</li>
+  <li>Italienische Steuernummer (fuer italienische Einwohner)</li>
+  <li>Fuer Nicht-EU-Buerger: internationaler Fuehrerschein empfohlen</li>
+</ul>
+
+<h2>6. Mindestalter Fahrer</h2>
+<p>Mindestalter des Hauptfahrers:</p>
+<ul>
+  <li><strong>21 Jahre</strong> fuer Kleinwagen und Standardfahrzeuge (Fiat Panda, Jeep Avenger, Mercedes A-Klasse)</li>
+  <li><strong>25 Jahre</strong> fuer Sportwagen, Supersportwagen und Premiumfahrzeuge (Audi RS3, BMW M2)</li>
+  <li><strong>21 Jahre</strong> fuer Quads (mit B-Fuehrerschein seit 1+ Jahr)</li>
+</ul>
+
+<h2>7. Nutzung des Fahrzeugs</h2>
+<p>Das Fahrzeug darf nur vom Mieter und vom im Vertrag genannten Zweitfahrer gefuehrt werden. Verboten: Nutzung in Rennen oder Wettbewerben, Schleppen nicht vereinbarter Anhaenger, Verlassen Sardiniens ohne schriftliche Genehmigung des Vermieters, Untervermietung an Dritte. Der Mieter ist verpflichtet, das Fahrzeug mit der Sorgfalt eines guten Familienvaters zu verwahren.</p>
+
+<h2>8. Bussgelder und Strafen</h2>
+<p>Etwaige Bussgelder, Verwaltungsstrafen oder Mautgebuehren waehrend der Mietdauer gehen vollstaendig zu Lasten des Mieters, der sich zur Erstattung an den Vermieter verpflichtet. Der Vermieter teilt die Daten des Mieters den zustaendigen Behoerden gemaess italienischer Strassenverkehrsordnung (Art. 196) mit und berechnet eine Bearbeitungsgebuehr von 25 € pro Mitteilung.</p>
+
+<h2>9. Uebergabe und Rueckgabe</h2>
+<p>Die Uebergabe erfolgt am Betriebssitz Olbia (Viale Isola Bianca 38) oder am vereinbarten Ort (kostenlose Lieferung innerhalb der Gemeinde Olbia, variable Kosten fuer andere Orte in Gallura und Costa Smeralda nach Angebot). Standardzeiten: 10:00–13:00 und 15:00–22:30 Uhr, 7 Tage die Woche, Feiertage inklusive. Fuer Lieferungen ausserhalb der Oeffnungszeiten ist eine schriftliche Vereinbarung erforderlich.</p>
+<p>Die Rueckgabe erfolgt am gleichen Ort und zur vereinbarten Zeit. Der Mieter muss das Fahrzeug im selben Zustand wie bei Uebernahme, normale Abnutzung ausgeschlossen, mit gleichem Tankstand zurueckgeben. Bei verspaeteter Rueckgabe wird pro 3 Stunden Verspaetung ein zusaetzlicher Miettag berechnet.</p>
+
+<h2>10. Widerruf und Stornierung</h2>
+<p>Der Mieter kann gemaess den Bedingungen der Seite <a href="/de/widerrufsrecht">Widerrufsrecht</a> vom Vertrag zuruecktreten. Stornierungen mit mehr als 7 Tagen Vorlauf sind ohne Strafe; zwischen 7 und 2 Tagen 30% Strafgebuehr des Gesamtbetrags; weniger als 48 Stunden 100% Strafgebuehr.</p>
+
+<h2>11. Zustaendiges Gericht</h2>
+<p>Fuer jede Streitigkeit aus diesem Vertrag ist ausschliesslich das <strong>Gericht von Sassari</strong> zustaendig. Es gilt italienisches Recht.</p>
+
+<h2>12. Kontakte und Beschwerden</h2>
+<p>Fuer Hilfe, Erklaerungen oder Beschwerden kann der Mieter den Vermieter unter folgenden Kontakten erreichen:</p>
+<ul>
+  <li>E-Mail: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li>PEC (zertifizierte E-Mail): <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>Telefon / WhatsApp: <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li>Sitz: Viale Aldo Moro 367, 07026 Olbia (SS), Italien</li>
+</ul>
+
+<p><em>Fuer die Datenschutzrichtlinie und die Cookie-Richtlinie verweisen wir auf die bei Iubenda veroeffentlichten Dokumente, zugaenglich ueber die Fusszeile der Website.</em></p>
+      `,
+    },
+    fr: {
+      title: "Conditions Générales de Location",
+      html: `
+<p><strong>Dernière mise à jour :</strong> 17 mai 2026</p>
+<p>Les présentes Conditions Générales régissent le contrat de location entre <strong>KS Rent S.R.L.</strong> (ci-après "Loueur") et le client (ci-après "Locataire") qui loue un véhicule de la flotte. En signant le contrat de location ou en confirmant la réservation en ligne, le Locataire déclare avoir lu et accepté ces conditions.</p>
+
+<h2>1. Objet du contrat</h2>
+<p>Le contrat a pour objet la location temporaire d'un véhicule, motocycle ou quad appartenant au Loueur, identifié par modèle, plaque et catégorie dans le formulaire de réservation. La livraison s'effectue au siège opérationnel de Viale Isola Bianca 38, 07026 Olbia (SS) ou au lieu convenu. Le Locataire prend le véhicule dans l'état où il se trouve, vérifié contradictoirement à la livraison.</p>
+
+<h2>2. Tarifs et modalités de paiement</h2>
+<p>Les tarifs appliqués sont ceux publiés sur www.ksrentsardinia.com à la page <a href="/fr/tarifs">Tarifs</a> et confirmés lors de la réservation. Les tarifs sont <strong>saisonniers</strong>, valables d'avril à octobre, et incluent la RC obligatoire, l'assistance routière 24/7 et la gestion contractuelle. Sont exclus : carburant (livré et à restituer au même niveau), péages, amendes, options (second conducteur, siège enfant, réduction franchise).</p>
+<p>Le Loueur accepte les modes de paiement suivants pour solde et dépôt : espèces (en euros), virement bancaire (même instantané), cartes prépayées rechargeables (Postepay, Revolut, N26, Hype, Wise), cartes de débit et bancomat (VISA/Maestro/Mastercard), cartes de crédit traditionnelles, paiements sans contact NFC (Apple Pay, Google Pay). <strong>La carte de crédit traditionnelle n'est pas obligatoire.</strong></p>
+
+<h2>3. Dépôt de garantie</h2>
+<p>À la livraison du véhicule, le Locataire verse un dépôt de garantie proportionnel à la catégorie du véhicule. Le montant exact est communiqué lors de la réservation, avant confirmation. Le dépôt peut être versé en espèces, par carte prépayée, débit ou crédit. À la fin de la location, si le véhicule est restitué intact, sans dommages ni amendes en attente, le dépôt est restitué par le même mode de paiement sous 24 heures.</p>
+
+<h2>4. Franchise kasko et responsabilité dommages</h2>
+<p>En cas de sinistre ou de dommage au véhicule, le Locataire est responsable jusqu'au maximum de la franchise kasko prévue pour la catégorie du véhicule. Le Loueur offre la possibilité de souscrire une réduction de franchise optionnelle au moment de la location, avec coût additionnel déclaré de manière transparente. La franchise ne s'applique pas en cas de faute grave, conduite sous influence d'alcool/drogues, ou utilisation du véhicule à des fins interdites par ce contrat.</p>
+
+<h2>5. Documents requis</h2>
+<p>Pour le retrait du véhicule, le Locataire doit présenter :</p>
+<ul>
+  <li>Permis de conduire en cours de validité depuis au moins 1 an (catégorie B pour voitures, A1/A2 pour scooters, B pour quads)</li>
+  <li>Pièce d'identité en cours de validité (carte d'identité ou passeport)</li>
+  <li>Code fiscal italien (pour résidents italiens)</li>
+  <li>Pour citoyens hors UE : permis international conseillé</li>
+</ul>
+
+<h2>6. Âge minimum du conducteur</h2>
+<p>Âge minimum du conducteur principal :</p>
+<ul>
+  <li><strong>21 ans</strong> pour citadines et véhicules standards (Fiat Panda, Jeep Avenger, Mercedes Classe A)</li>
+  <li><strong>25 ans</strong> pour véhicules sportifs, supercars et premium (Audi RS3, BMW M2)</li>
+  <li><strong>21 ans</strong> pour quads (avec permis B depuis 1+ an)</li>
+</ul>
+
+<h2>7. Utilisation du véhicule</h2>
+<p>Le véhicule ne peut être conduit que par le Locataire et l'éventuel second conducteur indiqué dans le contrat. Sont interdits : utilisation en courses ou compétitions, traction de remorques non convenues, déplacements hors de Sardaigne sans autorisation écrite, sous-location à tiers. Le Locataire est tenu de garder le véhicule avec la diligence du bon père de famille.</p>
+
+<h2>8. Amendes et sanctions</h2>
+<p>Les amendes, sanctions administratives ou péages encourus pendant la période de location sont intégralement à la charge du Locataire, qui s'engage à les rembourser au Loueur. Le Loueur communique les données du Locataire aux autorités compétentes selon le Code de la Route italien (art. 196), avec un frais de gestion administrative de 25 € par notification.</p>
+
+<h2>9. Livraison et restitution</h2>
+<p>La livraison s'effectue au siège opérationnel d'Olbia (Viale Isola Bianca 38) ou au lieu convenu (livraison gratuite dans la commune d'Olbia, coût variable pour autres localités de Gallura et Costa Smeralda selon devis). Horaires standards : 10h00–13h00 et 15h00–22h30, 7 jours sur 7, jours fériés inclus. Pour livraisons hors horaires un accord écrit est nécessaire.</p>
+<p>La restitution s'effectue au même endroit et à l'heure convenue. Le Locataire doit restituer le véhicule dans les mêmes conditions qu'à la prise, sauf usure normale, avec le même niveau de carburant. Le retard de restitution entraîne la facturation d'une journée de location supplémentaire par 3 heures de retard.</p>
+
+<h2>10. Rétractation et annulation</h2>
+<p>Le Locataire peut se rétracter du contrat selon les conditions indiquées à la page <a href="/fr/droit-de-retractation">Droit de Rétractation</a>. Les annulations avec préavis supérieur à 7 jours sont sans pénalité ; entre 7 et 2 jours, pénalité de 30 % du total ; moins de 48 heures, pénalité de 100 %.</p>
+
+<h2>11. Tribunal compétent</h2>
+<p>Pour tout litige découlant du présent contrat, le <strong>Tribunal de Sassari</strong> est exclusivement compétent. La loi applicable est la loi italienne.</p>
+
+<h2>12. Contacts et réclamations</h2>
+<p>Pour assistance, clarifications ou réclamations, le Locataire peut contacter le Loueur aux coordonnées suivantes :</p>
+<ul>
+  <li>Email : <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li>PEC (email certifié) : <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>Téléphone / WhatsApp : <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li>Siège social : Viale Aldo Moro 367, 07026 Olbia (SS), Italie</li>
+</ul>
+
+<p><em>Pour la Politique de Confidentialité et la Politique des Cookies, veuillez vous référer aux documents publiés sur Iubenda, accessibles depuis le pied de page du site.</em></p>
+      `,
+    },
+  },
+
+  // ─── DIRITTO DI RECESSO ───
+  withdrawal: {
+    it: {
+      title: "Diritto di Recesso",
+      html: `
+<p><strong>Ultimo aggiornamento:</strong> 17 maggio 2026</p>
+<p>La presente informativa illustra il diritto di recesso del Cliente per i contratti di noleggio conclusi a distanza con <strong>KS Rent S.R.L.</strong>, in conformità con il <strong>D.Lgs. 6 settembre 2005, n. 206 (Codice del Consumo)</strong> e successive modifiche.</p>
+
+<h2>1. Periodo di recesso ordinario (art. 52 Codice del Consumo)</h2>
+<p>Per i contratti conclusi a distanza (online, telefono, email) il Cliente consumatore ha diritto a recedere dal contratto entro <strong>14 giorni</strong> dalla conclusione del contratto, senza dover fornire alcuna motivazione e senza penalità.</p>
+
+<h2>2. Eccezione per servizi a data certa (art. 59 Codice del Consumo)</h2>
+<p>Il diritto di recesso <strong>non si applica</strong> ai contratti relativi a "servizi di noleggio di autoveicoli o di altro tipo di trasporto, quando il professionista si impegna a fornire la prestazione in una data o periodo specifico". Pertanto:</p>
+<ul>
+  <li>Per noleggi con <strong>data di consegna confermata</strong>, il diritto di recesso ordinario di 14 giorni <strong>NON è applicabile</strong></li>
+  <li>L'annullamento di una prenotazione confermata segue le condizioni di cancellazione previste nel contratto</li>
+</ul>
+
+<h2>3. Condizioni di cancellazione per prenotazioni confermate</h2>
+<p>Per le prenotazioni con data certa, KS Rent applica le seguenti condizioni di cancellazione equilibrate:</p>
+<ul>
+  <li><strong>Cancellazione con preavviso superiore a 7 giorni</strong>: gratuita, nessuna penale, rimborso integrale dell'eventuale acconto</li>
+  <li><strong>Cancellazione tra 7 e 2 giorni dalla data di consegna</strong>: penale del 30% del totale del noleggio</li>
+  <li><strong>Cancellazione meno di 48 ore prima</strong>: penale del 100% del totale del noleggio (no-show)</li>
+  <li><strong>Cancellazione per cause di forza maggiore documentate</strong> (malattia certificata, lutto familiare, evento di forza maggiore): rimborso integrale o riprogrammazione</li>
+</ul>
+
+<h2>4. Modifica della prenotazione</h2>
+<p>Il Cliente può chiedere una modifica della data di consegna o del veicolo prenotato fino a 48 ore prima, soggetto a disponibilità. Modifiche entro 48 ore sono valutate caso per caso e possono comportare addebito di differenza tariffaria.</p>
+
+<h2>5. Come esercitare il recesso</h2>
+<p>Per esercitare il diritto di recesso o richiedere l'annullamento di una prenotazione, il Cliente deve comunicare la propria decisione tramite uno dei seguenti canali:</p>
+<ul>
+  <li>Email: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> (con oggetto "Recesso prenotazione [numero]")</li>
+  <li>PEC: <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>WhatsApp: <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+</ul>
+
+<p>La comunicazione deve contenere:</p>
+<ul>
+  <li>Nome, cognome e codice fiscale del Cliente</li>
+  <li>Numero della prenotazione</li>
+  <li>Data e veicolo prenotato</li>
+  <li>Motivazione (opzionale per recesso ordinario; obbligatoria per cause di forza maggiore)</li>
+</ul>
+
+<h2>6. Rimborso</h2>
+<p>Il rimborso, se previsto, viene effettuato entro <strong>14 giorni dalla data di ricezione della comunicazione</strong> di recesso, utilizzando lo stesso metodo di pagamento usato dal Cliente per la prenotazione, salvo diversa indicazione scritta.</p>
+
+<h2>7. Modulo standard di recesso (allegato I, parte B, D.Lgs. 21/2014)</h2>
+<p>Il Cliente può utilizzare il seguente modulo standard, compilando i campi necessari e inviandolo agli indirizzi sopra indicati:</p>
+<blockquote>
+<p><strong>Modulo di recesso</strong><br/>
+Destinatario: KS Rent S.R.L., Viale Aldo Moro 367, 07026 Olbia (SS), email: ksrentsrl@gmail.com, PEC: ks.rent.srl@pec.it</p>
+<p>Con la presente notifico il recesso dal mio contratto di noleggio del seguente veicolo: __________</p>
+<p>Numero prenotazione: __________<br/>
+Data di prenotazione: __________<br/>
+Data di consegna prevista: __________<br/>
+Nome e cognome: __________<br/>
+Indirizzo: __________<br/>
+Codice fiscale: __________<br/>
+Data: __________<br/>
+Firma (solo se inviato su carta): __________</p>
+</blockquote>
+
+<h2>8. Foro competente</h2>
+<p>Per ogni controversia relativa all'esercizio del diritto di recesso è competente il Foro di Sassari, salvo le tutele di legge per il consumatore (Foro del consumatore).</p>
+      `,
+    },
+    en: {
+      title: "Right of Withdrawal",
+      html: `
+<p><strong>Last updated:</strong> 17 May 2026</p>
+<p>This notice illustrates the customer's right of withdrawal for rental contracts concluded at distance with <strong>KS Rent S.R.L.</strong>, in compliance with <strong>Italian Legislative Decree 6 September 2005 no. 206 (Consumer Code)</strong> and subsequent amendments.</p>
+
+<h2>1. Standard withdrawal period (art. 52 Italian Consumer Code)</h2>
+<p>For contracts concluded at distance (online, phone, email) the consumer Customer has the right to withdraw from the contract within <strong>14 days</strong> of contract conclusion, without giving any reason and without penalty.</p>
+
+<h2>2. Exception for date-specific services (art. 59 Italian Consumer Code)</h2>
+<p>The right of withdrawal <strong>does not apply</strong> to contracts for "car rental or other transport services, when the trader undertakes to provide the service on a specific date or period". Therefore:</p>
+<ul>
+  <li>For rentals with a <strong>confirmed delivery date</strong>, the standard 14-day withdrawal right <strong>is NOT applicable</strong></li>
+  <li>Cancellation of a confirmed booking follows the cancellation conditions set out in the contract</li>
+</ul>
+
+<h2>3. Cancellation conditions for confirmed bookings</h2>
+<p>For date-specific bookings, KS Rent applies the following fair cancellation conditions:</p>
+<ul>
+  <li><strong>Cancellation more than 7 days before</strong>: free, no penalty, full refund of any deposit</li>
+  <li><strong>Cancellation between 7 and 2 days from delivery date</strong>: 30% penalty of the total rental amount</li>
+  <li><strong>Cancellation less than 48 hours before</strong>: 100% penalty of the total rental amount (no-show)</li>
+  <li><strong>Cancellation for documented force majeure</strong> (certified illness, family bereavement, force majeure event): full refund or rescheduling</li>
+</ul>
+
+<h2>4. Booking modification</h2>
+<p>The Customer may request a modification of the delivery date or booked vehicle up to 48 hours before, subject to availability. Modifications within 48 hours are evaluated case by case and may involve a tariff difference charge.</p>
+
+<h2>5. How to exercise withdrawal</h2>
+<p>To exercise the right of withdrawal or request cancellation of a booking, the Customer must communicate their decision through one of the following channels:</p>
+<ul>
+  <li>Email: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> (with subject "Withdrawal booking [number]")</li>
+  <li>PEC (certified email): <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>WhatsApp: <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+</ul>
+
+<p>The communication must contain:</p>
+<ul>
+  <li>Customer's name, surname and fiscal code</li>
+  <li>Booking number</li>
+  <li>Booked date and vehicle</li>
+  <li>Reason (optional for standard withdrawal; mandatory for force majeure)</li>
+</ul>
+
+<h2>6. Refund</h2>
+<p>The refund, if due, is processed within <strong>14 days of receipt of the withdrawal communication</strong>, using the same payment method used by the Customer for the booking, unless otherwise indicated in writing.</p>
+
+<h2>7. Standard withdrawal form (Annex I, Part B, Italian Decree 21/2014)</h2>
+<p>The Customer may use the following standard form, filling in the necessary fields and sending it to the addresses indicated above:</p>
+<blockquote>
+<p><strong>Withdrawal form</strong><br/>
+Addressee: KS Rent S.R.L., Viale Aldo Moro 367, 07026 Olbia (SS), Italy, email: ksrentsrl@gmail.com, PEC: ks.rent.srl@pec.it</p>
+<p>I hereby notify withdrawal from my rental contract for the following vehicle: __________</p>
+<p>Booking number: __________<br/>
+Booking date: __________<br/>
+Scheduled delivery date: __________<br/>
+Full name: __________<br/>
+Address: __________<br/>
+Fiscal code: __________<br/>
+Date: __________<br/>
+Signature (only if sent on paper): __________</p>
+</blockquote>
+
+<h2>8. Competent court</h2>
+<p>For any dispute relating to the exercise of the right of withdrawal, the Court of Sassari has jurisdiction, subject to consumer protection laws (Consumer's Forum).</p>
+      `,
+    },
+    de: {
+      title: "Widerrufsrecht",
+      html: `
+<p><strong>Zuletzt aktualisiert:</strong> 17. Mai 2026</p>
+<p>Diese Information erlaeutert das Widerrufsrecht des Kunden fuer im Fernabsatz mit <strong>KS Rent S.R.L.</strong> abgeschlossene Mietvertraege, gemaess <strong>italienischem Gesetzesdekret Nr. 206/2005 (Verbraucherkodex)</strong> und nachfolgenden Aenderungen.</p>
+
+<h2>1. Ordentliche Widerrufsfrist (Art. 52 italienischer Verbraucherkodex)</h2>
+<p>Bei Vertraegen, die im Fernabsatz (online, telefonisch, per E-Mail) geschlossen werden, hat der Verbraucherkunde das Recht, den Vertrag innerhalb von <strong>14 Tagen</strong> ab Vertragsabschluss ohne Angabe von Gruenden und ohne Strafe zu widerrufen.</p>
+
+<h2>2. Ausnahme fuer Dienstleistungen zu bestimmtem Datum (Art. 59 italienischer Verbraucherkodex)</h2>
+<p>Das Widerrufsrecht <strong>gilt nicht</strong> fuer Vertraege ueber "Autovermietungen oder andere Transportdienste, wenn sich der Unternehmer verpflichtet, die Leistung zu einem bestimmten Datum oder Zeitraum zu erbringen". Daher:</p>
+<ul>
+  <li>Fuer Mieten mit <strong>bestaetigtem Liefertermin</strong> ist das ordentliche 14-taegige Widerrufsrecht <strong>NICHT anwendbar</strong></li>
+  <li>Die Stornierung einer bestaetigten Buchung folgt den im Vertrag vorgesehenen Stornierungsbedingungen</li>
+</ul>
+
+<h2>3. Stornierungsbedingungen fuer bestaetigte Buchungen</h2>
+<p>Fuer Buchungen mit bestimmtem Datum wendet KS Rent folgende ausgewogene Stornierungsbedingungen an:</p>
+<ul>
+  <li><strong>Stornierung mit mehr als 7 Tagen Vorlauf</strong>: kostenlos, keine Strafe, vollstaendige Erstattung der Anzahlung</li>
+  <li><strong>Stornierung zwischen 7 und 2 Tagen vor Liefertermin</strong>: 30% Strafgebuehr des Gesamtbetrags</li>
+  <li><strong>Stornierung weniger als 48 Stunden vorher</strong>: 100% Strafgebuehr des Gesamtbetrags (No-Show)</li>
+  <li><strong>Stornierung wegen dokumentierter hoeherer Gewalt</strong> (aerztlich bescheinigte Krankheit, Trauerfall, Force Majeure): vollstaendige Erstattung oder Verschiebung</li>
+</ul>
+
+<h2>4. Aenderung der Buchung</h2>
+<p>Der Kunde kann bis 48 Stunden vorher eine Aenderung des Liefertermins oder des gebuchten Fahrzeugs verlangen, abhaengig von Verfuegbarkeit. Aenderungen innerhalb von 48 Stunden werden im Einzelfall geprueft und koennen eine Tarifdifferenz beinhalten.</p>
+
+<h2>5. Ausuebung des Widerrufs</h2>
+<p>Zur Ausuebung des Widerrufsrechts oder Stornierung einer Buchung muss der Kunde seine Entscheidung ueber einen der folgenden Kanaele mitteilen:</p>
+<ul>
+  <li>E-Mail: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> (Betreff "Widerruf Buchung [Nummer]")</li>
+  <li>PEC (zertifizierte E-Mail): <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>WhatsApp: <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+</ul>
+
+<p>Die Mitteilung muss enthalten:</p>
+<ul>
+  <li>Name, Nachname und Steuernummer des Kunden</li>
+  <li>Buchungsnummer</li>
+  <li>Gebuchtes Datum und Fahrzeug</li>
+  <li>Begruendung (optional fuer ordentlichen Widerruf; obligatorisch fuer hoehere Gewalt)</li>
+</ul>
+
+<h2>6. Erstattung</h2>
+<p>Die Erstattung wird, falls faellig, innerhalb von <strong>14 Tagen ab Erhalt der Widerrufsmitteilung</strong> mit derselben vom Kunden fuer die Buchung verwendeten Zahlungsmethode vorgenommen, sofern nicht schriftlich anders angegeben.</p>
+
+<h2>7. Standardwiderrufsformular (Anhang I, Teil B, italienisches Dekret 21/2014)</h2>
+<p>Der Kunde kann folgendes Standardformular verwenden:</p>
+<blockquote>
+<p><strong>Widerrufsformular</strong><br/>
+Empfaenger: KS Rent S.R.L., Viale Aldo Moro 367, 07026 Olbia (SS), Italien, E-Mail: ksrentsrl@gmail.com, PEC: ks.rent.srl@pec.it</p>
+<p>Hiermit widerrufe ich meinen Mietvertrag fuer folgendes Fahrzeug: __________</p>
+<p>Buchungsnummer: __________<br/>
+Buchungsdatum: __________<br/>
+Geplanter Liefertermin: __________<br/>
+Vor- und Nachname: __________<br/>
+Anschrift: __________<br/>
+Steuernummer: __________<br/>
+Datum: __________<br/>
+Unterschrift (nur bei Papierversand): __________</p>
+</blockquote>
+
+<h2>8. Zustaendiges Gericht</h2>
+<p>Fuer jede Streitigkeit im Zusammenhang mit dem Widerrufsrecht ist das Gericht von Sassari zustaendig, vorbehaltlich der Verbraucherschutzgesetze (Verbraucherforum).</p>
+      `,
+    },
+    fr: {
+      title: "Droit de Rétractation",
+      html: `
+<p><strong>Dernière mise à jour :</strong> 17 mai 2026</p>
+<p>La présente notice illustre le droit de rétractation du Client pour les contrats de location conclus à distance avec <strong>KS Rent S.R.L.</strong>, conformément au <strong>Décret législatif italien du 6 septembre 2005, n. 206 (Code de la consommation)</strong> et modifications successives.</p>
+
+<h2>1. Délai de rétractation standard (art. 52 Code de la consommation italien)</h2>
+<p>Pour les contrats conclus à distance (en ligne, téléphone, e-mail), le Client consommateur a le droit de se rétracter du contrat dans les <strong>14 jours</strong> de la conclusion, sans motif et sans pénalité.</p>
+
+<h2>2. Exception pour services à date certaine (art. 59 Code de la consommation italien)</h2>
+<p>Le droit de rétractation <strong>ne s'applique pas</strong> aux contrats relatifs à "la location de véhicules ou d'autres services de transport, quand le professionnel s'engage à fournir la prestation à une date ou période spécifique". Par conséquent :</p>
+<ul>
+  <li>Pour les locations avec <strong>date de livraison confirmée</strong>, le droit de rétractation standard de 14 jours <strong>N'EST PAS applicable</strong></li>
+  <li>L'annulation d'une réservation confirmée suit les conditions d'annulation prévues au contrat</li>
+</ul>
+
+<h2>3. Conditions d'annulation pour réservations confirmées</h2>
+<p>Pour les réservations à date certaine, KS Rent applique les conditions d'annulation équilibrées suivantes :</p>
+<ul>
+  <li><strong>Annulation avec préavis supérieur à 7 jours</strong> : gratuite, aucune pénalité, remboursement intégral de tout acompte</li>
+  <li><strong>Annulation entre 7 et 2 jours de la date de livraison</strong> : pénalité de 30 % du total de la location</li>
+  <li><strong>Annulation moins de 48 heures avant</strong> : pénalité de 100 % du total de la location (no-show)</li>
+  <li><strong>Annulation pour cas de force majeure documentés</strong> (maladie certifiée, deuil familial, événement de force majeure) : remboursement intégral ou report</li>
+</ul>
+
+<h2>4. Modification de la réservation</h2>
+<p>Le Client peut demander une modification de la date de livraison ou du véhicule réservé jusqu'à 48 heures avant, sous réserve de disponibilité. Les modifications dans les 48 heures sont évaluées au cas par cas et peuvent entraîner un débit de différence tarifaire.</p>
+
+<h2>5. Comment exercer la rétractation</h2>
+<p>Pour exercer le droit de rétractation ou demander l'annulation d'une réservation, le Client doit communiquer sa décision via l'un des canaux suivants :</p>
+<ul>
+  <li>Email : <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> (avec objet "Rétractation réservation [numéro]")</li>
+  <li>PEC (email certifié) : <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li>WhatsApp : <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+</ul>
+
+<p>La communication doit contenir :</p>
+<ul>
+  <li>Nom, prénom et code fiscal du Client</li>
+  <li>Numéro de réservation</li>
+  <li>Date et véhicule réservés</li>
+  <li>Motif (facultatif pour rétractation standard ; obligatoire pour force majeure)</li>
+</ul>
+
+<h2>6. Remboursement</h2>
+<p>Le remboursement, si dû, est effectué dans les <strong>14 jours suivant la réception de la communication de rétractation</strong>, par le même moyen de paiement utilisé par le Client pour la réservation, sauf indication écrite contraire.</p>
+
+<h2>7. Formulaire standard de rétractation (Annexe I, Partie B, Décret italien 21/2014)</h2>
+<p>Le Client peut utiliser le formulaire standard suivant :</p>
+<blockquote>
+<p><strong>Formulaire de rétractation</strong><br/>
+Destinataire : KS Rent S.R.L., Viale Aldo Moro 367, 07026 Olbia (SS), Italie, email : ksrentsrl@gmail.com, PEC : ks.rent.srl@pec.it</p>
+<p>Par la présente, je notifie la rétractation de mon contrat de location pour le véhicule suivant : __________</p>
+<p>Numéro de réservation : __________<br/>
+Date de réservation : __________<br/>
+Date de livraison prévue : __________<br/>
+Nom et prénom : __________<br/>
+Adresse : __________<br/>
+Code fiscal : __________<br/>
+Date : __________<br/>
+Signature (uniquement si envoyé sur papier) : __________</p>
+</blockquote>
+
+<h2>8. Tribunal compétent</h2>
+<p>Pour tout litige relatif à l'exercice du droit de rétractation, le Tribunal de Sassari est compétent, sauf protections légales du consommateur (Forum du consommateur).</p>
+      `,
+    },
+  },
+
+  // ─── INFORMATIVA FORNITORE (AGCM) ───
+  "supplier-info": {
+    it: {
+      title: "Informativa Fornitore",
+      html: `
+<p><strong>Ultimo aggiornamento:</strong> 17 maggio 2026</p>
+<p>Le seguenti informazioni sono rese pubbliche ai sensi del <strong>D.Lgs. 70/2003</strong> (commercio elettronico) e delle linee guida AGCM (Autorità Garante della Concorrenza e del Mercato) per gli operatori commerciali online.</p>
+
+<h2>1. Identità del fornitore</h2>
+<table>
+  <tr><th>Ragione sociale</th><td>KS Rent S.R.L.</td></tr>
+  <tr><th>Forma giuridica</th><td>Società a Responsabilità Limitata</td></tr>
+  <tr><th>Sede legale</th><td>Viale Aldo Moro 367, 07026 Olbia (SS), Italia</td></tr>
+  <tr><th>Sede operativa</th><td>Viale Isola Bianca 38, 07026 Olbia (SS), Italia (Porto Isola Bianca)</td></tr>
+  <tr><th>P.IVA / Codice Fiscale</th><td>IT03028900904</td></tr>
+  <tr><th>REA</th><td>SS - 224046</td></tr>
+  <tr><th>Capitale sociale</th><td>€ 20.000,00 interamente versato</td></tr>
+  <tr><th>Camera di Commercio</th><td>CCIAA Sassari</td></tr>
+  <tr><th>Data costituzione</th><td>8 aprile 2025</td></tr>
+  <tr><th>Soci fondatori</th><td>Francesco Milo, Salvatore Milo</td></tr>
+</table>
+
+<h2>2. Recapiti</h2>
+<ul>
+  <li><strong>Email:</strong> <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li><strong>PEC (posta certificata):</strong> <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li><strong>Telefono / WhatsApp:</strong> <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li><strong>Sito web:</strong> <a href="https://www.ksrentsardinia.com">www.ksrentsardinia.com</a></li>
+</ul>
+
+<h2>3. Attività esercitata</h2>
+<p>KS Rent S.R.L. esercita l'attività di <strong>noleggio di autoveicoli, motoveicoli e quadricicli senza conducente</strong> (codice ATECO 77.11.00 — Noleggio di autovetture ed autoveicoli leggeri; 77.39.94 — Noleggio di altri mezzi di trasporto terrestri n.c.a.). La società opera nel territorio della Sardegna nord-orientale, con base operativa al porto Isola Bianca di Olbia, e fornisce servizio di consegna a domicilio nei comuni di Olbia, Costa Smeralda, Gallura e zone limitrofe.</p>
+
+<h2>4. Distinzione da omonime società</h2>
+<p>KS Rent S.R.L. (con sede in Olbia, P.IVA IT03028900904) <strong>è entità giuridica autonoma e indipendente</strong>, non affiliata, controllata o collegata a società omonime operanti in altre regioni italiane. In particolare non è in alcun modo riconducibile a "KS Rent S.r.l." con sede in Roma (sito ksrent.it). I clienti che ricercano servizi di noleggio in Sardegna devono fare riferimento esclusivamente al dominio <strong>ksrentsardinia.com</strong>.</p>
+
+<h2>5. Modalità di reclamo</h2>
+<p>I clienti che intendono presentare reclamo possono utilizzare i seguenti canali:</p>
+<ul>
+  <li><strong>Reclamo informale</strong>: email a <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> con risposta entro 5 giorni lavorativi</li>
+  <li><strong>Reclamo formale</strong>: PEC a <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> con risposta entro 10 giorni lavorativi</li>
+  <li><strong>Reclamo all'AGCM</strong>: in caso di mancata risposta o risposta insoddisfacente, il consumatore può segnalare alla <a href="https://www.agcm.it/" target="_blank" rel="noopener">Autorità Garante della Concorrenza e del Mercato</a></li>
+  <li><strong>Risoluzione alternativa delle controversie (ADR/ODR)</strong>: piattaforma europea ODR <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></li>
+</ul>
+
+<h2>6. Iscrizioni e autorizzazioni</h2>
+<ul>
+  <li>Iscrizione al Registro delle Imprese di Sassari: REA SS-224046</li>
+  <li>Iscrizione al Registro Imprese MIT (Ministero Infrastrutture e Trasporti) per attività di noleggio veicoli senza conducente</li>
+</ul>
+
+<h2>7. Polizze assicurative</h2>
+<p>L'intera flotta è coperta da polizza RCA obbligatoria. Le polizze includono inoltre garanzie kasko, furto e incendio, assistenza stradale 24/7 e copertura per atti vandalici. I dati delle compagnie assicuratrici sono disponibili su richiesta scritta.</p>
+
+<h2>8. Trattamento dei dati personali</h2>
+<p>Il trattamento dei dati personali è regolato dalla nostra <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Privacy Policy</a> pubblicata su Iubenda, conforme al Regolamento UE 2016/679 (GDPR) e al D.Lgs. 196/2003 e successive modifiche. Per esercitare i diritti GDPR (accesso, rettifica, cancellazione, opposizione) contattare il titolare del trattamento ai recapiti indicati al punto 2.</p>
+
+<h2>9. Foro competente</h2>
+<p>Per le controversie con consumatori si applica il <strong>Foro del consumatore</strong> ai sensi dell'art. 33 D.Lgs. 206/2005. Per controversie con clienti business è competente in via esclusiva il Foro di Sassari.</p>
+      `,
+    },
+    en: {
+      title: "Supplier Information",
+      html: `
+<p><strong>Last updated:</strong> 17 May 2026</p>
+<p>The following information is made public pursuant to Italian Legislative Decree <strong>70/2003</strong> (e-commerce) and AGCM (Italian Competition Authority) guidelines for online commercial operators.</p>
+
+<h2>1. Supplier identity</h2>
+<table>
+  <tr><th>Legal name</th><td>KS Rent S.R.L.</td></tr>
+  <tr><th>Legal form</th><td>Limited Liability Company (Società a Responsabilità Limitata)</td></tr>
+  <tr><th>Registered office</th><td>Viale Aldo Moro 367, 07026 Olbia (SS), Italy</td></tr>
+  <tr><th>Operational office</th><td>Viale Isola Bianca 38, 07026 Olbia (SS), Italy (Isola Bianca port)</td></tr>
+  <tr><th>VAT / Tax code</th><td>IT03028900904</td></tr>
+  <tr><th>Business register (REA)</th><td>SS - 224046</td></tr>
+  <tr><th>Share capital</th><td>€ 20,000.00 fully paid</td></tr>
+  <tr><th>Chamber of Commerce</th><td>CCIAA Sassari</td></tr>
+  <tr><th>Incorporation date</th><td>8 April 2025</td></tr>
+  <tr><th>Founders</th><td>Francesco Milo, Salvatore Milo</td></tr>
+</table>
+
+<h2>2. Contacts</h2>
+<ul>
+  <li><strong>Email:</strong> <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li><strong>PEC (certified email):</strong> <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li><strong>Phone / WhatsApp:</strong> <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li><strong>Website:</strong> <a href="https://www.ksrentsardinia.com">www.ksrentsardinia.com</a></li>
+</ul>
+
+<h2>3. Business activity</h2>
+<p>KS Rent S.R.L. operates the activity of <strong>car, motorbike and quadricycle rental without driver</strong> (Italian ATECO code 77.11.00 — Car and light motor vehicle rental; 77.39.94 — Rental of other land transport equipment n.e.c.). The company operates in north-eastern Sardinia, with operational base at Isola Bianca port in Olbia, and provides home delivery service in Olbia, Costa Smeralda, Gallura and nearby areas.</p>
+
+<h2>4. Distinction from similarly-named companies</h2>
+<p>KS Rent S.R.L. (based in Olbia, VAT IT03028900904) <strong>is an autonomous and independent legal entity</strong>, not affiliated, controlled or connected to similarly-named companies operating in other Italian regions. In particular, it is in no way related to "KS Rent S.r.l." based in Rome (site ksrent.it). Customers seeking rental services in Sardinia must refer exclusively to the domain <strong>ksrentsardinia.com</strong>.</p>
+
+<h2>5. Complaint procedures</h2>
+<p>Customers wishing to file a complaint may use the following channels:</p>
+<ul>
+  <li><strong>Informal complaint</strong>: email to <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> with reply within 5 business days</li>
+  <li><strong>Formal complaint</strong>: PEC to <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> with reply within 10 business days</li>
+  <li><strong>AGCM complaint</strong>: in case of no reply or unsatisfactory reply, the consumer may report to the <a href="https://www.agcm.it/" target="_blank" rel="noopener">Italian Competition Authority</a></li>
+  <li><strong>Online Dispute Resolution (ODR/ADR)</strong>: European ODR platform <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></li>
+</ul>
+
+<h2>6. Registrations and authorisations</h2>
+<ul>
+  <li>Registered in the Sassari Business Register: REA SS-224046</li>
+  <li>Registered with the Italian Ministry of Infrastructure and Transport (MIT) for vehicle rental activity without driver</li>
+</ul>
+
+<h2>7. Insurance policies</h2>
+<p>The entire fleet is covered by compulsory third-party liability insurance. Policies also include kasko (collision damage waiver), theft and fire cover, 24/7 roadside assistance and vandalism coverage. Insurer details are available on written request.</p>
+
+<h2>8. Personal data processing</h2>
+<p>Personal data processing is regulated by our <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Privacy Policy</a> published on Iubenda, compliant with EU Regulation 2016/679 (GDPR) and Italian Legislative Decree 196/2003 and subsequent amendments. To exercise GDPR rights (access, rectification, erasure, objection) contact the data controller at the contacts indicated in point 2.</p>
+
+<h2>9. Competent court</h2>
+<p>For consumer disputes, the <strong>Consumer's Forum</strong> applies under Italian Article 33 of Legislative Decree 206/2005. For business client disputes, the Court of Sassari has exclusive jurisdiction.</p>
+      `,
+    },
+    de: {
+      title: "Anbieterinformationen",
+      html: `
+<p><strong>Zuletzt aktualisiert:</strong> 17. Mai 2026</p>
+<p>Die folgenden Informationen werden gemaess italienischem Gesetzesdekret <strong>70/2003</strong> (E-Commerce) und den Richtlinien der AGCM (Italienische Wettbewerbsbehoerde) fuer Online-Handelsbetreiber veroeffentlicht.</p>
+
+<h2>1. Anbieter-Identitaet</h2>
+<table>
+  <tr><th>Firmenname</th><td>KS Rent S.R.L.</td></tr>
+  <tr><th>Rechtsform</th><td>Gesellschaft mit beschraenkter Haftung (S.R.L.)</td></tr>
+  <tr><th>Sitz</th><td>Viale Aldo Moro 367, 07026 Olbia (SS), Italien</td></tr>
+  <tr><th>Betriebssitz</th><td>Viale Isola Bianca 38, 07026 Olbia (SS), Italien (Hafen Isola Bianca)</td></tr>
+  <tr><th>USt-IdNr. / Steuernummer</th><td>IT03028900904</td></tr>
+  <tr><th>Handelsregister (REA)</th><td>SS - 224046</td></tr>
+  <tr><th>Stammkapital</th><td>20.000,00 € voll eingezahlt</td></tr>
+  <tr><th>Handelskammer</th><td>CCIAA Sassari</td></tr>
+  <tr><th>Gruendungsdatum</th><td>8. April 2025</td></tr>
+  <tr><th>Gruender</th><td>Francesco Milo, Salvatore Milo</td></tr>
+</table>
+
+<h2>2. Kontakte</h2>
+<ul>
+  <li><strong>E-Mail:</strong> <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li><strong>PEC (zertifizierte E-Mail):</strong> <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li><strong>Telefon / WhatsApp:</strong> <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li><strong>Website:</strong> <a href="https://www.ksrentsardinia.com">www.ksrentsardinia.com</a></li>
+</ul>
+
+<h2>3. Geschaeftstaetigkeit</h2>
+<p>KS Rent S.R.L. betreibt die Taetigkeit der <strong>Vermietung von Pkw, Motorraedern und Quadricycles ohne Fahrer</strong> (italienischer ATECO-Code 77.11.00 — Vermietung von Pkw und Leichtnutzfahrzeugen; 77.39.94 — Vermietung sonstiger Landtransportmittel a.n.g.). Das Unternehmen ist im Nordosten Sardiniens taetig, mit Betriebsbasis am Hafen Isola Bianca in Olbia, und bietet einen Haus-Lieferservice in Olbia, Costa Smeralda, Gallura und Umgebung an.</p>
+
+<h2>4. Unterscheidung von gleichnamigen Gesellschaften</h2>
+<p>KS Rent S.R.L. (mit Sitz in Olbia, USt-IdNr. IT03028900904) <strong>ist eine eigenstaendige und unabhaengige juristische Person</strong>, nicht verbunden, kontrolliert oder mit gleichnamigen Gesellschaften in anderen italienischen Regionen verbunden. Insbesondere besteht keinerlei Verbindung zu "KS Rent S.r.l." mit Sitz in Rom (Website ksrent.it). Kunden, die Mietdienste in Sardinien suchen, muessen sich ausschliesslich an die Domain <strong>ksrentsardinia.com</strong> wenden.</p>
+
+<h2>5. Beschwerdeverfahren</h2>
+<p>Kunden, die eine Beschwerde einreichen moechten, koennen folgende Kanaele nutzen:</p>
+<ul>
+  <li><strong>Informelle Beschwerde</strong>: E-Mail an <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> mit Antwort innerhalb von 5 Werktagen</li>
+  <li><strong>Formelle Beschwerde</strong>: PEC an <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> mit Antwort innerhalb von 10 Werktagen</li>
+  <li><strong>AGCM-Beschwerde</strong>: bei ausbleibender oder unzufriedenstellender Antwort kann der Verbraucher die <a href="https://www.agcm.it/" target="_blank" rel="noopener">italienische Wettbewerbsbehoerde</a> kontaktieren</li>
+  <li><strong>Online-Streitbeilegung (ODR/ADR)</strong>: europaeische ODR-Plattform <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></li>
+</ul>
+
+<h2>6. Eintragungen und Genehmigungen</h2>
+<ul>
+  <li>Eingetragen im Handelsregister Sassari: REA SS-224046</li>
+  <li>Eingetragen beim italienischen Ministerium fuer Infrastruktur und Verkehr (MIT) fuer Fahrzeugvermietung ohne Fahrer</li>
+</ul>
+
+<h2>7. Versicherungspolicen</h2>
+<p>Die gesamte Flotte ist durch obligatorische Haftpflichtversicherung abgedeckt. Die Policen enthalten zudem Kasko, Diebstahl- und Brandschutz, 24/7-Pannenhilfe und Vandalismus-Abdeckung. Versichererdaten sind auf schriftliche Anfrage verfuegbar.</p>
+
+<h2>8. Verarbeitung personenbezogener Daten</h2>
+<p>Die Verarbeitung personenbezogener Daten ist durch unsere <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Datenschutzrichtlinie</a> auf Iubenda geregelt, in Uebereinstimmung mit der EU-Verordnung 2016/679 (DSGVO) und dem italienischen Gesetzesdekret 196/2003. Zur Ausuebung der DSGVO-Rechte (Zugang, Berichtigung, Loeschung, Widerspruch) kontaktieren Sie den Datenverarbeitungsverantwortlichen unter den in Punkt 2 angegebenen Kontakten.</p>
+
+<h2>9. Zustaendiges Gericht</h2>
+<p>Fuer Verbraucherstreitigkeiten gilt das <strong>Verbraucherforum</strong> gemaess Art. 33 italienisches Gesetzesdekret 206/2005. Fuer Streitigkeiten mit Geschaeftskunden ist ausschliesslich das Gericht von Sassari zustaendig.</p>
+      `,
+    },
+    fr: {
+      title: "Informations Fournisseur",
+      html: `
+<p><strong>Dernière mise à jour :</strong> 17 mai 2026</p>
+<p>Les informations suivantes sont rendues publiques conformément au <strong>Décret législatif italien 70/2003</strong> (commerce électronique) et aux lignes directrices AGCM (Autorité italienne de la concurrence) pour les opérateurs commerciaux en ligne.</p>
+
+<h2>1. Identité du fournisseur</h2>
+<table>
+  <tr><th>Raison sociale</th><td>KS Rent S.R.L.</td></tr>
+  <tr><th>Forme juridique</th><td>Société à Responsabilité Limitée (S.R.L.)</td></tr>
+  <tr><th>Siège social</th><td>Viale Aldo Moro 367, 07026 Olbia (SS), Italie</td></tr>
+  <tr><th>Siège opérationnel</th><td>Viale Isola Bianca 38, 07026 Olbia (SS), Italie (port Isola Bianca)</td></tr>
+  <tr><th>TVA / Code fiscal</th><td>IT03028900904</td></tr>
+  <tr><th>Registre des entreprises (REA)</th><td>SS - 224046</td></tr>
+  <tr><th>Capital social</th><td>20 000,00 € entièrement libéré</td></tr>
+  <tr><th>Chambre de Commerce</th><td>CCIAA Sassari</td></tr>
+  <tr><th>Date de constitution</th><td>8 avril 2025</td></tr>
+  <tr><th>Fondateurs</th><td>Francesco Milo, Salvatore Milo</td></tr>
+</table>
+
+<h2>2. Contacts</h2>
+<ul>
+  <li><strong>Email :</strong> <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a></li>
+  <li><strong>PEC (email certifié) :</strong> <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a></li>
+  <li><strong>Téléphone / WhatsApp :</strong> <a href="https://wa.me/393446107071">+39 344 6107071</a></li>
+  <li><strong>Site web :</strong> <a href="https://www.ksrentsardinia.com">www.ksrentsardinia.com</a></li>
+</ul>
+
+<h2>3. Activité exercée</h2>
+<p>KS Rent S.R.L. exerce l'activité de <strong>location de voitures, motos et quadricycles sans chauffeur</strong> (code ATECO italien 77.11.00 — Location de voitures et véhicules légers ; 77.39.94 — Location d'autres moyens de transport terrestre n.c.a.). La société opère dans le nord-est de la Sardaigne, avec base opérationnelle au port Isola Bianca d'Olbia, et fournit un service de livraison à domicile dans les communes d'Olbia, Costa Smeralda, Gallura et environs.</p>
+
+<h2>4. Distinction des sociétés homonymes</h2>
+<p>KS Rent S.R.L. (avec siège à Olbia, TVA IT03028900904) <strong>est une entité juridique autonome et indépendante</strong>, non affiliée, contrôlée ou liée à des sociétés homonymes opérant dans d'autres régions italiennes. En particulier, elle n'est en aucune façon liée à "KS Rent S.r.l." avec siège à Rome (site ksrent.it). Les clients cherchant des services de location en Sardaigne doivent se référer exclusivement au domaine <strong>ksrentsardinia.com</strong>.</p>
+
+<h2>5. Procédures de réclamation</h2>
+<p>Les clients souhaitant déposer une réclamation peuvent utiliser les canaux suivants :</p>
+<ul>
+  <li><strong>Réclamation informelle</strong> : email à <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> avec réponse sous 5 jours ouvrables</li>
+  <li><strong>Réclamation formelle</strong> : PEC à <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> avec réponse sous 10 jours ouvrables</li>
+  <li><strong>Réclamation à l'AGCM</strong> : en cas de non-réponse ou réponse insatisfaisante, le consommateur peut signaler à l'<a href="https://www.agcm.it/" target="_blank" rel="noopener">Autorité italienne de la concurrence</a></li>
+  <li><strong>Résolution en ligne des litiges (RLL/ADR)</strong> : plateforme européenne ODR <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></li>
+</ul>
+
+<h2>6. Inscriptions et autorisations</h2>
+<ul>
+  <li>Inscription au Registre des Entreprises de Sassari : REA SS-224046</li>
+  <li>Inscription au Ministère italien des Infrastructures et Transports (MIT) pour activité de location de véhicules sans chauffeur</li>
+</ul>
+
+<h2>7. Polices d'assurance</h2>
+<p>Toute la flotte est couverte par une assurance responsabilité civile obligatoire. Les polices incluent également kasko, vol et incendie, assistance routière 24/7 et couverture vandalisme. Les données des compagnies d'assurance sont disponibles sur demande écrite.</p>
+
+<h2>8. Traitement des données personnelles</h2>
+<p>Le traitement des données personnelles est régi par notre <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Politique de Confidentialité</a> publiée sur Iubenda, conforme au Règlement UE 2016/679 (RGPD) et au Décret législatif italien 196/2003. Pour exercer les droits RGPD (accès, rectification, effacement, opposition), contactez le responsable du traitement aux coordonnées indiquées au point 2.</p>
+
+<h2>9. Tribunal compétent</h2>
+<p>Pour les litiges avec consommateurs, le <strong>Forum du consommateur</strong> s'applique conformément à l'art. 33 du Décret législatif italien 206/2005. Pour les litiges avec clients business, le Tribunal de Sassari a compétence exclusive.</p>
+      `,
+    },
+  },
+};
+
+const T = TRANSLATIONS[pageType][lang];
+const lastUpdatedLabels: Record<Lang, string> = {
+  it: "Pubblicato il 17 maggio 2026 — KS Rent S.R.L.",
+  en: "Published 17 May 2026 — KS Rent S.R.L.",
+  de: "Veroeffentlicht am 17. Mai 2026 — KS Rent S.R.L.",
+  fr: "Publié le 17 mai 2026 — KS Rent S.R.L.",
+};
+---
+
+<main class="bg-background min-h-screen pt-28 md:pt-36 pb-20">
+  <div class="container mx-auto px-4 max-w-4xl">
+    <header class="mb-10 md:mb-14 text-center">
+      <span class="inline-block text-gold font-semibold tracking-[0.3em] uppercase text-[11px] md:text-xs mb-4">
+        {lastUpdatedLabels[lang]}
+      </span>
+      <h1 class="font-serif text-3xl md:text-5xl text-foreground font-medium leading-tight">
+        {T.title}
+      </h1>
+    </header>
+
+    <article class="editorial mx-auto" set:html={T.html} />
+  </div>
+</main>

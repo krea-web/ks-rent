@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Anbieterinformationen (AGCM) | KS Rent Sardinia"
+  description="Identitaet des Anbieters KS Rent S.R.L.: Firmenbezeichnung, USt-IdNr., REA, Sitz, Kontakte, ATECO-Taetigkeit, Beschwerdeverfahren und Eintragungen — gemaess italienischen AGCM-Richtlinien."
+  canonical="https://www.ksrentsardinia.com/de/anbieterinformationen"
+  jsonLd={[buildBreadcrumb("Anbieterinformationen", "/de/anbieterinformationen")]}
+>
+  <LegalPageContent pageType="supplier-info" lang="de" />
+</BaseLayout>

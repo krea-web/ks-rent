@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Supplier Information (AGCM) | KS Rent Sardinia"
+  description="KS Rent S.R.L. supplier identity: legal name, VAT, REA, registered office, contacts, ATECO activity, complaint procedures and registrations — per Italian AGCM guidelines."
+  canonical="https://www.ksrentsardinia.com/en/supplier-info"
+  jsonLd={[buildBreadcrumb("Supplier Information", "/en/supplier-info")]}
+>
+  <LegalPageContent pageType="supplier-info" lang="en" />
+</BaseLayout>

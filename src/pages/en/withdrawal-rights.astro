@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Right of Withdrawal | KS Rent Sardinia"
+  description="Right of withdrawal information for distance car rental contracts under Italian Consumer Code (Legislative Decree 206/2005). KS Rent S.R.L. cancellation policy."
+  canonical="https://www.ksrentsardinia.com/en/withdrawal-rights"
+  jsonLd={[buildBreadcrumb("Right of Withdrawal", "/en/withdrawal-rights")]}
+>
+  <LegalPageContent pageType="withdrawal" lang="en" />
+</BaseLayout>

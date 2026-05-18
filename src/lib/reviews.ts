@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import googleSnapshot from "@/data/google-rating-snapshot.json";
 
 export interface AggregateRating {
   ratingValue: number;
@@ -10,16 +11,35 @@ const MIN_REVIEWS_FOR_SCHEMA = 5;
 let cached: AggregateRating | null | undefined;
 
 /**
- * Fetch dell'AggregateRating reale dalle reviews pubblicate su Supabase.
- * Il risultato e' cached a livello di modulo: durante un build SSG la query
- * viene eseguita una sola volta anche se invocata da N pagine.
+ * Fetch dell'AggregateRating reale.
  *
- * Ritorna null se ci sono meno di MIN_REVIEWS_FOR_SCHEMA recensioni
- * (evita JSON-LD con ratingCount basso o zero).
+ * Fonte autoritaria: `src/data/google-rating-snapshot.json`, popolato dallo
+ * script `fetch-google-reviews.mjs` con `user_ratings_total` e `rating` da
+ * Google Places API. Questi sono i numeri *reali* del GBP (es. 35 review
+ * totali, media 5.0), mentre la tabella `reviews` su Supabase contiene solo
+ * il subset (5-10) di review che Google espone via Place Details.
+ *
+ * Fallback: se lo snapshot e' assente o invalido, usa il count locale dalla
+ * tabella `reviews` (legacy).
  */
 export async function getAggregateRating(): Promise<AggregateRating | null> {
   if (cached !== undefined) return cached;
 
+  // 1. Fonte primaria: snapshot Google API (totale GBP reale)
+  if (
+    googleSnapshot &&
+    typeof googleSnapshot.ratingValue === "number" &&
+    typeof googleSnapshot.reviewCount === "number" &&
+    googleSnapshot.reviewCount >= MIN_REVIEWS_FOR_SCHEMA
+  ) {
+    cached = {
+      ratingValue: Number(googleSnapshot.ratingValue.toFixed(1)),
+      reviewCount: googleSnapshot.reviewCount,
+    };
+    return cached;
+  }
+
+  // 2. Fallback: count locale dalle review sincronizzate in Supabase
   const { data, error } = await supabase
     .from("reviews")
     .select("rating")

@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Widerrufsrecht | KS Rent Sardinia"
+  description="Informationen zum Widerrufsrecht fuer Fernabsatz-Mietvertraege gemaess italienischem Verbraucherkodex (Gesetzesdekret 206/2005). Stornierungsbedingungen KS Rent S.R.L."
+  canonical="https://www.ksrentsardinia.com/de/widerrufsrecht"
+  jsonLd={[buildBreadcrumb("Widerrufsrecht", "/de/widerrufsrecht")]}
+>
+  <LegalPageContent pageType="withdrawal" lang="de" />
+</BaseLayout>

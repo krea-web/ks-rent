@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Droit de Rétractation | KS Rent Sardinia"
+  description="Notice sur le droit de rétractation pour les contrats de location de voitures à distance, conformément au Code de la consommation italien (Décret 206/2005). KS Rent S.R.L."
+  canonical="https://www.ksrentsardinia.com/fr/droit-de-retractation"
+  jsonLd={[buildBreadcrumb("Droit de Rétractation", "/fr/droit-de-retractation")]}
+>
+  <LegalPageContent pageType="withdrawal" lang="fr" />
+</BaseLayout>

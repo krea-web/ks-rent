@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Diritto di Recesso | KS Rent Sardinia"
+  description="Informativa sul diritto di recesso per contratti di noleggio auto a distanza ai sensi del Codice del Consumo italiano (D.Lgs 206/2005). Condizioni di cancellazione KS Rent S.R.L."
+  canonical="https://www.ksrentsardinia.com/diritto-recesso"
+  jsonLd={[buildBreadcrumb("Diritto di Recesso", "/diritto-recesso")]}
+>
+  <LegalPageContent pageType="withdrawal" lang="it" />
+</BaseLayout>

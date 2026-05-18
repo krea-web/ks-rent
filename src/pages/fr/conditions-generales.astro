@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Conditions Générales de Location | KS Rent Sardinia"
+  description="Conditions Générales de location KS Rent S.R.L. Olbia : tarifs, caution, franchise kasko, documents requis, rétractation, juridiction (Tribunal de Sassari)."
+  canonical="https://www.ksrentsardinia.com/fr/conditions-generales"
+  jsonLd={[buildBreadcrumb("Conditions Générales", "/fr/conditions-generales")]}
+>
+  <LegalPageContent pageType="terms" lang="fr" />
+</BaseLayout>

@@ -1,5 +1,5 @@
 import { Link } from "@/lib/router-shim";
-import { Phone, Mail, MapPin, Map } from "lucide-react";
+import { Phone, Mail, MapPin, Map, MessageCircle, Star } from "lucide-react";
 import { getDict } from "@/i18n";
 import { localizePath, getFleetPath, localizeLocationSlug, localizeVehicleSlug, type Locale } from "@/lib/i18n";
 
@@ -42,6 +42,9 @@ const Footer = ({ lang = "it" }: FooterProps) => {
   const airportHref = localizePath("/noleggio-auto-aeroporto-olbia", lang);
   const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
   const noCardHref = localizePath("/noleggio-auto-senza-carta-di-credito-olbia", lang);
+  const termsHref = localizePath("/termini-e-condizioni", lang);
+  const withdrawalHref = localizePath("/diritto-recesso", lang);
+  const supplierInfoHref = localizePath("/informativa-fornitore", lang);
 
   const eastDestinations = [
     { label: "San Teodoro", slug: "noleggio-auto-san-teodoro" },
@@ -276,6 +279,26 @@ const Footer = ({ lang = "it" }: FooterProps) => {
                   <Mail size={14} />
                   {t.footer.emailBtn}
                 </a>
+                <a
+                  href="https://wa.me/393446107071"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp KS Rent Sardinia"
+                  className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all duration-300 group relative z-20 text-xs font-bold text-foreground tracking-wider"
+                >
+                  <MessageCircle size={14} className="group-hover:animate-pulse" />
+                  WhatsApp
+                </a>
+                <a
+                  href="https://www.tripadvisor.it/Attraction_Review-g187883-d34295915-Reviews-KS_RENT_SARDINIA-Olbia_Province_of_Olbia_Tempio_Sardinia.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="KS Rent Sardinia su Tripadvisor"
+                  className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-[#34E0A1] hover:border-[#34E0A1] hover:text-black transition-all duration-300 group relative z-20 text-xs font-bold text-foreground tracking-wider"
+                >
+                  <Star size={14} className="group-hover:animate-pulse" />
+                  Tripadvisor
+                </a>
               </div>
             </div>
           </div>
@@ -396,6 +419,30 @@ const Footer = ({ lang = "it" }: FooterProps) => {
                 title={t.footer.cookiePolicy}
               >
                 {t.footer.cookiePolicy}
+              </a>
+              <span className="hidden sm:inline opacity-30">•</span>
+              <a
+                href={termsHref}
+                className="hover:text-gold transition-colors relative z-20"
+                title={t.footer.termsConditions}
+              >
+                {t.footer.termsConditions}
+              </a>
+              <span className="hidden sm:inline opacity-30">•</span>
+              <a
+                href={withdrawalHref}
+                className="hover:text-gold transition-colors relative z-20"
+                title={t.footer.withdrawalRights}
+              >
+                {t.footer.withdrawalRights}
+              </a>
+              <span className="hidden sm:inline opacity-30">•</span>
+              <a
+                href={supplierInfoHref}
+                className="hover:text-gold transition-colors relative z-20"
+                title={t.footer.supplierInfo}
+              >
+                {t.footer.supplierInfo}
               </a>
               <span className="opacity-30">|</span>
               <span className="font-medium">

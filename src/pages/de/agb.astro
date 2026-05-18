@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Allgemeine Geschaeftsbedingungen | KS Rent Sardinia"
+  description="Allgemeine Mietbedingungen KS Rent S.R.L. Olbia: Tarife, Kaution, Kasko-Selbstbeteiligung, erforderliche Dokumente, Widerruf, Gerichtsstand Sassari."
+  canonical="https://www.ksrentsardinia.com/de/agb"
+  jsonLd={[buildBreadcrumb("AGB", "/de/agb")]}
+>
+  <LegalPageContent pageType="terms" lang="de" />
+</BaseLayout>

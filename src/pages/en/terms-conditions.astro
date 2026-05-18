@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Rental Terms & Conditions | KS Rent Sardinia"
+  description="KS Rent S.R.L. Olbia car rental Terms & Conditions: rates, security deposit, kasko excess, required documents, withdrawal, jurisdiction (Sassari Court)."
+  canonical="https://www.ksrentsardinia.com/en/terms-conditions"
+  jsonLd={[buildBreadcrumb("Terms & Conditions", "/en/terms-conditions")]}
+>
+  <LegalPageContent pageType="terms" lang="en" />
+</BaseLayout>

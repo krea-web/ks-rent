@@ -17,6 +17,12 @@
  */
 
 import { createClient } from "@supabase/supabase-js";
+import { writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const SNAPSHOT_PATH = resolve(__dirname, "..", "src", "data", "google-rating-snapshot.json");
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const PLACE_ID = process.env.GOOGLE_PLACE_ID;
@@ -60,6 +66,24 @@ async function main() {
   const reviews = json.result?.reviews || [];
 
   console.log(`[fetch-google-reviews] ${placeName} — ${aggregateRating} (${totalCount} totali, ${reviews.length} fetchate)`);
+
+  // Persisti snapshot rating/count REALI di Google (usato da src/lib/reviews.ts
+  // come fonte autoritaria per AggregateRating JSON-LD e UI homepage).
+  if (typeof aggregateRating === "number" && typeof totalCount === "number") {
+    const snapshot = {
+      ratingValue: aggregateRating,
+      reviewCount: totalCount,
+      fetchedAt: new Date().toISOString().slice(0, 10),
+      source: "google-places-api",
+      note: "Aggiornato automaticamente da scripts/fetch-google-reviews.mjs",
+    };
+    try {
+      writeFileSync(SNAPSHOT_PATH, JSON.stringify(snapshot, null, 2) + "\n", "utf8");
+      console.log(`[fetch-google-reviews] Snapshot aggiornato: ${aggregateRating}/${totalCount} -> ${SNAPSHOT_PATH}`);
+    } catch (err) {
+      console.warn(`[fetch-google-reviews] Snapshot write fail: ${err?.message || err}`);
+    }
+  }
 
   if (reviews.length === 0) {
     console.log("[fetch-google-reviews] Nessuna recensione restituita da Google.");
