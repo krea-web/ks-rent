@@ -205,6 +205,13 @@ _Nessuna._ Sessione (g): audit i18n service top-level confermato OK — tutte le
 
 ### ⛔️ SKIP MOTIVATI (non da fare)
 - **CTA gold dopo form in `PrenotaOra`**: il form è uno stepped wizard 2100 righe; aggiungere un secondo CTA distrarrebbe dal flow del primo (Conferma prenotazione). Skip definitivo.
+- **🔒 FREEZE TOTALE `src/views/PrenotaOra.tsx`** (2026-05-17): l'utente ha richiesto di NON toccare il workflow di prenotazione per evitare di romperlo. Sono in pausa i seguenti task del piano `gentle-snacking-sun.md`:
+  - B2 checkbox consenso T&C/Privacy nel form
+  - B3 età validation client-side nello step
+  - L3 integrazione Stripe gateway pagamento
+  - M1 documenti richiesti nello step "Conferma" del booking
+  - Alternative accettabili (senza toccare PrenotaOra): vedi `feedback_prenotaora_freeze.md` in memory.
+  - Task collegati SI possono fare: B1 Legal pages, B4 Franchigia /tariffe, B5 verifica N8N lato server, B6.b LLM batch Supabase, M1 in /tariffe, M2 skip-nav, M3 image srcset, M4 footer, L1 newsletter, L2 SMS.
 
 ---
 
