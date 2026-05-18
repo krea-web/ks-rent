@@ -7,15 +7,56 @@ const SITE = "https://www.ksrentsardinia.com";
 const pagineP = [
   { label: "Home", to: "/en/" },
   { label: "Fleet", to: "/en/fleet" },
+  { label: "Rates", to: "/en/rates" },
+  { label: "Guides", to: "/en/guide" },
+  { label: "Compare Vehicles", to: "/en/fleet/compare" },
   { label: "Book Now", to: "/en/book-now" },
   { label: "About Us", to: "/en/about-us" },
 ];
 
 const servizi = [
+  { label: "Car Hire Olbia", to: "/en/car-hire-olbia" },
   { label: "Car Hire Olbia Airport", to: "/en/car-hire-olbia-airport" },
   { label: "Car Hire Olbia Port", to: "/en/car-hire-olbia-port" },
   { label: "Car Hire Costa Smeralda", to: "/en/car-hire-costa-smeralda" },
   { label: "Car Hire Without Credit Card", to: "/en/car-hire-no-credit-card-olbia" },
+];
+
+const veicoli = [
+  { label: "Audi RS3 Sportback", to: "/en/fleet/audi-rs3-hire-olbia" },
+  { label: "BMW M2 Coupé", to: "/en/fleet/bmw-m2-coupe-hire-olbia" },
+  { label: "Mercedes A-Class 180d", to: "/en/fleet/mercedes-a-class-hire-olbia" },
+  { label: "Jeep Avenger", to: "/en/fleet/jeep-avenger-hire-olbia" },
+  { label: "Fiat Panda Hybrid", to: "/en/fleet/fiat-panda-hire-olbia" },
+  { label: "Honda SH 125/350", to: "/en/fleet/honda-sh-hire-olbia" },
+  { label: "Yamaha Raptor Quad", to: "/en/fleet/yamaha-raptor-quad-hire-sardinia" },
+];
+
+const confronti = [
+  { label: "Audi RS3 vs BMW M2", to: "/en/fleet/compare/audi-rs3-vs-bmw-m2" },
+  { label: "Audi RS3 vs Jeep Avenger", to: "/en/fleet/compare/audi-rs3-vs-jeep-avenger" },
+  { label: "Audi RS3 vs Mercedes A-Class", to: "/en/fleet/compare/audi-rs3-vs-mercedes-a-class" },
+  { label: "BMW M2 vs Mercedes A-Class", to: "/en/fleet/compare/bmw-m2-vs-mercedes-a-class" },
+  { label: "Mercedes A-Class vs Jeep Avenger", to: "/en/fleet/compare/mercedes-a-class-vs-jeep-avenger" },
+  { label: "Jeep Avenger vs Fiat Panda", to: "/en/fleet/compare/jeep-avenger-vs-fiat-panda" },
+];
+
+const guideArticoli = [
+  { label: "7-day Costa Smeralda itinerary", to: "/en/guide/7-day-itinerary-costa-smeralda-from-olbia" },
+  { label: "What to do in Olbia in 3 days", to: "/en/guide/what-to-do-in-olbia-3-days-itinerary" },
+  { label: "How to get to Costa Smeralda", to: "/en/guide/how-to-get-to-costa-smeralda-flights-ferries" },
+  { label: "Getting around Porto Cervo", to: "/en/guide/getting-around-porto-cervo-parking-shuttles" },
+  { label: "Costa Smeralda family beaches", to: "/en/guide/family-beaches-costa-smeralda" },
+  { label: "Hidden Gallura beaches", to: "/en/guide/hidden-beaches-gallura-dirt-roads" },
+  { label: "Most beautiful beaches NE Sardinia", to: "/en/guide/most-beautiful-beaches-north-east-sardinia" },
+  { label: "Visiting La Maddalena archipelago", to: "/en/guide/visiting-la-maddalena-archipelago-practical-guide" },
+  { label: "Costa Smeralda holiday cost", to: "/en/guide/costa-smeralda-holiday-cost-real-budget-2026" },
+  { label: "Gallura festivals 2026 calendar", to: "/en/guide/festivals-events-gallura-2026-calendar" },
+  { label: "Car hire Olbia airport guide", to: "/en/guide/car-hire-olbia-airport-practical-guide" },
+  { label: "Car hire without credit card", to: "/en/guide/car-hire-olbia-without-credit-card-complete-guide" },
+  { label: "International driving permit Sardinia", to: "/en/guide/international-driving-permit-sardinia-do-i-need-it" },
+  { label: "Scooter or quad in Sardinia", to: "/en/guide/scooter-quad-rental-sardinia-how-to-choose" },
+  { label: "Yacht charter vs car hire", to: "/en/guide/yacht-charter-vs-car-hire-costa-smeralda" },
 ];
 
 const locCostaSmeralda = [
@@ -72,6 +113,9 @@ const spiaggeEstNord = [
 const allItems = [
   ...pagineP,
   ...servizi,
+  ...veicoli,
+  ...confronti,
+  ...guideArticoli,
   ...locCostaSmeralda,
   ...locCostaEst,
   ...spiaggeCS,
@@ -94,6 +138,9 @@ const itemListJsonLd = {
 const sections = [
   { title: "Main pages", icon: "★", items: pagineP },
   { title: "Services & delivery points", icon: "✈", items: servizi },
+  { title: "Vehicle fleet", icon: "🚗", items: veicoli },
+  { title: "Vehicle comparisons", icon: "⚖", items: confronti },
+  { title: "Guides & itineraries", icon: "📖", items: guideArticoli },
   { title: "Costa Smeralda Locations", icon: "📍", items: locCostaSmeralda },
   { title: "East & North Coast Locations", icon: "📍", items: locCostaEst },
   { title: "Costa Smeralda Beaches", icon: "🌊", items: spiaggeCS },

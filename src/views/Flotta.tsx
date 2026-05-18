@@ -345,7 +345,7 @@ export default function Flotta({ lang = "it" }: Props) {
   const bookHref = lang === "it" ? "/prenotaora" : lang === "en" ? "/en/book-now" : lang === "de" ? "/de/jetzt-buchen" : "/fr/reserver";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-foreground">
+    <div className="min-h-screen bg-white dark:bg-black text-foreground editorial-soft">
       {/* Hero Intro */}
       <section className="relative pt-32 pb-8 px-4 text-center">
         <motion.h1

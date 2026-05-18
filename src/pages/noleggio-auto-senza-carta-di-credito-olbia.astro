@@ -3,8 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import NoleggioSenzaCartaCredito, {
   senzaCCJsonLd,
   senzaCCFaqJsonLd,
-} from "@/views/NoleggioSenzaCartaCredito";
-import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+} from "@/views/NoleggioSenzaCartaCredito";
 import { buildBreadcrumb } from "@/lib/jsonLd";
 ---
 <BaseLayout
@@ -17,6 +16,5 @@ import { buildBreadcrumb } from "@/lib/jsonLd";
     buildBreadcrumb("Noleggio Senza Carta di Credito", "/noleggio-auto-senza-carta-di-credito-olbia"),
   ]}
 >
-  <NoleggioSenzaCartaCredito lang="it" />
-  <GuideVehicleStrip lang="it" />
+  <NoleggioSenzaCartaCredito lang="it" />
 </BaseLayout>

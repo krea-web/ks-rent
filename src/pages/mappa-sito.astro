@@ -7,15 +7,56 @@ const SITE = "https://www.ksrentsardinia.com";
 const pagineP = [
   { label: "Home", to: "/" },
   { label: "Flotta", to: "/flotta" },
+  { label: "Tariffe", to: "/tariffe" },
+  { label: "Guide", to: "/guide" },
+  { label: "Confronta Veicoli", to: "/flotta/confronta" },
   { label: "Prenota Ora", to: "/prenotaora" },
   { label: "Chi Siamo", to: "/chisiamo" },
 ];
 
 const servizi = [
+  { label: "Noleggio Auto Olbia", to: "/noleggio-auto-olbia" },
   { label: "Noleggio Auto Aeroporto Olbia", to: "/noleggio-auto-aeroporto-olbia" },
   { label: "Noleggio Auto Porto Olbia", to: "/noleggio-auto-porto-olbia" },
   { label: "Noleggio Auto Costa Smeralda", to: "/noleggio-auto-costa-smeralda" },
   { label: "Noleggio Senza Carta di Credito", to: "/noleggio-auto-senza-carta-di-credito-olbia" },
+];
+
+const veicoli = [
+  { label: "Audi RS3 Sportback", to: "/flotta/audi-rs3" },
+  { label: "BMW M2 Coupé", to: "/flotta/bmw-m2" },
+  { label: "Mercedes Classe A 180d", to: "/flotta/mercedes-classe-a" },
+  { label: "Jeep Avenger", to: "/flotta/jeep-avenger" },
+  { label: "Fiat Panda Hybrid", to: "/flotta/fiat-panda" },
+  { label: "Honda SH 125/350", to: "/flotta/honda-sh" },
+  { label: "Yamaha Raptor Quad", to: "/flotta/yamaha-quad-raptor" },
+];
+
+const confronti = [
+  { label: "Audi RS3 vs BMW M2", to: "/flotta/confronta/audi-rs3-vs-bmw-m2" },
+  { label: "Audi RS3 vs Jeep Avenger", to: "/flotta/confronta/audi-rs3-vs-jeep-avenger" },
+  { label: "Audi RS3 vs Mercedes Classe A", to: "/flotta/confronta/audi-rs3-vs-mercedes-classe-a" },
+  { label: "BMW M2 vs Mercedes Classe A", to: "/flotta/confronta/bmw-m2-vs-mercedes-classe-a" },
+  { label: "Mercedes Classe A vs Jeep Avenger", to: "/flotta/confronta/mercedes-classe-a-vs-jeep-avenger" },
+  { label: "Jeep Avenger vs Fiat Panda", to: "/flotta/confronta/jeep-avenger-vs-fiat-panda" },
+];
+
+const guideArticoli = [
+  { label: "Itinerario 7 giorni Costa Smeralda", to: "/guide/itinerario-7-giorni-costa-smeralda-da-olbia" },
+  { label: "Cosa fare a Olbia in 3 giorni", to: "/guide/cosa-fare-a-olbia-3-giorni-itinerario" },
+  { label: "Come arrivare in Costa Smeralda", to: "/guide/come-arrivare-costa-smeralda-voli-traghetti" },
+  { label: "Come muoversi a Porto Cervo", to: "/guide/come-muoversi-porto-cervo-parcheggi-navette" },
+  { label: "Spiagge Costa Smeralda con bambini", to: "/guide/spiagge-costa-smeralda-con-bambini" },
+  { label: "Spiagge nascoste della Gallura", to: "/guide/spiagge-nascoste-gallura-sterrati" },
+  { label: "Spiagge più belle nord-est Sardegna", to: "/guide/spiagge-piu-belle-sardegna-nord-orientale" },
+  { label: "Visitare l'Arcipelago La Maddalena", to: "/guide/visitare-arcipelago-la-maddalena-guida-pratica" },
+  { label: "Quanto costa una vacanza in Costa Smeralda", to: "/guide/quanto-costa-vacanza-costa-smeralda-budget-2026" },
+  { label: "Sagre ed eventi Gallura 2026", to: "/guide/sagre-eventi-gallura-2026-calendario" },
+  { label: "Noleggio auto Olbia aeroporto", to: "/guide/noleggio-auto-olbia-aeroporto-guida-pratica" },
+  { label: "Noleggio senza carta di credito", to: "/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa" },
+  { label: "Patente internazionale Sardegna", to: "/guide/patente-internazionale-sardegna-serve-davvero" },
+  { label: "Noleggio scooter o quad in Sardegna", to: "/guide/noleggio-scooter-quad-sardegna-come-scegliere" },
+  { label: "Yacht charter vs auto a noleggio", to: "/guide/yacht-charter-vs-auto-noleggio-costa-smeralda" },
 ];
 
 const locCostaSmeralda = [
@@ -72,6 +113,9 @@ const spiaggeEstNord = [
 const allItems = [
   ...pagineP,
   ...servizi,
+  ...veicoli,
+  ...confronti,
+  ...guideArticoli,
   ...locCostaSmeralda,
   ...locCostaEst,
   ...spiaggeCS,
@@ -94,6 +138,9 @@ const itemListJsonLd = {
 const sections = [
   { title: "Pagine principali", icon: "★", items: pagineP },
   { title: "Servizi & punti di consegna", icon: "✈", items: servizi },
+  { title: "Flotta veicoli", icon: "🚗", items: veicoli },
+  { title: "Confronti veicoli", icon: "⚖", items: confronti },
+  { title: "Guide e itinerari", icon: "📖", items: guideArticoli },
   { title: "Località Costa Smeralda", icon: "📍", items: locCostaSmeralda },
   { title: "Località Costa Est & Nord", icon: "📍", items: locCostaEst },
   { title: "Spiagge Costa Smeralda", icon: "🌊", items: spiaggeCS },

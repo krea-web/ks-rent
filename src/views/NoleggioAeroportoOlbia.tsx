@@ -570,7 +570,7 @@ const NoleggioAeroportoOlbia = ({ lang = "it" }: Props) => {
   const icons = [Clock3, Luggage, BellRing, Plane];
 
   return (
-    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden editorial-soft">
       <SEOHead
         title={t.seo.title}
         description={t.seo.description}

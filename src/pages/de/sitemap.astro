@@ -7,15 +7,56 @@ const SITE = "https://www.ksrentsardinia.com";
 const pagineP = [
   { label: "Startseite", to: "/de/" },
   { label: "Fuhrpark", to: "/de/fuhrpark" },
+  { label: "Preise", to: "/de/preise" },
+  { label: "Anleitungen", to: "/de/guide" },
+  { label: "Fahrzeugvergleich", to: "/de/fuhrpark/vergleich" },
   { label: "Jetzt buchen", to: "/de/jetzt-buchen" },
   { label: "Über uns", to: "/de/uber-uns" },
 ];
 
 const servizi = [
+  { label: "Autovermietung Olbia", to: "/de/autovermietung-olbia" },
   { label: "Autovermietung Flughafen Olbia", to: "/de/autovermietung-flughafen-olbia" },
   { label: "Autovermietung Hafen Olbia", to: "/de/autovermietung-hafen-olbia" },
   { label: "Autovermietung Costa Smeralda", to: "/de/autovermietung-costa-smeralda" },
   { label: "Vermietung ohne Kreditkarte", to: "/de/autovermietung-ohne-kreditkarte-olbia" },
+];
+
+const veicoli = [
+  { label: "Audi RS3 Sportback", to: "/de/fuhrpark/audi-rs3-mieten-olbia" },
+  { label: "BMW M2 Coupé", to: "/de/fuhrpark/bmw-m2-coupe-mieten-olbia" },
+  { label: "Mercedes A-Klasse 180d", to: "/de/fuhrpark/mercedes-a-klasse-mieten-olbia" },
+  { label: "Jeep Avenger", to: "/de/fuhrpark/jeep-avenger-mieten-olbia" },
+  { label: "Fiat Panda Hybrid", to: "/de/fuhrpark/fiat-panda-mieten-olbia" },
+  { label: "Honda SH 125/350", to: "/de/fuhrpark/honda-sh-mieten-olbia" },
+  { label: "Yamaha Raptor Quad", to: "/de/fuhrpark/yamaha-raptor-quad-mieten-sardinien" },
+];
+
+const confronti = [
+  { label: "Audi RS3 vs BMW M2", to: "/de/fuhrpark/vergleich/audi-rs3-vs-bmw-m2" },
+  { label: "Audi RS3 vs Jeep Avenger", to: "/de/fuhrpark/vergleich/audi-rs3-vs-jeep-avenger" },
+  { label: "Audi RS3 vs Mercedes A-Klasse", to: "/de/fuhrpark/vergleich/audi-rs3-vs-mercedes-a-klasse" },
+  { label: "BMW M2 vs Mercedes A-Klasse", to: "/de/fuhrpark/vergleich/bmw-m2-vs-mercedes-a-klasse" },
+  { label: "Mercedes A-Klasse vs Jeep Avenger", to: "/de/fuhrpark/vergleich/mercedes-a-klasse-vs-jeep-avenger" },
+  { label: "Jeep Avenger vs Fiat Panda", to: "/de/fuhrpark/vergleich/jeep-avenger-vs-fiat-panda" },
+];
+
+const guideArticoli = [
+  { label: "7-Tage Costa Smeralda Reiseroute", to: "/de/guide/7-tage-reiseroute-costa-smeralda-ab-olbia" },
+  { label: "Was tun in Olbia in 3 Tagen", to: "/de/guide/was-tun-in-olbia-3-tage-reiseroute" },
+  { label: "Anfahrt Costa Smeralda", to: "/de/guide/anfahrt-costa-smeralda-fluege-faehren" },
+  { label: "Fortbewegung in Porto Cervo", to: "/de/guide/fortbewegung-porto-cervo-parkplaetze-shuttles" },
+  { label: "Familienstrände Costa Smeralda", to: "/de/guide/familienstraende-costa-smeralda" },
+  { label: "Versteckte Strände Gallura", to: "/de/guide/versteckte-straende-gallura-schotterpisten" },
+  { label: "Schönste Strände NO Sardinien", to: "/de/guide/schoenste-straende-nordost-sardinien" },
+  { label: "La Maddalena Archipel besuchen", to: "/de/guide/la-maddalena-archipel-besuchen-praktische-anleitung" },
+  { label: "Kosten Urlaub Costa Smeralda", to: "/de/guide/kosten-urlaub-costa-smeralda-realistisches-budget-2026" },
+  { label: "Feste & Events Gallura 2026", to: "/de/guide/feste-events-gallura-2026-kalender" },
+  { label: "Autovermietung Flughafen Olbia", to: "/de/guide/autovermietung-flughafen-olbia-praktische-anleitung" },
+  { label: "Vermietung ohne Kreditkarte", to: "/de/guide/autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung" },
+  { label: "Internationaler Führerschein Sardinien", to: "/de/guide/internationaler-fuehrerschein-sardinien-ist-er-noetig" },
+  { label: "Roller oder Quad in Sardinien", to: "/de/guide/roller-quad-mieten-sardinien-wie-waehlen" },
+  { label: "Yacht-Charter vs Mietwagen", to: "/de/guide/yacht-charter-vs-mietwagen-costa-smeralda" },
 ];
 
 const locCostaSmeralda = [
@@ -72,6 +113,9 @@ const spiaggeEstNord = [
 const allItems = [
   ...pagineP,
   ...servizi,
+  ...veicoli,
+  ...confronti,
+  ...guideArticoli,
   ...locCostaSmeralda,
   ...locCostaEst,
   ...spiaggeCS,
@@ -94,6 +138,9 @@ const itemListJsonLd = {
 const sections = [
   { title: "Hauptseiten", icon: "★", items: pagineP },
   { title: "Leistungen & Lieferpunkte", icon: "✈", items: servizi },
+  { title: "Fahrzeugflotte", icon: "🚗", items: veicoli },
+  { title: "Fahrzeugvergleiche", icon: "⚖", items: confronti },
+  { title: "Anleitungen & Reiserouten", icon: "📖", items: guideArticoli },
   { title: "Standorte Costa Smeralda", icon: "📍", items: locCostaSmeralda },
   { title: "Standorte Ost- & Nordküste", icon: "📍", items: locCostaEst },
   { title: "Strände Costa Smeralda", icon: "🌊", items: spiaggeCS },

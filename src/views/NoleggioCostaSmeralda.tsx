@@ -605,7 +605,7 @@ const NoleggioCostaSmeralda = ({ lang = "it" }: Props) => {
   ];
 
   return (
-    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans pt-24 md:pt-32">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans pt-24 md:pt-32 editorial-soft">
       <SEOHead
         title={t.seo.title}
         description={t.seo.description}

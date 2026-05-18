@@ -120,7 +120,7 @@
     width: 100%;
   }
 
-  h1, h2, h3 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
   }
 
@@ -396,6 +396,33 @@
   border-radius: 0.25rem;
   font-size: 0.88em;
   color: hsl(var(--gold));
+}
+
+/* ───────────── EDITORIAL SOFT — wrapper "leggero" per body long-form ─────
+   Da applicare a sezioni di pagine non-/guide che hanno paragrafi lunghi.
+   Differenza vs .editorial:
+   - NO drop-cap (per non confondere l'inizio di sezioni multiple)
+   - NO h2 barra dorata (preserva eventuali h2 esistenti con stile proprio)
+   - SOLO font-family serif Georgia per <p>, leading e color editoriali
+   - rispetta classi Tailwind esistenti */
+.editorial-soft p,
+.editorial-soft li {
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  line-height: 1.75;
+}
+.editorial-soft p {
+  font-size: 1.05em;
+}
+@media (min-width: 768px) {
+  .editorial-soft p {
+    font-size: 1.1em;
+  }
+}
+.editorial-soft a {
+  color: hsl(var(--gold));
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 @layer utilities {

@@ -100,7 +100,7 @@ const ChiSiamo = ({ lang = "it" }: ChiSiamoProps) => {
   const scrollNext = useCallback((e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); emblaApi?.scrollNext(); }, [emblaApi]);
 
   return (
-    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans">
+    <div className="bg-gray-50 dark:bg-[#050505] text-foreground selection:bg-gold selection:text-black overflow-x-hidden font-sans editorial-soft">
       <SEOHead
         title={t.about.seoTitle}
         description={t.about.seoDescription}
