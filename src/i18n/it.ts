@@ -485,6 +485,20 @@ export const it = {
     },
   },
 
+  // ───── NEWSLETTER SIGNUP ─────
+  newsletter: {
+    heading: "Resta aggiornato",
+    subtitle: "Offerte stagionali, novità sulla flotta e guide esclusive per la tua vacanza in Costa Smeralda.",
+    emailLabel: "La tua email",
+    placeholder: "nome@email.it",
+    submit: "Iscriviti",
+    submitting: "Invio...",
+    success: "Iscrizione confermata! Grazie.",
+    errorInvalid: "Inserisci un indirizzo email valido.",
+    errorGeneric: "Si è verificato un errore. Riprova tra qualche istante.",
+    privacy: "Iscrivendoti accetti la nostra Privacy Policy. Puoi cancellarti in qualsiasi momento.",
+  },
+
   // ───── PAGINE DINAMICHE LOCALITÀ / SPIAGGE ([lang]/[slug].astro) ─────
   dynamicPage: {
     eyebrowLocation: "Punto di Ritiro & Consegna",

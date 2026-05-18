@@ -484,6 +484,20 @@ export const de: typeof it = {
     },
   },
 
+  // ───── NEWSLETTER ANMELDUNG ─────
+  newsletter: {
+    heading: "Bleiben Sie informiert",
+    subtitle: "Saisonangebote, Flotten-News und exklusive Reisefuehrer fuer Ihren Urlaub an der Costa Smeralda.",
+    emailLabel: "Ihre E-Mail",
+    placeholder: "name@email.de",
+    submit: "Abonnieren",
+    submitting: "Wird gesendet...",
+    success: "Anmeldung bestaetigt! Vielen Dank.",
+    errorInvalid: "Bitte geben Sie eine gueltige E-Mail-Adresse ein.",
+    errorGeneric: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es in Kuerze erneut.",
+    privacy: "Mit Ihrer Anmeldung akzeptieren Sie unsere Datenschutzerklaerung. Sie koennen sich jederzeit abmelden.",
+  },
+
   // ───── DYNAMISCHE SEITEN ORTE / STRÄNDE ([lang]/[slug].astro) ─────
   dynamicPage: {
     eyebrowLocation: "Abhol- & Lieferpunkt",

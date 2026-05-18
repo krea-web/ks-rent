@@ -5,6 +5,7 @@ import { getAlternateLinks, getLocaleFromPath, LOCALE_NAMES } from "@/lib/i18n";
 import { getAggregateRating } from "@/lib/reviews";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
 
@@ -269,6 +270,13 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
+    {showChrome && (
+      <section class="bg-card border-t border-border py-12 md:py-16 px-4 md:px-8">
+        <div class="max-w-2xl mx-auto">
+          <NewsletterSignup lang={currentLocale} client:idle />
+        </div>
+      </section>
+    )}
     {showChrome && <Footer lang={currentLocale} />}
     {showChrome && <WhatsAppCTA lang={currentLocale} client:idle />}
     {showChrome && !hideMobileSticky && <MobileStickyCTA lang={currentLocale} client:idle />}

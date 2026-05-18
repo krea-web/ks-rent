@@ -484,6 +484,20 @@ export const fr: typeof it = {
     },
   },
 
+  // ───── INSCRIPTION NEWSLETTER ─────
+  newsletter: {
+    heading: "Restez informé",
+    subtitle: "Offres saisonnières, nouveautés de la flotte et guides exclusifs pour vos vacances en Costa Smeralda.",
+    emailLabel: "Votre e-mail",
+    placeholder: "nom@email.fr",
+    submit: "S'inscrire",
+    submitting: "Envoi en cours...",
+    success: "Inscription confirmée ! Merci.",
+    errorInvalid: "Veuillez saisir une adresse e-mail valide.",
+    errorGeneric: "Une erreur s'est produite. Veuillez réessayer dans un instant.",
+    privacy: "En vous inscrivant vous acceptez notre Politique de Confidentialité. Vous pouvez vous désinscrire à tout moment.",
+  },
+
   // ───── PAGES DYNAMIQUES LOCALITÉS / PLAGES ([lang]/[slug].astro) ─────
   dynamicPage: {
     eyebrowLocation: "Point de prise en charge & livraison",

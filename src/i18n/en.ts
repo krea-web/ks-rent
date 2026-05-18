@@ -484,6 +484,20 @@ export const en: typeof it = {
     },
   },
 
+  // ───── NEWSLETTER SIGNUP ─────
+  newsletter: {
+    heading: "Stay updated",
+    subtitle: "Seasonal offers, fleet news and exclusive guides for your Costa Smeralda holiday.",
+    emailLabel: "Your email",
+    placeholder: "name@email.com",
+    submit: "Subscribe",
+    submitting: "Sending...",
+    success: "Subscription confirmed! Thank you.",
+    errorInvalid: "Please enter a valid email address.",
+    errorGeneric: "An error occurred. Please try again in a moment.",
+    privacy: "By subscribing you accept our Privacy Policy. You can unsubscribe at any time.",
+  },
+
   // ───── DYNAMIC PAGES LOCATIONS / BEACHES ([lang]/[slug].astro) ─────
   dynamicPage: {
     eyebrowLocation: "Pickup & Delivery Point",
