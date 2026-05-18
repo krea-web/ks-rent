@@ -20,9 +20,11 @@ interface Props {
   intro: string;
   /** Lingua della pagina; default "it" (backward compatible). */
   lang?: Lang;
+  /** HTML "Quando scegliere X vs Y" — copy unico per ogni pair anti-duplicate. */
+  whenToChooseHtml?: string;
 }
 
-const { a, b, h1, intro, lang = "it" } = Astro.props;
+const { a, b, h1, intro, lang = "it", whenToChooseHtml } = Astro.props;
 
 // CTA URLs localizzate
 const bookingHref = lang === "it"
@@ -332,6 +334,13 @@ const labels = {
       </div>
     </div>
   </section>
+
+  {/* WHEN TO CHOOSE — copy unico per pair (anti-duplicate content) */}
+  {whenToChooseHtml && (
+    <section class="py-16 md:py-20 px-4 md:px-12 border-b border-border">
+      <div class="max-w-4xl mx-auto editorial" set:html={whenToChooseHtml} />
+    </section>
+  )}
 
   {/* CTA */}
   <section class="py-20 px-4 md:px-12">

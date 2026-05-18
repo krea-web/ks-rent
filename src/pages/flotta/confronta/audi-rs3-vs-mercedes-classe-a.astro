@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import VehicleComparison from "@/components/VehicleComparison.astro";
 import { VEHICLE_SPECS } from "@/data/vehicle-specs";
+import { WHEN_TO_CHOOSE } from "@/data/vehicle-compare-content";
 
 const a = VEHICLE_SPECS["audi-rs3"];
 const b = VEHICLE_SPECS["mercedes-classe-a"];
@@ -55,5 +56,5 @@ const jsonLd = [
     { name: "Audi RS3 vs Mercedes Classe A", path: "/flotta/confronta/audi-rs3-vs-mercedes-classe-a" },
   ]}
 >
-  <VehicleComparison a={a} b={b} h1={h1} intro={intro} />
+  <VehicleComparison a={a} b={b} h1={h1} intro={intro} whenToChooseHtml={WHEN_TO_CHOOSE["audi-rs3-vs-mercedes-classe-a"]?.it} />
 </BaseLayout>
