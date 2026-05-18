@@ -47,6 +47,39 @@ function stripHtml(html) {
     .toLowerCase();
 }
 
+/**
+ * stripHtmlContentOnly: like stripHtml but ALSO removes:
+ * - <aside> (sidebar)
+ * - CTA finale gold sections (bg-gold)
+ * - RelatedGuides + GuideVehicleStrip + FleetGrid + FleetShowcase + TopBeaches
+ * - cross-sell card lists in internal-linking section
+ * - GoogleReviews + FAQSection (uguali per template)
+ *
+ * Misura la similarity SOLO sul content body realmente unico per pagina.
+ * Soglia obiettivo utente: <0.10 (>90% diverso).
+ */
+function stripHtmlContentOnly(html) {
+  let h = html;
+  // Standard removal
+  h = h.replace(/<script[\s\S]*?<\/script>/gi, "");
+  h = h.replace(/<style[\s\S]*?<\/style>/gi, "");
+  h = h.replace(/<noscript[\s\S]*?<\/noscript>/gi, "");
+  h = h.replace(/<svg[\s\S]*?<\/svg>/gi, "");
+  h = h.replace(/<header[\s\S]*?<\/header>/gi, "");
+  h = h.replace(/<footer[\s\S]*?<\/footer>/gi, "");
+  h = h.replace(/<nav[\s\S]*?<\/nav>/gi, "");
+  h = h.replace(/<aside[\s\S]*?<\/aside>/gi, "");
+  // Remove sezioni gold (CTA finali) — heuristic: section con bg-gold OR text-background
+  h = h.replace(/<section[^>]*class="[^"]*bg-gold[^"]*"[\s\S]*?<\/section>/gi, "");
+  // Remove RelatedGuides (heading "Approfondisci|Read more|Mehr|Approfondir")
+  h = h.replace(/<section[^>]*class="[^"]*bg-card\/30[^"]*"[\s\S]*?<\/section>/gi, "");
+  // Strip remaining tags
+  h = h.replace(/<[^>]+>/g, " ");
+  h = h.replace(/&[a-z#0-9]+;/gi, " ");
+  h = h.replace(/\s+/g, " ");
+  return h.trim().toLowerCase();
+}
+
 function wordCount(text) {
   return text.split(/\s+/).filter((w) => w.length > 1).length;
 }
@@ -117,6 +150,7 @@ const pages = [];
 for (const f of files) {
   const html = await fs.readFile(f, "utf-8");
   const text = stripHtml(html);
+  const textContentOnly = stripHtmlContentOnly(html);
   const route = pageRoute(f);
   pages.push({
     route,
@@ -126,6 +160,7 @@ for (const f of files) {
     pictures: countTag(html, "picture"),
     words: wordCount(text),
     text,
+    textContentOnly,
     group: groupOf(route),
   });
 }
@@ -167,28 +202,41 @@ const allPairs = [];
 
 for (const [groupName, group] of byGroup) {
   if (group.length < 2) continue;
-  // pre-compute n-grams
-  for (const p of group) p._ng = ngrams(p.text);
+  // pre-compute n-grams: full HTML AND content-only
+  for (const p of group) {
+    p._ng = ngrams(p.text);
+    p._ngCO = ngrams(p.textContentOnly);
+  }
 
-  let sum = 0, count = 0, maxSim = 0, maxPair = null;
+  let sum = 0, sumCO = 0, count = 0, maxSim = 0, maxSimCO = 0, maxPair = null, maxPairCO = null;
   const pairs = [];
   for (let i = 0; i < group.length; i++) {
     for (let j = i + 1; j < group.length; j++) {
       const s = jaccard(group[i]._ng, group[j]._ng);
+      const sCO = jaccard(group[i]._ngCO, group[j]._ngCO);
       sum += s;
+      sumCO += sCO;
       count++;
-      pairs.push({ a: group[i].route, b: group[j].route, sim: s });
+      pairs.push({ a: group[i].route, b: group[j].route, sim: s, simCO: sCO });
       if (s > maxSim) {
         maxSim = s;
         maxPair = [group[i].route, group[j].route];
       }
+      if (sCO > maxSimCO) {
+        maxSimCO = sCO;
+        maxPairCO = [group[i].route, group[j].route];
+      }
     }
   }
   const avg = sum / count;
+  const avgCO = sumCO / count;
   console.log(
-    `${groupName.padEnd(14)} pages=${String(group.length).padStart(3)}  pairs=${String(count).padStart(4)}  avg=${avg.toFixed(3)}  max=${maxSim.toFixed(3)}`,
+    `${groupName.padEnd(14)} pages=${String(group.length).padStart(3)}  pairs=${String(count).padStart(4)}  full[avg=${avg.toFixed(3)} max=${maxSim.toFixed(3)}]  content-only[avg=${avgCO.toFixed(3)} max=${maxSimCO.toFixed(3)}]`,
   );
-  if (maxPair) console.log(`               ↳ peggior coppia: ${maxPair[0]}\n                                ${maxPair[1]}`);
+  if (maxPair) console.log(`               ↳ full max: ${maxPair[0]}\n                          ${maxPair[1]}`);
+  if (maxPairCO && (maxPairCO[0] !== maxPair?.[0] || maxPairCO[1] !== maxPair?.[1])) {
+    console.log(`               ↳ content-only max: ${maxPairCO[0]}\n                                  ${maxPairCO[1]}`);
+  }
   allPairs.push(...pairs.map((p) => ({ ...p, group: groupName })));
 }
 
