@@ -59,6 +59,15 @@ const guideArticoli = [
   { label: "Yacht-Charter vs Mietwagen", to: "/de/guide/yacht-charter-vs-mietwagen-costa-smeralda" },
 ];
 
+const guideDurata = [
+  { label: "Olbia Wochenende 3 Tage Autovermietung", to: "/de/guide/autovermietung-olbia-wochenende-3-tage" },
+  { label: "Olbia 5 Tage Autovermietung", to: "/de/guide/autovermietung-olbia-5-tage" },
+  { label: "Olbia Woche 7 Tage Autovermietung", to: "/de/guide/autovermietung-olbia-woche-7-tage" },
+  { label: "Olbia 10 Tage Autovermietung", to: "/de/guide/autovermietung-olbia-10-tage" },
+  { label: "Olbia 14 Tage zwei Wochen Autovermietung", to: "/de/guide/autovermietung-olbia-14-tage-zwei-wochen" },
+  { label: "Olbia 30 Tage Monatsmiete Autovermietung", to: "/de/guide/autovermietung-olbia-monatlich-30-tage" },
+];
+
 const locCostaSmeralda = [
   { label: "Porto Cervo", to: "/de/noleggio-auto-porto-cervo" },
   { label: "Baja Sardinia", to: "/de/noleggio-auto-baja-sardinia" },
@@ -116,6 +125,7 @@ const allItems = [
   ...veicoli,
   ...confronti,
   ...guideArticoli,
+  ...guideDurata,
   ...locCostaSmeralda,
   ...locCostaEst,
   ...spiaggeCS,
@@ -141,6 +151,7 @@ const sections = [
   { title: "Fahrzeugflotte", icon: "🚗", items: veicoli },
   { title: "Fahrzeugvergleiche", icon: "⚖", items: confronti },
   { title: "Anleitungen & Reiserouten", icon: "📖", items: guideArticoli },
+  { title: "Autovermietung nach Dauer", icon: "📅", items: guideDurata },
   { title: "Standorte Costa Smeralda", icon: "📍", items: locCostaSmeralda },
   { title: "Standorte Ost- & Nordküste", icon: "📍", items: locCostaEst },
   { title: "Strände Costa Smeralda", icon: "🌊", items: spiaggeCS },

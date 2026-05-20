@@ -64,6 +64,19 @@ const PROMPTS = {
     "Cinematic photograph of an outdoor traditional Sardinian village festival at dusk in Gallura, warm string lights overhead, long wooden tables with families eating, stone village square, atmospheric warm golden light, photorealistic editorial travel photography, 16:9 aspect ratio, no text or watermarks.",
   "spiagge-piu-belle-sardegna-nord-orientale":
     "Cinematic aerial shot of Cala Brandinchi beach in north-east Sardinia, pure white sand crescent, gradient turquoise to deep blue water, lush Mediterranean pine trees, Tavolara island in the distance, soft midday light, photorealistic editorial travel photography, 16:9 aspect ratio, no text or watermarks.",
+  // ─── Serie "Noleggio per X giorni" (6 articoli pillar duration-based) ───
+  "noleggio-auto-olbia-weekend-3-giorni":
+    "Cinematic editorial photograph: a small carry-on weekend suitcase and a set of car keys on a wooden cafe table at Olbia port at sunset, soft golden hour light, blurred yachts and Mediterranean architecture in the background, photorealistic travel magazine quality, 16:9 aspect ratio, no text or watermarks.",
+  "noleggio-auto-olbia-5-giorni":
+    "Cinematic photograph of a modern compact SUV parked next to a wooden welcome sign of a coastal village in Costa Smeralda Sardinia, a paper road map and an Italian espresso cup on the hood, mid-morning soft light, photorealistic editorial travel photography, 16:9 aspect ratio, no text or watermarks.",
+  "noleggio-auto-olbia-settimana-7-giorni":
+    "Cinematic aerial drone photograph of a single car driving on the panoramic coastal road of Costa Smeralda Sardinia, granite rocks and turquoise sea on one side, lush Mediterranean maquis on the other, late afternoon golden light, photorealistic travel editorial photography, 16:9 aspect ratio, no text or watermarks.",
+  "noleggio-auto-olbia-10-giorni":
+    "Cinematic photograph of a hand holding open paper road map of Sardinia spread on a car dashboard, sunglasses and Italian coffee thermos nearby, blurred coastal road through the windshield, soft morning light, photorealistic editorial travel photography, 16:9 aspect ratio, no text or watermarks.",
+  "noleggio-auto-olbia-14-giorni-due-settimane":
+    "Cinematic photograph of a vintage leather suitcase and a small backpack on the open boot of a modern car parked at a Sardinian beach overlook, gradient turquoise sea below, dramatic afternoon clouds, photorealistic editorial travel photography, 16:9 aspect ratio, no text or watermarks.",
+  "noleggio-auto-olbia-mensile-30-giorni":
+    "Cinematic editorial photograph: a laptop, an open notebook and a coffee mug on a wooden cafe table by a Sardinian harbor, a small car parked in the blurred background, late morning soft Mediterranean light, photorealistic remote work travel photography, 16:9 aspect ratio, no text or watermarks.",
 };
 
 const MODEL = "gemini-3.1-flash-image-preview"; // Nano Banana 2
