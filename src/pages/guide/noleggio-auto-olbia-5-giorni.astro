@@ -1,0 +1,126 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-5-giorni")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Quanto costa noleggiare un'auto a Olbia per 5 giorni?", acceptedAnswer: { "@type": "Answer", text: "5 giorni di Fiat Panda Hybrid in bassa stagione: 200 €. In alta stagione (luglio/agosto) la stessa formula sale a 400-550 €. Per Jeep Avenger 5 giorni: 250 € bassa stagione, 550-750 € alta. Mercedes Classe A 180d: 400 € bassa, 800 € alta." } },
+    { "@type": "Question", name: "I 5 giorni sono il formato ideale per i ponti italiani come 25 aprile?", acceptedAnswer: { "@type": "Answer", text: "Sì, perfettamente. 25 aprile, 1 maggio, 2 giugno, Ferragosto e Ognissanti cadono tipicamente in mid-week creando ponti di 4-5 giorni. Il formato 5 giorni copre arrivo giovedì sera + 3 giorni pieni + ripartenza lunedì mattina." } },
+    { "@type": "Question", name: "Quale veicolo conviene di più per 5 giorni con 2 adulti + 2 bambini?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger è il best-fit: SUV compatto con cambio automatico, bagagliaio 380 L, 5 posti veri con seggiolino bimbo posteriore. 250 € in bassa stagione, 550 € in alta. Alternativa premium: Mercedes Classe A 180d con sedili in pelle e infotainment top." } },
+    { "@type": "Question", name: "Posso fare un'escursione a La Maddalena durante un noleggio di 5 giorni?", acceptedAnswer: { "@type": "Answer", text: "Sì, La Maddalena richiede 1 giorno dedicato: 55 min da Olbia a Palau (porto d'imbarco) + traghetto 15 min + 4-5 ore nell'arcipelago + rientro. Il giorno 3 o 4 del noleggio è ideale per non perdere energie del primo arrivo o ultima sera." } },
+    { "@type": "Question", name: "Devo già conoscere bene le date per noleggiare 5 giorni o posso essere flessibile?", acceptedAnswer: { "@type": "Answer", text: "In alta stagione (luglio/agosto) date precise sono fondamentali: la flotta KS Rent Sardinia si esaurisce 4-6 settimane prima. Per bassa stagione (aprile/maggio/ottobre) puoi prenotare anche con 7-15 giorni di anticipo senza problemi." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Noleggio 5 giorni", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>5 giorni a Olbia sono il punto dolce della Costa Smeralda</strong>: abbastanza per vedere il meglio della Gallura senza la fatica di una settimana, sufficienti per inserire un'escursione a La Maddalena o un break a Tavolara. Il formato è cucito su misura per i <strong>ponti italiani</strong> (25 aprile, 1 maggio, 2 giugno, Ferragosto, Ognissanti) e per chi vuole una <strong>vacanza breve senza sentirsi di corsa</strong>. Qui i prezzi reali del noleggio 5 giorni, i veicoli ottimali, e un itinerario completo che bilancia mare, cultura e tempo libero.
+    </p>
+
+    <h2>Tariffe noleggio 5 giorni: prezzi puliti</h2>
+
+    <p>
+      Anche per 5 giorni la tariffa KS Rent Sardinia è <strong>5 × giornaliera</strong> (sconto significativo parte dal 7° giorno, vedi <a href="/guide/noleggio-auto-olbia-settimana-7-giorni">guida settimanale</a>). Esempi:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Veicolo</th>
+          <th>Aprile/Maggio/Ottobre</th>
+          <th>Giugno/Settembre</th>
+          <th>Luglio/Agosto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>200 €</td><td>300 €</td><td>400-550 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>250 €</td><td>400 €</td><td>550-750 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>400 €</td><td>600 €</td><td>800 €</td></tr>
+        <tr><td>Honda SH 350 (scooter sport)</td><td>250 €</td><td>375 €</td><td>500 €</td></tr>
+        <tr><td>Yamaha Raptor (quad)</td><td>su preventivo</td><td>su preventivo</td><td>su preventivo</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Cost extra opzionale</strong>: secondo conducente (20 € totale weekend, gratuito per coppie sposate con documento), seggiolino bimbo (5 €/giorno = 25 € totale max), riduzione franchigia (15 €/giorno). <strong>Consegna gratuita</strong> aeroporto OLB, porto Isola Bianca, centro Olbia.
+    </p>
+
+    <h2>Quando preferire 5 giorni vs 3 o 7</h2>
+
+    <ul>
+      <li><strong>5 giorni meglio di 3</strong>: se vuoi includere La Maddalena O Capo Coda Cavallo O un giorno relax in spiaggia senza saltare nulla. 3 giorni costringe a tagliare.</li>
+      <li><strong>5 giorni meglio di 7</strong>: se hai limite di ferie (mid-week ponte), se viaggi in coppia senza bambini (5 giorni bastano per Costa Smeralda + 1 escursione), se il volo costa molto di più per 7 notti.</li>
+      <li><strong>5 giorni peggio di 7</strong>: se vuoi includere anche Stintino/Asinara (servono 7+ giorni), se viaggi con bambini piccoli che hanno bisogno di "1 giorno di niente", se cerchi tariffa settimanale più conveniente.</li>
+    </ul>
+
+    <h2>Itinerario 5 giorni completo Costa Smeralda + 1 isola</h2>
+
+    <p>
+      Pianificato come una guida operativa, non come elenco wishful:
+    </p>
+
+    <ul>
+      <li><strong>Giorno 1 (giovedì sera/venerdì)</strong>: ritiro all'aeroporto OLB, arrivo Olbia, dinner al porto, notte in città. Riposo.</li>
+      <li><strong>Giorno 2 (sabato)</strong>: <strong>Costa Smeralda nord</strong> — Porto Cervo + Spiaggia del Principe + Liscia Ruja. Pranzo a Phi Beach o Quattro Passi. Rientro Olbia per la sera.</li>
+      <li><strong>Giorno 3 (domenica)</strong>: <strong>La Maddalena</strong> — partenza ore 8:00 verso Palau, traghetto 15 min, tour arcipelago (Caprera, Spargi, Budelli rosa pink beach). Rientro serale via Cannigione cena.</li>
+      <li><strong>Giorno 4 (lunedì)</strong>: <strong>Costa Est / San Teodoro</strong> — La Cinta + Cala Brandinchi + Lu Impostu. Pranzo a Capo Coda Cavallo. Pomeriggio relax.</li>
+      <li><strong>Giorno 5 (martedì)</strong>: <strong>Olbia entroterra + souvenir</strong> — visite San Pantaleo (mercato vintage del giovedì se incrocia), Pevero Health Hub o golf, ultimo bagno a Pittulongu. Riconsegna sera 22:30 o mattina presto.</li>
+    </ul>
+
+    <p>
+      <strong>Totale chilometri</strong>: 350-450 km. <strong>Costo carburante Panda Hybrid</strong>: ~30 €. <strong>Costo carburante Mercedes A 180d</strong>: ~40 € (diesel). <strong>Pedaggi</strong>: zero (no autostrade in Sardegna nord).
+    </p>
+
+    <h2>Documenti e check-in al ritiro</h2>
+
+    <p>
+      Per ritirare il veicolo presenti: patente B valida da 1+ anno, documento d'identità in originale, codice fiscale. Pagamento accettato senza carta di credito (bancomat, prepagate Postepay/Revolut/N26, bonifico istantaneo, contanti). <a href="/termini-e-condizioni">Vedi Termini e Condizioni</a> per dettagli completi.
+    </p>
+
+    <h2>Vuoi più tempo? Scopri il noleggio settimanale</h2>
+
+    <p>
+      Se i 5 giorni non bastano e puoi estendere di 2 notti, scopri la <a href="/guide/noleggio-auto-olbia-settimana-7-giorni">tariffa settimanale</a> che applica uno <strong>sconto progressivo</strong> rendendo il 7° giorno quasi gratis. Per esplorare anche zone fuori Gallura (Alghero, Bosa, Stintino) valuta il <a href="/guide/noleggio-auto-olbia-10-giorni">noleggio di 10 giorni</a>.
+    </p>
+
+    <p>
+      Prenota su <a href="/prenotaora">KS Rent Sardinia</a> oppure scrivi su <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a> con date + veicolo desiderato per quote in 30 minuti.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

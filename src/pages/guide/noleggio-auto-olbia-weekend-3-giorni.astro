@@ -1,0 +1,130 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-weekend-3-giorni")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Quanto costa noleggiare un'auto a Olbia per un weekend di 3 giorni?", acceptedAnswer: { "@type": "Answer", text: "In bassa stagione (aprile/maggio/ottobre) un weekend di 3 giorni con Fiat Panda Hybrid costa circa 120-150 €. In alta stagione (luglio/agosto) lo stesso noleggio sale a 240-330 €. Le sportive (Audi RS3, BMW M2) sono sempre su preventivo." } },
+    { "@type": "Question", name: "Qual è il veicolo ideale per 3 giorni a Olbia con la famiglia?", acceptedAnswer: { "@type": "Answer", text: "Per una famiglia di 4 persone in 3 giorni consigliamo Jeep Avenger (SUV compatto, bagagliaio 380 L, ideale per spiagge e centro) o Mercedes Classe A (più premium, comoda per spostamenti veloci verso Costa Smeralda)." } },
+    { "@type": "Question", name: "Conviene noleggiare per 3 giorni o pagare 3 giornate singole?", acceptedAnswer: { "@type": "Answer", text: "Il pacchetto 3 giorni costa esattamente come 3 giornate singole (no sconto multi-giorno fino a 6 giorni), ma garantisce blocco del veicolo per tutto il weekend evitando il rischio sold-out in alta stagione." } },
+    { "@type": "Question", name: "Quale itinerario fare con un'auto a noleggio in 3 giorni a Olbia?", acceptedAnswer: { "@type": "Answer", text: "Giorno 1: Olbia centro + spiaggia Pittulongu + cena al porto. Giorno 2: Costa Smeralda (Porto Cervo + spiaggia del Principe + Cala di Volpe). Giorno 3: Tavolara e ritorno via San Teodoro + La Cinta. Totale: ~180 km, ottimale con SUV compatto." } },
+    { "@type": "Question", name: "Posso ritirare il veicolo venerdì sera tardi e riconsegnarlo lunedì mattina?", acceptedAnswer: { "@type": "Answer", text: "Sì, modello classico weekend lungo. KS Rent Sardinia accetta ritiro venerdì fino alle 22:30 e riconsegna lunedì dalle 06:00. Costo: 3 giornate piene calcolate sul ritiro effettivo. Per ritiri post 22:30 attiva il servizio reperibilità WhatsApp." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Noleggio weekend 3 giorni", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Il weekend a Olbia è la formula d'oro per chi vuole assaggiare la Costa Smeralda senza prendersi una settimana intera di vacanza.</strong> Ryanair e easyJet hanno reso possibile partire venerdì sera da Milano, Roma o Londra e tornare lunedì mattina avendo visto turchesi che riscaldano l'inverno per mesi. In questa guida vediamo prezzi reali del noleggio di 3 giorni, veicoli che ottimizzano il rapporto comfort/costo, e un itinerario lampo che massimizza ogni ora delle vostre 72 ore in Gallura.
+    </p>
+
+    <h2>Tariffe weekend a Olbia: i prezzi reali</h2>
+
+    <p>
+      Le tariffe KS Rent Sardinia per 3 giorni sono <strong>esattamente 3 × tariffa giornaliera</strong> (no sconto multi-giorno fino a 6 giorni). Ecco gli scenari più richiesti:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Veicolo</th>
+          <th>Bassa stagione (apr/mag/ott)</th>
+          <th>Media (giu/set)</th>
+          <th>Alta (lug/ago)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>120 €</td><td>180 €</td><td>240-330 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>150 €</td><td>240 €</td><td>330-450 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>240 €</td><td>360 €</td><td>480 €</td></tr>
+        <tr><td>Honda SH 125 (scooter)</td><td>120 €</td><td>180 €</td><td>240 €</td></tr>
+        <tr><td>Audi RS3 / BMW M2 (sportive)</td colspan="3"><td colspan="3">su preventivo (da 600 € weekend)</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Tutto include RCA, assistenza 24/7, consegna gratuita a Olbia (aeroporto + porto + centro), chilometraggio adeguato. Esclusi: carburante (consegnato pieno), riduzione franchigia opzionale, seggiolino bimbi (5 €/giorno).
+    </p>
+
+    <h2>Quale veicolo scegliere per un weekend di 3 giorni?</h2>
+
+    <p>
+      Il weekend impone una scelta tattica: il veicolo che non vorrai cambiare a metà vacanza ma che paga il giusto. Le nostre <strong>3 scelte tipiche</strong>:
+    </p>
+
+    <ul>
+      <li><strong>Coppia smart, budget contenuto</strong>: Fiat Panda Hybrid (consumi minimi, parcheggio facile in Porto Cervo affollato, 120 € weekend bassa stagione).</li>
+      <li><strong>Famiglia 4 persone con bagagli</strong>: Jeep Avenger (SUV compatto, 380 L bagagliaio, automatico, comoda anche su sterrati per spiagge nascoste come Cala Brandinchi back access).</li>
+      <li><strong>Coppia che cerca esperienza premium</strong>: Mercedes Classe A 180d (interni premium, ottimi consumi diesel anche con AC sparata in agosto, perfetta per cene a Porto Rotondo).</li>
+    </ul>
+
+    <h2>Itinerario lampo Costa Smeralda in 72 ore</h2>
+
+    <p>
+      Pianificato con i tempi reali della Gallura (traffico ago/lug compreso), non dai guide books generici:
+    </p>
+
+    <ul>
+      <li><strong>Venerdì sera</strong>: ritiro all'aeroporto OLB (5-10 min), check-in hotel/B&B, cena al porto Olbia (Trattoria Su Nuraghe o Da Paolo). Auto in parcheggio gratuito Cocciani per la notte.</li>
+      <li><strong>Sabato mattina</strong>: 8:00 partenza per Costa Smeralda, prima fermata <strong>Spiaggia del Principe</strong> (parcheggio facile fino alle 10:30, poi pieno). 12:30 pranzo a Porto Cervo (Phi Beach o Quattro Passi). Pomeriggio <strong>Liscia Ruja + Capriccioli</strong>.</li>
+      <li><strong>Sabato sera</strong>: ritorno a Olbia per cena (1 ora di guida, evita gli orari aperitivo di Porto Cervo che bloccano la SS125).</li>
+      <li><strong>Domenica mattina</strong>: <strong>San Teodoro + La Cinta</strong> (45 min da Olbia, ideale spiaggia con bambini). Pranzo light a bordo spiaggia. Pomeriggio breve passaggio a <strong>Tavolara</strong> (Porto San Paolo, 30 min).</li>
+      <li><strong>Domenica sera</strong>: riconsegna entro le 22:30 oppure mattina lunedì primissima ora (consegnata vuota in aeroporto). Volo di rientro.</li>
+    </ul>
+
+    <p>
+      <strong>Totale chilometri</strong>: 180-220 km. <strong>Consumo Panda Hybrid</strong>: ~12 L di benzina (~22 €). <strong>Sterrati</strong>: nessuno, tutto asfalto. <strong>Tempi morti</strong>: zero.
+    </p>
+
+    <h2>Quando NON scegliere il weekend di 3 giorni</h2>
+
+    <p>
+      Sii onesto con te stesso: se vuoi vedere <strong>La Maddalena</strong> serve almeno 1 giorno dedicato (traghetto Palau + giro arcipelago = 5-6 ore). Se vuoi <strong>spiagge nascoste della Gallura</strong> (Spiaggia Bianca, Cala Coticcio) servono 4-5 giorni con sterrati e jeep. Se cerchi <strong>relax serio</strong>, 3 giorni in Costa Smeralda sono pochi.
+    </p>
+
+    <p>
+      Per questi scenari valuta il <a href="/guide/noleggio-auto-olbia-5-giorni">noleggio di 5 giorni</a> o il <a href="/guide/noleggio-auto-olbia-settimana-7-giorni">noleggio settimanale</a>, formati con miglior rapporto esperienza/costo.
+    </p>
+
+    <h2>Pronto a prenotare il tuo weekend?</h2>
+
+    <p>
+      KS Rent Sardinia ti aspetta all'<a href="/noleggio-auto-aeroporto-olbia">aeroporto Olbia OLB</a> o al <a href="/noleggio-auto-porto-olbia">porto Isola Bianca</a> con ritiro in 5-10 minuti. Senza carta di credito obbligatoria, supporto multilingua (IT/EN/DE/FR), e una flotta moderna ottimizzata per la Gallura. <a href="/tariffe">Vedi tutte le tariffe</a> o scrivi su <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a> per quote rapida e disponibilità.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

@@ -1,0 +1,128 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-10-giorni")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Quanto costa noleggiare un'auto per 10 giorni a Olbia?", acceptedAnswer: { "@type": "Answer", text: "10 giorni di Fiat Panda Hybrid: 350 € bassa stagione, 700-1.000 € alta. Jeep Avenger: 450 € bassa, 1.000-1.300 € alta. Mercedes Classe A 180d: 750 € bassa, 1.500 € alta. Lo sconto multi-giorno cresce: dal 7° al 10° giorno applichiamo tariffe pro-rata più convenienti." } },
+    { "@type": "Question", name: "10 giorni bastano per vedere anche Alghero o solo Gallura?", acceptedAnswer: { "@type": "Answer", text: "Bastano per Gallura + 1 escursione lunga: o Alghero (3 ore di guida one way, conviene dormire 1-2 notti lì) o Stintino/Asinara (3,5 ore, idem). Volendo includere Cagliari servono 14 giorni. Sconsigliamo di fare il giro completo dell'isola in 10 giorni: stressante." } },
+    { "@type": "Question", name: "Quale veicolo è ideale per 10 giorni con percorsi misti (asfalto + sterrati leggeri)?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger è perfetta: SUV compatto con luci alte sufficiente per sterrati di accesso spiagge nascoste (Cala Coticcio, Spiaggia Bianca back path), consumo contenuto (~6 L/100 km), automatico. Costo 10 giorni bassa stagione: 450 €." } },
+    { "@type": "Question", name: "Posso noleggiare per 10 giorni anche se le date includono cambio di stagione tariffaria?", acceptedAnswer: { "@type": "Answer", text: "Sì, KS Rent Sardinia applica le tariffe pro-rata per i giorni del periodo. Esempio: 28 settembre - 7 ottobre = 3 giorni media stagione (set) + 7 giorni bassa stagione (ott). Calcolo trasparente nel preventivo, no sorprese." } },
+    { "@type": "Question", name: "Conviene scegliere 10 giorni o estendere a 14 per la tariffa quindicinale?", acceptedAnswer: { "@type": "Answer", text: "Dipende. 14 giorni costano circa 13 × giornaliera (-7% extra vs 10×). Se hai 12-13 giorni di vacanza, vale la pena estendere a 14 per il prezzo del 13°. Se hai esattamente 10 giorni, 10 giorni è la scelta giusta." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Noleggio 10 giorni", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>10 giorni a Olbia sono la lunghezza che separa "una vacanza" da "un viaggio".</strong> Permettono di completare la Costa Smeralda con calma, dedicare una giornata intera a La Maddalena (senza correre), aggiungere un'escursione lunga verso Alghero o Stintino, e includere 1-2 giorni di puro relax senza spostamenti. È la durata che KS Rent Sardinia consiglia per chi vuole conoscere la Sardegna nord-orientale <strong>davvero</strong>, non solo passare. Qui prezzi pro-rata, scelta del veicolo per percorsi misti, e un itinerario 10 giorni che bilancia mare, cultura, gastronomia e tempo morto.
+    </p>
+
+    <h2>Prezzi 10 giorni con sconto progressivo</h2>
+
+    <p>
+      Dal 7° giorno in poi KS Rent Sardinia applica tariffe scontate progressive. Per 10 giorni il calcolo equivale a circa <strong>8,8 × giornaliera</strong> (12-13% di risparmio vs 10× giornaliera secca):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Veicolo</th>
+          <th>Aprile/Maggio/Ottobre</th>
+          <th>Giugno/Settembre</th>
+          <th>Luglio/Agosto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>350 €</td><td>525 €</td><td>700-1.000 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>450 €</td><td>720 €</td><td>1.000-1.300 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>750 €</td><td>1.100 €</td><td>1.500 €</td></tr>
+        <tr><td>BMW M2 Coupé</td><td>su preventivo</td><td>su preventivo</td><td>su preventivo</td></tr>
+        <tr><td>Audi RS3 Sportback</td><td>su preventivo</td><td>su preventivo</td><td>su preventivo</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Itinerario 10 giorni: Costa Smeralda completa + 1 estensione</h2>
+
+    <p>
+      Pensato per chi vuole vedere il meglio senza saltare di palo in frasca:
+    </p>
+
+    <ul>
+      <li><strong>Giorno 1-2 (Olbia + Costa Smeralda nord)</strong>: arrivo, ambientamento, Porto Cervo, Spiaggia del Principe, Pevero.</li>
+      <li><strong>Giorno 3 (Costa Smeralda sud)</strong>: Capriccioli, Romazzino, Cala di Volpe, sunset Phi Beach.</li>
+      <li><strong>Giorno 4 (La Maddalena intera giornata)</strong>: arcipelago in barca o auto+traghetto, Spargi, Budelli rosa.</li>
+      <li><strong>Giorno 5 (relax)</strong>: piscina hotel o spiaggia preferita giornata intera, no spostamenti.</li>
+      <li><strong>Giorno 6 (Costa Est)</strong>: San Teodoro, La Cinta, Cala Brandinchi, Tavolara visione.</li>
+      <li><strong>Giorno 7-8 (estensione Alghero o Stintino)</strong>: partenza mattutina, 1-2 notti nel west coast. Alghero città catalana + Capo Caccia OPPURE Stintino + Pelosa + Asinara.</li>
+      <li><strong>Giorno 9 (entroterra Gallura)</strong>: Tempio Pausania + cantine Vermentino + San Pantaleo + cena tipica.</li>
+      <li><strong>Giorno 10 (riconsegna)</strong>: ultimo bagno Pittulongu + riconsegna aeroporto/porto.</li>
+    </ul>
+
+    <p>
+      <strong>Totale chilometri</strong>: 900-1.200 km. <strong>Carburante</strong>: 90-130 € (Panda Hybrid), 130-180 € (Mercedes A). <strong>Pernottamenti extra-Olbia</strong>: 2-3 notti in zona Alghero/Stintino se scegli estensione west.
+    </p>
+
+    <h2>Veicolo ideale per 10 giorni multi-percorso</h2>
+
+    <p>
+      Per 10 giorni con percorsi misti (autostrada Olbia-Sassari, sterrati spiagge, centro città stretto) la scelta tipica è:
+    </p>
+
+    <ul>
+      <li><strong>Jeep Avenger</strong>: SUV compatto automatico, luci alte per sterrati di accesso, bagagliaio 380 L sufficiente per famiglia o coppia con valigie grandi. <strong>Il nostro best-seller per durate di 7-14 giorni</strong>.</li>
+      <li><strong>Mercedes Classe A 180d</strong>: berlina premium con consumi diesel molto bassi (5-6 L/100 km), comfort top per percorrenze lunghe (es. Olbia-Alghero 3 ore), ma NON adatta a sterrati impegnativi.</li>
+      <li><strong>Fiat Panda Hybrid</strong>: scelta budget, consumi minimi (4,5 L/100 km city, 5,5 fuori), parcheggia ovunque, ma per 10 giorni in coppia può essere stretta con valigie da 2 settimane.</li>
+    </ul>
+
+    <h2>Opzionali utili per durate medio-lunghe</h2>
+
+    <ul>
+      <li><strong>Secondo conducente</strong>: gratuito per coppie sposate (con documento), 20 € totali per altri. Indispensabile per 10 giorni dove le percorrenze stancano e i turni di guida sono raccomandati.</li>
+      <li><strong>Riduzione franchigia kasko</strong>: 15 €/giorno = 150 € totale. Riduce franchigia da default a zero. Consigliata su 10+ giorni per pace mentale.</li>
+      <li><strong>Seggiolino bambini gruppo 1/2/3</strong>: 5 €/giorno (max 25 € totale per noleggio). Omologazione ECE R44/04.</li>
+      <li><strong>Wi-Fi hotspot 4G</strong>: 8 €/giorno (max 50 € totale), utile per chi lavora in viaggio.</li>
+    </ul>
+
+    <h2>Pronto per i tuoi 10 giorni in Gallura?</h2>
+
+    <p>
+      Prenota su <a href="/prenotaora">KS Rent Sardinia</a>, vedi tutte le <a href="/tariffe">tariffe</a>, oppure scrivi su <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a> con date + veicolo per quote personalizzato (rispondiamo in 30 min). Per soggiorni più lunghi vedi <a href="/guide/noleggio-auto-olbia-14-giorni-due-settimane">noleggio 14 giorni</a> o <a href="/guide/noleggio-auto-olbia-mensile-30-giorni">tariffa mensile</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

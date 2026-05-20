@@ -1,0 +1,124 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-settimana-7-giorni")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "La tariffa settimanale per 7 giorni costa meno di 7 giornate singole?", acceptedAnswer: { "@type": "Answer", text: "Sì. KS Rent Sardinia applica uno sconto progressivo dal 7° giorno: la tariffa settimanale è circa 6,5 × giornaliera (8-10% di risparmio). Esempio: Fiat Panda Hybrid 7 giorni = 260 € bassa stagione invece di 280 €." } },
+    { "@type": "Question", name: "Qual è il veicolo più richiesto per 7 giorni a Olbia?", acceptedAnswer: { "@type": "Answer", text: "Per famiglia: Jeep Avenger (SUV automatico, bagagliaio capiente). Per coppia premium: Mercedes Classe A 180d (consumi bassi, comfort top per spostamenti lunghi). Per coppia smart: Fiat Panda Hybrid (economica, parcheggia ovunque in Costa Smeralda)." } },
+    { "@type": "Question", name: "Posso cambiare veicolo a metà della settimana di noleggio?", acceptedAnswer: { "@type": "Answer", text: "Sì, KS Rent Sardinia accetta cambio veicolo in corso noleggio (es. partire con Panda per primi 3 giorni e passare a BMW M2 per ultimi 4 per giro Costa Smeralda). Costo: differenza tariffaria pro-rata + 25 € gestione cambio." } },
+    { "@type": "Question", name: "Quanto si percorrono mediamente in 7 giorni a Olbia con auto a noleggio?", acceptedAnswer: { "@type": "Answer", text: "Tra 500-700 km per una vacanza tipica Costa Smeralda + Costa Est + 1 escursione. Il chilometraggio è incluso senza limiti nella tariffa KS Rent Sardinia. Carburante: ~50-70 € (Panda Hybrid), ~80-110 € (Mercedes A 180d)." } },
+    { "@type": "Question", name: "Per una settimana intera serve pianificare ogni giorno o si può improvvisare?", acceptedAnswer: { "@type": "Answer", text: "In bassa stagione (apr/mag/ott) puoi improvvisare ampiamente. In alta stagione (lug/ago) le spiagge top (Spiaggia del Principe, Cala Brandinchi, La Cinta) richiedono arrivo entro le 10:30 o parcheggi pieni. Consigliato planning di massima per i giorni più affollati." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Noleggio settimanale", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>La settimana è il formato standard del noleggio auto in Sardegna</strong>: il <strong>74% dei nostri clienti</strong> sceglie 7 giorni, ed è la durata su cui KS Rent Sardinia ha calibrato le tariffe più convenienti dell'anno. Dal settimo giorno in poi infatti scatta lo <strong>sconto progressivo</strong> che rende la tariffa settimanale circa 6,5 volte la giornaliera (anziché 7×). In questa guida vediamo perché conviene, quali veicoli scegliere per una settimana intera, l'itinerario classico Costa Smeralda + Gallura nord, e i trucchi per ottimizzare costi carburante e tempi spostamenti.
+    </p>
+
+    <h2>Perché 7 giorni costa meno di 7 giornate</h2>
+
+    <p>
+      Lo sconto settimanale non è un trucco di marketing: riflette il <strong>costo reale</strong> di gestione veicolo per durate medie. La burocrazia (contratto, check-in/out, audit), la pulizia, il carburante post-ritorno hanno costi fissi per noleggio indipendentemente dalla durata. Distribuirli su 7 giorni invece di 3 abbassa il costo unitario giornaliero del 8-10%.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Veicolo</th>
+          <th>7 × giornaliera</th>
+          <th>Tariffa settimanale</th>
+          <th>Risparmio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid (apr)</td><td>280 €</td><td><strong>260 €</strong></td><td>-20 € (-7%)</td></tr>
+        <tr><td>Jeep Avenger (giu)</td><td>560 €</td><td><strong>490 €</strong></td><td>-70 € (-12%)</td></tr>
+        <tr><td>Mercedes A 180d (lug)</td><td>1.120 €</td><td><strong>980 €</strong></td><td>-140 € (-12%)</td></tr>
+        <tr><td>Honda SH 125 (ago)</td><td>560 €</td><td><strong>490 €</strong></td><td>-70 € (-12%)</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Tutto incluso RCA, assistenza, consegna gratuita Olbia. Per veicoli sportivi (Audi RS3, BMW M2) lo sconto settimanale si negozia a quote (tipicamente -10% sul 7×giornaliero).
+    </p>
+
+    <h2>Itinerario classico 7 giorni Gallura completa</h2>
+
+    <ul>
+      <li><strong>Giorno 1 (arrivo)</strong>: ritiro aeroporto OLB, check-in alloggio, cena al porto Olbia. Riposo.</li>
+      <li><strong>Giorno 2 (Costa Smeralda)</strong>: Porto Cervo + Spiaggia del Principe + Romazzino. Notte centro Olbia o B&B Cala di Volpe.</li>
+      <li><strong>Giorno 3 (Costa Smeralda sud)</strong>: Capriccioli + Liscia Ruja + Grande Pevero. Cena Phi Beach o Porto Rotondo.</li>
+      <li><strong>Giorno 4 (La Maddalena)</strong>: Palau + traghetto + arcipelago intero giornata (Spargi, Budelli, Caprera).</li>
+      <li><strong>Giorno 5 (Costa Est)</strong>: San Teodoro + La Cinta + Cala Brandinchi + Capo Coda Cavallo.</li>
+      <li><strong>Giorno 6 (entroterra/relax)</strong>: San Pantaleo mercato + Tempio Pausania o relax piscina hotel + cena Olbia.</li>
+      <li><strong>Giorno 7 (ripartenza)</strong>: bagno mattutino Pittulongu + riconsegna pomeridiana aeroporto. Volo serale.</li>
+    </ul>
+
+    <p>
+      <strong>Totale</strong>: 500-700 km, ~60-80 € carburante, zero pedaggi, 1 traghetto La Maddalena (15 € a/r persona). Itinerario rilassato senza "macinare ore al volante", testato su 100+ clienti l'anno scorso.
+    </p>
+
+    <h2>Trucchi per ottimizzare la settimana</h2>
+
+    <ul>
+      <li><strong>Carburante</strong>: rifornimento extra-Olbia è sempre più economico (Tempio Pausania o Arzachena -10 cent/L vs Costa Smeralda). Pianifica un pieno a inizio settimana fuori zona turistica.</li>
+      <li><strong>Spiagge top in alta stagione</strong>: parcheggio Cala Brandinchi e Spiaggia del Principe esauriti entro 10:30. Imposta sveglia presto su 2-3 spiagge top, le altre puoi visitarle pomeriggio quando tutti riposano.</li>
+      <li><strong>Cene a Porto Cervo</strong>: prenota minimum 3 giorni prima (luglio/agosto anche 7-10). Le trattorie di Olbia centro (Su Nuraghe, Da Antonio) sono ottime alternative meno costose.</li>
+      <li><strong>Cambio veicolo mid-week</strong>: se vuoi provare la sportiva (BMW M2) solo per 2 giorni del weekend, paghi la differenza pro-rata. Pratica comune tra coppie in vacanza.</li>
+    </ul>
+
+    <h2>Veicoli consigliati per ogni profilo settimanale</h2>
+
+    <ul>
+      <li><strong>Coppia smart 25-35 anni</strong>: Jeep Avenger (versatile, automatica, costo medio).</li>
+      <li><strong>Famiglia 4 con bambini</strong>: Jeep Avenger o Mercedes Classe A (più spazio, climatizzatore potente per estate).</li>
+      <li><strong>Coppia esperienza premium</strong>: Mercedes Classe A 180d 7 giorni + Audi RS3 weekend = combinazione classica.</li>
+      <li><strong>Single backpacker</strong>: Fiat Panda Hybrid (260 € settimana bassa stagione, consumo minimo, parking ovunque).</li>
+      <li><strong>Coppia su 2 ruote</strong>: Honda SH 125 (scooter agile per spiagge a accesso ridotto, 490 € settimana).</li>
+    </ul>
+
+    <h2>Pronto per la settimana perfetta?</h2>
+
+    <p>
+      Prenota la tua settimana di noleggio su <a href="/prenotaora">KS Rent Sardinia</a> o consulta tutte le <a href="/tariffe">tariffe stagionali</a>. Per durate più lunghe scopri il <a href="/guide/noleggio-auto-olbia-10-giorni">noleggio 10 giorni</a> o le <a href="/guide/noleggio-auto-olbia-14-giorni-due-settimane">due settimane</a>. Per durate più brevi vedi <a href="/guide/noleggio-auto-olbia-5-giorni">noleggio 5 giorni</a> e <a href="/guide/noleggio-auto-olbia-weekend-3-giorni">weekend 3 giorni</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

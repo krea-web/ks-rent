@@ -1,0 +1,126 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-14-giorni-due-settimane")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Quanto costa noleggiare un'auto per 14 giorni a Olbia?", acceptedAnswer: { "@type": "Answer", text: "14 giorni di Fiat Panda Hybrid: 480 € bassa stagione, 1.000-1.400 € alta. Jeep Avenger: 600 € bassa, 1.400-1.800 € alta. Mercedes Classe A 180d: 1.000 € bassa, 2.100 € alta. La tariffa quindicinale è circa 12 × giornaliera (15-17% risparmio vs 14×)." } },
+    { "@type": "Question", name: "In 14 giorni si può fare il tour completo della Sardegna nord?", acceptedAnswer: { "@type": "Answer", text: "Sì, 2 settimane sono ideali: 5-6 giorni Gallura/Costa Smeralda + 2-3 giorni La Maddalena + 3-4 giorni Alghero/Stintino/Bosa + 2-3 giorni cultura entroterra (Castelsardo, Tempio, nuraghi). Resta il sud (Cagliari, Costa Sud) per un futuro viaggio." } },
+    { "@type": "Question", name: "Posso portare l'auto KS Rent in Corsica durante un noleggio di 14 giorni?", acceptedAnswer: { "@type": "Answer", text: "Sì, su richiesta scritta preventiva. Costo: 8 €/giorno aggiuntivi sull'intera durata + biglietto traghetto Corsica Ferries Olbia-Bastia (80-180 € a tratta auto + passeggeri). Auto sportive (Audi RS3, BMW M2) esclusi per policy assicurativa." } },
+    { "@type": "Question", name: "I 14 giorni convengono se ho ancora flessibilità sulla durata?", acceptedAnswer: { "@type": "Answer", text: "14 giorni hanno il miglior rapporto qualità/prezzo per visite complete. Se hai 10-13 giorni: estendi a 14 per costo del 12° giorno (sconto). Se hai 15-20 giorni: i 21 giorni costano ancora meno per giorno (tariffa pre-mensile). Se hai 25-30 giorni: passa alla tariffa mensile." } },
+    { "@type": "Question", name: "Per 14 giorni meglio un'auto economica o premium?", acceptedAnswer: { "@type": "Answer", text: "Su 14 giorni il delta tra Panda (480 €) e Mercedes A (1.000 €) è 520 €. Su una vacanza di 14 giorni che costa probabilmente 2.500-5.000 € totali tra voli, alloggi, mangiare, il delta del veicolo premium incide 10-20%. Vale la pena per chi viaggia in coppia con priorità comfort, non per chi viaggia in 4 con priorità budget." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Noleggio 14 giorni", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Due settimane sono la durata ottimale per chi vuole vedere la Sardegna del nord per davvero.</strong> Non solo Costa Smeralda e La Maddalena, ma anche Alghero catalana, le scogliere di Stintino, l'arcipelago dell'Asinara, Bosa con le sue case colorate, Castelsardo, l'entroterra dei nuraghi. La tariffa quindicinale di KS Rent Sardinia applica lo <strong>sconto più aggressivo prima della soglia mensile</strong>: ~12 × giornaliera anziché 14×. In questa guida vediamo prezzi, veicolo da viaggio ideale, e il planning 14 giorni che noi consigliamo ai clienti con 2 settimane di ferie da spendere.
+    </p>
+
+    <h2>Tariffe quindicinali: il prezzo per 14 giorni</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Veicolo</th>
+          <th>Aprile/Maggio/Ottobre</th>
+          <th>Giugno/Settembre</th>
+          <th>Luglio/Agosto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>480 €</td><td>720 €</td><td>1.000-1.400 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>600 €</td><td>960 €</td><td>1.400-1.800 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>1.000 €</td><td>1.500 €</td><td>2.100 €</td></tr>
+        <tr><td>Honda SH 350 (scooter)</td><td>650 €</td><td>980 €</td><td>1.300 €</td></tr>
+        <tr><td>BMW M2 Coupé</td colspan="3"><td colspan="3">su preventivo (week+week format)</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Tutto incluso RCA, assistenza 24/7, consegna gratuita, chilometraggio illimitato. Sui 14 giorni consigliamo riduzione franchigia (15 €/giorno = 210 € totale) per pace mentale su lungo periodo.
+    </p>
+
+    <h2>Itinerario completo 14 giorni nord Sardegna</h2>
+
+    <ul>
+      <li><strong>Giorno 1-5 (Costa Smeralda + Gallura nord)</strong>: arrivo, Porto Cervo, Spiaggia del Principe, Romazzino, Capriccioli, Liscia Ruja, San Pantaleo mercato, cena Porto Rotondo.</li>
+      <li><strong>Giorno 6 (La Maddalena giornata intera)</strong>: traghetto Palau + tour arcipelago in barca (Spargi, Budelli) o auto+barca.</li>
+      <li><strong>Giorno 7 (Costa Est)</strong>: San Teodoro, La Cinta, Cala Brandinchi, Capo Coda Cavallo, ritorno Olbia per riposo.</li>
+      <li><strong>Giorno 8 (transfer ovest)</strong>: partenza per Alghero (3 ore SS131), arrivo, pranzo bombas catalanas. Pomeriggio centro città.</li>
+      <li><strong>Giorno 9 (Capo Caccia)</strong>: Grotte di Nettuno + Cala Dragunara + scogliere Capo Caccia + cena Vermentino.</li>
+      <li><strong>Giorno 10 (Stintino-Pelosa)</strong>: trasferimento Stintino (1h da Alghero), Spiaggia Pelosa, vista Asinara.</li>
+      <li><strong>Giorno 11 (Asinara opzionale)</strong>: traghetto Asinara dal porto di Stintino, tour dell'isola in trenino o auto elettrica.</li>
+      <li><strong>Giorno 12 (Bosa+rientro est)</strong>: Bosa case colorate, fiume Temo, vino Malvasia. Trasferimento serale verso Tempio Pausania.</li>
+      <li><strong>Giorno 13 (entroterra Gallura)</strong>: Castelsardo, cantine, nuraghi (Su Nuraxi opzionale).</li>
+      <li><strong>Giorno 14 (rientro)</strong>: ultimo bagno + riconsegna aeroporto/porto.</li>
+    </ul>
+
+    <p>
+      <strong>Totale</strong>: ~1.400-1.700 km. <strong>Carburante</strong>: 130-180 € (Panda Hybrid), 180-240 € (Mercedes A diesel). <strong>Pernottamenti</strong>: 7-8 notti Olbia/Costa Smeralda + 3-4 notti Alghero/Stintino + 2 notti rotanti.
+    </p>
+
+    <h2>Vantaggi della tariffa quindicinale</h2>
+
+    <ul>
+      <li><strong>Sconto reale</strong>: -15/17% vs 14 giornate singole.</li>
+      <li><strong>Stesso veicolo per tutta la vacanza</strong>: niente check-in/out intermedi, niente confusione con compagnie diverse, abitudine al mezzo.</li>
+      <li><strong>Più flessibilità su date</strong>: in alta stagione bloccare 14 giorni anziché 7+7 separate riduce il rischio di non trovare disponibilità.</li>
+      <li><strong>Possibilità di tour Corsica</strong>: su 14 giorni ha senso valutare 2-3 notti in Corsica (Bonifacio + sud Corsica) usando ferry Olbia-Bastia con autorizzazione KS Rent.</li>
+    </ul>
+
+    <h2>Veicolo ideale per 14 giorni viaggianti</h2>
+
+    <p>
+      Su 14 giorni con tanti spostamenti la priorità è <strong>comfort di guida</strong>. Le nostre scelte top:
+    </p>
+
+    <ul>
+      <li><strong>Mercedes Classe A 180d</strong>: top per coppia che fa percorrenze (1.500+ km in 14 giorni). Diesel = consumi bassi, comfort sedili.</li>
+      <li><strong>Jeep Avenger</strong>: best balance prezzo/comfort/versatilità. Adatta sterrati leggeri per spiagge "secret".</li>
+      <li><strong>Fiat Panda Hybrid</strong>: solo per budget tirato o uso prevalente città. Su 14 giorni gli interni stretti pesano.</li>
+    </ul>
+
+    <h2>Pronto per il tour 2 settimane?</h2>
+
+    <p>
+      Prenota su <a href="/prenotaora">KS Rent Sardinia</a>. Per durate più lunghe scopri il <a href="/guide/noleggio-auto-olbia-mensile-30-giorni">noleggio mensile</a> con tariffe long-stay. Per ferie più corte vedi <a href="/guide/noleggio-auto-olbia-10-giorni">10 giorni</a> o <a href="/guide/noleggio-auto-olbia-settimana-7-giorni">una settimana</a>. Per quote personalizzata su 14 giorni <a href="https://wa.me/393446107071">scrivi su WhatsApp</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>
