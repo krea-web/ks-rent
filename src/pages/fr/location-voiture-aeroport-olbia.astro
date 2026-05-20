@@ -1,23 +1,64 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+import AeroportoOlbiaEnrichment from "@/components/AeroportoOlbiaEnrichment.astro";
 import NoleggioAeroportoOlbia from "@/views/NoleggioAeroportoOlbia";
 import {
   aeroportoAutoRentalJsonLd,
   aeroportoFaqJsonLd,
   buildBreadcrumb,
 } from "@/lib/jsonLd";
+
+const advancedFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/fr/location-voiture-aeroport-olbia#faq-advanced",
+  mainEntity: [
+    { "@type": "Question", name: "Combien de minutes prend le retrait réel du véhicule à l'aéroport d'Olbia avec KS Rent ?", acceptedAnswer: { "@type": "Answer", text: "5-10 minutes au total de la sortie des arrivées au départ. Avec les compagnies internationales (Hertz/Avis/Sixt) la moyenne est 30-90 minutes en haute saison, jusqu'à 2 heures avec file. Chez KS Rent Sardinia pas de comptoir interne : nous vous attendons dehors avec le véhicule prêt et le contrat pré-rempli." } },
+    { "@type": "Question", name: "Que se passe-t-il si mon vol Ryanair (ou easyJet, ITA) atterrit en retard à l'aéroport d'Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Aucun problème et aucun supplément. KS Rent Sardinia surveille votre numéro de vol via FlightRadar24 dès la réservation : si l'heure réelle d'atterrissage glisse, l'opérateur arrive au parking de retrait à l'heure actualisée sans frais supplémentaires." } },
+    { "@type": "Question", name: "KS Rent couvre-t-il les vols de nuit à l'aéroport d'Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Livraison aéroport Olbia disponible de 06:00 à 23:30, 7 jours sur 7. Vols hors fenêtre (ex. easyJet 00:30 de Milan en haute saison) gérés via service d'astreinte WhatsApp et coût supplémentaire convenu." } },
+    { "@type": "Question", name: "KS Rent a-t-il un support multilingue à l'aéroport d'Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Les opérateurs KS Rent Sardinia parlent italien, anglais, allemand, français et espagnol. Pour clients russes, polonais, scandinaves ou asiatiques nous utilisons Google Translate live plus contrats pré-traduits. Signature numérique sur tablette disponible en 4 langues." } },
+    { "@type": "Question", name: "Puis-je restituer le véhicule KS Rent à l'aéroport d'Olbia au lieu du centre ?", acceptedAnswer: { "@type": "Answer", text: "Oui, la restitution à l'aéroport OLB est gratuite et doit être convenue à la réservation. Nous prévenir via WhatsApp 30 minutes avant l'arrivée au parking, remettre les clés au parking de retrait. Temps moyen restitution : 5 minutes." } },
+    { "@type": "Question", name: "KS Rent fournit-il des sièges auto enfants à l'aéroport d'Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Oui, KS Rent Sardinia dispose de sièges groupe 1, 2 et 3 (9-36 kg) homologués ECE R44/04 à louer pour 5 €/jour (max 25 € total). Pour groupe 0+ nouveau-né, réservation 7+ jours à l'avance recommandée. Tous désinfectés à la vapeur entre locations." } },
+    { "@type": "Question", name: "Puis-je sortir de Sardaigne avec une voiture KS Rent (ex. ferry vers la Corse) ?", acceptedAnswer: { "@type": "Answer", text: "Pour la Corse autorisation écrite préalable et couverture d'assurance étendue requises (8 €/jour supplémentaires). Pour la péninsule italienne par ferry autorisation écrite requise (15 €/jour supplémentaires plus caution augmentée). Sportives (Audi RS3, BMW M2) ne peuvent quitter la Sardaigne selon police d'assurance." } },
+  ],
+};
+
+const airportServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/fr/location-voiture-aeroport-olbia#service",
+  serviceType: "Location de voiture avec livraison aéroport",
+  name: "Livraison de voiture à l'aéroport d'Olbia Costa Smeralda OLB",
+  description: "Service de livraison immédiate de voiture à l'aéroport d'Olbia Costa Smeralda (OLB), 7 jours sur 7, de 06:00 à 23:30. Sans files, sans navettes, sans carte de crédit obligatoire.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  serviceLocation: {
+    "@type": "Airport",
+    name: "Aéroport d'Olbia Costa Smeralda",
+    iataCode: "OLB",
+    address: { "@type": "PostalAddress", streetAddress: "Strada Statale 125 Orientale Sarda", addressLocality: "Olbia", postalCode: "07026", addressRegion: "SS", addressCountry: "IT" },
+    geo: { "@type": "GeoCoordinates", latitude: 40.898632, longitude: 9.517626 },
+    sameAs: "https://www.geasar.it/",
+  },
+  areaServed: { "@type": "Airport", name: "Aéroport d'Olbia Costa Smeralda", iataCode: "OLB" },
+  availableLanguage: ["it", "en", "de", "fr", "es"],
+  hoursAvailable: { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "06:00", closes: "23:30" },
+  termsOfService: "https://www.ksrentsardinia.com/fr/conditions-generales",
+};
 ---
 <BaseLayout
-  title="Location de Voiture Aéroport Olbia | KS Rent"
-  description="Location de voiture avec livraison immédiate à l'aéroport d'Olbia. Supercars, SUV et motos sans carte de crédit. Réservez en ligne avec KS Rent."
+  title="Location de Voiture Aéroport Olbia OLB | KS Rent Sardinia"
+  description="Livraison immédiate à l'aéroport d'Olbia (OLB) : nous desservons Ryanair, easyJet, ITA, Lufthansa et toutes les compagnies. Voitures, scooters et quads sans carte de crédit, retrait 5-10 min."
   canonical="https://www.ksrentsardinia.com/fr/location-voiture-aeroport-olbia"
   jsonLd={[
     aeroportoAutoRentalJsonLd,
     aeroportoFaqJsonLd,
+    advancedFaqJsonLd,
+    airportServiceJsonLd,
     buildBreadcrumb("Location de Voiture Aéroport Olbia", "/fr/location-voiture-aeroport-olbia"),
   ]}
 >
   <NoleggioAeroportoOlbia lang="fr" />
   <GuideVehicleStrip lang="fr" />
+  <AeroportoOlbiaEnrichment lang="fr" />
 </BaseLayout>

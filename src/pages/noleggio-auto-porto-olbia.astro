@@ -1,23 +1,63 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+import PortoOlbiaEnrichment from "@/components/PortoOlbiaEnrichment.astro";
 import NoleggioPortoOlbia from "@/views/NoleggioPortoOlbia";
 import {
   portoAutoRentalJsonLd,
   portoFaqJsonLd,
   buildBreadcrumb,
 } from "@/lib/jsonLd";
+
+const advancedFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia#faq-advanced",
+  mainEntity: [
+    { "@type": "Question", name: "Quanto è distante la sede KS Rent dalla banchina dei traghetti al porto Olbia?", acceptedAnswer: { "@type": "Answer", text: "100 metri esatti dalla banchina Isola Bianca, dove sbarca il 95% delle navi passeggeri. Raggiungi la sede a piedi in 1-2 minuti uscendo dall'area passeggeri. Con bagagli pesanti, ti veniamo incontro all'uscita pedonale." } },
+    { "@type": "Question", name: "Cosa succede se il mio traghetto Moby (o Tirrenia, GNV) arriva in ritardo al porto Olbia?", acceptedAnswer: { "@type": "Answer", text: "Nessun extra. KS Rent Sardinia monitora il numero della tua nave su VesselFinder e marinetraffic dal momento della prenotazione: se l'orario reale slitta di 1-4 ore, l'operatore arriva alla sede all'orario reale di sbarco." } },
+    { "@type": "Question", name: "Si può consegnare/ritirare auto al porto Olbia anche di notte?", acceptedAnswer: { "@type": "Answer", text: "Consegna al porto disponibile dalle 06:00 alle 23:30, 7 giorni su 7. Traghetti notturni (Moby da Genova arrivo 06:30, Tirrenia da Civitavecchia 07:00) sono perfettamente coperti. Fuori finestra attiva servizio reperibilità WhatsApp." } },
+    { "@type": "Question", name: "Posso lasciare la mia auto privata in porto Olbia durante il noleggio?", acceptedAnswer: { "@type": "Answer", text: "Sì, il parcheggio Isola Bianca ha aree dedicate lunga sosta (6,50 €/giorno, 4 €/giorno dal 3° giorno). Alternativa: parcheggio Cocciani (5 min a piedi) costa meno e ha posti coperti." } },
+    { "@type": "Question", name: "Posso riconsegnare al porto un'auto presa in aeroporto Olbia (o viceversa)?", acceptedAnswer: { "@type": "Answer", text: "Sì, switch porto ↔ aeroporto è gratuito. Esempio: voli ITA arrivo OLB, ritiro auto in aeroporto, vacanza, riconsegna al porto Isola Bianca per traghetto Moby a Genova. Comunica preferenza al booking." } },
+    { "@type": "Question", name: "Quanto costa portare l'auto noleggiata KS Rent in Corsica via traghetto?", acceptedAnswer: { "@type": "Answer", text: "Per la Corsica serve autorizzazione scritta preventiva (8 €/giorno aggiuntivi). Costo biglietto traghetto auto separato e a tuo carico (Corsica Ferries Olbia-Bastia: 80-180 € a tratta in alta stagione). Auto sportive (Audi RS3, BMW M2) non possono lasciare la Sardegna." } },
+    { "@type": "Question", name: "Avete pacchetti cruise day rental per scali crocieristici al porto Olbia?", acceptedAnswer: { "@type": "Answer", text: "Sì, offriamo tariffe daily speciali per crociere (MSC, Costa, AIDA, NCL, Royal Caribbean): Fiat Panda Hybrid 65 €/giorno, Jeep Avenger 95 €/giorno, Mercedes Classe A 130 €/giorno, tutto incluso. Consegna 09:00, riconsegna entro 19:00. Specifica 'day cruise [nome nave]' su WhatsApp." } },
+  ],
+};
+
+const portServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia#service",
+  serviceType: "Noleggio auto con consegna al porto",
+  name: "Consegna auto al Porto di Olbia Isola Bianca",
+  description: "Servizio di consegna immediata di auto a noleggio al Porto Isola Bianca di Olbia, primo scalo passeggeri della Sardegna. 100 metri dalla banchina, 7 giorni su 7, dalle 06:00 alle 23:30.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  serviceLocation: {
+    "@type": "Place",
+    name: "Porto Isola Bianca Olbia",
+    address: { "@type": "PostalAddress", streetAddress: "Viale Isola Bianca 38", addressLocality: "Olbia", postalCode: "07026", addressRegion: "SS", addressCountry: "IT" },
+    geo: { "@type": "GeoCoordinates", latitude: 40.923018, longitude: 9.520169 },
+    sameAs: "https://www.olbiagolfoaranci.it/",
+  },
+  areaServed: { "@type": "Place", name: "Porto di Olbia Isola Bianca" },
+  availableLanguage: ["it", "en", "de", "fr", "es"],
+  hoursAvailable: { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "06:00", closes: "23:30" },
+  termsOfService: "https://www.ksrentsardinia.com/termini-e-condizioni",
+};
 ---
 <BaseLayout
-  title="Noleggio Auto Porto Olbia Isola Bianca | KS Rent"
-  description="Arrivi in traghetto a Olbia? Noleggia supercar, SUV o moto al Porto Isola Bianca. Sede allo sbarco, zero attese. Prenota online con KS Rent."
+  title="Noleggio Auto Porto Olbia Isola Bianca | KS Rent Sardinia"
+  description="Arrivi in traghetto Moby, Tirrenia, GNV o Corsica Ferries a Olbia? Sede KS Rent a 100 m dalla banchina, zero navette, ritiro 5 min. Auto, scooter, quad senza carta di credito."
   canonical="https://www.ksrentsardinia.com/noleggio-auto-porto-olbia"
   jsonLd={[
     portoAutoRentalJsonLd,
     portoFaqJsonLd,
+    advancedFaqJsonLd,
+    portServiceJsonLd,
     buildBreadcrumb("Noleggio Auto Porto Olbia", "/noleggio-auto-porto-olbia"),
   ]}
 >
   <NoleggioPortoOlbia lang="it" />
   <GuideVehicleStrip lang="it" />
+  <PortoOlbiaEnrichment lang="it" />
 </BaseLayout>

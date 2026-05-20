@@ -1,23 +1,63 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+import PortoOlbiaEnrichment from "@/components/PortoOlbiaEnrichment.astro";
 import NoleggioPortoOlbia from "@/views/NoleggioPortoOlbia";
 import {
   portoAutoRentalJsonLd,
   portoFaqJsonLd,
   buildBreadcrumb,
 } from "@/lib/jsonLd";
+
+const advancedFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/de/autovermietung-hafen-olbia#faq-advanced",
+  mainEntity: [
+    { "@type": "Question", name: "Wie weit ist die KS Rent Niederlassung vom Faehranleger am Hafen Olbia entfernt?", acceptedAnswer: { "@type": "Answer", text: "Genau 100 Meter vom Isola Bianca Anleger, wo 95% der Passagierschiffe anlegen. Sie erreichen die Niederlassung zu Fuss in 1-2 Minuten beim Verlassen des Passagierbereichs. Bei schwerem Gepaeck koennen wir Sie am Fussgaengerausgang abholen." } },
+    { "@type": "Question", name: "Was passiert, wenn meine Moby- (oder Tirrenia, GNV) Faehre am Hafen Olbia verspaetet ankommt?", acceptedAnswer: { "@type": "Answer", text: "Kein Aufpreis. KS Rent Sardinia ueberwacht Ihre Schiffsnummer auf VesselFinder und marinetraffic ab Buchung: bei Verspaetung von 1-4 Stunden kommt unser Mitarbeiter zur realen Ausschiffungszeit an die Basis." } },
+    { "@type": "Question", name: "Koennen Autos auch nachts am Hafen Olbia abgeholt/zurueckgegeben werden?", acceptedAnswer: { "@type": "Answer", text: "Hafenlieferung verfuegbar 06:00 bis 23:30, 7 Tage die Woche. Nachtfaehren (Moby aus Genua Ankunft 06:30, Tirrenia aus Civitavecchia 07:00) sind perfekt abgedeckt. Ausserhalb des Fensters WhatsApp-Bereitschaftsdienst aktivieren." } },
+    { "@type": "Question", name: "Kann ich mein eigenes Auto am Hafen Olbia waehrend der Miete lassen?", acceptedAnswer: { "@type": "Answer", text: "Ja, der Parkplatz Isola Bianca hat dedizierte Langzeitparkbereiche (6,50 €/Tag, 4 €/Tag ab 3. Tag). Alternativ: Parkplatz Cocciani (5 Min zu Fuss) kostet weniger und hat ueberdachte Plaetze." } },
+    { "@type": "Question", name: "Kann ich ein am Flughafen Olbia abgeholtes Auto am Hafen zurueckgeben (oder umgekehrt)?", acceptedAnswer: { "@type": "Answer", text: "Ja, der Wechsel Hafen ↔ Flughafen ist kostenlos. Beispiel: ITA-Flug Ankunft OLB, Autoabholung am Flughafen, Urlaub, Rueckgabe am Hafen Isola Bianca fuer Moby-Faehre nach Genua. Praeferenz bei Buchung mitteilen." } },
+    { "@type": "Question", name: "Wie viel kostet es, ein KS Rent Mietauto per Faehre nach Korsika zu bringen?", acceptedAnswer: { "@type": "Answer", text: "Fuer Korsika schriftliche Voraberlaubnis erforderlich (8 €/Tag extra). Faehrticketkosten separat (Corsica Ferries Olbia-Bastia: 80-180 € pro Strecke in Hochsaison). Sportwagen (Audi RS3, BMW M2) duerfen Sardinien nicht verlassen." } },
+    { "@type": "Question", name: "Haben Sie Cruise-Day-Rental-Pakete fuer Kreuzfahrtanlaeufe am Hafen Olbia?", acceptedAnswer: { "@type": "Answer", text: "Ja, wir bieten spezielle Tagestarife fuer Kreuzfahrten (MSC, Costa, AIDA, NCL, Royal Caribbean): Fiat Panda Hybrid 65 €/Tag, Jeep Avenger 95 €/Tag, Mercedes A-Klasse 130 €/Tag, alles inklusive. Lieferung 09:00, Rueckgabe bis 19:00. Per WhatsApp 'day cruise [Schiffsname]' angeben." } },
+  ],
+};
+
+const portServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/de/autovermietung-hafen-olbia#service",
+  serviceType: "Autovermietung mit Hafenlieferung",
+  name: "Autolieferung am Hafen Olbia Isola Bianca",
+  description: "Sofortige Autolieferung am Hafen Isola Bianca Olbia, dem wichtigsten Passagierhafen Sardiniens. 100 Meter vom Anleger, 7 Tage die Woche, 06:00 bis 23:30.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  serviceLocation: {
+    "@type": "Place",
+    name: "Hafen Isola Bianca Olbia",
+    address: { "@type": "PostalAddress", streetAddress: "Viale Isola Bianca 38", addressLocality: "Olbia", postalCode: "07026", addressRegion: "SS", addressCountry: "IT" },
+    geo: { "@type": "GeoCoordinates", latitude: 40.923018, longitude: 9.520169 },
+    sameAs: "https://www.olbiagolfoaranci.it/",
+  },
+  areaServed: { "@type": "Place", name: "Hafen Isola Bianca Olbia" },
+  availableLanguage: ["it", "en", "de", "fr", "es"],
+  hoursAvailable: { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "06:00", closes: "23:30" },
+  termsOfService: "https://www.ksrentsardinia.com/de/agb",
+};
 ---
 <BaseLayout
-  title="Autovermietung Hafen Olbia Isola Bianca | KS Rent"
-  description="Kommen Sie mit der Fähre nach Olbia? Mieten Sie Supersportwagen, SUVs oder Motorräder am Hafen Isola Bianca. Sitz direkt bei der Ankunft, keine Wartezeit. Online buchen mit KS Rent."
+  title="Autovermietung Hafen Olbia Isola Bianca | KS Rent Sardinia"
+  description="Ankunft mit Moby, Tirrenia, GNV oder Corsica Ferries Faehre in Olbia? KS Rent Niederlassung 100 m vom Anleger, keine Shuttles, Abholung 5 Min. Autos, Roller, Quads ohne Kreditkarte."
   canonical="https://www.ksrentsardinia.com/de/autovermietung-hafen-olbia"
   jsonLd={[
     portoAutoRentalJsonLd,
     portoFaqJsonLd,
+    advancedFaqJsonLd,
+    portServiceJsonLd,
     buildBreadcrumb("Autovermietung Hafen Olbia", "/de/autovermietung-hafen-olbia"),
   ]}
 >
   <NoleggioPortoOlbia lang="de" />
   <GuideVehicleStrip lang="de" />
+  <PortoOlbiaEnrichment lang="de" />
 </BaseLayout>

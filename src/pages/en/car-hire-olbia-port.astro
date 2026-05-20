@@ -1,23 +1,63 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideVehicleStrip from "@/components/GuideVehicleStrip.astro";
+import PortoOlbiaEnrichment from "@/components/PortoOlbiaEnrichment.astro";
 import NoleggioPortoOlbia from "@/views/NoleggioPortoOlbia";
 import {
   portoAutoRentalJsonLd,
   portoFaqJsonLd,
   buildBreadcrumb,
 } from "@/lib/jsonLd";
+
+const advancedFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/en/car-hire-olbia-port#faq-advanced",
+  mainEntity: [
+    { "@type": "Question", name: "How far is the KS Rent base from the ferry dock at Olbia port?", acceptedAnswer: { "@type": "Answer", text: "Exactly 100 metres from Isola Bianca dock, where 95% of passenger ships disembark. Reach the base on foot in 1-2 minutes exiting the passenger area. With heavy luggage, we can come and meet you at the pedestrian exit." } },
+    { "@type": "Question", name: "What happens if my Moby (or Tirrenia, GNV) ferry arrives late at Olbia port?", acceptedAnswer: { "@type": "Answer", text: "No extra. KS Rent Sardinia monitors your ship's number on VesselFinder and marinetraffic from the moment of booking: if actual time slips 1-4 hours, our operator arrives at base at the actual disembarkation time." } },
+    { "@type": "Question", name: "Can cars be picked up/returned at Olbia port at night?", acceptedAnswer: { "@type": "Answer", text: "Port delivery available 06:00 to 23:30, 7 days a week. Night ferries (Moby from Genoa arrival 06:30, Tirrenia from Civitavecchia 07:00) are perfectly covered. Outside the window activate the WhatsApp on-call service." } },
+    { "@type": "Question", name: "Can I leave my own car at Olbia port during the rental?", acceptedAnswer: { "@type": "Answer", text: "Yes, Isola Bianca parking has dedicated long-stay areas (€6.50/day, €4/day from day 3). Alternative: Cocciani parking (5 min walking) costs less and has covered spots." } },
+    { "@type": "Question", name: "Can I return at the port a car picked up at Olbia airport (or vice versa)?", acceptedAnswer: { "@type": "Answer", text: "Yes, port ↔ airport switch is free. Example: ITA flight arriving OLB, pick up car at airport, holiday, return at Isola Bianca port to catch Moby ferry to Genoa. Communicate preference at booking." } },
+    { "@type": "Question", name: "How much to take a KS Rent rental car to Corsica via ferry?", acceptedAnswer: { "@type": "Answer", text: "For Corsica prior written authorisation required (extra €8/day). Ferry ticket cost is separate (Corsica Ferries Olbia-Bastia: €80-180 each way in peak season). Sports cars (Audi RS3, BMW M2) cannot leave Sardinia." } },
+    { "@type": "Question", name: "Do you have cruise day rental packages for cruise calls at Olbia port?", acceptedAnswer: { "@type": "Answer", text: "Yes, we offer special daily rates for cruises (MSC, Costa, AIDA, NCL, Royal Caribbean): Fiat Panda Hybrid €65/day, Jeep Avenger €95/day, Mercedes A-Class €130/day, all included. Delivery 09:00, return by 19:00. Specify 'day cruise [ship name]' on WhatsApp." } },
+  ],
+};
+
+const portServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/en/car-hire-olbia-port#service",
+  serviceType: "Car hire with port delivery",
+  name: "Car delivery at Olbia Isola Bianca Port",
+  description: "Immediate car delivery service at Olbia Isola Bianca Port, the first passenger port in Sardinia. 100 metres from the dock, 7 days a week, 06:00 to 23:30.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  serviceLocation: {
+    "@type": "Place",
+    name: "Olbia Isola Bianca Port",
+    address: { "@type": "PostalAddress", streetAddress: "Viale Isola Bianca 38", addressLocality: "Olbia", postalCode: "07026", addressRegion: "SS", addressCountry: "IT" },
+    geo: { "@type": "GeoCoordinates", latitude: 40.923018, longitude: 9.520169 },
+    sameAs: "https://www.olbiagolfoaranci.it/",
+  },
+  areaServed: { "@type": "Place", name: "Olbia Isola Bianca Port" },
+  availableLanguage: ["it", "en", "de", "fr", "es"],
+  hoursAvailable: { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "06:00", closes: "23:30" },
+  termsOfService: "https://www.ksrentsardinia.com/en/terms-conditions",
+};
 ---
 <BaseLayout
-  title="Car Hire Olbia Port Isola Bianca | KS Rent"
-  description="Arriving in Olbia by ferry? Hire a supercar, SUV or motorbike at Isola Bianca Port. Office right at the ferry terminal — no waiting. Book online with KS Rent."
+  title="Car Hire Olbia Port Isola Bianca | KS Rent Sardinia"
+  description="Arriving by Moby, Tirrenia, GNV or Corsica Ferries ferry at Olbia? KS Rent base 100 m from the dock, no shuttles, 5 min pickup. Cars, scooters, quads without credit card."
   canonical="https://www.ksrentsardinia.com/en/car-hire-olbia-port"
   jsonLd={[
     portoAutoRentalJsonLd,
     portoFaqJsonLd,
+    advancedFaqJsonLd,
+    portServiceJsonLd,
     buildBreadcrumb("Car Hire Olbia Port", "/en/car-hire-olbia-port"),
   ]}
 >
   <NoleggioPortoOlbia lang="en" />
   <GuideVehicleStrip lang="en" />
+  <PortoOlbiaEnrichment lang="en" />
 </BaseLayout>

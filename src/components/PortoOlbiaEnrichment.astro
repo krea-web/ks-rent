@@ -1,0 +1,580 @@
+---
+/**
+ * Sezioni SEO-enrichment per la pagina /noleggio-auto-porto-olbia
+ * (e versioni EN/DE/FR). Focus su traghetti/ferries (Isola Bianca).
+ *  - Compagnie traghetti servite (Tirrenia, Moby, GNV, Grimaldi, Corsica Ferries)
+ *  - Distanze banchina → punto consegna
+ *  - FAQ avanzata (10 domande non duplicate con portoFaqJsonLd)
+ *  - Hub di link interni verso /guide/ correlate
+ */
+
+type Lang = "it" | "en" | "de" | "fr";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const T = {
+  it: {
+    ferriesEyebrow: "Compagnie traghetti",
+    ferriesHeading: "Quali traghetti arrivano al Porto Isola Bianca di Olbia",
+    ferriesIntro:
+      "Il Porto Isola Bianca di Olbia è il <strong>primo scalo passeggeri della Sardegna</strong> con oltre 4 milioni di viaggiatori e 1,1 milioni di veicoli movimentati ogni anno. È la porta d'ingresso principale per chi arriva via mare dal continente. KS Rent Sardinia consegna l'auto a <strong>100 metri dalla banchina di sbarco</strong>, indipendentemente dalla compagnia con cui arrivi:",
+    ferriesTableHeaders: ["Compagnia", "Rotte principali", "Frequenza alta stagione"],
+    ferriesData: [
+      ["Moby Lines", "Olbia ↔ Livorno, Genova, Piombino, Civitavecchia", "8-12 partenze/giorno"],
+      ["Tirrenia (Gruppo Onorato)", "Olbia ↔ Genova, Civitavecchia, Napoli", "6-10 partenze/giorno"],
+      ["GNV (Grandi Navi Veloci)", "Olbia ↔ Genova, Civitavecchia", "4-6 partenze/giorno"],
+      ["Grimaldi Lines", "Olbia ↔ Civitavecchia, Livorno, Barcellona", "3-5 partenze/giorno"],
+      ["Corsica Ferries / Sardinia Ferries", "Olbia ↔ Livorno, Bastia (Corsica)", "3-5 partenze/giorno"],
+      ["MSC Cruises (occasionali)", "scali crocieristici", "stagionali (apr-ott)"],
+      ["Costa Crociere (occasionali)", "scali crocieristici", "stagionali (mag-set)"],
+    ],
+    ferriesNote:
+      "Il porto ha <strong>5 banchine attive</strong> (Cocciani, Bonaria, Isola Bianca, Cala Saccaia e Industria). Le navi passeggeri attraccano principalmente alla banchina Isola Bianca, dove si trova la nostra sede operativa di Viale Isola Bianca 38.",
+
+    distancesEyebrow: "Tempi e distanze",
+    distancesHeading: "Dalla banchina al punto di consegna KS Rent",
+    distancesIntro:
+      "La nostra sede al Porto si trova proprio sulla strada di uscita dalla banchina Isola Bianca. <strong>Niente navette, niente parcheggi remoti</strong>: sbarchi, cammini 100 metri (o guidi se hai l'auto al seguito) e sei al ritiro.",
+    distancesTableHeaders: ["Da", "A", "Distanza", "Tempo"],
+    distancesData: [
+      ["Banchina Isola Bianca (uscita pedonale)", "Sede KS Rent (Viale Isola Bianca 38)", "100 metri", "1-2 minuti a piedi"],
+      ["Stazione marittima (terminal Tirrenia)", "Sede KS Rent", "250 metri", "3 minuti"],
+      ["Sede KS Rent", "Aeroporto Olbia OLB", "5 km", "10 minuti"],
+      ["Sede KS Rent", "Centro Olbia (Corso Umberto)", "2 km", "5 minuti"],
+      ["Sede KS Rent", "Porto Cervo (Costa Smeralda)", "33 km", "40 minuti"],
+      ["Sede KS Rent", "Palau (imbarco La Maddalena)", "44 km", "55 minuti"],
+      ["Sede KS Rent", "Santa Teresa di Gallura (porto Bonifacio Corsica)", "65 km", "1 ora 10 min"],
+      ["Sede KS Rent", "San Teodoro (Costa Est)", "30 km", "30 minuti"],
+    ],
+    distancesNote:
+      "<strong>Traghetto in ritardo?</strong> Monitoriamo l'orario reale di arrivo dei traghetti tramite VesselFinder e marinetraffic.com, senza costi aggiuntivi. <strong>Traghetto notturno?</strong> Consegna disponibile dalle 06:00 alle 23:30; per orari fuori finestra opera servizio reperibilità su WhatsApp.",
+
+    faqEyebrow: "Domande frequenti porto",
+    faqHeading: "10 risposte concrete sul ritiro al Porto di Olbia",
+    faqs: [
+      {
+        q: "Quanto è distante la sede KS Rent dalla banchina dei traghetti?",
+        a: "<strong>100 metri esatti</strong> dalla banchina Isola Bianca, dove sbarca il 95% delle navi passeggeri. Ti puoi raggiungere la sede a piedi in 1-2 minuti uscendo dall'area passeggeri. Se hai bagagli pesanti, possiamo venirti incontro all'uscita pedonale.",
+      },
+      {
+        q: "Cosa succede se il mio traghetto Moby (o Tirrenia, GNV) arriva in ritardo al porto Olbia?",
+        a: "Nessun extra. Monitoriamo il numero della tua nave su VesselFinder / marinetraffic dal momento della prenotazione: se l'orario reale slitta di 1-4 ore (capita spesso d'estate con vento forte), il nostro operatore arriva alla sede all'orario reale di sbarco.",
+      },
+      {
+        q: "Si può consegnare/ritirare auto al porto anche di notte?",
+        a: "Consegna in porto è disponibile dalle <strong>06:00 alle 23:30</strong>, 7 giorni su 7. I traghetti notturni (es. Moby da Genova arrivo 06:30, Tirrenia da Civitavecchia arrivo 07:00) sono perfettamente coperti. Per arrivi fuori finestra (raro per traghetti, frequente per crociere) attiva servizio reperibilità via WhatsApp.",
+      },
+      {
+        q: "Posso lasciare la mia auto privata in porto durante il noleggio?",
+        a: "Sì, il <strong>parcheggio del porto Isola Bianca</strong> ha aree dedicate alla lunga sosta (sosta lunga 6,50 €/giorno, multi-giorno 4 €/giorno dal 3° giorno). Tariffe estive maggiorate. In alternativa il <strong>parcheggio Cocciani</strong> (5 min a piedi) costa meno e ha posti coperti.",
+      },
+      {
+        q: "Avete operatori che parlano francese/tedesco/inglese al porto?",
+        a: "Sì, i nostri operatori al porto parlano <strong>italiano, inglese, tedesco, francese e spagnolo</strong>. È strategico perché molti clienti arrivano da Francia (Corsica Ferries), Germania e Svizzera (Moby da Livorno/Genova con feeder da nord Europa).",
+      },
+      {
+        q: "Posso riconsegnare al porto un'auto presa in aeroporto (o viceversa)?",
+        a: "Sì, lo <strong>switch porto ↔ aeroporto</strong> è gratuito. Esempio tipico: voli ITA da Roma a Olbia OLB, ritiri auto in aeroporto, fai vacanza, riconsegni al porto Isola Bianca per prendere il traghetto Moby per Genova. Comunica preferenza al booking, gestiamo tutto noi.",
+      },
+      {
+        q: "Quanto si paga per portare l'auto noleggiata su un traghetto verso la Corsica?",
+        a: "Per la <strong>Corsica</strong> serve autorizzazione scritta preventiva (8 €/giorno aggiuntivi). Il costo del biglietto traghetto auto è separato e a tuo carico (Corsica Ferries Olbia-Bastia con auto: 80-180 € a tratta in alta stagione). Auto sportive (Audi RS3, BMW M2) non possono lasciare la Sardegna per policy assicurativa.",
+      },
+      {
+        q: "Cosa fare se sono in coda allo sbarco e il traghetto sta scaricando?",
+        a: "Tienici aggiornati via WhatsApp! Mediamente lo sbarco di una nave da 2.500 passeggeri richiede 30-60 minuti. Possiamo aspettarti al parcheggio sede oppure venirti incontro all'uscita pedonale appena sei sceso. Per gruppi numerosi (3+ veicoli) consigliamo arrivo scaglionato.",
+      },
+      {
+        q: "Avete partnership con compagnie crocieristiche per scali a Olbia?",
+        a: "Le navi crociera (MSC, Costa, AIDA, NCL, Royal Caribbean) attraccano alla banchina <strong>Cocciani</strong> o Bonaria, a 500-800 m dalla nostra sede. Offriamo pacchetti <strong>cruise day rental</strong> per gite singole giornaliere a Costa Smeralda con riconsegna serale al porto (consegna alle 09:00, riconsegna entro le 19:00).",
+      },
+      {
+        q: "Quanto costa noleggiare per la sola giornata di scalo crociera?",
+        a: "Per le crociere offriamo <strong>tariffe daily speciali</strong>: Fiat Panda Hybrid 65 €/giorno, Jeep Avenger 95 €/giorno, Mercedes Classe A 130 €/giorno (tutto incluso, no kasko extra). <a href=\"/tariffe\">Vedi listino completo</a> oppure scrivi WhatsApp specificando \"day cruise [nome nave]\" per quote rapida.",
+      },
+    ],
+
+    hubEyebrow: "Approfondisci",
+    hubHeading: "Guide correlate per chi arriva al porto di Olbia",
+    hubIntro:
+      "Articoli pratici scritti dai fondatori KS Rent Sardinia con dati reali (tempi, costi, compagnie, alternative). Aggiornati per la stagione 2026.",
+    hubCards: [
+      {
+        href: "/guide/come-arrivare-costa-smeralda-voli-traghetti",
+        title: "Come arrivare in Costa Smeralda",
+        desc: "Confronto reale voli vs traghetti per Olbia, costi medi 2026, durate, comparazione Tirrenia-Moby-GNV-Corsica Ferries.",
+      },
+      {
+        href: "/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+        title: "Noleggio senza carta di credito",
+        desc: "Per chi arriva in vacanza con la famiglia: come noleggiare senza blocco carta, metodi alternativi accettati, deposito trasparente.",
+      },
+      {
+        href: "/guide/visitare-arcipelago-la-maddalena-guida-pratica",
+        title: "Visitare La Maddalena: guida pratica",
+        desc: "Da Olbia all'imbarco di Palau in 55 minuti, traghetti per l'arcipelago, costi, parking auto, miglior periodo per visitare.",
+      },
+      {
+        href: "/guide/itinerario-7-giorni-costa-smeralda-da-olbia",
+        title: "Itinerario 7 giorni Costa Smeralda",
+        desc: "Pianificazione giorno-per-giorno per chi sbarca al porto: tappe, distanze, parcheggi, veicoli ideali per ogni tratto.",
+      },
+    ],
+  },
+
+  en: {
+    ferriesEyebrow: "Ferry companies",
+    ferriesHeading: "Which ferries arrive at Olbia Isola Bianca Port",
+    ferriesIntro:
+      "Olbia Isola Bianca Port is the <strong>first passenger port in Sardinia</strong> with over 4 million travellers and 1.1 million vehicles handled each year. It is the main gateway for those arriving by sea from the mainland. KS Rent Sardinia delivers the car <strong>100 metres from the disembarkation dock</strong>, regardless of the company you arrive with:",
+    ferriesTableHeaders: ["Company", "Main routes", "Peak season frequency"],
+    ferriesData: [
+      ["Moby Lines", "Olbia ↔ Livorno, Genoa, Piombino, Civitavecchia", "8-12 departures/day"],
+      ["Tirrenia (Onorato Group)", "Olbia ↔ Genoa, Civitavecchia, Naples", "6-10 departures/day"],
+      ["GNV (Grandi Navi Veloci)", "Olbia ↔ Genoa, Civitavecchia", "4-6 departures/day"],
+      ["Grimaldi Lines", "Olbia ↔ Civitavecchia, Livorno, Barcelona", "3-5 departures/day"],
+      ["Corsica Ferries / Sardinia Ferries", "Olbia ↔ Livorno, Bastia (Corsica)", "3-5 departures/day"],
+      ["MSC Cruises (occasional)", "cruise calls", "seasonal (Apr-Oct)"],
+      ["Costa Cruises (occasional)", "cruise calls", "seasonal (May-Sep)"],
+    ],
+    ferriesNote:
+      "The port has <strong>5 active docks</strong> (Cocciani, Bonaria, Isola Bianca, Cala Saccaia and Industria). Passenger ships mainly dock at Isola Bianca, where our operational base is at Viale Isola Bianca 38.",
+
+    distancesEyebrow: "Times and distances",
+    distancesHeading: "From the dock to KS Rent pickup point",
+    distancesIntro:
+      "Our Port base is right on the exit road from the Isola Bianca dock. <strong>No shuttles, no remote parking</strong>: disembark, walk 100 metres (or drive if you have your own car) and you're at pickup.",
+    distancesTableHeaders: ["From", "To", "Distance", "Time"],
+    distancesData: [
+      ["Isola Bianca dock (pedestrian exit)", "KS Rent base (Viale Isola Bianca 38)", "100 metres", "1-2 minutes walking"],
+      ["Maritime station (Tirrenia terminal)", "KS Rent base", "250 metres", "3 minutes"],
+      ["KS Rent base", "Olbia airport OLB", "5 km", "10 minutes"],
+      ["KS Rent base", "Olbia centre (Corso Umberto)", "2 km", "5 minutes"],
+      ["KS Rent base", "Porto Cervo (Costa Smeralda)", "33 km", "40 minutes"],
+      ["KS Rent base", "Palau (La Maddalena ferry)", "44 km", "55 minutes"],
+      ["KS Rent base", "Santa Teresa di Gallura (Bonifacio Corsica port)", "65 km", "1 hour 10 min"],
+      ["KS Rent base", "San Teodoro (East Coast)", "30 km", "30 minutes"],
+    ],
+    distancesNote:
+      "<strong>Ferry late?</strong> We monitor real arrival times via VesselFinder and marinetraffic.com, at no extra cost. <strong>Night ferry?</strong> Delivery available 06:00 to 23:30; outside these hours an on-call service operates via WhatsApp.",
+
+    faqEyebrow: "Port FAQs",
+    faqHeading: "10 concrete answers on pickup at the Port of Olbia",
+    faqs: [
+      {
+        q: "How far is the KS Rent base from the ferry dock?",
+        a: "<strong>Exactly 100 metres</strong> from Isola Bianca dock, where 95% of passenger ships disembark. You can reach the base on foot in 1-2 minutes exiting the passenger area. With heavy luggage, we can come and meet you at the pedestrian exit.",
+      },
+      {
+        q: "What happens if my Moby (or Tirrenia, GNV) ferry arrives late at Olbia port?",
+        a: "No extra. We monitor your ship's number on VesselFinder / marinetraffic from the moment of booking: if real arrival time slips 1-4 hours (often in summer with strong wind), our operator arrives at base at the actual disembarkation time.",
+      },
+      {
+        q: "Can cars be picked up/returned at the port at night?",
+        a: "Port delivery is available <strong>06:00 to 23:30</strong>, 7 days a week. Night ferries (e.g. Moby from Genoa arriving 06:30, Tirrenia from Civitavecchia 07:00) are perfectly covered. For out-of-window arrivals (rare for ferries, common for cruises) activate the WhatsApp on-call service.",
+      },
+      {
+        q: "Can I leave my own car at the port during the rental?",
+        a: "Yes, <strong>Isola Bianca port parking</strong> has dedicated long-stay areas (long stay €6.50/day, multi-day €4/day from day 3). Summer rates higher. Alternatively the <strong>Cocciani parking</strong> (5 min walking) costs less and has covered spots.",
+      },
+      {
+        q: "Do you have operators who speak French/German/English at the port?",
+        a: "Yes, our port operators speak <strong>Italian, English, German, French and Spanish</strong>. Strategic because many customers arrive from France (Corsica Ferries), Germany and Switzerland (Moby from Livorno/Genoa with feeder from northern Europe).",
+      },
+      {
+        q: "Can I return at the port a car picked up at the airport (or vice versa)?",
+        a: "Yes, the <strong>port ↔ airport switch</strong> is free. Typical example: ITA flight Rome-Olbia OLB, pick up car at airport, holiday, return at Isola Bianca port to catch Moby ferry to Genoa. Communicate preference at booking, we handle everything.",
+      },
+      {
+        q: "How much to take the rental car on a ferry to Corsica?",
+        a: "For <strong>Corsica</strong> prior written authorisation is required (extra €8/day). The ferry ticket cost is separate and on you (Corsica Ferries Olbia-Bastia with car: €80-180 each way in peak season). Sports cars (Audi RS3, BMW M2) cannot leave Sardinia per insurance policy.",
+      },
+      {
+        q: "What to do if I'm queueing for disembarkation and the ferry is unloading?",
+        a: "Keep us updated via WhatsApp! On average disembarking a 2,500-passenger ship takes 30-60 minutes. We can wait for you at the base parking or meet you at the pedestrian exit as soon as you're off. For large groups (3+ vehicles) we recommend staggered arrival.",
+      },
+      {
+        q: "Do you have partnerships with cruise companies calling at Olbia?",
+        a: "Cruise ships (MSC, Costa, AIDA, NCL, Royal Caribbean) dock at <strong>Cocciani</strong> or Bonaria, 500-800 m from our base. We offer <strong>cruise day rental</strong> packages for single-day Costa Smeralda trips with evening return to port (delivery at 09:00, return by 19:00).",
+      },
+      {
+        q: "How much for renting for just the cruise call day?",
+        a: "For cruises we offer <strong>special daily rates</strong>: Fiat Panda Hybrid €65/day, Jeep Avenger €95/day, Mercedes A-Class €130/day (all included, no extra excess). <a href=\"/en/rates\">See full pricing</a> or message us on WhatsApp specifying \"day cruise [ship name]\" for a quick quote.",
+      },
+    ],
+
+    hubEyebrow: "Read more",
+    hubHeading: "Related guides for those arriving at Olbia port",
+    hubIntro:
+      "Practical articles written by KS Rent Sardinia founders with real data (times, costs, companies, alternatives). Updated for 2026 season.",
+    hubCards: [
+      {
+        href: "/en/guide/how-to-get-to-costa-smeralda-flights-ferries",
+        title: "How to reach Costa Smeralda",
+        desc: "Real comparison of flights vs ferries for Olbia, average 2026 costs, durations, comparison Tirrenia-Moby-GNV-Corsica Ferries.",
+      },
+      {
+        href: "/en/guide/car-hire-olbia-without-credit-card-complete-guide",
+        title: "Car hire without credit card",
+        desc: "For those arriving on family holiday: how to rent without card hold, alternative accepted methods, transparent deposit.",
+      },
+      {
+        href: "/en/guide/visiting-la-maddalena-archipelago-practical-guide",
+        title: "Visit La Maddalena: practical guide",
+        desc: "From Olbia to Palau ferry in 55 minutes, ferries to the archipelago, costs, car parking, best time to visit.",
+      },
+      {
+        href: "/en/guide/7-day-itinerary-costa-smeralda-from-olbia",
+        title: "7-day Costa Smeralda itinerary",
+        desc: "Day-by-day planning for those disembarking at the port: stops, distances, parking, ideal vehicles for each leg.",
+      },
+    ],
+  },
+
+  de: {
+    ferriesEyebrow: "Faehrgesellschaften",
+    ferriesHeading: "Welche Faehren am Hafen Isola Bianca Olbia ankommen",
+    ferriesIntro:
+      "Der Hafen Isola Bianca Olbia ist der <strong>wichtigste Passagierhafen Sardiniens</strong> mit ueber 4 Millionen Reisenden und 1,1 Millionen abgewickelten Fahrzeugen pro Jahr. Er ist das Haupteingangstor fuer Ankunft per Schiff vom Festland. KS Rent Sardinia liefert das Fahrzeug <strong>100 Meter vom Anleger</strong>, unabhaengig von der Gesellschaft:",
+    ferriesTableHeaders: ["Gesellschaft", "Hauptrouten", "Frequenz Hochsaison"],
+    ferriesData: [
+      ["Moby Lines", "Olbia ↔ Livorno, Genua, Piombino, Civitavecchia", "8-12 Abfahrten/Tag"],
+      ["Tirrenia (Onorato-Gruppe)", "Olbia ↔ Genua, Civitavecchia, Neapel", "6-10 Abfahrten/Tag"],
+      ["GNV (Grandi Navi Veloci)", "Olbia ↔ Genua, Civitavecchia", "4-6 Abfahrten/Tag"],
+      ["Grimaldi Lines", "Olbia ↔ Civitavecchia, Livorno, Barcelona", "3-5 Abfahrten/Tag"],
+      ["Corsica Ferries / Sardinia Ferries", "Olbia ↔ Livorno, Bastia (Korsika)", "3-5 Abfahrten/Tag"],
+      ["MSC Kreuzfahrten (gelegentlich)", "Kreuzfahrtanlaeufe", "saisonal (Apr-Okt)"],
+      ["Costa Kreuzfahrten (gelegentlich)", "Kreuzfahrtanlaeufe", "saisonal (Mai-Sep)"],
+    ],
+    ferriesNote:
+      "Der Hafen hat <strong>5 aktive Anleger</strong> (Cocciani, Bonaria, Isola Bianca, Cala Saccaia und Industria). Passagierschiffe legen hauptsaechlich an Isola Bianca an, wo unsere Niederlassung in Viale Isola Bianca 38 liegt.",
+
+    distancesEyebrow: "Zeiten und Entfernungen",
+    distancesHeading: "Vom Anleger zum KS Rent Abholpunkt",
+    distancesIntro:
+      "Unsere Hafenniederlassung liegt direkt an der Ausfahrtsstrasse vom Isola Bianca Anleger. <strong>Keine Shuttles, keine entfernten Parkplaetze</strong>: aussteigen, 100 Meter laufen (oder fahren bei eigenem Fahrzeug) und Sie sind beim Abholen.",
+    distancesTableHeaders: ["Von", "Nach", "Entfernung", "Zeit"],
+    distancesData: [
+      ["Isola Bianca Anleger (Fussgaengerausgang)", "KS Rent Niederlassung (Viale Isola Bianca 38)", "100 Meter", "1-2 Minuten zu Fuss"],
+      ["Schiffsstation (Tirrenia-Terminal)", "KS Rent Niederlassung", "250 Meter", "3 Minuten"],
+      ["KS Rent Niederlassung", "Flughafen Olbia OLB", "5 km", "10 Minuten"],
+      ["KS Rent Niederlassung", "Olbia Zentrum (Corso Umberto)", "2 km", "5 Minuten"],
+      ["KS Rent Niederlassung", "Porto Cervo (Costa Smeralda)", "33 km", "40 Minuten"],
+      ["KS Rent Niederlassung", "Palau (Faehre La Maddalena)", "44 km", "55 Minuten"],
+      ["KS Rent Niederlassung", "Santa Teresa di Gallura (Hafen Bonifacio Korsika)", "65 km", "1 Std 10 Min"],
+      ["KS Rent Niederlassung", "San Teodoro (Ostkueste)", "30 km", "30 Minuten"],
+    ],
+    distancesNote:
+      "<strong>Faehre verspaetet?</strong> Wir ueberwachen reale Ankunftszeiten ueber VesselFinder und marinetraffic.com, ohne Aufpreis. <strong>Nachtfaehre?</strong> Lieferung verfuegbar 06:00 bis 23:30; ausserhalb dieser Zeiten arbeitet ein Bereitschaftsdienst per WhatsApp.",
+
+    faqEyebrow: "FAQ Hafen",
+    faqHeading: "10 konkrete Antworten zur Abholung am Hafen Olbia",
+    faqs: [
+      {
+        q: "Wie weit ist die KS Rent Niederlassung vom Faehranleger entfernt?",
+        a: "<strong>Genau 100 Meter</strong> vom Isola Bianca Anleger, wo 95% der Passagierschiffe anlegen. Sie erreichen die Niederlassung zu Fuss in 1-2 Minuten beim Verlassen des Passagierbereichs. Bei schwerem Gepaeck koennen wir Sie am Fussgaengerausgang abholen.",
+      },
+      {
+        q: "Was passiert, wenn meine Moby- (oder Tirrenia, GNV) Faehre am Hafen Olbia verspaetet ankommt?",
+        a: "Kein Aufpreis. Wir ueberwachen Ihre Schiffsnummer auf VesselFinder / marinetraffic ab Buchung: bei Verspaetung von 1-4 Stunden (oft im Sommer bei starkem Wind) kommt unser Mitarbeiter zur realen Ausschiffungszeit an die Basis.",
+      },
+      {
+        q: "Koennen Autos auch nachts am Hafen abgeholt/zurueckgegeben werden?",
+        a: "Hafenlieferung verfuegbar <strong>06:00 bis 23:30</strong>, 7 Tage die Woche. Nachtfaehren (z.B. Moby aus Genua Ankunft 06:30, Tirrenia aus Civitavecchia 07:00) sind perfekt abgedeckt. Fuer Ankuenfte ausserhalb der Fenster (selten bei Faehren, haeufig bei Kreuzfahrten) WhatsApp-Bereitschaftsdienst aktivieren.",
+      },
+      {
+        q: "Kann ich mein eigenes Auto am Hafen waehrend der Miete lassen?",
+        a: "Ja, der <strong>Parkplatz Isola Bianca</strong> hat dedizierte Langzeitparkbereiche (Langzeit 6,50 €/Tag, Mehrtages 4 €/Tag ab 3. Tag). Sommertarife hoeher. Alternativ kostet der <strong>Parkplatz Cocciani</strong> (5 Min zu Fuss) weniger und hat ueberdachte Plaetze.",
+      },
+      {
+        q: "Haben Sie Mitarbeiter, die Franzoesisch/Deutsch/Englisch am Hafen sprechen?",
+        a: "Ja, unsere Hafenmitarbeiter sprechen <strong>Italienisch, Englisch, Deutsch, Franzoesisch und Spanisch</strong>. Strategisch, weil viele Kunden aus Frankreich (Corsica Ferries), Deutschland und der Schweiz (Moby aus Livorno/Genua mit Feeder aus Nordeuropa) ankommen.",
+      },
+      {
+        q: "Kann ich ein am Flughafen abgeholtes Auto am Hafen zurueckgeben (oder umgekehrt)?",
+        a: "Ja, der <strong>Wechsel Hafen ↔ Flughafen</strong> ist kostenlos. Typisches Beispiel: ITA-Flug Rom-Olbia OLB, Autoabholung am Flughafen, Urlaub, Rueckgabe am Hafen Isola Bianca fuer Moby-Faehre nach Genua. Praeferenz bei Buchung mitteilen, wir uebernehmen alles.",
+      },
+      {
+        q: "Wie viel kostet es, das Mietauto auf eine Faehre nach Korsika mitzunehmen?",
+        a: "Fuer <strong>Korsika</strong> ist schriftliche Voraberlaubnis erforderlich (8 €/Tag extra). Die Faehrticketkosten sind separat und zu Ihren Lasten (Corsica Ferries Olbia-Bastia mit Auto: 80-180 € pro Strecke in Hochsaison). Sportwagen (Audi RS3, BMW M2) duerfen Sardinien per Versicherungspolice nicht verlassen.",
+      },
+      {
+        q: "Was tun, wenn ich in der Ausschiffungswarteschlange bin und die Faehre entlaedt?",
+        a: "Halten Sie uns per WhatsApp auf dem Laufenden! Im Durchschnitt dauert die Ausschiffung eines 2.500-Passagier-Schiffes 30-60 Minuten. Wir koennen am Basisparkplatz warten oder Sie am Fussgaengerausgang abholen, sobald Sie ausgestiegen sind. Fuer grosse Gruppen (3+ Fahrzeuge) empfehlen wir gestaffelte Ankunft.",
+      },
+      {
+        q: "Haben Sie Partnerschaften mit Kreuzfahrtgesellschaften mit Anlauf Olbia?",
+        a: "Kreuzfahrtschiffe (MSC, Costa, AIDA, NCL, Royal Caribbean) legen am <strong>Cocciani</strong> oder Bonaria Anleger an, 500-800 m von unserer Basis. Wir bieten <strong>Cruise Day Rental</strong> Pakete fuer Tagesausfluege Costa Smeralda mit abendlicher Rueckgabe am Hafen (Lieferung um 09:00, Rueckgabe bis 19:00).",
+      },
+      {
+        q: "Wie viel kostet die Miete nur fuer den Kreuzfahrt-Anlauftag?",
+        a: "Fuer Kreuzfahrten bieten wir <strong>spezielle Tagestarife</strong>: Fiat Panda Hybrid 65 €/Tag, Jeep Avenger 95 €/Tag, Mercedes A-Klasse 130 €/Tag (alles inklusive, keine zusaetzliche Selbstbeteiligung). <a href=\"/de/preise\">Vollstaendige Preisliste ansehen</a> oder per WhatsApp \"day cruise [Schiffsname]\" fuer schnelles Angebot anfragen.",
+      },
+    ],
+
+    hubEyebrow: "Mehr erfahren",
+    hubHeading: "Verwandte Reisefuehrer fuer Ankuenfte am Hafen Olbia",
+    hubIntro:
+      "Praktische Artikel verfasst von den KS Rent Sardinia Gruendern mit realen Daten (Zeiten, Kosten, Gesellschaften, Alternativen). Aktualisiert fuer die Saison 2026.",
+    hubCards: [
+      {
+        href: "/de/guide/anfahrt-costa-smeralda-fluege-faehren",
+        title: "Wie erreiche ich die Costa Smeralda",
+        desc: "Realer Vergleich Fluege vs Faehren fuer Olbia, durchschnittliche Kosten 2026, Dauer, Vergleich Tirrenia-Moby-GNV-Corsica Ferries.",
+      },
+      {
+        href: "/de/guide/autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung",
+        title: "Autovermietung ohne Kreditkarte",
+        desc: "Fuer Ankunft mit der Familie im Urlaub: wie ohne Kartensperrung mieten, akzeptierte alternative Methoden, transparente Kaution.",
+      },
+      {
+        href: "/de/guide/la-maddalena-archipel-besuchen-praktische-anleitung",
+        title: "La Maddalena besuchen: praktische Anleitung",
+        desc: "Von Olbia zur Faehre Palau in 55 Minuten, Faehren zum Archipel, Kosten, Autoparkplatz, beste Reisezeit.",
+      },
+      {
+        href: "/de/guide/7-tage-reiseroute-costa-smeralda-ab-olbia",
+        title: "7-Tage Costa Smeralda Reiseroute",
+        desc: "Tag-fuer-Tag-Planung fuer Hafenankunft: Stationen, Entfernungen, Parkplaetze, ideale Fahrzeuge fuer jede Etappe.",
+      },
+    ],
+  },
+
+  fr: {
+    ferriesEyebrow: "Compagnies de ferries",
+    ferriesHeading: "Quels ferries arrivent au Port Isola Bianca d'Olbia",
+    ferriesIntro:
+      "Le Port Isola Bianca d'Olbia est le <strong>premier port passagers de Sardaigne</strong> avec plus de 4 millions de voyageurs et 1,1 million de véhicules traités chaque année. C'est la principale porte d'entrée pour ceux qui arrivent par mer du continent. KS Rent Sardinia livre la voiture à <strong>100 mètres du quai de débarquement</strong>, indépendamment de la compagnie d'arrivée :",
+    ferriesTableHeaders: ["Compagnie", "Routes principales", "Fréquence haute saison"],
+    ferriesData: [
+      ["Moby Lines", "Olbia ↔ Livourne, Gênes, Piombino, Civitavecchia", "8-12 départs/jour"],
+      ["Tirrenia (Groupe Onorato)", "Olbia ↔ Gênes, Civitavecchia, Naples", "6-10 départs/jour"],
+      ["GNV (Grandi Navi Veloci)", "Olbia ↔ Gênes, Civitavecchia", "4-6 départs/jour"],
+      ["Grimaldi Lines", "Olbia ↔ Civitavecchia, Livourne, Barcelone", "3-5 départs/jour"],
+      ["Corsica Ferries / Sardinia Ferries", "Olbia ↔ Livourne, Bastia (Corse)", "3-5 départs/jour"],
+      ["MSC Croisières (occasionnels)", "escales croisières", "saisonniers (avr-oct)"],
+      ["Costa Croisières (occasionnels)", "escales croisières", "saisonniers (mai-sept)"],
+    ],
+    ferriesNote:
+      "Le port a <strong>5 quais actifs</strong> (Cocciani, Bonaria, Isola Bianca, Cala Saccaia et Industria). Les navires passagers accostent principalement au quai Isola Bianca, où se trouve notre siège opérationnel au Viale Isola Bianca 38.",
+
+    distancesEyebrow: "Temps et distances",
+    distancesHeading: "Du quai au point de retrait KS Rent",
+    distancesIntro:
+      "Notre siège au port est directement sur la route de sortie du quai Isola Bianca. <strong>Pas de navettes, pas de parking éloigné</strong> : vous débarquez, marchez 100 mètres (ou conduisez si vous avez votre voiture) et vous êtes au retrait.",
+    distancesTableHeaders: ["De", "À", "Distance", "Temps"],
+    distancesData: [
+      ["Quai Isola Bianca (sortie piétonne)", "Siège KS Rent (Viale Isola Bianca 38)", "100 mètres", "1-2 minutes à pied"],
+      ["Gare maritime (terminal Tirrenia)", "Siège KS Rent", "250 mètres", "3 minutes"],
+      ["Siège KS Rent", "Aéroport Olbia OLB", "5 km", "10 minutes"],
+      ["Siège KS Rent", "Centre Olbia (Corso Umberto)", "2 km", "5 minutes"],
+      ["Siège KS Rent", "Porto Cervo (Costa Smeralda)", "33 km", "40 minutes"],
+      ["Siège KS Rent", "Palau (ferry La Maddalena)", "44 km", "55 minutes"],
+      ["Siège KS Rent", "Santa Teresa di Gallura (port Bonifacio Corse)", "65 km", "1 heure 10 min"],
+      ["Siège KS Rent", "San Teodoro (côte est)", "30 km", "30 minutes"],
+    ],
+    distancesNote:
+      "<strong>Ferry en retard ?</strong> Nous surveillons les heures réelles d'arrivée via VesselFinder et marinetraffic.com, sans frais supplémentaires. <strong>Ferry de nuit ?</strong> Livraison disponible de 06:00 à 23:30 ; en dehors un service d'astreinte opère via WhatsApp.",
+
+    faqEyebrow: "FAQ port",
+    faqHeading: "10 réponses concrètes sur le retrait au Port d'Olbia",
+    faqs: [
+      {
+        q: "À quelle distance se trouve le siège KS Rent du quai des ferries ?",
+        a: "<strong>Exactement 100 mètres</strong> du quai Isola Bianca, où débarque 95% des navires passagers. Vous pouvez rejoindre le siège à pied en 1-2 minutes en sortant de la zone passagers. Avec des bagages lourds, nous pouvons venir vous chercher à la sortie piétonne.",
+      },
+      {
+        q: "Que se passe-t-il si mon ferry Moby (ou Tirrenia, GNV) arrive en retard au port d'Olbia ?",
+        a: "Aucun supplément. Nous surveillons le numéro de votre navire sur VesselFinder / marinetraffic dès la réservation : si l'heure réelle d'arrivée glisse de 1-4 heures (fréquent en été avec vent fort), notre opérateur arrive au siège à l'heure réelle de débarquement.",
+      },
+      {
+        q: "Peut-on récupérer/restituer des voitures au port même la nuit ?",
+        a: "Livraison au port disponible de <strong>06:00 à 23:30</strong>, 7 jours sur 7. Les ferries de nuit (ex. Moby de Gênes arrivée 06:30, Tirrenia de Civitavecchia 07:00) sont parfaitement couverts. Pour arrivées hors fenêtre (rare pour ferries, fréquent pour croisières) activez le service d'astreinte WhatsApp.",
+      },
+      {
+        q: "Puis-je laisser ma voiture personnelle au port pendant la location ?",
+        a: "Oui, le <strong>parking du port Isola Bianca</strong> a des zones dédiées longue durée (longue durée 6,50 €/jour, multi-jours 4 €/jour à partir du 3e jour). Tarifs estivaux majorés. Alternativement le <strong>parking Cocciani</strong> (5 min à pied) coûte moins et a des places couvertes.",
+      },
+      {
+        q: "Avez-vous des opérateurs qui parlent français/allemand/anglais au port ?",
+        a: "Oui, nos opérateurs au port parlent <strong>italien, anglais, allemand, français et espagnol</strong>. C'est stratégique car beaucoup de clients arrivent de France (Corsica Ferries), Allemagne et Suisse (Moby de Livourne/Gênes avec correspondance depuis le nord de l'Europe).",
+      },
+      {
+        q: "Puis-je restituer au port une voiture prise à l'aéroport (ou vice versa) ?",
+        a: "Oui, le <strong>switch port ↔ aéroport</strong> est gratuit. Exemple typique : vol ITA Rome-Olbia OLB, retrait voiture à l'aéroport, vacances, restitution au port Isola Bianca pour prendre le ferry Moby pour Gênes. Communiquez la préférence à la réservation, nous gérons tout.",
+      },
+      {
+        q: "Combien coûte d'emporter la voiture de location sur un ferry vers la Corse ?",
+        a: "Pour la <strong>Corse</strong> autorisation écrite préalable requise (8 €/jour supplémentaires). Le coût du billet ferry voiture est séparé et à votre charge (Corsica Ferries Olbia-Bastia avec voiture : 80-180 € par trajet en haute saison). Sportives (Audi RS3, BMW M2) ne peuvent quitter la Sardaigne selon police d'assurance.",
+      },
+      {
+        q: "Que faire si je suis en file de débarquement et le ferry décharge ?",
+        a: "Tenez-nous informés via WhatsApp ! En moyenne le débarquement d'un navire de 2.500 passagers prend 30-60 minutes. Nous pouvons attendre au parking du siège ou venir vous chercher à la sortie piétonne dès que vous êtes descendu. Pour grands groupes (3+ véhicules) nous recommandons arrivée échelonnée.",
+      },
+      {
+        q: "Avez-vous des partenariats avec des compagnies de croisière faisant escale à Olbia ?",
+        a: "Les navires de croisière (MSC, Costa, AIDA, NCL, Royal Caribbean) accostent au quai <strong>Cocciani</strong> ou Bonaria, à 500-800 m de notre siège. Nous offrons des forfaits <strong>cruise day rental</strong> pour excursions journalières à la Costa Smeralda avec restitution le soir au port (livraison à 09:00, restitution avant 19:00).",
+      },
+      {
+        q: "Combien coûte la location pour la seule journée d'escale de croisière ?",
+        a: "Pour les croisières nous offrons des <strong>tarifs journaliers spéciaux</strong> : Fiat Panda Hybrid 65 €/jour, Jeep Avenger 95 €/jour, Mercedes Classe A 130 €/jour (tout inclus, pas de franchise supplémentaire). <a href=\"/fr/tarifs\">Voir le tarif complet</a> ou WhatsApp en spécifiant \"day cruise [nom navire]\" pour devis rapide.",
+      },
+    ],
+
+    hubEyebrow: "En savoir plus",
+    hubHeading: "Guides connexes pour ceux qui arrivent au port d'Olbia",
+    hubIntro:
+      "Articles pratiques rédigés par les fondateurs de KS Rent Sardinia avec données réelles (temps, coûts, compagnies, alternatives). Mis à jour pour la saison 2026.",
+    hubCards: [
+      {
+        href: "/fr/guide/comment-arriver-costa-smeralda-vols-ferries",
+        title: "Comment rejoindre la Costa Smeralda",
+        desc: "Comparaison réelle vols vs ferries pour Olbia, coûts moyens 2026, durées, comparaison Tirrenia-Moby-GNV-Corsica Ferries.",
+      },
+      {
+        href: "/fr/guide/location-voiture-olbia-sans-carte-credit-guide-complet",
+        title: "Location sans carte de crédit",
+        desc: "Pour arrivée en vacances en famille : comment louer sans blocage carte, méthodes alternatives acceptées, caution transparente.",
+      },
+      {
+        href: "/fr/guide/visiter-archipel-maddalena-guide-pratique",
+        title: "Visiter La Maddalena : guide pratique",
+        desc: "D'Olbia à l'embarquement de Palau en 55 minutes, ferries pour l'archipel, coûts, parking voiture, meilleure période pour visiter.",
+      },
+      {
+        href: "/fr/guide/itineraire-7-jours-costa-smeralda-depuis-olbia",
+        title: "Itinéraire 7 jours Costa Smeralda",
+        desc: "Planification jour par jour pour ceux qui débarquent au port : étapes, distances, parkings, véhicules idéaux pour chaque tronçon.",
+      },
+    ],
+  },
+} as const;
+
+const t = T[lang];
+---
+
+<!-- COMPAGNIE TRAGHETTI -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-card border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.ferriesEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-5">
+      {t.ferriesHeading}
+    </h2>
+    <p class="text-foreground/75 font-light leading-relaxed mb-8" set:html={t.ferriesIntro}></p>
+
+    <div class="bg-background border border-border rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm min-w-[640px]">
+          <thead class="bg-card/50 border-b border-border">
+            <tr>
+              {t.ferriesTableHeaders.map((h) => (
+                <th class="px-4 py-3 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {t.ferriesData.map((row) => (
+              <tr class="border-b border-border/50 last:border-0 hover:bg-card/30 transition-colors">
+                <td class="px-4 py-3 font-bold text-foreground">{row[0]}</td>
+                <td class="px-4 py-3 text-foreground/70">{row[1]}</td>
+                <td class="px-4 py-3 text-gold font-semibold">{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="text-xs text-foreground/55 mt-4 leading-relaxed" set:html={t.ferriesNote}></p>
+  </div>
+</section>
+
+<!-- DISTANZE BANCHINA -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-background border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.distancesEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-5">
+      {t.distancesHeading}
+    </h2>
+    <p class="text-foreground/75 font-light leading-relaxed mb-8" set:html={t.distancesIntro}></p>
+
+    <div class="bg-card border border-border rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm min-w-[640px]">
+          <thead class="bg-background/50 border-b border-border">
+            <tr>
+              {t.distancesTableHeaders.map((h) => (
+                <th class="px-4 py-3 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {t.distancesData.map((row) => (
+              <tr class="border-b border-border/50 last:border-0">
+                <td class="px-4 py-3 text-foreground/85">{row[0]}</td>
+                <td class="px-4 py-3 text-foreground/85">{row[1]}</td>
+                <td class="px-4 py-3 text-gold font-semibold">{row[2]}</td>
+                <td class="px-4 py-3 text-foreground/70 font-medium">{row[3]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="text-xs text-foreground/55 mt-4 leading-relaxed" set:html={t.distancesNote}></p>
+  </div>
+</section>
+
+<!-- FAQ AVANZATA -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-card border-t border-border">
+  <div class="max-w-4xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.faqEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-10">
+      {t.faqHeading}
+    </h2>
+
+    <div class="space-y-3">
+      {t.faqs.map((faq, i) => (
+        <details class="group bg-background border border-border rounded-2xl p-5 md:p-6 transition-colors hover:border-gold/40">
+          <summary class="cursor-pointer list-none flex items-center justify-between gap-4">
+            <span class="font-bold text-foreground text-[15px] md:text-base leading-snug">
+              <span class="text-gold mr-2">{(i + 1).toString().padStart(2, "0")}.</span>
+              {faq.q}
+            </span>
+            <span class="text-gold text-2xl shrink-0 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <div class="mt-4 text-foreground/75 font-light leading-relaxed text-sm md:text-[15px]" set:html={faq.a}></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- HUB GUIDE CORRELATE -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-background border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.hubEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-3">
+      {t.hubHeading}
+    </h2>
+    <p class="text-foreground/70 font-light mb-10 max-w-2xl">{t.hubIntro}</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {t.hubCards.map((c) => (
+        <a
+          href={c.href}
+          class="block bg-card border border-border rounded-2xl p-6 hover:border-gold/50 hover:bg-card/80 transition-all group"
+        >
+          <h3 class="font-bold text-foreground group-hover:text-gold transition-colors text-lg mb-2 leading-tight">
+            {c.title}
+          </h3>
+          <p class="text-foreground/65 font-light text-sm leading-relaxed">{c.desc}</p>
+          <span class="inline-block mt-3 text-gold text-xs font-bold tracking-wider uppercase">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

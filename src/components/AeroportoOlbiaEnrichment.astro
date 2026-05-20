@@ -1,0 +1,596 @@
+---
+/**
+ * Sezioni SEO-enrichment per la pagina /noleggio-auto-aeroporto-olbia
+ * (e versioni EN/DE/FR). Si inserisce sotto il view React principale e
+ * sotto GuideVehicleStrip. Contiene:
+ *  - Compagnie aeree servite all'aeroporto OLB (intercetta keyword
+ *    "noleggio auto aeroporto Olbia + Ryanair/easyJet/ITA/Lufthansa/Volotea")
+ *  - Distanze e tempi terminal → punto consegna
+ *  - FAQ avanzata (10 domande non duplicate con aeroportoFaqJsonLd)
+ *  - Hub di link interni verso /guide/ correlate
+ *
+ * Tutto via TRANSLATIONS dict per 4 lingue. Pattern come LegalPageContent.
+ */
+
+type Lang = "it" | "en" | "de" | "fr";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const T = {
+  it: {
+    airlinesEyebrow: "Compagnie aeree servite",
+    airlinesHeading: "Quali voli arrivano all'Aeroporto Olbia Costa Smeralda (OLB)",
+    airlinesIntro:
+      "L'Aeroporto di Olbia (codice IATA: <strong>OLB</strong>, gestore Geasar) accoglie ogni anno oltre 3,3 milioni di passeggeri. In alta stagione (luglio-agosto) atterrano qui più di 50 voli al giorno da 60+ destinazioni europee. KS Rent Sardinia consegna l'auto a chiunque arrivi con queste compagnie, in qualsiasi orario incluso notte:",
+    airlinesTableHeaders: ["Compagnia", "Hub principali", "Frequenza alta stagione"],
+    airlinesData: [
+      ["Ryanair", "Milano BGY, Bologna, Roma CIA, Pisa, Londra STN, Manchester, Berlino", "10-15 voli/giorno"],
+      ["easyJet", "Milano MXP, Roma FCO, Napoli, Ginevra, Basilea, Parigi ORY, Lione", "8-12 voli/giorno"],
+      ["ITA Airways", "Roma FCO, Milano LIN", "6-8 voli/giorno (continuativi)"],
+      ["Volotea", "Verona, Torino, Genova, Napoli, Bari, Nantes, Bordeaux", "5-8 voli/giorno"],
+      ["Lufthansa", "Monaco MUC, Francoforte FRA", "3-5 voli/giorno"],
+      ["Air France", "Parigi CDG, Marsiglia", "2-4 voli/giorno"],
+      ["Eurowings", "Düsseldorf, Stoccarda, Colonia", "2-4 voli/giorno"],
+      ["Swiss / Edelweiss", "Zurigo", "1-3 voli/giorno"],
+      ["British Airways", "Londra LHR (stagionale)", "1-2 voli/giorno (giu-set)"],
+      ["Vueling, Wizz Air, Iberia, KLM, SAS", "varie capitali europee", "stagionali (mag-ott)"],
+    ],
+    airlinesNote:
+      "Voli charter e privati gestiti separatamente dal piazzale Aviation General. KS Rent Sardinia consegna anche al piazzale jet privati su richiesta esplicita, senza costi aggiuntivi entro l'orario di apertura.",
+
+    distancesEyebrow: "Tempi e distanze",
+    distancesHeading: "Dal terminal al punto di consegna KS Rent",
+    distancesIntro:
+      "L'Aeroporto Olbia ha un solo terminal passeggeri, compatto e moderno. KS Rent Sardinia ti consegna il veicolo al <strong>parcheggio antistante l'uscita arrivi</strong>, evitando navette o lunghi percorsi a piedi tipici delle compagnie internazionali.",
+    distancesTableHeaders: ["Da", "A", "Distanza", "Tempo"],
+    distancesData: [
+      ["Uscita Arrivi (porta 1)", "Parcheggio consegna KS Rent", "80 metri", "1 minuto a piedi"],
+      ["Nastro bagagli (sala arrivi)", "Uscita Arrivi", "30 metri", "30 secondi"],
+      ["Parcheggio consegna KS Rent", "Uscita autostrada SS125", "200 metri", "1 minuto in auto"],
+      ["Parcheggio consegna KS Rent", "Centro Olbia (Corso Umberto)", "4 km", "10 minuti"],
+      ["Parcheggio consegna KS Rent", "Porto Isola Bianca", "5 km", "10 minuti"],
+      ["Parcheggio consegna KS Rent", "Porto Cervo (Costa Smeralda)", "32 km", "40 minuti"],
+      ["Parcheggio consegna KS Rent", "San Teodoro (Costa Est)", "30 km", "30 minuti"],
+      ["Parcheggio consegna KS Rent", "La Maddalena (Palau imbarco)", "44 km", "55 minuti"],
+    ],
+    distancesNote:
+      "<strong>Voli in ritardo o anticipo?</strong> Tracciamo il numero del tuo volo in tempo reale (FlightRadar24) e ti aspettiamo all'orario reale di atterraggio, senza costi aggiuntivi. <strong>Voli notturni?</strong> Consegna disponibile dalle 06:00 alle 23:30; per orari fuori finestra opera servizio reperibilità su WhatsApp.",
+
+    faqEyebrow: "Domande frequenti aeroporto",
+    faqHeading: "10 risposte concrete su come funziona il ritiro all'OLB",
+    faqs: [
+      {
+        q: "Quanti minuti dura il ritiro effettivo del veicolo all'aeroporto Olbia con KS Rent?",
+        a: "<strong>5-10 minuti totali</strong> dall'uscita dagli arrivi alla partenza con auto. Confronto: con le compagnie internazionali (Hertz/Avis/Sixt) la media è 30-90 minuti in alta stagione, anche 2 ore con coda. Da noi non c'è banco interno: ti aspettiamo già fuori con il veicolo pronto e i documenti pre-compilati.",
+      },
+      {
+        q: "Cosa succede se il mio volo Ryanair (o easyJet, ITA, ecc.) atterra in ritardo?",
+        a: "Nessun problema e nessun extra. Monitoriamo il numero del tuo volo dal momento della prenotazione: se l'orario reale di atterraggio scivola, il nostro operatore arriva al parcheggio consegna all'orario aggiornato. È sufficiente che tu ci comunichi il numero volo (es. FR4892, U24512, AZ1535) in fase di prenotazione.",
+      },
+      {
+        q: "Quali voli notturni potete coprire?",
+        a: "Consegna in aeroporto è disponibile dalle <strong>06:00 alle 23:30</strong>, 7 giorni su 7. Voli fuori finestra (es. easyJet 00:30 da Milano in alta stagione) sono gestiti con servizio reperibilità WhatsApp e costo aggiuntivo concordato. Sconsigliamo prenotazione per voli che atterrano dopo le 23:30 senza accordo preventivo via WhatsApp.",
+      },
+      {
+        q: "Avete supporto multilingua all'aeroporto?",
+        a: "I nostri operatori parlano <strong>italiano, inglese, tedesco, francese e spagnolo</strong>. Per clienti russi, polacchi, scandinavi o asiatici utilizziamo Google Translate live + documenti contrattuali pre-tradotti. La firma digitale del contratto su tablet è disponibile in 4 lingue.",
+      },
+      {
+        q: "Posso riconsegnare il veicolo in aeroporto invece che in centro Olbia?",
+        a: "Sì, la riconsegna in aeroporto OLB è <strong>gratuita</strong> e va concordata in fase di prenotazione. Modalità: ci avvisi via WhatsApp 30 minuti prima dell'arrivo al parcheggio, ci consegni le chiavi al parcheggio consegna. Tempo medio riconsegna: 5 minuti.",
+      },
+      {
+        q: "Quanto pesa la stagionalità sui prezzi del noleggio aeroporto?",
+        a: "Le nostre tariffe sono <strong>stagionali ma trasparenti</strong>: aprile/maggio/ottobre = bassa (es. Fiat Panda 40 €/giorno), giugno/settembre = media (60-90 €), luglio/agosto = alta (80-160 €). Le sportive (Audi RS3, BMW M2) sono sempre su preventivo. <a href=\"/tariffe\">Vedi il listino completo</a>.",
+      },
+      {
+        q: "C'è un parcheggio sicuro vicino all'aeroporto se voglio lasciare la mia auto durante il noleggio?",
+        a: "Sì, l'aeroporto Olbia ha <strong>3 parcheggi ufficiali</strong> (P1 multipiano coperto, P2 lunga sosta scoperto, P3 lunga sosta economico). Tariffe da 8-15 €/giorno. P3 ha navetta gratuita per terminal. Possiamo facilitarti la transizione: parcheggi la tua auto in P3, prendi navetta gratuita per arrivi, ritiri il nostro veicolo. Tempo extra: 15 minuti.",
+      },
+      {
+        q: "Avete seggiolini auto bambini per chi arriva senza?",
+        a: "Sì, disponiamo di <strong>seggiolini gruppo 1, 2 e 3</strong> (9-36 kg) omologati ECE R44/04 a noleggio per 5 €/giorno (max 25 € totale per noleggio). Per gruppo 0+ (0-13 kg, ovetto neonato) consigliamo prenotazione con 7+ giorni di anticipo. <strong>Tutti i seggiolini sono sanificati</strong> a vapore tra un noleggio e l'altro.",
+      },
+      {
+        q: "Posso uscire dalla Sardegna con l'auto noleggiata (es. traghetto verso Corsica)?",
+        a: "Per la <strong>Corsica</strong> serve autorizzazione scritta preventiva e copertura assicurativa estesa (costo: 8 €/giorno aggiuntivi). Per la <strong>penisola italiana via traghetto</strong> serve autorizzazione scritta (costo: 15 €/giorno aggiuntivi + cauzione maggiorata). Richiedi entrambe via WhatsApp prima di prenotare. Auto sportive (RS3, M2) non possono lasciare la Sardegna per policy assicurativa.",
+      },
+      {
+        q: "Cosa include esattamente la consegna gratuita in aeroporto?",
+        a: "Include: <strong>spostamento del veicolo dalla sede</strong> all'aeroporto, <strong>operatore presente</strong> al parcheggio consegna, <strong>contratto pre-compilato</strong>, <strong>spiegazione veicolo</strong> (luci, climatizzatore, navigatore se richiesto), <strong>verifica documenti</strong>, <strong>foto pre-noleggio</strong> condivise via WhatsApp. Non include: pieno carburante (consegnato pieno, da restituire pieno) e parcheggio aeroporto della tua auto (vedi sopra).",
+      },
+    ],
+
+    hubEyebrow: "Approfondisci",
+    hubHeading: "Guide correlate per il tuo arrivo all'aeroporto Olbia",
+    hubIntro:
+      "Articoli pratici scritti dai fondatori KS Rent Sardinia con dati reali (prezzi, tempi, distanze, alternative). Aggiornati per la stagione 2026.",
+    hubCards: [
+      {
+        href: "/guide/noleggio-auto-olbia-aeroporto-guida-pratica",
+        title: "Guida pratica al noleggio in aeroporto",
+        desc: "Compagnie internazionali vs alternative locali: prezzi reali, tempi di attesa, trucchi per evitare extra al banco.",
+      },
+      {
+        href: "/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+        title: "Noleggio senza carta di credito",
+        desc: "Tutti i metodi alternativi accettati: prepagate, bancomat, bonifico, contanti. Deposito cauzionale trasparente.",
+      },
+      {
+        href: "/guide/come-arrivare-costa-smeralda-voli-traghetti",
+        title: "Come arrivare in Costa Smeralda",
+        desc: "Voli, traghetti, distanze, costi reali. Confronto Olbia OLB vs Cagliari CAG vs Alghero AHO per la Costa Smeralda.",
+      },
+      {
+        href: "/guide/patente-internazionale-sardegna-serve-davvero",
+        title: "Patente internazionale: serve davvero?",
+        desc: "Per cittadini UE, USA, UK, Svizzera, Canada, Australia. Quando è obbligatoria, quando è solo raccomandata, dove ottenerla.",
+      },
+    ],
+  },
+
+  en: {
+    airlinesEyebrow: "Airlines served",
+    airlinesHeading: "Which flights land at Olbia Costa Smeralda Airport (OLB)",
+    airlinesIntro:
+      "Olbia Airport (IATA code: <strong>OLB</strong>, operator Geasar) welcomes over 3.3 million passengers each year. In peak season (July-August) more than 50 flights land daily from 60+ European destinations. KS Rent Sardinia delivers the car to anyone arriving with these airlines, at any time including night:",
+    airlinesTableHeaders: ["Airline", "Main hubs", "Peak season frequency"],
+    airlinesData: [
+      ["Ryanair", "Milan BGY, Bologna, Rome CIA, Pisa, London STN, Manchester, Berlin", "10-15 flights/day"],
+      ["easyJet", "Milan MXP, Rome FCO, Naples, Geneva, Basel, Paris ORY, Lyon", "8-12 flights/day"],
+      ["ITA Airways", "Rome FCO, Milan LIN", "6-8 flights/day (year-round)"],
+      ["Volotea", "Verona, Turin, Genoa, Naples, Bari, Nantes, Bordeaux", "5-8 flights/day"],
+      ["Lufthansa", "Munich MUC, Frankfurt FRA", "3-5 flights/day"],
+      ["Air France", "Paris CDG, Marseille", "2-4 flights/day"],
+      ["Eurowings", "Düsseldorf, Stuttgart, Cologne", "2-4 flights/day"],
+      ["Swiss / Edelweiss", "Zurich", "1-3 flights/day"],
+      ["British Airways", "London LHR (seasonal)", "1-2 flights/day (Jun-Sep)"],
+      ["Vueling, Wizz Air, Iberia, KLM, SAS", "various European capitals", "seasonal (May-Oct)"],
+    ],
+    airlinesNote:
+      "Charter and private flights handled separately at General Aviation apron. KS Rent Sardinia also delivers at the private jet apron upon explicit request, at no extra cost within opening hours.",
+
+    distancesEyebrow: "Times and distances",
+    distancesHeading: "From the terminal to KS Rent pickup point",
+    distancesIntro:
+      "Olbia Airport has a single, compact and modern passenger terminal. KS Rent Sardinia delivers your vehicle at the <strong>parking right in front of the arrivals exit</strong>, avoiding shuttles or long walks typical of international companies.",
+    distancesTableHeaders: ["From", "To", "Distance", "Time"],
+    distancesData: [
+      ["Arrivals exit (gate 1)", "KS Rent pickup parking", "80 meters", "1 minute walking"],
+      ["Baggage belt (arrivals hall)", "Arrivals exit", "30 meters", "30 seconds"],
+      ["KS Rent pickup parking", "Motorway exit SS125", "200 meters", "1 minute driving"],
+      ["KS Rent pickup parking", "Olbia centre (Corso Umberto)", "4 km", "10 minutes"],
+      ["KS Rent pickup parking", "Isola Bianca port", "5 km", "10 minutes"],
+      ["KS Rent pickup parking", "Porto Cervo (Costa Smeralda)", "32 km", "40 minutes"],
+      ["KS Rent pickup parking", "San Teodoro (East Coast)", "30 km", "30 minutes"],
+      ["KS Rent pickup parking", "La Maddalena (Palau ferry)", "44 km", "55 minutes"],
+    ],
+    distancesNote:
+      "<strong>Late or early flight?</strong> We track your flight number in real time (FlightRadar24) and wait for you at the actual landing time, at no extra cost. <strong>Night flights?</strong> Delivery available 06:00 to 23:30; outside these hours an on-call service operates via WhatsApp.",
+
+    faqEyebrow: "Airport FAQs",
+    faqHeading: "10 concrete answers on how pickup at OLB works",
+    faqs: [
+      {
+        q: "How many minutes does the actual pickup take at Olbia airport with KS Rent?",
+        a: "<strong>5-10 minutes total</strong> from exiting arrivals to driving off. Comparison: with international companies (Hertz/Avis/Sixt) the average is 30-90 minutes in peak season, even 2 hours with queues. With us there is no internal counter: we wait for you outside with the vehicle ready and contract pre-filled.",
+      },
+      {
+        q: "What happens if my Ryanair flight (or easyJet, ITA, etc.) lands late?",
+        a: "No problem and no extra fee. We monitor your flight number from the moment of booking: if the actual landing time slips, our operator arrives at the pickup parking at the updated time. Just communicate the flight number (e.g. FR4892, U24512, AZ1535) when booking.",
+      },
+      {
+        q: "Which night flights can you cover?",
+        a: "Airport delivery is available <strong>06:00 to 23:30</strong>, 7 days a week. Flights outside this window (e.g. easyJet 00:30 from Milan in peak season) are handled via WhatsApp on-call service with a pre-agreed extra cost. We discourage booking for flights landing after 23:30 without prior WhatsApp arrangement.",
+      },
+      {
+        q: "Do you have multilingual support at the airport?",
+        a: "Our operators speak <strong>Italian, English, German, French and Spanish</strong>. For Russian, Polish, Scandinavian or Asian customers we use live Google Translate + pre-translated contracts. Digital signature of the contract on tablet is available in 4 languages.",
+      },
+      {
+        q: "Can I return the vehicle at the airport instead of in central Olbia?",
+        a: "Yes, return at OLB airport is <strong>free</strong> and must be agreed when booking. How it works: notify us via WhatsApp 30 minutes before arriving at the parking, hand over keys at the pickup parking. Average return time: 5 minutes.",
+      },
+      {
+        q: "How much does seasonality impact airport rental prices?",
+        a: "Our rates are <strong>seasonal but transparent</strong>: April/May/October = low (e.g. Fiat Panda €40/day), June/September = mid (€60-90), July/August = high (€80-160). Sports cars (Audi RS3, BMW M2) are always on quote. <a href=\"/en/rates\">See full pricing</a>.",
+      },
+      {
+        q: "Is there a secure parking near the airport if I want to leave my own car during the rental?",
+        a: "Yes, Olbia airport has <strong>3 official parkings</strong> (P1 covered multistorey, P2 long-stay uncovered, P3 long-stay economy). Rates from €8-15/day. P3 has free shuttle to terminal. We can ease the transition: park your car in P3, take the free shuttle to arrivals, pick up our vehicle. Extra time: 15 minutes.",
+      },
+      {
+        q: "Do you have child car seats for those arriving without?",
+        a: "Yes, we have <strong>group 1, 2 and 3 seats</strong> (9-36 kg) approved ECE R44/04 to rent for €5/day (max €25 total per rental). For group 0+ (0-13 kg, newborn carrier) we recommend booking 7+ days in advance. <strong>All seats are steam-sanitised</strong> between rentals.",
+      },
+      {
+        q: "Can I leave Sardinia with the rented car (e.g. ferry to Corsica)?",
+        a: "For <strong>Corsica</strong> prior written authorisation and extended insurance coverage are required (cost: extra €8/day). For <strong>mainland Italy via ferry</strong> written authorisation is required (cost: extra €15/day + increased deposit). Request both via WhatsApp before booking. Sports cars (RS3, M2) cannot leave Sardinia per insurance policy.",
+      },
+      {
+        q: "What exactly is included in the free airport delivery?",
+        a: "Includes: <strong>moving the vehicle from base</strong> to the airport, <strong>operator on site</strong> at the pickup parking, <strong>pre-filled contract</strong>, <strong>vehicle walkthrough</strong> (lights, AC, GPS if requested), <strong>document check</strong>, <strong>pre-rental photos</strong> shared via WhatsApp. Does not include: fuel (delivered full, return full) and airport parking of your own car (see above).",
+      },
+    ],
+
+    hubEyebrow: "Read more",
+    hubHeading: "Related guides for your arrival at Olbia airport",
+    hubIntro:
+      "Practical articles written by KS Rent Sardinia founders with real data (prices, times, distances, alternatives). Updated for 2026 season.",
+    hubCards: [
+      {
+        href: "/en/guide/car-hire-olbia-airport-practical-guide",
+        title: "Practical guide to airport car hire",
+        desc: "International companies vs local alternatives: real prices, waiting times, tips to avoid counter extras.",
+      },
+      {
+        href: "/en/guide/car-hire-olbia-without-credit-card-complete-guide",
+        title: "Car hire without credit card",
+        desc: "All alternative payment methods accepted: prepaid, debit, bank transfer, cash. Transparent security deposit.",
+      },
+      {
+        href: "/en/guide/how-to-get-to-costa-smeralda-flights-ferries",
+        title: "How to reach Costa Smeralda",
+        desc: "Flights, ferries, distances, real costs. Comparison Olbia OLB vs Cagliari CAG vs Alghero AHO for Costa Smeralda.",
+      },
+      {
+        href: "/en/guide/international-driving-permit-sardinia-do-i-need-it",
+        title: "International driving permit: do I need it?",
+        desc: "For EU, US, UK, Swiss, Canadian, Australian citizens. When mandatory, when only recommended, where to get it.",
+      },
+    ],
+  },
+
+  de: {
+    airlinesEyebrow: "Bediente Fluggesellschaften",
+    airlinesHeading: "Welche Fluege landen am Flughafen Olbia Costa Smeralda (OLB)",
+    airlinesIntro:
+      "Der Flughafen Olbia (IATA-Code: <strong>OLB</strong>, Betreiber Geasar) empfaengt jaehrlich ueber 3,3 Millionen Passagiere. In der Hochsaison (Juli-August) landen hier taeglich mehr als 50 Fluege aus 60+ europaeischen Zielen. KS Rent Sardinia liefert das Fahrzeug an alle, die mit diesen Fluggesellschaften ankommen, zu jeder Uhrzeit auch nachts:",
+    airlinesTableHeaders: ["Fluggesellschaft", "Haupthubs", "Frequenz Hochsaison"],
+    airlinesData: [
+      ["Ryanair", "Mailand BGY, Bologna, Rom CIA, Pisa, London STN, Manchester, Berlin", "10-15 Fluege/Tag"],
+      ["easyJet", "Mailand MXP, Rom FCO, Neapel, Genf, Basel, Paris ORY, Lyon", "8-12 Fluege/Tag"],
+      ["ITA Airways", "Rom FCO, Mailand LIN", "6-8 Fluege/Tag (ganzjaehrig)"],
+      ["Volotea", "Verona, Turin, Genua, Neapel, Bari, Nantes, Bordeaux", "5-8 Fluege/Tag"],
+      ["Lufthansa", "Muenchen MUC, Frankfurt FRA", "3-5 Fluege/Tag"],
+      ["Air France", "Paris CDG, Marseille", "2-4 Fluege/Tag"],
+      ["Eurowings", "Duesseldorf, Stuttgart, Koeln", "2-4 Fluege/Tag"],
+      ["Swiss / Edelweiss", "Zuerich", "1-3 Fluege/Tag"],
+      ["British Airways", "London LHR (saisonal)", "1-2 Fluege/Tag (Jun-Sep)"],
+      ["Vueling, Wizz Air, Iberia, KLM, SAS", "verschiedene europaeische Hauptstaedte", "saisonal (Mai-Okt)"],
+    ],
+    airlinesNote:
+      "Charter- und Privatfluege werden separat am Vorfeld General Aviation abgewickelt. KS Rent Sardinia liefert auf ausdruecklichen Wunsch auch am Privatjet-Vorfeld, ohne Aufpreis innerhalb der Oeffnungszeiten.",
+
+    distancesEyebrow: "Zeiten und Entfernungen",
+    distancesHeading: "Vom Terminal zum KS Rent Abholpunkt",
+    distancesIntro:
+      "Der Flughafen Olbia hat ein einziges, kompaktes und modernes Passagierterminal. KS Rent Sardinia liefert Ihr Fahrzeug am <strong>Parkplatz direkt vor dem Ankunftsausgang</strong>, ohne Shuttles oder lange Fussmaersche, wie sie bei internationalen Unternehmen ueblich sind.",
+    distancesTableHeaders: ["Von", "Nach", "Entfernung", "Zeit"],
+    distancesData: [
+      ["Ankunftsausgang (Tor 1)", "KS Rent Abholparkplatz", "80 Meter", "1 Minute zu Fuss"],
+      ["Gepaeckband (Ankunftshalle)", "Ankunftsausgang", "30 Meter", "30 Sekunden"],
+      ["KS Rent Abholparkplatz", "Autobahnausfahrt SS125", "200 Meter", "1 Minute Fahrzeit"],
+      ["KS Rent Abholparkplatz", "Olbia Zentrum (Corso Umberto)", "4 km", "10 Minuten"],
+      ["KS Rent Abholparkplatz", "Hafen Isola Bianca", "5 km", "10 Minuten"],
+      ["KS Rent Abholparkplatz", "Porto Cervo (Costa Smeralda)", "32 km", "40 Minuten"],
+      ["KS Rent Abholparkplatz", "San Teodoro (Ostkueste)", "30 km", "30 Minuten"],
+      ["KS Rent Abholparkplatz", "La Maddalena (Palau Faehre)", "44 km", "55 Minuten"],
+    ],
+    distancesNote:
+      "<strong>Flug verspaetet oder verfrueht?</strong> Wir verfolgen Ihre Flugnummer in Echtzeit (FlightRadar24) und warten zur tatsaechlichen Landezeit auf Sie, ohne Aufpreis. <strong>Nachtfluege?</strong> Lieferung verfuegbar von 06:00 bis 23:30 Uhr; ausserhalb dieser Zeiten arbeitet ein Bereitschaftsdienst per WhatsApp.",
+
+    faqEyebrow: "Haeufige Fragen Flughafen",
+    faqHeading: "10 konkrete Antworten zur Abholung am OLB",
+    faqs: [
+      {
+        q: "Wie viele Minuten dauert die tatsaechliche Fahrzeugabholung am Flughafen Olbia mit KS Rent?",
+        a: "<strong>Insgesamt 5-10 Minuten</strong> vom Verlassen der Ankunft bis zur Abfahrt mit dem Fahrzeug. Vergleich: bei internationalen Unternehmen (Hertz/Avis/Sixt) sind es im Schnitt 30-90 Minuten in der Hochsaison, mit Warteschlange sogar 2 Stunden. Bei uns gibt es keinen Innentresen: wir warten bereits draussen mit dem Fahrzeug und vorbereitetem Vertrag.",
+      },
+      {
+        q: "Was passiert, wenn mein Ryanair-Flug (oder easyJet, ITA, usw.) verspaetet landet?",
+        a: "Kein Problem und keine Zusatzkosten. Wir ueberwachen Ihre Flugnummer ab Buchung: verschiebt sich die tatsaechliche Landezeit, kommt unser Mitarbeiter zur aktualisierten Zeit am Parkplatz an. Geben Sie einfach die Flugnummer bei der Buchung an (z.B. FR4892, U24512, AZ1535).",
+      },
+      {
+        q: "Welche Nachtfluege koennen Sie bedienen?",
+        a: "Flughafenlieferung verfuegbar von <strong>06:00 bis 23:30 Uhr</strong>, 7 Tage die Woche. Fluege ausserhalb dieser Zeiten (z.B. easyJet 00:30 aus Mailand in Hochsaison) werden mit WhatsApp-Bereitschaftsdienst und vereinbartem Aufpreis abgewickelt. Wir raten von Buchung fuer Fluege nach 23:30 Uhr ohne vorherige WhatsApp-Absprache ab.",
+      },
+      {
+        q: "Haben Sie mehrsprachige Unterstuetzung am Flughafen?",
+        a: "Unsere Mitarbeiter sprechen <strong>Italienisch, Englisch, Deutsch, Franzoesisch und Spanisch</strong>. Fuer russische, polnische, skandinavische oder asiatische Kunden nutzen wir Live-Google-Translate + vorab uebersetzte Vertraege. Digitale Vertragsunterschrift auf Tablet in 4 Sprachen verfuegbar.",
+      },
+      {
+        q: "Kann ich das Fahrzeug am Flughafen anstatt im Zentrum Olbia zurueckgeben?",
+        a: "Ja, die Rueckgabe am Flughafen OLB ist <strong>kostenlos</strong> und muss bei Buchung vereinbart werden. Ablauf: per WhatsApp 30 Minuten vor Parkplatzankunft melden, Schluessel am Abholparkplatz uebergeben. Durchschnittliche Rueckgabezeit: 5 Minuten.",
+      },
+      {
+        q: "Wie stark beeinflusst die Saisonalitaet die Mietpreise am Flughafen?",
+        a: "Unsere Tarife sind <strong>saisonal, aber transparent</strong>: April/Mai/Oktober = niedrig (z.B. Fiat Panda 40 €/Tag), Juni/September = mittel (60-90 €), Juli/August = hoch (80-160 €). Sportwagen (Audi RS3, BMW M2) immer auf Anfrage. <a href=\"/de/preise\">Vollstaendige Preisliste ansehen</a>.",
+      },
+      {
+        q: "Gibt es einen sicheren Parkplatz am Flughafen, falls ich mein eigenes Auto waehrend der Miete dort lassen will?",
+        a: "Ja, der Flughafen Olbia hat <strong>3 offizielle Parkplaetze</strong> (P1 ueberdachtes Parkhaus, P2 unueberdachter Langzeitparker, P3 Economy-Langzeitparker). Tarife ab 8-15 €/Tag. P3 hat kostenlosen Shuttle zum Terminal. Wir erleichtern den Uebergang: Ihr Auto in P3 parken, kostenlosen Shuttle zur Ankunft nehmen, unser Fahrzeug abholen. Zusatzzeit: 15 Minuten.",
+      },
+      {
+        q: "Haben Sie Kindersitze fuer Reisende ohne?",
+        a: "Ja, wir haben <strong>Gruppe 1, 2 und 3 Sitze</strong> (9-36 kg) ECE R44/04 zugelassen zur Miete fuer 5 €/Tag (max. 25 € Gesamtkosten pro Miete). Fuer Gruppe 0+ (0-13 kg, Babyschale Neugeborene) empfehlen wir Buchung 7+ Tage im Voraus. <strong>Alle Sitze werden dampfsanifiziert</strong> zwischen Mieten.",
+      },
+      {
+        q: "Darf ich mit dem Mietwagen Sardinien verlassen (z.B. Faehre nach Korsika)?",
+        a: "Fuer <strong>Korsika</strong> ist eine schriftliche Voraberlaubnis und erweiterter Versicherungsschutz erforderlich (Kosten: 8 €/Tag extra). Fuer das <strong>italienische Festland per Faehre</strong> ist schriftliche Erlaubnis erforderlich (Kosten: 15 €/Tag extra + erhoehte Kaution). Beides per WhatsApp vor Buchung anfragen. Sportwagen (RS3, M2) duerfen Sardinien per Versicherungspolice nicht verlassen.",
+      },
+      {
+        q: "Was ist genau in der kostenlosen Flughafenlieferung enthalten?",
+        a: "Enthaelt: <strong>Fahrzeugtransfer von der Basis</strong> zum Flughafen, <strong>Mitarbeiter vor Ort</strong> am Abholparkplatz, <strong>vorbereiteter Vertrag</strong>, <strong>Fahrzeugeinweisung</strong> (Licht, Klima, GPS auf Anfrage), <strong>Dokumentenpruefung</strong>, <strong>Vor-Miete-Fotos</strong> per WhatsApp geteilt. Nicht enthalten: Treibstoff (voll geliefert, voll zurueckgeben) und Flughafenparkplatz Ihres eigenen Autos (siehe oben).",
+      },
+    ],
+
+    hubEyebrow: "Mehr erfahren",
+    hubHeading: "Verwandte Reisefuehrer fuer Ihre Ankunft am Flughafen Olbia",
+    hubIntro:
+      "Praktische Artikel verfasst von den KS Rent Sardinia Gruendern mit realen Daten (Preise, Zeiten, Entfernungen, Alternativen). Aktualisiert fuer die Saison 2026.",
+    hubCards: [
+      {
+        href: "/de/guide/autovermietung-flughafen-olbia-praktische-anleitung",
+        title: "Praktischer Reisefuehrer zur Autovermietung am Flughafen",
+        desc: "Internationale Unternehmen vs lokale Alternativen: reale Preise, Wartezeiten, Tricks gegen Zusatzkosten am Schalter.",
+      },
+      {
+        href: "/de/guide/autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung",
+        title: "Autovermietung ohne Kreditkarte",
+        desc: "Alle akzeptierten alternativen Zahlungsmethoden: Prepaid, EC-Karte, Ueberweisung, Bargeld. Transparente Kaution.",
+      },
+      {
+        href: "/de/guide/anfahrt-costa-smeralda-fluege-faehren",
+        title: "Wie erreiche ich die Costa Smeralda",
+        desc: "Fluege, Faehren, Entfernungen, reale Kosten. Vergleich Olbia OLB vs Cagliari CAG vs Alghero AHO fuer Costa Smeralda.",
+      },
+      {
+        href: "/de/guide/internationaler-fuehrerschein-sardinien-ist-er-noetig",
+        title: "Internationaler Fuehrerschein: ist er noetig?",
+        desc: "Fuer EU-, US-, UK-, Schweizer, kanadische, australische Buerger. Wann Pflicht, wann nur empfohlen, wo zu bekommen.",
+      },
+    ],
+  },
+
+  fr: {
+    airlinesEyebrow: "Compagnies aériennes desservies",
+    airlinesHeading: "Quels vols atterrissent à l'aéroport d'Olbia Costa Smeralda (OLB)",
+    airlinesIntro:
+      "L'aéroport d'Olbia (code IATA : <strong>OLB</strong>, exploitant Geasar) accueille chaque année plus de 3,3 millions de passagers. En haute saison (juillet-août) plus de 50 vols atterrissent ici quotidiennement depuis 60+ destinations européennes. KS Rent Sardinia livre la voiture à quiconque arrive avec ces compagnies, à n'importe quelle heure y compris la nuit :",
+    airlinesTableHeaders: ["Compagnie", "Hubs principaux", "Fréquence haute saison"],
+    airlinesData: [
+      ["Ryanair", "Milan BGY, Bologne, Rome CIA, Pise, Londres STN, Manchester, Berlin", "10-15 vols/jour"],
+      ["easyJet", "Milan MXP, Rome FCO, Naples, Genève, Bâle, Paris ORY, Lyon", "8-12 vols/jour"],
+      ["ITA Airways", "Rome FCO, Milan LIN", "6-8 vols/jour (toute l'année)"],
+      ["Volotea", "Vérone, Turin, Gênes, Naples, Bari, Nantes, Bordeaux", "5-8 vols/jour"],
+      ["Lufthansa", "Munich MUC, Francfort FRA", "3-5 vols/jour"],
+      ["Air France", "Paris CDG, Marseille", "2-4 vols/jour"],
+      ["Eurowings", "Düsseldorf, Stuttgart, Cologne", "2-4 vols/jour"],
+      ["Swiss / Edelweiss", "Zurich", "1-3 vols/jour"],
+      ["British Airways", "Londres LHR (saisonnier)", "1-2 vols/jour (juin-sept)"],
+      ["Vueling, Wizz Air, Iberia, KLM, SAS", "diverses capitales européennes", "saisonniers (mai-oct)"],
+    ],
+    airlinesNote:
+      "Vols charters et privés gérés séparément au tarmac Aviation Générale. KS Rent Sardinia livre également au tarmac jets privés sur demande explicite, sans frais supplémentaires dans les heures d'ouverture.",
+
+    distancesEyebrow: "Temps et distances",
+    distancesHeading: "Du terminal au point de retrait KS Rent",
+    distancesIntro:
+      "L'aéroport d'Olbia a un seul terminal passagers, compact et moderne. KS Rent Sardinia livre votre véhicule au <strong>parking juste devant la sortie arrivées</strong>, évitant navettes ou longues marches typiques des compagnies internationales.",
+    distancesTableHeaders: ["De", "À", "Distance", "Temps"],
+    distancesData: [
+      ["Sortie arrivées (porte 1)", "Parking retrait KS Rent", "80 mètres", "1 minute à pied"],
+      ["Tapis bagages (hall arrivées)", "Sortie arrivées", "30 mètres", "30 secondes"],
+      ["Parking retrait KS Rent", "Sortie autoroute SS125", "200 mètres", "1 minute en voiture"],
+      ["Parking retrait KS Rent", "Centre Olbia (Corso Umberto)", "4 km", "10 minutes"],
+      ["Parking retrait KS Rent", "Port Isola Bianca", "5 km", "10 minutes"],
+      ["Parking retrait KS Rent", "Porto Cervo (Costa Smeralda)", "32 km", "40 minutes"],
+      ["Parking retrait KS Rent", "San Teodoro (côte est)", "30 km", "30 minutes"],
+      ["Parking retrait KS Rent", "La Maddalena (Palau ferry)", "44 km", "55 minutes"],
+    ],
+    distancesNote:
+      "<strong>Vol en retard ou en avance ?</strong> Nous suivons votre numéro de vol en temps réel (FlightRadar24) et nous vous attendons à l'heure réelle d'atterrissage, sans frais supplémentaires. <strong>Vols de nuit ?</strong> Livraison disponible de 06:00 à 23:30 ; en dehors un service d'astreinte opère via WhatsApp.",
+
+    faqEyebrow: "FAQ aéroport",
+    faqHeading: "10 réponses concrètes sur le retrait à OLB",
+    faqs: [
+      {
+        q: "Combien de minutes prend le retrait réel du véhicule à l'aéroport d'Olbia avec KS Rent ?",
+        a: "<strong>5-10 minutes au total</strong> de la sortie des arrivées au départ avec voiture. Comparaison : avec les compagnies internationales (Hertz/Avis/Sixt) la moyenne est 30-90 minutes en haute saison, jusqu'à 2 heures avec file. Chez nous pas de comptoir interne : nous vous attendons dehors avec le véhicule prêt et le contrat pré-rempli.",
+      },
+      {
+        q: "Que se passe-t-il si mon vol Ryanair (ou easyJet, ITA, etc.) atterrit en retard ?",
+        a: "Aucun problème et aucun supplément. Nous surveillons votre numéro de vol dès la réservation : si l'heure réelle d'atterrissage glisse, notre opérateur arrive au parking de retrait à l'heure actualisée. Il suffit de nous communiquer le numéro de vol (ex. FR4892, U24512, AZ1535) lors de la réservation.",
+      },
+      {
+        q: "Quels vols de nuit pouvez-vous couvrir ?",
+        a: "Livraison aéroport disponible de <strong>06:00 à 23:30</strong>, 7 jours sur 7. Vols hors fenêtre (ex. easyJet 00:30 de Milan en haute saison) gérés via service d'astreinte WhatsApp et coût supplémentaire convenu. Nous déconseillons réservation pour vols atterrissant après 23:30 sans accord WhatsApp préalable.",
+      },
+      {
+        q: "Avez-vous un support multilingue à l'aéroport ?",
+        a: "Nos opérateurs parlent <strong>italien, anglais, allemand, français et espagnol</strong>. Pour clients russes, polonais, scandinaves ou asiatiques nous utilisons Google Translate live + contrats pré-traduits. Signature numérique du contrat sur tablette disponible en 4 langues.",
+      },
+      {
+        q: "Puis-je restituer le véhicule à l'aéroport au lieu du centre d'Olbia ?",
+        a: "Oui, la restitution à l'aéroport OLB est <strong>gratuite</strong> et doit être convenue à la réservation. Modalités : nous prévenir via WhatsApp 30 minutes avant l'arrivée au parking, remettre les clés au parking de retrait. Temps moyen restitution : 5 minutes.",
+      },
+      {
+        q: "Quel est l'impact de la saisonnalité sur les prix de location à l'aéroport ?",
+        a: "Nos tarifs sont <strong>saisonniers mais transparents</strong> : avril/mai/octobre = bas (ex. Fiat Panda 40 €/jour), juin/septembre = moyen (60-90 €), juillet/août = haut (80-160 €). Sportives (Audi RS3, BMW M2) toujours sur devis. <a href=\"/fr/tarifs\">Voir le tarif complet</a>.",
+      },
+      {
+        q: "Y a-t-il un parking sécurisé près de l'aéroport pour laisser ma propre voiture pendant la location ?",
+        a: "Oui, l'aéroport d'Olbia a <strong>3 parkings officiels</strong> (P1 couvert multi-étages, P2 longue durée découvert, P3 longue durée économique). Tarifs de 8-15 €/jour. P3 a navette gratuite vers terminal. Nous facilitons la transition : garez votre voiture en P3, prenez navette gratuite vers arrivées, retirez notre véhicule. Temps supplémentaire : 15 minutes.",
+      },
+      {
+        q: "Avez-vous des sièges auto enfants pour ceux qui arrivent sans ?",
+        a: "Oui, nous disposons de <strong>sièges groupe 1, 2 et 3</strong> (9-36 kg) homologués ECE R44/04 à louer pour 5 €/jour (max 25 € total par location). Pour groupe 0+ (0-13 kg, coque nouveau-né) nous recommandons réservation 7+ jours à l'avance. <strong>Tous les sièges sont désinfectés à la vapeur</strong> entre locations.",
+      },
+      {
+        q: "Puis-je sortir de Sardaigne avec la voiture louée (ex. ferry vers la Corse) ?",
+        a: "Pour la <strong>Corse</strong> autorisation écrite préalable et couverture d'assurance étendue requises (coût : 8 €/jour supplémentaires). Pour la <strong>péninsule italienne par ferry</strong> autorisation écrite requise (coût : 15 €/jour supplémentaires + caution augmentée). Demander les deux via WhatsApp avant réservation. Sportives (RS3, M2) ne peuvent quitter la Sardaigne selon police d'assurance.",
+      },
+      {
+        q: "Que comprend exactement la livraison gratuite à l'aéroport ?",
+        a: "Comprend : <strong>déplacement du véhicule depuis la base</strong> vers l'aéroport, <strong>opérateur sur place</strong> au parking de retrait, <strong>contrat pré-rempli</strong>, <strong>présentation du véhicule</strong> (feux, climatisation, GPS si demandé), <strong>vérification documents</strong>, <strong>photos pré-location</strong> partagées via WhatsApp. Ne comprend pas : carburant (livré plein, à rendre plein) et parking aéroport de votre propre voiture (voir ci-dessus).",
+      },
+    ],
+
+    hubEyebrow: "En savoir plus",
+    hubHeading: "Guides connexes pour votre arrivée à l'aéroport d'Olbia",
+    hubIntro:
+      "Articles pratiques rédigés par les fondateurs de KS Rent Sardinia avec données réelles (prix, temps, distances, alternatives). Mis à jour pour la saison 2026.",
+    hubCards: [
+      {
+        href: "/fr/guide/location-voiture-aeroport-olbia-guide-pratique",
+        title: "Guide pratique de la location de voiture à l'aéroport",
+        desc: "Compagnies internationales vs alternatives locales : prix réels, temps d'attente, astuces pour éviter les suppléments au comptoir.",
+      },
+      {
+        href: "/fr/guide/location-voiture-olbia-sans-carte-credit-guide-complet",
+        title: "Location sans carte de crédit",
+        desc: "Toutes les méthodes de paiement alternatives acceptées : prépayées, débit, virement, espèces. Caution transparente.",
+      },
+      {
+        href: "/fr/guide/comment-arriver-costa-smeralda-vols-ferries",
+        title: "Comment rejoindre la Costa Smeralda",
+        desc: "Vols, ferries, distances, coûts réels. Comparaison Olbia OLB vs Cagliari CAG vs Alghero AHO pour la Costa Smeralda.",
+      },
+      {
+        href: "/fr/guide/permis-international-sardaigne-est-il-necessaire",
+        title: "Permis international : est-il nécessaire ?",
+        desc: "Pour citoyens UE, US, UK, Suisse, Canada, Australie. Quand obligatoire, quand seulement recommandé, où l'obtenir.",
+      },
+    ],
+  },
+} as const;
+
+const t = T[lang];
+---
+
+<!-- COMPAGNIE AEREE -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-card border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.airlinesEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-5">
+      {t.airlinesHeading}
+    </h2>
+    <p class="text-foreground/75 font-light leading-relaxed mb-8" set:html={t.airlinesIntro}></p>
+
+    <div class="bg-background border border-border rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm min-w-[640px]">
+          <thead class="bg-card/50 border-b border-border">
+            <tr>
+              {t.airlinesTableHeaders.map((h) => (
+                <th class="px-4 py-3 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {t.airlinesData.map((row) => (
+              <tr class="border-b border-border/50 last:border-0 hover:bg-card/30 transition-colors">
+                <td class="px-4 py-3 font-bold text-foreground">{row[0]}</td>
+                <td class="px-4 py-3 text-foreground/70">{row[1]}</td>
+                <td class="px-4 py-3 text-gold font-semibold">{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="text-xs text-foreground/55 mt-4 leading-relaxed">{t.airlinesNote}</p>
+  </div>
+</section>
+
+<!-- DISTANZE TERMINAL -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-background border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.distancesEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-5">
+      {t.distancesHeading}
+    </h2>
+    <p class="text-foreground/75 font-light leading-relaxed mb-8" set:html={t.distancesIntro}></p>
+
+    <div class="bg-card border border-border rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm min-w-[640px]">
+          <thead class="bg-background/50 border-b border-border">
+            <tr>
+              {t.distancesTableHeaders.map((h) => (
+                <th class="px-4 py-3 text-left text-xs uppercase tracking-wider text-foreground/50 font-bold">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {t.distancesData.map((row) => (
+              <tr class="border-b border-border/50 last:border-0">
+                <td class="px-4 py-3 text-foreground/85">{row[0]}</td>
+                <td class="px-4 py-3 text-foreground/85">{row[1]}</td>
+                <td class="px-4 py-3 text-gold font-semibold">{row[2]}</td>
+                <td class="px-4 py-3 text-foreground/70 font-medium">{row[3]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="text-xs text-foreground/55 mt-4 leading-relaxed" set:html={t.distancesNote}></p>
+  </div>
+</section>
+
+<!-- FAQ AVANZATA -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-card border-t border-border">
+  <div class="max-w-4xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.faqEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-10">
+      {t.faqHeading}
+    </h2>
+
+    <div class="space-y-3">
+      {t.faqs.map((faq, i) => (
+        <details class="group bg-background border border-border rounded-2xl p-5 md:p-6 transition-colors hover:border-gold/40">
+          <summary class="cursor-pointer list-none flex items-center justify-between gap-4">
+            <span class="font-bold text-foreground text-[15px] md:text-base leading-snug">
+              <span class="text-gold mr-2">{(i + 1).toString().padStart(2, "0")}.</span>
+              {faq.q}
+            </span>
+            <span class="text-gold text-2xl shrink-0 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <div class="mt-4 text-foreground/75 font-light leading-relaxed text-sm md:text-[15px]" set:html={faq.a}></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- HUB GUIDE CORRELATE -->
+<section class="py-16 md:py-20 px-4 md:px-12 bg-background border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">{t.hubEyebrow}</span>
+    <h2 class="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-3">
+      {t.hubHeading}
+    </h2>
+    <p class="text-foreground/70 font-light mb-10 max-w-2xl">{t.hubIntro}</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {t.hubCards.map((c) => (
+        <a
+          href={c.href}
+          class="block bg-card border border-border rounded-2xl p-6 hover:border-gold/50 hover:bg-card/80 transition-all group"
+        >
+          <h3 class="font-bold text-foreground group-hover:text-gold transition-colors text-lg mb-2 leading-tight">
+            {c.title}
+          </h3>
+          <p class="text-foreground/65 font-light text-sm leading-relaxed">{c.desc}</p>
+          <span class="inline-block mt-3 text-gold text-xs font-bold tracking-wider uppercase">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
