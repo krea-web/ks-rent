@@ -1,0 +1,70 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("location-voiture-olbia-weekend-3-jours")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "fr-FR",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Combien coûte une location de voiture de 3 jours pour un weekend à Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Basse saison (avril/mai/octobre) un weekend de 3 jours avec Fiat Panda Hybrid coûte environ 120-150 €. Haute saison (juillet/août) la même location monte à 240-330 €. Sportives (Audi RS3, BMW M2) toujours sur devis." } },
+    { "@type": "Question", name: "Quel est le véhicule idéal pour 3 jours à Olbia en famille ?", acceptedAnswer: { "@type": "Answer", text: "Pour 4 personnes nous recommandons Jeep Avenger (SUV compact, coffre 380 L, idéal pour plages et centre) ou Mercedes Classe A (plus premium, confortable pour trajets rapides vers Costa Smeralda)." } },
+    { "@type": "Question", name: "Vaut-il mieux réserver 3 jours ou payer 3 journées individuelles ?", acceptedAnswer: { "@type": "Answer", text: "Le pack 3 jours coûte exactement comme 3 journées individuelles (pas de réduction multi-jours jusqu'à 6 jours), mais garantit le véhicule pour tout le weekend évitant le risque de rupture en haute saison." } },
+    { "@type": "Question", name: "Quel itinéraire faire avec une voiture de location en 3 jours à Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Jour 1 : centre Olbia + plage Pittulongu + dîner au port. Jour 2 : Costa Smeralda (Porto Cervo + Spiaggia del Principe + Cala di Volpe). Jour 3 : Tavolara et retour via San Teodoro + La Cinta. Total : ~180 km, idéal avec SUV compact." } },
+    { "@type": "Question", name: "Puis-je récupérer vendredi tard et restituer lundi matin ?", acceptedAnswer: { "@type": "Answer", text: "Oui, modèle classique long weekend. KS Rent Sardinia accepte retrait vendredi jusqu'à 22h30 et restitution lundi dès 06h00. Coût : 3 journées pleines. Pour retraits après 22h30 service d'astreinte WhatsApp." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Weekend 3 jours location", path: `/fr/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>Un weekend à Olbia est la formule en or pour qui veut goûter la Costa Smeralda sans prendre une semaine entière de vacances.</strong> Ryanair et easyJet ont rendu possible de partir vendredi soir de Paris, Lyon ou Genève et rentrer lundi matin ayant vu des turquoises qui réchauffent l'hiver pendant des mois. Dans ce guide les prix réels de location 3 jours, les véhicules optimisant le rapport confort/coût, et un itinéraire éclair maximisant chaque heure de vos 72 heures en Gallura.</p>
+
+    <h2>Tarifs weekend à Olbia : les prix réels</h2>
+    <p>Les tarifs KS Rent Sardinia pour 3 jours sont exactement <strong>3 × tarif journalier</strong> (pas de réduction multi-jours jusqu'à 6 jours) :</p>
+    <table>
+      <thead><tr><th>Véhicule</th><th>Basse saison (avr/mai/oct)</th><th>Moyenne (juin/sept)</th><th>Haute (juil/août)</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>120 €</td><td>180 €</td><td>240-330 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>150 €</td><td>240 €</td><td>330-450 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>240 €</td><td>360 €</td><td>480 €</td></tr>
+        <tr><td>Honda SH 125 (scooter)</td><td>120 €</td><td>180 €</td><td>240 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Quel véhicule choisir pour un weekend de 3 jours ?</h2>
+    <ul>
+      <li><strong>Couple smart, budget contrôlé</strong>: Fiat Panda Hybrid (consommation minimale, stationnement facile à Porto Cervo bondé).</li>
+      <li><strong>Famille de 4 avec bagages</strong>: Jeep Avenger (SUV compact, coffre 380 L, automatique, confortable même sur pistes pour plages cachées).</li>
+      <li><strong>Couple expérience premium</strong>: Mercedes Classe A 180d (intérieur premium, excellente consommation diesel, parfaite pour dîners Porto Rotondo).</li>
+    </ul>
+
+    <h2>Itinéraire éclair Costa Smeralda en 72 heures</h2>
+    <ul>
+      <li><strong>Vendredi soir</strong>: retrait aéroport OLB (5-10 min), check-in hôtel, dîner au port d'Olbia.</li>
+      <li><strong>Samedi matin</strong>: 8h00 départ Costa Smeralda, premier arrêt Spiaggia del Principe (parking facile jusqu'à 10h30). 12h30 déjeuner Porto Cervo. Après-midi Liscia Ruja + Capriccioli.</li>
+      <li><strong>Samedi soir</strong>: retour à Olbia pour dîner (1h de route).</li>
+      <li><strong>Dimanche matin</strong>: San Teodoro + La Cinta (45 min d'Olbia, idéale avec enfants). Déjeuner léger en bord de plage. Après-midi bref passage à Tavolara.</li>
+      <li><strong>Dimanche soir</strong>: restitution avant 22h30 ou tôt lundi matin.</li>
+    </ul>
+    <p><strong>Total kilomètres</strong>: 180-220 km. <strong>Consommation Panda Hybrid</strong>: ~12 L (~22 €). <strong>Pistes</strong>: aucune, tout asphalté.</p>
+
+    <h2>Quand NE PAS choisir le weekend de 3 jours</h2>
+    <p>Si vous voulez voir <strong>La Maddalena</strong> il faut au moins 1 jour dédié. Si vous voulez <strong>plages cachées de Gallura</strong>, 4-5 jours avec pistes et jeep sont nécessaires. Pour ces scénarios évaluez la <a href="/fr/guide/location-voiture-olbia-5-jours">location de 5 jours</a> ou la <a href="/fr/guide/location-voiture-olbia-semaine-7-jours">location hebdomadaire</a>.</p>
+
+    <h2>Prêt à réserver votre weekend ?</h2>
+    <p>KS Rent Sardinia vous attend à l'<a href="/fr/location-voiture-aeroport-olbia">aéroport Olbia OLB</a> ou au <a href="/fr/location-voiture-port-olbia">port Isola Bianca</a> avec retrait en 5-10 minutes. Sans carte de crédit obligatoire, support multilingue. <a href="/fr/tarifs">Voir tous les tarifs</a> ou <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

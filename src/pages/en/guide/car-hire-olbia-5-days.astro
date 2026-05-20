@@ -1,0 +1,72 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("car-hire-olbia-5-days")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "en-GB",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "How much does a 5-day car hire cost in Olbia?", acceptedAnswer: { "@type": "Answer", text: "5 days of Fiat Panda Hybrid low season: €200. In high season (July/August) the same formula rises to €400-550. For Jeep Avenger 5 days: €250 low, €550-750 high. Mercedes A-Class 180d: €400 low, €800 high." } },
+    { "@type": "Question", name: "Are 5 days the ideal format for Italian bank holidays?", acceptedAnswer: { "@type": "Answer", text: "Yes, perfectly. 25 April, 1 May, 2 June, Ferragosto and All Saints typically fall mid-week creating 4-5 day bridges. The 5-day format covers Thursday evening arrival + 3 full days + Monday morning departure." } },
+    { "@type": "Question", name: "Which vehicle is most convenient for 5 days with 2 adults + 2 children?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger is the best-fit: compact SUV with automatic gearbox, 380 L boot, 5 real seats with child seat in the back. €250 in low season, €550 in high. Premium alternative: Mercedes A-Class 180d with leather seats and top infotainment." } },
+    { "@type": "Question", name: "Can I do a La Maddalena excursion during a 5-day rental?", acceptedAnswer: { "@type": "Answer", text: "Yes, La Maddalena requires 1 dedicated day: 55 min from Olbia to Palau + 15 min ferry + 4-5 hours in the archipelago + return. Day 3 or 4 of rental is ideal to avoid losing first arrival or last evening energies." } },
+    { "@type": "Question", name: "Do I need to know exact dates to book 5 days or can I be flexible?", acceptedAnswer: { "@type": "Answer", text: "In high season (July/August) exact dates are fundamental: KS Rent Sardinia fleet sells out 4-6 weeks in advance. For low season (April/May/October) you can book with 7-15 days notice without issues." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "5-day car hire", path: `/en/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>5 days in Olbia is the sweet spot of Costa Smeralda</strong>: enough to see the best of Gallura without the fatigue of a week, sufficient to include a La Maddalena excursion or a Tavolara break. The format is tailored for <strong>Italian public holidays</strong> (25 April, 1 May, 2 June, Ferragosto, All Saints) and for those who want a <strong>short holiday without feeling rushed</strong>. Here real 5-day rental prices, optimal vehicles, and a complete itinerary balancing sea, culture and free time.</p>
+
+    <h2>5-day rental rates: clean prices</h2>
+    <p>For 5 days too KS Rent Sardinia rate is <strong>5 × daily</strong> (significant discount starts from day 7, see <a href="/en/guide/car-hire-olbia-7-day-week">weekly guide</a>). Examples:</p>
+    <table>
+      <thead><tr><th>Vehicle</th><th>April/May/October</th><th>June/September</th><th>July/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>€200</td><td>€300</td><td>€400-550</td></tr>
+        <tr><td>Jeep Avenger</td><td>€250</td><td>€400</td><td>€550-750</td></tr>
+        <tr><td>Mercedes A-Class 180d</td><td>€400</td><td>€600</td><td>€800</td></tr>
+        <tr><td>Honda SH 350 (sport scooter)</td><td>€250</td><td>€375</td><td>€500</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Optional extras</strong>: second driver (€20 total weekend, free for married couples), child seat (€5/day = €25 max total), excess reduction (€15/day). Free delivery to OLB airport, Isola Bianca port, Olbia centre.</p>
+
+    <h2>When 5 days beats 3 or 7</h2>
+    <ul>
+      <li><strong>5 days beats 3</strong>: if you want to include La Maddalena OR Capo Coda Cavallo OR a relaxing day without missing anything.</li>
+      <li><strong>5 days beats 7</strong>: if you have holiday limits (mid-week bridge), if you travel as a couple without children, if flights cost much more for 7 nights.</li>
+      <li><strong>5 days worse than 7</strong>: if you want to include Stintino/Asinara too (need 7+ days), if you travel with small children needing "one day of nothing", if you seek weekly cheaper rate.</li>
+    </ul>
+
+    <h2>Complete 5-day itinerary Costa Smeralda + 1 island</h2>
+    <ul>
+      <li><strong>Day 1 (Thursday evening/Friday)</strong>: pickup at OLB airport, arrival Olbia, dinner at port, night in city.</li>
+      <li><strong>Day 2 (Saturday)</strong>: Costa Smeralda north — Porto Cervo + Spiaggia del Principe + Liscia Ruja. Lunch at Phi Beach. Return Olbia.</li>
+      <li><strong>Day 3 (Sunday)</strong>: La Maddalena — 8:00 departure to Palau, 15 min ferry, archipelago tour (Caprera, Spargi, Budelli pink beach). Evening return via Cannigione dinner.</li>
+      <li><strong>Day 4 (Monday)</strong>: East Coast / San Teodoro — La Cinta + Cala Brandinchi + Lu Impostu. Lunch at Capo Coda Cavallo.</li>
+      <li><strong>Day 5 (Tuesday)</strong>: Olbia inland + souvenirs — San Pantaleo visits (Thursday vintage market if it crosses), Pevero Health Hub or golf, last swim at Pittulongu. Evening return 22:30 or early morning.</li>
+    </ul>
+    <p><strong>Total km</strong>: 350-450. <strong>Panda Hybrid fuel cost</strong>: ~€30. <strong>Mercedes A 180d fuel cost</strong>: ~€40 (diesel). <strong>Tolls</strong>: zero (no motorways in north Sardinia).</p>
+
+    <h2>Documents and pickup check-in</h2>
+    <p>To pick up the vehicle present: B licence valid 1+ year, ID document in original, fiscal code. Payment accepted without credit card (debit, prepaid Postepay/Revolut/N26, instant transfer, cash). <a href="/en/terms-conditions">See Terms & Conditions</a>.</p>
+
+    <h2>Want more time? Discover weekly rental</h2>
+    <p>If 5 days aren't enough and you can extend by 2 nights, discover the <a href="/en/guide/car-hire-olbia-7-day-week">weekly rate</a> applying a progressive discount making day 7 almost free. To explore zones outside Gallura (Alghero, Bosa, Stintino) consider the <a href="/en/guide/car-hire-olbia-10-days">10-day rental</a>.</p>
+    <p>Book on <a href="/en/book-now">KS Rent Sardinia</a> or message <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a> with dates + vehicle for quote in 30 minutes.</p>
+  </GuideArticleLayout>
+</BaseLayout>

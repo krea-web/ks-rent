@@ -1,0 +1,82 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("car-hire-olbia-monthly-30-days")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "en-GB",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "How much does a monthly car hire cost in Olbia?", acceptedAnswer: { "@type": "Answer", text: "30 days of Fiat Panda Hybrid: €800 low season (Apr/May/Oct), €1,500 mid (Jun/Sep), €2,400-3,500 high (Jul/Aug). Jeep Avenger: €1,100 low, €2,000 mid, €3,500-4,500 high. Monthly rate is about 22 × daily (~27% savings vs 30×)." } },
+    { "@type": "Question", name: "Who typically chooses monthly car hire in Olbia?", acceptedAnswer: { "@type": "Answer", text: "KS Rent Sardinia monthly clients are: 1) remote smart workers moving to Sardinia for 1-3 months, 2) those looking for a house in Costa Smeralda needing to explore zones, 3) families taking extended summer holidays (full August), 4) digital nomad freelancers working from Olbia." } },
+    { "@type": "Question", name: "Can I pay monthly rental in instalments or only one go?", acceptedAnswer: { "@type": "Answer", text: "Yes, KS Rent Sardinia accepts 2-tranche monthly payment for 30+ day durations: 50% at pickup, 50% on day 15. Payment accepted without credit card: transfer, prepaid, cash, debit. For 2+ months we can discuss personalised plans." } },
+    { "@type": "Question", name: "What if I need maintenance (e.g. engine oil) during a 30-day rental?", acceptedAnswer: { "@type": "Answer", text: "KS Rent Sardinia fully covers routine maintenance during 30+ day rentals: oil change (if km require), tyre check, monthly wash, AC recharge. Temporary replacement vehicle for 1-2 days during work. No extra cost." } },
+    { "@type": "Question", name: "Is there a km limit for monthly rental?", acceptedAnswer: { "@type": "Answer", text: "For monthly rentals KS Rent Sardinia applies generous 3,500 km/month limit (115 km/day average), more than enough for intensive Gallura + Costa Smeralda + Sardinia excursions. Beyond: €0.15/km extra. Most monthly clients stay below 2,500 km." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "Monthly 30-day car hire", path: `/en/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>Monthly car hire is another category compared to short holidays.</strong> It's not "the holidaymaker who sees everything in 7 days", it's those who <strong>temporarily live in Sardinia</strong>: remote smart workers moving office to Costa Smeralda for 1-3 months, families taking the entire August in Gallura, professionals looking for houses needing to explore zones, digital nomads alternating client and sea. For these clients KS Rent Sardinia applies the <strong>most aggressive long-stay rate</strong>: ~22 × daily for 30 days (-27% vs 30 single days). Here prices, included maintenance coverage, and why it pays vs buying a used car for short stay.</p>
+
+    <h2>30-day rental rates</h2>
+    <table>
+      <thead><tr><th>Vehicle</th><th>April/May/October</th><th>June/September</th><th>July/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>€800</td><td>€1,500</td><td>€2,400-3,500</td></tr>
+        <tr><td>Jeep Avenger</td><td>€1,100</td><td>€2,000</td><td>€3,500-4,500</td></tr>
+        <tr><td>Mercedes A-Class 180d</td><td>€1,700</td><td>€3,000</td><td>€4,800</td></tr>
+        <tr><td>Honda SH 125 (scooter)</td><td>€750</td><td>€1,300</td><td>€2,200</td></tr>
+      </tbody>
+    </table>
+    <p><strong>For 30+ days</strong>: even more discounted rates, personalised quote. For 90+ days we offer <strong>"long-term rental"</strong> formula with short-lease type conditions.</p>
+
+    <h2>What's included in monthly rental</h2>
+    <ul>
+      <li><strong>Full RCA insurance</strong>.</li>
+      <li><strong>24/7 roadside assistance</strong> across Sardinia (no Corsica).</li>
+      <li><strong>Routine maintenance</strong>: oil change if km require, tyre check, monthly wash, AC recharge.</li>
+      <li><strong>Temporary replacement vehicle</strong> during maintenance (1-2 days).</li>
+      <li><strong>Mileage</strong>: 3,500 km/month included (115 km/day average).</li>
+      <li><strong>Free delivery</strong>: airport, port, Olbia centre.</li>
+      <li><strong>Vehicle change</strong>: 1 free change during the month if needs change.</li>
+    </ul>
+
+    <h2>Monthly rental vs used car purchase for short stay</h2>
+    <p>A question we often receive from those staying 2-3 months: "<em>is it better to rent or buy used?</em>". Calculations:</p>
+    <ul>
+      <li><strong>Average used car (e.g. 2020 Panda in Olbia)</strong>: €6,000-8,000 + road tax + 6-month insurance (~€500) + service (~€250) + post-sale management = €7,000-9,000 total for 3 months.</li>
+      <li><strong>KS Rent monthly rental × 3 months</strong>: €2,400-4,500 total (low-mid season).</li>
+      <li><strong>Difference</strong>: rental is <strong>40-60% cheaper</strong> than buying/reselling.</li>
+    </ul>
+    <p>Plus: zero risk of unexpected breakdown, zero document management, zero "can't sell" risk, maintenance included. For stays under 6 months renting is always the rational choice.</p>
+
+    <h2>Typical monthly client profile</h2>
+    <ul>
+      <li><strong>Remote smart worker</strong>: works 4 days/week from Costa Smeralda B&B. Vehicle: Fiat Panda Hybrid (easy parking, minimum consumption).</li>
+      <li><strong>Full-August family</strong>: private villa near Porto Cervo, children, beach trips daily. Vehicle: Jeep Avenger (5 seats, automatic, capacious boot).</li>
+      <li><strong>October retired couple</strong>: 30 days Gallura to avoid northern weather, slow pace. Vehicle: Mercedes A-Class 180d (top comfort, economic diesel).</li>
+      <li><strong>Digital nomad influencer</strong>: produces content, wants photo-genic car. Vehicle: BMW M2 (on quote).</li>
+      <li><strong>Professional on site visit</strong>: visits Gallura construction sites. Vehicle: Jeep Avenger (high lights for site dirt).</li>
+    </ul>
+
+    <h2>Documents for monthly rental</h2>
+    <p>B licence valid 1+ year, ID document, Italian fiscal code OR home country TIN. Slightly higher deposit but instalment-friendly. <a href="/en/guide/car-hire-olbia-without-credit-card-complete-guide">Car hire also without credit card</a>: we accept transfer, prepaid (Postepay, Revolut, N26, Hype, Wise), debit, cash.</p>
+
+    <h2>Request personalised monthly quote</h2>
+    <p>For 30+ day rentals we prefer <strong>personalised WhatsApp quote</strong> because every client has different needs (expected km, exact period, vehicle, options). Message <a href="https://wa.me/393446107071">+39 344 6107071</a> with: start/end dates, preferred vehicle, purpose (smart work, holiday, house hunt). We reply within 1 hour with named quote. For shorter durations see <a href="/en/guide/car-hire-olbia-14-days-two-weeks">biweekly rates</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

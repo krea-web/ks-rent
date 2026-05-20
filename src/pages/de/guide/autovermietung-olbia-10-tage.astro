@@ -1,0 +1,76 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("autovermietung-olbia-10-tage")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "de-DE",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Wie viel kostet eine 10-Tage-Autovermietung in Olbia?", acceptedAnswer: { "@type": "Answer", text: "10 Tage Fiat Panda Hybrid: 350 € Nebensaison, 700-1.000 € Hoch. Jeep Avenger: 450 € Neben, 1.000-1.300 € Hoch. Mercedes A-Klasse 180d: 750 € Neben, 1.500 € Hoch." } },
+    { "@type": "Question", name: "Reichen 10 Tage, um auch Alghero zu sehen oder nur Gallura?", acceptedAnswer: { "@type": "Answer", text: "Reichen fuer Gallura + 1 langen Ausflug: entweder Alghero (3 Stunden Fahrt, besser 1-2 Naechte dort schlafen) oder Stintino/Asinara. Cagliari erfordert 14 Tage." } },
+    { "@type": "Question", name: "Welches Fahrzeug ist ideal fuer 10 Tage mit gemischten Routen?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger ist perfekt: kompakter SUV mit hohen Lichtern fuer Strandzugangs-Schotter, niedriger Verbrauch (~6 L/100 km), Automatik. 10 Tage Kosten Nebensaison: 450 €." } },
+    { "@type": "Question", name: "Kann ich 10 Tage buchen, auch wenn die Daten Saisonwechsel beinhalten?", acceptedAnswer: { "@type": "Answer", text: "Ja, KS Rent Sardinia wendet Pro-rata-Tarife fuer die Tage jedes Zeitraums an. Transparente Berechnung im Angebot." } },
+    { "@type": "Question", name: "Lohnt es sich, 10 Tage zu waehlen oder auf 14 Tage zu verlaengern?", acceptedAnswer: { "@type": "Answer", text: "Wenn Sie 12-13 Tage Urlaub haben, lohnt es sich auf 14 zu verlaengern. Wenn Sie genau 10 Tage haben, sind 10 Tage die richtige Wahl." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "10-Tage Autovermietung", path: `/de/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>10 Tage in Olbia sind die Laenge, die "einen Urlaub" von "einer Reise" trennt.</strong> Sie ermoeglichen es, die Costa Smeralda in Ruhe zu beenden, einen ganzen Tag La Maddalena zu widmen (ohne Hetze), einen langen Ausflug nach Alghero oder Stintino hinzuzufuegen und 1-2 Tage purer Entspannung ohne Reisen einzubeziehen. Es ist die Dauer, die KS Rent Sardinia jenen empfiehlt, die das Nordosten Sardiniens <strong>wirklich</strong> kennen wollen, nicht nur durchziehen.</p>
+
+    <h2>10-Tage-Preise mit progressivem Rabatt</h2>
+    <table>
+      <thead><tr><th>Fahrzeug</th><th>April/Mai/Oktober</th><th>Juni/September</th><th>Juli/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>350 €</td><td>525 €</td><td>700-1.000 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>450 €</td><td>720 €</td><td>1.000-1.300 €</td></tr>
+        <tr><td>Mercedes A-Klasse 180d</td><td>750 €</td><td>1.100 €</td><td>1.500 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>10-Tage-Reiseroute: komplette Costa Smeralda + 1 Erweiterung</h2>
+    <ul>
+      <li><strong>Tag 1-2</strong>: Ankunft, Costa Smeralda Nord — Porto Cervo, Spiaggia del Principe, Pevero.</li>
+      <li><strong>Tag 3</strong>: Costa Smeralda Sued — Capriccioli, Romazzino, Cala di Volpe.</li>
+      <li><strong>Tag 4</strong>: La Maddalena ganztaegig — Archipel per Boot oder Auto+Faehre.</li>
+      <li><strong>Tag 5</strong>: Entspannung — Hotel-Pool oder Lieblingsstrand ganztaegig.</li>
+      <li><strong>Tag 6</strong>: Ostkueste — San Teodoro, La Cinta, Cala Brandinchi.</li>
+      <li><strong>Tag 7-8</strong>: Alghero oder Stintino Erweiterung — 1-2 Naechte Westkueste.</li>
+      <li><strong>Tag 9</strong>: Gallura Hinterland — Tempio Pausania + Vermentino Weingueter.</li>
+      <li><strong>Tag 10</strong>: letztes Bad + Flughafen/Hafen-Rueckgabe.</li>
+    </ul>
+    <p><strong>Gesamt km</strong>: 900-1.200. <strong>Kraftstoff</strong>: 90-130 € (Panda Hybrid), 130-180 € (Mercedes A).</p>
+
+    <h2>Ideales Fahrzeug fuer 10 Tage Multi-Routen</h2>
+    <ul>
+      <li><strong>Jeep Avenger</strong>: kompakter Automatik-SUV, hohe Lichter fuer Schotterzugang. <strong>Unser Best-Seller fuer 7-14 Tage</strong>.</li>
+      <li><strong>Mercedes A-Klasse 180d</strong>: Premium-Limousine mit sehr niedrigem Diesel-Verbrauch, Top-Komfort fuer lange Strecken.</li>
+      <li><strong>Fiat Panda Hybrid</strong>: Budget-Wahl, minimaler Verbrauch, parkt ueberall.</li>
+    </ul>
+
+    <h2>Nuetzliche Optionen fuer mittel-lange Dauern</h2>
+    <ul>
+      <li><strong>Zweiter Fahrer</strong>: kostenlos fuer Ehepaare, 20 € gesamt fuer andere.</li>
+      <li><strong>Kasko-Selbstbeteiligungsreduzierung</strong>: 15 €/Tag = 150 € gesamt.</li>
+      <li><strong>Kindersitze Gruppe 1/2/3</strong>: 5 €/Tag (max 25 € gesamt).</li>
+      <li><strong>4G Wi-Fi Hotspot</strong>: 8 €/Tag (max 50 € gesamt).</li>
+    </ul>
+
+    <h2>Bereit fuer Ihre 10 Tage in Gallura?</h2>
+    <p>Buchen Sie auf <a href="/de/jetzt-buchen">KS Rent Sardinia</a> oder <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a>. Fuer laengere Aufenthalte siehe <a href="/de/guide/autovermietung-olbia-14-tage-zwei-wochen">14-Tage-Vermietung</a> oder <a href="/de/guide/autovermietung-olbia-monatlich-30-tage">Monatstarif</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

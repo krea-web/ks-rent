@@ -1,0 +1,69 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("autovermietung-olbia-woche-7-tage")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "de-DE",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Kostet der Wochentarif fuer 7 Tage weniger als 7 Einzeltage?", acceptedAnswer: { "@type": "Answer", text: "Ja. KS Rent Sardinia wendet ab Tag 7 progressiven Rabatt an: Wochentarif ist etwa 6,5 × Tagestarif (8-10% Ersparnis). Beispiel: Fiat Panda Hybrid 7 Tage = 260 € Nebensaison statt 280 €." } },
+    { "@type": "Question", name: "Welches Fahrzeug wird am meisten fuer 7 Tage in Olbia angefragt?", acceptedAnswer: { "@type": "Answer", text: "Fuer Familien: Jeep Avenger (Automatik-SUV, geraeumiger Kofferraum). Fuer Premium-Paare: Mercedes A-Klasse 180d. Fuer smarte Paare: Fiat Panda Hybrid." } },
+    { "@type": "Question", name: "Kann ich mitten in der Mietwoche das Fahrzeug wechseln?", acceptedAnswer: { "@type": "Answer", text: "Ja, KS Rent Sardinia akzeptiert Fahrzeugwechsel waehrend laufender Miete (z.B. erste 3 Tage Panda, letzten 4 Tage BMW M2). Kosten: pro-rata Tarifdifferenz + 25 € Wechselgebuehr." } },
+    { "@type": "Question", name: "Wie viele km werden durchschnittlich in 7 Tagen in Olbia gefahren?", acceptedAnswer: { "@type": "Answer", text: "Zwischen 500-700 km fuer einen typischen Costa Smeralda + Ostkueste + 1 Ausflug Urlaub. Unbegrenzte km in KS Rent Sardinia Tarif inklusive." } },
+    { "@type": "Question", name: "Muss ich fuer eine ganze Woche jeden Tag planen oder kann ich improvisieren?", acceptedAnswer: { "@type": "Answer", text: "In Nebensaison koennen Sie weitgehend improvisieren. In Hochsaison erfordern Top-Straende Ankunft bis 10:30. Empfohlene allgemeine Planung fuer die meistbesuchten Tage." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "Wochenmiete Autovermietung", path: `/de/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>Eine Woche ist das Standardformat der Autovermietung in Sardinien</strong>: <strong>74% unserer Kunden</strong> waehlen 7 Tage, und es ist die Dauer, auf die KS Rent Sardinia die guenstigsten Tarife des Jahres kalibriert hat. Ab dem siebten Tag greift der <strong>progressive Rabatt</strong>, der den Wochentarif auf etwa 6,5 Mal den Tagestarif bringt (statt 7×). In diesem Reisefuehrer warum es lohnt, welche Fahrzeuge fuer eine ganze Woche zu waehlen, die klassische Costa Smeralda + Gallura Nord Reiseroute und Tricks zur Optimierung von Kraftstoffkosten und Fahrzeiten.</p>
+
+    <h2>Warum 7 Tage weniger kosten als 7 Einzeltage</h2>
+    <table>
+      <thead><tr><th>Fahrzeug</th><th>7 × Tag</th><th>Wochentarif</th><th>Ersparnis</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid (Apr)</td><td>280 €</td><td><strong>260 €</strong></td><td>-20 €</td></tr>
+        <tr><td>Jeep Avenger (Jun)</td><td>560 €</td><td><strong>490 €</strong></td><td>-70 €</td></tr>
+        <tr><td>Mercedes A 180d (Jul)</td><td>1.120 €</td><td><strong>980 €</strong></td><td>-140 €</td></tr>
+        <tr><td>Honda SH 125 (Aug)</td><td>560 €</td><td><strong>490 €</strong></td><td>-70 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Klassische 7-Tage-Reiseroute Gallura komplett</h2>
+    <ul>
+      <li><strong>Tag 1 (Ankunft)</strong>: OLB-Flughafenabholung, Unterkunft-Check-in, Abendessen am Hafen Olbia.</li>
+      <li><strong>Tag 2 (Costa Smeralda)</strong>: Porto Cervo + Spiaggia del Principe + Romazzino.</li>
+      <li><strong>Tag 3 (Costa Smeralda Sued)</strong>: Capriccioli + Liscia Ruja + Grande Pevero.</li>
+      <li><strong>Tag 4 (La Maddalena)</strong>: Palau + Faehre + ganztaegig Archipel (Spargi, Budelli, Caprera).</li>
+      <li><strong>Tag 5 (Ostkueste)</strong>: San Teodoro + La Cinta + Cala Brandinchi + Capo Coda Cavallo.</li>
+      <li><strong>Tag 6 (Hinterland)</strong>: San Pantaleo Markt + Tempio Pausania oder Pool-Entspannung.</li>
+      <li><strong>Tag 7 (Abreise)</strong>: Morgendliches Bad Pittulongu + Nachmittag Flughafen-Rueckgabe.</li>
+    </ul>
+    <p><strong>Gesamt</strong>: 500-700 km, ~60-80 € Kraftstoff, keine Mauten, 1 La Maddalena Faehre.</p>
+
+    <h2>Tricks zur Wochenoptimierung</h2>
+    <ul>
+      <li><strong>Kraftstoff</strong>: Tankstellen ausserhalb Olbia immer guenstiger (Tempio Pausania oder Arzachena -10 Cent/L vs Costa Smeralda).</li>
+      <li><strong>Top-Straende in Hochsaison</strong>: Parkplaetze ausverkauft bis 10:30. Frueher Wecker fuer 2-3 Top-Straende.</li>
+      <li><strong>Porto Cervo Abendessen</strong>: Mindestens 3 Tage im Voraus buchen (Juli/August sogar 7-10).</li>
+      <li><strong>Fahrzeugwechsel mitten in der Woche</strong>: BMW M2 nur fuer 2 Wochenendtage, pro-rata Differenz.</li>
+    </ul>
+
+    <h2>Bereit fuer die perfekte Woche?</h2>
+    <p>Buchen Sie Ihre Wochenvermietung auf <a href="/de/jetzt-buchen">KS Rent Sardinia</a> oder pruefen Sie alle <a href="/de/preise">saisonalen Tarife</a>. Fuer laengere Aufenthalte siehe <a href="/de/guide/autovermietung-olbia-10-tage">10-Tage-Vermietung</a> oder <a href="/de/guide/autovermietung-olbia-14-tage-zwei-wochen">zwei Wochen</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

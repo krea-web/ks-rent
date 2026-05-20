@@ -1,0 +1,78 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("autovermietung-olbia-monatlich-30-tage")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "de-DE",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Wie viel kostet eine Monatsmiete in Olbia?", acceptedAnswer: { "@type": "Answer", text: "30 Tage Fiat Panda Hybrid: 800 € Nebensaison, 1.500 € Mittel, 2.400-3.500 € Hoch. Jeep Avenger: 1.100 € Neben, 2.000 € Mittel, 3.500-4.500 € Hoch. Monatstarif etwa 22 × Tag (~27% Ersparnis)." } },
+    { "@type": "Question", name: "Wer waehlt typischerweise die Monatsmiete in Olbia?", acceptedAnswer: { "@type": "Answer", text: "KS Rent Sardinia Monatskunden sind: 1) Remote Smart Worker, 2) Haussuchende in Costa Smeralda, 3) Familien mit verlaengerten Sommerurlauben, 4) Digital Nomad Freelancer." } },
+    { "@type": "Question", name: "Kann ich die Monatsmiete in Raten zahlen?", acceptedAnswer: { "@type": "Answer", text: "Ja, KS Rent Sardinia akzeptiert 2-Tranchen-Zahlung fuer 30+ Tage: 50% bei Abholung, 50% am 15. Tag. Zahlung ohne Kreditkarte akzeptiert." } },
+    { "@type": "Question", name: "Was passiert bei Wartungsbedarf waehrend einer 30-Tage-Miete?", acceptedAnswer: { "@type": "Answer", text: "KS Rent Sardinia deckt komplett die Routine-Wartung waehrend 30+ Tage Mieten: Oelwechsel, Reifenkontrolle, monatliche Waesche. Vorlaeufiges Ersatzfahrzeug fuer 1-2 Tage waehrend Eingriff." } },
+    { "@type": "Question", name: "Gibt es ein Kilometerlimit fuer Monatsmiete?", acceptedAnswer: { "@type": "Answer", text: "KS Rent Sardinia wendet grosszuegiges Limit von 3.500 km/Monat an (115 km/Tag durchschnittlich). Darueber: 0,15 €/km extra." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "Monatsmiete 30 Tage", path: `/de/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>Die Monatsmiete ist eine andere Kategorie als Kurzurlaube.</strong> Es ist nicht "der Urlauber, der alles in 7 Tagen sieht", es sind diejenigen, die <strong>vorruebergehend in Sardinien leben</strong>: Remote Smart Worker, die das Buero fuer 1-3 Monate nach Costa Smeralda verlegen, Familien, die den ganzen August in Gallura verbringen, Profis auf Haussuche, Digital Nomads. Fuer diese Kunden wendet KS Rent Sardinia den <strong>aggressivsten Long-Stay-Tarif</strong> an: ~22 × Tag fuer 30 Tage (-27% vs 30 Einzeltage).</p>
+
+    <h2>30-Tage-Mietpreise</h2>
+    <table>
+      <thead><tr><th>Fahrzeug</th><th>April/Mai/Oktober</th><th>Juni/September</th><th>Juli/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>800 €</td><td>1.500 €</td><td>2.400-3.500 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>1.100 €</td><td>2.000 €</td><td>3.500-4.500 €</td></tr>
+        <tr><td>Mercedes A-Klasse 180d</td><td>1.700 €</td><td>3.000 €</td><td>4.800 €</td></tr>
+        <tr><td>Honda SH 125 (Roller)</td><td>750 €</td><td>1.300 €</td><td>2.200 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Was ist in der Monatsmiete enthalten</h2>
+    <ul>
+      <li><strong>Vollstaendige RCA-Versicherung</strong>.</li>
+      <li><strong>24/7 Pannenhilfe</strong> in ganz Sardinien.</li>
+      <li><strong>Routine-Wartung</strong>: Oelwechsel, Reifenkontrolle, monatliche Waesche, Klimaanlage Nachfuellung.</li>
+      <li><strong>Vorlaeufiges Ersatzfahrzeug</strong> waehrend Wartung (1-2 Tage).</li>
+      <li><strong>Kilometer</strong>: 3.500 km/Monat inklusive.</li>
+      <li><strong>Kostenlose Lieferung</strong>: Flughafen, Hafen, Olbia Zentrum.</li>
+      <li><strong>Fahrzeugwechsel</strong>: 1 kostenloser Wechsel waehrend des Monats.</li>
+    </ul>
+
+    <h2>Monatsmiete vs Gebrauchtwagenkauf fuer kurzen Aufenthalt</h2>
+    <ul>
+      <li><strong>Durchschnittlicher Gebrauchtwagen (z.B. Panda 2020)</strong>: 6.000-8.000 € + Versicherung + Service = 7.000-9.000 € fuer 3 Monate.</li>
+      <li><strong>KS Rent Monatsmiete × 3 Monate</strong>: 2.400-4.500 € insgesamt.</li>
+      <li><strong>Unterschied</strong>: Miete ist <strong>40-60% guenstiger</strong> als Kauf/Wiederverkauf.</li>
+    </ul>
+
+    <h2>Typisches Monatskunden-Profil</h2>
+    <ul>
+      <li><strong>Remote Smart Worker</strong>: arbeitet 4 Tage/Woche aus Costa Smeralda B&B. Fahrzeug: Fiat Panda Hybrid.</li>
+      <li><strong>Familie ganzer August</strong>: Privatvilla nahe Porto Cervo, Kinder. Fahrzeug: Jeep Avenger.</li>
+      <li><strong>Rentnerpaar Oktober</strong>: 30 Tage Gallura, langsames Tempo. Fahrzeug: Mercedes A-Klasse 180d.</li>
+      <li><strong>Digital Nomad Influencer</strong>: produziert Content. Fahrzeug: BMW M2 (auf Anfrage).</li>
+    </ul>
+
+    <h2>Dokumente fuer Monatsmiete</h2>
+    <p>Fuehrerschein B seit 1+ Jahr gueltig, Ausweisdokument, italienische Steuernummer ODER TIN Heimatland. <a href="/de/guide/autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung">Autovermietung auch ohne Kreditkarte</a>: wir akzeptieren Ueberweisung, Prepaid, EC-Karte, Bargeld.</p>
+
+    <h2>Personalisierten Monatsangebot anfragen</h2>
+    <p>Fuer 30+ Tage Mieten bevorzugen wir <strong>personalisiertes WhatsApp-Angebot</strong>. Schreiben Sie an <a href="https://wa.me/393446107071">+39 344 6107071</a> mit Start/Ende-Daten, bevorzugtem Fahrzeug, Zweck. Antwort innerhalb 1 Stunde. Fuer kuerzere Dauer siehe <a href="/de/guide/autovermietung-olbia-14-tage-zwei-wochen">Zwei-Wochen-Tarife</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

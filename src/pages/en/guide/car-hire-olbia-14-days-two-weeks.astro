@@ -1,0 +1,80 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("car-hire-olbia-14-days-two-weeks")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "en-GB",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "How much does a 14-day car hire cost in Olbia?", acceptedAnswer: { "@type": "Answer", text: "14 days of Fiat Panda Hybrid: €480 low season, €1,000-1,400 high. Jeep Avenger: €600 low, €1,400-1,800 high. Mercedes A-Class 180d: €1,000 low, €2,100 high. Biweekly rate is about 12 × daily (15-17% savings vs 14×)." } },
+    { "@type": "Question", name: "Can you do the full north Sardinia tour in 14 days?", acceptedAnswer: { "@type": "Answer", text: "Yes, 2 weeks are ideal: 5-6 days Gallura/Costa Smeralda + 2-3 days La Maddalena + 3-4 days Alghero/Stintino/Bosa + 2-3 days inland culture (Castelsardo, Tempio, nuraghi). The south (Cagliari) remains for a future trip." } },
+    { "@type": "Question", name: "Can I take a KS Rent car to Corsica during a 14-day rental?", acceptedAnswer: { "@type": "Answer", text: "Yes, on prior written request. Cost: €8/day extra over the whole duration + Corsica Ferries Olbia-Bastia ticket (€80-180 each way car + passengers). Sports cars (Audi RS3, BMW M2) excluded per insurance policy." } },
+    { "@type": "Question", name: "Do 14 days pay off if I still have flexibility on duration?", acceptedAnswer: { "@type": "Answer", text: "14 days have the best quality/price ratio for complete visits. If you have 10-13 days: extend to 14 for cost of day 12 (discount). If you have 15-20 days: 21 days cost even less per day (pre-monthly rate). If you have 25-30 days: switch to monthly rate." } },
+    { "@type": "Question", name: "For 14 days better economy or premium car?", acceptedAnswer: { "@type": "Answer", text: "On 14 days the delta between Panda (€480) and Mercedes A (€1,000) is €520. On a 14-day holiday that probably costs €2,500-5,000 total, the premium vehicle delta is 10-20%. Worth it for couples with comfort priority, not for families of 4 with budget priority." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "14-day car hire", path: `/en/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>Two weeks are the optimal duration for those wanting to see north Sardinia properly.</strong> Not just Costa Smeralda and La Maddalena, but also Catalan Alghero, Stintino cliffs, Asinara archipelago, Bosa with its colourful houses, Castelsardo, the nuraghi inland. KS Rent Sardinia biweekly rate applies the <strong>most aggressive discount before the monthly threshold</strong>: ~12 × daily instead of 14×. Here prices, ideal travel vehicle, and the 14-day planning we recommend to clients with 2 weeks of holiday to spend.</p>
+
+    <h2>Biweekly rates: the 14-day price</h2>
+    <table>
+      <thead><tr><th>Vehicle</th><th>April/May/October</th><th>June/September</th><th>July/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>€480</td><td>€720</td><td>€1,000-1,400</td></tr>
+        <tr><td>Jeep Avenger</td><td>€600</td><td>€960</td><td>€1,400-1,800</td></tr>
+        <tr><td>Mercedes A-Class 180d</td><td>€1,000</td><td>€1,500</td><td>€2,100</td></tr>
+        <tr><td>Honda SH 350 (scooter)</td><td>€650</td><td>€980</td><td>€1,300</td></tr>
+      </tbody>
+    </table>
+    <p>All-inclusive RCA, 24/7 assistance, free delivery, unlimited mileage. For 14 days we recommend excess reduction (€15/day = €210 total) for peace of mind over long period.</p>
+
+    <h2>Complete 14-day north Sardinia itinerary</h2>
+    <ul>
+      <li><strong>Day 1-5 (Costa Smeralda + Gallura north)</strong>: arrival, Porto Cervo, Spiaggia del Principe, Romazzino, Capriccioli, Liscia Ruja, San Pantaleo market.</li>
+      <li><strong>Day 6 (La Maddalena full day)</strong>: Palau ferry + archipelago tour by boat (Spargi, Budelli) or car+boat.</li>
+      <li><strong>Day 7 (East Coast)</strong>: San Teodoro, La Cinta, Cala Brandinchi, Capo Coda Cavallo.</li>
+      <li><strong>Day 8 (west transfer)</strong>: departure for Alghero (3 hours SS131), arrival, Catalan bombas lunch.</li>
+      <li><strong>Day 9 (Capo Caccia)</strong>: Neptune Grottoes + Cala Dragunara + Capo Caccia cliffs + Vermentino dinner.</li>
+      <li><strong>Day 10 (Stintino-Pelosa)</strong>: Stintino transfer (1h from Alghero), Pelosa Beach, Asinara view.</li>
+      <li><strong>Day 11 (Asinara optional)</strong>: ferry to Asinara from Stintino port, island tour by train or electric car.</li>
+      <li><strong>Day 12 (Bosa + east return)</strong>: Bosa colourful houses, Temo river, Malvasia wine. Evening Tempio Pausania transfer.</li>
+      <li><strong>Day 13 (Gallura inland)</strong>: Castelsardo, wineries, nuraghi.</li>
+      <li><strong>Day 14 (return)</strong>: last swim + airport/port return.</li>
+    </ul>
+    <p><strong>Total</strong>: ~1,400-1,700 km. <strong>Fuel</strong>: €130-180 (Panda Hybrid), €180-240 (Mercedes A diesel).</p>
+
+    <h2>Benefits of the biweekly rate</h2>
+    <ul>
+      <li><strong>Real discount</strong>: -15/17% vs 14 single days.</li>
+      <li><strong>Same vehicle for the whole holiday</strong>: no intermediate check-in/out, no confusion with different companies, getting used to the car.</li>
+      <li><strong>More flexibility on dates</strong>: in high season blocking 14 days instead of 7+7 separate reduces the risk of not finding availability.</li>
+      <li><strong>Possibility of Corsica tour</strong>: on 14 days makes sense to evaluate 2-3 nights in Corsica (Bonifacio + south Corsica) using Olbia-Bastia ferry with KS Rent authorisation.</li>
+    </ul>
+
+    <h2>Ideal vehicle for 14 days of travel</h2>
+    <ul>
+      <li><strong>Mercedes A-Class 180d</strong>: top for couple covering distance (1,500+ km in 14 days). Diesel = low consumption, seat comfort.</li>
+      <li><strong>Jeep Avenger</strong>: best balance price/comfort/versatility. Suited to light dirt for "secret" beaches.</li>
+      <li><strong>Fiat Panda Hybrid</strong>: only for tight budget or city use. On 14 days tight interiors weigh in for couples.</li>
+    </ul>
+
+    <h2>Ready for the 2-week tour?</h2>
+    <p>Book on <a href="/en/book-now">KS Rent Sardinia</a>. For longer stays see <a href="/en/guide/car-hire-olbia-monthly-30-days">monthly rental</a> with long-stay rates. For shorter holidays see <a href="/en/guide/car-hire-olbia-10-days">10 days</a> or <a href="/en/guide/car-hire-olbia-7-day-week">one week</a>. For personalised 14-day quote <a href="https://wa.me/393446107071">message WhatsApp</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

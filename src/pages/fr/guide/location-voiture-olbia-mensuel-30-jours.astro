@@ -1,0 +1,78 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("location-voiture-olbia-mensuel-30-jours")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "fr-FR",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Combien coûte une location voiture mensuelle à Olbia ?", acceptedAnswer: { "@type": "Answer", text: "30 jours Fiat Panda Hybrid : 800 € basse saison, 1.500 € moyenne, 2.400-3.500 € haute. Jeep Avenger : 1.100 € basse, 2.000 € moyenne, 3.500-4.500 € haute. Tarif mensuel environ 22 × journalier (~27% économie)." } },
+    { "@type": "Question", name: "Qui choisit typiquement la location mensuelle à Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Les clients mensuels KS Rent Sardinia sont : 1) télétravailleurs remote, 2) chercheurs de maison en Costa Smeralda, 3) familles en vacances prolongées, 4) nomades numériques freelance." } },
+    { "@type": "Question", name: "Puis-je payer la location mensuelle en plusieurs fois ?", acceptedAnswer: { "@type": "Answer", text: "Oui, KS Rent Sardinia accepte paiement 2 tranches pour 30+ jours : 50% au retrait, 50% au 15e jour. Paiement aussi sans carte de crédit." } },
+    { "@type": "Question", name: "Que se passe-t-il si j'ai besoin d'entretien durant 30 jours ?", acceptedAnswer: { "@type": "Answer", text: "KS Rent Sardinia couvre intégralement l'entretien routine durant locations 30+ jours : vidange, contrôle pneus, lavage mensuel. Véhicule remplacement temporaire 1-2 jours durant intervention." } },
+    { "@type": "Question", name: "Y a-t-il une limite kilométrique pour location mensuelle ?", acceptedAnswer: { "@type": "Answer", text: "KS Rent Sardinia applique limite généreuse de 3.500 km/mois (115 km/jour moyens). Au-delà : 0,15 €/km supplémentaire." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Location mensuelle 30 jours", path: `/fr/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>La location mensuelle est une autre catégorie par rapport aux courtes vacances.</strong> Ce n'est pas "le vacancier qui voit tout en 7 jours", c'est ceux qui <strong>vivent temporairement en Sardaigne</strong> : télétravailleurs remote transférant le bureau en Costa Smeralda pour 1-3 mois, familles passant tout août en Gallura, professionnels cherchant maison, nomades numériques. Pour ces clients KS Rent Sardinia applique le <strong>tarif long stay le plus agressif</strong> : ~22 × journalier pour 30 jours (-27% vs 30 journées individuelles).</p>
+
+    <h2>Tarifs location 30 jours</h2>
+    <table>
+      <thead><tr><th>Véhicule</th><th>Avril/Mai/Octobre</th><th>Juin/Septembre</th><th>Juillet/Août</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>800 €</td><td>1.500 €</td><td>2.400-3.500 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>1.100 €</td><td>2.000 €</td><td>3.500-4.500 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>1.700 €</td><td>3.000 €</td><td>4.800 €</td></tr>
+        <tr><td>Honda SH 125 (scooter)</td><td>750 €</td><td>1.300 €</td><td>2.200 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Ce qui est inclus dans la location mensuelle</h2>
+    <ul>
+      <li><strong>Assurance RCA complète</strong>.</li>
+      <li><strong>Assistance routière 24/7</strong> Sardaigne entière.</li>
+      <li><strong>Entretien routine</strong>: vidange si km le requièrent, contrôle pneus, lavage mensuel.</li>
+      <li><strong>Véhicule remplacement temporaire</strong> durant entretien (1-2 jours).</li>
+      <li><strong>Kilométrage</strong>: 3.500 km/mois inclus.</li>
+      <li><strong>Livraison gratuite</strong>: aéroport, port, centre Olbia.</li>
+      <li><strong>Changement véhicule</strong>: 1 changement gratuit durant le mois.</li>
+    </ul>
+
+    <h2>Location mensuelle vs achat voiture occasion pour court séjour</h2>
+    <ul>
+      <li><strong>Voiture occasion moyenne (ex. Panda 2020)</strong>: 6.000-8.000 € + assurance + service = 7.000-9.000 € pour 3 mois.</li>
+      <li><strong>KS Rent location mensuelle × 3 mois</strong>: 2.400-4.500 € total.</li>
+      <li><strong>Différence</strong>: location est <strong>40-60% moins chère</strong> qu'acheter/revendre.</li>
+    </ul>
+
+    <h2>Profil client typique location mensuelle</h2>
+    <ul>
+      <li><strong>Télétravailleur remote</strong>: travaille 4 jours/semaine depuis B&B Costa Smeralda. Véhicule : Fiat Panda Hybrid.</li>
+      <li><strong>Famille août entier</strong>: villa privée près Porto Cervo, enfants. Véhicule : Jeep Avenger.</li>
+      <li><strong>Couple retraités octobre</strong>: 30 jours Gallura, rythme lent. Véhicule : Mercedes Classe A 180d.</li>
+      <li><strong>Nomade numérique influenceur</strong>: produit du contenu. Véhicule : BMW M2 (sur devis).</li>
+    </ul>
+
+    <h2>Documents pour location mensuelle</h2>
+    <p>Permis B valide depuis 1+ an, document identité, code fiscal italien OU TIN pays origine. <a href="/fr/guide/location-voiture-olbia-sans-carte-credit-guide-complet">Location aussi sans carte de crédit</a> : nous acceptons virement, prépayées, débit, espèces.</p>
+
+    <h2>Demandez devis personnalisé mensuel</h2>
+    <p>Pour locations 30+ jours nous préférons <strong>devis personnalisé WhatsApp</strong>. Écrivez à <a href="https://wa.me/393446107071">+39 344 6107071</a> avec dates début/fin, véhicule préféré, finalité. Réponse en 1 heure. Pour durées plus courtes voir <a href="/fr/guide/location-voiture-olbia-14-jours-deux-semaines">tarifs quinzaine</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

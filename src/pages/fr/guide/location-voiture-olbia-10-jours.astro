@@ -1,0 +1,76 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("location-voiture-olbia-10-jours")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "fr-FR",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Combien coûte une location voiture 10 jours à Olbia ?", acceptedAnswer: { "@type": "Answer", text: "10 jours Fiat Panda Hybrid : 350 € basse saison, 700-1.000 € haute. Jeep Avenger : 450 € basse, 1.000-1.300 € haute. Mercedes Classe A 180d : 750 € basse, 1.500 € haute." } },
+    { "@type": "Question", name: "10 jours suffisent-ils pour voir aussi Alghero ou seulement Gallura ?", acceptedAnswer: { "@type": "Answer", text: "Suffisent pour Gallura + 1 longue excursion : soit Alghero (3 heures de route, mieux 1-2 nuits sur place) soit Stintino/Asinara. Cagliari nécessite 14 jours." } },
+    { "@type": "Question", name: "Quel véhicule est idéal pour 10 jours en routes mixtes ?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger parfait : SUV compact avec phares hauts pour pistes d'accès plages, faible consommation (~6 L/100 km), automatique. Coût 10 jours basse saison : 450 €." } },
+    { "@type": "Question", name: "Puis-je réserver 10 jours même si dates incluent changement saison tarifaire ?", acceptedAnswer: { "@type": "Answer", text: "Oui, KS Rent Sardinia applique tarifs pro-rata pour les jours de chaque période. Calcul transparent dans le devis." } },
+    { "@type": "Question", name: "Vaut-il mieux choisir 10 jours ou étendre à 14 pour le tarif quinzaine ?", acceptedAnswer: { "@type": "Answer", text: "Si vous avez 12-13 jours de vacances : étendre à 14 vaut la peine. Si exactement 10 jours : 10 jours est le bon choix." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Location 10 jours", path: `/fr/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>10 jours à Olbia sont la longueur qui sépare "des vacances" d'"un voyage".</strong> Ils permettent de compléter la Costa Smeralda calmement, dédier une journée entière à La Maddalena (sans courir), ajouter une longue excursion vers Alghero ou Stintino, et inclure 1-2 jours de pure détente sans déplacements. C'est la durée que KS Rent Sardinia recommande à qui veut connaître la Sardaigne nord-orientale <strong>vraiment</strong>, pas seulement passer.</p>
+
+    <h2>Prix 10 jours avec réduction progressive</h2>
+    <table>
+      <thead><tr><th>Véhicule</th><th>Avril/Mai/Octobre</th><th>Juin/Septembre</th><th>Juillet/Août</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>350 €</td><td>525 €</td><td>700-1.000 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>450 €</td><td>720 €</td><td>1.000-1.300 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>750 €</td><td>1.100 €</td><td>1.500 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Itinéraire 10 jours : Costa Smeralda complète + 1 extension</h2>
+    <ul>
+      <li><strong>Jour 1-2</strong>: arrivée, Costa Smeralda nord — Porto Cervo, Spiaggia del Principe, Pevero.</li>
+      <li><strong>Jour 3</strong>: Costa Smeralda sud — Capriccioli, Romazzino, Cala di Volpe.</li>
+      <li><strong>Jour 4</strong>: La Maddalena journée entière — archipel en bateau ou voiture+ferry.</li>
+      <li><strong>Jour 5</strong>: détente — piscine hôtel ou plage favorite, sans déplacements.</li>
+      <li><strong>Jour 6</strong>: côte est — San Teodoro, La Cinta, Cala Brandinchi.</li>
+      <li><strong>Jour 7-8</strong>: extension Alghero ou Stintino — 1-2 nuits côte ouest.</li>
+      <li><strong>Jour 9</strong>: arrière-pays Gallura — Tempio Pausania + caves Vermentino.</li>
+      <li><strong>Jour 10</strong>: dernière baignade + restitution aéroport.</li>
+    </ul>
+    <p><strong>Total km</strong>: 900-1.200. <strong>Carburant</strong>: 90-130 € (Panda Hybrid), 130-180 € (Mercedes A).</p>
+
+    <h2>Véhicule idéal pour 10 jours multi-routes</h2>
+    <ul>
+      <li><strong>Jeep Avenger</strong>: SUV compact automatique, phares hauts pour pistes, coffre 380 L. <strong>Notre best-seller pour 7-14 jours</strong>.</li>
+      <li><strong>Mercedes Classe A 180d</strong>: berline premium consommation diesel très basse, top confort longue distance.</li>
+      <li><strong>Fiat Panda Hybrid</strong>: choix budget, consommation minimale.</li>
+    </ul>
+
+    <h2>Options utiles pour durées moyennes-longues</h2>
+    <ul>
+      <li><strong>Second conducteur</strong>: gratuit pour couples mariés, 20 € total pour autres.</li>
+      <li><strong>Réduction franchise kasko</strong>: 15 €/jour = 150 € total.</li>
+      <li><strong>Sièges enfants groupes 1/2/3</strong>: 5 €/jour (max 25 € total).</li>
+      <li><strong>Hotspot Wi-Fi 4G</strong>: 8 €/jour (max 50 € total).</li>
+    </ul>
+
+    <h2>Prêt pour vos 10 jours en Gallura ?</h2>
+    <p>Réservez sur <a href="/fr/reserver">KS Rent Sardinia</a> ou <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a>. Pour séjours plus longs voir <a href="/fr/guide/location-voiture-olbia-14-jours-deux-semaines">14 jours</a> ou <a href="/fr/guide/location-voiture-olbia-mensuel-30-jours">tarif mensuel</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

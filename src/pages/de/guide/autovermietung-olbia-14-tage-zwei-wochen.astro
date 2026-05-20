@@ -1,0 +1,80 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("autovermietung-olbia-14-tage-zwei-wochen")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "de-DE",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Wie viel kostet eine 14-Tage-Autovermietung in Olbia?", acceptedAnswer: { "@type": "Answer", text: "14 Tage Fiat Panda Hybrid: 480 € Nebensaison, 1.000-1.400 € Hoch. Jeep Avenger: 600 € Neben, 1.400-1.800 € Hoch. Mercedes A-Klasse 180d: 1.000 € Neben, 2.100 € Hoch. Zwei-Wochen-Tarif etwa 12 × Tag (15-17% Ersparnis)." } },
+    { "@type": "Question", name: "Kann man in 14 Tagen die komplette Nord-Sardinien-Tour machen?", acceptedAnswer: { "@type": "Answer", text: "Ja, 2 Wochen sind ideal: 5-6 Tage Gallura/Costa Smeralda + 2-3 Tage La Maddalena + 3-4 Tage Alghero/Stintino/Bosa + 2-3 Tage Hinterland-Kultur." } },
+    { "@type": "Question", name: "Darf ich das KS Rent Auto bei einer 14-Tage-Vermietung nach Korsika bringen?", acceptedAnswer: { "@type": "Answer", text: "Ja, auf vorheriger schriftlicher Anfrage. Kosten: 8 €/Tag extra ueber die gesamte Dauer + Corsica Ferries Olbia-Bastia Ticket. Sportwagen ausgeschlossen." } },
+    { "@type": "Question", name: "Lohnen sich 14 Tage, wenn ich noch flexibel bin?", acceptedAnswer: { "@type": "Answer", text: "14 Tage haben das beste Preis-Leistungs-Verhaeltnis fuer komplette Besuche. Wenn 10-13 Tage: verlaengern auf 14. Wenn 15-20 Tage: 21 Tage noch guenstiger pro Tag." } },
+    { "@type": "Question", name: "Fuer 14 Tage besseres Auto oder Premium?", acceptedAnswer: { "@type": "Answer", text: "Delta zwischen Panda (480 €) und Mercedes A (1.000 €) ist 520 €. Auf 14-Tage-Urlaub von 2.500-5.000 € insgesamt, Premium-Delta betraegt 10-20%. Lohnt sich fuer Paare mit Komfort-Prioritaet." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "14-Tage Autovermietung", path: `/de/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>Zwei Wochen sind die optimale Dauer, um Nord-Sardinien wirklich zu sehen.</strong> Nicht nur Costa Smeralda und La Maddalena, sondern auch katalanisches Alghero, Stintino Klippen, Asinara Archipel, Bosa mit den bunten Haeusern, Castelsardo, Nuraghen im Hinterland. KS Rent Sardinia zwei-Wochen-Tarif wendet den <strong>aggressivsten Rabatt vor der Monatschwelle</strong> an: ~12 × Tagestarif statt 14×.</p>
+
+    <h2>Zwei-Wochen-Tarife: der 14-Tage-Preis</h2>
+    <table>
+      <thead><tr><th>Fahrzeug</th><th>April/Mai/Oktober</th><th>Juni/September</th><th>Juli/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>480 €</td><td>720 €</td><td>1.000-1.400 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>600 €</td><td>960 €</td><td>1.400-1.800 €</td></tr>
+        <tr><td>Mercedes A-Klasse 180d</td><td>1.000 €</td><td>1.500 €</td><td>2.100 €</td></tr>
+        <tr><td>Honda SH 350 (Roller)</td><td>650 €</td><td>980 €</td><td>1.300 €</td></tr>
+      </tbody>
+    </table>
+    <p>Alles inklusive RCA, 24/7-Assistenz, kostenlose Lieferung, unbegrenzte Kilometer.</p>
+
+    <h2>Komplette 14-Tage-Reiseroute Nord-Sardinien</h2>
+    <ul>
+      <li><strong>Tag 1-5 (Costa Smeralda + Gallura Nord)</strong>: Ankunft, Porto Cervo, Spiaggia del Principe, Romazzino, Capriccioli, Liscia Ruja.</li>
+      <li><strong>Tag 6 (La Maddalena)</strong>: Palau Faehre + Archipel-Tour mit Boot.</li>
+      <li><strong>Tag 7 (Ostkueste)</strong>: San Teodoro, La Cinta, Cala Brandinchi, Capo Coda Cavallo.</li>
+      <li><strong>Tag 8 (Transfer West)</strong>: Abfahrt nach Alghero (3 Stunden SS131), Ankunft, katalanische bombas Mittagessen.</li>
+      <li><strong>Tag 9 (Capo Caccia)</strong>: Neptungrotte + Cala Dragunara + Capo Caccia Klippen + Vermentino Abendessen.</li>
+      <li><strong>Tag 10 (Stintino-Pelosa)</strong>: Stintino Transfer, Pelosa Strand.</li>
+      <li><strong>Tag 11 (Asinara optional)</strong>: Faehre nach Asinara, Inseltour.</li>
+      <li><strong>Tag 12 (Bosa + Rueckkehr Ost)</strong>: Bosa bunte Haeuser, Temo Fluss, Malvasia Wein.</li>
+      <li><strong>Tag 13 (Gallura Hinterland)</strong>: Castelsardo, Weingueter, Nuraghen.</li>
+      <li><strong>Tag 14 (Rueckkehr)</strong>: letztes Bad + Flughafen/Hafen-Rueckgabe.</li>
+    </ul>
+    <p><strong>Gesamt</strong>: ~1.400-1.700 km. <strong>Kraftstoff</strong>: 130-180 € (Panda Hybrid), 180-240 € (Mercedes A Diesel).</p>
+
+    <h2>Vorteile des Zwei-Wochen-Tarifs</h2>
+    <ul>
+      <li><strong>Echter Rabatt</strong>: -15/17% vs 14 Einzeltage.</li>
+      <li><strong>Gleiches Fahrzeug fuer den ganzen Urlaub</strong>: keine Zwischen-Check-in/out.</li>
+      <li><strong>Mehr Flexibilitaet bei Daten</strong>: in Hochsaison sicherer als 7+7 getrennt.</li>
+      <li><strong>Korsika-Tour-Moeglichkeit</strong>: 2-3 Naechte in Korsika moeglich.</li>
+    </ul>
+
+    <h2>Ideales Fahrzeug fuer 14 Tage</h2>
+    <ul>
+      <li><strong>Mercedes A-Klasse 180d</strong>: top fuer Paare mit Entfernung (1.500+ km). Diesel = niedriger Verbrauch.</li>
+      <li><strong>Jeep Avenger</strong>: bestes Verhaeltnis Preis/Komfort/Vielseitigkeit.</li>
+      <li><strong>Fiat Panda Hybrid</strong>: nur fuer Budget oder Stadtnutzung.</li>
+    </ul>
+
+    <h2>Bereit fuer die 2-Wochen-Tour?</h2>
+    <p>Buchen Sie auf <a href="/de/jetzt-buchen">KS Rent Sardinia</a>. Fuer laengere Aufenthalte siehe <a href="/de/guide/autovermietung-olbia-monatlich-30-tage">Monatsmiete</a>. Fuer kuerzere Urlaube <a href="/de/guide/autovermietung-olbia-10-tage">10 Tage</a> oder <a href="/de/guide/autovermietung-olbia-woche-7-tage">eine Woche</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

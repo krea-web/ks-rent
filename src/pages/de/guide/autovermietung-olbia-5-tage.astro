@@ -1,0 +1,62 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("autovermietung-olbia-5-tage")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "de-DE",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Wie viel kostet eine 5-Tage-Autovermietung in Olbia?", acceptedAnswer: { "@type": "Answer", text: "5 Tage Fiat Panda Hybrid Nebensaison: 200 €. In Hochsaison (Juli/August) steigt die gleiche Formel auf 400-550 €. Jeep Avenger 5 Tage: 250 € Neben, 550-750 € Hoch. Mercedes A-Klasse 180d: 400 € Neben, 800 € Hoch." } },
+    { "@type": "Question", name: "Sind 5 Tage das ideale Format fuer italienische Brueckenfeiertage?", acceptedAnswer: { "@type": "Answer", text: "Ja, perfekt. 25. April, 1. Mai, 2. Juni, Ferragosto und Allerheiligen fallen typischerweise in der Wochenmitte und schaffen 4-5-Tage-Bruecken. Das 5-Tage-Format deckt Donnerstagabend-Ankunft + 3 volle Tage + Montagmorgen-Abreise ab." } },
+    { "@type": "Question", name: "Welches Fahrzeug ist am besten fuer 5 Tage mit 2 Erwachsenen + 2 Kindern?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger ist der Best-Fit: kompakter SUV mit Automatikgetriebe, 380 L Kofferraum, 5 echte Sitze mit Kindersitz hinten. 250 € Nebensaison, 550 € Hochsaison." } },
+    { "@type": "Question", name: "Kann ich einen La Maddalena Ausflug waehrend einer 5-Tage-Vermietung machen?", acceptedAnswer: { "@type": "Answer", text: "Ja, La Maddalena erfordert 1 dedizierten Tag: 55 Min von Olbia nach Palau + 15 Min Faehre + 4-5 Stunden im Archipel + Rueckkehr. Tag 3 oder 4 der Vermietung ist ideal." } },
+    { "@type": "Question", name: "Muss ich genaue Daten kennen, um 5 Tage zu buchen?", acceptedAnswer: { "@type": "Answer", text: "In Hochsaison (Juli/August) genaue Daten sind grundlegend: KS Rent Sardinia Flotte ist 4-6 Wochen im Voraus ausverkauft. Fuer Nebensaison koennen Sie mit 7-15 Tagen Vorankuendigung buchen." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "5-Tage Autovermietung", path: `/de/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>5 Tage in Olbia sind der Sweet Spot der Costa Smeralda</strong>: genug, um das Beste von Gallura ohne die Anstrengung einer Woche zu sehen, ausreichend fuer einen La Maddalena Ausflug oder eine Tavolara Pause. Das Format ist zugeschnitten fuer <strong>italienische Brueckenfeiertage</strong> und fuer alle, die einen <strong>kurzen Urlaub ohne Hetze</strong> wollen. Hier reale 5-Tage-Mietpreise, optimale Fahrzeuge und eine vollstaendige Reiseroute, die Meer, Kultur und Freizeit ausbalanciert.</p>
+
+    <h2>5-Tage-Mietpreise: saubere Preise</h2>
+    <p>Auch fuer 5 Tage ist der KS Rent Sardinia Tarif <strong>5 × Tagestarif</strong> (signifikanter Rabatt startet ab Tag 7):</p>
+    <table>
+      <thead><tr><th>Fahrzeug</th><th>April/Mai/Oktober</th><th>Juni/September</th><th>Juli/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>200 €</td><td>300 €</td><td>400-550 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>250 €</td><td>400 €</td><td>550-750 €</td></tr>
+        <tr><td>Mercedes A-Klasse 180d</td><td>400 €</td><td>600 €</td><td>800 €</td></tr>
+        <tr><td>Honda SH 350 (Sportroller)</td><td>250 €</td><td>375 €</td><td>500 €</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Optionale Extras</strong>: zweiter Fahrer (20 € Gesamtwochenende, kostenlos fuer Ehepaare), Kindersitz (5 €/Tag = 25 € max Gesamt), Selbstbeteiligungsreduzierung (15 €/Tag). Kostenlose Lieferung OLB-Flughafen, Hafen Isola Bianca, Olbia Zentrum.</p>
+
+    <h2>Komplette 5-Tage-Reiseroute Costa Smeralda + 1 Insel</h2>
+    <ul>
+      <li><strong>Tag 1</strong>: Abholung OLB-Flughafen, Ankunft Olbia, Abendessen am Hafen.</li>
+      <li><strong>Tag 2</strong>: Costa Smeralda Nord — Porto Cervo + Spiaggia del Principe + Liscia Ruja. Mittagessen Phi Beach.</li>
+      <li><strong>Tag 3</strong>: La Maddalena — 8:00 Abfahrt nach Palau, 15 Min Faehre, Archipel-Tour (Caprera, Spargi, Budelli rosa).</li>
+      <li><strong>Tag 4</strong>: Ostkueste / San Teodoro — La Cinta + Cala Brandinchi + Lu Impostu. Mittagessen Capo Coda Cavallo.</li>
+      <li><strong>Tag 5</strong>: Olbia Hinterland + Souvenirs — San Pantaleo Besuche, Pevero Health Hub oder Golf, letztes Bad Pittulongu.</li>
+    </ul>
+    <p><strong>Gesamt km</strong>: 350-450. <strong>Panda Hybrid Kraftstoff</strong>: ~30 €. <strong>Mercedes A 180d Kraftstoff</strong>: ~40 € (Diesel).</p>
+
+    <h2>Mehr Zeit gewuenscht? Wochenmiete entdecken</h2>
+    <p>Wenn 5 Tage nicht reichen, entdecken Sie den <a href="/de/guide/autovermietung-olbia-woche-7-tage">Wochentarif</a> mit progressivem Rabatt. Fuer Gebiete ausserhalb Gallura siehe <a href="/de/guide/autovermietung-olbia-10-tage">10-Tage-Vermietung</a>.</p>
+    <p>Buchen Sie auf <a href="/de/jetzt-buchen">KS Rent Sardinia</a> oder <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

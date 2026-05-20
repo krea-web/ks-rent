@@ -1,0 +1,61 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("location-voiture-olbia-5-jours")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "fr-FR",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Combien coûte une location de voiture pour 5 jours à Olbia ?", acceptedAnswer: { "@type": "Answer", text: "5 jours de Fiat Panda Hybrid basse saison : 200 €. En haute saison 400-550 €. Pour Jeep Avenger 5 jours : 250 € basse, 550-750 € haute. Mercedes Classe A 180d : 400 € basse, 800 € haute." } },
+    { "@type": "Question", name: "Les 5 jours sont-ils le format idéal pour les ponts ?", acceptedAnswer: { "@type": "Answer", text: "Oui, parfaitement. 1er mai, 8 mai, 14 juillet, 15 août, 1er novembre tombent typiquement en mi-semaine créant des ponts de 4-5 jours. Le format 5 jours couvre arrivée jeudi soir + 3 jours pleins + départ lundi matin." } },
+    { "@type": "Question", name: "Quel véhicule convient le plus pour 5 jours avec 2 adultes + 2 enfants ?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger est le best-fit : SUV compact automatique, coffre 380 L, 5 vraies places avec siège enfant à l'arrière. 250 € basse saison, 550 € haute. Alternative premium : Mercedes Classe A 180d." } },
+    { "@type": "Question", name: "Puis-je faire une excursion à La Maddalena durant une location de 5 jours ?", acceptedAnswer: { "@type": "Answer", text: "Oui, La Maddalena nécessite 1 jour dédié : 55 min d'Olbia à Palau + 15 min ferry + 4-5 heures dans l'archipel + retour. Le jour 3 ou 4 est idéal." } },
+    { "@type": "Question", name: "Dois-je connaître les dates exactes pour réserver 5 jours ?", acceptedAnswer: { "@type": "Answer", text: "En haute saison (juillet/août) dates précises fondamentales : la flotte se vend 4-6 semaines à l'avance. Pour basse saison vous pouvez réserver avec 7-15 jours d'avance." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Location 5 jours", path: `/fr/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>5 jours à Olbia sont le point doux de la Costa Smeralda</strong>: assez pour voir le meilleur de la Gallura sans la fatigue d'une semaine, suffisants pour inclure une excursion à La Maddalena ou une pause à Tavolara. Le format est taillé pour les <strong>ponts français et italiens</strong> et pour qui veut une <strong>courte vacance sans se sentir pressé</strong>. Ici les prix réels de location 5 jours, les véhicules optimaux, et un itinéraire complet équilibrant mer, culture et temps libre.</p>
+
+    <h2>Tarifs location 5 jours : prix propres</h2>
+    <p>Pour 5 jours aussi le tarif KS Rent Sardinia est <strong>5 × journalier</strong> (réduction significative dès jour 7) :</p>
+    <table>
+      <thead><tr><th>Véhicule</th><th>Avril/Mai/Octobre</th><th>Juin/Septembre</th><th>Juillet/Août</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>200 €</td><td>300 €</td><td>400-550 €</td></tr>
+        <tr><td>Jeep Avenger</td><td>250 €</td><td>400 €</td><td>550-750 €</td></tr>
+        <tr><td>Mercedes Classe A 180d</td><td>400 €</td><td>600 €</td><td>800 €</td></tr>
+        <tr><td>Honda SH 350 (scooter sport)</td><td>250 €</td><td>375 €</td><td>500 €</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Itinéraire complet 5 jours Costa Smeralda + 1 île</h2>
+    <ul>
+      <li><strong>Jour 1</strong>: retrait aéroport OLB, arrivée Olbia, dîner au port.</li>
+      <li><strong>Jour 2</strong>: Costa Smeralda nord — Porto Cervo + Spiaggia del Principe + Liscia Ruja.</li>
+      <li><strong>Jour 3</strong>: La Maddalena — 8h00 départ Palau, ferry 15 min, tour archipel (Caprera, Spargi, Budelli rose).</li>
+      <li><strong>Jour 4</strong>: Côte est / San Teodoro — La Cinta + Cala Brandinchi + Lu Impostu.</li>
+      <li><strong>Jour 5</strong>: Olbia arrière-pays + souvenirs — San Pantaleo, Pevero Health Hub, dernière baignade Pittulongu.</li>
+    </ul>
+    <p><strong>Total km</strong>: 350-450. <strong>Carburant Panda Hybrid</strong>: ~30 €. <strong>Carburant Mercedes A 180d</strong>: ~40 € (diesel).</p>
+
+    <h2>Plus de temps ? Découvrez la location hebdomadaire</h2>
+    <p>Si 5 jours ne suffisent pas, découvrez le <a href="/fr/guide/location-voiture-olbia-semaine-7-jours">tarif hebdomadaire</a> appliquant une réduction progressive. Pour explorer hors Gallura voir <a href="/fr/guide/location-voiture-olbia-10-jours">location 10 jours</a>.</p>
+    <p>Réservez sur <a href="/fr/reserver">KS Rent Sardinia</a> ou <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>

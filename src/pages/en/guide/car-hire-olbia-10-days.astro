@@ -1,0 +1,77 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("car-hire-olbia-10-days")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org", "@type": "Article", "@id": `${pageUrl}#article`,
+  headline: meta.title, description: meta.excerpt, image: meta.heroImage,
+  datePublished: meta.publishedAt, dateModified: meta.updatedAt || meta.publishedAt,
+  author: [{ "@type": "Person", name: "Francesco Milo" }, { "@type": "Person", name: "Salvatore Milo" }],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl }, inLanguage: "en-GB",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage", "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "How much does a 10-day car hire cost in Olbia?", acceptedAnswer: { "@type": "Answer", text: "10 days of Fiat Panda Hybrid: €350 low season, €700-1,000 high. Jeep Avenger: €450 low, €1,000-1,300 high. Mercedes A-Class 180d: €750 low, €1,500 high. Multi-day discount grows: from day 7 to 10 we apply more convenient pro-rata rates." } },
+    { "@type": "Question", name: "Are 10 days enough to see Alghero too or just Gallura?", acceptedAnswer: { "@type": "Answer", text: "Enough for Gallura + 1 long excursion: either Alghero (3 hours drive one way, better to sleep 1-2 nights there) or Stintino/Asinara (3.5 hours, same). Including Cagliari needs 14 days. We discourage the full island tour in 10 days: stressful." } },
+    { "@type": "Question", name: "Which vehicle is ideal for 10 days with mixed routes (paved + light dirt)?", acceptedAnswer: { "@type": "Answer", text: "Jeep Avenger is perfect: compact SUV with high lights sufficient for hidden beach access dirt roads (Cala Coticcio, Spiaggia Bianca back path), low consumption (~6 L/100 km), automatic. 10-day cost low season: €450." } },
+    { "@type": "Question", name: "Can I book 10 days even if dates include season change?", acceptedAnswer: { "@type": "Answer", text: "Yes, KS Rent Sardinia applies pro-rata rates for the days of each period. Example: 28 September - 7 October = 3 days mid season (Sep) + 7 days low season (Oct). Transparent calculation in the quote, no surprises." } },
+    { "@type": "Question", name: "Is it better to choose 10 days or extend to 14 for the biweekly rate?", acceptedAnswer: { "@type": "Answer", text: "Depends. 14 days cost about 13 × daily (-7% extra vs 10×). If you have 12-13 days of holiday, worth extending to 14 for the price of day 13. If you have exactly 10 days, 10 days is the right choice." } },
+  ],
+};
+---
+<BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "10-day car hire", path: `/en/guide/${meta.slug}` }]}>
+  <GuideArticleLayout meta={meta}>
+    <p><strong>10 days in Olbia is the length that separates "a holiday" from "a journey".</strong> They allow you to complete Costa Smeralda calmly, dedicate a full day to La Maddalena (without rushing), add a long excursion to Alghero or Stintino, and include 1-2 days of pure relaxation without travel. It is the duration KS Rent Sardinia recommends for those wanting to know north-eastern Sardinia <strong>truly</strong>, not just pass through. Here pro-rata prices, vehicle choice for mixed routes, and a 10-day itinerary balancing sea, culture, gastronomy and downtime.</p>
+
+    <h2>10-day prices with progressive discount</h2>
+    <p>From day 7 onwards KS Rent Sardinia applies progressive discounted rates. For 10 days the calculation equates to about <strong>8.8 × daily</strong> (12-13% savings vs 10× daily flat):</p>
+    <table>
+      <thead><tr><th>Vehicle</th><th>April/May/October</th><th>June/September</th><th>July/August</th></tr></thead>
+      <tbody>
+        <tr><td>Fiat Panda Hybrid</td><td>€350</td><td>€525</td><td>€700-1,000</td></tr>
+        <tr><td>Jeep Avenger</td><td>€450</td><td>€720</td><td>€1,000-1,300</td></tr>
+        <tr><td>Mercedes A-Class 180d</td><td>€750</td><td>€1,100</td><td>€1,500</td></tr>
+      </tbody>
+    </table>
+
+    <h2>10-day itinerary: complete Costa Smeralda + 1 extension</h2>
+    <ul>
+      <li><strong>Day 1-2 (Olbia + Costa Smeralda north)</strong>: arrival, settling in, Porto Cervo, Spiaggia del Principe, Pevero.</li>
+      <li><strong>Day 3 (Costa Smeralda south)</strong>: Capriccioli, Romazzino, Cala di Volpe, sunset Phi Beach.</li>
+      <li><strong>Day 4 (La Maddalena full day)</strong>: archipelago by boat or car+ferry, Spargi, Budelli rosa.</li>
+      <li><strong>Day 5 (relax)</strong>: hotel pool or favourite beach full day, no travel.</li>
+      <li><strong>Day 6 (East Coast)</strong>: San Teodoro, La Cinta, Cala Brandinchi, Tavolara view.</li>
+      <li><strong>Day 7-8 (Alghero or Stintino extension)</strong>: morning departure, 1-2 nights on west coast. Catalan Alghero + Capo Caccia OR Stintino + Pelosa + Asinara.</li>
+      <li><strong>Day 9 (Gallura inland)</strong>: Tempio Pausania + Vermentino wineries + San Pantaleo + typical dinner.</li>
+      <li><strong>Day 10 (return)</strong>: last swim Pittulongu + airport/port return.</li>
+    </ul>
+    <p><strong>Total km</strong>: 900-1,200. <strong>Fuel</strong>: €90-130 (Panda Hybrid), €130-180 (Mercedes A). <strong>Extra-Olbia nights</strong>: 2-3 in Alghero/Stintino if you choose west extension.</p>
+
+    <h2>Ideal vehicle for 10 days multi-route</h2>
+    <ul>
+      <li><strong>Jeep Avenger</strong>: compact automatic SUV, high lights for access dirt, 380 L boot. <strong>Our best-seller for 7-14 day durations</strong>.</li>
+      <li><strong>Mercedes A-Class 180d</strong>: premium sedan with very low diesel consumption (5-6 L/100 km), top comfort for long distances. NOT suited to demanding dirt roads.</li>
+      <li><strong>Fiat Panda Hybrid</strong>: budget choice, minimum consumption (4.5 L/100 km city, 5.5 outside), parks anywhere, but for 10 days for a couple can be tight with 2-week luggage.</li>
+    </ul>
+
+    <h2>Useful add-ons for medium-long durations</h2>
+    <ul>
+      <li><strong>Second driver</strong>: free for married couples (with document), €20 total for others. Indispensable for 10 days.</li>
+      <li><strong>Kasko excess reduction</strong>: €15/day = €150 total. Reduces excess from default to zero. Recommended for 10+ days for peace of mind.</li>
+      <li><strong>Child seat groups 1/2/3</strong>: €5/day (max €25 total). ECE R44/04 approved.</li>
+      <li><strong>4G Wi-Fi hotspot</strong>: €8/day (max €50 total), useful for those working while travelling.</li>
+    </ul>
+
+    <h2>Ready for your 10 days in Gallura?</h2>
+    <p>Book on <a href="/en/book-now">KS Rent Sardinia</a>, see all <a href="/en/rates">rates</a>, or message <a href="https://wa.me/393446107071">WhatsApp +39 344 6107071</a> for personalised quote. For longer stays see <a href="/en/guide/car-hire-olbia-14-days-two-weeks">14-day rental</a> or <a href="/en/guide/car-hire-olbia-monthly-30-days">monthly rate</a>.</p>
+  </GuideArticleLayout>
+</BaseLayout>
