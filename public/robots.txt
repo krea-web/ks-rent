@@ -47,6 +47,63 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
+# Bot AI/LLM addizionali (2025-2026 releases)
+User-agent: Diffbot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: cohere-training-data-crawler
+Allow: /
+
+User-agent: ProRataInc
+Allow: /
+
+User-agent: TimpiBot
+Allow: /
+
+# Bot per OG image preview / social cards (mantenere allow, sennò share senza preview)
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+# Bingbot esplicito per assicurare priorita su Bing index (powers ChatGPT, Copilot, Alexa)
+User-agent: Bingbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
 # 2. BOT SEO COMPETITOR - BLOCCO TOTALE (Per non farti copiare le 40 rotte)
 User-agent: AhrefsBot
 Disallow: /
