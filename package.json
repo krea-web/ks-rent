@@ -9,7 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "prebuild": "node scripts/fetch-google-reviews.mjs",
-    "postbuild": "node scripts/indexnow-ping.mjs --best-effort",
+    "postbuild": "node scripts/generate-image-sitemap.mjs && node scripts/indexnow-ping.mjs --best-effort",
     "preview": "astro preview",
     "astro": "astro",
     "indexnow": "node scripts/indexnow-ping.mjs",
