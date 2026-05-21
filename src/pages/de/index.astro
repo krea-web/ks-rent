@@ -9,6 +9,7 @@ import FAQSection from "@/components/FAQSection";
 import GoogleReviews from "@/components/GoogleReviews";
 import { supabase } from "@/lib/supabase";
 import { getAggregateRating, getTopReviewsForSchema } from "@/lib/reviews";
+import { buildSpeakableJsonLd } from "@/lib/jsonLd";
 
 // Fetch reviews al build-time da Supabase
 const { data: reviewsData } = await supabase
@@ -52,7 +53,7 @@ const reviewsLdExtension = topReviewSchemas.length >= 3
   ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/home.webp"
   includeGlobalFaq={true}
   aggregateRating={aggregateAuth ?? undefined}
-  jsonLd={reviewsLdExtension ? [reviewsLdExtension] : []}
+  jsonLd={reviewsLdExtension ? [reviewsLdExtension, buildSpeakableJsonLd("https://www.ksrentsardinia.com/de/", "de")] : [buildSpeakableJsonLd("https://www.ksrentsardinia.com/de/", "de")]}
 >
   <HeroSection lang="de" />
   <TrustMarquee lang="de" />

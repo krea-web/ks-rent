@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { supabase } from "@/lib/supabase";
 import RelatedGuides from "@/components/RelatedGuides.astro";
 import { ArrowRight, ShieldCheck, Calendar, CreditCard, CheckCircle2 } from "lucide-react";
+import { serviceCatalogJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
 
 interface VehicleRow {
   make: string;
@@ -98,6 +99,8 @@ const jsonLd = [
     validFrom: `${new Date().getFullYear()}-04-01`,
     validThrough: `${new Date().getFullYear()}-10-31`,
   },
+  ...serviceCatalogJsonLd,
+  buildBreadcrumb("Tariffe", "/tariffe"),
 ];
 ---
 <BaseLayout

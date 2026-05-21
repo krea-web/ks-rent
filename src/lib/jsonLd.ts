@@ -587,11 +587,17 @@ export const buildBeachJsonLd = (
     },
     {
       "@context": "https://schema.org",
-      "@type": "Beach",
+      "@type": ["TouristAttraction", "Beach"],
+      "@id": `${pageUrl}#beach`,
       name: page.title,
       description: page.meta_description,
       image: page.og_image_url,
+      url: pageUrl,
+      touristType: ["Family", "Couple", "Adventure", "Beach lover", "Photography enthusiast"],
+      isAccessibleForFree: true,
+      publicAccess: true,
       isPartOf: { "@type": "AdministrativeArea", name: "Costa Smeralda, Sardegna" },
+      containedInPlace: { "@type": "AdministrativeArea", name: "Gallura, Sardegna, Italia" },
       ...(page.parking_info
         ? {
             amenityFeature: {
@@ -858,6 +864,193 @@ export const founderAuthorRefs = [
   { "@type": "Person" as const, "@id": "https://www.ksrentsardinia.com/#person-francesco-milo", name: "Francesco Milo" },
   { "@type": "Person" as const, "@id": "https://www.ksrentsardinia.com/#person-salvatore-milo", name: "Salvatore Milo" },
 ];
+
+/* ── Service schemas dettagliati per servizi distinti (rich results SERP) ── */
+
+const SVC_HOURS = {
+  "@type": "OpeningHoursSpecification" as const,
+  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+  opens: "10:00",
+  closes: "22:30",
+};
+
+/**
+ * Catalogo di Service schemas riusabili. Ogni servizio espone:
+ *  - provider come reference all'Organization (@id match)
+ *  - offers con priceSpecification per i servizi a pagamento
+ *  - areaServed per i delivery zonali
+ *  - availableLanguage e hoursAvailable
+ * Pensati per essere inclusi su pagine specifiche (es. /tariffe espone tutti,
+ * /noleggio-auto-aeroporto-olbia espone solo deliveryAirport, ecc.)
+ */
+export const serviceDeliveryAirport = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/#service-delivery-airport",
+  serviceType: "Car delivery at airport",
+  name: "Consegna auto all'Aeroporto Olbia Costa Smeralda (OLB)",
+  description: "Consegna gratuita del veicolo direttamente all'Aeroporto Olbia Costa Smeralda (OLB), parcheggio antistante l'uscita arrivi. Tempo medio ritiro: 5-10 minuti.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  areaServed: { "@type": "Airport", name: "Aeroporto Olbia Costa Smeralda", iataCode: "OLB" },
+  availableLanguage: ["it", "en", "de", "fr", "es"],
+  hoursAvailable: { ...SVC_HOURS, opens: "06:00", closes: "23:30" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR", description: "Consegna gratuita inclusa nel noleggio" },
+};
+
+export const serviceDeliveryPort = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/#service-delivery-port",
+  serviceType: "Car delivery at port",
+  name: "Consegna auto al Porto Olbia Isola Bianca",
+  description: "Consegna gratuita del veicolo a 100 metri dalla banchina di sbarco traghetti Moby, Tirrenia, GNV, Grimaldi, Corsica Ferries al Porto Isola Bianca.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  areaServed: { "@type": "Place", name: "Porto Olbia Isola Bianca" },
+  availableLanguage: ["it", "en", "de", "fr", "es"],
+  hoursAvailable: { ...SVC_HOURS, opens: "06:00", closes: "23:30" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR", description: "Consegna gratuita inclusa nel noleggio" },
+};
+
+export const serviceDeliveryGallura = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/#service-delivery-gallura",
+  serviceType: "Car home delivery",
+  name: "Consegna auto a domicilio in Gallura e Costa Smeralda",
+  description: "Consegna del veicolo presso hotel, ville, B&B o resort in tutta la Gallura e Costa Smeralda. Costo trasparente da 5€ comunicato in fase di preventivo, in base alla località.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  areaServed: [
+    { "@type": "Place", name: "Porto Cervo" },
+    { "@type": "Place", name: "Porto Rotondo" },
+    { "@type": "Place", name: "Baja Sardinia" },
+    { "@type": "Place", name: "Cala di Volpe" },
+    { "@type": "Place", name: "Romazzino" },
+    { "@type": "Place", name: "Cannigione" },
+    { "@type": "Place", name: "Palau" },
+    { "@type": "City", name: "San Teodoro" },
+    { "@type": "City", name: "Arzachena" },
+    { "@type": "City", name: "Olbia" },
+  ],
+  availableLanguage: ["it", "en", "de", "fr"],
+  hoursAvailable: SVC_HOURS,
+  offers: { "@type": "Offer", priceCurrency: "EUR", priceSpecification: { "@type": "PriceSpecification", minPrice: "5", maxPrice: "200", priceCurrency: "EUR", description: "Su preventivo in base alla distanza" } },
+};
+
+export const serviceNoCreditCard = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/#service-no-credit-card",
+  serviceType: "Car rental without credit card",
+  name: "Noleggio auto senza carta di credito obbligatoria",
+  description: "Accettiamo come metodo di pagamento e deposito cauzionale: contanti, bonifico bancario istantaneo, carte prepagate (Postepay, Revolut, N26, Hype, Wise), bancomat e carte di debito. La carta di credito tradizionale NON è obbligatoria.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  areaServed: { "@type": "AdministrativeArea", name: "Gallura, Sardegna" },
+  availableLanguage: ["it", "en", "de", "fr"],
+  hoursAvailable: SVC_HOURS,
+};
+
+export const serviceSecondDriver = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/#service-second-driver",
+  serviceType: "Additional driver option",
+  name: "Secondo conducente",
+  description: "Aggiunta di un secondo conducente al contratto di noleggio. Gratuito per coppie sposate con documento; costo fisso 20€ totali per altri.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  offers: { "@type": "Offer", price: "20", priceCurrency: "EUR", description: "Costo fisso forfait per l'intero noleggio (gratuito per coppie sposate)" },
+};
+
+export const serviceChildSeat = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/#service-child-seat",
+  serviceType: "Child car seat rental",
+  name: "Noleggio seggiolino auto per bambini",
+  description: "Seggiolini auto gruppo 1, 2 e 3 (9-36 kg) omologati ECE R44/04. Sanificati a vapore tra un noleggio e l'altro. Disponibile gruppo 0+ neonato su prenotazione 7+ giorni anticipo.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  offers: { "@type": "Offer", price: "5", priceCurrency: "EUR", priceSpecification: { "@type": "UnitPriceSpecification", price: "5", priceCurrency: "EUR", unitText: "DAY", referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitText: "DAY" } }, description: "5€/giorno, massimo 25€ totale per noleggio" },
+};
+
+export const serviceExcessReduction = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.ksrentsardinia.com/#service-excess-reduction",
+  serviceType: "Insurance excess reduction",
+  name: "Riduzione franchigia kasko",
+  description: "Riduzione opzionale della franchigia kasko a zero. Disponibile su tutti i veicoli della flotta. Costo 15€/giorno, da sottoscrivere al ritiro.",
+  provider: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  offers: { "@type": "Offer", price: "15", priceCurrency: "EUR", priceSpecification: { "@type": "UnitPriceSpecification", price: "15", priceCurrency: "EUR", unitText: "DAY", referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitText: "DAY" } }, description: "15€/giorno aggiuntivi al noleggio" },
+};
+
+/** Catalogo completo Service per inclusione su /tariffe */
+export const serviceCatalogJsonLd = [
+  serviceDeliveryAirport,
+  serviceDeliveryPort,
+  serviceDeliveryGallura,
+  serviceNoCreditCard,
+  serviceSecondDriver,
+  serviceChildSeat,
+  serviceExcessReduction,
+];
+
+/* ── Speakable schema per FAQ critiche (Voice Search / Google Assistant) ── */
+
+/**
+ * Speakable schema su WebPage homepage: specifica quali sezioni della pagina
+ * sono adatte per la lettura vocale (Google Assistant, Alexa, Siri quando
+ * leggono articoli). Indica CSS selector dei testi importanti.
+ *
+ * Per ora supporta IT/EN/DE/FR e indica selettori semantici basati su:
+ *  - hero subtitle (USP principale del brand)
+ *  - faq section (risposte ai dubbi piu comuni)
+ */
+export function buildSpeakableJsonLd(pageUrl: string, lang: "it" | "en" | "de" | "fr" = "it") {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage-speakable`,
+    url: pageUrl,
+    inLanguage: lang === "en" ? "en-GB" : lang === "de" ? "de-DE" : lang === "fr" ? "fr-FR" : "it-IT",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".hero-headline", ".hero-subheadline", ".faq-answer", "[data-speakable]"],
+      xpath: [
+        "/html/head/title",
+        "/html/head/meta[@name='description']/@content",
+      ],
+    },
+  };
+}
+
+/* ── CollectionPage schema builders per pagine indice ── */
+
+/**
+ * Genera CollectionPage schema per pagine indice (es. /flotta, /guide,
+ * /flotta/confronta). Indica chiaramente a Google che la pagina è una
+ * collection di sub-pagine, non una pagina contenuto singolo. Migliora
+ * la classificazione + sitelinks search box.
+ */
+export function buildCollectionPageJsonLd(input: {
+  name: string;
+  description: string;
+  url: string;
+  numberOfItems?: number;
+  inLanguage?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${input.url}#collection`,
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    inLanguage: input.inLanguage || "it-IT",
+    isPartOf: { "@id": "https://www.ksrentsardinia.com/#organization" },
+    ...(input.numberOfItems
+      ? { mainEntity: { "@type": "ItemList", numberOfItems: input.numberOfItems } }
+      : {}),
+  };
+}
 
 /* ── BreadcrumbList builder per percorsi multi-livello ── */
 

@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Flotta, { flottaFaqJsonLd, flottaBreadcrumbJsonLd } from "@/views/Flotta";
 import FleetGrid from "@/components/FleetGrid.astro";
-import { flottaJsonLd } from "@/lib/jsonLd";
+import { flottaJsonLd, buildCollectionPageJsonLd } from "@/lib/jsonLd";
 import { supabase } from "@/lib/supabase";
 
 // Fetch primary variants per generare VehicleListing schema dinamico
@@ -57,7 +57,7 @@ const vehicleListingJsonLd = {
   description="Scopri la flotta premium di KS Rent: auto sportive, SUV, city car, scooter e quad. Noleggio senza carta di credito a Olbia e Costa Smeralda."
   canonical="https://www.ksrentsardinia.com/flotta"
   ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/flotta.webp"
-  jsonLd={[flottaJsonLd, vehicleListingJsonLd, flottaFaqJsonLd]}
+  jsonLd={[flottaJsonLd, vehicleListingJsonLd, buildCollectionPageJsonLd({ name: "Flotta veicoli KS Rent Sardinia", description: "Pagina indice della flotta KS Rent Sardinia: auto sportive, SUV, city car, scooter e quad a noleggio a Olbia.", url: "https://www.ksrentsardinia.com/flotta", numberOfItems: (vehiclesData || []).length }), flottaFaqJsonLd]}
   breadcrumbs={[{ name: "Flotta", path: "/flotta" }]}
 >
   <Flotta client:only="react" />
