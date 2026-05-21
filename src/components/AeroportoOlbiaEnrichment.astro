@@ -544,6 +544,41 @@ const t = T[lang];
   </div>
 </section>
 
+<!-- VISUAL CONSEGNA: foto chiavi -->
+<section class="relative overflow-hidden border-t border-border">
+  <div class="grid md:grid-cols-2">
+    <div class="relative aspect-[4/3] md:aspect-auto">
+      <img
+        src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp"
+        srcset="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp?width=480 480w, https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp?width=800 800w, https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp?width=1200 1200w"
+        sizes="(min-width: 768px) 50vw, 100vw"
+        alt={lang === "en" ? "KS Rent Sardinia key handover at Olbia airport — fast pickup" : lang === "de" ? "KS Rent Sardinia Schluesseluebergabe am Flughafen Olbia — schnelle Abholung" : lang === "fr" ? "Remise des clés KS Rent Sardinia à l'aéroport d'Olbia — retrait rapide" : "Consegna chiavi KS Rent Sardinia in aeroporto Olbia — ritiro 5 minuti"}
+        width="1200"
+        height="900"
+        class="w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="bg-background flex items-center px-6 md:px-12 py-12 md:py-16">
+      <div>
+        <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">
+          {lang === "en" ? "5 min handover" : lang === "de" ? "5 Min Uebergabe" : lang === "fr" ? "Remise en 5 min" : "Consegna 5 min"}
+        </span>
+        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4 leading-tight">
+          {lang === "en" ? "Keys in your hand. Wheels rolling." : lang === "de" ? "Schluessel in der Hand. Raeder rollen." : lang === "fr" ? "Clés en main. Roues qui tournent." : "Chiavi in mano. Ruote che girano."}
+        </h2>
+        <p class="text-foreground/75 font-light leading-relaxed">
+          {lang === "en" ? "No internal counter, no queue, no upsell games. Our operator waits for you outside arrivals with the vehicle ready, contract pre-filled, and a quick walkthrough. Most pickups finish in 5-10 minutes from exit gate to wheel."
+            : lang === "de" ? "Kein Innentresen, keine Warteschlange, keine Upsell-Spiele. Unser Mitarbeiter wartet vor den Ankuenften mit dem Fahrzeug bereit, vorbereitetem Vertrag und kurzer Einweisung. Die meisten Abholungen sind in 5-10 Minuten vom Ausgangstor zum Rad abgeschlossen."
+            : lang === "fr" ? "Pas de comptoir interne, pas de file, pas de jeux d'upsell. Notre opérateur vous attend devant les arrivées avec le véhicule prêt, contrat pré-rempli et présentation rapide. La plupart des retraits se terminent en 5-10 minutes de la porte de sortie à la roue."
+            : "Niente banco interno, niente coda, niente trucchi di upsell. Il nostro operatore ti aspetta fuori dagli arrivi con il veicolo pronto, contratto pre-compilato, e walkthrough rapido. La maggior parte dei ritiri si chiude in 5-10 minuti dal gate alle ruote."}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ AVANZATA -->
 <section class="py-16 md:py-20 px-4 md:px-12 bg-card border-t border-border">
   <div class="max-w-4xl mx-auto">

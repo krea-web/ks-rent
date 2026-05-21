@@ -528,6 +528,41 @@ const t = T[lang];
   </div>
 </section>
 
+<!-- VISUAL CONSEGNA: foto chiavi al porto -->
+<section class="relative overflow-hidden border-t border-border">
+  <div class="grid md:grid-cols-2">
+    <div class="bg-background flex items-center px-6 md:px-12 py-12 md:py-16 md:order-1 order-2">
+      <div>
+        <span class="block text-gold font-bold tracking-[0.3em] uppercase text-[10px] mb-3">
+          {lang === "en" ? "100 m from the dock" : lang === "de" ? "100 m vom Anleger" : lang === "fr" ? "100 m du quai" : "100 m dalla banchina"}
+        </span>
+        <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-4 leading-tight">
+          {lang === "en" ? "Off the ferry. Into the car." : lang === "de" ? "Aus der Faehre. Ins Auto." : lang === "fr" ? "Hors du ferry. Dans la voiture." : "Sceso dal traghetto. In auto."}
+        </h2>
+        <p class="text-foreground/75 font-light leading-relaxed">
+          {lang === "en" ? "Disembark from Moby, Tirrenia, GNV or Corsica Ferries, walk 100 metres along Viale Isola Bianca and you're at our base. Keys handed over outside, contract pre-filled, walkthrough done in 5 minutes flat."
+            : lang === "de" ? "Aussteigen aus Moby, Tirrenia, GNV oder Corsica Ferries, 100 Meter entlang Viale Isola Bianca laufen und Sie sind an unserer Basis. Schluessel draussen uebergeben, Vertrag vorbereitet, Einweisung in glatten 5 Minuten erledigt."
+            : lang === "fr" ? "Débarquez du Moby, Tirrenia, GNV ou Corsica Ferries, marchez 100 mètres le long du Viale Isola Bianca et vous êtes à notre base. Clés remises dehors, contrat pré-rempli, présentation faite en 5 minutes pile."
+            : "Sbarchi da Moby, Tirrenia, GNV o Corsica Ferries, cammini 100 metri lungo Viale Isola Bianca e sei alla nostra sede. Chiavi consegnate fuori, contratto pre-compilato, walkthrough in 5 minuti netti."}
+        </p>
+      </div>
+    </div>
+    <div class="relative aspect-[4/3] md:aspect-auto md:order-2 order-1">
+      <img
+        src="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp"
+        srcset="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp?width=480 480w, https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp?width=800 800w, https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/editorial/18-chiavi-consegna.webp?width=1200 1200w"
+        sizes="(min-width: 768px) 50vw, 100vw"
+        alt={lang === "en" ? "KS Rent Sardinia key handover at Olbia Isola Bianca port — fast pickup" : lang === "de" ? "KS Rent Sardinia Schluesseluebergabe am Hafen Olbia Isola Bianca — schnelle Abholung" : lang === "fr" ? "Remise des clés KS Rent Sardinia au port d'Olbia Isola Bianca — retrait rapide" : "Consegna chiavi KS Rent Sardinia al porto Olbia Isola Bianca — ritiro rapido"}
+        width="1200"
+        height="900"
+        class="w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+</section>
+
 <!-- FAQ AVANZATA -->
 <section class="py-16 md:py-20 px-4 md:px-12 bg-card border-t border-border">
   <div class="max-w-4xl mx-auto">
