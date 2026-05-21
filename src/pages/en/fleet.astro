@@ -3,12 +3,62 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Flotta, { flottaFaqJsonLd, flottaBreadcrumbJsonLd } from "@/views/Flotta";
 import FleetGrid from "@/components/FleetGrid.astro";
 import { flottaJsonLd } from "@/lib/jsonLd";
+import { supabase } from "@/lib/supabase";
+import { localizeVehicleSlug } from "@/lib/i18n";
+
+const { data: vehiclesData } = await supabase
+  .from("vehicles")
+  .select("group_slug, make, model, category, fuel_type, year")
+  .eq("is_primary_variant", true)
+  .or("is_archived.is.null,is_archived.eq.false")
+  .order("category");
+
+const { data: seoData } = await supabase
+  .from("seo_vehicles")
+  .select("group_slug, title_en");
+
+const seoTitleMap = new Map<string, string>();
+for (const s of seoData || []) seoTitleMap.set(s.group_slug, s.title_en || "");
+
+const vehicleListingJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": "https://www.ksrentsardinia.com/en/fleet#vehicle-listing",
+  name: "KS Rent Sardinia vehicle fleet",
+  numberOfItems: (vehiclesData || []).length,
+  itemListElement: (vehiclesData || []).map((v, i) => {
+    const slug = localizeVehicleSlug(v.group_slug || "", "en");
+    return {
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Vehicle",
+        "@id": `https://www.ksrentsardinia.com/en/fleet/${slug}#vehicle`,
+        name: seoTitleMap.get(v.group_slug || "") || `${v.make} ${v.model}`,
+        brand: { "@type": "Brand", name: v.make },
+        model: v.model,
+        vehicleConfiguration: v.category,
+        fuelType: v.fuel_type,
+        productionDate: v.year ? String(v.year) : undefined,
+        url: `https://www.ksrentsardinia.com/en/fleet/${slug}`,
+        offers: {
+          "@type": "Offer",
+          url: `https://www.ksrentsardinia.com/en/fleet/${slug}`,
+          availability: "https://schema.org/InStock",
+          priceCurrency: "EUR",
+          seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+        },
+      },
+    };
+  }),
+};
 ---
 <BaseLayout
   title="KS Rent Vehicle Fleet | Car Hire Olbia"
   description="Discover KS Rent's premium fleet: sports cars, SUVs, city cars, scooters and quads. Car hire without a credit card in Olbia and Costa Smeralda."
   canonical="https://www.ksrentsardinia.com/en/fleet"
-  jsonLd={[flottaJsonLd, flottaFaqJsonLd]}
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/flotta.webp"
+  jsonLd={[flottaJsonLd, vehicleListingJsonLd, flottaFaqJsonLd]}
   breadcrumbs={[{ name: "Fleet", path: "/en/fleet" }]}
 >
   <Flotta client:only="react" lang="en" />

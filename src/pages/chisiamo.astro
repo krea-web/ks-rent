@@ -1,13 +1,14 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ChiSiamo, { chiSiamoFaqJsonLd } from "@/views/ChiSiamo";
-import { buildBreadcrumb } from "@/lib/jsonLd";
+import { buildBreadcrumb, personFrancescoMilo, personSalvatoreMilo } from "@/lib/jsonLd";
 ---
 <BaseLayout
   title="Chi Siamo — KS Rent | Autonoleggio Olbia Sardegna"
   description="KS Rent Sardinia: autonoleggio premium con sede a Olbia, fondato l'8 aprile 2025. Flotta di proprietà, consegna in Costa Smeralda, deposito flessibile e senza carta di credito obbligatoria."
   canonical="https://www.ksrentsardinia.com/chisiamo"
-  jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/chisiamo.webp"
+  jsonLd={[chiSiamoFaqJsonLd, personFrancescoMilo, personSalvatoreMilo, buildBreadcrumb("Chi Siamo", "/chisiamo")]}
 >
   {/*
     ═══ SEO RICH TEXT statico — LETTO DA AI/Google senza JS ═══

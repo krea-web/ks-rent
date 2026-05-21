@@ -3,12 +3,62 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Flotta, { flottaFaqJsonLd, flottaBreadcrumbJsonLd } from "@/views/Flotta";
 import FleetGrid from "@/components/FleetGrid.astro";
 import { flottaJsonLd } from "@/lib/jsonLd";
+import { supabase } from "@/lib/supabase";
+import { localizeVehicleSlug } from "@/lib/i18n";
+
+const { data: vehiclesData } = await supabase
+  .from("vehicles")
+  .select("group_slug, make, model, category, fuel_type, year")
+  .eq("is_primary_variant", true)
+  .or("is_archived.is.null,is_archived.eq.false")
+  .order("category");
+
+const { data: seoData } = await supabase
+  .from("seo_vehicles")
+  .select("group_slug, title_de");
+
+const seoTitleMap = new Map<string, string>();
+for (const s of seoData || []) seoTitleMap.set(s.group_slug, s.title_de || "");
+
+const vehicleListingJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": "https://www.ksrentsardinia.com/de/fuhrpark#vehicle-listing",
+  name: "KS Rent Sardinia Fuhrpark",
+  numberOfItems: (vehiclesData || []).length,
+  itemListElement: (vehiclesData || []).map((v, i) => {
+    const slug = localizeVehicleSlug(v.group_slug || "", "de");
+    return {
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Vehicle",
+        "@id": `https://www.ksrentsardinia.com/de/fuhrpark/${slug}#vehicle`,
+        name: seoTitleMap.get(v.group_slug || "") || `${v.make} ${v.model}`,
+        brand: { "@type": "Brand", name: v.make },
+        model: v.model,
+        vehicleConfiguration: v.category,
+        fuelType: v.fuel_type,
+        productionDate: v.year ? String(v.year) : undefined,
+        url: `https://www.ksrentsardinia.com/de/fuhrpark/${slug}`,
+        offers: {
+          "@type": "Offer",
+          url: `https://www.ksrentsardinia.com/de/fuhrpark/${slug}`,
+          availability: "https://schema.org/InStock",
+          priceCurrency: "EUR",
+          seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+        },
+      },
+    };
+  }),
+};
 ---
 <BaseLayout
   title="Fuhrpark KS Rent | Autovermietung Olbia"
   description="Entdecken Sie den Premium-Fuhrpark von KS Rent: Sportwagen, SUVs, Kleinwagen, Roller und Quads. Vermietung ohne Kreditkarte in Olbia und an der Costa Smeralda."
   canonical="https://www.ksrentsardinia.com/de/fuhrpark"
-  jsonLd={[flottaJsonLd, flottaFaqJsonLd]}
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/flotta.webp"
+  jsonLd={[flottaJsonLd, vehicleListingJsonLd, flottaFaqJsonLd]}
   breadcrumbs={[{ name: "Fuhrpark", path: "/de/fuhrpark" }]}
 >
   <Flotta client:only="react" lang="de" />

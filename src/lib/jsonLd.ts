@@ -790,6 +790,75 @@ export const buildBreadcrumb = (name: string, path: string) => ({
   ],
 });
 
+/* ── Person schema — Founders (E-E-A-T author signal) ── */
+
+/**
+ * Person schema standalone per i due co-fondatori KS Rent S.R.L.
+ * Esposto come @id riusabile in tutto il sito (author di articoli, founder
+ * di Organization, jobTitle in About page). Google legge questo come
+ * "expertise + authoritativeness" del brand: contenuti firmati da persone
+ * reali con ruolo definito hanno trust signal molto più alto di "Admin".
+ *
+ * sameAs: l'utente può aggiungere LinkedIn personali quando disponibili.
+ * Per ora include solo i social aziendali come ancoraggio entità Knowledge Graph.
+ */
+const FOUNDER_KNOWS = [
+  "Noleggio auto Olbia",
+  "Noleggio auto Costa Smeralda",
+  "Noleggio supercar Sardegna",
+  "Servizio consegna auto aeroporto Olbia",
+  "Servizio consegna auto porto Olbia Isola Bianca",
+  "Noleggio senza carta di credito",
+  "Gestione flotta veicoli premium",
+  "Turismo Gallura",
+];
+
+export const personFrancescoMilo = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://www.ksrentsardinia.com/#person-francesco-milo",
+  name: "Francesco Milo",
+  givenName: "Francesco",
+  familyName: "Milo",
+  jobTitle: "Co-fondatore",
+  description: "Co-fondatore di KS Rent S.R.L. (KS Rent Sardinia), autonoleggio premium con sede a Olbia. Esperto di gestione flotta e logistica consegne in Gallura e Costa Smeralda.",
+  worksFor: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  affiliation: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  knowsAbout: FOUNDER_KNOWS,
+  knowsLanguage: ["it", "en"],
+  nationality: { "@type": "Country", name: "Italy" },
+  homeLocation: { "@type": "Place", name: "Olbia, Sardegna, Italia" },
+  sameAs: [
+    "https://www.instagram.com/ksrentsardinia",
+  ],
+};
+
+export const personSalvatoreMilo = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://www.ksrentsardinia.com/#person-salvatore-milo",
+  name: "Salvatore Milo",
+  givenName: "Salvatore",
+  familyName: "Milo",
+  jobTitle: "Co-fondatore",
+  description: "Co-fondatore di KS Rent S.R.L. (KS Rent Sardinia). Si occupa di customer experience, relazioni con i clienti via WhatsApp ed email, e supervisione operativa quotidiana.",
+  worksFor: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  affiliation: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  knowsAbout: FOUNDER_KNOWS,
+  knowsLanguage: ["it", "en"],
+  nationality: { "@type": "Country", name: "Italy" },
+  homeLocation: { "@type": "Place", name: "Olbia, Sardegna, Italia" },
+  sameAs: [
+    "https://www.instagram.com/ksrentsardinia",
+  ],
+};
+
+/** Lightweight reference Person — usabile come author in Article senza duplicare l'entità completa */
+export const founderAuthorRefs = [
+  { "@type": "Person" as const, "@id": "https://www.ksrentsardinia.com/#person-francesco-milo", name: "Francesco Milo" },
+  { "@type": "Person" as const, "@id": "https://www.ksrentsardinia.com/#person-salvatore-milo", name: "Salvatore Milo" },
+];
+
 /* ── BreadcrumbList builder per percorsi multi-livello ── */
 
 export const buildBreadcrumbJsonLd = (items: { name: string; path: string }[]) => ({

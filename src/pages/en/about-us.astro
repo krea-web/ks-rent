@@ -1,13 +1,14 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ChiSiamo, { chiSiamoFaqJsonLd } from "@/views/ChiSiamo";
-import { buildBreadcrumb } from "@/lib/jsonLd";
+import { buildBreadcrumb, personFrancescoMilo, personSalvatoreMilo } from "@/lib/jsonLd";
 ---
 <BaseLayout
   title="About Us — KS Rent | Car Hire Olbia Sardinia"
   description="KS Rent Sardinia: luxury car hire based in Olbia. Owned fleet, home delivery in Costa Smeralda, flexible deposit and no credit card required."
   canonical="https://www.ksrentsardinia.com/en/about-us"
-  jsonLd={[chiSiamoFaqJsonLd, buildBreadcrumb("About Us", "/en/about-us")]}
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/chisiamo.webp"
+  jsonLd={[chiSiamoFaqJsonLd, personFrancescoMilo, personSalvatoreMilo, buildBreadcrumb("About Us", "/en/about-us")]}
 >
   <ChiSiamo client:only="react" lang="en" />
 </BaseLayout>

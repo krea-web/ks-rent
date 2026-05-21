@@ -86,13 +86,43 @@ const faqJsonLd = {
     },
   ],
 };
+
+// HowTo schema: rich result "steps" visibile in SERP per query "come noleggiare
+// auto senza carta credito Olbia". Boost CTR significativo perche' Google
+// mostra l'elenco numerato direttamente nei risultati di ricerca.
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "@id": `${pageUrl}#howto`,
+  name: "Come noleggiare un'auto a Olbia senza carta di credito",
+  description: "Procedura passo-passo per noleggiare un veicolo a Olbia con KS Rent Sardinia usando metodi di pagamento alternativi alla carta di credito.",
+  image: meta.heroImage,
+  totalTime: "PT15M",
+  estimatedCost: { "@type": "MonetaryAmount", currency: "EUR", value: "40" },
+  supply: [
+    { "@type": "HowToSupply", name: "Patente di guida B valida da almeno 1 anno" },
+    { "@type": "HowToSupply", name: "Documento d'identita in originale" },
+    { "@type": "HowToSupply", name: "Codice fiscale (o TIN paese origine)" },
+    { "@type": "HowToSupply", name: "Metodo di pagamento alternativo (contanti, prepagata, bancomat, bonifico istantaneo)" },
+  ],
+  tool: [
+    { "@type": "HowToTool", name: "Smartphone con WhatsApp" },
+  ],
+  step: [
+    { "@type": "HowToStep", position: 1, name: "Verifica disponibilita", text: "Vai su ksrentsardinia.com/prenotaora oppure scrivi su WhatsApp +39 344 6107071 con date e veicolo desiderato. Risposta in 30 minuti.", url: "https://www.ksrentsardinia.com/prenotaora" },
+    { "@type": "HowToStep", position: 2, name: "Conferma metodo pagamento", text: "Specifica il metodo di pagamento alternativo che preferisci: contanti, bonifico istantaneo, carta prepagata (Postepay, Revolut, N26, Hype, Wise), bancomat o carta di debito. Nessun blocco preautorizzato sulla tua carta." },
+    { "@type": "HowToStep", position: 3, name: "Ricezione conferma prenotazione", text: "Ricevi email di conferma con riepilogo, importo deposito cauzionale e luogo di ritiro (sede Olbia, aeroporto OLB, porto Isola Bianca o altra destinazione)." },
+    { "@type": "HowToStep", position: 4, name: "Ritiro veicolo", text: "Presentati al ritiro con patente, documento d'identita, codice fiscale. Versa il deposito cauzionale nel metodo concordato. Tempo medio ritiro: 5-10 minuti.", url: "https://www.ksrentsardinia.com/noleggio-auto-olbia" },
+    { "@type": "HowToStep", position: 5, name: "Riconsegna e restituzione deposito", text: "Riconsegna il veicolo nello stato in cui l'hai ricevuto. Il deposito cauzionale viene restituito immediatamente nella stessa modalita di versamento (entro 24 ore per bonifico)." },
+  ],
+};
 ---
 <BaseLayout
   title={`${meta.title} | KS Rent Sardinia`}
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, howToJsonLd]}
   breadcrumbs={[
     { name: "Guide", path: "/guide" },
     { name: meta.title, path: `/guide/${meta.slug}` },

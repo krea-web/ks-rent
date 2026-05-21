@@ -8,6 +8,7 @@ import GuideSpotlight from "@/components/GuideSpotlight.astro";
 import FAQSection from "@/components/FAQSection";
 import GoogleReviews from "@/components/GoogleReviews";
 import { supabase } from "@/lib/supabase";
+import { getAggregateRating, getTopReviewsForSchema } from "@/lib/reviews";
 
 // Fetch reviews at build-time from Supabase
 const { data: reviewsData } = await supabase
@@ -31,17 +32,27 @@ const { data: avgData } = await supabase
 const averageRating = avgData && avgData.length > 0
   ? avgData.reduce((s, r) => s + r.rating, 0) / avgData.length
   : null;
+
+const aggregateAuth = await getAggregateRating();
+const topReviewSchemas = await getTopReviewsForSchema(5);
+
+const reviewsLdExtension = topReviewSchemas.length >= 3
+  ? {
+      "@context": "https://schema.org",
+      "@type": ["AutoRental", "LocalBusiness"],
+      "@id": "https://www.ksrentsardinia.com/#organization",
+      review: topReviewSchemas,
+    }
+  : null;
 ---
 <BaseLayout
   title="Car Hire Olbia | Costa Smeralda Car Rental — KS Rent"
   description="Car hire in Olbia with home delivery throughout Costa Smeralda. SUVs, supercars and city cars without a credit card. Book online with KS Rent Sardinia."
   canonical="https://www.ksrentsardinia.com/en/"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/home.webp"
   includeGlobalFaq={true}
-  aggregateRating={
-    averageRating !== null && (reviewsCount || 0) >= 5
-      ? { ratingValue: averageRating, reviewCount: reviewsCount! }
-      : undefined
-  }
+  aggregateRating={aggregateAuth ?? undefined}
+  jsonLd={reviewsLdExtension ? [reviewsLdExtension] : []}
 >
   <HeroSection lang="en" />
   <TrustMarquee lang="en" />
