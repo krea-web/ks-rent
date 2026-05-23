@@ -15,7 +15,7 @@ let cached: AggregateRating | null | undefined;
  *
  * Fonte autoritaria: `src/data/google-rating-snapshot.json`, popolato dallo
  * script `fetch-google-reviews.mjs` con `user_ratings_total` e `rating` da
- * Google Places API. Questi sono i numeri *reali* del GBP (es. 36 review
+ * Google Places API. Questi sono i numeri *reali* del GBP (es. 40 review
  * totali, media 5.0), mentre la tabella `reviews` su Supabase contiene solo
  * il subset (5-10) di review che Google espone via Place Details.
  *
