@@ -73,34 +73,38 @@ function getFieldNames(lang) {
 function buildPrompt({ table, slug, lang, title, h1, content }) {
   const entityType = table === "seo_locations" ? "localita" : "spiaggia";
   const langName = LANG_NAMES[lang] || lang;
+  const targetChars = content.length;
+  const minChars = Math.round(content.length * 0.95);
   return `Sei un copywriter SEO esperto. Riscrivi il seguente contenuto HTML per la ${entityType} "${title}" (slug ${slug}) in ${langName}, mantenendo ESATTAMENTE le stesse informazioni essenziali ma trasformando lo stile per renderlo UNICO e non templated.
+
+⚠️ VINCOLO DI LUNGHEZZA CRITICO ⚠️
+L'originale ha ${targetChars} caratteri. Il tuo output DEVE avere ALMENO ${minChars} caratteri (idealmente ${targetChars}). NON riassumere, NON accorciare, NON condensare. Se l'originale ha 5 paragrafi, il tuo output deve avere 5 paragrafi (o più). Espandi con dettagli concreti dove serve per raggiungere la lunghezza. Un output piu corto dell'originale sara RIFIUTATO.
 
 REGOLE TASSATIVE:
 - Mantieni TUTTI i tag HTML esistenti (h2, h3, p, ul, li, strong, em, a). Non aggiungere classi.
-- Mantieni la LUNGHEZZA approssimativa (+/-15%).
+- Mantieni lo STESSO NUMERO di paragrafi e sezioni dell'originale (o di piu).
 - Mantieni TUTTI i link href esistenti.
 - NON aggiungere CTA promozionali nuove. NON inventare prezzi.
 - NON tradurre in altre lingue: scrivi SOLO in ${langName}.
 - Cambia l'APERTURA del primo paragrafo (no "${title} e una...", "Located in...", "Im Herzen...", "Au coeur...")
 - Cambia le TRANSIZIONI tra sezioni (no "Inoltre," "Furthermore," "Daruber hinaus," "De plus,")
-- Inserisci 2-3 DETTAGLI SPECIFICI di questa esatta ${entityType} (toponimi vicini, distanza km esatta da Olbia, riferimenti culturali locali, dettagli geografici granulari) per renderlo non scambiabile con altre ${entityType}.
-- Varia la STRUTTURA: se l'originale aveva "intro + 3 sezioni", puoi fare "intro + 2 sezioni + conclusione" o "domanda iniziale + 3 mini-storie".
-- Tono: editoriale, autorevole, specifico. NON da marketing aggressivo. NON da AI generico.
+- Inserisci 3-4 DETTAGLI SPECIFICI di questa esatta ${entityType} (toponimi vicini, distanza km esatta da Olbia, riferimenti culturali locali, dettagli geografici granulari, nomi di calette/strade/punti di riferimento adiacenti) per renderlo non scambiabile con altre ${entityType}.
+- Tono: editoriale, autorevole, specifico, ricco. NON da marketing aggressivo. NON da AI generico.
 
-CONTENUTO ORIGINALE DA RISCRIVERE:
+CONTENUTO ORIGINALE DA RISCRIVERE (${targetChars} caratteri — il tuo output deve essere lungo almeno quanto questo):
 ${content}
 
-OUTPUT: SOLO l'HTML riscritto, senza commenti, senza markdown, senza spiegazioni. Inizia direttamente con il primo tag HTML.`;
+OUTPUT: SOLO l'HTML riscritto (almeno ${minChars} caratteri), senza commenti, senza markdown, senza spiegazioni, senza ragionamenti. Inizia direttamente con il primo tag HTML (es. <p> o <h2>).`;
 }
 
 async function callGemini(prompt) {
   const body = {
     contents: [{ parts: [{ text: prompt }] }],
     generationConfig: {
-      temperature: 0.9,
+      temperature: 0.75,
       topK: 40,
       topP: 0.95,
-      maxOutputTokens: 4096,
+      maxOutputTokens: 8192,
     },
   };
   const res = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
