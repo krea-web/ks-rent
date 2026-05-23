@@ -132,10 +132,15 @@ const labels = {
               class="group block relative overflow-hidden rounded-xl shadow-sm hover:shadow-2xl transition-shadow aspect-[3/4]"
             >
               <img
-                src={b.hero_image_url!}
+                src={`${b.hero_image_url}?width=480&quality=72`}
+                srcset={`${b.hero_image_url}?width=320&quality=72 320w, ${b.hero_image_url}?width=480&quality=72 480w, ${b.hero_image_url}?width=640&quality=72 640w`}
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 alt={cleanName(localTitle(b))}
+                width="480"
+                height="640"
                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 loading="lazy"
+                decoding="async"
               />
               {/* gradient overlay per leggibilità testo */}
               <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none"></div>

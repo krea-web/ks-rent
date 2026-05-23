@@ -82,7 +82,7 @@ const ReviewCard = ({ review, index }: { review: ReviewItem; index: number }) =>
         )}
         <div>
           <h3 className="font-bold text-lg text-gold tracking-wide">{review.author_name}</h3>
-          <span className="text-xs text-gray-400 dark:text-white/40 uppercase tracking-wider">
+          <span className="text-xs text-gray-500 dark:text-white/65 uppercase tracking-wider">
             {formattedDate || "Cliente Verificato"}
           </span>
         </div>
