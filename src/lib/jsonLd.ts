@@ -11,6 +11,7 @@ const SAME_AS = [
   "https://www.paginebianche.it/ksrentsardinia-olbia-a3a5413c-6bb6-4471-91b0-121e05b1a939",
   "https://www.misterimprese.it/sardegna/olbia-tempio/olbia/autonoleggio/2638614.html",
   "https://www.tripadvisor.it/Attraction_Review-g187883-d34295915-Reviews-KS_RENT_SARDINIA-Olbia_Province_of_Olbia_Tempio_Sardinia.html",
+  "https://carmappa.com/autonoleggi/olbia/ks-rent-sardinia/",
   "https://maps.google.com/?cid=9638199341974199698",
 ];
 
