@@ -133,32 +133,10 @@
     border-collapse: collapse;
     max-width: 100%;
   }
-  /* Wrapper "table-responsive" + tabelle dentro contenuti .editorial /
-     .guide-prose ricevono il comportamento mobile-first di scroll. */
+  /* Wrapper helper riutilizzabili per tabelle in React/Astro components.
+     Le tabelle dentro .editorial / .guide-prose sono gestite dalla regola
+     dedicata fuori da @layer (priorità maggiore). */
   .table-responsive,
-  .editorial > table,
-  .guide-prose > table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100%;
-    white-space: nowrap;
-  }
-  .table-responsive table,
-  .editorial > table,
-  .guide-prose > table {
-    min-width: 100%;
-  }
-  /* Su desktop le tabelle tornano fluide (no scroll) */
-  @media (min-width: 768px) {
-    .editorial > table,
-    .guide-prose > table {
-      display: table;
-      white-space: normal;
-      overflow-x: visible;
-    }
-  }
-  /* Tabelle inside React components UI (Card/Comparison) - wrap responsivo */
   .table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -315,15 +293,32 @@
   margin: 0.5em 0;
 }
 
+/* Tabelle dei contenuti editoriali: la table resta display:table (per
+   allineamento perfetto header/colonne); lo scroll orizzontale lo fornisce
+   il wrapper .table-scroll-wrapper iniettato via script in BaseLayout.
+   NIENTE overflow:hidden (tagliava i dati su mobile/tablet). */
 .editorial table,
 .guide-prose table {
   width: 100%;
+  min-width: 540px;
   border-collapse: collapse;
   font-size: 0.92em;
   margin: 2em 0;
   border: 1px solid hsl(var(--border));
   border-radius: 0.5rem;
-  overflow: hidden;
+}
+/* Wrapper iniettato attorno a ogni tabella editoriale → scroll orizzontale
+   su qualsiasi viewport quando la tabella eccede il container. */
+.table-scroll-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 2em 0;
+}
+.table-scroll-wrapper > table {
+  margin: 0;
 }
 .editorial thead,
 .guide-prose thead {

@@ -282,5 +282,32 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     {showChrome && !hideMobileSticky && <MobileStickyCTA lang={currentLocale} client:idle />}
 
     <script type="text/javascript" src="https://cdn.iubenda.com/iubenda.js" defer></script>
+
+    {/* Auto-wrapping tabelle editoriali in container scrollabile orizzontale.
+        Risolve il taglio dati su mobile/tablet per le tabelle inline di
+        guide e pagine legali (dentro .editorial / .guide-prose) che non
+        possono avere un wrapper esplicito nel markup. La table resta
+        display:table (allineamento colonne perfetto); il wrapper fornisce
+        lo scroll. Idempotente: salta tabelle già wrappate. */}
+    <script is:inline>
+      (function () {
+        function wrapTables() {
+          var tables = document.querySelectorAll(".editorial table, .guide-prose table");
+          for (var i = 0; i < tables.length; i++) {
+            var t = tables[i];
+            if (t.parentElement && t.parentElement.classList.contains("table-scroll-wrapper")) continue;
+            var w = document.createElement("div");
+            w.className = "table-scroll-wrapper";
+            t.parentNode.insertBefore(w, t);
+            w.appendChild(t);
+          }
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", wrapTables);
+        } else {
+          wrapTables();
+        }
+      })();
+    </script>
   </body>
 </html>
