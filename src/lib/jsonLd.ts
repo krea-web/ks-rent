@@ -12,6 +12,8 @@ const SAME_AS = [
   "https://www.misterimprese.it/sardegna/olbia-tempio/olbia/autonoleggio/2638614.html",
   "https://www.tripadvisor.it/Attraction_Review-g187883-d34295915-Reviews-KS_RENT_SARDINIA-Olbia_Province_of_Olbia_Tempio_Sardinia.html",
   "https://carmappa.com/autonoleggi/olbia/ks-rent-sardinia/",
+  "https://www.empresite.it/KS-RENT-SRL.html",
+  "https://www.aziendeeasy.it/aziendaselezionata15754006-KS%20RENT%20SRL",
   "https://maps.google.com/?cid=9638199341974199698",
 ];
 
