@@ -33,15 +33,14 @@ export default defineConfig({
       configFile: "./tailwind.config.ts",
     }),
     sitemap({
-      i18n: {
-        defaultLocale: "it",
-        locales: {
-          it: "it-IT",
-          en: "en-GB",
-          de: "de-DE",
-          fr: "fr-FR",
-        },
-      },
+      // NB: NESSUN blocco i18n qui. @astrojs/sitemap con i18n genera gli
+      // alternate hreflang per sostituzione MECCANICA del prefisso lingua
+      // (es. /noleggio-auto-X → /de/noleggio-auto-X), ignorando gli slug
+      // localizzati reali (/de/autovermietung-X) e le pagine non tradotte.
+      // Risultato: centinaia di alternate verso 404. Gli hreflang CORRETTI
+      // sono già emessi in <head> da BaseLayout via getAlternateLinks(),
+      // che conosce gli slug veri e le traduzioni effettivamente pubblicate.
+      // La sitemap elenca quindi solo i <loc> reali delle pagine buildate.
       filter: (page) =>
         !page.includes("/admin") &&
         !page.includes("/login") &&
