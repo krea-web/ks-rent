@@ -148,7 +148,7 @@ La debolezza strutturale è l'indirizzo lontano dall'aeroporto OLB (vale ~30% de
 | G3 | **Schema `Event`** sulla guida sagre/eventi Gallura 2026 | ✅ FATTO su **tutte e 4 le lingue** (6 eventi con data esplicita). IT inline; EN/DE/FR via `buildGalluraEvents` |
 | G4 | **Tipo `MotorcycleRental`** aggiunto al `@graph` per query moto/scooter | ✅ FATTO (⚠️ MotorcycleRental non esiste su schema.org → `makesOffer` con item tipati `Motorcycle`) |
 | G5 | **robots.txt**: aggiungere `DuckAssistBot` (DuckDuckGo AI) | ✅ FATTO |
-| G6 | **Passaggi pagine dinamiche** (località/spiagge): da 60-90 → **134-167 parole** auto-conclusive (+1 dato specifico ciascuno) | 🟡 IN CORSO — i passaggi sono in `src/data/locality-content.ts` (codice, non Supabase). Fatti i 3 hub principali (Porto Cervo, San Teodoro, Baja Sardinia). Restano ~38 pagine (altre località + 20 spiagge), ~152 passaggi. |
+| G6 | **Passaggi pagine dinamiche** (località/spiagge): da 60-90 → **134-167 parole** auto-conclusive (+1 dato specifico ciascuno) | ✅ **FATTO** — tutte le **39 pagine** (19 località + 20 spiagge) in `src/data/locality-content.ts`: 4 blocchi ciascuna (whyUs/noCreditCard/delivery/vacation) espansi a ~135-160 parole auto-conclusive con dato concreto, fatti accurati, niente prezzi franchigia. (~156 passaggi.) |
 | G7 | **`inLanguage` array** nel WebSite schema + `speakable` su pagine hub (olbia/aeroporto/porto) | 🟡 inLanguage ✅ · speakable hub ⬜ (bassa priorità) |
 | G8 | **llms.txt auto-generato** da `.astro` (legge il review count da Supabase → niente drift) | ✅ FATTO (endpoint `src/pages/llms.txt.ts`, review count da `getAggregateRating()`; rimosso `public/llms.txt`) |
 
