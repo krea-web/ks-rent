@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleEn } from "@/data/guide-articles";
 
 const meta = findArticleEn("car-hire-olbia-3-day-weekend")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("3", "en", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "Weekend 3-day car hire", path: `/en/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>A weekend in Olbia is the golden formula for those who want to taste Costa Smeralda without taking a full week off.</strong> Ryanair and easyJet have made it possible to leave Friday evening from Milan, Rome or London and return Monday morning having seen turquoise that warms the winter for months. In this guide we look at real 3-day rental prices, vehicles that optimise the comfort/cost ratio, and a lightning itinerary that maximises every hour of your 72 hours in Gallura.</p>

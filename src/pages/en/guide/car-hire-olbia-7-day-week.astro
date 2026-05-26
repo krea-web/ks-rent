@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleEn } from "@/data/guide-articles";
 
 const meta = findArticleEn("car-hire-olbia-7-day-week")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("7", "en", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "Weekly car hire", path: `/en/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>One week is the standard car rental format in Sardinia</strong>: <strong>74% of our clients</strong> choose 7 days, and it is the length on which KS Rent Sardinia has calibrated the most convenient rates of the year. From day seven onwards the <strong>progressive discount</strong> kicks in, making the weekly rate about 6.5 times the daily (instead of 7×). In this guide we look at why it pays, which vehicles to choose for a full week, the classic Costa Smeralda + Gallura north itinerary, and tricks to optimise fuel costs and travel times.</p>

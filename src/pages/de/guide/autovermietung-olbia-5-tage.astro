@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleDe } from "@/data/guide-articles";
 
 const meta = findArticleDe("autovermietung-olbia-5-tage")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("5", "de", pageUrl)]}
   breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "5-Tage Autovermietung", path: `/de/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>5 Tage in Olbia sind der Sweet Spot der Costa Smeralda</strong>: genug, um das Beste von Gallura ohne die Anstrengung einer Woche zu sehen, ausreichend fuer einen La Maddalena Ausflug oder eine Tavolara Pause. Das Format ist zugeschnitten fuer <strong>italienische Brueckenfeiertage</strong> und fuer alle, die einen <strong>kurzen Urlaub ohne Hetze</strong> wollen. Hier reale 5-Tage-Mietpreise, optimale Fahrzeuge und eine vollstaendige Reiseroute, die Meer, Kultur und Freizeit ausbalanciert.</p>

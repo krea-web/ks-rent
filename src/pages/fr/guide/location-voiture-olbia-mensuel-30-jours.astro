@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleFr } from "@/data/guide-articles";
 
 const meta = findArticleFr("location-voiture-olbia-mensuel-30-jours")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("30", "fr", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Location mensuelle 30 jours", path: `/fr/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>La location mensuelle est une autre catégorie par rapport aux courtes vacances.</strong> Ce n'est pas "le vacancier qui voit tout en 7 jours", c'est ceux qui <strong>vivent temporairement en Sardaigne</strong> : télétravailleurs remote transférant le bureau en Costa Smeralda pour 1-3 mois, familles passant tout août en Gallura, professionnels cherchant maison, nomades numériques. Pour ces clients KS Rent Sardinia applique le <strong>tarif long stay le plus agressif</strong> : ~22 × journalier pour 30 jours (-27% vs 30 journées individuelles).</p>

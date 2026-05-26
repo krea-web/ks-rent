@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleDe } from "@/data/guide-articles";
 
 const meta = findArticleDe("autovermietung-olbia-14-tage-zwei-wochen")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("14", "de", pageUrl)]}
   breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "14-Tage Autovermietung", path: `/de/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Zwei Wochen sind die optimale Dauer, um Nord-Sardinien wirklich zu sehen.</strong> Nicht nur Costa Smeralda und La Maddalena, sondern auch katalanisches Alghero, Stintino Klippen, Asinara Archipel, Bosa mit den bunten Haeusern, Castelsardo, Nuraghen im Hinterland. KS Rent Sardinia zwei-Wochen-Tarif wendet den <strong>aggressivsten Rabatt vor der Monatschwelle</strong> an: ~12 × Tagestarif statt 14×.</p>

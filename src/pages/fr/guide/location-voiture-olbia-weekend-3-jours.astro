@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleFr } from "@/data/guide-articles";
 
 const meta = findArticleFr("location-voiture-olbia-weekend-3-jours")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("3", "fr", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Weekend 3 jours location", path: `/fr/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Un weekend à Olbia est la formule en or pour qui veut goûter la Costa Smeralda sans prendre une semaine entière de vacances.</strong> Ryanair et easyJet ont rendu possible de partir vendredi soir de Paris, Lyon ou Genève et rentrer lundi matin ayant vu des turquoises qui réchauffent l'hiver pendant des mois. Dans ce guide les prix réels de location 3 jours, les véhicules optimisant le rapport confort/coût, et un itinéraire éclair maximisant chaque heure de vos 72 heures en Gallura.</p>

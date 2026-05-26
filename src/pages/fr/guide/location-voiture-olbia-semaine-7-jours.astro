@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleFr } from "@/data/guide-articles";
 
 const meta = findArticleFr("location-voiture-olbia-semaine-7-jours")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("7", "fr", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Location hebdomadaire", path: `/fr/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Une semaine est le format standard de la location voiture en Sardaigne</strong>: <strong>74% de nos clients</strong> choisissent 7 jours, et c'est la durée sur laquelle KS Rent Sardinia a calibré les tarifs les plus avantageux de l'année. Dès le septième jour la <strong>réduction progressive</strong> entre en jeu, rendant le tarif hebdomadaire environ 6,5 fois le journalier (au lieu de 7×). Dans ce guide pourquoi cela paie, quels véhicules choisir pour une semaine entière, l'itinéraire classique Costa Smeralda + Gallura nord, et astuces pour optimiser carburant et temps.</p>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleFr } from "@/data/guide-articles";
 
 const meta = findArticleFr("location-voiture-olbia-5-jours")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("5", "fr", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Location 5 jours", path: `/fr/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>5 jours à Olbia sont le point doux de la Costa Smeralda</strong>: assez pour voir le meilleur de la Gallura sans la fatigue d'une semaine, suffisants pour inclure une excursion à La Maddalena ou une pause à Tavolara. Le format est taillé pour les <strong>ponts français et italiens</strong> et pour qui veut une <strong>courte vacance sans se sentir pressé</strong>. Ici les prix réels de location 5 jours, les véhicules optimaux, et un itinéraire complet équilibrant mer, culture et temps libre.</p>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleEn } from "@/data/guide-articles";
 
 const meta = findArticleEn("car-hire-olbia-14-days-two-weeks")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("14", "en", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "14-day car hire", path: `/en/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Two weeks are the optimal duration for those wanting to see north Sardinia properly.</strong> Not just Costa Smeralda and La Maddalena, but also Catalan Alghero, Stintino cliffs, Asinara archipelago, Bosa with its colourful houses, Castelsardo, the nuraghi inland. KS Rent Sardinia biweekly rate applies the <strong>most aggressive discount before the monthly threshold</strong>: ~12 × daily instead of 14×. Here prices, ideal travel vehicle, and the 14-day planning we recommend to clients with 2 weeks of holiday to spend.</p>

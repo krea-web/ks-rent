@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleDe } from "@/data/guide-articles";
 
 const meta = findArticleDe("autovermietung-olbia-woche-7-tage")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("7", "de", pageUrl)]}
   breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "Wochenmiete Autovermietung", path: `/de/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Eine Woche ist das Standardformat der Autovermietung in Sardinien</strong>: <strong>74% unserer Kunden</strong> waehlen 7 Tage, und es ist die Dauer, auf die KS Rent Sardinia die guenstigsten Tarife des Jahres kalibriert hat. Ab dem siebten Tag greift der <strong>progressive Rabatt</strong>, der den Wochentarif auf etwa 6,5 Mal den Tagestarif bringt (statt 7×). In diesem Reisefuehrer warum es lohnt, welche Fahrzeuge fuer eine ganze Woche zu waehlen, die klassische Costa Smeralda + Gallura Nord Reiseroute und Tricks zur Optimierung von Kraftstoffkosten und Fahrzeiten.</p>

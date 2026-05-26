@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleEn } from "@/data/guide-articles";
 
 const meta = findArticleEn("car-hire-olbia-5-days")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("5", "en", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "5-day car hire", path: `/en/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>5 days in Olbia is the sweet spot of Costa Smeralda</strong>: enough to see the best of Gallura without the fatigue of a week, sufficient to include a La Maddalena excursion or a Tavolara break. The format is tailored for <strong>Italian public holidays</strong> (25 April, 1 May, 2 June, Ferragosto, All Saints) and for those who want a <strong>short holiday without feeling rushed</strong>. Here real 5-day rental prices, optimal vehicles, and a complete itinerary balancing sea, culture and free time.</p>

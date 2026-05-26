@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleFr } from "@/data/guide-articles";
 
 const meta = findArticleFr("location-voiture-olbia-14-jours-deux-semaines")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("14", "fr", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/fr/guide" }, { name: "Location 14 jours", path: `/fr/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Deux semaines sont la durée optimale pour qui veut voir la Sardaigne du nord vraiment.</strong> Pas seulement Costa Smeralda et La Maddalena, mais aussi Alghero catalane, falaises de Stintino, archipel de l'Asinara, Bosa avec ses maisons colorées, Castelsardo, arrière-pays des nuraghes. Le tarif quinzaine de KS Rent Sardinia applique la <strong>réduction la plus agressive avant le seuil mensuel</strong> : ~12 × journalier au lieu de 14×.</p>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleDe } from "@/data/guide-articles";
 
 const meta = findArticleDe("autovermietung-olbia-10-tage")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("10", "de", pageUrl)]}
   breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "10-Tage Autovermietung", path: `/de/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>10 Tage in Olbia sind die Laenge, die "einen Urlaub" von "einer Reise" trennt.</strong> Sie ermoeglichen es, die Costa Smeralda in Ruhe zu beenden, einen ganzen Tag La Maddalena zu widmen (ohne Hetze), einen langen Ausflug nach Alghero oder Stintino hinzuzufuegen und 1-2 Tage purer Entspannung ohne Reisen einzubeziehen. Es ist die Dauer, die KS Rent Sardinia jenen empfiehlt, die das Nordosten Sardiniens <strong>wirklich</strong> kennen wollen, nicht nur durchziehen.</p>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleDe } from "@/data/guide-articles";
 
 const meta = findArticleDe("autovermietung-olbia-monatlich-30-tage")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("30", "de", pageUrl)]}
   breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "Monatsmiete 30 Tage", path: `/de/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Die Monatsmiete ist eine andere Kategorie als Kurzurlaube.</strong> Es ist nicht "der Urlauber, der alles in 7 Tagen sieht", es sind diejenigen, die <strong>vorruebergehend in Sardinien leben</strong>: Remote Smart Worker, die das Buero fuer 1-3 Monate nach Costa Smeralda verlegen, Familien, die den ganzen August in Gallura verbringen, Profis auf Haussuche, Digital Nomads. Fuer diese Kunden wendet KS Rent Sardinia den <strong>aggressivsten Long-Stay-Tarif</strong> an: ~22 × Tag fuer 30 Tage (-27% vs 30 Einzeltage).</p>

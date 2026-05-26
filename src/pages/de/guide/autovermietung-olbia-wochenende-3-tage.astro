@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleDe } from "@/data/guide-articles";
 
 const meta = findArticleDe("autovermietung-olbia-wochenende-3-tage")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("3", "de", pageUrl)]}
   breadcrumbs={[{ name: "Reisefuehrer", path: "/de/guide" }, { name: "Wochenende 3 Tage Autovermietung", path: `/de/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Ein Wochenende in Olbia ist die goldene Formel fuer alle, die Costa Smeralda probieren wollen, ohne eine ganze Urlaubswoche zu nehmen.</strong> Ryanair und easyJet machten es moeglich, freitagabends aus Muenchen, Berlin oder Zuerich abzufliegen und montagmorgens zurueckzukommen, nachdem man Tuerkis gesehen hat, das den Winter monatelang waermt. In diesem Reisefuehrer reale 3-Tage-Mietpreise, Fahrzeuge mit dem besten Komfort/Kosten-Verhaeltnis und eine Blitzreiseroute, die jede Stunde der 72 Stunden in Gallura maximiert.</p>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleEn } from "@/data/guide-articles";
 
 const meta = findArticleEn("car-hire-olbia-monthly-30-days")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("30", "en", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "Monthly 30-day car hire", path: `/en/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>Monthly car hire is another category compared to short holidays.</strong> It's not "the holidaymaker who sees everything in 7 days", it's those who <strong>temporarily live in Sardinia</strong>: remote smart workers moving office to Costa Smeralda for 1-3 months, families taking the entire August in Gallura, professionals looking for houses needing to explore zones, digital nomads alternating client and sea. For these clients KS Rent Sardinia applies the <strong>most aggressive long-stay rate</strong>: ~22 × daily for 30 days (-27% vs 30 single days). Here prices, included maintenance coverage, and why it pays vs buying a used car for short stay.</p>

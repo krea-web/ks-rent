@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildGalluraEvents } from "@/data/guide-schema";
 import { findArticleEn } from "@/data/guide-articles";
 
 const meta = findArticleEn("festivals-events-gallura-2026-calendar")!;
@@ -30,7 +31,7 @@ const articleJsonLd = {
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={articleJsonLd}
+  jsonLd={[articleJsonLd, ...buildGalluraEvents("en", meta.heroImage)]}
   breadcrumbs={[
     { name: "Guides", path: "/en/guide" },
     { name: "Festivals events Gallura 2026", path: `/en/guide/${meta.slug}` },

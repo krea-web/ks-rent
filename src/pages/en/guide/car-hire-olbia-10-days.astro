@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { buildDurationHowTo } from "@/data/guide-schema";
 import { findArticleEn } from "@/data/guide-articles";
 
 const meta = findArticleEn("car-hire-olbia-10-days")!;
@@ -27,7 +28,7 @@ const faqJsonLd = {
 };
 ---
 <BaseLayout title={meta.title} description={meta.excerpt} canonical={pageUrl} ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, buildDurationHowTo("10", "en", pageUrl)]}
   breadcrumbs={[{ name: "Guides", path: "/en/guide" }, { name: "10-day car hire", path: `/en/guide/${meta.slug}` }]}>
   <GuideArticleLayout meta={meta}>
     <p><strong>10 days in Olbia is the length that separates "a holiday" from "a journey".</strong> They allow you to complete Costa Smeralda calmly, dedicate a full day to La Maddalena (without rushing), add a long excursion to Alghero or Stintino, and include 1-2 days of pure relaxation without travel. It is the duration KS Rent Sardinia recommends for those wanting to know north-eastern Sardinia <strong>truly</strong>, not just pass through. Here pro-rata prices, vehicle choice for mixed routes, and a 10-day itinerary balancing sea, culture, gastronomy and downtime.</p>
