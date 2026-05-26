@@ -798,16 +798,19 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     }
     setCheckingAvailability(true);
     try {
-      const params = new URLSearchParams({
-        vehicle_id: selectedVehicle.id,
-        start_date: format(startDate, "yyyy-MM-dd"),
-        end_date: format(endDate, "yyyy-MM-dd"),
+      // Verifica disponibilità lato backend (Supabase RPC SECURITY DEFINER):
+      // controlla l'overlap di date sulle prenotazioni non cancellate per il
+      // GRUPPO del veicolo, rispetto allo stock reale (vehicle_group_stock).
+      // Non espone righe di prenotazione. Prezzo/giorni restano calcolati lato client.
+      const { data, error } = await supabase.rpc("check_group_availability", {
+        p_group_slug: selectedVehicle.group_slug,
+        p_start: format(startDate, "yyyy-MM-dd"),
+        p_end: format(endDate, "yyyy-MM-dd"),
       });
-      const res = await fetch(`${N8N_BASE}/check-availability?${params}`);
-      if (!res.ok) throw new Error(t.errors.availabilityCheck);
-      const data = await res.json();
-      setAvailabilityResult(data);
-      if (!data.available) {
+      if (error) throw error;
+      const available = !!(data as { available?: boolean } | null)?.available;
+      setAvailabilityResult({ available });
+      if (!available) {
         toast.error(t.validation.vehicleNotAvailable);
       }
     } catch {

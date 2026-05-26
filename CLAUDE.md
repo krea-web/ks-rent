@@ -160,7 +160,9 @@ Auto-iniettati in `<head>` da [BaseLayout.astro](src/layouts/BaseLayout.astro) v
 
 ### Tabelle business
 - **`vehicles`** — flotta. `make`, `model`, `category`, `year`, `fuel_type`, `color`, `license_plate`, `daily_rate`, `rate_april`…`rate_october`, `group_slug`, `is_primary_variant`, `gallery_urls` (jsonb), `transparent_image_url`, `is_archived`. (Esiste `franchise_amount` — **vedi Nota Critica #13: NON pubblicare prezzi franchigia**.)
-- **`bookings`** — prenotazioni + cliente + 2° conducente + `signed_pdf_url`.
+- **`bookings`** — prenotazioni + cliente + 2° conducente + `signed_pdf_url`. RLS: pubblico **solo INSERT**, lettura solo admin.
+- **`vehicle_group_stock`** — quantità reali per `group_slug` (il DB ha 1 riga rappresentante per modello, non 1 per unità fisica). Usata dalla RPC disponibilità. Inventario: rs3 3, bmw-m2 1, classe-a 4, jeep 2, panda 15, honda-sh 18, quad 1. (`sql/11-booking-group-availability.sql`)
+- **RPC `check_group_availability(group_slug,start,end)`** — `SECURITY DEFINER`, verifica overlap date su prenotazioni non `cancelled` vs stock → ritorna `{available, free_units, total_units}` senza esporre righe. Chiamata da `PrenotaOra.tsx` (verifica disponibilità step 2).
 - **`profiles`** — flag `is_admin`.
 - **`leads`** — email newsletter.
 - **`reviews`** — Google + manuali. `source`, `google_review_id`, `author_name/photo_url`, `rating`, `text` (+ 3 lingue), `published_at`, `is_published`, `is_featured`.
@@ -292,7 +294,7 @@ npm run indexnow                               # ping IndexNow ai motori
 9. **301 redirect in `vercel.json`**: NON rimuovere `/localita/:slug`→`/:slug`, `/spiagge/:slug`→`/:slug`, né i redirect `/porto-cervo`→`/noleggio-auto-porto-cervo` ecc. Servono per link equity.
 10. **Auth admin**: Supabase Auth + flag `profiles.is_admin`. RLS richiede `is_admin=true` per scrittura su reviews / audit_log / maintenance_log.
 11. **Storage buckets** (`vehicles`, `contracts`, `reviews`) vanno creati MANUALMENTE in Supabase UI.
-12. **🔒 FREEZE FLUSSO BOOKING — `src/views/PrenotaOra.tsx`**: il **workflow di prenotazione (submit → webhook N8N) NON si tocca**. Decisione utente: *"Solo il calendario, non il flusso."* È permesso modificare **solo il calendario**; il submit (`format(startDate,"yyyy-MM-dd")` → N8N) resta identico. Congelati finché non sbloccati: B2 checkbox consenso, B3 età ≥21, M1 documenti, L3 Stripe.
+12. **🔒 FREEZE FLUSSO BOOKING — `src/views/PrenotaOra.tsx`**: il **submit della prenotazione (→ webhook N8N `/create-booking`) NON si tocca**. Il submit (`format(startDate,"yyyy-MM-dd")` → N8N) resta identico. Congelati finché non sbloccati: B2 checkbox consenso, B3 età ≥21, M1 documenti, L3 Stripe. **⚠️ SBLOCCATO (2026-05-27)**: la **verifica disponibilità** è stata spostata da N8N a **Supabase RPC `check_group_availability`** (per gruppo/stock, vedi schema DB sopra). `checkAvailability()` ora chiama `supabase.rpc(...)`, non più `fetch(N8N/check-availability)`. Il resto del flusso resta congelato.
 13. **💶 FRANCHIGIA / DEPOSITO — MAI pubblicare i prezzi sul sito.** Esiste `vehicles.franchise_amount` nel DB ma **non va mostrato** in `/tariffe` né altrove. Sempre **CTA WhatsApp** per il preventivo personalizzato. (memory: `feedback_franchigia_no_prezzi.md`)
 14. **📧 EMAIL = N8N + Gmail.** Le email transazionali/reminder passano dal workflow **N8N + Gmail** già configurato dall'utente. **NON** introdurre Resend / SendGrid / trigger Supabase. (memory: `reference_email_n8n_gmail.md`)
 15. **react-day-picker è v9** — l'API `classNames` differisce da v8 (`month_caption`, `weekdays/weekday`, `week`, `day/day_button`, `selected`, `range_start/middle/end`, `button_previous/next`, `components.Chevron`). Vedi `src/components/ui/calendar.tsx`.
