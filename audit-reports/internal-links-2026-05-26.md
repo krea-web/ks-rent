@@ -1,10 +1,10 @@
-# Internal Linking Audit — 2026-05-21
+# Internal Linking Audit — 2026-05-26
 
-- Pagine HTML totali: **366**
+- Pagine HTML totali: **370**
 - Link interni totali: **56**
 - Media link/pagina: **0.2**
 
-## 🚨 Pagine ORPHAN (zero inbound) — 358
+## 🚨 Pagine ORPHAN (zero inbound) — 362
 
 - /cala-brandinchi
 - /cala-del-faro
@@ -57,7 +57,7 @@
 - /de/fuhrpark/vergleich/audi-rs3-vs-bmw-m2
 - /de/fuhrpark/vergleich/audi-rs3-vs-jeep-avenger
 
-_...e altre 308_
+_...e altre 312_
 
 ## ⚠️ Pagine sotto-linked (1-2 inbound) — 0
 
