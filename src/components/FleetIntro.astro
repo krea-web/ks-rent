@@ -1,0 +1,75 @@
+---
+/**
+ * Blocco statico SEO introduttivo per le pagine flotta (4 lingue).
+ *
+ * /flotta (+ /en/fleet, /de/fuhrpark, /fr/flotte) montano <Flotta client:only>
+ * come hero/filtro React (invisibile ai crawler senza JS). Il <FleetGrid> server
+ * mostra le card veicolo, ma manca prosa introduttiva keyword-rich indicizzabile.
+ * Questo componente aggiunge ~180 parole localizzate + link interni agli hub di
+ * servizio. Va inserito tra l'isola React e FleetGrid (o subito dopo FleetGrid).
+ */
+type Lang = "it" | "en" | "de" | "fr";
+interface Props { lang?: Lang; }
+const { lang = "it" } = Astro.props;
+
+const CAR_HUB: Record<Lang, string> = {
+  it: "/noleggio-auto-olbia", en: "/en/car-hire-olbia",
+  de: "/de/autovermietung-olbia", fr: "/fr/location-voiture-olbia",
+};
+const MOTO: Record<Lang, string> = {
+  it: "/noleggio-moto-scooter-olbia", en: "/en/scooter-motorbike-rental-olbia",
+  de: "/de/motorrad-roller-mieten-olbia", fr: "/fr/location-scooter-moto-olbia",
+};
+const RATES: Record<Lang, string> = {
+  it: "/tariffe", en: "/en/rates", de: "/de/preise", fr: "/fr/tarifs",
+};
+const BOOK: Record<Lang, string> = {
+  it: "/prenotaora", en: "/en/book-now", de: "/de/jetzt-buchen", fr: "/fr/reserver",
+};
+
+const T = {
+  it: {
+    eyebrow: "La nostra flotta",
+    heading: "Una flotta di proprietà, dalla city car alla supercar",
+    body: "La flotta di KS Rent Sardinia è interamente di proprietà: non siamo un intermediario né un broker, ma noleggiamo i nostri veicoli, controllati e revisionati prima di ogni consegna. Trovi ogni categoria per ogni esigenza di vacanza in Costa Smeralda: city car ibride come la Fiat Panda per muoverti agile a Olbia, premium come la Mercedes Classe A, SUV Jeep Avenger per la famiglia, supercar Audi RS3 e BMW M2 per chi vuole emozioni, oltre a scooter Honda SH 125/350 e quad Yamaha Raptor per le due ruote. Ogni veicolo è consegnato gratuitamente all'Aeroporto di Olbia Costa Smeralda (OLB), al Porto Isola Bianca o in hotel, anche senza carta di credito obbligatoria.",
+    links: { hub: "Noleggio auto a Olbia", moto: "Noleggio moto, scooter e quad", rates: "Tariffe stagionali", book: "Prenota ora" },
+  },
+  en: {
+    eyebrow: "Our fleet",
+    heading: "An owned fleet, from city car to supercar",
+    body: "The KS Rent Sardinia fleet is entirely owned: we are not a broker or an intermediary, we rent out our own vehicles, checked and serviced before every handover. You'll find a category for every Costa Smeralda holiday: hybrid city cars like the Fiat Panda to move easily around Olbia, premium models like the Mercedes A-Class, the Jeep Avenger SUV for families, Audi RS3 and BMW M2 supercars for thrill-seekers, plus Honda SH 125/350 scooters and Yamaha Raptor quads for two wheels. Every vehicle is delivered free of charge to Olbia Costa Smeralda Airport (OLB), the Isola Bianca port or your hotel — even without a credit card.",
+    links: { hub: "Car hire in Olbia", moto: "Scooter, motorbike and quad hire", rates: "Seasonal rates", book: "Book now" },
+  },
+  de: {
+    eyebrow: "Unser Fuhrpark",
+    heading: "Ein eigener Fuhrpark, vom Stadtauto bis zum Supersportwagen",
+    body: "Der Fuhrpark von KS Rent Sardinia ist vollständig im Eigenbesitz: Wir sind kein Vermittler und kein Broker, sondern vermieten unsere eigenen Fahrzeuge, die vor jeder Übergabe geprüft und gewartet werden. Sie finden für jeden Urlaub an der Costa Smeralda die passende Kategorie: Hybrid-Stadtautos wie den Fiat Panda für die wendige Fahrt durch Olbia, Premium-Modelle wie die Mercedes A-Klasse, den SUV Jeep Avenger für Familien, die Supersportwagen Audi RS3 und BMW M2 für Nervenkitzel sowie Roller Honda SH 125/350 und Quads Yamaha Raptor für zwei Räder. Jedes Fahrzeug wird kostenlos am Flughafen Olbia Costa Smeralda (OLB), am Hafen Isola Bianca oder am Hotel geliefert – auch ohne Kreditkartenpflicht.",
+    links: { hub: "Autovermietung in Olbia", moto: "Roller-, Motorrad- und Quadverleih", rates: "Saisonpreise", book: "Jetzt buchen" },
+  },
+  fr: {
+    eyebrow: "Notre flotte",
+    heading: "Une flotte en propriété, de la citadine à la supercar",
+    body: "La flotte de KS Rent Sardinia est entièrement en propriété : nous ne sommes ni un intermédiaire ni un courtier, nous louons nos propres véhicules, vérifiés et révisés avant chaque remise. Vous trouverez une catégorie pour chaque séjour en Costa Smeralda : citadines hybrides comme la Fiat Panda pour circuler aisément à Olbia, modèles premium comme la Mercedes Classe A, le SUV Jeep Avenger pour la famille, les supercars Audi RS3 et BMW M2 pour les amateurs de sensations, ainsi que les scooters Honda SH 125/350 et les quads Yamaha Raptor pour les deux-roues. Chaque véhicule est livré gratuitement à l'aéroport d'Olbia Costa Smeralda (OLB), au port d'Isola Bianca ou à votre hôtel — même sans carte de crédit.",
+    links: { hub: "Location de voiture à Olbia", moto: "Location scooter, moto et quad", rates: "Tarifs saisonniers", book: "Réserver" },
+  },
+} satisfies Record<Lang, any>;
+
+const t = T[lang];
+const carHub = CAR_HUB[lang];
+const moto = MOTO[lang];
+const rates = RATES[lang];
+const book = BOOK[lang];
+---
+<section class="border-t border-border" aria-labelledby="fleet-intro-heading">
+  <div class="max-w-4xl mx-auto px-4 py-12 md:py-14">
+    <span class="text-gold font-bold tracking-[0.3em] uppercase text-[10px]">{t.eyebrow}</span>
+    <h2 id="fleet-intro-heading" class="text-2xl md:text-3xl font-black text-foreground mt-3 mb-4">{t.heading}</h2>
+    <p class="text-foreground/80 leading-relaxed">{t.body}</p>
+    <div class="flex flex-wrap gap-3 mt-6">
+      <a href={carHub} class="inline-flex items-center gap-2 text-sm font-semibold text-foreground border border-border rounded-full px-4 py-2 hover:border-gold hover:text-gold transition-colors">{t.links.hub} →</a>
+      <a href={moto} class="inline-flex items-center gap-2 text-sm font-semibold text-foreground border border-border rounded-full px-4 py-2 hover:border-gold hover:text-gold transition-colors">{t.links.moto} →</a>
+      <a href={rates} class="inline-flex items-center gap-2 text-sm font-semibold text-foreground border border-border rounded-full px-4 py-2 hover:border-gold hover:text-gold transition-colors">{t.links.rates} →</a>
+      <a href={book} class="inline-flex items-center gap-2 text-sm font-semibold text-background bg-gold rounded-full px-4 py-2 hover:scale-105 transition-transform">{t.links.book} →</a>
+    </div>
+  </div>
+</section>

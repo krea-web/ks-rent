@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PrenotaOra from "@/views/PrenotaOra";
+import BookingIntro from "@/components/BookingIntro.astro";
 import { buildBreadcrumb } from "@/lib/jsonLd";
 ---
 <BaseLayout
@@ -11,4 +12,5 @@ import { buildBreadcrumb } from "@/lib/jsonLd";
   hideMobileSticky={true}
 >
   <PrenotaOra client:only="react" />
+  <BookingIntro lang="it" />
 </BaseLayout>

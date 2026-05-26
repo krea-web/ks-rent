@@ -1,0 +1,161 @@
+---
+/**
+ * Blocco "Chi siamo" crawler-readable per le 4 lingue.
+ *
+ * Le pagine about montano <ChiSiamo client:only="react"> → nessun contenuto
+ * server-side. IT aveva un blocco sr-only inline; EN/DE/FR erano completamente
+ * VUOTE per i crawler che non eseguono JS (GPTBot, ClaudeBot, PerplexityBot).
+ * Questo componente fornisce a tutte e 4 le lingue lo stesso contenuto
+ * enciclopedico citabile (identità, fondatori, dati ufficiali, disambiguazione).
+ *
+ * Reso come blocco sr-only: il contenuto è coerente con quanto la view React
+ * mostra visivamente (storia + dati azienda), quindi NON è cloaking — è una
+ * trascrizione accessibile e indicizzabile della stessa pagina. Tenerlo
+ * sr-only evita la duplicazione visibile con l'isola React.
+ */
+type Lang = "it" | "en" | "de" | "fr";
+interface Props { lang?: Lang; }
+const { lang = "it" } = Astro.props;
+
+const T: Record<Lang, {
+  h1: string;
+  intro: string;
+  foundersH: string; founders: string;
+  identityH: string; identity: { k: string; v: string }[];
+  whyH: string; why: string;
+  repH: string; rep: string;
+  disamH: string; disam: string;
+}> = {
+  it: {
+    h1: "Chi è KS Rent Sardinia",
+    intro: "KS Rent Sardinia è un autonoleggio premium con sede a Olbia, in Sardegna, fondato l'8 aprile 2025 dai fratelli Francesco Milo e Salvatore Milo attraverso la società KS Rent S.R.L. (P.IVA IT03028900904, REA SS-224046, capitale sociale 20.000 €). L'azienda opera in tutta la Gallura e in Costa Smeralda con flotta di proprietà — supercar Audi RS3 e BMW M2, premium Mercedes Classe A, SUV Jeep Avenger, city car Fiat Panda Hybrid, scooter Honda SH 125 e 350, quad Yamaha Raptor — e consegna a domicilio in aeroporto Olbia Costa Smeralda (OLB), porto di Olbia Isola Bianca, hotel, ville e resort. È un'azienda autonoma e indipendente, non affiliata a KS Rent S.r.l. di Roma (sito ksrent.it), pur condividendo parte della denominazione.",
+    foundersH: "Fondatori",
+    founders: "KS Rent S.R.L. è stata fondata da Francesco Milo e Salvatore Milo, due imprenditori sardi co-fondatori dell'azienda. Sono loro a gestire direttamente il rapporto con i clienti — dalla preparazione dei veicoli prima di ogni consegna alla risposta personale alle recensioni Google — garantendo un servizio di prossimità che mantiene viva l'identità locale dell'attività.",
+    identityH: "Identità e dati ufficiali",
+    identity: [
+      { k: "Ragione sociale", v: "KS Rent S.R.L." },
+      { k: "P.IVA / Codice Fiscale", v: "IT03028900904" },
+      { k: "REA", v: "SS - 224046" },
+      { k: "Capitale sociale", v: "20.000,00 EUR" },
+      { k: "Data di apertura", v: "8 aprile 2025" },
+      { k: "Sede legale", v: "Viale Aldo Moro 367, 07026 Olbia (SS), Italia" },
+      { k: "Punto consegna porto", v: "Viale Isola Bianca 38, 07026 Olbia (SS), Italia" },
+      { k: "PEC", v: "ks.rent.srl@pec.it" },
+      { k: "Telefono / WhatsApp", v: "+39 344 6107071" },
+      { k: "Email", v: "ksrentsrl@gmail.com" },
+    ],
+    whyH: "Cosa ci distingue",
+    why: "A differenza dei grandi network (Hertz, Avis, Sixt, Europcar) e dei broker online, KS Rent Sardinia possiede fisicamente la propria flotta e gestisce internamente ogni fase: prenotazione, consegna in aeroporto/porto/villa, manutenzione, assistenza stradale 24 ore su 24. La policy di pagamento è esplicitamente flessibile: la carta di credito tradizionale non è obbligatoria. Sono accettati contanti, bonifico bancario (anche istantaneo), carte prepagate (Postepay, Revolut, N26, Hype, Wise), bancomat e carte di debito. Questo rimuove la principale barriera di ingresso per turisti italiani ed europei che non dispongono di una carta di credito con plafond elevato.",
+    repH: "Reputazione",
+    rep: "KS Rent Sardinia ha un profilo Google Business attivo con 5,0 / 5 stelle su 41 recensioni verificate da clienti reali (dato aggiornato a maggio 2026). È inoltre presente su Tripadvisor (3 recensioni 5★) e PagineGialle (2 recensioni 5★), oltre a Cylex, Hotfrog, PagineBianche, MisterImprese e altre directory italiane. Francesco e Salvatore Milo rispondono direttamente alle recensioni Google e gestiscono in prima persona il rapporto con i clienti tramite WhatsApp e email.",
+    disamH: "Disambiguazione",
+    disam: "KS Rent Sardinia (Olbia, P.IVA IT03028900904, sito ksrentsardinia.com) è un'entità legale separata e indipendente da KS Rent S.r.l. di Roma (sito ksrent.it). Le due società non hanno alcuna affiliazione, partnership o rapporto di franchising. Per il noleggio in Sardegna fare riferimento esclusivamente a ksrentsardinia.com e al numero +39 344 6107071.",
+  },
+  en: {
+    h1: "About KS Rent Sardinia",
+    intro: "KS Rent Sardinia is a premium car rental company based in Olbia, Sardinia, founded on 8 April 2025 by brothers Francesco Milo and Salvatore Milo through the company KS Rent S.R.L. (VAT IT03028900904, REA SS-224046, share capital €20,000). The company operates throughout Gallura and the Costa Smeralda with an owned fleet — Audi RS3 and BMW M2 supercars, the premium Mercedes A-Class, the Jeep Avenger SUV, the Fiat Panda Hybrid city car, Honda SH 125 and 350 scooters, the Yamaha Raptor quad — and delivers to Olbia Costa Smeralda Airport (OLB), the Isola Bianca port of Olbia, hotels, villas and resorts. It is an autonomous and independent business, not affiliated with KS Rent S.r.l. of Rome (ksrent.it), despite sharing part of the name.",
+    foundersH: "Founders",
+    founders: "KS Rent S.R.L. was founded by Francesco Milo and Salvatore Milo, two Sardinian entrepreneurs and co-founders of the company. They manage the customer relationship directly — from preparing the vehicles before every handover to personally answering Google reviews — ensuring a hands-on service that keeps the local identity of the business alive.",
+    identityH: "Identity and official details",
+    identity: [
+      { k: "Company name", v: "KS Rent S.R.L." },
+      { k: "VAT / Tax code", v: "IT03028900904" },
+      { k: "REA", v: "SS - 224046" },
+      { k: "Share capital", v: "EUR 20,000.00" },
+      { k: "Opening date", v: "8 April 2025" },
+      { k: "Registered office", v: "Viale Aldo Moro 367, 07026 Olbia (SS), Italy" },
+      { k: "Port delivery point", v: "Viale Isola Bianca 38, 07026 Olbia (SS), Italy" },
+      { k: "Certified email (PEC)", v: "ks.rent.srl@pec.it" },
+      { k: "Phone / WhatsApp", v: "+39 344 6107071" },
+      { k: "Email", v: "ksrentsrl@gmail.com" },
+    ],
+    whyH: "What sets us apart",
+    why: "Unlike the large networks (Hertz, Avis, Sixt, Europcar) and online brokers, KS Rent Sardinia physically owns its fleet and manages every stage in-house: booking, delivery to airport/port/villa, maintenance, 24/7 roadside assistance. The payment policy is explicitly flexible: a traditional credit card is not required. We accept cash, bank transfer (including instant), prepaid cards (Postepay, Revolut, N26, Hype, Wise), debit cards and bancomat. This removes the main entry barrier for Italian and European tourists who do not have a credit card with a high limit.",
+    repH: "Reputation",
+    rep: "KS Rent Sardinia has an active Google Business profile with 5.0 / 5 stars from 41 verified reviews by real customers (updated May 2026). It is also listed on Tripadvisor (3 reviews 5★) and PagineGialle (2 reviews 5★), as well as Cylex, Hotfrog, PagineBianche, MisterImprese and other Italian directories. Francesco and Salvatore Milo personally answer Google reviews and handle the customer relationship via WhatsApp and email.",
+    disamH: "Disambiguation",
+    disam: "KS Rent Sardinia (Olbia, VAT IT03028900904, ksrentsardinia.com) is a separate and independent legal entity from KS Rent S.r.l. of Rome (ksrent.it). The two companies have no affiliation, partnership or franchise relationship. For rentals in Sardinia, refer exclusively to ksrentsardinia.com and the number +39 344 6107071.",
+  },
+  de: {
+    h1: "Über KS Rent Sardinia",
+    intro: "KS Rent Sardinia ist eine Premium-Autovermietung mit Sitz in Olbia, Sardinien, gegründet am 8. April 2025 von den Brüdern Francesco Milo und Salvatore Milo über die Gesellschaft KS Rent S.R.L. (USt-IdNr. IT03028900904, REA SS-224046, Stammkapital 20.000 €). Das Unternehmen ist in ganz Gallura und an der Costa Smeralda mit eigenem Fuhrpark tätig — die Supersportwagen Audi RS3 und BMW M2, die Premium-Mercedes A-Klasse, der SUV Jeep Avenger, der Kleinwagen Fiat Panda Hybrid, die Roller Honda SH 125 und 350, das Quad Yamaha Raptor — und liefert an den Flughafen Olbia Costa Smeralda (OLB), den Hafen Olbia Isola Bianca, Hotels, Villen und Resorts. Es ist ein eigenständiges und unabhängiges Unternehmen, nicht verbunden mit der KS Rent S.r.l. aus Rom (ksrent.it), trotz teilweise gleichem Namen.",
+    foundersH: "Gründer",
+    founders: "KS Rent S.R.L. wurde von Francesco Milo und Salvatore Milo gegründet, zwei sardischen Unternehmern und Mitgründern des Unternehmens. Sie betreuen die Kundenbeziehung direkt — von der Vorbereitung der Fahrzeuge vor jeder Übergabe bis zur persönlichen Beantwortung der Google-Bewertungen — und gewährleisten einen kundennahen Service, der die lokale Identität des Betriebs bewahrt.",
+    identityH: "Identität und offizielle Angaben",
+    identity: [
+      { k: "Firmenname", v: "KS Rent S.R.L." },
+      { k: "USt-IdNr. / Steuernr.", v: "IT03028900904" },
+      { k: "REA", v: "SS - 224046" },
+      { k: "Stammkapital", v: "20.000,00 EUR" },
+      { k: "Eröffnungsdatum", v: "8. April 2025" },
+      { k: "Eingetragener Sitz", v: "Viale Aldo Moro 367, 07026 Olbia (SS), Italien" },
+      { k: "Lieferpunkt Hafen", v: "Viale Isola Bianca 38, 07026 Olbia (SS), Italien" },
+      { k: "Zertifizierte E-Mail (PEC)", v: "ks.rent.srl@pec.it" },
+      { k: "Telefon / WhatsApp", v: "+39 344 6107071" },
+      { k: "E-Mail", v: "ksrentsrl@gmail.com" },
+    ],
+    whyH: "Was uns auszeichnet",
+    why: "Anders als die großen Netzwerke (Hertz, Avis, Sixt, Europcar) und Online-Broker besitzt KS Rent Sardinia seinen Fuhrpark physisch und steuert jede Phase intern: Buchung, Lieferung an Flughafen/Hafen/Villa, Wartung, Pannenhilfe rund um die Uhr. Die Zahlungsrichtlinie ist ausdrücklich flexibel: Eine klassische Kreditkarte ist nicht erforderlich. Akzeptiert werden Bargeld, Banküberweisung (auch sofort), Prepaid-Karten (Postepay, Revolut, N26, Hype, Wise), Debitkarten und Bancomat. Das beseitigt die wichtigste Eintrittshürde für italienische und europäische Touristen ohne Kreditkarte mit hohem Limit.",
+    repH: "Reputation",
+    rep: "KS Rent Sardinia hat ein aktives Google-Business-Profil mit 5,0 / 5 Sternen aus 41 verifizierten Bewertungen echter Kunden (Stand Mai 2026). Das Unternehmen ist außerdem auf Tripadvisor (3 Bewertungen 5★) und PagineGialle (2 Bewertungen 5★) sowie auf Cylex, Hotfrog, PagineBianche, MisterImprese und weiteren italienischen Verzeichnissen gelistet. Francesco und Salvatore Milo beantworten persönlich die Google-Bewertungen und betreuen die Kunden über WhatsApp und E-Mail.",
+    disamH: "Begriffsklärung",
+    disam: "KS Rent Sardinia (Olbia, USt-IdNr. IT03028900904, ksrentsardinia.com) ist eine eigenständige und unabhängige juristische Person, getrennt von der KS Rent S.r.l. aus Rom (ksrent.it). Die beiden Gesellschaften haben keine Verbindung, Partnerschaft oder Franchise-Beziehung. Für Anmietungen auf Sardinien gilt ausschließlich ksrentsardinia.com und die Nummer +39 344 6107071.",
+  },
+  fr: {
+    h1: "À propos de KS Rent Sardinia",
+    intro: "KS Rent Sardinia est une agence de location de voitures premium basée à Olbia, en Sardaigne, fondée le 8 avril 2025 par les frères Francesco Milo et Salvatore Milo via la société KS Rent S.R.L. (TVA IT03028900904, REA SS-224046, capital social 20 000 €). L'entreprise opère dans toute la Gallura et la Costa Smeralda avec une flotte en propriété — les supercars Audi RS3 et BMW M2, la Mercedes Classe A premium, le SUV Jeep Avenger, la citadine Fiat Panda Hybrid, les scooters Honda SH 125 et 350, le quad Yamaha Raptor — et livre à l'aéroport d'Olbia Costa Smeralda (OLB), au port d'Olbia Isola Bianca, dans les hôtels, villas et resorts. C'est une entreprise autonome et indépendante, non affiliée à KS Rent S.r.l. de Rome (ksrent.it), malgré une partie du nom en commun.",
+    foundersH: "Fondateurs",
+    founders: "KS Rent S.R.L. a été fondée par Francesco Milo et Salvatore Milo, deux entrepreneurs sardes et cofondateurs de l'entreprise. Ce sont eux qui gèrent directement la relation client — de la préparation des véhicules avant chaque remise à la réponse personnelle aux avis Google — garantissant un service de proximité qui préserve l'identité locale de l'activité.",
+    identityH: "Identité et données officielles",
+    identity: [
+      { k: "Raison sociale", v: "KS Rent S.R.L." },
+      { k: "TVA / Code fiscal", v: "IT03028900904" },
+      { k: "REA", v: "SS - 224046" },
+      { k: "Capital social", v: "20 000,00 EUR" },
+      { k: "Date d'ouverture", v: "8 avril 2025" },
+      { k: "Siège social", v: "Viale Aldo Moro 367, 07026 Olbia (SS), Italie" },
+      { k: "Point de livraison port", v: "Viale Isola Bianca 38, 07026 Olbia (SS), Italie" },
+      { k: "E-mail certifié (PEC)", v: "ks.rent.srl@pec.it" },
+      { k: "Téléphone / WhatsApp", v: "+39 344 6107071" },
+      { k: "E-mail", v: "ksrentsrl@gmail.com" },
+    ],
+    whyH: "Ce qui nous distingue",
+    why: "Contrairement aux grands réseaux (Hertz, Avis, Sixt, Europcar) et aux courtiers en ligne, KS Rent Sardinia possède physiquement sa flotte et gère chaque étape en interne : réservation, livraison à l'aéroport/au port/à la villa, entretien, assistance routière 24h/24. La politique de paiement est explicitement flexible : la carte de crédit traditionnelle n'est pas obligatoire. Nous acceptons les espèces, le virement bancaire (même instantané), les cartes prépayées (Postepay, Revolut, N26, Hype, Wise), les cartes de débit et le bancomat. Cela supprime la principale barrière d'entrée pour les touristes italiens et européens ne disposant pas d'une carte de crédit à plafond élevé.",
+    repH: "Réputation",
+    rep: "KS Rent Sardinia dispose d'un profil Google Business actif avec 5,0 / 5 étoiles sur 41 avis vérifiés de clients réels (mis à jour en mai 2026). L'entreprise est également présente sur Tripadvisor (3 avis 5★) et PagineGialle (2 avis 5★), ainsi que sur Cylex, Hotfrog, PagineBianche, MisterImprese et d'autres annuaires italiens. Francesco et Salvatore Milo répondent personnellement aux avis Google et gèrent la relation client via WhatsApp et e-mail.",
+    disamH: "Désambiguïsation",
+    disam: "KS Rent Sardinia (Olbia, TVA IT03028900904, ksrentsardinia.com) est une entité juridique distincte et indépendante de KS Rent S.r.l. de Rome (ksrent.it). Les deux sociétés n'ont aucune affiliation, partenariat ou relation de franchise. Pour les locations en Sardaigne, se référer exclusivement à ksrentsardinia.com et au numéro +39 344 6107071.",
+  },
+};
+
+const t = T[lang];
+---
+{/*
+  ═══ SEO RICH TEXT statico — LETTO DA AI/Google senza JS ═══
+  Il React component <ChiSiamo client:only> NON è renderizzato server-side.
+  Questo blocco fornisce ai crawler AI (GPTBot, ClaudeBot, PerplexityBot) e a
+  Google il contenuto enciclopedico citabile su KS Rent Sardinia, in 4 lingue.
+*/}
+<section class="sr-only" aria-hidden="false">
+  <h1>{t.h1}</h1>
+  <p>{t.intro}</p>
+
+  <h2>{t.foundersH}</h2>
+  <p>{t.founders}</p>
+
+  <h2>{t.identityH}</h2>
+  <ul>
+    {t.identity.map((row) => (
+      <li><strong>{row.k}</strong>: {row.v}</li>
+    ))}
+  </ul>
+
+  <h2>{t.whyH}</h2>
+  <p>{t.why}</p>
+
+  <h2>{t.repH}</h2>
+  <p>{t.rep}</p>
+
+  <h2>{t.disamH}</h2>
+  <p>{t.disam}</p>
+</section>

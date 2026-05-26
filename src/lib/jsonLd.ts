@@ -71,7 +71,7 @@ export const localBusinessJsonLd = {
       url: "https://www.ksrentsardinia.com",
       telephone: "+393446107071",
       email: "ksrentsrl@gmail.com",
-      priceRange: "€€€",
+      priceRange: "€€",
       currenciesAccepted: "EUR",
       paymentAccepted: "Cash, Credit Card, Debit Card, Prepaid Card, Bonifico Bancario",
       inLanguage: "it-IT",
@@ -428,7 +428,7 @@ const carRentalBase = {
   logo: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Viale Isola Bianca 38",
+    streetAddress: "Viale Aldo Moro 367",
     addressLocality: "Olbia",
     postalCode: "07026",
     addressRegion: "SS",
@@ -436,8 +436,8 @@ const carRentalBase = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 40.923018,
-    longitude: 9.520169,
+    latitude: 40.944573,
+    longitude: 9.497897,
   },
   sameAs: SAME_AS,
 };
@@ -536,7 +536,7 @@ export const buildLocationJsonLd = (
         telephone: "+393446107071",
         address: {
           "@type": "PostalAddress",
-          streetAddress: "Viale Isola Bianca 38",
+          streetAddress: "Viale Aldo Moro 367",
           addressLocality: "Olbia",
           postalCode: "07026",
           addressRegion: "SS",

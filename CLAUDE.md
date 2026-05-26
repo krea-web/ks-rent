@@ -202,6 +202,15 @@ Auto-iniettati in `<head>` da [BaseLayout.astro](src/layouts/BaseLayout.astro) v
 - **P4**: image sitemap (`generate-image-sitemap.mjs`) + audit internal links + baseline snapshot SEO.
 - **Content diversification**: **160/160 record** locale-specifici diversificati (Gemini API) → similarity Jaccard media bassa.
 
+#### ✅ SEO Master Plan — Fase A: Fondamenta (2026-05-26)
+Vedi [SEO-MASTER-PLAN.md](SEO-MASTER-PLAN.md) §1. Indirizzo principale (NAP) **deciso = Viale Aldo Moro 367** (coincide col GBP).
+- **F2 — NAP allineato in codice a Aldo Moro 367 / 40.944573, 9.497897**: `carRentalBase` (address+geo) + provider in `buildLocationJsonLd` ([jsonLd.ts](src/lib/jsonLd.ts)) + meta `geo.position`/`ICBM` in [BaseLayout.astro](src/layouts/BaseLayout.astro). Il punto porto **Isola Bianca 38** resta SOLO come punto di consegna secondario (`location[1]` + contenuti pagina porto) — corretto, non incoerente. ⚠️ Resta da allineare le **directory** manualmente (GBP/PagineGialle/Cylex/Tripadvisor/…).
+- **F3 — priceRange** standardizzato a **`€€`** ovunque (era `€€€` in `localBusinessJsonLd`).
+- **F4 — Crawlability pagine `client:only`** (i crawler AI non eseguono JS): 3 componenti statici condivisi (4 lingue):
+  - `BookingIntro.astro` → `/prenotaora` + EN/DE/FR (prima ZERO testo server-side).
+  - `FleetIntro.astro` → `/flotta` + EN/DE/FR (intro prosa + link hub).
+  - `AboutCrawlerText.astro` → chi siamo enciclopedico su **tutte e 4 le lingue** (EN/DE/FR erano vuote SSR; IT migrato dal vecchio blocco inline `sr-only`). **Scelta**: `sr-only` mantenuto (contenuto coerente con la view React → no cloaking, no duplicazione visibile).
+
 #### ✅ Rifiniture & fix recenti (maggio 2026)
 - **Newsletter signup** in footer (`NewsletterSignup.tsx` → `leads`).
 - **Image optimization**: `OptimizedImage.tsx` + Supabase image transform `?width=&quality=` srcset (TopBeachesShowcase, GuideSpotlight, hero) → Core Web Vitals.

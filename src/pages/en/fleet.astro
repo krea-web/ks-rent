@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Flotta, { flottaFaqJsonLd, flottaBreadcrumbJsonLd } from "@/views/Flotta";
 import FleetGrid from "@/components/FleetGrid.astro";
+import FleetIntro from "@/components/FleetIntro.astro";
 import { flottaJsonLd } from "@/lib/jsonLd";
 import { supabase } from "@/lib/supabase";
 import { localizeVehicleSlug } from "@/lib/i18n";
@@ -67,4 +68,5 @@ const vehicleListingJsonLd = {
     heading="All our vehicles"
     intro="Discover every model in detail: seasonal rates, available variants and recommended destinations."
   />
+  <FleetIntro lang="en" />
 </BaseLayout>

@@ -35,32 +35,30 @@ fix di oggi rende molto di più tra 3-6 mesi.
 
 ---
 
-## 1. 🔴 FONDAMENTA — da fare PRIMA di tutto (P0)
+## 1. 🔴 FONDAMENTA — da fare PRIMA di tutto (P0)  ✅ **COMPLETATA (2026-05-26)**
 
 Senza queste, ogni altra attività rende meno o crea confusione agli algoritmi.
 
-### F1. DECISIONE: quale indirizzo è "il principale"? 👤 **BLOCCANTE**
-Oggi c'è incoerenza tra:
-- **GBP** → Viale Aldo Moro 367 (sede legale)
-- **`carRentalBase` in jsonLd.ts** → Viale Isola Bianca 38 (punto porto)
-- **`geo.position` meta in BaseLayout** → coord. Isola Bianca
-
-Google e gli aggregatori vedono **due indirizzi** per la stessa attività = segnale NAP incoerente che **sopprime il local pack**.
-**Devi decidere UN indirizzo principale** (raccomandato: **Isola Bianca 38** se è il punto operativo realmente visitabile dai clienti / più vicino al porto e all'aeroporto). Dopo la tua decisione → F2.
+### F1. DECISIONE: quale indirizzo è "il principale"? ✅ **DECISO → Viale Aldo Moro 367**
+**Decisione utente (2026-05-26): indirizzo principale = Viale Aldo Moro 367** (sede legale, già coincidente col GBP verificato → scelta a minor rischio: allineato il codice al GBP, non viceversa).
+Contesto storico dell'incoerenza risolta:
+- GBP → Aldo Moro 367 (sede legale) ✅
+- `carRentalBase` in jsonLd.ts → era Isola Bianca 38 → **ora Aldo Moro 367**
+- `geo.position` meta in BaseLayout → era coord. Isola Bianca → **ora coord. Aldo Moro**
 
 ### F2. Allineare il NAP ovunque 🤝
-Una volta scelto l'indirizzo (F1):
-- 🤖 Allineo in codice: `carRentalBase` + `localBusinessJsonLd` (address + geo) + `geo.position` meta in `BaseLayout.astro` → tutti uguali.
-- 👤 Allinei nelle directory: GBP, PagineGialle, Cylex, Hotfrog, Tripadvisor, carmappa, empresite, aziendeeasy → **nome esatto "KS Rent Sardinia", indirizzo identico, tel +39 344 6107071**. Una sola incoerenza crea attrito.
+- 🤖 **FATTO in codice**: `carRentalBase` (address + geo) + provider in `buildLocationJsonLd` + `geo.position`/`ICBM` meta in `BaseLayout.astro` → tutti su **Aldo Moro 367 / 40.944573, 9.497897**. `localBusinessJsonLd` era già allineato. Il punto porto Isola Bianca resta come **punto di consegna secondario** (array `location[1]` + contenuti pagina porto), corretto e non dannoso per il NAP.
+- 👤 **DA FARE (manuale)**: allineare le directory — GBP, PagineGialle, Cylex, Hotfrog, Tripadvisor, carmappa, empresite, aziendeeasy → **nome esatto "KS Rent Sardinia", indirizzo identico (Aldo Moro 367), tel +39 344 6107071**. Una sola incoerenza crea attrito.
 
-### F3. priceRange coerente 🤖
-`localBusinessJsonLd` dice `€€€`, `carRentalBase` dice `€€`. Standardizzo a **`€€`** (la Panda parte da 40€/giorno). Allineo anche in llms.txt.
+### F3. priceRange coerente ✅ **FATTO**
+`localBusinessJsonLd` diceva `€€€` → standardizzato a **`€€`** (coerente con `carRentalBase`; la Panda parte da 40€/giorno). Verificato: zero `€€€` residui nel dist.
 
-### F4. Crawlability: contenuto statico sulle pagine `client:only` 🤖 ← *"i crawler devono leggere tutto"*
-Le pagine React `client:only` mostrano **body vuoto** a chi non esegue JS (GPTBot, ClaudeBot, PerplexityBot **non eseguono JS**; Googlebot lo fa in differita).
-- **`/prenotaora`** (+ /en/book-now, /de/jetzt-buchen, /fr/reserver): **ZERO testo** per i crawler. → Aggiungo un blocco Astro statico (200-300 parole) prima dell'isola React: come funziona la prenotazione (HowTo), metodi di pagamento, link a flotta/tariffe.
-- **`/flotta`** (+ EN/DE/FR): ha solo FleetGrid statico. → Aggiungo 150-200 parole introduttive statiche localizzate.
-- **`/chisiamo`** (+ EN/DE/FR): usa `<section class="sr-only">` = testo nascosto visivamente → **rischio cloaking** per Google. → Rendo il testo visibile con stile editoriale (rimuovo `sr-only`), l'isola React diventa secondaria.
+### F4. Crawlability: contenuto statico sulle pagine `client:only` ✅ **FATTO**
+Creati 2 componenti Astro condivisi (4 lingue ciascuno) + 1 per il chi siamo:
+- **`BookingIntro.astro`** → su `/prenotaora` + /en/book-now + /de/jetzt-buchen + /fr/reserver: come prenotare (4 step), pagamenti senza carta, link interni a flotta/tariffe/hub. (Prima: ZERO testo per i crawler.)
+- **`FleetIntro.astro`** → su `/flotta` (+ EN/DE/FR): ~180 parole introduttive localizzate + link agli hub di servizio.
+- **`AboutCrawlerText.astro`** → contenuto "chi siamo" enciclopedico ora presente su **tutte e 4 le lingue** (EN/DE/FR erano completamente vuote server-side; IT migrato al componente condiviso).
+- ⚖️ **Decisione su `sr-only` (chisiamo)**: mantenuto `sr-only` invece di renderlo visibile. Il contenuto è **coerente** con quello che la view React mostra visivamente (trascrizione accessibile/indicizzabile, non testo divergente → rischio cloaking basso) e questo evita la duplicazione visibile. La versione "tutto visibile" richiederebbe un refactor della view React `ChiSiamo` — rinviata come scelta di prodotto.
 
 ---
 
@@ -202,7 +200,7 @@ L'audit segnala **362 pagine "orphan"** nel link-graph statico: Navbar e Footer 
 
 | Fase | Cosa | Owner | Tempi |
 |------|------|-------|-------|
-| **Fase A — Fondamenta** | F1 (decisione indirizzo) → F2 NAP, F3 priceRange, F4 crawlability client:only | 🤝 | settimana 1 |
+| ✅ **Fase A — Fondamenta** | F1 (deciso: Aldo Moro 367) → F2 NAP codice, F3 priceRange, F4 crawlability client:only — **FATTA 2026-05-26**. Resta solo F2-manuale (allineamento directory) | 🤝 | ~~settimana 1~~ |
 | **Fase B — Keyword + AI on-page** | K1 landing lusso, G1-G8 (llms.txt, HowTo, Event, passaggi) | 🤖 | settimana 1-2 |
 | **Fase C — Local foundation** | B1-B7 quick-win backlink + L1-L8 GBP + 3C citazioni mappa | 👤 (testi 🤖) | settimana 1-4 |
 | **Fase D — Recensioni + off-site AI** | 3B sistema recensioni, G9-G11 (Wikidata/YouTube/LinkedIn) | 👤 | mese 1-2 |
@@ -233,11 +231,11 @@ F1 (decisione), tutte le rivendicazioni profilo (GBP, Bing, Apple, Wikidata, You
 
 ## 10. DECISIONI APERTE (servono a te)
 
-1. **Indirizzo principale** (F1): Aldo Moro 367 o Isola Bianca 38? → sblocca tutto il local.
+1. ~~**Indirizzo principale** (F1)~~ → ✅ **DECISO: Viale Aldo Moro 367** (2026-05-26). Codice allineato. Resta da allineare le directory manualmente (F2-manuale).
 2. **Sbloccare Ahrefs/Semrush** nel robots.txt per auto-monitoraggio? (oggi bloccati)
 3. **Secondo GBP all'aeroporto** (3D): perseguibile un punto fisico/accordo?
 4. **Budget Ads** (fuori da questo piano ma collegato): per traffico immediato mentre la SEO matura.
 
 ---
 
-_Prossimo passo operativo consigliato: tu decidi **F1 (indirizzo)**; in parallelo io parto con **K1 (landing auto di lusso)** + **F3/F4 (priceRange + crawlability)** che non dipendono da F1._
+_Stato: **Fase A completata** (F1-F4 in codice, 2026-05-26). Prossimo passo consigliato: **Fase B → K1 (landing auto di lusso `/noleggio-auto-lusso-olbia` in 4 lingue)** — gap critico — poi G1-G8 (llms.txt + schema HowTo/Event + passaggi pagine dinamiche)._

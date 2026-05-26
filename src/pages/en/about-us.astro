@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ChiSiamo, { chiSiamoFaqJsonLd } from "@/views/ChiSiamo";
+import AboutCrawlerText from "@/components/AboutCrawlerText.astro";
 import { buildBreadcrumb, personFrancescoMilo, personSalvatoreMilo } from "@/lib/jsonLd";
 ---
 <BaseLayout
@@ -10,5 +11,6 @@ import { buildBreadcrumb, personFrancescoMilo, personSalvatoreMilo } from "@/lib
   ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/chisiamo.webp"
   jsonLd={[chiSiamoFaqJsonLd, personFrancescoMilo, personSalvatoreMilo, buildBreadcrumb("About Us", "/en/about-us")]}
 >
+  <AboutCrawlerText lang="en" />
   <ChiSiamo client:only="react" lang="en" />
 </BaseLayout>
