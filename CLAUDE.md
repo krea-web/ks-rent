@@ -337,6 +337,6 @@ git push origin main          # Vercel auto-deploya da main
 | [astro.config.mjs](astro.config.mjs) | Build + i18n + sitemap (no blocco i18n) |
 | [vercel.json](vercel.json) | Redirect 301 + security headers + CSP |
 | [public/robots.txt](public/robots.txt) | Crawler AI ammessi, tool SEO bloccati |
-| [public/llms.txt](public/llms.txt) | Riassunto entità per LLM/AI search |
+| [src/pages/llms.txt.ts](src/pages/llms.txt.ts) | `/llms.txt` **generato a build-time** (review count da `getAggregateRating()`, no drift). Era `public/llms.txt`, rimosso. |
 | [docs/PAGES-CHECKLIST.md](docs/PAGES-CHECKLIST.md) | Tracker UX/SEO per rotta |
 | [scripts/](scripts/) | 22 script: sync reviews, audit, diversify, indexnow, image/OG gen, sitemap |

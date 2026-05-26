@@ -143,14 +143,14 @@ La debolezza strutturale è l'indirizzo lontano dall'aeroporto OLB (vale ~30% de
 ### 4A. Codice 🤖
 | # | Azione | Stato |
 |---|--------|-------|
-| G1 | **llms.txt**: aggiungere le **18 guide** (contenuto più citabile: tabelle prezzi, itinerari), la pagina **/chisiamo**, e una **sezione "English summary"** (150-200 parole) per i LLM anglofoni | ⬜ da fare |
+| G1 | **llms.txt**: aggiungere le **18 guide** (contenuto più citabile: tabelle prezzi, itinerari), la pagina **/chisiamo**, e una **sezione "English summary"** (150-200 parole) per i LLM anglofoni | ✅ FATTO (21 guide + /chisiamo + English summary) |
 | G2 | **Schema `HowTo`** sulle guide durata (weekend/5/7/10/14/30 giorni — struttura a step perfetta) | ✅ FATTO su **tutte e 4 le lingue** (24 guide). IT inline; EN/DE/FR via `src/data/guide-schema.ts` (`buildDurationHowTo`) |
 | G3 | **Schema `Event`** sulla guida sagre/eventi Gallura 2026 | ✅ FATTO su **tutte e 4 le lingue** (6 eventi con data esplicita). IT inline; EN/DE/FR via `buildGalluraEvents` |
 | G4 | **Tipo `MotorcycleRental`** aggiunto al `@graph` per query moto/scooter | ✅ FATTO (⚠️ MotorcycleRental non esiste su schema.org → `makesOffer` con item tipati `Motorcycle`) |
 | G5 | **robots.txt**: aggiungere `DuckAssistBot` (DuckDuckGo AI) | ✅ FATTO |
 | G6 | **Passaggi pagine dinamiche** (località/spiagge): da 60-90 → **134-167 parole** auto-conclusive (+1 dato specifico ciascuno) | ⬜ da fare (tocca contenuti Supabase) |
 | G7 | **`inLanguage` array** nel WebSite schema + `speakable` su pagine hub (olbia/aeroporto/porto) | 🟡 inLanguage ✅ · speakable hub ⬜ (bassa priorità) |
-| G8 | **llms.txt auto-generato** da `.astro` (legge il review count da Supabase → niente drift) | ⬜ da fare |
+| G8 | **llms.txt auto-generato** da `.astro` (legge il review count da Supabase → niente drift) | ✅ FATTO (endpoint `src/pages/llms.txt.ts`, review count da `getAggregateRating()`; rimosso `public/llms.txt`) |
 
 ### 4B. Presenza off-site (i 3 segnali AI più forti, oggi ASSENTI) 👤
 | # | Azione | Perché |
