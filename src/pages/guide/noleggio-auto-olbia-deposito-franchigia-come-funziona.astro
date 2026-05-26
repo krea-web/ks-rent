@@ -1,0 +1,95 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticle } from "@/data/guide-articles";
+
+const meta = findArticle("noleggio-auto-olbia-deposito-franchigia-come-funziona")!;
+const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondatore KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "it-IT",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Qual è la differenza tra deposito cauzionale e franchigia?", acceptedAnswer: { "@type": "Answer", text: "Il deposito cauzionale è una somma temporanea, trattenuta o pre-bloccata alla consegna e restituita interamente alla riconsegna se il veicolo torna integro. La franchigia è invece l'importo massimo che resta a tuo carico in caso di danno coperto dall'assicurazione: è un tetto al rischio, non un costo che paghi se non succede nulla. Con KS Rent Sardinia entrambi gli importi variano in base alla categoria del veicolo e vengono comunicati in modo chiaro prima della prenotazione." } },
+    { "@type": "Question", name: "Serve la carta di credito per versare il deposito a Olbia?", acceptedAnswer: { "@type": "Answer", text: "No. KS Rent Sardinia è uno dei pochi autonoleggi a Olbia che non impone la carta di credito: il deposito cauzionale può essere versato con bancomat, carta di debito, carta prepagata ricaricabile (Postepay, Revolut, N26) o contanti. È un vantaggio concreto per chi non possiede una carta di credito con plafond elevato." } },
+    { "@type": "Question", name: "Quando viene restituito il deposito cauzionale?", acceptedAnswer: { "@type": "Answer", text: "Alla riconsegna del veicolo, dopo il controllo che confermi l'assenza di danni, infrazioni o carburante mancante. Se il deposito è stato versato in contanti viene restituito subito; se è stato pre-bloccato sulla carta, lo sblocco dipende dai tempi tecnici della banca." } },
+    { "@type": "Question", name: "Cos'è la riduzione della franchigia e conviene?", acceptedAnswer: { "@type": "Answer", text: "È una copertura opzionale che azzera o riduce la franchigia: in caso di danno coperto non pagheresti nulla (o quasi). Conviene soprattutto sui noleggi più lunghi e sulle categorie premium, per viaggiare senza pensieri. Il costo viene comunicato in fase di prenotazione: scrivici su WhatsApp per i dettagli sul tuo veicolo." } },
+    { "@type": "Question", name: "Come faccio a sapere l'importo del deposito prima di prenotare?", acceptedAnswer: { "@type": "Answer", text: "Scrivici su WhatsApp al +39 344 6107071 indicando veicolo e date: ti comunichiamo deposito e franchigia in modo chiaro e trasparente, caso per caso, prima che tu confermi. Nessuna sorpresa al ritiro." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guide", path: "/guide" },
+    { name: "Deposito e franchigia", path: `/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta}>
+    <p>
+      <strong>Deposito cauzionale e franchigia sono i due aspetti del noleggio che generano più dubbi</strong> — e su cui i grandi network e i broker online sono spesso poco trasparenti, con blocchi sulla carta e cifre che emergono solo al banco. In questa guida spieghiamo in chiaro come funzionano con KS Rent Sardinia a Olbia: cosa sono, perché variano, come si pagano (anche senza carta di credito) e cosa succede in caso di danno. Una premessa importante: <strong>non pubblichiamo gli importi a listino</strong>, perché dipendono dalla categoria del veicolo e li comunichiamo caso per caso, in modo chiaro, prima della prenotazione.
+    </p>
+
+    <h2>Deposito cauzionale e franchigia: non sono la stessa cosa</h2>
+    <p>
+      Sono due concetti distinti che spesso vengono confusi:
+    </p>
+    <ul>
+      <li><strong>Deposito cauzionale</strong>: una somma temporanea, versata o pre-bloccata alla consegna del veicolo. È una garanzia, non un costo: viene <strong>restituita interamente</strong> alla riconsegna se l'auto torna integra, con il pieno e senza infrazioni.</li>
+      <li><strong>Franchigia (kasko)</strong>: l'importo massimo che resta a tuo carico in caso di danno coperto dall'assicurazione. È un tetto al rischio: se non succede nulla, non paghi nulla. La franchigia non è una somma che versi all'inizio, ma il limite della tua eventuale responsabilità in caso di sinistro.</li>
+    </ul>
+
+    <h2>Perché l'importo varia da veicolo a veicolo</h2>
+    <p>
+      Deposito e franchigia sono proporzionati al valore e alla categoria del mezzo. Una <a href="/flotta/fiat-panda">Fiat Panda Hybrid</a> ha cifre molto più contenute rispetto a una sportiva come l'<a href="/flotta/audi-rs3">Audi RS3</a> o la <a href="/flotta/bmw-m2">BMW M2</a>, mentre un <a href="/flotta/jeep-avenger">Jeep Avenger</a> o una <a href="/flotta/mercedes-classe-a">Mercedes Classe A</a> si collocano nel mezzo. È lo stesso principio che applicano tutti gli autonoleggi: più alto è il valore del veicolo, maggiore è la garanzia richiesta. La differenza è che noi te lo diciamo <strong>prima</strong>, non al momento del ritiro.
+    </p>
+
+    <h2>Come si versa il deposito: anche senza carta di credito</h2>
+    <p>
+      Qui sta la nostra differenza principale rispetto ai grandi network. La carta di credito tradizionale <strong>non è obbligatoria</strong>: il deposito cauzionale può essere versato con bancomat, carta di debito, carta prepagata ricaricabile (Postepay, Revolut, N26) o contanti. Nessuna pre-autorizzazione che blocchi migliaia di euro sulla tua carta proprio mentre vuoi goderti la vacanza. Per approfondire i metodi accettati, vedi la <a href="/guide/noleggio-auto-olbia-senza-carta-di-credito-guida-completa">guida completa al noleggio senza carta di credito</a>.
+    </p>
+
+    <h2>La riduzione della franchigia (opzionale)</h2>
+    <p>
+      Se vuoi guidare senza pensieri, puoi sottoscrivere al ritiro una <strong>riduzione della franchigia</strong>: una copertura opzionale che azzera o abbassa l'importo che resterebbe a tuo carico in caso di danno coperto. È particolarmente consigliata sui noleggi più lunghi e sulle categorie premium e sportive. Il costo, contenuto e rapportato al veicolo, viene comunicato in fase di prenotazione: scrivici su WhatsApp e ti diciamo subito se conviene per il tuo caso.
+    </p>
+
+    <h2>Cosa succede in caso di danno, furto o incidente</h2>
+    <p>
+      Tutti i nostri veicoli includono l'assicurazione RCA obbligatoria e l'assistenza stradale 24 ore su 24. In caso di danno coperto, la tua responsabilità economica è limitata alla franchigia (o azzerata se hai sottoscritto la riduzione). In caso di incidente è sufficiente chiamare il numero dedicato: ti guidiamo passo passo nella compilazione della constatazione e, se necessario, nella sostituzione del veicolo. Il deposito viene utilizzato solo per coprire eventuali danni a carico del cliente, ed è restituito per la parte non utilizzata.
+    </p>
+
+    <h2>Come conoscere gli importi prima di prenotare</h2>
+    <p>
+      È il modo più semplice per non avere sorprese: <strong>scrivici su WhatsApp al <a href="https://wa.me/393446107071">+39 344 6107071</a></strong> indicando il veicolo che ti interessa e le date. Ti comunichiamo deposito e franchigia in modo chiaro e trasparente, caso per caso, <strong>prima</strong> che tu confermi. Poi puoi completare la prenotazione online dalla pagina <a href="/prenotaora">Prenota Ora</a> o consultare il <a href="/tariffe">listino tariffe stagionali</a>.
+    </p>
+
+    <h2>In sintesi</h2>
+    <p>
+      Il deposito è una garanzia temporanea e restituibile; la franchigia è il tetto della tua responsabilità in caso di danno. Con KS Rent Sardinia entrambi sono <strong>trasparenti, proporzionati al veicolo, comunicati prima della prenotazione</strong> e pagabili anche senza carta di credito. Nessun blocco a sorpresa, nessuna cifra nascosta: solo chiarezza, per noleggiare a Olbia in totale serenità. Per qualsiasi dubbio, <a href="https://wa.me/393446107071">siamo su WhatsApp</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

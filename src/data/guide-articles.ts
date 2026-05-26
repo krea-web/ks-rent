@@ -49,6 +49,19 @@ export const GUIDE_ARTICLES: GuideArticleMeta[] = [
     related: ["noleggio-auto-olbia-aeroporto-guida-pratica", "itinerario-7-giorni-costa-smeralda-da-olbia"],
   },
   {
+    slug: "noleggio-auto-olbia-deposito-franchigia-come-funziona",
+    title: "Deposito cauzionale e franchigia nel noleggio auto a Olbia: come funziona",
+    excerpt:
+      "Come funzionano deposito cauzionale e franchigia kasko quando noleggi un'auto a Olbia: differenze, metodi di pagamento (anche senza carta di credito), riduzione franchigia, cosa succede in caso di danni. Aggiornato 2026.",
+    category: "Noleggio",
+    publishedAt: "2026-05-26",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["noleggio-auto-olbia-senza-carta-di-credito-guida-completa", "noleggio-auto-olbia-aeroporto-guida-pratica"],
+  },
+  {
     slug: "itinerario-7-giorni-costa-smeralda-da-olbia",
     title: "Itinerario 7 giorni in Costa Smeralda da Olbia: percorsi, spiagge, distanze",
     excerpt:
