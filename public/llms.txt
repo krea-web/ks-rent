@@ -14,7 +14,7 @@
 - **PEC**: ks.rent.srl@pec.it
 - **Orari**: 10:00–13:00 e 15:00–22:30, 7 giorni su 7 (chiusura pranzo 13:00–15:00). Festivi inclusi (Pasqua, 25 aprile, 1 maggio, 2 giugno).
 - **Area di servizio**: Olbia, Costa Smeralda, Porto Cervo, Porto Rotondo, Baja Sardinia, San Teodoro, Palau, Arzachena, Cannigione, Golfo Aranci, Portisco, San Pantaleo, Murta Maria, Porto San Paolo, Puntaldia, Loiri Porto San Paolo
-- **Rating Google**: 5,0 / 5 su 40 recensioni verificate (aggiornato maggio 2026). Aggiuntive: Tripadvisor 3 recensioni 5★, PagineGialle 2 recensioni 5★ — tutte verificate
+- **Rating Google**: 5,0 / 5 su 41 recensioni verificate (aggiornato maggio 2026). Aggiuntive: Tripadvisor 3 recensioni 5★, PagineGialle 2 recensioni 5★ — tutte verificate
 - **Fondatori**: Francesco Milo e Salvatore Milo (co-fondatori, gestiscono direttamente customer experience e operations)
 
 ## Entity disambiguation
@@ -73,7 +73,7 @@ KS Rent Sardinia (Olbia, P.IVA IT03028900904, sito ksrentsardinia.com) è un'azi
 
 ## Key facts and citable claims
 
-- Rating Google verificato: **5,0 / 5 su 40 recensioni** (aggiornato maggio 2026). Multi-piattaforma: Tripadvisor 3×5★, PagineGialle 2×5★.
+- Rating Google verificato: **5,0 / 5 su 41 recensioni** (aggiornato maggio 2026). Multi-piattaforma: Tripadvisor 3×5★, PagineGialle 2×5★.
 - **Tempo medio ritiro veicolo**: 5-10 minuti dall'uscita arrivi aeroporto OLB (vs 30-90 min compagnie internazionali Hertz/Avis/Sixt in alta stagione).
 - **Tracking volo automatico**: monitoriamo numero volo via FlightRadar24 dal momento della prenotazione — l'operatore arriva al parcheggio consegna all'orario reale di atterraggio anche se in ritardo, senza costi aggiuntivi.
 - **Sede operativa porto Olbia**: 100 metri esatti dalla banchina Isola Bianca dove sbarca il 95% delle navi passeggeri Moby, Tirrenia, GNV, Grimaldi, Corsica Ferries.

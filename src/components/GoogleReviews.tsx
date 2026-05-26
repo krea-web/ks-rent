@@ -43,10 +43,27 @@ const Stars = ({ rating }: { rating: number }) => (
   </div>
 );
 
+// Mesi IT hardcoded: formattazione deterministica identica su server (SSG) e
+// client. toLocaleDateString + new Date() davano output diversi tra Node e
+// browser (ICU/timezone) → hydration mismatch React #418/#425. Parsando la
+// stringa ISO direttamente evitiamo Date object, timezone e locale runtime.
+const MESI_IT = [
+  "gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno",
+  "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre",
+];
+function formatReviewDate(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const datePart = String(iso).split("T")[0]; // "2026-05-18"
+  const parts = datePart.split("-");
+  if (parts.length < 2) return null;
+  const year = parts[0];
+  const monthIdx = parseInt(parts[1], 10) - 1;
+  if (monthIdx < 0 || monthIdx > 11) return null;
+  return `${MESI_IT[monthIdx]} ${year}`;
+}
+
 const ReviewCard = ({ review, index }: { review: ReviewItem; index: number }) => {
-  const formattedDate = review.published_at
-    ? new Date(review.published_at).toLocaleDateString("it-IT", { year: "numeric", month: "long" })
-    : null;
+  const formattedDate = formatReviewDate(review.published_at);
 
   return (
     <motion.div
