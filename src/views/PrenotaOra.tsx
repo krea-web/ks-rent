@@ -32,7 +32,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
@@ -694,8 +693,6 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
-  const [startDateOpen, setStartDateOpen] = useState(false);
-  const [endDateOpen, setEndDateOpen] = useState(false);
 
   const [mainDriver, setMainDriver] = useState({ ...initialDriverState });
   const [hasSecondDriver, setHasSecondDriver] = useState<boolean | null>(null);
@@ -1507,88 +1504,80 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                     </span>
                     {t.step2.heading}
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <div className="space-y-3">
-                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.step2.pickupLabel}</Label>
-                      <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full justify-start text-left bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gold/50 hover:bg-gray-50 dark:hover:bg-[#151515] h-14 rounded-xl text-base",
-                              !startDate && "text-gray-400 dark:text-white/40",
-                            )}
-                          >
-                            <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                            {startDate ? format(startDate, "dd MMM yyyy", { locale: dateLocale }) : t.step2.selectDate}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl z-50">
-                          <Suspense
-                            fallback={
-                              <div className="p-4">
-                                <Skeleton className="w-[280px] h-[280px]" />
-                              </div>
-                            }
-                          >
-                            <Calendar
-                              mode="single"
-                              selected={startDate}
-                              onSelect={(date) => {
-                                setStartDate(date);
-                                if (date) {
-                                  // Reset end date if it's before the new start date
-                                  if (endDate && date > endDate) setEndDate(undefined);
-                                  setStartDateOpen(false);
-                                  setTimeout(() => setEndDateOpen(true), 200);
-                                }
-                              }}
-                              disabled={(d) => d < new Date()}
-                              className="p-4 pointer-events-auto"
-                              classNames={{ day_selected: "bg-gold text-white hover:bg-gold/80" }}
-                            />
-                          </Suspense>
-                        </PopoverContent>
-                      </Popover>
+                  <div className="space-y-5">
+                    {/* Riepilogo date — sola lettura, evidenziato in oro quando impostato */}
+                    <div className="grid grid-cols-2 gap-3 md:gap-4">
+                      <div
+                        className={cn(
+                          "rounded-xl border p-4 transition-colors",
+                          startDate
+                            ? "border-gold/50 bg-gold/5"
+                            : "border-gray-200 dark:border-white/10 bg-white dark:bg-[#111]",
+                        )}
+                      >
+                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-1.5">
+                          <CalendarIcon className="h-3.5 w-3.5 text-gold" />
+                          {t.step2.pickupLabel}
+                        </div>
+                        <div
+                          className={cn(
+                            "text-base md:text-lg font-semibold",
+                            startDate ? "text-gray-900 dark:text-white" : "text-gray-400 dark:text-white/40",
+                          )}
+                        >
+                          {startDate ? format(startDate, "dd MMM yyyy", { locale: dateLocale }) : t.step2.selectDate}
+                        </div>
+                      </div>
+                      <div
+                        className={cn(
+                          "rounded-xl border p-4 transition-colors",
+                          endDate
+                            ? "border-gold/50 bg-gold/5"
+                            : "border-gray-200 dark:border-white/10 bg-white dark:bg-[#111]",
+                        )}
+                      >
+                        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-1.5">
+                          <CalendarIcon className="h-3.5 w-3.5 text-gold" />
+                          {t.step2.returnLabel}
+                        </div>
+                        <div
+                          className={cn(
+                            "text-base md:text-lg font-semibold",
+                            endDate ? "text-gray-900 dark:text-white" : "text-gray-400 dark:text-white/40",
+                          )}
+                        >
+                          {endDate ? format(endDate, "dd MMM yyyy", { locale: dateLocale }) : t.step2.selectDate}
+                        </div>
+                      </div>
                     </div>
-                    <div className="space-y-3">
-                      <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.step2.returnLabel}</Label>
-                      <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full justify-start text-left bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 hover:border-gold/50 hover:bg-gray-50 dark:hover:bg-[#151515] h-14 rounded-xl text-base",
-                              !endDate && "text-gray-400 dark:text-white/40",
-                            )}
-                          >
-                            <CalendarIcon className="mr-3 h-5 w-5 text-gold" />
-                            {endDate ? format(endDate, "dd MMM yyyy", { locale: dateLocale }) : t.step2.selectDate}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white rounded-2xl z-50">
-                          <Suspense
-                            fallback={
-                              <div className="p-4">
-                                <Skeleton className="w-[280px] h-[280px]" />
-                              </div>
-                            }
-                          >
-                            <Calendar
-                              mode="single"
-                              selected={endDate}
-                              onSelect={(date) => {
-                                setEndDate(date);
-                                if (date) setEndDateOpen(false);
-                              }}
-                              defaultMonth={startDate || new Date()}
-                              disabled={(d) => d < (startDate || new Date())}
-                              className="p-4 pointer-events-auto"
-                              classNames={{ day_selected: "bg-gold text-white hover:bg-gold/80" }}
-                            />
-                          </Suspense>
-                        </PopoverContent>
-                      </Popover>
+
+                    {/* Calendario range singolo — data inizio + fine nella stessa finestra */}
+                    <div className="flex justify-center rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#111] py-2">
+                      <Suspense
+                        fallback={
+                          <div className="p-4">
+                            <Skeleton className="w-[300px] h-[300px]" />
+                          </div>
+                        }
+                      >
+                        <Calendar
+                          mode="range"
+                          selected={{ from: startDate, to: endDate }}
+                          onSelect={(range) => {
+                            setStartDate(range?.from);
+                            setEndDate(range?.to);
+                          }}
+                          numberOfMonths={1}
+                          defaultMonth={startDate || new Date()}
+                          disabled={(d) => {
+                            const t0 = new Date();
+                            t0.setHours(0, 0, 0, 0);
+                            return d < t0;
+                          }}
+                          locale={dateLocale}
+                          className="pointer-events-auto"
+                        />
+                      </Suspense>
                     </div>
                   </div>
 
