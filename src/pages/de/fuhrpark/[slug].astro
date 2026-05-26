@@ -43,6 +43,8 @@ const jsonLd = buildVehiclePageJsonLd(
     group_slug: seo.group_slug,
     name: seo.title_de,
     brand: primary?.make || null,
+    model: primary?.model || null,
+    year: primary?.year || null,
     category: primary?.category || null,
     fuel: primary?.fuel_type || null,
     description: seo.meta_description_de || null,

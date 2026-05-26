@@ -1191,6 +1191,8 @@ interface VehiclePageData {
   group_slug: string;
   name: string;
   brand?: string | null;
+  model?: string | null;
+  year?: number | null;
   category?: string | null;
   fuel?: string | null;
   description?: string | null;
@@ -1243,10 +1245,15 @@ export const buildVehiclePageJsonLd = (
     brand: v.brand
       ? { "@type": "Brand", name: v.brand }
       : undefined,
+    model: v.model || undefined,
+    vehicleModelDate: v.year ? String(v.year) : undefined,
     description: v.description || undefined,
     image: v.image || undefined,
     vehicleConfiguration: v.category || undefined,
     fuelType: v.fuel ? (fuelMap[v.fuel] || v.fuel) : undefined,
+    vehicleEngine: v.fuel
+      ? { "@type": "EngineSpecification", fuelType: fuelMap[v.fuel] || v.fuel }
+      : undefined,
     offers:
       v.priceFrom != null
         ? {
