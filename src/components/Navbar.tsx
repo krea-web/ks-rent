@@ -197,6 +197,13 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
   const portHref = localizePath("/noleggio-auto-porto-olbia", lang);
   const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
   const noCardHref = localizePath("/noleggio-auto-senza-carta-di-credito-olbia", lang);
+  const motoScooterHref = localizePath("/noleggio-moto-scooter-olbia", lang);
+  const motoScooterNavLabel: Record<Locale, string> = {
+    it: "Scooter, Moto e Quad",
+    en: "Scooter, Motorbike & Quad",
+    de: "Roller, Motorrad & Quad",
+    fr: "Scooter, Moto & Quad",
+  };
 
   // Sezioni con presenza completa nelle 4 lingue dopo i18n batch.
   // Hub guide: /guide (IT), /en/guide, /de/guide, /fr/guide
@@ -239,6 +246,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
     { label: t.nav.deliveryItems.port, to: portHref, Icon: Anchor },
     { label: t.nav.deliveryItems.costaSmeralda, to: costaSmeraldaHref, Icon: Palmtree },
     { label: t.nav.deliveryItems.noCard, to: noCardHref, Icon: CreditCard },
+    { label: motoScooterNavLabel[lang], to: motoScooterHref, Icon: Bike },
   ];
 
   const LOC_COSTA_SMERALDA: DeliveryItem[] = [

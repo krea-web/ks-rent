@@ -138,6 +138,18 @@ const BOOK_HUB: Record<Lang, string> = {
   de: "/de/jetzt-buchen",
   fr: "/fr/reserver",
 };
+const MOTO_PAGE: Record<Lang, string> = {
+  it: "/noleggio-moto-scooter-olbia",
+  en: "/en/scooter-motorbike-rental-olbia",
+  de: "/de/motorrad-roller-mieten-olbia",
+  fr: "/fr/location-scooter-moto-olbia",
+};
+const MOTO_LINK_LABEL: Record<Lang, string> = {
+  it: "Cerchi due ruote? Scopri il noleggio scooter e moto a Olbia →",
+  en: "Looking for two wheels? See scooter & motorbike hire in Olbia →",
+  de: "Lieber zwei Räder? Zur Roller- & Motorradvermietung in Olbia →",
+  fr: "Plutôt deux roues ? Voir la location scooter & moto à Olbia →",
+};
 
 // ────────────────────────────────────────────────────────────────────
 // TRANSLATIONS — tutte le stringhe in 4 lingue
@@ -821,6 +833,9 @@ const faqsForComponent = T.faq.items.map((it) => ({ question: it.q, answer: it.a
 
       <p class="text-center mt-8">
         <a href={FLEET_HUB[lang]} class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition">{T.fleet.exploreAll}</a>
+      </p>
+      <p class="text-center mt-4">
+        <a href={MOTO_PAGE[lang]} class="text-primary font-medium hover:underline text-sm">{MOTO_LINK_LABEL[lang]}</a>
       </p>
     </div>
   </section>
