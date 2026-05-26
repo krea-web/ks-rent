@@ -1,50 +1,59 @@
-# CLAUDE.md — KS Rent Sardinia | Stack Astro 5 SSG + Multilingua
+# CLAUDE.md — KS Rent Sardinia | Astro 5 SSG multilingua
 
 > **Prima di fare qualsiasi cosa, leggi questo file intero. Poi esegui il PASSO 0.**
+>
+> Questo file è la **fonte di verità** su identità, stack, stato dello sviluppo
+> e regole inviolabili del progetto. Aggiornare la sezione "STATO SVILUPPO" e
+> "NOTE CRITICHE" ad ogni milestone.
 
 ---
 
 ## PASSO 0 — LETTURA OBBLIGATORIA DEL REPO PRIMA DI INIZIARE
 
-Prima di scrivere una riga di codice, leggi questi file per capire la struttura reale del progetto:
+Prima di scrivere una riga di codice, leggi questi file per capire la struttura reale:
 
 ```
-# 1. Configurazione build + i18n
+# 1. Configurazione build + i18n + sitemap
 astro.config.mjs
 
-# 2. Layout principale (meta tags, hreflang auto-injected, JSON-LD, switcher lingua)
+# 2. Layout principale (meta, hreflang auto, JSON-LD, switcher lingua, skip-nav)
 src/layouts/BaseLayout.astro
 
-# 3. Pagine dinamiche multilingua
-src/pages/[slug].astro                    # IT default (località + spiagge)
-src/pages/flotta/[slug].astro             # IT default (veicoli)
-src/pages/[lang]/[slug].astro             # EN/DE/FR (località + spiagge)
-src/pages/[lang]/flotta/[slug].astro      # EN/DE/FR (veicoli)
+# 3. Pagine dinamiche multilingua (località + spiagge + veicoli)
+src/pages/[slug].astro                    # IT default
+src/pages/flotta/[slug].astro             # IT veicoli
+src/pages/[lang]/[slug].astro             # EN/DE/FR località + spiagge
+src/pages/[lang]/flotta/[slug].astro      # EN/DE/FR veicoli
 
-# 4. Schema JSON-LD (LocalBusiness, Vehicle, Breadcrumb, FAQ)
+# 4. Schema JSON-LD (~30 export: LocalBusiness, Vehicle, Person, Service, ecc.)
 src/lib/jsonLd.ts
 
-# 5. Helper i18n e dizionari UI 4 lingue
+# 5. Helper i18n + dizionari UI 4 lingue
 src/lib/i18n.ts
-src/i18n/it.ts | en.ts | de.ts | fr.ts | index.ts
+src/i18n/{it,en,de,fr}.ts
 
-# 6. Admin (6 sezioni: Dashboard, Flotta, Manutenzione, Noleggi, SEO Editor, Reviews)
+# 6. Booking wizard (FLUSSO CONGELATO — vedi Nota Critica #12)
+src/views/PrenotaOra.tsx
+
+# 7. Admin (6 sezioni)
 src/views/Admin.tsx
 src/components/admin/sections/
 
-# 7. Sitemap + redirect Vercel
-public/sitemap-index.xml (generato al build)
-vercel.json
+# 8. Componenti riutilizzati ovunque
+src/components/GuideArticleLayout.astro   # template guide/magazine
+src/components/VehiclePageBody.astro      # corpo pagina veicolo
+src/components/LegalPageContent.astro     # pagine legali shared (3 tipi)
+src/components/Footer.tsx                 # link legali + social
+src/components/ui/calendar.tsx            # react-day-picker v9 wrapper
 
-# 8. Scripts SEO operativi
-scripts/seo-similarity.mjs
-scripts/audit-supabase-seo.mjs
-scripts/indexnow-ping.mjs
-scripts/fetch-google-reviews.mjs
-scripts/export-seo-content.mjs
+# 9. Deploy + SEO operativo
+vercel.json                               # redirect 301 + security headers + CSP
+public/robots.txt | public/llms.txt
+scripts/                                  # 22 script SEO/asset/audit
+docs/PAGES-CHECKLIST.md                   # tracker UX/SEO per rotta
 ```
 
-**Non procedere finché non hai letto tutti questi file.**
+**Non procedere finché non hai letto i file rilevanti per il tuo task.**
 
 ---
 
@@ -55,271 +64,270 @@ scripts/export-seo-content.mjs
 | **Sito** | `https://www.ksrentsardinia.com` |
 | **Business** | KS Rent Sardinia — Noleggio auto di lusso, SUV, supercar, moto, quad a Olbia, Gallura e Costa Smeralda |
 | **Ragione sociale** | KS Rent S.R.L. |
-| **P.IVA** | IT03028900904 |
+| **Fondatori** | **Francesco Milo** e **Salvatore Milo** (fratelli, imprenditori sardi) |
+| **P.IVA / CF** | IT03028900904 |
 | **REA** | SS - 224046 |
 | **Capitale sociale** | 20.000,00 EUR |
 | **PEC** | ks.rent.srl@pec.it |
 | **Email** | ksrentsrl@gmail.com |
-| **Telefono** | +393446107071 |
-| **Data apertura** | 8 aprile 2025 |
-| **Sede operativa** | Viale Isola Bianca 38, 07026 Olbia (SS) — coord: 40.922967, 9.520115 |
-| **Sede legale** | Viale Aldo Moro 367, 07026 Olbia (SS) — coord: 40.944573, 9.497897 |
-| **Indirizzo principale GBP** | Viale Aldo Moro 367 (sede legale) ⚠️ decisione pending se spostare a Isola Bianca |
-| **Orari** | 10:00–13:00 + 15:00–22:30 (chiusura pranzo), 7 giorni su 7 |
+| **Telefono / WhatsApp** | +39 344 6107071 |
+| **Data apertura** | 8 aprile 2025 (`foundingDate: 2025-04-08`) |
+| **Sede operativa / consegna porto** | Viale Isola Bianca 38, 07026 Olbia (SS) — 40.922967, 9.520115 |
+| **Sede legale** | Viale Aldo Moro 367, 07026 Olbia (SS) — 40.944573, 9.497897 |
+| **Orari** | 10:00–13:00 + 15:00–22:30, 7 giorni su 7 |
 | **Place ID (Google Maps)** | `ChIJP6b_YdBL2RIRkp3GdDzDwYU` — CID `9638199341974199698` |
-| **Categoria GBP primaria** | Agenzia di noleggio auto (`car_rental`) |
-| **Entità legale distinta da** | KS Rent S.r.l. (Roma) — sito `ksrent.it` — **NON siamo loro** |
+| **Categoria GBP** | Agenzia di noleggio auto (`car_rental`) |
+| **Recensioni Google** | **5,0 / 5 su 41 recensioni** (snapshot in `src/data/google-rating-snapshot.json`) |
+| **⚠️ Entità DISTINTA da** | KS Rent S.r.l. (Roma) — sito `ksrent.it` — **NON siamo loro** |
 
-### Social
+### Social & directory (usate come `sameAs` in JSON-LD)
 - Instagram: `https://www.instagram.com/ksrentsardinia`
 - TikTok: `https://www.tiktok.com/@ksrentsardinia`
 - Tripadvisor: `https://www.tripadvisor.it/Attraction_Review-g187883-d34295915-...`
+- Directory: PagineGialle, PagineBianche, Cylex, Hotfrog, MisterImprese, **carmappa.com, empresite.it, aziendeeasy.it**
 
 ### Asset
-- Logo: `https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/KSRENTlogo.png`
-- OG image: 1200×630 trasformata via Supabase image render
-- Favicon: `https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/ksrent-favicon.webp`
+- Logo: `.../storage/v1/object/public/asset/KSRENTlogo.png`
+- Favicon: `.../asset/ksrent-favicon.webp`
+- OG images custom per pagina: `.../asset/og/*.webp` (1200×630)
+- Supabase project ref: `zgytnkimjpoosvshfopz`
 
 ---
 
-## STACK TECNICO (post-migrazione Vite SPA → Astro 5 SSG)
+## STACK TECNICO
 
 | Tecnologia | Dettaglio |
 |------------|-----------|
-| **Framework** | **Astro 5.18 SSG** (output `static`, no adapter, deploy CDN su Vercel) |
-| **Build** | Astro + Vite 5 + SWC |
-| **Styling** | Tailwind CSS 3.4 con `@astrojs/tailwind` |
-| **React** | 18.3 — usato come **island** (`client:load`/`client:visible`) per Navbar, Booking form, Admin, FleetShowcase, Maps |
-| **SEO meta + JSON-LD** | Iniezione **statica** in `<head>` via `BaseLayout.astro`. NO react-helmet-async, NO Prerender.io |
-| **i18n** | Nativo Astro 5 — `defaultLocale: "it"` senza prefisso, `en/de/fr` con prefisso, `prefixDefaultLocale: false` |
-| **Database** | Supabase (PostgreSQL) — vedi schema sotto |
-| **Deploy** | Vercel (static + redirects + headers in `vercel.json`) |
-| **Analytics** | GA4 `G-1JL353W8QW` + Google Ads `AW-18006357660` |
-| **Privacy** | iubenda |
-| **UI Components** | shadcn/ui (Radix) + Framer Motion (shimmed per drop-in) |
-| **Maps** | @react-google-maps/api (in island `client:visible`) |
-| **PDF** | jspdf + jspdf-autotable (admin: contratti) |
+| **Framework** | **Astro 5.18 SSG** (`output: "static"`, no adapter, CDN Vercel, `trailingSlash: "never"`) |
+| **Build** | Astro + Vite 5 + SWC + `astro-compress` (HTML/CSS/JS/SVG) |
+| **Styling** | Tailwind 3.4 (`@astrojs/tailwind`, `applyBaseStyles:false`) + `@tailwindcss/typography` |
+| **React** | 18.3 come **island** (`client:load/visible/idle/only`) — Navbar, Booking, Admin, Maps, FleetShowcase, Reviews |
+| **Animazioni** | **`framer-motion` è SHIMMATO** → `src/lib/framer-motion-shim.tsx` rende `<motion.X>` come `<X>` puri (–100 KB di bundle). Vedi alias in astro.config.mjs |
+| **SEO meta + JSON-LD** | Iniezione **statica** in `<head>` via `BaseLayout.astro`. NO react-helmet, NO Prerender.io |
+| **i18n** | Nativo Astro 5 — `defaultLocale:"it"` senza prefisso, `en/de/fr` con prefisso, `prefixDefaultLocale:false` |
+| **DB** | Supabase (PostgreSQL + Storage) — MCP `supabase-ksrent` disponibile |
+| **Date** | `date-fns` v4 + **`react-day-picker` v9.14** (⚠️ API classNames diversa da v8) |
+| **Form** | `react-hook-form` + `zod` |
+| **Admin charts** | `recharts` v3 (Dashboard) |
+| **Contratti** | `jspdf` + `jspdf-autotable` + `react-signature-canvas` (firma) |
+| **UI** | shadcn/ui (Radix) + `sonner` (toast) + `vaul` (drawer) + `embla-carousel` + `cmdk` |
+| **Maps** | `@react-google-maps/api` (island `client:visible`) |
+| **Deploy** | Vercel (static + redirect 301 + security headers + CSP in `vercel.json`) |
+| **Analytics** | GA4 `G-1JL353W8QW` + Google Ads tag `AW-18006357660` |
+| **Privacy** | iubenda (Privacy + Cookie) |
 
-### Componenti SEO chiave
-- [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) — hub unico per `<title>`, `<meta>`, canonical, **hreflang auto-injected**, Open Graph, Twitter, JSON-LD (LocalBusiness statico + AggregateRating dinamico se passato + Breadcrumb auto-injected via prop + FAQPage globale opzionale + custom array).
-- [src/lib/jsonLd.ts](src/lib/jsonLd.ts) — builder per Vehicle, Breadcrumb (`buildBreadcrumbJsonLd`), FAQ, Service, Beach, Location.
-- `src/components/SEOHead.tsx` — **stub legacy**, non usare. Tutto passa da BaseLayout.
+### Componenti SEO chiave (da ESTENDERE, non riscrivere)
+- [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) — hub unico `<title>`, meta, canonical, **hreflang auto**, OG/Twitter, JSON-LD (LocalBusiness statico + `aggregateRating` dinamico + `breadcrumbs` auto-`BreadcrumbList` + FAQ globale opzionale + array custom). Skip-nav a11y.
+- [src/lib/jsonLd.ts](src/lib/jsonLd.ts) — ~30 builder: `localBusinessJsonLd`, `buildVehicleJsonLd`, `buildVehiclePageJsonLd`, `buildLocationJsonLd`, `buildBeachJsonLd` (con `TouristAttraction`), `buildBreadcrumb`/`buildBreadcrumbJsonLd`, `personFrancescoMilo`/`personSalvatoreMilo`/`founderAuthorRefs`, `serviceCatalogJsonLd` (7 servizi), `buildSpeakableJsonLd`, `buildCollectionPageJsonLd`, FAQ varie.
+- `src/components/SEOHead.tsx` — **STUB legacy, non usare**. Tutto passa da BaseLayout.
 
 ---
 
 ## ARCHITETTURA i18n (4 lingue)
 
-### Routing URL
-- **IT** (default, no prefisso): `/`, `/flotta`, `/tariffe`, `/noleggio-auto-porto-cervo`, `/flotta/audi-rs3`
-- **EN**: `/en/`, `/en/fleet`, `/en/rates`, `/en/{slug_en}`, `/en/flotta/{slug_en}`
-- **DE**: `/de/`, `/de/fuhrpark`, `/de/preise`, `/de/{slug_de}`, `/de/flotta/{slug_de}`
-- **FR**: `/fr/`, `/fr/flotte`, `/fr/tarifs`, `/fr/{slug_fr}`, `/fr/flotta/{slug_fr}`
+### Routing URL — slug localizzati per massimizzare keyword
+- **IT** (default, no prefisso): `/`, `/flotta`, `/tariffe`, `/noleggio-auto-porto-cervo`, `/flotta/audi-rs3`, `/guide/...`
+- **EN**: `/en/`, `/en/fleet`, `/en/rates`, `/en/car-hire-porto-cervo`, `/en/fleet/audi-rs3`
+- **DE**: `/de/`, `/de/fuhrpark`, `/de/preise`, `/de/autovermietung-porto-cervo`
+- **FR**: `/fr/`, `/fr/flotte`, `/fr/tarifs`, `/fr/location-voiture-porto-cervo`
+
+Gli slug possono **divergere per lingua** (es. `noleggio-auto-porto-cervo` → `car-hire-porto-cervo` → `autovermietung-porto-cervo` → `location-voiture-porto-cervo`). Mappa in [src/lib/i18n.ts](src/lib/i18n.ts).
 
 ### Dove vivono le traduzioni
+| Tipo | Storage | File / colonna |
+|------|---------|----------------|
+| **UI strings** | Codice TS | `src/i18n/{it,en,de,fr}.ts` (~175+ chiavi, stessa struttura) |
+| **Pagine statiche** (landing, guide, legali) | File `.astro` | `src/pages/{en,de,fr}/*.astro` |
+| **Contenuti dinamici** (località, spiagge, veicoli) | Supabase | Colonne `_en`, `_de`, `_fr` |
 
-| Tipo contenuto | Storage | File / colonna |
-|----------------|---------|----------------|
-| **UI strings** (CTA, navbar, footer, label form) | Codice TS | `src/i18n/{it,en,de,fr}.ts` — stessa struttura, stesse chiavi |
-| **Pagine statiche** (landing, hero, FAQ globali) | File `.astro` | `src/pages/{en,de,fr}/*.astro` (file separati per lingua) |
-| **Contenuti dinamici** (località, spiagge, veicoli) | Supabase | Colonne `_en`, `_de`, `_fr` su `seo_locations`, `seo_beaches`, `seo_vehicles` |
-
-### Regole di pubblicazione contenuti dinamici
-- Una pagina viene generata in lingua X SOLO se `slug_X` E `title_X` sono entrambi popolati nel DB
-- Le restanti località/spiagge/veicoli rimangono solo in IT finché non sono tradotti via SEO Editor admin
-- Il LanguageSwitcher porta sempre a una pagina valida (gli URL alternate vengono generati anche se il record manca, ma 404 = visibile sul livello DB)
+### Regole pubblicazione contenuti dinamici
+- Una pagina è generata in lingua X SOLO se `slug_X` **E** `title_X` sono popolati nel DB.
+- Le restanti restano solo IT finché non tradotte via SEO Editor admin.
 
 ### hreflang
-Auto-iniettati in `<head>` da [BaseLayout.astro](src/layouts/BaseLayout.astro) tramite [src/lib/i18n.ts](src/lib/i18n.ts) `getAlternateLinks()`:
-```html
-<link rel="alternate" hreflang="it-it" href=".../path" />
-<link rel="alternate" hreflang="en-gb" href=".../en/path" />
-<link rel="alternate" hreflang="de-de" href=".../de/path" />
-<link rel="alternate" hreflang="fr-fr" href=".../fr/path" />
-<link rel="alternate" hreflang="x-default" href=".../path" />
-```
+Auto-iniettati in `<head>` da [BaseLayout.astro](src/layouts/BaseLayout.astro) via `getAlternateLinks()` (conosce slug veri + traduzioni pubblicate). `it-it`, `en-gb`, `de-de`, `fr-fr`, `x-default`.
 
-### Switcher lingua
-- Astro: [src/components/LanguageSwitcher.astro](src/components/LanguageSwitcher.astro)
-- React (per Navbar island): [src/components/LanguageSwitcher.tsx](src/components/LanguageSwitcher.tsx)
-- Pure `<a>` link, no JS-driven redirect, attributi `hreflang` corretti su ogni link
-- Integrato nella Navbar desktop (vicino al ThemeToggle) e mobile (in cima al drawer)
+> ⚠️ **La sitemap NON usa il blocco i18n di `@astrojs/sitemap`** (generava alternate per sostituzione meccanica del prefisso → 404). Vedi commento in astro.config.mjs. Gli hreflang corretti vengono solo da BaseLayout.
 
 ---
 
-## SCHEMA DATABASE SUPABASE (post-Fase 0)
+## SCHEMA DATABASE SUPABASE
 
-### Tabelle SEO contenuti (multilingua)
-- **`seo_locations`** — 21 record. Colonne IT: `slug`, `title`, `h1`, `meta_description`, `content_html`. Colonne EN/DE/FR: `slug_en/de/fr`, `title_en/de/fr`, `h1_en/de/fr`, `meta_description_en/de/fr`, `content_html_en/de/fr`. Asset: `hero_image_url`, `og_image_url`, `canonical_url`, `map_url`.
-- **`seo_beaches`** — 20 record. Stesse colonne di seo_locations + `parking_info`.
-- **`seo_vehicles`** — N record (uno per `group_slug`, es. `audi-rs3`, `honda-sh`). Colonne IT + 3 lingue, `slug_en/de/fr` (URL localizzata), `faqs` (jsonb multilingua), `recommended_locations` (text[]).
+### Tabelle SEO contenuti (multilingua: IT + colonne `_en/_de/_fr`)
+- **`seo_locations`** — 21 record. `slug`, `title`, `h1`, `meta_description`, `content_html` (+ 3 lingue), `hero_image_url`, `og_image_url`, `canonical_url`, `map_url`.
+- **`seo_beaches`** — 20 record. Come locations + `parking_info`.
+- **`seo_vehicles`** — 1 record per `group_slug` (es. `audi-rs3`, `honda-sh`). IT + 3 lingue, `faqs` (jsonb multilingua), `recommended_locations` (text[]).
 
 ### Tabelle business
-- **`vehicles`** — flotta. Colonne core: `make`, `model`, `category`, `year`, `fuel_type`, `color`, `license_plate`, `daily_rate`, `rate_april`...`rate_october` (tariffe mensili). **Nuove colonne post-Fase 0**: `group_slug` (link a seo_vehicles), `is_primary_variant` (immagine hero del gruppo), `gallery_urls` (jsonb), `transparent_image_url` (PNG hero pagina veicolo), `is_archived` (soft delete).
-- **`bookings`** — prenotazioni con dati cliente, secondo conducente, contratto firmato (`signed_pdf_url` su Supabase Storage `contracts/`).
-- **`profiles`** — `is_admin` flag per gating admin.
-- **`leads`** — email form newsletter.
+- **`vehicles`** — flotta. `make`, `model`, `category`, `year`, `fuel_type`, `color`, `license_plate`, `daily_rate`, `rate_april`…`rate_october`, `group_slug`, `is_primary_variant`, `gallery_urls` (jsonb), `transparent_image_url`, `is_archived`. (Esiste `franchise_amount` — **vedi Nota Critica #13: NON pubblicare prezzi franchigia**.)
+- **`bookings`** — prenotazioni + cliente + 2° conducente + `signed_pdf_url`.
+- **`profiles`** — flag `is_admin`.
+- **`leads`** — email newsletter.
+- **`reviews`** — Google + manuali. `source`, `google_review_id`, `author_name/photo_url`, `rating`, `text` (+ 3 lingue), `published_at`, `is_published`, `is_featured`.
+- **`admin_audit_log`** — azioni admin (via `src/lib/audit.ts`).
+- **`vehicle_maintenance_log`** — storico KM/revisioni.
 
-### Tabelle Fase 0 (nuove)
-- **`reviews`** — Google Reviews + manuali. Colonne: `source ('google'|'manual')`, `google_review_id`, `author_name`, `author_photo_url`, `rating (1-5)`, `text`, `text_en/de/fr`, `published_at`, `is_published`, `is_featured`.
-- **`admin_audit_log`** — tracciamento azioni admin. Auto-popolato da `src/lib/audit.ts`.
-- **`vehicle_maintenance_log`** — storico KM/revisioni per veicolo.
-
-### Storage buckets (creare manualmente in Supabase UI)
-- `vehicles` (public) — immagini veicoli e gallerie
-- `contracts` (private) — PDF contratti firmati
-- `reviews` (public) — foto autori Google Reviews
+### Storage buckets (creare MANUALMENTE in Supabase UI)
+`vehicles` (public), `contracts` (private), `reviews` (public).
 
 ---
 
-## ROADMAP OPERATIVA — STATO AVANZAMENTO
+## STATO SVILUPPO — DOVE SIAMO ARRIVATI (agg. 2026-05-26)
 
-### ✅ Fase 0 — Admin Redesign (completata)
-- 6 sezioni admin: Dashboard, Flotta & Prezzi, Manutenzione, Noleggi & Contratti, **SEO Editor 4-lingue**, **Reviews Manager**
-- Migrazione DB: [sql/08-phase-0-admin-redesign-schema.sql](sql/08-phase-0-admin-redesign-schema.sql)
-- Helper: [src/lib/audit.ts](src/lib/audit.ts), [src/lib/adminStorage.ts](src/lib/adminStorage.ts)
-- VehicleModal esteso con `group_slug`, gallery, immagine trasparente, archiviazione
-- BookingModal: upload contratto firmato + audit log
+### Sito pubblico: ~370 pagine generate, 4 lingue. Stato **production-ready**.
 
-### ✅ Fase 1 — Pagine Veicoli + Navbar + Linking (completata)
-- [src/pages/flotta/[slug].astro](src/pages/flotta/[slug].astro) con hero, prezzi mensili, gallery, FAQ, location consigliate
-- [src/lib/jsonLd.ts](src/lib/jsonLd.ts): `buildVehiclePageJsonLd`, `buildBreadcrumbJsonLd`
-- [src/components/FleetGrid.astro](src/components/FleetGrid.astro): griglia card (in home + /flotta)
-- Navbar mega-menu Flotta (desktop + mobile accordion)
-- Footer: chip "Flotta" + 7 link veicolo
-- Pagine località: doppio CTA "Scopri [Veicolo]" + "Prenota"
+#### ✅ Fasi fondative (0→5) — completate
+- **Fase 0 — Admin redesign**: 6 sezioni (Dashboard, Flotta & Prezzi, Manutenzione, Noleggi & Contratti, SEO Editor 4-lingue, Reviews Manager). Migrazione `sql/08-phase-0-admin-redesign-schema.sql`. Helper `audit.ts`, `adminStorage.ts`. VehicleModal + BookingModal estesi (gallery, immagine trasparente, archiviazione, upload contratto firmato).
+- **Fase 1 — Pagine veicoli + linking**: `/flotta/[slug]` (hero, prezzi mensili, gallery, FAQ, location consigliate), FleetGrid, Navbar mega-menu, footer chip Flotta.
+- **Fase 2 — Reviews API + tariffe**: `fetch-google-reviews.mjs` (sync Places API → Supabase, auto al prebuild), GoogleReviews component, `/tariffe` listino mensile.
+- **Fase 3 — Schema avanzato**: `aggregateRating` + `breadcrumbs` dinamici in BaseLayout, Vehicle schema con Offer + priceSpecification + seller AutoRental.
+- **Fase 4 — i18n IT/EN/DE/FR**: config i18n, helper, dizionari completi, ~33 pagine statiche tradotte, generatori dinamici multilingua, LanguageSwitcher, hreflang, slug localizzati.
 
-### ✅ Fase 2 — Google Reviews API + Tariffe (completata)
-- [scripts/fetch-google-reviews.mjs](scripts/fetch-google-reviews.mjs) — sync Places API → Supabase
-- `npm run sync-reviews` (auto al `prebuild`)
-- [src/components/GoogleReviews.tsx](src/components/GoogleReviews.tsx) accetta props (con fallback hardcoded)
-- Home Astro fetch reviews + count + averageRating
-- [src/pages/tariffe.astro](src/pages/tariffe.astro) — listino prezzi mensili per categoria
+#### ✅ Espansione contenuti (post-Fase 4)
+- **Sistema Guide / Magazine**: **15 guide × 4 lingue = 60 pagine** (`GuideArticleLayout.astro` + `GuideTOC`, `GuideReadingProgress`, `GuideVehicleStrip`, `RelatedGuides`, `GuideSpotlight`). Tipografia editorial (serif + drop-cap + barra dorata h2).
+- **Pagine confronto veicoli**: **6 pair × 4 lingue = 24** (`/flotta/confronta/audi-rs3-vs-bmw-m2`, ecc.) + 4 index.
+- **Service landing top-level**: 5 servizi × 4 lingue (Olbia, aeroporto, porto, Costa Smeralda, senza-carta-di-credito).
+- **Pagine legali**: **3 tipi × 4 lingue = 12** via `LegalPageContent.astro` (`pageType`: `terms` | `withdrawal` | `supplier-info`):
+  - IT: `/termini-e-condizioni`, `/diritto-recesso`, `/informativa-fornitore`
+  - EN: `/en/terms-conditions`, `/en/withdrawal-rights`, `/en/supplier-info`
+  - DE: `/de/agb`, `/de/widerrufsrecht`, `/de/anbieterinformationen`
+  - FR: `/fr/conditions-generales`, `/fr/droit-de-retractation`, `/fr/informations-fournisseur`
+  - ⚖️ Template AGCM/Codice del Consumo. **Disclaimer**: revisione di un legale è consigliata prima del lancio definitivo.
 
-**Env vars per attivare sync** (`.env.local`):
-```
-GOOGLE_PLACES_API_KEY=
-GOOGLE_PLACE_ID=
-SUPABASE_SERVICE_ROLE_KEY=
-```
+#### ✅ SEO avanzato (P0→P4) — completato
+- **P0**: schema `Person` (founders) + `Review` + `HowTo` + `VehicleListing` + OG images custom per pagina.
+- **P1**: riscrittura LLM batch **153/160** `content_html` su Supabase + `llms.txt` arricchito.
+- **P2**: `Service` schemas (7) + `TouristAttraction` su spiagge + `Speakable`.
+- **P3**: `robots.txt` con 11 nuovi crawler AI/social ammessi + raffinamento security headers.
+- **P4**: image sitemap (`generate-image-sitemap.mjs`) + audit internal links + baseline snapshot SEO.
+- **Content diversification**: **160/160 record** locale-specifici diversificati (Gemini API) → similarity Jaccard media bassa.
 
-### ✅ Fase 3 — Schema markup avanzato (completata)
-- [BaseLayout.astro](src/layouts/BaseLayout.astro) prop `aggregateRating` (rating dinamico) + `breadcrumbs` (auto BreadcrumbList)
-- Home passa AggregateRating reale da Supabase
-- Tutte le pagine principali e dinamiche emettono BreadcrumbList JSON-LD
-- Vehicle schema con `Offer` + `priceSpecification` + `seller` AutoRental
+#### ✅ Rifiniture & fix recenti (maggio 2026)
+- **Newsletter signup** in footer (`NewsletterSignup.tsx` → `leads`).
+- **Image optimization**: `OptimizedImage.tsx` + Supabase image transform `?width=&quality=` srcset (TopBeachesShowcase, GuideSpotlight, hero) → Core Web Vitals.
+- **Footer**: link Tripadvisor + WhatsApp + 3 link legali.
+- **Calendario prenotazione (2026-05-26)**: migrato `ui/calendar.tsx` da API react-day-picker v8 → v9; convertito a **range picker singolo inline** (data inizio + fine nella stessa finestra) con celle 44px touch. Flusso submit invariato.
+- **Fix hydration** (#418/#423/#425): `GoogleReviews` date formattate in modo deterministico (no `toLocaleDateString`).
+- **CSP refinement** (`vercel.json`): `connect-src` con iubenda + Google Ads/doubleclick/googlesyndication.
+- **Broken internal links**: audit (`audit-buttons.mjs`) + fix 22 link verso slug localizzati corretti.
+- **Backlink/directory**: `sameAs` esteso (carmappa, empresite, aziendeeasy).
+- **Email reminder ritiro**: workflow **N8N + Gmail** (vedi Nota Critica #14).
+- **Reviews**: 41 @ 5,0 in tutto il codebase + snapshot JSON.
 
-### ✅ Fase 4 — i18n IT/EN/DE/FR (completata, 3 agenti in parallelo)
-- [astro.config.mjs](astro.config.mjs) con `i18n` (4 lingue, IT senza prefisso)
-- [src/lib/i18n.ts](src/lib/i18n.ts) — helper `getLocaleFromPath`, `localizePath`, `getAlternateLinks`
-- Dizionari UI completi: [src/i18n/{it,en,de,fr}.ts](src/i18n/it.ts) — stessa struttura, ~175 chiavi
-- Pagine statiche tradotte: `src/pages/{en,de,fr}/*.astro` (homepage, fleet, rates, about, 4 services, 404, book-now, sitemap) — 33 pagine totali
-- Pagine dinamiche multilingua: [src/pages/[lang]/[slug].astro](src/pages/[lang]/[slug].astro), [src/pages/[lang]/flotta/[slug].astro](src/pages/[lang]/flotta/[slug].astro)
-- LanguageSwitcher: [Astro](src/components/LanguageSwitcher.astro) + [React](src/components/LanguageSwitcher.tsx) integrati in Navbar
-- hreflang auto-injected in tutte le pagine
-- Slug localizzati: `/en/car-hire-porto-cervo`, `/de/autovermietung-porto-cervo`, `/fr/location-voiture-porto-cervo`
+### ⏸️ In sospeso / decisioni aperte (NON ancora fatte)
+| # | Item | Stato / motivo |
+|---|------|----------------|
+| 2 | **Google / Meta Ads** | Non è un task di codice. Richiede budget + setup account. GA4 + tag Google Ads già installati nel sito (tracking pronto). Serve per traffico immediato a pagamento mentre la SEO organica matura. |
+| 4 | **Booking checkbox consenso (B2), età ≥21 (B3), documenti richiesti (M1)** | **CONGELATI** nel flusso PrenotaOra (Nota Critica #12). Riattivabili solo con sblocco esplicito. |
+| 6 | **Foto reali (fotografo)** | Decisione utente, rinviata. Ora foto AI/contestuali + avatar fondatori. |
+| 8 | **Copy da umanizzare** | Possibili interventi puntuali (utente da confermare quali pagine). |
+| — | **Stripe gateway (L3)** | Cambio di business model — decisione owner. Congelato. |
+| — | **SMS reminder pre-ritiro (L2)** | Non implementato (Twilio). |
+| — | **"Sito non appare su Google"** | **NON è un bug**: dominio giovane (apr 2025), zero authority, ~370 URL creati in fretta, migrazione recente. Tecnicamente indicizzabile (index/follow OK, canonical OK, robots OK). Soluzione = richieste indicizzazione manuale in GSC + backlink + tempo (3-6 mesi). **Nessun fix di codice esiste.** |
 
-**Limitazione nota**: i React component (`Flotta.tsx`, `ChiSiamo.tsx`, `PrenotaOra.tsx`, `NotFound.tsx`) usati come island nelle pagine `/en|de|fr/` hanno ancora i body in italiano — solo title/meta/canonical/breadcrumb sono localizzati. Per tradurre completamente i body, refactorare i component per leggere da `getDict(lang)`.
-
-### ✅ Fase 5 — Riscrittura CLAUDE.md (questo file)
+> Tracker dettagliato per-rotta (8 aspetti UX/SEO): [docs/PAGES-CHECKLIST.md](docs/PAGES-CHECKLIST.md).
 
 ---
 
 ## OPERAZIONI QUOTIDIANE — CHECKLIST
 
-### Aggiungere una nuova località/spiaggia (4 lingue)
+### Aggiungere una località/spiaggia (4 lingue)
 1. Admin → SEO Editor → tab Località/Spiagge → "Aggiungi"
-2. Compila campi IT (slug, title, h1, meta_description, content_html, hero_image_url)
-3. Cambia tab a EN → bulk action "Copia da IT" → traduci → salva
-4. Ripeti per DE, FR
-5. Per ogni lingua, popola `slug_xx` con keyword localizzata (es. EN: `car-hire-{location}`)
-6. La pagina viene generata automaticamente al prossimo `npm run build`
-7. Esegui `npm run indexnow` per pingare i motori di ricerca
+2. Compila IT (slug, title, h1, meta_description, content_html, hero_image_url)
+3. Tab EN → "Copia da IT" → traduci → popola `slug_en` con keyword localizzata → salva
+4. Ripeti DE, FR. Build genera la pagina automaticamente.
+5. `npm run indexnow` per pingare i motori.
 
-### Aggiungere un nuovo veicolo
-1. Admin → Flotta → "Aggiungi Veicolo"
-2. Imposta `group_slug` (es. `audi-rs3`); se è una variante usa lo stesso slug
-3. Carica `transparent_image_url` (PNG su sfondo trasparente per hero)
-4. Carica galleria (`gallery_urls`)
-5. Imposta tariffe mensili Aprile→Ottobre
-6. Admin → SEO Editor → tab Veicoli → crea/modifica record per quel `group_slug` (4 lingue)
-7. Build → la pagina `/flotta/[slug]` viene generata automaticamente
+### Aggiungere un veicolo
+1. Admin → Flotta → "Aggiungi Veicolo" → imposta `group_slug` (varianti = stesso slug)
+2. Carica `transparent_image_url` (PNG hero) + `gallery_urls` + tariffe Apr→Ott
+3. Admin → SEO Editor → tab Veicoli → record per quel `group_slug` (4 lingue)
+4. Build → `/flotta/[slug]` generata.
 
 ### Sync recensioni Google
 ```bash
-npm run sync-reviews     # one-shot
-# oppure automatico ad ogni: npm run build (via prebuild hook)
+npm run sync-reviews     # one-shot (richiede env keys — vedi sotto)
+# automatico ad ogni: npm run build (prebuild hook)
+```
+> ⚠️ Le key Places API vivono su **Vercel** (env del deploy), non in locale. In locale lo snapshot resta `src/data/google-rating-snapshot.json` (mantenuto a mano: 41 @ 5,0). Env per attivare il sync: `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, `SUPABASE_SERVICE_ROLE_KEY`.
+
+### Build locale senza side-effect
+```bash
+npx astro build          # salta prebuild (sync-reviews) e postbuild (indexnow ping)
+npm run build            # build completa con sync + image sitemap + indexnow ping
 ```
 
-### Verifica SEO post-deploy
+### Audit SEO / qualità
 ```bash
-node scripts/seo-similarity.mjs       # audit duplicati contenuto rendered
-node scripts/audit-supabase-seo.mjs   # audit qualità contenuti DB
-npm run indexnow                      # ping IndexNow ai motori
-# https://hreflang.org/ con qualche URL del sito per validare hreflang
+node scripts/audit-pages-visual.mjs --top=20   # immagini/pagina + similarity Jaccard
+node scripts/audit-supabase-seo.mjs            # qualità contenuti DB
+node scripts/audit-internal-links.mjs          # link interni rotti
+node scripts/audit-buttons.mjs                 # tasti/href senza rotta valida
+node scripts/seo-similarity.mjs                # duplicati su HTML renderizzato
+node scripts/diversify-supabase-content.mjs    # riscrittura LLM content_html (Gemini)
+npm run indexnow                               # ping IndexNow ai motori
 ```
 
 ---
 
-## NOTE CRITICHE — NON DIMENTICARE
+## NOTE CRITICHE — NON DIMENTICARE (regole inviolabili)
 
-1. **Mai usare lo stesso meta_description in due pagine diverse.** Zero eccezioni, nemmeno tra lingue.
-
-2. **I dati SEO dinamici vivono in Supabase.** Per modificare title/h1/meta_description/content_html, usa l'admin SEO Editor (non file locali).
-
-3. **Componenti SEO esistenti**: `BaseLayout.astro`, `FAQSection.tsx`, `jsonLd.ts` sono **da estendere, non riscrivere**.
-
-4. **`SEOHead.tsx` è uno STUB**. Tutto passa da `BaseLayout.astro`.
-
-5. **Prerender.io è stato rimosso.** Non serve più: Astro SSG produce HTML statico già pre-renderizzato.
-
-6. **KS Rent Sardinia ≠ KS Rent Roma.** In ogni contenuto includere "Sardinia" o "Olbia" per la disambiguazione.
-
-7. **Veicoli noti** (per citazioni nei contenuti): Audi RS3 (verde + grigia), BMW M2, Jeep Avenger, Fiat Panda Hybrid, Mercedes Classe A, Honda SH 125/350, Yamaha Quad Raptor.
-
-8. **Data apertura: 8 aprile 2025** (foundingDate `2025-04-08`). Verificare coerenza tra `jsonLd.ts` e contenuti.
-
-9. **301 redirect**: NON rimuovere quelli da `/localita/:slug` → `/:slug` e `/spiagge/:slug` → `/:slug` in `vercel.json`. Servono per non perdere link equity.
-
-10. **Auth admin**: Supabase Auth con flag `profiles.is_admin`. Tutte le tabelle nuove (reviews, admin_audit_log, vehicle_maintenance_log) hanno RLS che richiede `is_admin = true` per scrittura.
-
-11. **Storage buckets** (`vehicles`, `contracts`, `reviews`) vanno creati MANUALMENTE in Supabase UI. Lo script `08-phase-0-admin-redesign-schema.sql` non li crea.
-
-12. **i18n — slug per lingua possono divergere**: lo slug `noleggio-auto-porto-cervo` (IT) può diventare `car-hire-porto-cervo` (EN), `autovermietung-porto-cervo` (DE), `location-voiture-porto-cervo` (FR). Massimizza intercettazione keyword localizzate.
+1. **Mai lo stesso `meta_description` in due pagine** — nemmeno tra lingue. Zero eccezioni.
+2. **I dati SEO dinamici vivono in Supabase** — modifica title/h1/meta/content via admin SEO Editor, non file locali.
+3. **`BaseLayout.astro`, `jsonLd.ts`, `FAQSection.tsx`, `GuideArticleLayout.astro`, `VehiclePageBody.astro`, `LegalPageContent.astro` si ESTENDONO, non si riscrivono.**
+4. **`SEOHead.tsx` è uno STUB** — tutto passa da BaseLayout.
+5. **Prerender.io rimosso** — Astro SSG produce HTML statico già pre-renderizzato.
+6. **KS Rent Sardinia ≠ KS Rent Roma** — in ogni contenuto includere "Sardinia"/"Olbia" per disambiguazione.
+7. **Veicoli noti**: Audi RS3 (verde + grigia), BMW M2, Jeep Avenger, Fiat Panda Hybrid, Mercedes Classe A, Honda SH 125/350, Yamaha Quad Raptor.
+8. **Data apertura: 8 aprile 2025** (`foundingDate 2025-04-08`) — coerenza tra jsonLd e contenuti.
+9. **301 redirect in `vercel.json`**: NON rimuovere `/localita/:slug`→`/:slug`, `/spiagge/:slug`→`/:slug`, né i redirect `/porto-cervo`→`/noleggio-auto-porto-cervo` ecc. Servono per link equity.
+10. **Auth admin**: Supabase Auth + flag `profiles.is_admin`. RLS richiede `is_admin=true` per scrittura su reviews / audit_log / maintenance_log.
+11. **Storage buckets** (`vehicles`, `contracts`, `reviews`) vanno creati MANUALMENTE in Supabase UI.
+12. **🔒 FREEZE FLUSSO BOOKING — `src/views/PrenotaOra.tsx`**: il **workflow di prenotazione (submit → webhook N8N) NON si tocca**. Decisione utente: *"Solo il calendario, non il flusso."* È permesso modificare **solo il calendario**; il submit (`format(startDate,"yyyy-MM-dd")` → N8N) resta identico. Congelati finché non sbloccati: B2 checkbox consenso, B3 età ≥21, M1 documenti, L3 Stripe.
+13. **💶 FRANCHIGIA / DEPOSITO — MAI pubblicare i prezzi sul sito.** Esiste `vehicles.franchise_amount` nel DB ma **non va mostrato** in `/tariffe` né altrove. Sempre **CTA WhatsApp** per il preventivo personalizzato. (memory: `feedback_franchigia_no_prezzi.md`)
+14. **📧 EMAIL = N8N + Gmail.** Le email transazionali/reminder passano dal workflow **N8N + Gmail** già configurato dall'utente. **NON** introdurre Resend / SendGrid / trigger Supabase. (memory: `reference_email_n8n_gmail.md`)
+15. **react-day-picker è v9** — l'API `classNames` differisce da v8 (`month_caption`, `weekdays/weekday`, `week`, `day/day_button`, `selected`, `range_start/middle/end`, `button_previous/next`, `components.Chevron`). Vedi `src/components/ui/calendar.tsx`.
+16. **`framer-motion` è shimmato** — non aspettarti animazioni reali da `<motion.X>`; sono render statici (scelta di bundle size).
+17. **SEO "non appaio su Google"**: vedi tabella "In sospeso" — è maturazione dominio, non un bug. Niente fix di codice.
 
 ---
 
 ## DEPLOY E PUSH
 
-**Dopo ogni sessione di modifiche confermata dall'utente:**
-
 ```bash
 git add .
-git commit -m "[Fase X]: [descrizione delle modifiche]"
-git push origin main
+git commit -m "[area]: [descrizione]"
+git push origin main          # Vercel auto-deploya da main
 ```
 
-Il push su GitHub deve avvenire **solo dopo conferma esplicita da parte dell'utente** che le modifiche sono corrette e pronte per il deploy. Vercel auto-deploya da `main`.
+> Il push su GitHub avviene **solo dopo conferma esplicita dell'utente** che le modifiche sono corrette. Messaggio di commit termina con `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>`.
 
 ---
 
 ## FILE CRITICI — RIFERIMENTO RAPIDO
 
-| File | Ruolo | Righe ca. |
-|------|-------|-----------|
-| [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) | Hub meta + JSON-LD + hreflang + i18n | ~250 |
-| [src/lib/jsonLd.ts](src/lib/jsonLd.ts) | Tutti gli schema JSON-LD (12+ export) | ~720 |
-| [src/lib/i18n.ts](src/lib/i18n.ts) | Helper i18n (locale, hreflang, paths) | ~50 |
-| [src/i18n/{it,en,de,fr}.ts](src/i18n/it.ts) | Dizionari UI 4 lingue | ~220 ognuno |
-| [src/pages/[slug].astro](src/pages/[slug].astro) | Generatore IT località/spiagge | ~460 |
-| [src/pages/flotta/[slug].astro](src/pages/flotta/[slug].astro) | Generatore IT veicoli | ~400 |
-| [src/pages/[lang]/[slug].astro](src/pages/[lang]/[slug].astro) | Generatore EN/DE/FR località/spiagge | ~250 |
-| [src/pages/[lang]/flotta/[slug].astro](src/pages/[lang]/flotta/[slug].astro) | Generatore EN/DE/FR veicoli | ~430 |
-| [src/components/Navbar.tsx](src/components/Navbar.tsx) | Mega-menu desktop + drawer mobile + switcher | ~830 |
-| [src/components/FleetGrid.astro](src/components/FleetGrid.astro) | Griglia card veicolo | ~110 |
-| [src/components/LanguageSwitcher.tsx](src/components/LanguageSwitcher.tsx) | Switcher React | ~55 |
-| [src/views/Admin.tsx](src/views/Admin.tsx) | Admin orchestrator | ~600 |
-| [src/components/admin/sections/](src/components/admin/sections/) | Dashboard, SEO Editor, Reviews | 200-450 |
-| [scripts/](scripts/) | seo-similarity, audit-supabase-seo, indexnow-ping, fetch-google-reviews, export-seo-content | — |
-| [astro.config.mjs](astro.config.mjs) | Config build + i18n + sitemap | ~95 |
-| [vercel.json](vercel.json) | Redirect 301 + cache headers | ~40 |
-| [public/robots.txt](public/robots.txt) | Crawlers AI permessi, SEO tool bloccati | ~40 |
+| File | Ruolo |
+|------|-------|
+| [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) | Hub meta + JSON-LD + hreflang + i18n + skip-nav |
+| [src/lib/jsonLd.ts](src/lib/jsonLd.ts) | ~30 builder schema JSON-LD |
+| [src/lib/i18n.ts](src/lib/i18n.ts) | Helper locale, hreflang, path localizzati |
+| [src/i18n/{it,en,de,fr}.ts](src/i18n/it.ts) | Dizionari UI 4 lingue |
+| [src/pages/[slug].astro](src/pages/[slug].astro) | Generatore IT località/spiagge |
+| [src/pages/flotta/[slug].astro](src/pages/flotta/[slug].astro) | Generatore IT veicoli |
+| [src/pages/[lang]/[slug].astro](src/pages/[lang]/[slug].astro) | Generatore EN/DE/FR località/spiagge |
+| [src/pages/[lang]/flotta/[slug].astro](src/pages/[lang]/flotta/[slug].astro) | Generatore EN/DE/FR veicoli |
+| [src/components/GuideArticleLayout.astro](src/components/GuideArticleLayout.astro) | Template guide/magazine (60 pagine) |
+| [src/components/VehiclePageBody.astro](src/components/VehiclePageBody.astro) | Corpo pagina veicolo |
+| [src/components/VehicleComparison.astro](src/components/VehicleComparison.astro) | Pagine confronto (24) |
+| [src/components/LegalPageContent.astro](src/components/LegalPageContent.astro) | Pagine legali shared (12, 3 tipi × 4 lingue) |
+| [src/components/ui/calendar.tsx](src/components/ui/calendar.tsx) | Wrapper react-day-picker v9 |
+| [src/views/PrenotaOra.tsx](src/views/PrenotaOra.tsx) | Booking wizard — 🔒 FLUSSO CONGELATO |
+| [src/components/Navbar.tsx](src/components/Navbar.tsx) | Mega-menu + drawer + switcher |
+| [src/components/Footer.tsx](src/components/Footer.tsx) | Link legali + social + newsletter |
+| [src/views/Admin.tsx](src/views/Admin.tsx) | Admin orchestrator (6 sezioni) |
+| [astro.config.mjs](astro.config.mjs) | Build + i18n + sitemap (no blocco i18n) |
+| [vercel.json](vercel.json) | Redirect 301 + security headers + CSP |
+| [public/robots.txt](public/robots.txt) | Crawler AI ammessi, tool SEO bloccati |
+| [public/llms.txt](public/llms.txt) | Riassunto entità per LLM/AI search |
+| [docs/PAGES-CHECKLIST.md](docs/PAGES-CHECKLIST.md) | Tracker UX/SEO per rotta |
+| [scripts/](scripts/) | 22 script: sync reviews, audit, diversify, indexnow, image/OG gen, sitemap |
