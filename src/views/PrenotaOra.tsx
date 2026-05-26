@@ -799,11 +799,13 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     setCheckingAvailability(true);
     try {
       // Verifica disponibilità lato backend (Supabase RPC SECURITY DEFINER):
-      // controlla l'overlap di date sulle prenotazioni non cancellate per il
-      // GRUPPO del veicolo, rispetto allo stock reale (vehicle_group_stock).
-      // Non espone righe di prenotazione. Prezzo/giorni restano calcolati lato client.
-      const { data, error } = await supabase.rpc("check_group_availability", {
-        p_group_slug: selectedVehicle.group_slug,
+      // controlla l'overlap di date sulle prenotazioni non cancellate per la
+      // RIGA veicolo selezionata (ogni card = make+model = pool a sé: es. SH125
+      // separato da SH350), rispetto a vehicles.units. Overlap esclusivo: stesso
+      // giorno rientro/ritiro non è conflitto. Non espone righe di prenotazione.
+      // Prezzo/giorni restano calcolati lato client.
+      const { data, error } = await supabase.rpc("check_vehicle_availability", {
+        p_vehicle_id: selectedVehicle.id,
         p_start: format(startDate, "yyyy-MM-dd"),
         p_end: format(endDate, "yyyy-MM-dd"),
       });
