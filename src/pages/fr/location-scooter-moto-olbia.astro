@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import MotoScooterContent from "@/components/MotoScooterContent.astro";
+import {
+  motoScooterRentalJsonLd,
+  motoScooterFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+
+<BaseLayout
+  title="Location Scooter & Moto à Olbia | KS Rent Sardinia — Casque Inclus"
+  description="Location scooter Honda SH 125/350 et quad Yamaha Raptor à Olbia, casque inclus et livraison gratuite à l'aéroport et au port. Quel permis faut-il. Aussi sans carte de crédit."
+  canonical="https://www.ksrentsardinia.com/fr/location-scooter-moto-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    motoScooterRentalJsonLd,
+    motoScooterFaqJsonLd,
+    buildBreadcrumb("Location Scooter & Moto Olbia", "/fr/location-scooter-moto-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Location Scooter & Moto Olbia", path: "/fr/location-scooter-moto-olbia" }]}
+>
+  <MotoScooterContent lang="fr" />
+</BaseLayout>

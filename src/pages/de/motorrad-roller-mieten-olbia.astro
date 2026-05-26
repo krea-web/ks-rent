@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import MotoScooterContent from "@/components/MotoScooterContent.astro";
+import {
+  motoScooterRentalJsonLd,
+  motoScooterFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+
+<BaseLayout
+  title="Roller & Motorrad mieten in Olbia | KS Rent Sardinia — Helm inklusive"
+  description="Honda SH 125/350 Roller und Yamaha Raptor Quad in Olbia mieten, Helm inklusive und kostenlose Lieferung am Flughafen und Hafen. Welcher Führerschein nötig ist. Auch ohne Kreditkarte."
+  canonical="https://www.ksrentsardinia.com/de/motorrad-roller-mieten-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    motoScooterRentalJsonLd,
+    motoScooterFaqJsonLd,
+    buildBreadcrumb("Roller & Motorrad mieten Olbia", "/de/motorrad-roller-mieten-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Roller & Motorrad mieten Olbia", path: "/de/motorrad-roller-mieten-olbia" }]}
+>
+  <MotoScooterContent lang="de" />
+</BaseLayout>

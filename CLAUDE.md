@@ -186,7 +186,7 @@ Auto-iniettati in `<head>` da [BaseLayout.astro](src/layouts/BaseLayout.astro) v
 #### ✅ Espansione contenuti (post-Fase 4)
 - **Sistema Guide / Magazine**: **15 guide × 4 lingue = 60 pagine** (`GuideArticleLayout.astro` + `GuideTOC`, `GuideReadingProgress`, `GuideVehicleStrip`, `RelatedGuides`, `GuideSpotlight`). Tipografia editorial (serif + drop-cap + barra dorata h2).
 - **Pagine confronto veicoli**: **6 pair × 4 lingue = 24** (`/flotta/confronta/audi-rs3-vs-bmw-m2`, ecc.) + 4 index.
-- **Service landing top-level**: 5 servizi × 4 lingue (Olbia, aeroporto, porto, Costa Smeralda, senza-carta-di-credito).
+- **Service landing top-level**: 6 servizi × 4 lingue (Olbia, aeroporto, porto, Costa Smeralda, senza-carta-di-credito, **scooter/moto/quad**). La landing moto — `MotoScooterContent.astro` + 4 wrapper (`/noleggio-moto-scooter-olbia`, `/en/scooter-motorbike-rental-olbia`, `/de/motorrad-roller-mieten-olbia`, `/fr/location-scooter-moto-olbia`) — è stata creata per chiudere il gap SEO "noleggio scooter Olbia" (vedi `docs/seo-cluster-noleggio-auto-olbia.md`); schema `motoScooterRentalJsonLd` + `motoScooterFaqJsonLd`.
 - **Pagine legali**: **3 tipi × 4 lingue = 12** via `LegalPageContent.astro` (`pageType`: `terms` | `withdrawal` | `supplier-info`):
   - IT: `/termini-e-condizioni`, `/diritto-recesso`, `/informativa-fornitore`
   - EN: `/en/terms-conditions`, `/en/withdrawal-rights`, `/en/supplier-info`

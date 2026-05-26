@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import MotoScooterContent from "@/components/MotoScooterContent.astro";
+import {
+  motoScooterRentalJsonLd,
+  motoScooterFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+
+<BaseLayout
+  title="Noleggio Scooter e Moto a Olbia | KS Rent Sardinia — Casco Incluso"
+  description="Noleggio scooter Honda SH 125/350 e quad Yamaha Raptor a Olbia con casco incluso e consegna gratuita in aeroporto e porto. Scopri quale patente serve. Anche senza carta di credito obbligatoria."
+  canonical="https://www.ksrentsardinia.com/noleggio-moto-scooter-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    motoScooterRentalJsonLd,
+    motoScooterFaqJsonLd,
+    buildBreadcrumb("Noleggio Scooter e Moto Olbia", "/noleggio-moto-scooter-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Noleggio Scooter e Moto Olbia", path: "/noleggio-moto-scooter-olbia" }]}
+>
+  <MotoScooterContent lang="it" />
+</BaseLayout>

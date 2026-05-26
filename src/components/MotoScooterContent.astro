@@ -1,0 +1,722 @@
+---
+/**
+ * Content shared della pagina "Noleggio Scooter, Moto e Quad a Olbia" nelle
+ * 4 lingue — usato dai wrapper:
+ *   IT  /noleggio-moto-scooter-olbia
+ *   EN  /en/scooter-motorbike-rental-olbia
+ *   DE  /de/motorrad-roller-mieten-olbia
+ *   FR  /fr/location-scooter-moto-olbia
+ *
+ * Pagina di servizio dedicata al segmento due-ruote + quad (Honda SH 125/350,
+ * Yamaha Raptor), distinta dal pillar auto: il ciclo di ricerca "noleggio
+ * scooter Olbia" è indipendente da "noleggio auto Olbia". Tutto il copy è
+ * moto-specifico (patenti, casco, percorsi panoramici), non un riuso dell'auto.
+ */
+import FAQSection from "@/components/FAQSection";
+
+type Lang = "it" | "en" | "de" | "fr";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const ASSETS = {
+  scooter125: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png",
+  quad: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
+};
+
+// ── Path localizzati ──────────────────────────────────────────────
+const FLEET_PREFIX: Record<Lang, string> = {
+  it: "/flotta", en: "/en/fleet", de: "/de/fuhrpark", fr: "/fr/flotte",
+};
+const VEHICLE_SLUGS = {
+  "honda-sh":           { it: "honda-sh",           en: "honda-sh-hire-olbia",              de: "honda-sh-mieten-olbia",               fr: "honda-sh-location-olbia" },
+  "yamaha-quad-raptor": { it: "yamaha-quad-raptor", en: "yamaha-raptor-quad-hire-sardinia", de: "yamaha-raptor-quad-mieten-sardinien", fr: "yamaha-raptor-quad-location-sardaigne" },
+} satisfies Record<string, Record<Lang, string>>;
+function fleetHref(slug: keyof typeof VEHICLE_SLUGS): string {
+  return `${FLEET_PREFIX[lang]}/${VEHICLE_SLUGS[slug][lang]}`;
+}
+
+const LOCATION_PREFIX: Record<Lang, string> = {
+  it: "/noleggio-auto-", en: "/en/car-hire-", de: "/de/autovermietung-", fr: "/fr/location-voiture-",
+};
+const locHref = (loc: string) => `${LOCATION_PREFIX[lang]}${loc}`;
+
+const CAR_PAGE: Record<Lang, string> = {
+  it: "/noleggio-auto-olbia", en: "/en/car-hire-olbia", de: "/de/autovermietung-olbia", fr: "/fr/location-voiture-olbia",
+};
+const NOCARD_PAGE: Record<Lang, string> = {
+  it: "/noleggio-auto-senza-carta-di-credito-olbia", en: "/en/car-hire-no-credit-card-olbia",
+  de: "/de/autovermietung-ohne-kreditkarte-olbia", fr: "/fr/location-voiture-sans-carte-credit-olbia",
+};
+const BOOK_HUB: Record<Lang, string> = {
+  it: "/prenotaora", en: "/en/book-now", de: "/de/jetzt-buchen", fr: "/fr/reserver",
+};
+// Guide pertinenti (slug localizzati reali)
+const GUIDE_CHOOSE: Record<Lang, string> = {
+  it: "/guide/noleggio-scooter-quad-sardegna-come-scegliere",
+  en: "/en/guide/scooter-quad-rental-sardinia-how-to-choose",
+  de: "/de/guide/roller-quad-mieten-sardinien-wie-waehlen",
+  fr: "/fr/guide/location-scooter-quad-sardaigne-comment-choisir",
+};
+const GUIDE_HIDDEN: Record<Lang, string> = {
+  it: "/guide/spiagge-nascoste-gallura-sterrati",
+  en: "/en/guide/hidden-beaches-gallura-dirt-roads",
+  de: "/de/guide/versteckte-straende-gallura-schotterpisten",
+  fr: "/fr/guide/plages-cachees-gallura-pistes-terre",
+};
+
+// ── TRANSLATIONS ──────────────────────────────────────────────────
+const TRANSLATIONS = {
+  it: {
+    hero: {
+      eyebrow: "Noleggio Scooter, Moto e Quad — Olbia, Gallura",
+      titleLine1: "Noleggio Scooter e Moto a Olbia",
+      titleLine2: "Honda SH e Quad Yamaha, casco incluso",
+      lead: "Due ruote per muoverti leggero in Costa Smeralda: parcheggi dove un'auto non entra, salti la coda del traffico estivo e arrivi in spiaggia col vento addosso. Scooter Honda SH e quad Yamaha Raptor, consegnati all'aeroporto di Olbia, al porto o in hotel.",
+      badge1: "Casco incluso (anche per il passeggero)",
+      badge2: "Consegna gratuita a Olbia",
+      badge3: "Senza carta di credito obbligatoria",
+      ctaBook: "Prenota Ora",
+      ratingText: "su 41 recensioni Google",
+    },
+    why: {
+      heading: "Perché girare la Gallura in scooter o quad",
+      lead: "In alta stagione, tra Porto Cervo e le spiagge della Costa Smeralda, lo scooter è spesso il mezzo più intelligente: niente caccia al parcheggio, niente code sulla litoranea, niente stress. Il quad, invece, è il modo più divertente per raggiungere le cale nascoste raggiungibili solo da strade sterrate.",
+      bullets: [
+        { icon: "🅿️", title: "Parcheggi ovunque.", text: "A Porto Cervo, Porto Rotondo e nei borghi della Costa Smeralda trovare posto per l'auto d'estate è un'impresa. Con lo scooter accosti a due passi dalla piazzetta o dalla spiaggia." },
+        { icon: "🪖", title: "Casco sempre incluso.", text: "Forniamo casco omologato per guidatore e passeggero, sanificato prima di ogni consegna. Su richiesta aggiungiamo bauletto e antifurto." },
+        { icon: "🏝️", title: "Quad per le cale sterrate.", text: "Cala Brandinchi, Lu Impostu, le calette dietro Capo Ceraso: molte spiagge più belle si raggiungono su sterrato. Il quad Yamaha Raptor le rende un gioco." },
+        { icon: "⭐", title: "5,0/5 su Google.", text: "41 recensioni verificate. Mezzi recenti, controllati prima di ogni noleggio, con assistenza diretta del titolare via WhatsApp." },
+      ],
+    },
+    vehicles: {
+      heading: "Scooter e quad disponibili a Olbia",
+      lead: "Mezzi di nostra proprietà, recenti e revisionati. Consegna in tutta la Gallura.",
+      items: [
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 125", desc: "Lo scooter da città per eccellenza: agile, parco nei consumi, perfetto per spostarti tra Olbia, le spiagge e i borghi. Pedana piatta e sottosella capiente per il casco del passeggero.", licenseLabel: "Patente A1 o B" },
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 350", desc: "Più cavalli e più ripresa per chi vuole affrontare la litoranea e le salite verso Porto Cervo senza fatica, anche in due. Stesso comfort dell'SH, un'altra marcia di brillantezza.", licenseLabel: "Patente A2 o B (3+ anni)" },
+        { slug: "yamaha-quad-raptor", img: "quad", name: "Yamaha Raptor (Quad)", desc: "Per chi cerca l'avventura: il quad sportivo che trasforma uno sterrato verso una cala nascosta nel ricordo più bello della vacanza. Solo per uso consentito, con casco.", licenseLabel: "Patente B" },
+      ],
+      seeHonda: "Scheda Honda SH →",
+      seeQuad: "Scheda Yamaha Raptor →",
+    },
+    licenses: {
+      heading: "Quale patente serve per scooter, moto e quad",
+      lead: "È la domanda che ci fanno più spesso. Ecco la regola valida in Italia, in chiaro: porta sempre con te la patente originale in corso di validità e un documento d'identità.",
+      thVehicle: "Mezzo",
+      thLicense: "Patente",
+      thAge: "Età minima",
+      rows: [
+        { v: "Scooter 125 (Honda SH 125)", l: "A1, oppure B (valida in Italia per i 125 cc)", age: "18 anni" },
+        { v: "Scooter 350 (Honda SH 350)", l: "A2, oppure B posseduta da almeno 3 anni", age: "18 anni" },
+        { v: "Quad (Yamaha Raptor)", l: "B (o A per i quad pesanti)", age: "18 anni" },
+      ],
+      note: "Per i clienti extra-UE è consigliata la patente internazionale insieme a quella nazionale. Il casco è sempre incluso e obbligatorio per guidatore e passeggero. In caso di dubbio sul tuo titolo di guida, scrivici su WhatsApp prima di prenotare: ti diciamo subito cosa puoi guidare.",
+    },
+    delivery: {
+      heading: "Consegna scooter e quad: aeroporto, porto, hotel",
+      lead: "Ti portiamo il mezzo dove ti serve, già pronto e col pieno di accessori. Consegna gratuita all'interno del comune di Olbia (aeroporto OLB e porto Isola Bianca inclusi); per le altre località di Gallura e Costa Smeralda il costo è dichiarato in modo trasparente nel preventivo, a partire da 5 €.",
+      cards: [
+        { t: "✈️ Aeroporto di Olbia (OLB)", x: "Atterri, ritiri i bagagli e trovi lo scooter pronto agli Arrivi, a 2 km dalla nostra sede. Coordiniamo la consegna con l'orario del tuo volo." },
+        { t: "⚓ Porto Isola Bianca", x: "Sbarchi dal traghetto e sali subito in sella: la nostra postazione è proprio al porto, niente navette né attese." },
+        { t: "🏨 Hotel e Costa Smeralda", x: "Consegna a domicilio in hotel, villa o residence in tutta la Gallura: Porto Cervo, Porto Rotondo, San Teodoro, Golfo Aranci, Palau." },
+      ],
+    },
+    rates: {
+      heading: "Tariffe noleggio scooter e quad a Olbia",
+      lead: "Tariffe stagionali trasparenti, da aprile a ottobre. Tutte includono RCA, assistenza stradale, casco e gestione del contratto.",
+      thCat: "Mezzo", thLow: "Da €/giorno (bassa)", thHigh: "Da €/giorno (alta)",
+      rows: [
+        { c: "Scooter Honda SH 125", low: "40 €", high: "60 €" },
+        { c: "Scooter Honda SH 350", low: "su richiesta", high: "su richiesta" },
+        { c: "Quad Yamaha Raptor", low: "su richiesta", high: "su richiesta" },
+      ],
+      disclaimer: "Tariffe orientative, soggette a disponibilità e durata. Sconti previsti per noleggi settimanali. Il deposito cauzionale varia per mezzo e viene comunicato in fase di prenotazione: per i dettagli e un preventivo su misura scrivici su WhatsApp.",
+    },
+    noCard: {
+      heading: "Anche senza carta di credito",
+      lead: "Come per le auto, lo scooter lo noleggi anche senza carta di credito obbligatoria. Accettiamo contanti, carte prepagate (Postepay, Revolut, N26), bancomat e bonifico. Una barriera in meno tra te e la tua vacanza in sella.",
+      cta: "Come funziona il noleggio senza carta →",
+    },
+    ride: {
+      heading: "Dove andare in scooter (e quad) dalla base di Olbia",
+      lead: "Ecco gli itinerari preferiti dai nostri clienti su due ruote. Per le spiagge raggiungibili solo da sterrato, il quad è la scelta giusta — le abbiamo raccolte nella nostra guida.",
+      spots: [
+        { label: "Porto Cervo & la piazzetta", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 25 min" },
+        { label: "San Teodoro & La Cinta", slug: "san-teodoro", time: "~ 30 min" },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 min" },
+      ],
+      guideChoose: "Scooter o quad? La nostra guida per scegliere →",
+      guideHidden: "Le spiagge nascoste della Gallura su sterrato →",
+    },
+    faq: {
+      heading: "Domande frequenti sul noleggio scooter e quad a Olbia",
+      items: [
+        { q: "Posso guidare uno scooter 125 con la patente B?", a: "Sì. In Italia la patente B abilita alla guida di scooter e moto fino a 125 cc (11 kW). Per la Honda SH 125 è quindi sufficiente la patente B. Per la SH 350 serve invece la patente A2, oppure la B posseduta da almeno 3 anni. Il quad Yamaha Raptor si guida con patente B. Porta sempre la patente originale in corso di validità." },
+        { q: "Il casco è incluso nel noleggio?", a: "Sì, sempre. Forniamo caschi omologati per guidatore e passeggero, sanificati prima di ogni consegna. Su richiesta aggiungiamo bauletto portaoggetti e antifurto. Il casco è obbligatorio per legge per tutti gli occupanti." },
+        { q: "Qual è l'età minima per noleggiare uno scooter a Olbia?", a: "L'età minima è 18 anni, con patente valida adeguata alla cilindrata del mezzo. Per lo scooter 125 serve patente A1 o B; per il 350 patente A2 o B da almeno 3 anni; per il quad patente B." },
+        { q: "Consegnate lo scooter in aeroporto o in hotel?", a: "Sì. Consegna gratuita all'aeroporto di Olbia Costa Smeralda (OLB) e al porto Isola Bianca, e a domicilio in hotel, villa o residence in tutta la Gallura (Porto Cervo, San Teodoro, Golfo Aranci, Palau e altre località). Per le consegne fuori Olbia il costo, a partire da 5 €, è dichiarato nel preventivo." },
+        { q: "Posso noleggiare uno scooter senza carta di credito?", a: "Sì. Come per le auto, accettiamo contanti, carte prepagate ricaricabili (Postepay, Revolut, N26), bancomat e bonifico bancario. Il deposito cauzionale può essere versato anche in contanti al momento della consegna." },
+        { q: "Lo scooter è coperto da assicurazione?", a: "Sì. Tutti i nostri mezzi includono la RCA obbligatoria e l'assistenza stradale. Il deposito cauzionale, variabile per mezzo, copre la franchigia in caso di danni: importo e condizioni te li comunichiamo in fase di prenotazione, scrivici su WhatsApp per i dettagli." },
+        { q: "Il quad si può portare in spiaggia o sugli sterrati?", a: "Il quad Yamaha Raptor è perfetto per le strade sterrate che portano a molte cale nascoste della Gallura. La circolazione è consentita solo sulle strade e nelle aree dove è permesso: non si guida sulla sabbia delle spiagge né nelle aree protette. Ti indichiamo gli itinerari consentiti più belli al momento del ritiro." },
+        { q: "Avete anche auto a noleggio a Olbia?", a: "Sì. Oltre a scooter e quad noleggiamo una flotta completa di auto: city car, SUV, premium e supercar, con le stesse condizioni di consegna gratuita a Olbia e pagamento anche senza carta di credito. Vedi la pagina noleggio auto Olbia." },
+      ],
+    },
+    cta: {
+      heading: "Pronto a salire in sella?",
+      addressLine1: "Sede: Viale Aldo Moro 367, Olbia · Consegna porto: Viale Isola Bianca 38",
+      addressLine2: "Aperti 7 giorni su 7, 10:00–13:00 e 15:00–22:30. Casco sempre incluso.",
+      bookCta: "Prenota il tuo scooter",
+      whatsappCta: "💬 Chiedi su WhatsApp",
+    },
+  },
+
+  en: {
+    hero: {
+      eyebrow: "Scooter, Motorbike and Quad Hire — Olbia, Gallura",
+      titleLine1: "Scooter & Motorbike Hire in Olbia",
+      titleLine2: "Honda SH and Yamaha quad, helmet included",
+      lead: "Two wheels to move light around the Costa Smeralda: park where a car can't, skip the summer traffic and reach the beach with the wind in your face. Honda SH scooters and Yamaha Raptor quads, delivered to Olbia airport, the port or your hotel.",
+      badge1: "Helmet included (passenger too)",
+      badge2: "Free delivery in Olbia",
+      badge3: "No credit card required",
+      ctaBook: "Book Now",
+      ratingText: "on 41 Google reviews",
+    },
+    why: {
+      heading: "Why explore Gallura by scooter or quad",
+      lead: "In high season, between Porto Cervo and the Costa Smeralda beaches, a scooter is often the smartest choice: no parking hunt, no queues on the coast road, no stress. The quad, instead, is the most fun way to reach the hidden coves that only dirt tracks lead to.",
+      bullets: [
+        { icon: "🅿️", title: "Park anywhere.", text: "In Porto Cervo, Porto Rotondo and the Costa Smeralda villages, finding a car space in summer is a battle. On a scooter you pull up a few steps from the square or the beach." },
+        { icon: "🪖", title: "Helmet always included.", text: "We provide approved helmets for rider and passenger, sanitised before every delivery. On request we add a top case and a security lock." },
+        { icon: "🏝️", title: "Quad for the dirt-track coves.", text: "Cala Brandinchi, Lu Impostu, the little coves behind Capo Ceraso: many of the finest beaches are reached on unpaved roads. The Yamaha Raptor quad makes it easy." },
+        { icon: "⭐", title: "5.0/5 on Google.", text: "41 verified reviews. Recent, inspected vehicles, with direct owner support via WhatsApp." },
+      ],
+    },
+    vehicles: {
+      heading: "Scooters and quads available in Olbia",
+      lead: "Owned vehicles, recent and serviced. Delivery throughout Gallura.",
+      items: [
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 125", desc: "The city scooter par excellence: agile, frugal, perfect to move between Olbia, the beaches and the villages. Flat footboard and roomy underseat for the passenger helmet.", licenseLabel: "A1 or B licence" },
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 350", desc: "More power and pull for those who want to tackle the coast road and the climbs to Porto Cervo effortlessly, even two-up. Same SH comfort, another gear of liveliness.", licenseLabel: "A2 or B licence (3+ yrs)" },
+        { slug: "yamaha-quad-raptor", img: "quad", name: "Yamaha Raptor (Quad)", desc: "For those after adventure: the sporty quad that turns a dirt track to a hidden cove into the best memory of the holiday. Permitted use only, with helmet.", licenseLabel: "B licence" },
+      ],
+      seeHonda: "Honda SH details →",
+      seeQuad: "Yamaha Raptor details →",
+    },
+    licenses: {
+      heading: "Which licence you need for scooter, motorbike and quad",
+      lead: "It's the question we get most often. Here is the rule that applies in Italy, in plain words: always carry your original valid licence and an ID document.",
+      thVehicle: "Vehicle",
+      thLicense: "Licence",
+      thAge: "Min. age",
+      rows: [
+        { v: "125 scooter (Honda SH 125)", l: "A1, or B (valid in Italy for 125 cc)", age: "18" },
+        { v: "350 scooter (Honda SH 350)", l: "A2, or B held for at least 3 years", age: "18" },
+        { v: "Quad (Yamaha Raptor)", l: "B (or A for heavy quads)", age: "18" },
+      ],
+      note: "For non-EU customers an international driving permit is recommended alongside the national one. The helmet is always included and mandatory for rider and passenger. If you're unsure about your licence, message us on WhatsApp before booking: we'll tell you right away what you can ride.",
+    },
+    delivery: {
+      heading: "Scooter and quad delivery: airport, port, hotel",
+      lead: "We bring the vehicle where you need it, ready and fully equipped. Free delivery within the municipality of Olbia (OLB airport and Isola Bianca port included); for other Gallura and Costa Smeralda locations the cost is transparently declared in the quote, from €5.",
+      cards: [
+        { t: "✈️ Olbia Airport (OLB)", x: "Land, collect your bags and find the scooter ready at Arrivals, 2 km from our office. We coordinate delivery with your flight time." },
+        { t: "⚓ Isola Bianca Port", x: "Step off the ferry and ride away straight away: our base is right at the port, no shuttles, no waiting." },
+        { t: "🏨 Hotel and Costa Smeralda", x: "Home delivery to your hotel, villa or residence across Gallura: Porto Cervo, Porto Rotondo, San Teodoro, Golfo Aranci, Palau." },
+      ],
+    },
+    rates: {
+      heading: "Scooter and quad hire rates in Olbia",
+      lead: "Transparent seasonal rates, April to October. All include third-party insurance, roadside assistance, helmet and contract management.",
+      thCat: "Vehicle", thLow: "From €/day (low)", thHigh: "From €/day (high)",
+      rows: [
+        { c: "Honda SH 125 scooter", low: "€40", high: "€60" },
+        { c: "Honda SH 350 scooter", low: "on request", high: "on request" },
+        { c: "Yamaha Raptor quad", low: "on request", high: "on request" },
+      ],
+      disclaimer: "Indicative rates, subject to availability and duration. Discounts for weekly rentals. The security deposit varies by vehicle and is communicated at booking: for details and a tailored quote, message us on WhatsApp.",
+    },
+    noCard: {
+      heading: "No credit card needed",
+      lead: "As with cars, you can hire a scooter without a mandatory credit card. We accept cash, prepaid cards (Postepay, Revolut, N26), debit cards and bank transfer. One less barrier between you and your holiday on two wheels.",
+      cta: "How no-credit-card hire works →",
+    },
+    ride: {
+      heading: "Where to ride from your Olbia base",
+      lead: "Here are our customers' favourite two-wheel routes. For beaches reachable only by dirt road, the quad is the right choice — we've gathered them in our guide.",
+      spots: [
+        { label: "Porto Cervo & the piazzetta", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 25 min" },
+        { label: "San Teodoro & La Cinta", slug: "san-teodoro", time: "~ 30 min" },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 min" },
+      ],
+      guideChoose: "Scooter or quad? Our guide to choosing →",
+      guideHidden: "The hidden beaches of Gallura by dirt road →",
+    },
+    faq: {
+      heading: "Frequently asked questions about scooter and quad hire in Olbia",
+      items: [
+        { q: "Can I ride a 125 scooter with a category B licence?", a: "Yes. In Italy a category B licence allows you to ride scooters and motorbikes up to 125 cc (11 kW). So a B licence is enough for the Honda SH 125. The SH 350 instead requires an A2 licence, or a B licence held for at least 3 years. The Yamaha Raptor quad is ridden with a B licence. Always carry your original valid licence." },
+        { q: "Is the helmet included in the rental?", a: "Yes, always. We provide approved helmets for rider and passenger, sanitised before every delivery. On request we add a storage top case and a security lock. By law the helmet is mandatory for all occupants." },
+        { q: "What is the minimum age to hire a scooter in Olbia?", a: "The minimum age is 18, with a valid licence suitable for the engine size. The 125 scooter needs an A1 or B licence; the 350 an A2 or B held for 3 years; the quad a B licence." },
+        { q: "Do you deliver the scooter to the airport or hotel?", a: "Yes. Free delivery at Olbia Costa Smeralda airport (OLB) and Isola Bianca port, plus to your hotel, villa or residence across Gallura (Porto Cervo, San Teodoro, Golfo Aranci, Palau and more). For deliveries outside Olbia the cost, from €5, is declared in the quote." },
+        { q: "Can I hire a scooter without a credit card?", a: "Yes. As with cars, we accept cash, reloadable prepaid cards (Postepay, Revolut, N26), debit cards and bank transfer. The security deposit can also be paid in cash on delivery." },
+        { q: "Is the scooter covered by insurance?", a: "Yes. All our vehicles include mandatory third-party insurance and roadside assistance. The security deposit, which varies by vehicle, covers the excess in case of damage: we tell you the amount and conditions at booking — message us on WhatsApp for details." },
+        { q: "Can the quad go on the beach or on dirt tracks?", a: "The Yamaha Raptor quad is perfect for the dirt roads leading to many of Gallura's hidden coves. Riding is allowed only on roads and in areas where it is permitted: you don't ride on beach sand or in protected areas. We point out the best permitted routes at pickup." },
+        { q: "Do you also rent cars in Olbia?", a: "Yes. Besides scooters and quads we rent a full car fleet: city cars, SUVs, premium and supercars, with the same free delivery in Olbia and no-credit-card payment. See the Olbia car hire page." },
+      ],
+    },
+    cta: {
+      heading: "Ready to hit the road?",
+      addressLine1: "Office: Viale Aldo Moro 367, Olbia · Port delivery: Viale Isola Bianca 38",
+      addressLine2: "Open 7 days a week, 10:00–13:00 and 15:00–22:30. Helmet always included.",
+      bookCta: "Book your scooter",
+      whatsappCta: "💬 Ask on WhatsApp",
+    },
+  },
+
+  de: {
+    hero: {
+      eyebrow: "Roller-, Motorrad- und Quadvermietung — Olbia, Gallura",
+      titleLine1: "Roller & Motorrad mieten in Olbia",
+      titleLine2: "Honda SH und Yamaha Quad, Helm inklusive",
+      lead: "Auf zwei Rädern leicht durch die Costa Smeralda: parken, wo kein Auto hinkommt, den Sommerverkehr überholen und mit Wind im Gesicht an den Strand. Honda SH Roller und Yamaha Raptor Quads, geliefert zum Flughafen Olbia, zum Hafen oder ins Hotel.",
+      badge1: "Helm inklusive (auch für Beifahrer)",
+      badge2: "Kostenlose Lieferung in Olbia",
+      badge3: "Ohne obligatorische Kreditkarte",
+      ctaBook: "Jetzt buchen",
+      ratingText: "bei 41 Google-Bewertungen",
+    },
+    why: {
+      heading: "Warum Gallura mit Roller oder Quad erkunden",
+      lead: "In der Hochsaison ist zwischen Porto Cervo und den Stränden der Costa Smeralda der Roller oft die klügste Wahl: keine Parkplatzsuche, keine Schlangen auf der Küstenstraße, kein Stress. Das Quad wiederum ist die unterhaltsamste Art, die versteckten Buchten zu erreichen, zu denen nur Schotterpisten führen.",
+      bullets: [
+        { icon: "🅿️", title: "Überall parken.", text: "In Porto Cervo, Porto Rotondo und den Dörfern der Costa Smeralda ist ein Autoparkplatz im Sommer ein Kampf. Mit dem Roller hältst du wenige Schritte vom Platz oder Strand entfernt." },
+        { icon: "🪖", title: "Helm immer inklusive.", text: "Wir stellen zugelassene Helme für Fahrer und Beifahrer, vor jeder Lieferung desinfiziert. Auf Wunsch ergänzen wir Topcase und Schloss." },
+        { icon: "🏝️", title: "Quad für die Schotter-Buchten.", text: "Cala Brandinchi, Lu Impostu, die kleinen Buchten hinter Capo Ceraso: viele der schönsten Strände erreicht man über unbefestigte Wege. Das Yamaha Raptor Quad macht's leicht." },
+        { icon: "⭐", title: "5,0/5 bei Google.", text: "41 verifizierte Bewertungen. Aktuelle, geprüfte Fahrzeuge, mit direktem Inhaber-Support über WhatsApp." },
+      ],
+    },
+    vehicles: {
+      heading: "Verfügbare Roller und Quads in Olbia",
+      lead: "Eigene, aktuelle und gewartete Fahrzeuge. Lieferung in ganz Gallura.",
+      items: [
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 125", desc: "Der City-Roller schlechthin: wendig, sparsam, perfekt zwischen Olbia, Stränden und Dörfern. Flaches Trittbrett und geräumiges Staufach für den Beifahrerhelm.", licenseLabel: "Führerschein A1 oder B" },
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 350", desc: "Mehr Leistung und Durchzug für alle, die Küstenstraße und Anstiege nach Porto Cervo mühelos meistern wollen, auch zu zweit. Gleicher SH-Komfort, ein Gang lebendiger.", licenseLabel: "Führerschein A2 oder B (3+ J.)" },
+        { slug: "yamaha-quad-raptor", img: "quad", name: "Yamaha Raptor (Quad)", desc: "Für Abenteuerlustige: das sportliche Quad, das eine Schotterpiste zu einer versteckten Bucht zur schönsten Urlaubserinnerung macht. Nur erlaubte Nutzung, mit Helm.", licenseLabel: "Führerschein B" },
+      ],
+      seeHonda: "Honda SH Details →",
+      seeQuad: "Yamaha Raptor Details →",
+    },
+    licenses: {
+      heading: "Welchen Führerschein für Roller, Motorrad und Quad",
+      lead: "Das ist die häufigste Frage. Hier die in Italien geltende Regel, klar formuliert: führe immer deinen gültigen Original-Führerschein und ein Ausweisdokument mit.",
+      thVehicle: "Fahrzeug",
+      thLicense: "Führerschein",
+      thAge: "Mindestalter",
+      rows: [
+        { v: "125er Roller (Honda SH 125)", l: "A1 oder B (in Italien für 125 cc gültig)", age: "18" },
+        { v: "350er Roller (Honda SH 350)", l: "A2 oder B seit mindestens 3 Jahren", age: "18" },
+        { v: "Quad (Yamaha Raptor)", l: "B (oder A für schwere Quads)", age: "18" },
+      ],
+      note: "Für Kunden außerhalb der EU wird neben dem nationalen ein internationaler Führerschein empfohlen. Der Helm ist immer inklusive und für Fahrer und Beifahrer Pflicht. Bei Zweifeln zu deinem Führerschein schreib uns vor der Buchung auf WhatsApp: wir sagen dir sofort, was du fahren darfst.",
+    },
+    delivery: {
+      heading: "Roller- und Quadlieferung: Flughafen, Hafen, Hotel",
+      lead: "Wir bringen das Fahrzeug dorthin, wo du es brauchst, bereit und voll ausgestattet. Kostenlose Lieferung innerhalb der Gemeinde Olbia (Flughafen OLB und Hafen Isola Bianca inklusive); für andere Orte in Gallura und an der Costa Smeralda wird der Preis transparent im Angebot ausgewiesen, ab 5 €.",
+      cards: [
+        { t: "✈️ Flughafen Olbia (OLB)", x: "Landen, Gepäck holen und den Roller bereit am Ankunftsbereich finden, 2 km von unserem Sitz. Wir koordinieren die Lieferung mit deiner Flugzeit." },
+        { t: "⚓ Hafen Isola Bianca", x: "Von der Fähre steigen und sofort losfahren: unsere Basis ist direkt am Hafen, keine Shuttles, kein Warten." },
+        { t: "🏨 Hotel und Costa Smeralda", x: "Lieferung an Hotel, Villa oder Residence in ganz Gallura: Porto Cervo, Porto Rotondo, San Teodoro, Golfo Aranci, Palau." },
+      ],
+    },
+    rates: {
+      heading: "Miettarife Roller und Quad in Olbia",
+      lead: "Transparente Saisonpreise, April bis Oktober. Alle inkl. Haftpflicht, Pannenhilfe, Helm und Vertragsverwaltung.",
+      thCat: "Fahrzeug", thLow: "Ab €/Tag (Neben.)", thHigh: "Ab €/Tag (Hoch.)",
+      rows: [
+        { c: "Honda SH 125 Roller", low: "40 €", high: "60 €" },
+        { c: "Honda SH 350 Roller", low: "auf Anfrage", high: "auf Anfrage" },
+        { c: "Yamaha Raptor Quad", low: "auf Anfrage", high: "auf Anfrage" },
+      ],
+      disclaimer: "Richtpreise, je nach Verfügbarkeit und Dauer. Rabatte für Wochenmieten. Die Kaution variiert je Fahrzeug und wird bei der Buchung mitgeteilt: für Details und ein individuelles Angebot schreib uns auf WhatsApp.",
+    },
+    noCard: {
+      heading: "Auch ohne Kreditkarte",
+      lead: "Wie bei den Autos mietest du den Roller auch ohne obligatorische Kreditkarte. Wir akzeptieren Bargeld, Prepaid-Karten (Postepay, Revolut, N26), EC-Karte und Überweisung. Eine Barriere weniger zwischen dir und deinem Urlaub auf zwei Rädern.",
+      cta: "Wie die Vermietung ohne Karte funktioniert →",
+    },
+    ride: {
+      heading: "Wohin mit Roller (und Quad) ab Olbia",
+      lead: "Hier die beliebtesten Zwei-Rad-Routen unserer Kunden. Für nur über Schotter erreichbare Strände ist das Quad die richtige Wahl — wir haben sie in unserem Guide gesammelt.",
+      spots: [
+        { label: "Porto Cervo & die Piazzetta", slug: "porto-cervo", time: "~ 35 Min." },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 25 Min." },
+        { label: "San Teodoro & La Cinta", slug: "san-teodoro", time: "~ 30 Min." },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 Min." },
+      ],
+      guideChoose: "Roller oder Quad? Unser Ratgeber zur Wahl →",
+      guideHidden: "Die versteckten Strände Galluras über Schotter →",
+    },
+    faq: {
+      heading: "Häufige Fragen zur Roller- und Quadvermietung in Olbia",
+      items: [
+        { q: "Darf ich einen 125er Roller mit Führerschein B fahren?", a: "Ja. In Italien berechtigt der Führerschein B zum Fahren von Rollern und Motorrädern bis 125 cc (11 kW). Für die Honda SH 125 genügt also der B-Führerschein. Die SH 350 erfordert dagegen den A2-Führerschein oder einen seit mindestens 3 Jahren bestehenden B. Das Yamaha Raptor Quad fährt man mit B. Führe immer deinen gültigen Original-Führerschein mit." },
+        { q: "Ist der Helm in der Miete inbegriffen?", a: "Ja, immer. Wir stellen zugelassene Helme für Fahrer und Beifahrer, vor jeder Lieferung desinfiziert. Auf Wunsch ergänzen wir ein Topcase und ein Schloss. Der Helm ist gesetzlich für alle Insassen Pflicht." },
+        { q: "Wie hoch ist das Mindestalter für die Rollermiete in Olbia?", a: "Das Mindestalter beträgt 18 Jahre, mit gültigem Führerschein passend zum Hubraum. Der 125er Roller braucht A1 oder B; der 350er A2 oder B seit 3 Jahren; das Quad B." },
+        { q: "Liefern Sie den Roller zum Flughafen oder Hotel?", a: "Ja. Kostenlose Lieferung am Flughafen Olbia Costa Smeralda (OLB) und am Hafen Isola Bianca, sowie an Hotel, Villa oder Residence in ganz Gallura (Porto Cervo, San Teodoro, Golfo Aranci, Palau und mehr). Für Lieferungen außerhalb Olbias wird der Preis ab 5 € im Angebot ausgewiesen." },
+        { q: "Kann ich einen Roller ohne Kreditkarte mieten?", a: "Ja. Wie bei Autos akzeptieren wir Bargeld, aufladbare Prepaid-Karten (Postepay, Revolut, N26), EC-Karte und Überweisung. Die Kaution kann auch bar bei Lieferung hinterlegt werden." },
+        { q: "Ist der Roller versichert?", a: "Ja. Alle unsere Fahrzeuge beinhalten die Haftpflicht und Pannenhilfe. Die je Fahrzeug variierende Kaution deckt die Selbstbeteiligung bei Schäden: Betrag und Bedingungen teilen wir bei der Buchung mit — schreib uns für Details auf WhatsApp." },
+        { q: "Darf das Quad an den Strand oder auf Schotterwege?", a: "Das Yamaha Raptor Quad ist perfekt für die Schotterstraßen zu vielen versteckten Buchten Galluras. Das Fahren ist nur auf Straßen und in erlaubten Bereichen gestattet: nicht auf Strandsand oder in Schutzgebieten. Die schönsten erlaubten Routen zeigen wir bei der Übergabe." },
+        { q: "Vermieten Sie auch Autos in Olbia?", a: "Ja. Neben Rollern und Quads vermieten wir eine komplette Autoflotte: Kleinwagen, SUV, Premium und Supersportwagen, mit gleicher kostenloser Lieferung in Olbia und Zahlung ohne Kreditkarte. Siehe die Seite Autovermietung Olbia." },
+      ],
+    },
+    cta: {
+      heading: "Bereit aufzusteigen?",
+      addressLine1: "Sitz: Viale Aldo Moro 367, Olbia · Hafenlieferung: Viale Isola Bianca 38",
+      addressLine2: "7 Tage die Woche geöffnet, 10:00–13:00 und 15:00–22:30. Helm immer inklusive.",
+      bookCta: "Roller buchen",
+      whatsappCta: "💬 Auf WhatsApp fragen",
+    },
+  },
+
+  fr: {
+    hero: {
+      eyebrow: "Location Scooter, Moto et Quad — Olbia, Gallura",
+      titleLine1: "Location Scooter & Moto à Olbia",
+      titleLine2: "Honda SH et quad Yamaha, casque inclus",
+      lead: "À deux roues pour se déplacer léger en Costa Smeralda : se garer là où une voiture ne passe pas, doubler les bouchons de l'été et rejoindre la plage le vent au visage. Scooters Honda SH et quads Yamaha Raptor, livrés à l'aéroport d'Olbia, au port ou à l'hôtel.",
+      badge1: "Casque inclus (passager aussi)",
+      badge2: "Livraison gratuite à Olbia",
+      badge3: "Sans carte de crédit obligatoire",
+      ctaBook: "Réserver maintenant",
+      ratingText: "sur 41 avis Google",
+    },
+    why: {
+      heading: "Pourquoi explorer la Gallura en scooter ou quad",
+      lead: "En haute saison, entre Porto Cervo et les plages de la Costa Smeralda, le scooter est souvent le choix le plus malin : pas de chasse au parking, pas de files sur la route côtière, pas de stress. Le quad, lui, est la façon la plus amusante d'atteindre les criques cachées accessibles uniquement par des pistes en terre.",
+      bullets: [
+        { icon: "🅿️", title: "Se garer partout.", text: "À Porto Cervo, Porto Rotondo et dans les villages de la Costa Smeralda, trouver une place de voiture l'été est un combat. En scooter, vous vous arrêtez à deux pas de la place ou de la plage." },
+        { icon: "🪖", title: "Casque toujours inclus.", text: "Nous fournissons des casques homologués pour le conducteur et le passager, désinfectés avant chaque livraison. Sur demande, top-case et antivol." },
+        { icon: "🏝️", title: "Quad pour les criques en terre.", text: "Cala Brandinchi, Lu Impostu, les petites criques derrière Capo Ceraso : beaucoup des plus belles plages se rejoignent par des routes non goudronnées. Le quad Yamaha Raptor rend ça facile." },
+        { icon: "⭐", title: "5,0/5 sur Google.", text: "41 avis vérifiés. Véhicules récents et contrôlés, avec assistance directe du propriétaire via WhatsApp." },
+      ],
+    },
+    vehicles: {
+      heading: "Scooters et quads disponibles à Olbia",
+      lead: "Véhicules en propriété, récents et révisés. Livraison dans toute la Gallura.",
+      items: [
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 125", desc: "Le scooter urbain par excellence : agile, sobre, parfait pour circuler entre Olbia, les plages et les villages. Plancher plat et coffre sous la selle pour le casque du passager.", licenseLabel: "Permis A1 ou B" },
+        { slug: "honda-sh", img: "scooter125", name: "Honda SH 350", desc: "Plus de chevaux et de reprise pour affronter la côtière et les montées vers Porto Cervo sans effort, même à deux. Même confort que la SH, une vitesse de vivacité en plus.", licenseLabel: "Permis A2 ou B (3+ ans)" },
+        { slug: "yamaha-quad-raptor", img: "quad", name: "Yamaha Raptor (Quad)", desc: "Pour ceux qui cherchent l'aventure : le quad sportif qui transforme une piste vers une crique cachée en plus beau souvenir des vacances. Usage autorisé uniquement, avec casque.", licenseLabel: "Permis B" },
+      ],
+      seeHonda: "Fiche Honda SH →",
+      seeQuad: "Fiche Yamaha Raptor →",
+    },
+    licenses: {
+      heading: "Quel permis pour scooter, moto et quad",
+      lead: "C'est la question qu'on nous pose le plus. Voici la règle en vigueur en Italie, en clair : ayez toujours sur vous votre permis original en cours de validité et une pièce d'identité.",
+      thVehicle: "Véhicule",
+      thLicense: "Permis",
+      thAge: "Âge min.",
+      rows: [
+        { v: "Scooter 125 (Honda SH 125)", l: "A1, ou B (valable en Italie pour 125 cc)", age: "18 ans" },
+        { v: "Scooter 350 (Honda SH 350)", l: "A2, ou B détenu depuis au moins 3 ans", age: "18 ans" },
+        { v: "Quad (Yamaha Raptor)", l: "B (ou A pour les quads lourds)", age: "18 ans" },
+      ],
+      note: "Pour les clients hors UE, le permis international est recommandé en plus du permis national. Le casque est toujours inclus et obligatoire pour le conducteur et le passager. En cas de doute sur votre permis, écrivez-nous sur WhatsApp avant de réserver : on vous dit tout de suite ce que vous pouvez conduire.",
+    },
+    delivery: {
+      heading: "Livraison scooter et quad : aéroport, port, hôtel",
+      lead: "Nous apportons le véhicule là où vous en avez besoin, prêt et tout équipé. Livraison gratuite dans la commune d'Olbia (aéroport OLB et port Isola Bianca inclus) ; pour les autres localités de Gallura et Costa Smeralda, le coût est déclaré de façon transparente dans le devis, à partir de 5 €.",
+      cards: [
+        { t: "✈️ Aéroport d'Olbia (OLB)", x: "Atterrissez, récupérez vos bagages et trouvez le scooter prêt aux Arrivées, à 2 km de notre siège. Nous coordonnons la livraison avec l'heure de votre vol." },
+        { t: "⚓ Port Isola Bianca", x: "Descendez du ferry et partez aussitôt : notre poste est directement au port, pas de navette ni d'attente." },
+        { t: "🏨 Hôtel et Costa Smeralda", x: "Livraison à l'hôtel, en villa ou résidence dans toute la Gallura : Porto Cervo, Porto Rotondo, San Teodoro, Golfo Aranci, Palau." },
+      ],
+    },
+    rates: {
+      heading: "Tarifs location scooter et quad à Olbia",
+      lead: "Tarifs saisonniers transparents, d'avril à octobre. Tous incluent la RC, l'assistance routière, le casque et la gestion du contrat.",
+      thCat: "Véhicule", thLow: "Dès €/jour (basse)", thHigh: "Dès €/jour (haute)",
+      rows: [
+        { c: "Scooter Honda SH 125", low: "40 €", high: "60 €" },
+        { c: "Scooter Honda SH 350", low: "sur demande", high: "sur demande" },
+        { c: "Quad Yamaha Raptor", low: "sur demande", high: "sur demande" },
+      ],
+      disclaimer: "Tarifs indicatifs, selon disponibilité et durée. Réductions pour les locations à la semaine. Le dépôt de garantie varie selon le véhicule et est communiqué à la réservation : pour les détails et un devis sur mesure, écrivez-nous sur WhatsApp.",
+    },
+    noCard: {
+      heading: "Aussi sans carte de crédit",
+      lead: "Comme pour les voitures, le scooter se loue aussi sans carte de crédit obligatoire. Nous acceptons espèces, cartes prépayées (Postepay, Revolut, N26), carte de débit et virement. Une barrière de moins entre vous et vos vacances à deux roues.",
+      cta: "Comment fonctionne la location sans carte →",
+    },
+    ride: {
+      heading: "Où aller en scooter (et quad) depuis Olbia",
+      lead: "Voici les itinéraires à deux roues préférés de nos clients. Pour les plages accessibles uniquement par piste, le quad est le bon choix — nous les avons réunies dans notre guide.",
+      spots: [
+        { label: "Porto Cervo & la piazzetta", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 25 min" },
+        { label: "San Teodoro & La Cinta", slug: "san-teodoro", time: "~ 30 min" },
+        { label: "Baja Sardinia", slug: "baja-sardinia", time: "~ 45 min" },
+      ],
+      guideChoose: "Scooter ou quad ? Notre guide pour choisir →",
+      guideHidden: "Les plages cachées de la Gallura en piste →",
+    },
+    faq: {
+      heading: "Questions fréquentes sur la location scooter et quad à Olbia",
+      items: [
+        { q: "Puis-je conduire un scooter 125 avec le permis B ?", a: "Oui. En Italie, le permis B autorise la conduite de scooters et motos jusqu'à 125 cc (11 kW). Le permis B suffit donc pour la Honda SH 125. La SH 350 nécessite en revanche le permis A2, ou le B détenu depuis au moins 3 ans. Le quad Yamaha Raptor se conduit avec le permis B. Ayez toujours sur vous votre permis original en cours de validité." },
+        { q: "Le casque est-il inclus dans la location ?", a: "Oui, toujours. Nous fournissons des casques homologués pour le conducteur et le passager, désinfectés avant chaque livraison. Sur demande, nous ajoutons un top-case et un antivol. Le casque est obligatoire par la loi pour tous les occupants." },
+        { q: "Quel est l'âge minimum pour louer un scooter à Olbia ?", a: "L'âge minimum est de 18 ans, avec un permis valide adapté à la cylindrée. Le scooter 125 demande un permis A1 ou B ; le 350 un A2 ou B depuis 3 ans ; le quad un permis B." },
+        { q: "Livrez-vous le scooter à l'aéroport ou à l'hôtel ?", a: "Oui. Livraison gratuite à l'aéroport d'Olbia Costa Smeralda (OLB) et au port Isola Bianca, ainsi qu'à l'hôtel, en villa ou résidence dans toute la Gallura (Porto Cervo, San Teodoro, Golfo Aranci, Palau et plus). Pour les livraisons hors d'Olbia, le coût, dès 5 €, est déclaré dans le devis." },
+        { q: "Puis-je louer un scooter sans carte de crédit ?", a: "Oui. Comme pour les voitures, nous acceptons espèces, cartes prépayées rechargeables (Postepay, Revolut, N26), carte de débit et virement. Le dépôt de garantie peut aussi être versé en espèces à la livraison." },
+        { q: "Le scooter est-il couvert par une assurance ?", a: "Oui. Tous nos véhicules incluent la RC obligatoire et l'assistance routière. Le dépôt de garantie, variable selon le véhicule, couvre la franchise en cas de dommages : nous vous communiquons le montant et les conditions à la réservation — écrivez-nous sur WhatsApp pour les détails." },
+        { q: "Le quad peut-il aller sur la plage ou sur les pistes ?", a: "Le quad Yamaha Raptor est parfait pour les routes en terre menant à de nombreuses criques cachées de la Gallura. La circulation n'est autorisée que sur les routes et dans les zones permises : on ne roule pas sur le sable des plages ni dans les zones protégées. Nous vous indiquons les plus beaux itinéraires autorisés au retrait." },
+        { q: "Louez-vous aussi des voitures à Olbia ?", a: "Oui. Outre les scooters et quads, nous louons une flotte complète de voitures : citadines, SUV, premium et supercars, avec la même livraison gratuite à Olbia et le paiement sans carte de crédit. Voir la page location voiture Olbia." },
+      ],
+    },
+    cta: {
+      heading: "Prêt à enfourcher ?",
+      addressLine1: "Siège : Viale Aldo Moro 367, Olbia · Livraison port : Viale Isola Bianca 38",
+      addressLine2: "Ouvert 7 jours sur 7, 10h00–13h00 et 15h00–22h30. Casque toujours inclus.",
+      bookCta: "Réserver votre scooter",
+      whatsappCta: "💬 Demander sur WhatsApp",
+    },
+  },
+} as const;
+
+const T = TRANSLATIONS[lang];
+const faqsForComponent = T.faq.items.map((it) => ({ question: it.q, answer: it.a }));
+---
+
+<main class="bg-background text-foreground">
+
+  {/* ───── HERO ───── */}
+  <section class="relative overflow-hidden border-b border-border/40 bg-gradient-to-br from-background via-background to-primary/5">
+    <div class="container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-sm uppercase tracking-widest text-primary/80 font-semibold mb-4">{T.hero.eyebrow}</p>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+          {T.hero.titleLine1}<br/>
+          <span class="text-primary">{T.hero.titleLine2}</span>
+        </h1>
+        <p class="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">{T.hero.lead}</p>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-10 text-sm">
+          <span class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">✓ {T.hero.badge1}</span>
+          <span class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">✓ {T.hero.badge2}</span>
+          <span class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-medium">✓ {T.hero.badge3}</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href={BOOK_HUB[lang]} class="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary/90 transition shadow-lg">{T.hero.ctaBook}</a>
+          <a href="tel:+393446107071" class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur border border-border text-foreground rounded-full font-semibold text-lg hover:bg-white/20 transition">📞 +39 344 6107071</a>
+        </div>
+
+        <p class="mt-6 text-sm text-muted-foreground">
+          <span aria-label="5/5">⭐⭐⭐⭐⭐</span> <strong>5,0/5</strong> {T.hero.ratingText}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ───── WHY ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.why.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-8 leading-relaxed">{T.why.lead}</p>
+      <ul class="grid md:grid-cols-2 gap-6 text-base">
+        {T.why.bullets.map((b) => (
+          <li class="flex gap-3">
+            <span class="text-primary text-2xl">{b.icon}</span>
+            <div><strong>{b.title}</strong> {b.text}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ───── VEHICLES ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-muted/20">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">{T.vehicles.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-10 text-center max-w-3xl mx-auto">{T.vehicles.lead}</p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {T.vehicles.items.map((v) => (
+          <article class="group flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-primary transition shadow-sm hover:shadow-lg">
+            <div class="aspect-[4/3] flex items-center justify-center bg-gradient-to-br from-muted/40 to-muted/10 p-5 overflow-hidden">
+              <img
+                src={ASSETS[v.img as keyof typeof ASSETS]}
+                alt={`${v.name} — ${T.vehicles.heading}`}
+                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                loading="lazy" width="260" height="195"
+              />
+            </div>
+            <div class="flex flex-col flex-1 p-5">
+              <h3 class="text-xl font-semibold">{v.name}</h3>
+              <span class="inline-flex w-fit mt-1 mb-3 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">{v.licenseLabel}</span>
+              <p class="text-muted-foreground text-sm leading-relaxed flex-1">{v.desc}</p>
+              <p class="mt-4">
+                <a href={fleetHref(v.slug as "honda-sh" | "yamaha-quad-raptor")} class="text-primary font-medium hover:underline text-sm">
+                  {v.slug === "yamaha-quad-raptor" ? T.vehicles.seeQuad : T.vehicles.seeHonda}
+                </a>
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ───── LICENSES ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.licenses.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-8 leading-relaxed">{T.licenses.lead}</p>
+
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full border-collapse min-w-[540px]">
+          <thead>
+            <tr class="border-b border-border">
+              <th class="text-left py-3 px-4 font-semibold">{T.licenses.thVehicle}</th>
+              <th class="text-left py-3 px-4 font-semibold">{T.licenses.thLicense}</th>
+              <th class="text-left py-3 px-4 font-semibold">{T.licenses.thAge}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {T.licenses.rows.map((r) => (
+              <tr class="border-b border-border/40">
+                <td class="py-3 px-4 font-medium">{r.v}</td>
+                <td class="py-3 px-4 text-muted-foreground">{r.l}</td>
+                <td class="py-3 px-4">{r.age}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="bg-primary/5 border border-primary/20 rounded-2xl p-6">
+        <p class="text-foreground/80 leading-relaxed text-sm">{T.licenses.note}</p>
+      </aside>
+    </div>
+  </section>
+
+  {/* ───── DELIVERY ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-muted/20">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.delivery.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-8 leading-relaxed">{T.delivery.lead}</p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        {T.delivery.cards.map((c) => (
+          <article class="bg-card border border-border rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-3">{c.t}</h3>
+            <p class="text-muted-foreground text-sm">{c.x}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ───── RATES ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.rates.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-6 leading-relaxed">{T.rates.lead}</p>
+
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full border-collapse min-w-[520px]">
+          <thead>
+            <tr class="border-b border-border">
+              <th class="text-left py-3 px-4 font-semibold">{T.rates.thCat}</th>
+              <th class="text-left py-3 px-4 font-semibold">{T.rates.thLow}</th>
+              <th class="text-left py-3 px-4 font-semibold">{T.rates.thHigh}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {T.rates.rows.map((r) => (
+              <tr class="border-b border-border/40">
+                <td class="py-3 px-4">{r.c}</td>
+                <td class="py-3 px-4">{r.low}</td>
+                <td class="py-3 px-4">{r.high}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-sm text-muted-foreground italic">{T.rates.disclaimer}</p>
+    </div>
+  </section>
+
+  {/* ───── NO CREDIT CARD ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-muted/20">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <div class="bg-primary/5 border border-primary/20 rounded-3xl p-8 md:p-12 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-5">{T.noCard.heading}</h2>
+        <p class="text-lg text-muted-foreground mb-6 leading-relaxed max-w-2xl mx-auto">{T.noCard.lead}</p>
+        <a href={NOCARD_PAGE[lang]} class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition">{T.noCard.cta}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ───── WHERE TO RIDE ───── */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.ride.heading}</h2>
+      <p class="text-lg text-muted-foreground mb-6 leading-relaxed">{T.ride.lead}</p>
+
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-8">
+        {T.ride.spots.map((l) => (
+          <a href={locHref(l.slug)} class="px-4 py-3 bg-card border border-border rounded-xl hover:border-primary transition">
+            <strong>{l.label}</strong><br/>
+            <span class="text-muted-foreground">{l.time}</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 text-sm">
+        <a href={GUIDE_CHOOSE[lang]} class="flex-1 px-5 py-4 bg-primary/5 border border-primary/20 rounded-xl text-primary font-medium hover:bg-primary/10 transition">{T.ride.guideChoose}</a>
+        <a href={GUIDE_HIDDEN[lang]} class="flex-1 px-5 py-4 bg-primary/5 border border-primary/20 rounded-xl text-primary font-medium hover:bg-primary/10 transition">{T.ride.guideHidden}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ───── FAQ ───── */}
+  <FAQSection
+    title={T.faq.heading}
+    faqs={faqsForComponent}
+    lang={lang}
+    client:visible
+  />
+
+  {/* ───── CTA FINALE su sfondo ORO ───── */}
+  <section class="relative bg-gold text-background py-20 md:py-24 px-4 overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#000_2px,transparent_2px),radial-gradient(circle_at_60%_70%,#000_1px,transparent_1px)] bg-[length:32px_32px,18px_18px]"></div>
+    <div class="relative container mx-auto max-w-4xl text-center">
+      <h2 class="font-serif text-3xl md:text-5xl text-background font-medium mb-5 leading-tight">{T.cta.heading}</h2>
+      <p class="font-serif text-background/85 text-[17px] md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+        {T.cta.addressLine1}<br/>
+        {T.cta.addressLine2}
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+        <a href={BOOK_HUB[lang]} class="inline-flex items-center justify-center px-10 py-4 bg-background text-foreground rounded-full font-semibold text-sm md:text-base hover:scale-105 transition-transform shadow-xl ring-1 ring-background/20">{T.cta.bookCta}</a>
+        <a href="https://wa.me/393446107071" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-10 py-4 bg-[#25D366] text-white rounded-full font-semibold text-sm md:text-base hover:scale-105 transition-transform shadow-xl">{T.cta.whatsappCta}</a>
+      </div>
+
+      <p class="text-xs md:text-sm text-background/70 leading-relaxed">
+        KS Rent S.R.L. · P.IVA <strong class="text-background">IT03028900904</strong> · REA <strong class="text-background">SS-224046</strong> · Capitale sociale 20.000 €<br/>
+        PEC: ks.rent.srl@pec.it · Email: ksrentsrl@gmail.com
+      </p>
+    </div>
+  </section>
+
+</main>

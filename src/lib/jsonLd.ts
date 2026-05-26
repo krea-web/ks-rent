@@ -664,6 +664,72 @@ export const olbiaAutoRentalJsonLd = {
   ],
 };
 
+export const motoScooterRentalJsonLd = {
+  "@context": "https://schema.org",
+  ...carRentalBase,
+  "@id": "https://www.ksrentsardinia.com/noleggio-moto-scooter-olbia#service",
+  name: "KS Rent Sardinia — Noleggio Scooter, Moto e Quad Olbia",
+  description:
+    "Noleggio scooter Honda SH 125 e SH 350 e quad Yamaha Raptor a Olbia, con casco incluso e consegna gratuita all'aeroporto Costa Smeralda (OLB), al porto Isola Bianca e in hotel. Anche senza carta di credito obbligatoria.",
+  url: "https://www.ksrentsardinia.com/noleggio-moto-scooter-olbia",
+  image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+  areaServed: [
+    { "@type": "City", name: "Olbia" },
+    { "@type": "Place", name: "Aeroporto di Olbia Costa Smeralda (OLB)" },
+    { "@type": "Place", name: "Porto di Olbia Isola Bianca" },
+    { "@type": "Place", name: "Costa Smeralda" },
+    { "@type": "Place", name: "Gallura" },
+  ],
+};
+
+export const motoScooterFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/noleggio-moto-scooter-olbia#faq",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Posso guidare uno scooter 125 con la patente B?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. In Italia la patente B abilita alla guida di scooter e moto fino a 125 cc (11 kW): per la Honda SH 125 è quindi sufficiente la patente B. Per la SH 350 serve la patente A2, oppure la B posseduta da almeno 3 anni. Il quad Yamaha Raptor si guida con patente B.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Il casco è incluso nel noleggio scooter a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì, sempre. KS Rent Sardinia fornisce caschi omologati per guidatore e passeggero, sanificati prima di ogni consegna. Su richiesta aggiungiamo bauletto portaoggetti e antifurto. Il casco è obbligatorio per legge per tutti gli occupanti.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Qual è l'età minima per noleggiare uno scooter a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "L'età minima è 18 anni, con patente valida adeguata alla cilindrata: A1 o B per lo scooter 125, A2 o B da almeno 3 anni per il 350, patente B per il quad.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Consegnate lo scooter in aeroporto o in hotel a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. Consegna gratuita all'aeroporto di Olbia Costa Smeralda (OLB) e al porto Isola Bianca, e a domicilio in hotel o villa in tutta la Gallura (Porto Cervo, San Teodoro, Golfo Aranci, Palau). Per le consegne fuori Olbia il costo parte da 5 € ed è dichiarato in modo trasparente nel preventivo.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso noleggiare uno scooter senza carta di credito?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. Come per le auto, KS Rent Sardinia accetta contanti, carte prepagate ricaricabili (Postepay, Revolut, N26), bancomat e bonifico bancario. Il deposito cauzionale può essere versato anche in contanti al momento della consegna.",
+      },
+    },
+  ],
+};
+
 export const olbiaFaqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",

@@ -42,6 +42,13 @@ const Footer = ({ lang = "it" }: FooterProps) => {
   const airportHref = localizePath("/noleggio-auto-aeroporto-olbia", lang);
   const costaSmeraldaHref = localizePath("/noleggio-auto-costa-smeralda", lang);
   const noCardHref = localizePath("/noleggio-auto-senza-carta-di-credito-olbia", lang);
+  const motoScooterHref = localizePath("/noleggio-moto-scooter-olbia", lang);
+  const motoScooterLabel: Record<typeof lang, string> = {
+    it: "Noleggio Scooter e Moto",
+    en: "Scooter & Motorbike Hire",
+    de: "Roller & Motorrad mieten",
+    fr: "Location Scooter & Moto",
+  };
   const termsHref = localizePath("/termini-e-condizioni", lang);
   const withdrawalHref = localizePath("/diritto-recesso", lang);
   const supplierInfoHref = localizePath("/informativa-fornitore", lang);
@@ -214,6 +221,7 @@ const Footer = ({ lang = "it" }: FooterProps) => {
                 { label: t.services.airport.title, to: airportHref },
                 { label: t.services.costaSmeralda.title, to: costaSmeraldaHref },
                 { label: t.services.noCreditCard.title, to: noCardHref },
+                { label: motoScooterLabel[lang], to: motoScooterHref },
               ].map((link) => (
                 <Link
                   key={link.to}

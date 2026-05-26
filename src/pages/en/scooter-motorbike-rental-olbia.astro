@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import MotoScooterContent from "@/components/MotoScooterContent.astro";
+import {
+  motoScooterRentalJsonLd,
+  motoScooterFaqJsonLd,
+  buildBreadcrumb,
+} from "@/lib/jsonLd";
+---
+
+<BaseLayout
+  title="Scooter & Motorbike Hire in Olbia | KS Rent Sardinia — Helmet Included"
+  description="Honda SH 125/350 scooter and Yamaha Raptor quad hire in Olbia, helmet included and free delivery at the airport and port. Find out which licence you need. No credit card required."
+  canonical="https://www.ksrentsardinia.com/en/scooter-motorbike-rental-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    motoScooterRentalJsonLd,
+    motoScooterFaqJsonLd,
+    buildBreadcrumb("Scooter & Motorbike Hire Olbia", "/en/scooter-motorbike-rental-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Scooter & Motorbike Hire Olbia", path: "/en/scooter-motorbike-rental-olbia" }]}
+>
+  <MotoScooterContent lang="en" />
+</BaseLayout>
