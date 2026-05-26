@@ -1,0 +1,93 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleDe } from "@/data/guide-articles";
+
+const meta = findArticleDe("autovermietung-olbia-kaution-selbstbeteiligung-anleitung")!;
+const pageUrl = `https://www.ksrentsardinia.com/de/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Mitgruender KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "de-DE",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Was ist der Unterschied zwischen Kaution und Selbstbeteiligung?", acceptedAnswer: { "@type": "Answer", text: "Die Kaution ist ein voruebergehender Betrag, der bei der Uebergabe einbehalten oder vorautorisiert und bei Rueckgabe des unbeschaedigten Fahrzeugs vollstaendig erstattet wird. Die Selbstbeteiligung ist der Hoechstbetrag, fuer den Sie im Fall eines versicherten Schadens haften: eine Obergrenze fuer Ihr Risiko, keine Gebuehr, wenn nichts passiert. Bei KS Rent Sardinia haengen beide Betraege von der Fahrzeugkategorie ab und werden vor der Buchung klar mitgeteilt." } },
+    { "@type": "Question", name: "Brauche ich eine Kreditkarte fuer die Kaution in Olbia?", acceptedAnswer: { "@type": "Answer", text: "Nein. KS Rent Sardinia ist eine der wenigen Autovermietungen in Olbia ohne Kreditkartenpflicht: die Kaution kann per Debitkarte, Bancomat, aufladbarer Prepaid-Karte (Postepay, Revolut, N26) oder bar hinterlegt werden. Ein echter Vorteil fuer alle ohne Kreditkarte mit hohem Limit." } },
+    { "@type": "Question", name: "Wann wird die Kaution zurueckerstattet?", acceptedAnswer: { "@type": "Answer", text: "Bei der Rueckgabe des Fahrzeugs, nach der Kontrolle ohne Schaeden, Bussgelder oder fehlenden Kraftstoff. Bei Barzahlung wird die Kaution sofort zurueckgegeben; bei Vorautorisierung auf der Karte haengt die Freigabe von den technischen Zeiten Ihrer Bank ab." } },
+    { "@type": "Question", name: "Was ist die Selbstbeteiligungs-Reduzierung und lohnt sie sich?", acceptedAnswer: { "@type": "Answer", text: "Eine optionale Deckung, die die Selbstbeteiligung auf null oder fast null senkt: bei einem versicherten Schaden zahlen Sie nichts (oder fast nichts). Besonders sinnvoll bei laengeren Mieten und Premium-Kategorien. Die Kosten werden bei der Buchung mitgeteilt: schreiben Sie uns per WhatsApp fuer die Details zu Ihrem Fahrzeug." } },
+    { "@type": "Question", name: "Wie erfahre ich den Kautionsbetrag vor der Buchung?", acceptedAnswer: { "@type": "Answer", text: "Schreiben Sie uns per WhatsApp an +39 344 6107071 mit Fahrzeug und Daten: wir nennen Ihnen Kaution und Selbstbeteiligung klar und transparent, Fall fuer Fall, bevor Sie bestaetigen. Keine Ueberraschungen bei der Abholung." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Reisefuehrer", path: "/de/guide" },
+    { name: "Kaution & Selbstbeteiligung", path: `/de/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="de">
+    <p>
+      <strong>Kaution und Versicherungs-Selbstbeteiligung sind die beiden Aspekte der Automiete, die die meiste Verwirrung stiften</strong> — und bei denen die grossen Netzwerke und Online-Broker oft am wenigsten transparent sind, mit Kartensperren und Betraegen, die erst am Schalter auftauchen. In dieser Anleitung erklaeren wir klar, wie sie bei KS Rent Sardinia in Olbia funktionieren: was sie sind, warum sie variieren, wie Sie sie bezahlen (auch ohne Kreditkarte) und was bei einem Schaden passiert. Ein wichtiger Hinweis vorab: <strong>wir veroeffentlichen die Betraege nicht in einer Preisliste</strong>, da sie von der Fahrzeugkategorie abhaengen und wir sie Fall fuer Fall klar vor der Buchung mitteilen.
+    </p>
+
+    <h2>Kaution und Selbstbeteiligung: nicht dasselbe</h2>
+    <p>Zwei unterschiedliche Konzepte, die oft verwechselt werden:</p>
+    <ul>
+      <li><strong>Kaution</strong>: ein voruebergehender Betrag, bei der Uebergabe gezahlt oder vorautorisiert. Sie ist eine Garantie, keine Gebuehr: sie wird bei Rueckgabe <strong>vollstaendig erstattet</strong>, wenn das Auto unbeschaedigt, vollgetankt und ohne Bussgelder zurueckkommt.</li>
+      <li><strong>Selbstbeteiligung (Kasko)</strong>: der Hoechstbetrag, fuer den Sie bei einem versicherten Schaden haften. Eine Obergrenze fuer Ihr Risiko: passiert nichts, zahlen Sie nichts. Die Selbstbeteiligung ist kein im Voraus gezahlter Betrag, sondern die Grenze Ihrer moeglichen Haftung im Schadensfall.</li>
+    </ul>
+
+    <h2>Warum der Betrag je Fahrzeug variiert</h2>
+    <p>
+      Kaution und Selbstbeteiligung sind proportional zum Wert und zur Kategorie des Fahrzeugs. Ein <a href="/de/fuhrpark/fiat-panda-mieten-olbia">Fiat Panda Hybrid</a> hat viel niedrigere Betraege als ein Sportwagen wie der <a href="/de/fuhrpark/audi-rs3-mieten-olbia">Audi RS3</a> oder der <a href="/de/fuhrpark/bmw-m2-coupe-mieten-olbia">BMW M2</a>, waehrend ein <a href="/de/fuhrpark/jeep-avenger-mieten-olbia">Jeep Avenger</a> oder eine <a href="/de/fuhrpark/mercedes-a-klasse-mieten-olbia">Mercedes A-Klasse</a> dazwischen liegen. Es ist dasselbe Prinzip wie bei jeder Autovermietung: je hoeher der Fahrzeugwert, desto hoeher die geforderte Garantie. Der Unterschied: wir sagen es Ihnen <strong>vorher</strong>, nicht bei der Abholung.
+    </p>
+
+    <h2>Wie Sie die Kaution zahlen: auch ohne Kreditkarte</h2>
+    <p>
+      Das ist unser Hauptunterschied zu den grossen Netzwerken. Eine klassische Kreditkarte ist <strong>nicht erforderlich</strong>: die Kaution kann per Debitkarte, Bancomat, aufladbarer Prepaid-Karte (Postepay, Revolut, N26) oder bar hinterlegt werden. Keine Vorautorisierung, die Tausende Euro auf Ihrer Karte blockiert, gerade wenn Sie den Urlaub geniessen wollen. Mehr zu den akzeptierten Methoden in der <a href="/de/guide/autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung">vollstaendigen Anleitung zur Vermietung ohne Kreditkarte</a>.
+    </p>
+
+    <h2>Die Selbstbeteiligungs-Reduzierung (optional)</h2>
+    <p>
+      Wenn Sie sorgenfrei fahren moechten, koennen Sie bei der Abholung eine <strong>Reduzierung der Selbstbeteiligung</strong> abschliessen: eine optionale Deckung, die den Betrag, fuer den Sie bei einem versicherten Schaden haften wuerden, auf null senkt oder verringert. Besonders empfohlen bei laengeren Mieten sowie Premium- und Sportkategorien. Die Kosten, moderat und auf das Fahrzeug bezogen, werden bei der Buchung mitgeteilt: schreiben Sie uns per WhatsApp und wir sagen Ihnen sofort, ob es sich fuer Ihren Fall lohnt.
+    </p>
+
+    <h2>Was bei Schaden, Diebstahl oder Unfall passiert</h2>
+    <p>
+      Alle unsere Fahrzeuge umfassen die obligatorische Haftpflichtversicherung und die Pannenhilfe rund um die Uhr. Bei einem versicherten Schaden ist Ihre finanzielle Haftung auf die Selbstbeteiligung begrenzt (oder null, wenn Sie die Reduzierung gewaehlt haben). Bei einem Unfall genuegt ein Anruf bei der zugewiesenen Nummer: wir begleiten Sie Schritt fuer Schritt beim Unfallbericht und, falls noetig, beim Fahrzeugtausch. Die Kaution wird nur zur Deckung etwaiger dem Kunden anzulastender Schaeden verwendet und der ungenutzte Teil wird erstattet.
+    </p>
+
+    <h2>Wie Sie die Betraege vor der Buchung erfahren</h2>
+    <p>
+      Der einfachste Weg ohne Ueberraschungen: <strong>schreiben Sie uns per WhatsApp an <a href="https://wa.me/393446107071">+39 344 6107071</a></strong> mit dem gewuenschten Fahrzeug und den Daten. Wir nennen Ihnen Kaution und Selbstbeteiligung klar und transparent, Fall fuer Fall, <strong>bevor</strong> Sie bestaetigen. Dann koennen Sie die Buchung online auf der Seite <a href="/de/jetzt-buchen">Jetzt buchen</a> abschliessen oder die <a href="/de/preise">Saisonpreise</a> ansehen.
+    </p>
+
+    <h2>Kurz gesagt</h2>
+    <p>
+      Die Kaution ist eine voruebergehende, erstattbare Garantie; die Selbstbeteiligung ist die Obergrenze Ihrer Haftung im Schadensfall. Bei KS Rent Sardinia sind beide <strong>transparent, auf das Fahrzeug bezogen, vor der Buchung mitgeteilt</strong> und auch ohne Kreditkarte zahlbar. Keine ueberraschenden Sperren, keine versteckten Betraege: nur Klarheit, damit Sie in Olbia voellig sorgenfrei mieten. Bei Fragen sind wir <a href="https://wa.me/393446107071">auf WhatsApp</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

@@ -1,0 +1,93 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleFr } from "@/data/guide-articles";
+
+const meta = findArticleFr("location-voiture-olbia-caution-franchise-guide")!;
+const pageUrl = `https://www.ksrentsardinia.com/fr/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-fondateur KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "fr-FR",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "Quelle est la différence entre la caution et la franchise ?", acceptedAnswer: { "@type": "Answer", text: "La caution est une somme temporaire, retenue ou pré-autorisée à la remise et restituée intégralement quand le véhicule revient intact. La franchise est le montant maximum qui reste à votre charge en cas de dommage couvert : un plafond à votre risque, pas un coût que vous payez s'il ne se passe rien. Chez KS Rent Sardinia, les deux montants varient selon la catégorie du véhicule et sont communiqués clairement avant la réservation." } },
+    { "@type": "Question", name: "Faut-il une carte de crédit pour la caution à Olbia ?", acceptedAnswer: { "@type": "Answer", text: "Non. KS Rent Sardinia est l'une des rares agences à Olbia sans carte de crédit obligatoire : la caution peut être versée par carte de débit, bancomat, carte prépayée rechargeable (Postepay, Revolut, N26) ou espèces. Un vrai avantage pour qui n'a pas de carte de crédit à plafond élevé." } },
+    { "@type": "Question", name: "Quand la caution est-elle restituée ?", acceptedAnswer: { "@type": "Answer", text: "À la restitution du véhicule, après le contrôle confirmant l'absence de dommages, d'amendes ou de carburant manquant. Si la caution a été versée en espèces, elle est rendue tout de suite ; si elle a été pré-autorisée sur la carte, la libération dépend des délais techniques de votre banque." } },
+    { "@type": "Question", name: "Qu'est-ce que la réduction de franchise et est-ce avantageux ?", acceptedAnswer: { "@type": "Answer", text: "C'est une couverture optionnelle qui ramène la franchise à zéro ou presque : en cas de dommage couvert, vous ne payez rien (ou presque). Particulièrement avantageuse sur les locations longues et les catégories premium. Le coût est communiqué à la réservation : écrivez-nous sur WhatsApp pour les détails sur votre véhicule." } },
+    { "@type": "Question", name: "Comment connaître le montant de la caution avant de réserver ?", acceptedAnswer: { "@type": "Answer", text: "Écrivez-nous sur WhatsApp au +39 344 6107071 avec le véhicule et les dates : nous vous indiquons la caution et la franchise clairement et en toute transparence, au cas par cas, avant que vous confirmiez. Aucune surprise au retrait." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guides", path: "/fr/guide" },
+    { name: "Caution & franchise", path: `/fr/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="fr">
+    <p>
+      <strong>La caution et la franchise d'assurance sont les deux aspects de la location qui suscitent le plus de doutes</strong> — et ceux sur lesquels les grands réseaux et les courtiers en ligne sont souvent les moins transparents, avec des blocages sur la carte et des montants qui n'apparaissent qu'au comptoir. Dans ce guide, nous expliquons clairement comment ils fonctionnent chez KS Rent Sardinia à Olbia : ce qu'ils sont, pourquoi ils varient, comment vous les payez (même sans carte de crédit) et ce qui se passe en cas de dommage. Une précision importante d'emblée : <strong>nous ne publions pas les montants sur une grille tarifaire</strong>, car ils dépendent de la catégorie du véhicule et nous les communiquons au cas par cas, clairement, avant la réservation.
+    </p>
+
+    <h2>Caution et franchise : ce n'est pas la même chose</h2>
+    <p>Deux concepts distincts souvent confondus :</p>
+    <ul>
+      <li><strong>Caution</strong>: une somme temporaire, versée ou pré-autorisée à la remise. C'est une garantie, pas un coût : elle est <strong>restituée intégralement</strong> au retour si la voiture revient intacte, avec le plein et sans amendes.</li>
+      <li><strong>Franchise (CDW)</strong>: le montant maximum qui reste à votre charge en cas de dommage couvert. C'est un plafond à votre risque : s'il ne se passe rien, vous ne payez rien. La franchise n'est pas une somme versée au début, mais la limite de votre responsabilité éventuelle en cas de sinistre.</li>
+    </ul>
+
+    <h2>Pourquoi le montant varie d'un véhicule à l'autre</h2>
+    <p>
+      La caution et la franchise sont proportionnelles à la valeur et à la catégorie du véhicule. Une <a href="/fr/flotte/fiat-panda-location-olbia">Fiat Panda Hybrid</a> a des montants bien plus bas qu'une sportive comme l'<a href="/fr/flotte/audi-rs3-location-olbia">Audi RS3</a> ou la <a href="/fr/flotte/bmw-m2-coupe-location-olbia">BMW M2</a>, tandis qu'un <a href="/fr/flotte/jeep-avenger-location-olbia">Jeep Avenger</a> ou une <a href="/fr/flotte/mercedes-classe-a-location-olbia">Mercedes Classe A</a> se situent entre les deux. C'est le même principe que celui appliqué par toutes les agences : plus la valeur du véhicule est élevée, plus la garantie demandée est importante. La différence, c'est que nous vous le disons <strong>à l'avance</strong>, pas au retrait.
+    </p>
+
+    <h2>Comment payer la caution : même sans carte de crédit</h2>
+    <p>
+      C'est notre principale différence avec les grands réseaux. La carte de crédit traditionnelle <strong>n'est pas obligatoire</strong> : la caution peut être versée par carte de débit, bancomat, carte prépayée rechargeable (Postepay, Revolut, N26) ou espèces. Aucune pré-autorisation bloquant des milliers d'euros sur votre carte juste au moment où vous voulez profiter de vos vacances. Pour en savoir plus sur les modes acceptés, voir le <a href="/fr/guide/location-voiture-olbia-sans-carte-credit-guide-complet">guide complet de la location sans carte de crédit</a>.
+    </p>
+
+    <h2>La réduction de franchise (optionnelle)</h2>
+    <p>
+      Si vous voulez conduire l'esprit tranquille, vous pouvez souscrire au retrait une <strong>réduction de franchise</strong> : une couverture optionnelle qui annule ou abaisse le montant qui resterait à votre charge en cas de dommage couvert. Particulièrement recommandée sur les locations longues et les catégories premium et sportives. Le coût, modéré et proportionné au véhicule, est communiqué à la réservation : écrivez-nous sur WhatsApp et nous vous dirons tout de suite si cela vaut la peine pour votre cas.
+    </p>
+
+    <h2>Que se passe-t-il en cas de dommage, vol ou accident</h2>
+    <p>
+      Tous nos véhicules incluent l'assurance responsabilité civile obligatoire et l'assistance routière 24h/24. En cas de dommage couvert, votre responsabilité financière est limitée à la franchise (ou annulée si vous avez souscrit la réduction). En cas d'accident, il suffit d'appeler le numéro dédié : nous vous guidons étape par étape dans le constat et, si nécessaire, dans le remplacement du véhicule. La caution sert uniquement à couvrir d'éventuels dommages imputables au client, et la partie non utilisée est restituée.
+    </p>
+
+    <h2>Comment connaître les montants avant de réserver</h2>
+    <p>
+      C'est le moyen le plus simple d'éviter les surprises : <strong>écrivez-nous sur WhatsApp au <a href="https://wa.me/393446107071">+39 344 6107071</a></strong> avec le véhicule qui vous intéresse et les dates. Nous vous indiquons la caution et la franchise clairement et en toute transparence, au cas par cas, <strong>avant</strong> que vous confirmiez. Vous pouvez ensuite compléter la réservation en ligne depuis la page <a href="/fr/reserver">Réserver</a> ou consulter la <a href="/fr/tarifs">grille des tarifs saisonniers</a>.
+    </p>
+
+    <h2>En résumé</h2>
+    <p>
+      La caution est une garantie temporaire et remboursable ; la franchise est le plafond de votre responsabilité en cas de dommage. Chez KS Rent Sardinia, les deux sont <strong>transparentes, proportionnées au véhicule, communiquées avant la réservation</strong> et payables même sans carte de crédit. Aucun blocage surprise, aucun montant caché : juste de la clarté, pour louer à Olbia en toute sérénité. Pour toute question, <a href="https://wa.me/393446107071">nous sommes sur WhatsApp</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

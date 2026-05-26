@@ -1,0 +1,93 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
+import { findArticleEn } from "@/data/guide-articles";
+
+const meta = findArticleEn("car-hire-olbia-deposit-and-excess-guide")!;
+const pageUrl = `https://www.ksrentsardinia.com/en/guide/${meta.slug}`;
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${pageUrl}#article`,
+  headline: meta.title,
+  description: meta.excerpt,
+  image: meta.heroImage,
+  datePublished: meta.publishedAt,
+  dateModified: meta.updatedAt || meta.publishedAt,
+  author: [
+    { "@type": "Person", name: "Francesco Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+    { "@type": "Person", name: "Salvatore Milo", jobTitle: "Co-founder KS Rent Sardinia" },
+  ],
+  publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  inLanguage: "en-GB",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  mainEntity: [
+    { "@type": "Question", name: "What is the difference between the security deposit and the excess?", acceptedAnswer: { "@type": "Answer", text: "The security deposit is a temporary amount, held or pre-authorised at handover and returned in full when the vehicle comes back undamaged. The excess is the maximum amount you are liable for in case of an insured damage: a cap on your risk, not a cost you pay if nothing happens. With KS Rent Sardinia both amounts vary by vehicle category and are communicated clearly before booking." } },
+    { "@type": "Question", name: "Do I need a credit card to pay the deposit in Olbia?", acceptedAnswer: { "@type": "Answer", text: "No. KS Rent Sardinia is one of the few car hire companies in Olbia that does not require a credit card: the deposit can be paid by debit card, bancomat, rechargeable prepaid card (Postepay, Revolut, N26) or cash. A real advantage for those without a high-limit credit card." } },
+    { "@type": "Question", name: "When is the security deposit returned?", acceptedAnswer: { "@type": "Answer", text: "On return of the vehicle, after the check confirms no damage, fines or missing fuel. If the deposit was paid in cash it is returned immediately; if it was pre-authorised on a card, the release depends on your bank's technical times." } },
+    { "@type": "Question", name: "What is the excess reduction and is it worth it?", acceptedAnswer: { "@type": "Answer", text: "It is an optional cover that brings the excess down to zero or near zero: in case of an insured damage you would pay nothing (or almost). It is especially worth it on longer rentals and premium categories. The cost is stated at booking: message us on WhatsApp for the details on your vehicle." } },
+    { "@type": "Question", name: "How do I find out the deposit amount before booking?", acceptedAnswer: { "@type": "Answer", text: "Message us on WhatsApp at +39 344 6107071 with vehicle and dates: we tell you the deposit and excess clearly and transparently, case by case, before you confirm. No surprises at pick-up." } },
+  ],
+};
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.excerpt}
+  canonical={pageUrl}
+  ogImage={meta.heroImage}
+  jsonLd={[articleJsonLd, faqJsonLd]}
+  breadcrumbs={[
+    { name: "Guides", path: "/en/guide" },
+    { name: "Deposit & excess", path: `/en/guide/${meta.slug}` },
+  ]}
+>
+  <GuideArticleLayout meta={meta} lang="en">
+    <p>
+      <strong>The security deposit and the insurance excess are the two aspects of car hire that cause the most confusion</strong> — and the ones the big networks and online brokers are often least transparent about, with card holds and figures that only appear at the desk. In this guide we explain clearly how they work with KS Rent Sardinia in Olbia: what they are, why they vary, how you pay them (even without a credit card) and what happens in case of damage. One important note up front: <strong>we do not publish the amounts on a price list</strong>, because they depend on the vehicle category and we communicate them case by case, clearly, before booking.
+    </p>
+
+    <h2>Security deposit and excess: not the same thing</h2>
+    <p>These are two distinct concepts that often get confused:</p>
+    <ul>
+      <li><strong>Security deposit</strong>: a temporary amount, paid or pre-authorised at handover. It is a guarantee, not a cost: it is <strong>returned in full</strong> on return if the car comes back undamaged, with a full tank and no fines.</li>
+      <li><strong>Excess (CDW)</strong>: the maximum amount you remain liable for in case of an insured damage. It is a cap on your risk: if nothing happens, you pay nothing. The excess is not a sum you pay upfront, but the limit of your possible liability in case of a claim.</li>
+    </ul>
+
+    <h2>Why the amount varies from vehicle to vehicle</h2>
+    <p>
+      Deposit and excess are proportionate to the value and category of the vehicle. A <a href="/en/fleet/fiat-panda-hire-olbia">Fiat Panda Hybrid</a> has much lower figures than a sports car like the <a href="/en/fleet/audi-rs3-hire-olbia">Audi RS3</a> or the <a href="/en/fleet/bmw-m2-coupe-hire-olbia">BMW M2</a>, while a <a href="/en/fleet/jeep-avenger-hire-olbia">Jeep Avenger</a> or a <a href="/en/fleet/mercedes-a-class-hire-olbia">Mercedes A-Class</a> sit in between. It is the same principle every car hire company applies: the higher the vehicle value, the greater the guarantee required. The difference is that we tell you <strong>beforehand</strong>, not at pick-up.
+    </p>
+
+    <h2>How you pay the deposit: even without a credit card</h2>
+    <p>
+      This is our main difference from the big networks. A traditional credit card is <strong>not required</strong>: the security deposit can be paid by debit card, bancomat, rechargeable prepaid card (Postepay, Revolut, N26) or cash. No pre-authorisation freezing thousands of euros on your card just as you want to enjoy your holiday. For more on accepted methods, see the <a href="/en/guide/car-hire-olbia-without-credit-card-complete-guide">complete guide to car hire without a credit card</a>.
+    </p>
+
+    <h2>The excess reduction (optional)</h2>
+    <p>
+      If you want to drive worry-free, at pick-up you can take an <strong>excess reduction</strong>: an optional cover that zeroes or lowers the amount you would be liable for in case of an insured damage. It is particularly recommended on longer rentals and premium or sports categories. The cost, modest and proportionate to the vehicle, is stated at booking: message us on WhatsApp and we will tell you straight away whether it is worth it for your case.
+    </p>
+
+    <h2>What happens in case of damage, theft or accident</h2>
+    <p>
+      All our vehicles include mandatory third-party insurance and 24/7 roadside assistance. In case of an insured damage, your financial liability is limited to the excess (or zeroed if you took the reduction). In case of an accident, just call the dedicated number: we guide you step by step through the report and, if needed, the vehicle replacement. The deposit is used only to cover any damage chargeable to the customer, and the unused part is returned.
+    </p>
+
+    <h2>How to find out the amounts before booking</h2>
+    <p>
+      It is the simplest way to avoid surprises: <strong>message us on WhatsApp at <a href="https://wa.me/393446107071">+39 344 6107071</a></strong> with the vehicle you are interested in and the dates. We tell you the deposit and excess clearly and transparently, case by case, <strong>before</strong> you confirm. Then you can complete the booking online from the <a href="/en/book-now">Book Now</a> page or check the <a href="/en/rates">seasonal rate list</a>.
+    </p>
+
+    <h2>In short</h2>
+    <p>
+      The deposit is a temporary, refundable guarantee; the excess is the cap on your liability in case of damage. With KS Rent Sardinia both are <strong>transparent, proportionate to the vehicle, communicated before booking</strong> and payable even without a credit card. No surprise holds, no hidden figures: just clarity, so you can rent in Olbia with total peace of mind. For any question, <a href="https://wa.me/393446107071">we're on WhatsApp</a>.
+    </p>
+  </GuideArticleLayout>
+</BaseLayout>

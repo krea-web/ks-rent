@@ -346,6 +346,20 @@ export const GUIDE_ARTICLES_EN: GuideArticleMetaEn[] = [
     itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
   },
   {
+    slug: "car-hire-olbia-deposit-and-excess-guide",
+    title: "Car hire Olbia: how the security deposit and excess work",
+    excerpt:
+      "How the security deposit and insurance excess work when you rent a car in Olbia: the difference, payment methods (even without a credit card), excess reduction and what happens in case of damage. Updated 2026.",
+    category: "Car hire",
+    publishedAt: "2026-05-26",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["car-hire-olbia-without-credit-card-complete-guide", "car-hire-olbia-airport-practical-guide"],
+    itEquivalent: "noleggio-auto-olbia-deposito-franchigia-come-funziona",
+  },
+  {
     slug: "7-day-itinerary-costa-smeralda-from-olbia",
     title: "7-day itinerary in Costa Smeralda from Olbia: routes, beaches, distances",
     excerpt:
@@ -669,6 +683,20 @@ export const GUIDE_ARTICLES_DE: GuideArticleMetaDe[] = [
     itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
   },
   {
+    slug: "autovermietung-olbia-kaution-selbstbeteiligung-anleitung",
+    title: "Autovermietung Olbia: wie Kaution und Selbstbeteiligung funktionieren",
+    excerpt:
+      "Wie Kaution und Versicherungs-Selbstbeteiligung bei der Automiete in Olbia funktionieren: der Unterschied, Zahlungsarten (auch ohne Kreditkarte), Reduzierung der Selbstbeteiligung und was bei Schaeden passiert. Aktualisiert 2026.",
+    category: "Autovermietung",
+    publishedAt: "2026-05-26",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["autovermietung-olbia-ohne-kreditkarte-vollstaendige-anleitung", "autovermietung-flughafen-olbia-praktische-anleitung"],
+    itEquivalent: "noleggio-auto-olbia-deposito-franchigia-come-funziona",
+  },
+  {
     slug: "7-tage-reiseroute-costa-smeralda-ab-olbia",
     title: "7-Tage-Reiseroute Costa Smeralda ab Olbia: Routen, Straende, Distanzen",
     excerpt:
@@ -923,6 +951,20 @@ export const GUIDE_ARTICLES_FR: GuideArticleMetaFr[] = [
     author: "Francesco Milo & Salvatore Milo",
     related: ["location-voiture-aeroport-olbia-guide-pratique", "itineraire-7-jours-costa-smeralda-depuis-olbia"],
     itEquivalent: "noleggio-auto-olbia-senza-carta-di-credito-guida-completa",
+  },
+  {
+    slug: "location-voiture-olbia-caution-franchise-guide",
+    title: "Location voiture Olbia : comment fonctionnent la caution et la franchise",
+    excerpt:
+      "Comment fonctionnent la caution et la franchise d'assurance quand vous louez une voiture à Olbia : la différence, les moyens de paiement (même sans carte de crédit), la réduction de franchise et en cas de dommage. Mis à jour 2026.",
+    category: "Location",
+    publishedAt: "2026-05-26",
+    readingMinutes: 7,
+    heroImage:
+      "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+    author: "Francesco Milo & Salvatore Milo",
+    related: ["location-voiture-olbia-sans-carte-credit-guide-complet", "location-voiture-aeroport-olbia-guide-pratique"],
+    itEquivalent: "noleggio-auto-olbia-deposito-franchigia-come-funziona",
   },
   {
     slug: "itineraire-7-jours-costa-smeralda-depuis-olbia",
