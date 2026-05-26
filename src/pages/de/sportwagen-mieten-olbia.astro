@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SportiveContent from "@/components/SportiveContent.astro";
+import { sportiveRentalJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Sportwagen mieten Olbia | Audi RS3, BMW M2 — KS Rent Sardinia"
+  description="Sportwagen mieten in Olbia: Audi RS3 mit 400 PS, BMW M2 Coupé und Mercedes A-Klasse. Kostenlose Lieferung an Flughafen und Hafen, auch ohne Kreditkarte. Für die Straßen der Costa Smeralda."
+  canonical="https://www.ksrentsardinia.com/de/sportwagen-mieten-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    sportiveRentalJsonLd,
+    buildBreadcrumb("Sportwagen mieten Olbia", "/de/sportwagen-mieten-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Sportwagen mieten Olbia", path: "/de/sportwagen-mieten-olbia" }]}
+>
+  <SportiveContent lang="de" />
+</BaseLayout>

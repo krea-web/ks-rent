@@ -1,0 +1,463 @@
+---
+/**
+ * Content condiviso della landing "Noleggio Auto Sportive a Olbia" (4 lingue),
+ * usata dai wrapper:
+ *   IT  /noleggio-auto-sportive-olbia
+ *   EN  /en/sports-car-hire-olbia
+ *   DE  /de/sportwagen-mieten-olbia
+ *   FR  /fr/location-voiture-sportive-olbia
+ *
+ * Posizionamento ONESTO: sportive/premium reali (Audi RS3, BMW M2, Mercedes
+ * Classe A), NON lusso/supercar esotiche — la flotta non include Ferrari/Lambo.
+ * Intercetta il cluster "noleggio auto sportive Olbia", distinto dal pillar auto.
+ * Nessun prezzo di franchigia/deposito (Nota Critica #13): CTA WhatsApp.
+ */
+type Lang = "it" | "en" | "de" | "fr";
+interface Props { lang?: Lang; }
+const { lang = "it" } = Astro.props;
+
+const ASSETS = {
+  rs3: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-audirs3supercar-verde.png",
+  m2: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-bmwm2-maschera.png",
+  classea: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-mercedessupercarclassea180d.png",
+};
+
+const FLEET_PREFIX: Record<Lang, string> = { it: "/flotta", en: "/en/fleet", de: "/de/fuhrpark", fr: "/fr/flotte" };
+const VEHICLE_SLUGS = {
+  "audi-rs3":          { it: "audi-rs3",          en: "audi-rs3-hire-olbia",         de: "audi-rs3-mieten-olbia",         fr: "audi-rs3-location-olbia" },
+  "bmw-m2":            { it: "bmw-m2",            en: "bmw-m2-coupe-hire-olbia",     de: "bmw-m2-coupe-mieten-olbia",     fr: "bmw-m2-coupe-location-olbia" },
+  "mercedes-classe-a": { it: "mercedes-classe-a", en: "mercedes-a-class-hire-olbia", de: "mercedes-a-klasse-mieten-olbia", fr: "mercedes-classe-a-location-olbia" },
+} satisfies Record<string, Record<Lang, string>>;
+const fleetHref = (slug: keyof typeof VEHICLE_SLUGS) => `${FLEET_PREFIX[lang]}/${VEHICLE_SLUGS[slug][lang]}`;
+
+const LOCATION_PREFIX: Record<Lang, string> = { it: "/noleggio-auto-", en: "/en/car-hire-", de: "/de/autovermietung-", fr: "/fr/location-voiture-" };
+const locHref = (loc: string) => `${LOCATION_PREFIX[lang]}${loc}`;
+
+const CAR_PAGE: Record<Lang, string> = { it: "/noleggio-auto-olbia", en: "/en/car-hire-olbia", de: "/de/autovermietung-olbia", fr: "/fr/location-voiture-olbia" };
+const NOCARD_PAGE: Record<Lang, string> = { it: "/noleggio-auto-senza-carta-di-credito-olbia", en: "/en/car-hire-no-credit-card-olbia", de: "/de/autovermietung-ohne-kreditkarte-olbia", fr: "/fr/location-voiture-sans-carte-credit-olbia" };
+const RATES: Record<Lang, string> = { it: "/tariffe", en: "/en/rates", de: "/de/preise", fr: "/fr/tarifs" };
+const BOOK: Record<Lang, string> = { it: "/prenotaora", en: "/en/book-now", de: "/de/jetzt-buchen", fr: "/fr/reserver" };
+const WHATSAPP = "https://wa.me/393446107071";
+
+const T = {
+  it: {
+    eyebrow: "Noleggio Auto Sportive — Olbia, Costa Smeralda",
+    titleLine1: "Noleggio Auto Sportive a Olbia",
+    titleLine2: "Audi RS3, BMW M2 e Mercedes Classe A",
+    lead: "Le strade panoramiche della Costa Smeralda meritano un'auto che le faccia valere. KS Rent Sardinia noleggia sportive vere — Audi RS3 da 400 CV, BMW M2 Coupé e la premium Mercedes Classe A — consegnate gratuitamente all'aeroporto di Olbia, al porto o in hotel. Niente supercar esotiche da vetrina: auto da guidare davvero, di nostra proprietà.",
+    badge1: "Consegna gratuita a Olbia",
+    badge2: "Senza carta di credito obbligatoria",
+    badge3: "5,0/5 su 41 recensioni Google",
+    ctaBook: "Prenota Ora",
+    ctaQuote: "💬 Richiedi preventivo",
+    why: {
+      heading: "Perché noleggiare una sportiva in Costa Smeralda",
+      lead: "Tra Porto Cervo e le cale della Gallura, le strade costiere sono un piacere di guida raro. Una sportiva trasforma il tragitto verso la spiaggia in parte della vacanza — e a noi piace l'idea di auto vere, accessibili, non di status symbol irraggiungibili.",
+      bullets: [
+        { icon: "🏁", title: "Sportive vere, non vetrina.", text: "Audi RS3 e BMW M2 sono tra le sportive più desiderate e divertenti da guidare. Niente esotiche da museo: mezzi che usi davvero, ogni giorno della vacanza." },
+        { icon: "🛣️", title: "Strade da copertina.", text: "La litoranea verso Porto Cervo, i tornanti di Capo Ceraso, la SP59 panoramica: percorsi nati per essere guidati con un'auto all'altezza." },
+        { icon: "🔑", title: "Di nostra proprietà.", text: "Non siamo un broker: la flotta è nostra, controllata prima di ogni noleggio. Conosciamo ogni auto e rispondiamo direttamente noi, i titolari." },
+        { icon: "⭐", title: "5,0/5 su Google.", text: "41 recensioni verificate. Consegna gratuita a Olbia e pagamento anche senza carta di credito, sportive comprese." },
+      ],
+    },
+    vehicles: {
+      heading: "Le nostre auto sportive a Olbia",
+      lead: "Tre interpretazioni diverse del piacere di guida, tutte disponibili con consegna a domicilio in Gallura.",
+      items: [
+        { slug: "audi-rs3" as const, img: ASSETS.rs3, name: "Audi RS3 Sportback", desc: "Il 5 cilindri turbo da 400 CV: trazione integrale quattro, accelerazione fulminante e sound inconfondibile. La sportiva più completa della flotta, sicura e divertente su ogni strada della Costa Smeralda.", spec: "400 CV · quattro · Benzina" },
+        { slug: "bmw-m2" as const, img: ASSETS.m2, name: "BMW M2 Coupé", desc: "Trazione posteriore, motore in linea e proporzioni compatte: la M2 è purezza di guida. Per chi cerca l'esperienza più coinvolgente sui tornanti della Gallura.", spec: "Coupé · trazione posteriore · Benzina" },
+        { slug: "mercedes-classe-a" as const, img: ASSETS.classea, name: "Mercedes Classe A 180d", desc: "L'alternativa premium: interni curati, infotainment top e consumi diesel contenuti. Comfort e stile per chi vuole un'auto elegante senza rinunciare al piacere di guida.", spec: "Premium · diesel · comfort" },
+      ],
+      seeLabel: "Scheda completa →",
+    },
+    routes: {
+      heading: "Dove guidarle: gli itinerari più belli da Olbia",
+      lead: "I percorsi preferiti dai nostri clienti al volante di una sportiva. Consegna direttamente in queste località.",
+      spots: [
+        { label: "Porto Cervo & la SP59", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Baja Sardinia & Cannigione", slug: "baja-sardinia", time: "~ 35 min" },
+        { label: "San Teodoro & la costa est", slug: "san-teodoro", time: "~ 25 min" },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 20 min" },
+      ],
+    },
+    rates: {
+      heading: "Tariffe e preventivo",
+      body: "Le tariffe delle sportive sono stagionali e su preventivo personalizzato, in base al periodo e alla durata. La Mercedes Classe A parte da circa 90 €/giorno in bassa stagione; per Audi RS3 e BMW M2 ti facciamo un preventivo su misura. Deposito e franchigia variano per veicolo e vengono comunicati in modo trasparente prima della prenotazione — nessuna sorpresa al ritiro.",
+      ctaRates: "Vedi il listino tariffe →",
+      ctaQuote: "Chiedi un preventivo su WhatsApp →",
+    },
+    noCard: {
+      heading: "Anche le sportive senza carta di credito",
+      lead: "A differenza dei grandi network, non imponiamo la carta di credito nemmeno sulle sportive. Accettiamo contanti, prepagate (Postepay, Revolut, N26), bancomat e bonifico anche per il deposito cauzionale.",
+      cta: "Come funziona il noleggio senza carta →",
+    },
+    faq: {
+      heading: "Domande frequenti sul noleggio auto sportive a Olbia",
+      items: [
+        { q: "Quali auto sportive posso noleggiare a Olbia?", a: "Audi RS3 Sportback (400 CV), BMW M2 Coupé e, in chiave premium, la Mercedes Classe A 180d. Sono auto di nostra proprietà, controllate prima di ogni noleggio. Non offriamo supercar esotiche: puntiamo su sportive accessibili, affidabili e divertenti da guidare." },
+        { q: "Qual è l'età minima per una sportiva?", a: "Per Audi RS3 e BMW M2 l'età minima è 25 anni con patente B da almeno un anno; per la Mercedes Classe A si parte da 21 anni. Al ritiro servono patente, documento d'identità e codice fiscale." },
+        { q: "Posso noleggiare una sportiva senza carta di credito?", a: "Sì. Accettiamo bancomat, carte di debito, prepagate ricaricabili (Postepay, Revolut, N26) e contanti anche per il deposito cauzionale. La carta di credito non è obbligatoria." },
+        { q: "Consegnate la sportiva in aeroporto o in hotel?", a: "Sì, consegna gratuita all'aeroporto di Olbia Costa Smeralda (OLB) e al porto Isola Bianca, e a domicilio in hotel o villa in tutta la Gallura e Costa Smeralda. Per le consegne fuori Olbia il costo è dichiarato nel preventivo." },
+        { q: "Quanto costa noleggiare una sportiva a Olbia?", a: "Tariffe stagionali su preventivo: la Mercedes Classe A parte da circa 90 €/giorno in bassa stagione; per RS3 e M2 scrivici su WhatsApp con date e veicolo per un preventivo immediato. Deposito e franchigia variano per veicolo e te li comunichiamo prima." },
+      ],
+    },
+    cta: {
+      heading: "Pronto a metterti al volante?",
+      addr1: "Sede: Viale Aldo Moro 367, Olbia · Consegna porto: Viale Isola Bianca 38",
+      addr2: "Aperti 7 giorni su 7, 10:00–13:00 e 15:00–22:30. Consegna gratuita a Olbia.",
+      bookCta: "Prenota la tua sportiva",
+      whatsappCta: "💬 Chiedi su WhatsApp",
+    },
+  },
+
+  en: {
+    eyebrow: "Sports Car Hire — Olbia, Costa Smeralda",
+    titleLine1: "Sports Car Hire in Olbia",
+    titleLine2: "Audi RS3, BMW M2 and Mercedes A-Class",
+    lead: "The Costa Smeralda's scenic roads deserve a car worthy of them. KS Rent Sardinia hires real sports cars — the 400 hp Audi RS3, the BMW M2 Coupé and the premium Mercedes A-Class — delivered free of charge to Olbia airport, the port or your hotel. No showroom-only exotics: cars made to actually drive, and owned by us.",
+    badge1: "Free delivery in Olbia",
+    badge2: "No credit card required",
+    badge3: "5.0/5 from 41 Google reviews",
+    ctaBook: "Book Now",
+    ctaQuote: "💬 Get a quote",
+    why: {
+      heading: "Why hire a sports car on the Costa Smeralda",
+      lead: "Between Porto Cervo and the coves of Gallura, the coastal roads are a rare driving pleasure. A sports car turns the trip to the beach into part of the holiday — and we like the idea of real, accessible cars, not unattainable status symbols.",
+      bullets: [
+        { icon: "🏁", title: "Real sports cars, not showpieces.", text: "The Audi RS3 and BMW M2 are among the most desirable and fun cars to drive. No museum exotics: cars you actually use, every day of your trip." },
+        { icon: "🛣️", title: "Postcard roads.", text: "The coast road to Porto Cervo, the bends of Capo Ceraso, the scenic SP59: routes made to be driven with a car worthy of them." },
+        { icon: "🔑", title: "Owned by us.", text: "We're not a broker: the fleet is ours, checked before every rental. We know every car and reply personally — we are the owners." },
+        { icon: "⭐", title: "5.0/5 on Google.", text: "41 verified reviews. Free delivery in Olbia and payment even without a credit card, sports cars included." },
+      ],
+    },
+    vehicles: {
+      heading: "Our sports cars in Olbia",
+      lead: "Three different takes on driving pleasure, all available with home delivery across Gallura.",
+      items: [
+        { slug: "audi-rs3" as const, img: ASSETS.rs3, name: "Audi RS3 Sportback", desc: "The 400 hp turbo five-cylinder: quattro all-wheel drive, blistering acceleration and an unmistakable sound. The most complete sports car in the fleet, safe and fun on every Costa Smeralda road.", spec: "400 hp · quattro · Petrol" },
+        { slug: "bmw-m2" as const, img: ASSETS.m2, name: "BMW M2 Coupé", desc: "Rear-wheel drive, straight-six engine and compact proportions: the M2 is pure driving. For those after the most engaging experience on Gallura's bends.", spec: "Coupé · rear-wheel drive · Petrol" },
+        { slug: "mercedes-classe-a" as const, img: ASSETS.classea, name: "Mercedes A-Class 180d", desc: "The premium alternative: refined interior, top infotainment and low diesel consumption. Comfort and style for those who want an elegant car without giving up driving pleasure.", spec: "Premium · diesel · comfort" },
+      ],
+      seeLabel: "Full details →",
+    },
+    routes: {
+      heading: "Where to drive them: the best routes from Olbia",
+      lead: "Our customers' favourite routes behind the wheel of a sports car. We deliver straight to these spots.",
+      spots: [
+        { label: "Porto Cervo & the SP59", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Baja Sardinia & Cannigione", slug: "baja-sardinia", time: "~ 35 min" },
+        { label: "San Teodoro & the east coast", slug: "san-teodoro", time: "~ 25 min" },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 20 min" },
+      ],
+    },
+    rates: {
+      heading: "Rates and quote",
+      body: "Sports car rates are seasonal and on personalised quote, depending on period and duration. The Mercedes A-Class starts at around €90/day in low season; for the Audi RS3 and BMW M2 we'll prepare a tailored quote. Deposit and excess vary by vehicle and are stated transparently before booking — no surprises at pick-up.",
+      ctaRates: "See the rate list →",
+      ctaQuote: "Ask for a quote on WhatsApp →",
+    },
+    noCard: {
+      heading: "Sports cars without a credit card too",
+      lead: "Unlike the big networks, we don't require a credit card even for sports cars. We accept cash, prepaid cards (Postepay, Revolut, N26), debit cards and bank transfer for the security deposit too.",
+      cta: "How car hire without a credit card works →",
+    },
+    faq: {
+      heading: "Sports car hire in Olbia — FAQ",
+      items: [
+        { q: "Which sports cars can I hire in Olbia?", a: "The Audi RS3 Sportback (400 hp), the BMW M2 Coupé and, as a premium option, the Mercedes A-Class 180d. They are owned by us and checked before every rental. We don't offer exotic supercars: we focus on accessible, reliable and fun sports cars." },
+        { q: "What is the minimum age for a sports car?", a: "For the Audi RS3 and BMW M2 the minimum age is 25 with a category B licence held for at least a year; for the Mercedes A-Class it starts at 21. At pick-up you need your licence, an ID and tax code." },
+        { q: "Can I hire a sports car without a credit card?", a: "Yes. We accept bancomat, debit cards, rechargeable prepaid cards (Postepay, Revolut, N26) and cash for the security deposit too. A credit card is not required." },
+        { q: "Do you deliver the sports car to the airport or hotel?", a: "Yes, free delivery to Olbia Costa Smeralda Airport (OLB) and the Isola Bianca port, and to your hotel or villa across Gallura and the Costa Smeralda. For deliveries outside Olbia the cost is stated in the quote." },
+        { q: "How much does it cost to hire a sports car in Olbia?", a: "Seasonal rates on quote: the Mercedes A-Class starts at around €90/day in low season; for the RS3 and M2 message us on WhatsApp with dates and vehicle for an instant quote. Deposit and excess vary by vehicle and are stated beforehand." },
+      ],
+    },
+    cta: {
+      heading: "Ready to take the wheel?",
+      addr1: "Office: Viale Aldo Moro 367, Olbia · Port delivery: Viale Isola Bianca 38",
+      addr2: "Open 7 days a week, 10:00–13:00 and 15:00–22:30. Free delivery in Olbia.",
+      bookCta: "Book your sports car",
+      whatsappCta: "💬 Ask on WhatsApp",
+    },
+  },
+
+  de: {
+    eyebrow: "Sportwagen mieten — Olbia, Costa Smeralda",
+    titleLine1: "Sportwagen mieten in Olbia",
+    titleLine2: "Audi RS3, BMW M2 und Mercedes A-Klasse",
+    lead: "Die Panoramastraßen der Costa Smeralda verdienen ein passendes Auto. KS Rent Sardinia vermietet echte Sportwagen — den 400-PS-Audi RS3, das BMW M2 Coupé und die Premium-Mercedes A-Klasse — kostenlos geliefert an den Flughafen Olbia, den Hafen oder Ihr Hotel. Keine Schauraum-Exoten: Autos, die man wirklich fährt, in unserem Eigenbesitz.",
+    badge1: "Kostenlose Lieferung in Olbia",
+    badge2: "Ohne Kreditkartenpflicht",
+    badge3: "5,0/5 bei 41 Google-Bewertungen",
+    ctaBook: "Jetzt buchen",
+    ctaQuote: "💬 Angebot anfragen",
+    why: {
+      heading: "Warum einen Sportwagen an der Costa Smeralda mieten",
+      lead: "Zwischen Porto Cervo und den Buchten der Gallura sind die Küstenstraßen ein seltenes Fahrvergnügen. Ein Sportwagen macht die Fahrt zum Strand zum Teil des Urlaubs — und wir mögen die Idee von echten, zugänglichen Autos statt unerreichbarer Statussymbole.",
+      bullets: [
+        { icon: "🏁", title: "Echte Sportwagen, keine Schaustücke.", text: "Audi RS3 und BMW M2 gehören zu den begehrtesten und unterhaltsamsten Autos. Keine Museums-Exoten: Autos, die Sie jeden Urlaubstag wirklich nutzen." },
+        { icon: "🛣️", title: "Bilderbuchstraßen.", text: "Die Küstenstraße nach Porto Cervo, die Kurven von Capo Ceraso, die malerische SP59: Strecken, die zum Fahren gemacht sind." },
+        { icon: "🔑", title: "In unserem Eigenbesitz.", text: "Wir sind kein Broker: Der Fuhrpark gehört uns und wird vor jeder Vermietung geprüft. Wir kennen jedes Auto und antworten persönlich — als Inhaber." },
+        { icon: "⭐", title: "5,0/5 bei Google.", text: "41 verifizierte Bewertungen. Kostenlose Lieferung in Olbia und Zahlung auch ohne Kreditkarte, Sportwagen inklusive." },
+      ],
+    },
+    vehicles: {
+      heading: "Unsere Sportwagen in Olbia",
+      lead: "Drei verschiedene Interpretationen des Fahrvergnügens, alle mit Lieferung in der ganzen Gallura.",
+      items: [
+        { slug: "audi-rs3" as const, img: ASSETS.rs3, name: "Audi RS3 Sportback", desc: "Der 400-PS-Fünfzylinder-Turbo: quattro-Allradantrieb, brachiale Beschleunigung und unverwechselbarer Sound. Der vollständigste Sportwagen der Flotte, sicher und unterhaltsam auf jeder Straße der Costa Smeralda.", spec: "400 PS · quattro · Benzin" },
+        { slug: "bmw-m2" as const, img: ASSETS.m2, name: "BMW M2 Coupé", desc: "Heckantrieb, Reihensechszylinder und kompakte Proportionen: Der M2 ist pures Fahren. Für alle, die das intensivste Erlebnis auf den Kurven der Gallura suchen.", spec: "Coupé · Heckantrieb · Benzin" },
+        { slug: "mercedes-classe-a" as const, img: ASSETS.classea, name: "Mercedes A-Klasse 180d", desc: "Die Premium-Alternative: edles Interieur, Top-Infotainment und niedriger Dieselverbrauch. Komfort und Stil für alle, die ein elegantes Auto ohne Verzicht auf Fahrspaß wollen.", spec: "Premium · Diesel · Komfort" },
+      ],
+      seeLabel: "Alle Details →",
+    },
+    routes: {
+      heading: "Wo Sie fahren: die schönsten Routen ab Olbia",
+      lead: "Die Lieblingsrouten unserer Kunden am Steuer eines Sportwagens. Wir liefern direkt an diese Orte.",
+      spots: [
+        { label: "Porto Cervo & die SP59", slug: "porto-cervo", time: "~ 35 Min." },
+        { label: "Baja Sardinia & Cannigione", slug: "baja-sardinia", time: "~ 35 Min." },
+        { label: "San Teodoro & die Ostküste", slug: "san-teodoro", time: "~ 25 Min." },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 20 Min." },
+      ],
+    },
+    rates: {
+      heading: "Preise und Angebot",
+      body: "Die Sportwagenpreise sind saisonal und auf Anfrage, je nach Zeitraum und Dauer. Die Mercedes A-Klasse beginnt in der Nebensaison bei rund 90 €/Tag; für Audi RS3 und BMW M2 erstellen wir ein individuelles Angebot. Kaution und Selbstbeteiligung variieren je Fahrzeug und werden vor der Buchung transparent mitgeteilt — keine Überraschungen bei der Abholung.",
+      ctaRates: "Preisliste ansehen →",
+      ctaQuote: "Angebot per WhatsApp anfragen →",
+    },
+    noCard: {
+      heading: "Auch Sportwagen ohne Kreditkarte",
+      lead: "Anders als die großen Netzwerke verlangen wir auch bei Sportwagen keine Kreditkarte. Wir akzeptieren Bargeld, Prepaid-Karten (Postepay, Revolut, N26), Debitkarten und Überweisung auch für die Kaution.",
+      cta: "So funktioniert die Vermietung ohne Kreditkarte →",
+    },
+    faq: {
+      heading: "Sportwagen mieten in Olbia — FAQ",
+      items: [
+        { q: "Welche Sportwagen kann ich in Olbia mieten?", a: "Den Audi RS3 Sportback (400 PS), das BMW M2 Coupé und als Premium-Option die Mercedes A-Klasse 180d. Sie sind in unserem Eigenbesitz und werden vor jeder Vermietung geprüft. Wir bieten keine exotischen Supersportwagen: Wir setzen auf zugängliche, zuverlässige und unterhaltsame Sportwagen." },
+        { q: "Wie hoch ist das Mindestalter für einen Sportwagen?", a: "Für Audi RS3 und BMW M2 beträgt das Mindestalter 25 Jahre mit Führerschein Klasse B seit mindestens einem Jahr; für die Mercedes A-Klasse ab 21 Jahren. Bei der Abholung benötigen Sie Führerschein, Ausweis und Steuernummer." },
+        { q: "Kann ich einen Sportwagen ohne Kreditkarte mieten?", a: "Ja. Wir akzeptieren Bancomat, Debitkarten, aufladbare Prepaid-Karten (Postepay, Revolut, N26) und Bargeld auch für die Kaution. Eine Kreditkarte ist nicht erforderlich." },
+        { q: "Liefern Sie den Sportwagen zum Flughafen oder Hotel?", a: "Ja, kostenlose Lieferung zum Flughafen Olbia Costa Smeralda (OLB) und zum Hafen Isola Bianca sowie an Ihr Hotel oder Ihre Villa in ganz Gallura und an der Costa Smeralda. Für Lieferungen außerhalb Olbias werden die Kosten im Angebot genannt." },
+        { q: "Was kostet die Miete eines Sportwagens in Olbia?", a: "Saisonpreise auf Anfrage: Die Mercedes A-Klasse beginnt in der Nebensaison bei rund 90 €/Tag; für RS3 und M2 schreiben Sie uns per WhatsApp mit Daten und Fahrzeug für ein sofortiges Angebot. Kaution und Selbstbeteiligung variieren je Fahrzeug und werden vorab mitgeteilt." },
+      ],
+    },
+    cta: {
+      heading: "Bereit, ans Steuer zu gehen?",
+      addr1: "Sitz: Viale Aldo Moro 367, Olbia · Lieferung Hafen: Viale Isola Bianca 38",
+      addr2: "7 Tage die Woche geöffnet, 10:00–13:00 und 15:00–22:30. Kostenlose Lieferung in Olbia.",
+      bookCta: "Sportwagen buchen",
+      whatsappCta: "💬 Per WhatsApp fragen",
+    },
+  },
+
+  fr: {
+    eyebrow: "Location de voiture sportive — Olbia, Costa Smeralda",
+    titleLine1: "Location de voiture sportive à Olbia",
+    titleLine2: "Audi RS3, BMW M2 et Mercedes Classe A",
+    lead: "Les routes panoramiques de la Costa Smeralda méritent une voiture à leur hauteur. KS Rent Sardinia loue de vraies sportives — l'Audi RS3 de 400 ch, la BMW M2 Coupé et la Mercedes Classe A premium — livrées gratuitement à l'aéroport d'Olbia, au port ou à votre hôtel. Pas d'exotiques de vitrine : des voitures faites pour être conduites, et qui nous appartiennent.",
+    badge1: "Livraison gratuite à Olbia",
+    badge2: "Sans carte de crédit obligatoire",
+    badge3: "5,0/5 sur 41 avis Google",
+    ctaBook: "Réserver",
+    ctaQuote: "💬 Demander un devis",
+    why: {
+      heading: "Pourquoi louer une sportive en Costa Smeralda",
+      lead: "Entre Porto Cervo et les criques de la Gallura, les routes côtières sont un plaisir de conduite rare. Une sportive transforme le trajet vers la plage en partie des vacances — et nous aimons l'idée de voitures vraies et accessibles, pas de symboles de statut inaccessibles.",
+      bullets: [
+        { icon: "🏁", title: "De vraies sportives, pas des vitrines.", text: "L'Audi RS3 et la BMW M2 comptent parmi les sportives les plus désirables et amusantes à conduire. Pas d'exotiques de musée : des voitures que vous utilisez vraiment, chaque jour." },
+        { icon: "🛣️", title: "Des routes de carte postale.", text: "La route côtière vers Porto Cervo, les virages de Capo Ceraso, la SP59 panoramique : des parcours faits pour être conduits avec une voiture à la hauteur." },
+        { icon: "🔑", title: "Notre propre flotte.", text: "Nous ne sommes pas un courtier : la flotte est la nôtre, vérifiée avant chaque location. Nous connaissons chaque voiture et répondons personnellement — nous sommes les propriétaires." },
+        { icon: "⭐", title: "5,0/5 sur Google.", text: "41 avis vérifiés. Livraison gratuite à Olbia et paiement même sans carte de crédit, sportives comprises." },
+      ],
+    },
+    vehicles: {
+      heading: "Nos voitures sportives à Olbia",
+      lead: "Trois interprétations différentes du plaisir de conduite, toutes disponibles avec livraison à domicile en Gallura.",
+      items: [
+        { slug: "audi-rs3" as const, img: ASSETS.rs3, name: "Audi RS3 Sportback", desc: "Le cinq cylindres turbo de 400 ch : transmission intégrale quattro, accélération foudroyante et son inimitable. La sportive la plus complète de la flotte, sûre et amusante sur chaque route de la Costa Smeralda.", spec: "400 ch · quattro · Essence" },
+        { slug: "bmw-m2" as const, img: ASSETS.m2, name: "BMW M2 Coupé", desc: "Propulsion arrière, moteur six cylindres en ligne et proportions compactes : la M2 est la conduite à l'état pur. Pour ceux qui cherchent l'expérience la plus engageante sur les virages de la Gallura.", spec: "Coupé · propulsion · Essence" },
+        { slug: "mercedes-classe-a" as const, img: ASSETS.classea, name: "Mercedes Classe A 180d", desc: "L'alternative premium : intérieur soigné, infodivertissement haut de gamme et consommation diesel maîtrisée. Confort et style pour qui veut une voiture élégante sans renoncer au plaisir de conduite.", spec: "Premium · diesel · confort" },
+      ],
+      seeLabel: "Fiche complète →",
+    },
+    routes: {
+      heading: "Où les conduire : les plus beaux itinéraires depuis Olbia",
+      lead: "Les itinéraires préférés de nos clients au volant d'une sportive. Nous livrons directement dans ces localités.",
+      spots: [
+        { label: "Porto Cervo & la SP59", slug: "porto-cervo", time: "~ 35 min" },
+        { label: "Baja Sardinia & Cannigione", slug: "baja-sardinia", time: "~ 35 min" },
+        { label: "San Teodoro & la côte est", slug: "san-teodoro", time: "~ 25 min" },
+        { label: "Golfo Aranci & Capo Figari", slug: "golfo-aranci", time: "~ 20 min" },
+      ],
+    },
+    rates: {
+      heading: "Tarifs et devis",
+      body: "Les tarifs des sportives sont saisonniers et sur devis personnalisé, selon la période et la durée. La Mercedes Classe A démarre autour de 90 €/jour en basse saison ; pour l'Audi RS3 et la BMW M2 nous établissons un devis sur mesure. Caution et franchise varient selon le véhicule et sont communiquées en toute transparence avant la réservation — aucune surprise à la prise en charge.",
+      ctaRates: "Voir la grille tarifaire →",
+      ctaQuote: "Demander un devis sur WhatsApp →",
+    },
+    noCard: {
+      heading: "Les sportives aussi sans carte de crédit",
+      lead: "Contrairement aux grands réseaux, nous n'exigeons pas de carte de crédit, même pour les sportives. Nous acceptons les espèces, les cartes prépayées (Postepay, Revolut, N26), les cartes de débit et le virement, y compris pour la caution.",
+      cta: "Comment fonctionne la location sans carte →",
+    },
+    faq: {
+      heading: "Location de voiture sportive à Olbia — FAQ",
+      items: [
+        { q: "Quelles voitures sportives puis-je louer à Olbia ?", a: "L'Audi RS3 Sportback (400 ch), la BMW M2 Coupé et, en option premium, la Mercedes Classe A 180d. Elles nous appartiennent et sont vérifiées avant chaque location. Nous ne proposons pas de supercars exotiques : nous misons sur des sportives accessibles, fiables et amusantes." },
+        { q: "Quel est l'âge minimum pour une sportive ?", a: "Pour l'Audi RS3 et la BMW M2, l'âge minimum est de 25 ans avec un permis B depuis au moins un an ; pour la Mercedes Classe A, à partir de 21 ans. À la prise en charge, il faut le permis, une pièce d'identité et le code fiscal." },
+        { q: "Puis-je louer une sportive sans carte de crédit ?", a: "Oui. Nous acceptons le bancomat, les cartes de débit, les cartes prépayées rechargeables (Postepay, Revolut, N26) et les espèces, y compris pour la caution. La carte de crédit n'est pas obligatoire." },
+        { q: "Livrez-vous la sportive à l'aéroport ou à l'hôtel ?", a: "Oui, livraison gratuite à l'aéroport d'Olbia Costa Smeralda (OLB) et au port d'Isola Bianca, ainsi qu'à votre hôtel ou villa dans toute la Gallura et la Costa Smeralda. Pour les livraisons hors d'Olbia, le coût est indiqué dans le devis." },
+        { q: "Combien coûte la location d'une sportive à Olbia ?", a: "Tarifs saisonniers sur devis : la Mercedes Classe A démarre autour de 90 €/jour en basse saison ; pour la RS3 et la M2, écrivez-nous sur WhatsApp avec les dates et le véhicule pour un devis immédiat. Caution et franchise varient selon le véhicule et sont communiquées au préalable." },
+      ],
+    },
+    cta: {
+      heading: "Prêt à prendre le volant ?",
+      addr1: "Siège : Viale Aldo Moro 367, Olbia · Livraison port : Viale Isola Bianca 38",
+      addr2: "Ouvert 7 j/7, 10h00–13h00 et 15h00–22h30. Livraison gratuite à Olbia.",
+      bookCta: "Réservez votre sportive",
+      whatsappCta: "💬 Demander sur WhatsApp",
+    },
+  },
+} satisfies Record<Lang, any>;
+
+const t = T[lang];
+const carHub = CAR_PAGE[lang];
+const noCard = NOCARD_PAGE[lang];
+const rates = RATES[lang];
+const book = BOOK[lang];
+---
+<div class="bg-background">
+  {/* HERO */}
+  <section class="relative overflow-hidden border-b border-border/40 bg-gradient-to-br from-background via-background to-gold/5">
+    <div class="container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-4xl mx-auto text-center">
+        <p class="text-xs uppercase tracking-[0.3em] text-gold font-bold mb-4">{t.eyebrow}</p>
+        <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-[0.95] text-foreground">
+          {t.titleLine1}<br /><span class="text-gold">{t.titleLine2}</span>
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-foreground/75 font-light max-w-3xl mx-auto leading-relaxed">{t.lead}</p>
+
+        <div class="flex flex-wrap justify-center gap-3 mt-8 text-sm">
+          <span class="px-4 py-2 bg-gold/10 border border-gold/30 text-foreground rounded-full font-medium">✓ {t.badge1}</span>
+          <span class="px-4 py-2 bg-gold/10 border border-gold/30 text-foreground rounded-full font-medium">✓ {t.badge2}</span>
+          <span class="px-4 py-2 bg-gold/10 border border-gold/30 text-foreground rounded-full font-medium" data-speakable>★ {t.badge3}</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mt-10">
+          <a href={book} class="inline-flex items-center justify-center px-8 py-4 bg-gold text-background rounded-full font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform shadow-lg">{t.ctaBook}</a>
+          <a href={WHATSAPP} rel="nofollow" class="inline-flex items-center justify-center px-8 py-4 border border-border text-foreground rounded-full font-bold uppercase tracking-wider text-sm hover:border-gold hover:text-gold transition-colors">{t.ctaQuote}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* WHY */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-4">{t.why.heading}</h2>
+      <p class="text-lg text-foreground/70 font-light leading-relaxed mb-10 max-w-3xl">{t.why.lead}</p>
+      <ul class="grid md:grid-cols-2 gap-6">
+        {t.why.bullets.map((b) => (
+          <li class="flex gap-4 bg-card border border-border rounded-2xl p-6">
+            <span class="text-2xl shrink-0">{b.icon}</span>
+            <div>
+              <strong class="block text-foreground font-bold mb-1">{b.title}</strong>
+              <span class="text-sm text-foreground/70 leading-relaxed">{b.text}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* VEHICLES */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-card/30">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground">{t.vehicles.heading}</h2>
+        <p class="text-foreground/60 font-light mt-3 max-w-2xl mx-auto">{t.vehicles.lead}</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        {t.vehicles.items.map((v) => (
+          <a href={fleetHref(v.slug)} class="group block bg-background border border-border rounded-2xl overflow-hidden hover:border-gold/50 hover:shadow-xl transition">
+            <div class="aspect-[4/3] flex items-center justify-center p-6 bg-gradient-to-br from-card to-background">
+              <img src={v.img} alt={`Noleggio ${v.name} a Olbia — KS Rent Sardinia`} width="600" height="450" class="w-full h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform" loading="lazy" decoding="async" />
+            </div>
+            <div class="p-5 border-t border-border/60">
+              <span class="text-gold text-[10px] font-bold tracking-[0.2em] uppercase">{v.spec}</span>
+              <h3 class="text-xl font-black italic uppercase tracking-tight text-foreground mt-1">{v.name}</h3>
+              <p class="text-sm text-foreground/70 font-light mt-2 leading-relaxed">{v.desc}</p>
+              <span class="inline-flex items-center gap-1 text-sm font-semibold text-foreground mt-4 group-hover:text-gold transition">{t.vehicles.seeLabel}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ROUTES */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-3">{t.routes.heading}</h2>
+      <p class="text-foreground/70 font-light leading-relaxed mb-8 max-w-3xl">{t.routes.lead}</p>
+      <div class="grid sm:grid-cols-2 gap-4">
+        {t.routes.spots.map((s) => (
+          <a href={locHref(s.slug)} class="flex items-center justify-between bg-card border border-border rounded-xl px-5 py-4 hover:border-gold/50 hover:text-gold transition">
+            <span class="font-semibold text-foreground">{s.label}</span>
+            <span class="text-sm text-foreground/50">{s.time}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* RATES */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-card/30">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-4">{t.rates.heading}</h2>
+      <p class="text-lg text-foreground/75 font-light leading-relaxed">{t.rates.body}</p>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <a href={rates} class="inline-flex items-center gap-2 text-sm font-semibold text-foreground border border-border rounded-full px-4 py-2 hover:border-gold hover:text-gold transition-colors">{t.rates.ctaRates}</a>
+        <a href={WHATSAPP} rel="nofollow" class="inline-flex items-center gap-2 text-sm font-semibold text-background bg-gold rounded-full px-4 py-2 hover:scale-105 transition-transform">{t.rates.ctaQuote}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* NO CARD */}
+  <section class="py-16 md:py-20 border-b border-border/40">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-foreground mb-3">{t.noCard.heading}</h2>
+      <p class="text-lg text-foreground/75 font-light leading-relaxed">{t.noCard.lead}</p>
+      <a href={noCard} class="inline-flex items-center gap-2 text-sm font-semibold text-gold mt-5 hover:underline underline-offset-4">{t.noCard.cta}</a>
+    </div>
+  </section>
+
+  {/* FAQ (statiche, crawler-friendly) */}
+  <section class="py-16 md:py-20 border-b border-border/40 bg-card/30">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-foreground mb-8">{t.faq.heading}</h2>
+      <div class="space-y-4">
+        {t.faq.items.map((f) => (
+          <details class="bg-background border border-border rounded-xl overflow-hidden group">
+            <summary class="px-6 py-5 cursor-pointer text-foreground font-semibold hover:text-gold transition list-none">{f.q}</summary>
+            <div class="px-6 pb-5"><p class="text-foreground/70 font-light leading-relaxed faq-answer">{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="relative bg-gold text-background py-20 md:py-24 text-center px-4 overflow-hidden">
+    <div class="relative max-w-3xl mx-auto">
+      <h2 class="font-serif text-3xl md:text-5xl font-medium leading-tight mb-5">{t.cta.heading}</h2>
+      <p class="font-serif text-background/85 text-base md:text-lg leading-relaxed mb-2">{t.cta.addr1}</p>
+      <p class="font-serif text-background/75 text-sm md:text-base leading-relaxed mb-10">{t.cta.addr2}</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href={book} class="inline-flex items-center justify-center gap-2 bg-background text-foreground font-semibold tracking-wide text-sm px-8 py-4 rounded-full hover:scale-105 transition-transform shadow-xl">{t.cta.bookCta}</a>
+        <a href={WHATSAPP} rel="nofollow" class="inline-flex items-center justify-center gap-2 border border-background/40 text-background font-semibold tracking-wide text-sm px-8 py-4 rounded-full hover:bg-background/10 transition">{t.cta.whatsappCta}</a>
+      </div>
+    </div>
+  </section>
+</div>

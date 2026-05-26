@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SportiveContent from "@/components/SportiveContent.astro";
+import { sportiveRentalJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Sports Car Hire Olbia | Audi RS3, BMW M2 — KS Rent Sardinia"
+  description="Sports car hire in Olbia: 400 hp Audi RS3, BMW M2 Coupé and Mercedes A-Class. Free airport and port delivery, even without a credit card. For the Costa Smeralda's roads."
+  canonical="https://www.ksrentsardinia.com/en/sports-car-hire-olbia"
+  ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
+  jsonLd={[
+    sportiveRentalJsonLd,
+    buildBreadcrumb("Sports Car Hire Olbia", "/en/sports-car-hire-olbia"),
+  ]}
+  breadcrumbs={[{ name: "Sports Car Hire Olbia", path: "/en/sports-car-hire-olbia" }]}
+>
+  <SportiveContent lang="en" />
+</BaseLayout>

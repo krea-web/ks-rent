@@ -664,6 +664,122 @@ export const olbiaAutoRentalJsonLd = {
   ],
 };
 
+export const sportiveRentalJsonLd = {
+  "@context": "https://schema.org",
+  ...carRentalBase,
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-sportive-olbia#service",
+  name: "KS Rent Sardinia — Noleggio Auto Sportive Olbia",
+  description:
+    "Noleggio auto sportive a Olbia: Audi RS3, BMW M2 e Mercedes Classe A, con consegna gratuita all'aeroporto Costa Smeralda (OLB) e al porto Isola Bianca. Per le strade panoramiche della Costa Smeralda, anche senza carta di credito obbligatoria.",
+  url: "https://www.ksrentsardinia.com/noleggio-auto-sportive-olbia",
+  image: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg",
+  areaServed: [
+    { "@type": "City", name: "Olbia" },
+    { "@type": "Place", name: "Aeroporto di Olbia Costa Smeralda (OLB)" },
+    { "@type": "Place", name: "Porto di Olbia Isola Bianca" },
+    { "@type": "Place", name: "Costa Smeralda" },
+    { "@type": "Place", name: "Porto Cervo" },
+    { "@type": "Place", name: "Gallura" },
+  ],
+  // Item offerti tipati Car (tipo schema.org valido) per le query "noleggio
+  // auto sportive Olbia". Posizionamento sportive/premium, non lusso/supercar.
+  makesOffer: [
+    {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "EUR",
+      seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      itemOffered: {
+        "@type": "Car",
+        name: "Audi RS3 Sportback",
+        brand: { "@type": "Brand", name: "Audi" },
+        model: "RS3",
+        vehicleConfiguration: "Berlina sportiva 400 CV",
+        fuelType: "Gasoline",
+        url: "https://www.ksrentsardinia.com/flotta/audi-rs3",
+      },
+    },
+    {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "EUR",
+      seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      itemOffered: {
+        "@type": "Car",
+        name: "BMW M2 Coupé",
+        brand: { "@type": "Brand", name: "BMW" },
+        model: "M2",
+        vehicleConfiguration: "Coupé sportiva",
+        fuelType: "Gasoline",
+        url: "https://www.ksrentsardinia.com/flotta/bmw-m2",
+      },
+    },
+    {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "EUR",
+      seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      itemOffered: {
+        "@type": "Car",
+        name: "Mercedes Classe A 180d",
+        brand: { "@type": "Brand", name: "Mercedes-Benz" },
+        model: "Classe A",
+        vehicleConfiguration: "Berlina premium",
+        fuelType: "Diesel",
+        url: "https://www.ksrentsardinia.com/flotta/mercedes-classe-a",
+      },
+    },
+  ],
+};
+
+export const sportiveFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-sportive-olbia#faq",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Quali auto sportive si possono noleggiare a Olbia con KS Rent Sardinia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La flotta sportiva di KS Rent Sardinia comprende l'Audi RS3 Sportback (400 CV), la BMW M2 Coupé e, in chiave premium, la Mercedes Classe A 180d. Sono auto vere da guidare, di nostra proprietà e controllate prima di ogni noleggio, perfette per le strade panoramiche della Costa Smeralda. Non siamo un broker di supercar esotiche: offriamo sportive accessibili e affidabili, con consegna gratuita a Olbia.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Qual è l'età minima per noleggiare un'auto sportiva a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Per le auto sportive come Audi RS3 e BMW M2 l'età minima è 25 anni, con patente B valida da almeno un anno. Per la Mercedes Classe A si parte da 21 anni. Al ritiro servono patente, documento d'identità e codice fiscale.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Posso noleggiare una sportiva senza carta di credito?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. Anche sulle sportive KS Rent Sardinia accetta bancomat, carte di debito, prepagate ricaricabili (Postepay, Revolut, N26) e contanti per il deposito cauzionale. La carta di credito non è obbligatoria. Deposito e franchigia variano per veicolo e vengono comunicati in modo trasparente via WhatsApp prima della prenotazione.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Consegnate l'auto sportiva in aeroporto o in hotel?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sì. Consegna gratuita all'aeroporto di Olbia Costa Smeralda (OLB) e al porto Isola Bianca, e a domicilio in hotel o villa in tutta la Gallura e la Costa Smeralda (Porto Cervo, Porto Rotondo, Baja Sardinia). Per le consegne fuori Olbia il costo è dichiarato in modo trasparente nel preventivo.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quanto costa noleggiare un'auto sportiva a Olbia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le tariffe delle sportive sono stagionali e su preventivo personalizzato, in base al periodo e alla durata. La Mercedes Classe A parte da circa 90 €/giorno in bassa stagione; per Audi RS3 e BMW M2 scrivici su WhatsApp con date e veicolo per un preventivo immediato.",
+      },
+    },
+  ],
+};
+
 export const motoScooterRentalJsonLd = {
   "@context": "https://schema.org",
   ...carRentalBase,

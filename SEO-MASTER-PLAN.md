@@ -167,7 +167,7 @@ Dall'audit cluster ([docs/seo-cluster-noleggio-auto-olbia.md](docs/seo-cluster-n
 
 | # | Gap | Azione | Stato |
 |---|-----|--------|-------|
-| K1 | **Auto di lusso / SUV / supercar** | Creare landing `/noleggio-auto-lusso-olbia` (4 lingue) — è il NOSTRO punto di forza che oggi prendono i competitor (luxurycarsolbia, platinumservicerent). ~1.200-2.400 ricerche/mese stimate | 🤖 **GAP CRITICAL — pronto a costruire** |
+| K1 | ~~Auto di lusso / supercar~~ → **Auto sportive** | ⚖️ **RIVALUTATA (utente, 2026-05-26)**: la flotta NON ha lusso/supercar esotiche (solo RS3/M2 sportive + Classe A premium) → landing "lusso" sarebbe intent-mismatch. **FATTO** invece: landing **`/noleggio-auto-sportive-olbia`** (4 lingue) onesta su RS3+M2+Classe A — `SportiveContent.astro` + 4 wrapper + `sportiveRentalJsonLd`/`sportiveFaqJsonLd` (item tipati `Car`) + hreflang + link da FleetIntro + mappe-sito. |
 | K2 | **Scooter / moto / quad** | Landing `/noleggio-moto-scooter-olbia` | ✅ **FATTO** |
 | K3 | **Noleggio lungo termine / mensile** | Esistono le *guide* durata; manca una **service landing** "noleggio lungo termine Olbia" (intento commerciale B2B/residenti). Valutare | 🤖 da valutare |
 | K4 | **Deposito cauzionale / franchigia** | Guida informazionale (converte indecisi, **no prezzi** → CTA WhatsApp) | 🤖 da fare |
