@@ -196,7 +196,7 @@ export const localBusinessJsonLd = {
       url: "https://www.ksrentsardinia.com/",
       name: "KS Rent Sardinia",
       publisher: { "@id": "https://www.ksrentsardinia.com/#organization" },
-      inLanguage: "it-IT",
+      inLanguage: ["it-IT", "en-GB", "de-DE", "fr-FR"],
       potentialAction: {
         "@type": "SearchAction",
         target: {
@@ -679,6 +679,54 @@ export const motoScooterRentalJsonLd = {
     { "@type": "Place", name: "Porto di Olbia Isola Bianca" },
     { "@type": "Place", name: "Costa Smeralda" },
     { "@type": "Place", name: "Gallura" },
+  ],
+  // G4 (SEO Master Plan): schema.org NON ha un tipo "MotorcycleRental".
+  // Segnaliamo il noleggio moto/scooter/quad tipando gli item offerti come
+  // Motorcycle (tipo valido) tramite makesOffer → entity chiare per query
+  // "noleggio scooter/moto Olbia" senza iniettare tipi inesistenti.
+  makesOffer: [
+    {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "EUR",
+      seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      itemOffered: {
+        "@type": "Motorcycle",
+        name: "Honda SH 125",
+        brand: { "@type": "Brand", name: "Honda" },
+        vehicleConfiguration: "Scooter 125 cc",
+        fuelType: "Gasoline",
+        url: "https://www.ksrentsardinia.com/flotta/honda-sh",
+      },
+    },
+    {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "EUR",
+      seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      itemOffered: {
+        "@type": "Motorcycle",
+        name: "Honda SH 350",
+        brand: { "@type": "Brand", name: "Honda" },
+        vehicleConfiguration: "Scooter 350 cc",
+        fuelType: "Gasoline",
+        url: "https://www.ksrentsardinia.com/flotta/honda-sh",
+      },
+    },
+    {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "EUR",
+      seller: { "@id": "https://www.ksrentsardinia.com/#organization" },
+      itemOffered: {
+        "@type": "Vehicle",
+        name: "Yamaha Raptor",
+        brand: { "@type": "Brand", name: "Yamaha" },
+        vehicleConfiguration: "Quad / ATV",
+        fuelType: "Gasoline",
+        url: "https://www.ksrentsardinia.com/flotta/yamaha-quad-raptor",
+      },
+    },
   ],
 };
 

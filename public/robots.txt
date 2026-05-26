@@ -66,6 +66,9 @@ Allow: /
 User-agent: TimpiBot
 Allow: /
 
+User-agent: DuckAssistBot
+Allow: /
+
 # Bot per OG image preview / social cards (mantenere allow, sennò share senza preview)
 User-agent: facebookexternalhit
 Allow: /

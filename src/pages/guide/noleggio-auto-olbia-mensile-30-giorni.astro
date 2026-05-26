@@ -36,13 +36,29 @@ const faqJsonLd = {
     { "@type": "Question", name: "C'è un limite di chilometri per il noleggio mensile?", acceptedAnswer: { "@type": "Answer", text: "Per noleggi mensili KS Rent Sardinia applica un limite generoso di 3.500 km/mese (115 km/giorno medi), più che sufficienti per uso intensivo Gallura + Costa Smeralda + escursioni in Sardegna. Oltre quel limite: 0,15 €/km extra. La maggior parte dei clienti mensili sta sotto i 2.500 km." } },
   ],
 };
+
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "@id": `${pageUrl}#howto`,
+  name: "Come noleggiare un'auto al mese a Olbia",
+  description: "I passaggi per attivare un noleggio long-stay di 30 giorni con KS Rent Sardinia: preventivo, scelta veicolo, ritiro, manutenzione inclusa e riconsegna.",
+  totalTime: "P30D",
+  step: [
+    { "@type": "HowToStep", position: 1, name: "Richiedi il preventivo", text: "Scrivi su WhatsApp con date di inizio/fine, veicolo preferito e finalità (smart work, vacanza, ricerca casa): rispondiamo con un preventivo nominale entro un'ora." },
+    { "@type": "HowToStep", position: 2, name: "Scegli il veicolo", text: "Seleziona il mezzo in base all'uso: Fiat Panda Hybrid per la città, Jeep Avenger per la famiglia, Mercedes Classe A per il comfort sulle lunghe percorrenze." },
+    { "@type": "HowToStep", position: 3, name: "Ritira e paga (anche senza carta)", text: "Presenta patente B (1+ anno), documento e codice fiscale/TIN. Pagamento in 2 tranche (50% al ritiro, 50% al 15° giorno) con bonifico, prepagate, bancomat o contanti." },
+    { "@type": "HowToStep", position: 4, name: "Usa l'auto con manutenzione inclusa", text: "Sono inclusi cambio olio se necessario, controllo pneumatici, lavaggio mensile e veicolo sostitutivo durante gli interventi, con 3.500 km/mese compresi." },
+    { "@type": "HowToStep", position: 5, name: "Riconsegna", text: "Restituisci il veicolo col pieno nel punto concordato (aeroporto, porto o centro Olbia). Per durate oltre i 30 giorni si attivano tariffe long-term ancora più convenienti." },
+  ],
+};
 ---
 <BaseLayout
   title={meta.title}
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, howToJsonLd]}
   breadcrumbs={[
     { name: "Guide", path: "/guide" },
     { name: "Noleggio mensile 30 giorni", path: `/guide/${meta.slug}` },

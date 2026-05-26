@@ -36,13 +36,34 @@ const faqJsonLd = {
     { "@type": "Question", name: "Per 14 giorni meglio un'auto economica o premium?", acceptedAnswer: { "@type": "Answer", text: "Su 14 giorni il delta tra Panda (480 €) e Mercedes A (1.000 €) è 520 €. Su una vacanza di 14 giorni che costa probabilmente 2.500-5.000 € totali tra voli, alloggi, mangiare, il delta del veicolo premium incide 10-20%. Vale la pena per chi viaggia in coppia con priorità comfort, non per chi viaggia in 4 con priorità budget." } },
   ],
 };
+
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "@id": `${pageUrl}#howto`,
+  name: "Come organizzare 14 giorni nel nord Sardegna da Olbia",
+  description: "Itinerario di due settimane con auto a noleggio da Olbia: Costa Smeralda, La Maddalena, Costa Est, Alghero, Stintino, Asinara, Bosa ed entroterra.",
+  totalTime: "P14D",
+  step: [
+    { "@type": "HowToStep", position: 1, name: "Giorni 1-5 — Costa Smeralda e Gallura nord", text: "Porto Cervo, Spiaggia del Principe, Romazzino, Capriccioli, Liscia Ruja, mercato di San Pantaleo e cena a Porto Rotondo." },
+    { "@type": "HowToStep", position: 2, name: "Giorno 6 — La Maddalena", text: "Traghetto da Palau e tour dell'arcipelago (Spargi, Budelli) in barca o auto+barca." },
+    { "@type": "HowToStep", position: 3, name: "Giorno 7 — Costa Est", text: "San Teodoro, La Cinta, Cala Brandinchi e Capo Coda Cavallo, con rientro a Olbia." },
+    { "@type": "HowToStep", position: 4, name: "Giorno 8 — Transfer ovest", text: "Trasferimento ad Alghero (circa 3 ore), pranzo catalano e centro storico." },
+    { "@type": "HowToStep", position: 5, name: "Giorno 9 — Capo Caccia", text: "Grotte di Nettuno, Cala Dragunara e scogliere di Capo Caccia." },
+    { "@type": "HowToStep", position: 6, name: "Giorno 10 — Stintino e La Pelosa", text: "Trasferimento a Stintino, spiaggia di La Pelosa e vista sull'Asinara." },
+    { "@type": "HowToStep", position: 7, name: "Giorno 11 — Asinara (opzionale)", text: "Traghetto da Stintino e tour dell'isola in trenino o auto elettrica." },
+    { "@type": "HowToStep", position: 8, name: "Giorno 12 — Bosa e rientro est", text: "Bosa con le case colorate e il fiume Temo, poi trasferimento serale verso Tempio Pausania." },
+    { "@type": "HowToStep", position: 9, name: "Giorno 13 — Entroterra Gallura", text: "Castelsardo, cantine e nuraghi della Gallura interna." },
+    { "@type": "HowToStep", position: 10, name: "Giorno 14 — Rientro", text: "Ultimo bagno e riconsegna del veicolo in aeroporto o al porto." },
+  ],
+};
 ---
 <BaseLayout
   title={meta.title}
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, howToJsonLd]}
   breadcrumbs={[
     { name: "Guide", path: "/guide" },
     { name: "Noleggio 14 giorni", path: `/guide/${meta.slug}` },

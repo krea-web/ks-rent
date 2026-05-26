@@ -36,13 +36,32 @@ const faqJsonLd = {
     { "@type": "Question", name: "Conviene scegliere 10 giorni o estendere a 14 per la tariffa quindicinale?", acceptedAnswer: { "@type": "Answer", text: "Dipende. 14 giorni costano circa 13 × giornaliera (-7% extra vs 10×). Se hai 12-13 giorni di vacanza, vale la pena estendere a 14 per il prezzo del 13°. Se hai esattamente 10 giorni, 10 giorni è la scelta giusta." } },
   ],
 };
+
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "@id": `${pageUrl}#howto`,
+  name: "Come organizzare 10 giorni in Sardegna nord-orientale da Olbia",
+  description: "Itinerario di 10 giorni con auto a noleggio da Olbia: Costa Smeralda completa, La Maddalena, Costa Est e un'estensione verso Alghero o Stintino.",
+  totalTime: "P10D",
+  step: [
+    { "@type": "HowToStep", position: 1, name: "Giorni 1-2 — Olbia e Costa Smeralda nord", text: "Arrivo e ambientamento, Porto Cervo, Spiaggia del Principe e Pevero." },
+    { "@type": "HowToStep", position: 2, name: "Giorno 3 — Costa Smeralda sud", text: "Capriccioli, Romazzino, Cala di Volpe e tramonto a Phi Beach." },
+    { "@type": "HowToStep", position: 3, name: "Giorno 4 — La Maddalena", text: "Arcipelago in barca o auto+traghetto: Spargi e la spiaggia rosa di Budelli." },
+    { "@type": "HowToStep", position: 4, name: "Giorno 5 — Relax", text: "Giornata intera senza spostamenti, in piscina o sulla spiaggia preferita." },
+    { "@type": "HowToStep", position: 5, name: "Giorno 6 — Costa Est", text: "San Teodoro, La Cinta, Cala Brandinchi e vista su Tavolara." },
+    { "@type": "HowToStep", position: 6, name: "Giorni 7-8 — Estensione ovest", text: "Una o due notti ad Alghero (città catalana + Capo Caccia) oppure a Stintino (La Pelosa + Asinara)." },
+    { "@type": "HowToStep", position: 7, name: "Giorno 9 — Entroterra Gallura", text: "Tempio Pausania, cantine di Vermentino e San Pantaleo, con cena tipica." },
+    { "@type": "HowToStep", position: 8, name: "Giorno 10 — Riconsegna", text: "Ultimo bagno a Pittulongu e riconsegna del veicolo in aeroporto o al porto." },
+  ],
+};
 ---
 <BaseLayout
   title={meta.title}
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, faqJsonLd]}
+  jsonLd={[articleJsonLd, faqJsonLd, howToJsonLd]}
   breadcrumbs={[
     { name: "Guide", path: "/guide" },
     { name: "Noleggio 10 giorni", path: `/guide/${meta.slug}` },
