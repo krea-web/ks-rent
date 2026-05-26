@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SportiveContent from "@/components/SportiveContent.astro";
-import { sportiveRentalJsonLd, sportiveFaqJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
+import { sportiveRentalJsonLd, buildSportiveFaqJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
 ---
 <BaseLayout
   title="Noleggio Auto Sportive Olbia | Audi RS3, BMW M2 — KS Rent Sardinia"
@@ -10,7 +10,7 @@ import { sportiveRentalJsonLd, sportiveFaqJsonLd, buildBreadcrumb } from "@/lib/
   ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og-image.jpg"
   jsonLd={[
     sportiveRentalJsonLd,
-    sportiveFaqJsonLd,
+    buildSportiveFaqJsonLd("it"),
     buildBreadcrumb("Noleggio Auto Sportive Olbia", "/noleggio-auto-sportive-olbia"),
   ]}
   breadcrumbs={[{ name: "Noleggio Auto Sportive Olbia", path: "/noleggio-auto-sportive-olbia" }]}

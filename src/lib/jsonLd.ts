@@ -732,53 +732,59 @@ export const sportiveRentalJsonLd = {
   ],
 };
 
-export const sportiveFaqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "@id": "https://www.ksrentsardinia.com/noleggio-auto-sportive-olbia#faq",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Quali auto sportive si possono noleggiare a Olbia con KS Rent Sardinia?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "La flotta sportiva di KS Rent Sardinia comprende l'Audi RS3 Sportback (400 CV), la BMW M2 Coupé e, in chiave premium, la Mercedes Classe A 180d. Sono auto vere da guidare, di nostra proprietà e controllate prima di ogni noleggio, perfette per le strade panoramiche della Costa Smeralda. Non siamo un broker di supercar esotiche: offriamo sportive accessibili e affidabili, con consegna gratuita a Olbia.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Qual è l'età minima per noleggiare un'auto sportiva a Olbia?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Per le auto sportive come Audi RS3 e BMW M2 l'età minima è 25 anni, con patente B valida da almeno un anno. Per la Mercedes Classe A si parte da 21 anni. Al ritiro servono patente, documento d'identità e codice fiscale.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Posso noleggiare una sportiva senza carta di credito?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Sì. Anche sulle sportive KS Rent Sardinia accetta bancomat, carte di debito, prepagate ricaricabili (Postepay, Revolut, N26) e contanti per il deposito cauzionale. La carta di credito non è obbligatoria. Deposito e franchigia variano per veicolo e vengono comunicati in modo trasparente via WhatsApp prima della prenotazione.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Consegnate l'auto sportiva in aeroporto o in hotel?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Sì. Consegna gratuita all'aeroporto di Olbia Costa Smeralda (OLB) e al porto Isola Bianca, e a domicilio in hotel o villa in tutta la Gallura e la Costa Smeralda (Porto Cervo, Porto Rotondo, Baja Sardinia). Per le consegne fuori Olbia il costo è dichiarato in modo trasparente nel preventivo.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Quanto costa noleggiare un'auto sportiva a Olbia?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Le tariffe delle sportive sono stagionali e su preventivo personalizzato, in base al periodo e alla durata. La Mercedes Classe A parte da circa 90 €/giorno in bassa stagione; per Audi RS3 e BMW M2 scrivici su WhatsApp con date e veicolo per un preventivo immediato.",
-      },
-    },
+/**
+ * FAQ landing sportive in 4 lingue — testo ALLINEATO alla FAQ visibile in
+ * SportiveContent.astro (così lo schema combacia con il contenuto mostrato).
+ */
+type SportiveFaqLang = "it" | "en" | "de" | "fr";
+const SPORTIVE_FAQ_URL: Record<SportiveFaqLang, string> = {
+  it: "https://www.ksrentsardinia.com/noleggio-auto-sportive-olbia",
+  en: "https://www.ksrentsardinia.com/en/sports-car-hire-olbia",
+  de: "https://www.ksrentsardinia.com/de/sportwagen-mieten-olbia",
+  fr: "https://www.ksrentsardinia.com/fr/location-voiture-sportive-olbia",
+};
+const SPORTIVE_FAQS: Record<SportiveFaqLang, { q: string; a: string }[]> = {
+  it: [
+    { q: "Quali auto sportive posso noleggiare a Olbia?", a: "Audi RS3 Sportback (400 CV), BMW M2 Coupé e, in chiave premium, la Mercedes Classe A 180d. Sono auto di nostra proprietà, controllate prima di ogni noleggio. Non offriamo supercar esotiche: puntiamo su sportive accessibili, affidabili e divertenti da guidare." },
+    { q: "Qual è l'età minima per una sportiva?", a: "Per Audi RS3 e BMW M2 l'età minima è 25 anni con patente B da almeno un anno; per la Mercedes Classe A si parte da 21 anni. Al ritiro servono patente, documento d'identità e codice fiscale." },
+    { q: "Posso noleggiare una sportiva senza carta di credito?", a: "Sì. Accettiamo bancomat, carte di debito, prepagate ricaricabili (Postepay, Revolut, N26) e contanti anche per il deposito cauzionale. La carta di credito non è obbligatoria." },
+    { q: "Consegnate la sportiva in aeroporto o in hotel?", a: "Sì, consegna gratuita all'aeroporto di Olbia Costa Smeralda (OLB) e al porto Isola Bianca, e a domicilio in hotel o villa in tutta la Gallura e Costa Smeralda. Per le consegne fuori Olbia il costo è dichiarato nel preventivo." },
+    { q: "Quanto costa noleggiare una sportiva a Olbia?", a: "Tariffe stagionali su preventivo: la Mercedes Classe A parte da circa 90 €/giorno in bassa stagione; per RS3 e M2 scrivici su WhatsApp con date e veicolo per un preventivo immediato. Deposito e franchigia variano per veicolo e te li comunichiamo prima." },
+  ],
+  en: [
+    { q: "Which sports cars can I hire in Olbia?", a: "The Audi RS3 Sportback (400 hp), the BMW M2 Coupé and, as a premium option, the Mercedes A-Class 180d. They are owned by us and checked before every rental. We don't offer exotic supercars: we focus on accessible, reliable and fun sports cars." },
+    { q: "What is the minimum age for a sports car?", a: "For the Audi RS3 and BMW M2 the minimum age is 25 with a category B licence held for at least a year; for the Mercedes A-Class it starts at 21. At pick-up you need your licence, an ID and tax code." },
+    { q: "Can I hire a sports car without a credit card?", a: "Yes. We accept bancomat, debit cards, rechargeable prepaid cards (Postepay, Revolut, N26) and cash for the security deposit too. A credit card is not required." },
+    { q: "Do you deliver the sports car to the airport or hotel?", a: "Yes, free delivery to Olbia Costa Smeralda Airport (OLB) and the Isola Bianca port, and to your hotel or villa across Gallura and the Costa Smeralda. For deliveries outside Olbia the cost is stated in the quote." },
+    { q: "How much does it cost to hire a sports car in Olbia?", a: "Seasonal rates on quote: the Mercedes A-Class starts at around €90/day in low season; for the RS3 and M2 message us on WhatsApp with dates and vehicle for an instant quote. Deposit and excess vary by vehicle and are stated beforehand." },
+  ],
+  de: [
+    { q: "Welche Sportwagen kann ich in Olbia mieten?", a: "Den Audi RS3 Sportback (400 PS), das BMW M2 Coupé und als Premium-Option die Mercedes A-Klasse 180d. Sie sind in unserem Eigenbesitz und werden vor jeder Vermietung geprüft. Wir bieten keine exotischen Supersportwagen: Wir setzen auf zugängliche, zuverlässige und unterhaltsame Sportwagen." },
+    { q: "Wie hoch ist das Mindestalter für einen Sportwagen?", a: "Für Audi RS3 und BMW M2 beträgt das Mindestalter 25 Jahre mit Führerschein Klasse B seit mindestens einem Jahr; für die Mercedes A-Klasse ab 21 Jahren. Bei der Abholung benötigen Sie Führerschein, Ausweis und Steuernummer." },
+    { q: "Kann ich einen Sportwagen ohne Kreditkarte mieten?", a: "Ja. Wir akzeptieren Bancomat, Debitkarten, aufladbare Prepaid-Karten (Postepay, Revolut, N26) und Bargeld auch für die Kaution. Eine Kreditkarte ist nicht erforderlich." },
+    { q: "Liefern Sie den Sportwagen zum Flughafen oder Hotel?", a: "Ja, kostenlose Lieferung zum Flughafen Olbia Costa Smeralda (OLB) und zum Hafen Isola Bianca sowie an Ihr Hotel oder Ihre Villa in ganz Gallura und an der Costa Smeralda. Für Lieferungen außerhalb Olbias werden die Kosten im Angebot genannt." },
+    { q: "Was kostet die Miete eines Sportwagens in Olbia?", a: "Saisonpreise auf Anfrage: Die Mercedes A-Klasse beginnt in der Nebensaison bei rund 90 €/Tag; für RS3 und M2 schreiben Sie uns per WhatsApp mit Daten und Fahrzeug für ein sofortiges Angebot. Kaution und Selbstbeteiligung variieren je Fahrzeug und werden vorab mitgeteilt." },
+  ],
+  fr: [
+    { q: "Quelles voitures sportives puis-je louer à Olbia ?", a: "L'Audi RS3 Sportback (400 ch), la BMW M2 Coupé et, en option premium, la Mercedes Classe A 180d. Elles nous appartiennent et sont vérifiées avant chaque location. Nous ne proposons pas de supercars exotiques : nous misons sur des sportives accessibles, fiables et amusantes." },
+    { q: "Quel est l'âge minimum pour une sportive ?", a: "Pour l'Audi RS3 et la BMW M2, l'âge minimum est de 25 ans avec un permis B depuis au moins un an ; pour la Mercedes Classe A, à partir de 21 ans. À la prise en charge, il faut le permis, une pièce d'identité et le code fiscal." },
+    { q: "Puis-je louer une sportive sans carte de crédit ?", a: "Oui. Nous acceptons le bancomat, les cartes de débit, les cartes prépayées rechargeables (Postepay, Revolut, N26) et les espèces, y compris pour la caution. La carte de crédit n'est pas obligatoire." },
+    { q: "Livrez-vous la sportive à l'aéroport ou à l'hôtel ?", a: "Oui, livraison gratuite à l'aéroport d'Olbia Costa Smeralda (OLB) et au port d'Isola Bianca, ainsi qu'à votre hôtel ou villa dans toute la Gallura et la Costa Smeralda. Pour les livraisons hors d'Olbia, le coût est indiqué dans le devis." },
+    { q: "Combien coûte la location d'une sportive à Olbia ?", a: "Tarifs saisonniers sur devis : la Mercedes Classe A démarre autour de 90 €/jour en basse saison ; pour la RS3 et la M2, écrivez-nous sur WhatsApp avec les dates et le véhicule pour un devis immédiat. Caution et franchise varient selon le véhicule et sont communiquées au préalable." },
   ],
 };
+export function buildSportiveFaqJsonLd(lang: SportiveFaqLang = "it") {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${SPORTIVE_FAQ_URL[lang]}#faq`,
+    mainEntity: SPORTIVE_FAQS[lang].map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
 
 export const motoScooterRentalJsonLd = {
   "@context": "https://schema.org",
