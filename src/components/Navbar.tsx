@@ -246,7 +246,6 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
     { label: t.nav.deliveryItems.port, to: portHref, Icon: Anchor },
     { label: t.nav.deliveryItems.costaSmeralda, to: costaSmeraldaHref, Icon: Palmtree },
     { label: t.nav.deliveryItems.noCard, to: noCardHref, Icon: CreditCard },
-    { label: motoScooterNavLabel[lang], to: motoScooterHref, Icon: Bike },
   ];
 
   const LOC_COSTA_SMERALDA: DeliveryItem[] = [
@@ -310,6 +309,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
   ];
 
   const VEICOLI_DUE_RUOTE: DeliveryItem[] = [
+    { label: motoScooterNavLabel[lang], to: motoScooterHref, Icon: Bike },
     { label: "Honda SH", to: fleetVehicleHref("honda-sh"), Icon: Bike },
     { label: "Yamaha Quad Raptor", to: fleetVehicleHref("yamaha-quad-raptor"), Icon: Bike },
   ];
