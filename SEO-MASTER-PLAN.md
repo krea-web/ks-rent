@@ -141,16 +141,16 @@ La debolezza strutturale è l'indirizzo lontano dall'aeroporto OLB (vale ~30% de
 **GEO Health 74/100.** robots.txt AI eccellente, schema ottimo. Gap principali off-site + crawlability.
 
 ### 4A. Codice 🤖
-| # | Azione |
-|---|--------|
-| G1 | **llms.txt**: aggiungere le **18 guide** (contenuto più citabile: tabelle prezzi, itinerari), la pagina **/chisiamo**, e una **sezione "English summary"** (150-200 parole) per i LLM anglofoni |
-| G2 | **Schema `HowTo`** sulle guide durata (weekend/5/7/10/14/30 giorni — struttura a step perfetta) |
-| G3 | **Schema `Event`** sulla guida sagre/eventi Gallura 2026 |
-| G4 | **Tipo `MotorcycleRental`** aggiunto al `@graph` per query moto/scooter |
-| G5 | **robots.txt**: aggiungere `DuckAssistBot` (DuckDuckGo AI) |
-| G6 | **Passaggi pagine dinamiche** (località/spiagge): da 60-90 → **134-167 parole** auto-conclusive (+1 dato specifico ciascuno) |
-| G7 | **`inLanguage` array** nel WebSite schema + `speakable` su pagine hub (olbia/aeroporto/porto) |
-| G8 | **llms.txt auto-generato** da `.astro` (legge il review count da Supabase → niente drift) |
+| # | Azione | Stato |
+|---|--------|-------|
+| G1 | **llms.txt**: aggiungere le **18 guide** (contenuto più citabile: tabelle prezzi, itinerari), la pagina **/chisiamo**, e una **sezione "English summary"** (150-200 parole) per i LLM anglofoni | ⬜ da fare |
+| G2 | **Schema `HowTo`** sulle guide durata (weekend/5/7/10/14/30 giorni — struttura a step perfetta) | ✅ FATTO (2026-05-26, 6 guide IT — itinerario/processo) |
+| G3 | **Schema `Event`** sulla guida sagre/eventi Gallura 2026 | ✅ FATTO (6 eventi con data esplicita 2026) |
+| G4 | **Tipo `MotorcycleRental`** aggiunto al `@graph` per query moto/scooter | ✅ FATTO (⚠️ MotorcycleRental non esiste su schema.org → `makesOffer` con item tipati `Motorcycle`) |
+| G5 | **robots.txt**: aggiungere `DuckAssistBot` (DuckDuckGo AI) | ✅ FATTO |
+| G6 | **Passaggi pagine dinamiche** (località/spiagge): da 60-90 → **134-167 parole** auto-conclusive (+1 dato specifico ciascuno) | ⬜ da fare (tocca contenuti Supabase) |
+| G7 | **`inLanguage` array** nel WebSite schema + `speakable` su pagine hub (olbia/aeroporto/porto) | 🟡 inLanguage ✅ · speakable hub ⬜ (bassa priorità) |
+| G8 | **llms.txt auto-generato** da `.astro` (legge il review count da Supabase → niente drift) | ⬜ da fare |
 
 ### 4B. Presenza off-site (i 3 segnali AI più forti, oggi ASSENTI) 👤
 | # | Azione | Perché |
