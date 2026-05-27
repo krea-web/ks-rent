@@ -9,11 +9,9 @@ import {
   buildBreadcrumb,
 } from "@/lib/jsonLd";
 
-const advancedFaqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "@id": "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia#faq-advanced",
-  mainEntity: [
+// FAQ avanzata: domande aggiuntive (7) — concatenate al FAQPage base
+// per evitare DUE blocchi FAQPage sulla stessa pagina (Google: "campo duplicato FAQPage").
+const advancedFaqEntities = [
     { "@type": "Question", name: "Quanto è distante la sede KS Rent dalla banchina dei traghetti al porto Olbia?", acceptedAnswer: { "@type": "Answer", text: "100 metri esatti dalla banchina Isola Bianca, dove sbarca il 95% delle navi passeggeri. Raggiungi la sede a piedi in 1-2 minuti uscendo dall'area passeggeri. Con bagagli pesanti, ti veniamo incontro all'uscita pedonale." } },
     { "@type": "Question", name: "Cosa succede se il mio traghetto Moby (o Tirrenia, GNV) arriva in ritardo al porto Olbia?", acceptedAnswer: { "@type": "Answer", text: "Nessun extra. KS Rent Sardinia monitora il numero della tua nave su VesselFinder e marinetraffic dal momento della prenotazione: se l'orario reale slitta di 1-4 ore, l'operatore arriva alla sede all'orario reale di sbarco." } },
     { "@type": "Question", name: "Si può consegnare/ritirare auto al porto Olbia anche di notte?", acceptedAnswer: { "@type": "Answer", text: "Consegna al porto disponibile dalle 06:00 alle 23:30, 7 giorni su 7. Traghetti notturni (Moby da Genova arrivo 06:30, Tirrenia da Civitavecchia 07:00) sono perfettamente coperti. Fuori finestra attiva servizio reperibilità WhatsApp." } },
@@ -21,7 +19,14 @@ const advancedFaqJsonLd = {
     { "@type": "Question", name: "Posso riconsegnare al porto un'auto presa in aeroporto Olbia (o viceversa)?", acceptedAnswer: { "@type": "Answer", text: "Sì, switch porto ↔ aeroporto è gratuito. Esempio: voli ITA arrivo OLB, ritiro auto in aeroporto, vacanza, riconsegna al porto Isola Bianca per traghetto Moby a Genova. Comunica preferenza al booking." } },
     { "@type": "Question", name: "Quanto costa portare l'auto noleggiata KS Rent in Corsica via traghetto?", acceptedAnswer: { "@type": "Answer", text: "Per la Corsica serve autorizzazione scritta preventiva (8 €/giorno aggiuntivi). Costo biglietto traghetto auto separato e a tuo carico (Corsica Ferries Olbia-Bastia: 80-180 € a tratta in alta stagione). Auto sportive (Audi RS3, BMW M2) non possono lasciare la Sardegna." } },
     { "@type": "Question", name: "Avete pacchetti cruise day rental per scali crocieristici al porto Olbia?", acceptedAnswer: { "@type": "Answer", text: "Sì, offriamo tariffe daily speciali per crociere (MSC, Costa, AIDA, NCL, Royal Caribbean): Fiat Panda Hybrid 65 €/giorno, Jeep Avenger 95 €/giorno, Mercedes Classe A 130 €/giorno, tutto incluso. Consegna 09:00, riconsegna entro 19:00. Specifica 'day cruise [nome nave]' su WhatsApp." } },
-  ],
+];
+
+// Unico FAQPage = FAQ base (jsonLd.ts) + FAQ avanzate.
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-porto-olbia#faq",
+  mainEntity: [...portoFaqJsonLd.mainEntity, ...advancedFaqEntities],
 };
 
 const portServiceJsonLd = {
@@ -52,8 +57,7 @@ const portServiceJsonLd = {
   ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/porto.webp"
   jsonLd={[
     portoAutoRentalJsonLd,
-    portoFaqJsonLd,
-    advancedFaqJsonLd,
+    faqJsonLd,
     portServiceJsonLd,
     buildBreadcrumb("Noleggio Auto Porto Olbia", "/noleggio-auto-porto-olbia"),
   ]}

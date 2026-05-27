@@ -17,7 +17,7 @@ const BASE = "https://www.ksrentsardinia.com";
 
 export const GET: APIRoute = async () => {
   const rating = await getAggregateRating();
-  const reviewCount = rating?.reviewCount ?? 41;
+  const reviewCount = rating?.reviewCount ?? 42;
   const ratingValue = (rating?.ratingValue ?? 5).toLocaleString("it-IT", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
   const body = `# KS Rent Sardinia

@@ -9,12 +9,9 @@ import {
   buildBreadcrumb,
 } from "@/lib/jsonLd";
 
-// FAQ avanzata schema (10 nuove domande, non duplicate con aeroportoFaqJsonLd)
-const advancedFaqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "@id": "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia#faq-advanced",
-  mainEntity: [
+// FAQ avanzata: domande aggiuntive (10) — concatenate al FAQPage base
+// per evitare DUE blocchi FAQPage sulla stessa pagina (Google: "campo duplicato FAQPage").
+const advancedFaqEntities = [
     { "@type": "Question", name: "Quanti minuti dura il ritiro effettivo del veicolo all'aeroporto Olbia con KS Rent?", acceptedAnswer: { "@type": "Answer", text: "5-10 minuti totali dall'uscita dagli arrivi alla partenza con auto. Con le compagnie internazionali (Hertz/Avis/Sixt) la media è 30-90 minuti in alta stagione, anche 2 ore con coda. Da KS Rent Sardinia non c'è banco interno: ti aspettiamo già fuori con il veicolo pronto e i documenti pre-compilati." } },
     { "@type": "Question", name: "Cosa succede se il mio volo Ryanair (o easyJet, ITA) atterra in ritardo all'aeroporto Olbia?", acceptedAnswer: { "@type": "Answer", text: "Nessun problema e nessun extra. KS Rent Sardinia monitora il numero del tuo volo dal momento della prenotazione tramite FlightRadar24: se l'orario reale di atterraggio scivola, l'operatore arriva al parcheggio consegna all'orario aggiornato senza costi aggiuntivi." } },
     { "@type": "Question", name: "KS Rent Sardinia copre voli notturni all'aeroporto Olbia?", acceptedAnswer: { "@type": "Answer", text: "Consegna in aeroporto Olbia è disponibile dalle 06:00 alle 23:30, 7 giorni su 7. Voli fuori finestra (es. easyJet 00:30 da Milano in alta stagione) sono gestiti con servizio reperibilità WhatsApp e costo aggiuntivo concordato." } },
@@ -22,7 +19,14 @@ const advancedFaqJsonLd = {
     { "@type": "Question", name: "Posso riconsegnare il veicolo KS Rent in aeroporto Olbia invece che in centro?", acceptedAnswer: { "@type": "Answer", text: "Sì, la riconsegna in aeroporto OLB è gratuita e va concordata in fase di prenotazione. Comunica via WhatsApp 30 minuti prima dell'arrivo al parcheggio, consegna le chiavi al parcheggio consegna. Tempo medio riconsegna: 5 minuti." } },
     { "@type": "Question", name: "KS Rent fornisce seggiolini auto per bambini all'aeroporto Olbia?", acceptedAnswer: { "@type": "Answer", text: "Sì, KS Rent Sardinia dispone di seggiolini gruppo 1, 2 e 3 (9-36 kg) omologati ECE R44/04 a noleggio per 5 €/giorno (max 25 € totale). Per gruppo 0+ neonato consigliata prenotazione con 7+ giorni di anticipo. Tutti sanificati a vapore tra noleggi." } },
     { "@type": "Question", name: "Posso uscire dalla Sardegna con un'auto KS Rent (es. traghetto verso Corsica)?", acceptedAnswer: { "@type": "Answer", text: "Per la Corsica serve autorizzazione scritta preventiva e copertura assicurativa estesa (8 €/giorno aggiuntivi). Per la penisola italiana via traghetto serve autorizzazione scritta (15 €/giorno + cauzione maggiorata). Auto sportive (Audi RS3, BMW M2) non possono lasciare la Sardegna per policy assicurativa." } },
-  ],
+];
+
+// Unico FAQPage = FAQ base (jsonLd.ts) + FAQ avanzate.
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.ksrentsardinia.com/noleggio-auto-aeroporto-olbia#faq",
+  mainEntity: [...aeroportoFaqJsonLd.mainEntity, ...advancedFaqEntities],
 };
 
 // Schema Service ricco per il servizio specifico aeroporto
@@ -55,8 +59,7 @@ const airportServiceJsonLd = {
   ogImage="https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/asset/og/aeroporto.webp"
   jsonLd={[
     aeroportoAutoRentalJsonLd,
-    aeroportoFaqJsonLd,
-    advancedFaqJsonLd,
+    faqJsonLd,
     airportServiceJsonLd,
     buildBreadcrumb("Noleggio Auto Aeroporto Olbia", "/noleggio-auto-aeroporto-olbia"),
   ]}
