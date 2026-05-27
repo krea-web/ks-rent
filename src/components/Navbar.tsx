@@ -204,6 +204,13 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
     de: "Roller, Motorrad & Quad",
     fr: "Scooter, Moto & Quad",
   };
+  const sportiveHref = localizePath("/noleggio-auto-sportive-olbia", lang);
+  const sportiveNavLabel: Record<Locale, string> = {
+    it: "Auto Sportive",
+    en: "Sports Cars",
+    de: "Sportwagen",
+    fr: "Voitures Sportives",
+  };
 
   // Sezioni con presenza completa nelle 4 lingue dopo i18n batch.
   // Hub guide: /guide (IT), /en/guide, /de/guide, /fr/guide
@@ -301,6 +308,7 @@ const Navbar = ({ lang = "it" }: NavbarProps) => {
   ];
 
   const VEICOLI_AUTO: DeliveryItem[] = [
+    { label: sportiveNavLabel[lang], to: sportiveHref, Icon: Sparkles },
     { label: "Audi RS3", to: fleetVehicleHref("audi-rs3"), Icon: Sparkles },
     { label: "BMW M2", to: fleetVehicleHref("bmw-m2"), Icon: Sparkles },
     { label: "Mercedes Classe A", to: fleetVehicleHref("mercedes-classe-a"), Icon: Car },
