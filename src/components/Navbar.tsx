@@ -54,7 +54,16 @@ const localizeSlug = (itSlug: string, lang: Locale) => {
 
 const ThemeToggle = ({ lightLabel, darkLabel }: { lightLabel: string; darkLabel: string }) => {
   const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  // Hydration-safe (#418/#423): l'icona dipende da `theme` (localStorage) e da
+  // window.matchMedia, disponibili solo sul client. Fino al mount restituiamo lo
+  // stato di default (isDark=false → Moon), identico tra SSR e primo render client;
+  // dopo il mount calcoliamo il valore reale. Evita anche di leggere window in SSR.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark =
+    mounted &&
+    (theme === "dark" ||
+      (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches));
 
   return (
     <button
