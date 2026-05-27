@@ -14,7 +14,14 @@ const SAME_AS = [
   "https://carmappa.com/autonoleggi/olbia/ks-rent-sardinia/",
   "https://www.empresite.it/KS-RENT-SRL.html",
   "https://www.aziendeeasy.it/aziendaselezionata15754006-KS%20RENT%20SRL",
+  "https://aziende.virgilio.it/autonoleggio/olbia-ot/ksrentsardinia-olbia",
+  "https://www.infobel.com/it/italy/ks_rent_sardinia/olbia/IT110466875-3446107071/businessdetails.aspx",
+  "https://www.provenexpert.com/it-it/ks-rent-sardinia/",
+  "https://brownbook.net/business/55145099/ks-rent-sardinia",
+  "https://www.blinx.biz/ks-rent-sardinia",
   "https://maps.google.com/?cid=9638199341974199698",
+  // Àncora entità Knowledge Graph (disambiguazione KS Rent Sardinia ≠ KS Rent Roma)
+  "https://www.openstreetmap.org/node/5633191348",
 ];
 
 const AREA_SERVED = [
