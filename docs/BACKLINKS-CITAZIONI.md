@@ -51,9 +51,10 @@ P.IVA IT03028900904 — REA SS-224046
 
 ## ⏳ In attesa di approvazione/verifica
 - **TomTom** — in verifica
-- **Yelp** — in approvazione
+- **Yelp** — in approvazione (https://biz.yelp.com)
 - **GoWork** — in approvazione
 - **Opendi** — verifica entro 24h
+- **Europages** — registrazione inviata, in revisione (descrizione 3865 char, disambiguazione vs KS Rent SRLS Roma inclusa)
 
 ## ❌ Scartati (con motivo)
 - **2findlocal** — la loro verifica obbliga a mettere in home un link verso un sito
@@ -84,9 +85,9 @@ P.IVA IT03028900904 — REA SS-224046
 - [ ] **Foursquare / Places** — alimenta Uber, Apple, mille app.
 
 ### Directory IT / B2B autorevoli
-- [ ] **Europages** (dofollow, alta autorità B2B)
-- [ ] **Kompass**
-- [ ] **iGlobal**, **Where2go** (2FindLocal scartato, Tupalo a pagamento, Brownbook ✅ fatto)
+- [x] **Europages** ✅ (registrazione inviata, in revisione)
+- [ ] **Kompass** — https://it.kompass.com (registra azienda gratis)
+- [ ] **Yandex Business** — https://yandex.com/business/ (turisti russi/est Europa)
 
 ### Schede Registro Imprese da RIVENDICARE (esistono già, hai REA SS-224046)
 Cercati e clicca "sei il titolare?" per correggere/arricchire:
