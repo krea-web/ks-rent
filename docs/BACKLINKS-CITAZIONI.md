@@ -45,6 +45,9 @@ P.IVA IT03028900904 — REA SS-224046
 | **ProvenExpert** | provenexpert.com/it-it/ks-rent-sardinia (2 review 5★) | ✅ |
 | **Brownbook** | brownbook.net/business/55145099/ks-rent-sardinia | ✅ |
 | **Blinx** | blinx.biz/ks-rent-sardinia | ✅ |
+| **reportaziende.it** | reportaziende.it/ks-rent-srl_ss_it20906983 (verificato P.IVA/REA) | ✅ |
+| **wogha.com** | wogha.com/.../ks-rent-srl-vle-aldo-moro-367-...ss224046 | ✅ |
+| **ufficiocamerale.it** | ufficiocamerale.it/7811/ks-rent-srl (confermato visivamente) | ✅ |
 
 ## ⏳ In attesa di approvazione/verifica
 - **TomTom** — in verifica
@@ -56,6 +59,18 @@ P.IVA IT03028900904 — REA SS-224046
 - **2findlocal** — la loro verifica obbliga a mettere in home un link verso un sito
   estraneo (`coffeehow.co`/"pikadil"): è un **link scheme**, danneggia la SEO della
   home. Rinunciato al backlink (basso valore). Decisione utente 2026-05-28.
+- **visura.pro/imprese/3167014310-ks-rent-srls.html** — ⚠️ NON nostra. Verificato
+  2026-05-29: è la scheda di **KS RENT SRLS Roma** (Via di Villa Pamphili 105/107,
+  P.IVA 13075011000). Aggiungerla al sameAs sarebbe controproducente (segnalerebbe
+  fusione di entità con il concorrente romano). Da cercare invece la scheda della
+  vera P.IVA IT03028900904 su visura.pro, se esiste.
+- **Foursquare for Business** — al 2026-05-29 il signup non permette nuove
+  attività italiane di piccole dimensioni (form bloccato lato Foursquare). Da
+  ritentare in futuro.
+- **Trustpilot Business** — bug "senza CSS" persistente anche in incognito su
+  Bing. Provato browser diversi: nessuno funziona. Apri ticket al supporto
+  Trustpilot citando il bug; nel frattempo concentra le review su Google +
+  Tripadvisor + ProvenExpert.
 - **Tupalo** — a pagamento.
 - **Sardegna Turismo (regionale ufficiale)** — non consentito.
 - **Camera di Commercio (iscrizione diretta)** — non consentito (la presenza su

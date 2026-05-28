@@ -19,6 +19,9 @@ const SAME_AS = [
   "https://www.provenexpert.com/it-it/ks-rent-sardinia/",
   "https://brownbook.net/business/55145099/ks-rent-sardinia",
   "https://www.blinx.biz/ks-rent-sardinia",
+  "https://www.reportaziende.it/ks-rent-srl_ss_it20906983",
+  "https://www.wogha.com/company/ks-rent-srl-vle-aldo-moro-367-olbia-07026-ss_it-0-ss224046",
+  "https://www.ufficiocamerale.it/7811/ks-rent-srl",
   "https://maps.google.com/?cid=9638199341974199698",
   // Àncora entità Knowledge Graph (disambiguazione KS Rent Sardinia ≠ KS Rent Roma)
   "https://www.openstreetmap.org/node/5633191348",
