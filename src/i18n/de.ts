@@ -75,6 +75,8 @@ export const de: typeof it = {
     whereAndContact: "Standorte & Kontakt",
     operationalSeat: "Operatives Büro (Hafen)",
     legalSeat: "Firmensitz",
+    hours: "Öffnungszeiten",
+    hoursOpen: "7 Tage die Woche geöffnet",
     callNow: "Jetzt anrufen",
     emailBtn: "E-Mail",
     destinationsEast: "Reiseziele Ostküste",

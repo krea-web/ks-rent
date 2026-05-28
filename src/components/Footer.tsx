@@ -1,5 +1,5 @@
 import { Link } from "@/lib/router-shim";
-import { Phone, Mail, MapPin, Map, MessageCircle, Star } from "lucide-react";
+import { Phone, Mail, MapPin, Map, MessageCircle, Star, Clock } from "lucide-react";
 import { getDict } from "@/i18n";
 import { localizePath, getFleetPath, localizeLocationSlug, localizeVehicleSlug, type Locale } from "@/lib/i18n";
 
@@ -268,6 +268,20 @@ const Footer = ({ lang = "it" }: FooterProps) => {
                     Viale Aldo Moro 367
                     <br />
                     07026, Olbia (SS)
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-4 bg-gray-100 dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 rounded-2xl flex items-start gap-3 hover:border-gold/30 transition-colors">
+                <div className="p-2 bg-gold/10 rounded-xl shrink-0 mt-0.5">
+                  <Clock size={16} className="text-gold" />
+                </div>
+                <div className="text-sm">
+                  <strong className="block text-foreground mb-0.5 font-medium">{t.footer.hours}</strong>
+                  <span className="text-muted-foreground">
+                    {t.footer.hoursOpen}
+                    <br />
+                    10:00–13:00 · 15:00–22:30
                   </span>
                 </div>
               </div>

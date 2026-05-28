@@ -75,6 +75,8 @@ export const fr: typeof it = {
     whereAndContact: "Où nous sommes & Contact",
     operationalSeat: "Siège Opérationnel (Port)",
     legalSeat: "Siège Social",
+    hours: "Horaires",
+    hoursOpen: "Ouvert 7j/7",
     callNow: "Appeler",
     emailBtn: "E-mail",
     destinationsEast: "Destinations Côte Est",

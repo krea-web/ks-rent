@@ -25,6 +25,16 @@ const { lang } = Astro.props;
 const ASSETS = {
   scooter125: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-hondascooter125.png",
   quad: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/vehicle_images/Trasparenza/ksrent-yamahaquadraptor.png",
+  guideChoose: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/noleggio-scooter-quad-sardegna-come-scegliere.webp",
+  guideHidden: "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/guide/spiagge-nascoste-gallura-sterrati.webp",
+};
+
+// Hero foto reali delle 4 località della Gallura / Costa Smeralda — sezione WHERE TO RIDE.
+const SPOT_IMAGES: Record<string, string> = {
+  "porto-cervo":   "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/noleggio-auto-porto-cervo.webp",
+  "golfo-aranci":  "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/noleggio-auto-golfo-aranci.webp",
+  "san-teodoro":   "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/noleggio-auto-san-teodoro.webp",
+  "baja-sardinia": "https://zgytnkimjpoosvshfopz.supabase.co/storage/v1/object/public/seo_pages/noleggio-auto-baja-sardinia.webp",
 };
 
 // ── Path localizzati ──────────────────────────────────────────────
@@ -53,6 +63,28 @@ const NOCARD_PAGE: Record<Lang, string> = {
 };
 const BOOK_HUB: Record<Lang, string> = {
   it: "/prenotaora", en: "/en/book-now", de: "/de/jetzt-buchen", fr: "/fr/reserver",
+};
+// Landing aeroporto/porto Olbia: link interni dalle delivery card per distribuire link equity.
+const AIRPORT_PAGE: Record<Lang, string> = {
+  it: "/noleggio-auto-aeroporto-olbia",
+  en: "/en/car-hire-olbia-airport",
+  de: "/de/autovermietung-flughafen-olbia",
+  fr: "/fr/location-voiture-aeroport-olbia",
+};
+const PORT_PAGE: Record<Lang, string> = {
+  it: "/noleggio-auto-porto-olbia",
+  en: "/en/car-hire-olbia-port",
+  de: "/de/autovermietung-hafen-olbia",
+  fr: "/fr/location-voiture-port-olbia",
+};
+const MORE_LABEL: Record<Lang, string> = {
+  it: "Scopri di più →",
+  en: "Read more →",
+  de: "Mehr erfahren →",
+  fr: "En savoir plus →",
+};
+const GUIDE_KICKER: Record<Lang, string> = {
+  it: "Guida", en: "Guide", de: "Ratgeber", fr: "Guide",
 };
 // Guide pertinenti (slug localizzati reali)
 const GUIDE_CHOOSE: Record<Lang, string> = {
@@ -615,12 +647,20 @@ const faqsForComponent = T.faq.items.map((it) => ({ question: it.q, answer: it.a
       <p class="text-lg text-muted-foreground mb-8 leading-relaxed">{T.delivery.lead}</p>
 
       <div class="grid md:grid-cols-3 gap-6">
-        {T.delivery.cards.map((c) => (
-          <article class="bg-card border border-border rounded-2xl p-6">
-            <h3 class="text-lg font-semibold mb-3">{c.t}</h3>
-            <p class="text-muted-foreground text-sm">{c.x}</p>
-          </article>
-        ))}
+        {T.delivery.cards.map((c, i) => {
+          const href = i === 0 ? AIRPORT_PAGE[lang] : i === 1 ? PORT_PAGE[lang] : null;
+          return (
+            <article class="bg-card border border-border rounded-2xl p-6 flex flex-col">
+              <h3 class="text-lg font-semibold mb-3">{c.t}</h3>
+              <p class="text-muted-foreground text-sm flex-1">{c.x}</p>
+              {href && (
+                <p class="mt-4">
+                  <a href={href} class="text-primary font-medium text-sm hover:underline">{MORE_LABEL[lang]}</a>
+                </p>
+              )}
+            </article>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -673,18 +713,65 @@ const faqsForComponent = T.faq.items.map((it) => ({ question: it.q, answer: it.a
       <h2 class="text-3xl md:text-4xl font-bold mb-6">{T.ride.heading}</h2>
       <p class="text-lg text-muted-foreground mb-6 leading-relaxed">{T.ride.lead}</p>
 
-      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-8">
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-10">
         {T.ride.spots.map((l) => (
-          <a href={locHref(l.slug)} class="px-4 py-3 bg-card border border-border rounded-xl hover:border-primary transition">
-            <strong>{l.label}</strong><br/>
-            <span class="text-muted-foreground">{l.time}</span>
+          <a
+            href={locHref(l.slug)}
+            class="group relative block overflow-hidden rounded-2xl border border-border hover:border-primary transition shadow-sm hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <div class="aspect-[4/3] overflow-hidden bg-muted/30">
+              <img
+                src={SPOT_IMAGES[l.slug]}
+                alt={`${l.label} — ${T.ride.heading}`}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy" width="400" height="300"
+              />
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+              <strong class="block text-sm md:text-base leading-tight">{l.label}</strong>
+              <span class="text-xs md:text-sm text-white/85">{l.time}</span>
+            </div>
           </a>
         ))}
       </div>
 
-      <div class="flex flex-col sm:flex-row gap-4 text-sm">
-        <a href={GUIDE_CHOOSE[lang]} class="flex-1 px-5 py-4 bg-primary/5 border border-primary/20 rounded-xl text-primary font-medium hover:bg-primary/10 transition">{T.ride.guideChoose}</a>
-        <a href={GUIDE_HIDDEN[lang]} class="flex-1 px-5 py-4 bg-primary/5 border border-primary/20 rounded-xl text-primary font-medium hover:bg-primary/10 transition">{T.ride.guideHidden}</a>
+      <div class="grid sm:grid-cols-2 gap-6">
+        <a
+          href={GUIDE_CHOOSE[lang]}
+          class="group flex flex-col overflow-hidden rounded-2xl border border-primary/20 hover:border-primary transition shadow-sm hover:shadow-lg bg-card focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <div class="aspect-[16/9] overflow-hidden bg-muted/30">
+            <img
+              src={ASSETS.guideChoose}
+              alt={T.ride.guideChoose}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy" width="640" height="360"
+            />
+          </div>
+          <div class="p-5">
+            <span class="inline-block text-[11px] font-semibold uppercase tracking-wider text-primary/80">{GUIDE_KICKER[lang]}</span>
+            <p class="mt-2 font-medium text-primary group-hover:underline">{T.ride.guideChoose}</p>
+          </div>
+        </a>
+
+        <a
+          href={GUIDE_HIDDEN[lang]}
+          class="group flex flex-col overflow-hidden rounded-2xl border border-primary/20 hover:border-primary transition shadow-sm hover:shadow-lg bg-card focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <div class="aspect-[16/9] overflow-hidden bg-muted/30">
+            <img
+              src={ASSETS.guideHidden}
+              alt={T.ride.guideHidden}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy" width="640" height="360"
+            />
+          </div>
+          <div class="p-5">
+            <span class="inline-block text-[11px] font-semibold uppercase tracking-wider text-primary/80">{GUIDE_KICKER[lang]}</span>
+            <p class="mt-2 font-medium text-primary group-hover:underline">{T.ride.guideHidden}</p>
+          </div>
+        </a>
       </div>
     </div>
   </section>

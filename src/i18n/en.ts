@@ -75,6 +75,8 @@ export const en: typeof it = {
     whereAndContact: "Where We Are & Contact",
     operationalSeat: "Operational Office (Port)",
     legalSeat: "Registered Office",
+    hours: "Hours",
+    hoursOpen: "Open 7 days a week",
     callNow: "Call Now",
     emailBtn: "Email",
     destinationsEast: "East Coast Destinations",

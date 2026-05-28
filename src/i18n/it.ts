@@ -76,6 +76,8 @@ export const it = {
     whereAndContact: "Dove Siamo & Contatti",
     operationalSeat: "Sede Operativa (Porto)",
     legalSeat: "Sede Legale",
+    hours: "Orari",
+    hoursOpen: "Aperti 7 giorni su 7",
     callNow: "Chiama Ora",
     emailBtn: "Email",
     destinationsEast: "Destinazioni Costa Est",
