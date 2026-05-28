@@ -55,6 +55,7 @@ P.IVA IT03028900904 — REA SS-224046
 - **GoWork** — in approvazione
 - **Opendi** — verifica entro 24h
 - **Europages** — registrazione inviata, in revisione (descrizione 3865 char, disambiguazione vs KS Rent SRLS Roma inclusa)
+- **paradisola.it** — scheda inviata, in revisione (portale turismo Sardegna)
 
 ## ❌ Scartati (con motivo)
 - **2findlocal** — la loro verifica obbliga a mettere in home un link verso un sito
@@ -98,16 +99,14 @@ Cercati e clicca "sei il titolare?" per correggere/arricchire:
 - [ ] infoimprese.it
 
 ### Settore noleggio (rilevanza tematica = più peso) — a commissione
-- [ ] DiscoverCars
-- [ ] Rentcars.com
-- [ ] AutoEurope
-- [ ] QEEQ
+> Rimandato per scelta utente (2026-05-29): si valuterà più avanti.
+- [ ] DiscoverCars · Rentcars.com · AutoEurope · QEEQ (commissione su prenotazione, non costo fisso)
 
 ### Turismo Sardegna (NON ufficiali, accettano inserimenti)
-- [ ] sardegna.com
-- [ ] paradisola.it
-- [ ] charmingsardinia.com
-- [ ] portali Costa Smeralda / Gallura
+- [x] **paradisola.it** ✅ (in revisione)
+- [ ] **sardegna.com** — non trovato form inserimento (tentato, sembra chiuso a nuove schede)
+- [ ] **charmingsardinia.com** — registrazione non disponibile
+- [ ] portali Costa Smeralda / Gallura (da identificare caso per caso)
 
 ### Il vero salto di autorità (effort alto, ROI alto)
 - [ ] **Stampa locale** (publiredazionale con link): La Nuova Sardegna, L'Unione
