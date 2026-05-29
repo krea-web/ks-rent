@@ -9,7 +9,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
   SEDE_OPERATIVA,
-  SEDE_LEGALE,
   DARK_MAP_STYLE,
   TIME_SLOTS,
 } from "@/lib/googleMaps";
@@ -77,13 +76,16 @@ const LocationStep = ({
   const [dropoffMapCenter, setDropoffMapCenter] = useState<{ lat: number; lng: number } | null>(null);
 
   const pickupAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
-  // Auto-select sede for dropoff when sede-only mode
+  // Auto-select sede for dropoff when sede-only mode — la riconsegna avviene
+  // ESCLUSIVAMENTE presso la sede operativa al Porto Isola Bianca (Viale Aldo Moro
+  // resta solo sede legale, niente pickup/dropoff lì).
   useEffect(() => {
-    if (dropoffSedeOnly && dropoffType !== "sede") {
-      setDropoffType("sede");
-      setDropoffLocation("");
+    if (dropoffSedeOnly) {
+      if (dropoffType !== "sede") setDropoffType("sede");
+      if (dropoffLocation !== SEDE_OPERATIVA.address) setDropoffLocation(SEDE_OPERATIVA.address);
+      if (!dropoffMapCenter) setDropoffMapCenter({ lat: SEDE_OPERATIVA.lat, lng: SEDE_OPERATIVA.lng });
     }
-  }, [dropoffSedeOnly, dropoffType, setDropoffType, setDropoffLocation]);
+  }, [dropoffSedeOnly, dropoffType, dropoffLocation, dropoffMapCenter, setDropoffType, setDropoffLocation]);
 
   const dropoffAutoRef = useRef<google.maps.places.Autocomplete | null>(null);
 
@@ -119,17 +121,15 @@ const LocationStep = ({
     }
   }, [setDropoffLocation]);
 
-  const handleSedeSelect = (
-    sede: string,
-    type: "pickup" | "dropoff"
-  ) => {
-    const sedeData = sede === "operativa" ? SEDE_OPERATIVA : SEDE_LEGALE;
+  // Pickup/dropoff in sede = SEMPRE Porto Isola Bianca 38 (unica sede operativa).
+  // Viale Aldo Moro 367 è solo sede legale, niente ritiri/consegne lì.
+  const handleSedeSelect = (type: "pickup" | "dropoff") => {
     if (type === "pickup") {
-      setPickupLocation(sedeData.address);
-      setPickupMapCenter({ lat: sedeData.lat, lng: sedeData.lng });
+      setPickupLocation(SEDE_OPERATIVA.address);
+      setPickupMapCenter({ lat: SEDE_OPERATIVA.lat, lng: SEDE_OPERATIVA.lng });
     } else {
-      setDropoffLocation(sedeData.address);
-      setDropoffMapCenter({ lat: sedeData.lat, lng: sedeData.lng });
+      setDropoffLocation(SEDE_OPERATIVA.address);
+      setDropoffMapCenter({ lat: SEDE_OPERATIVA.lat, lng: SEDE_OPERATIVA.lng });
     }
   };
 
@@ -158,11 +158,16 @@ const LocationStep = ({
       {/* Type selection cards - show both options only if not sede-only */}
       {sedeOnly ? (
         <div className="bg-gold/5 border border-gold/30 rounded-xl p-4">
-          <div className="flex items-center gap-3">
-            <Building2 size={20} className="text-gold" />
+          <div className="flex items-start gap-3">
+            <Building2 size={20} className="text-gold mt-0.5" />
             <div>
               <p className="text-sm font-bold text-gray-900 dark:text-white">Riconsegna in Sede</p>
-              <p className="text-xs text-gray-500 dark:text-white/40 mt-0.5">La riconsegna avviene presso le nostre sedi di Olbia</p>
+              <p className="text-xs text-gray-500 dark:text-white/40 mt-0.5">
+                La riconsegna avviene presso la nostra sede al Porto Isola Bianca.
+              </p>
+              <p className="text-xs text-gray-700 dark:text-white/70 mt-2 font-medium">
+                Viale Isola Bianca 38, 07026 Olbia (SS)
+              </p>
             </div>
           </div>
         </div>
@@ -170,7 +175,7 @@ const LocationStep = ({
         <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
-            onClick={() => { setLocationType("sede"); setLocation(""); }}
+            onClick={() => { setLocationType("sede"); handleSedeSelect(type); }}
             className={cn(
               "p-4 rounded-xl border text-left transition-all duration-300",
               locationType === "sede"
@@ -182,7 +187,7 @@ const LocationStep = ({
             <p className={cn("text-sm font-bold", locationType === "sede" ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-white/60")}>
               {type === "pickup" ? "Ritiro in Sede" : "Consegna in Sede"}
             </p>
-            <p className="text-xs text-gray-500 dark:text-white/40 mt-1">Sedi KS Rent Olbia</p>
+            <p className="text-xs text-gray-500 dark:text-white/40 mt-1">Porto Isola Bianca</p>
           </button>
           <button
             type="button"
@@ -203,31 +208,19 @@ const LocationStep = ({
         </div>
       )}
 
-      {/* Sede select */}
+      {/* Sede unica: Porto Isola Bianca (Viale Aldo Moro è solo sede legale) */}
       {locationType === "sede" && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
-          <Select onValueChange={(v) => handleSedeSelect(v, type)}>
-            <SelectTrigger className="h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold rounded-xl text-gray-900 dark:text-white">
-              <SelectValue placeholder="Seleziona sede" />
-            </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 text-gray-900 dark:text-white">
-              <SelectItem value="operativa">
-                <div className="flex items-center gap-2">
-                  <MapPin size={14} className="text-gold" />
-                  Sede Operativa — Viale Isola Bianca 38
-                </div>
-              </SelectItem>
-              <SelectItem value="legale">
-                <div className="flex items-center gap-2">
-                  <MapPin size={14} className="text-gold" />
-                  Sede Legale — Viale Aldo Moro 367
-                </div>
-              </SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="bg-white dark:bg-[#111] border border-gold/30 rounded-xl p-4 flex items-start gap-3">
+            <MapPin size={18} className="text-gold mt-0.5 shrink-0" />
+            <div>
+              <p className="text-sm font-bold text-gray-900 dark:text-white">Sede al Porto Isola Bianca</p>
+              <p className="text-xs text-gray-700 dark:text-white/70 mt-0.5">Viale Isola Bianca 38, 07026 Olbia (SS)</p>
+            </div>
+          </div>
           {location && (
             <div className="flex items-center gap-2 text-xs text-green-400/80 bg-green-500/5 rounded-lg px-3 py-2">
-              <CheckCircle2 size={12} /> {location}
+              <CheckCircle2 size={12} /> Sede selezionata
             </div>
           )}
         </motion.div>
