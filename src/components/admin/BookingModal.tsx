@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { Loader2, FileUp, FileCheck2, ExternalLink } from "lucide-react";
-import { uploadToBucket } from "@/lib/adminStorage";
+import { uploadToBucket, getSignedUrlForPrivateBucket } from "@/lib/adminStorage";
 import { logAdminAction } from "@/lib/audit";
 
 const STATUSES = [
@@ -133,14 +133,23 @@ const BookingModal = ({ open, onClose, booking, onSaved }: BookingModalProps) =>
             {signedPdfUrl ? (
               <div className="flex items-center gap-2 text-sm">
                 <FileCheck2 size={18} className="text-green-500 shrink-0" />
-                <a
-                  href={signedPdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={async () => {
+                    // Il bucket "contracts" è privato: l'URL pubblico non funziona.
+                    // Genero on-click un signed URL temporaneo (1h) gestendo sia
+                    // path nuovi sia URL pubblici legacy salvati nel DB.
+                    const url = await getSignedUrlForPrivateBucket("contracts", signedPdfUrl, 3600);
+                    if (url) {
+                      window.open(url, "_blank", "noopener,noreferrer");
+                    } else {
+                      toast.error("Impossibile generare il link al PDF (file non trovato nel bucket 'contracts').");
+                    }
+                  }}
                   className="text-[#C8A135] hover:underline flex items-center gap-1 truncate"
                 >
                   Apri PDF firmato <ExternalLink size={12} />
-                </a>
+                </button>
               </div>
             ) : (
               <p className="text-xs text-white/40">Nessun PDF firmato caricato.</p>
