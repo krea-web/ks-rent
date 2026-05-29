@@ -311,8 +311,42 @@ const EVENTS: Record<EventLang, EventContent[]> = {
   ],
 };
 
+// EVENT_PRINCIPALS: organizer + performer per ogni evento. Entità reali e verificabili
+// (nessuna invenzione). I nomi sono italiani per natura (Comune, Diocesi…) quindi
+// resi identici nelle 4 lingue. Usato per soddisfare GSC che pretende organizer +
+// performer anche per i warning non-critici (altrimenti blocca la "Convalida correzione").
+type Principal = { "@type": "Organization" | "Person"; name: string; url?: string };
+const EVENT_PRINCIPALS: Record<string, { organizer: Principal; performer: Principal }> = {
+  "Festa di San Simplicio": {
+    organizer: { "@type": "Organization", name: "Comune di Olbia" },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+  },
+  "Festa di Sant'Antonio Abate": {
+    organizer: { "@type": "Organization", name: "Comuni e Pro Loco della Gallura" },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+  },
+  "Sant'Antonio Abate — Tempio Pausania": {
+    organizer: { "@type": "Organization", name: "Comune di Tempio Pausania" },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+  },
+  "Time in Jazz": {
+    organizer: { "@type": "Organization", name: "Associazione Culturale Time in Jazz", url: "https://timeinjazz.eu/" },
+    performer: { "@type": "Person", name: "Paolo Fresu" },
+  },
+  "Festa di Stella Maris": {
+    organizer: { "@type": "Organization", name: "Comune di Loiri Porto San Paolo" },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+  },
+  "Festa della Beata Vergine di Bonaria": {
+    organizer: { "@type": "Organization", name: "Comune di Olbia" },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+  },
+};
+
 export function buildGalluraEvents(lang: EventLang, heroImage: string, pageUrl: string) {
-  return EVENTS[lang].map((e) => ({
+  return EVENTS[lang].map((e) => {
+    const principals = EVENT_PRINCIPALS[e.name];
+    return {
     "@context": "https://schema.org",
     "@type": "Event",
     name: e.name,
@@ -328,6 +362,7 @@ export function buildGalluraEvents(lang: EventLang, heroImage: string, pageUrl: 
       address: { "@type": "PostalAddress", addressLocality: e.locality, addressRegion: "SS", addressCountry: "IT" },
     },
     image: heroImage,
+    ...(principals ? { organizer: principals.organizer, performer: principals.performer } : {}),
     ...(e.free ? { isAccessibleForFree: true } : {}),
     // Solo per eventi esplicitamente gratuiti: offerta con prezzo 0 (GSC chiede "offers").
     // Per eventi misti (es. Time in Jazz) NON emettiamo offers per non dichiarare un prezzo
@@ -345,5 +380,6 @@ export function buildGalluraEvents(lang: EventLang, heroImage: string, pageUrl: 
         }
       : {}),
     description: e.description,
-  }));
+    };
+  });
 }
