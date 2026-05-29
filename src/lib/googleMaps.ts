@@ -12,6 +12,48 @@ export const LIBRARIES: ("places")[] = ["places"];
  */
 let mapsPromise: Promise<void> | null = null;
 
+const SCRIPT_ID = "google-maps-js-sdk";
+const MAX_ATTEMPTS = 3;
+
+/**
+ * Inietta una volta il tag <script> del bootstrap Maps e risolve quando la SDK
+ * (incl. la libreria `places`) è pronta. Rimuove sempre un eventuale tag morto
+ * lasciato da un tentativo precedente fallito (altrimenti i retry si bloccano:
+ * un tag già andato in error non rifà mai partire `load`/`error`).
+ */
+function injectMapsScript(): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    document.getElementById(SCRIPT_ID)?.remove();
+
+    const libs = LIBRARIES.join(",");
+    const script = document.createElement("script");
+    script.id = SCRIPT_ID;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(
+      GOOGLE_MAPS_API_KEY,
+    )}&libraries=${libs}&v=weekly&loading=async`;
+    script.async = true;
+    script.defer = true;
+    script.onload = async () => {
+      // Con `loading=async` l'onload scatta quando il bootstrap è parsato, non
+      // quando le librerie sono caricate: attendi che `places` sia pronta.
+      try {
+        const g = (window as any).google;
+        if (g?.maps?.importLibrary && LIBRARIES.includes("places") && !g.maps.places) {
+          await g.maps.importLibrary("places");
+        }
+      } catch {
+        /* best-effort: se importLibrary fallisce, prova comunque a proseguire */
+      }
+      resolve();
+    };
+    script.onerror = () => {
+      script.remove(); // niente tag morto in DOM → il prossimo tentativo riparte pulito
+      reject(new Error("Failed to load Google Maps JS SDK"));
+    };
+    document.head.appendChild(script);
+  });
+}
+
 export function loadGoogleMaps(): Promise<void> {
   if (mapsPromise) return mapsPromise;
   if (typeof window === "undefined") {
@@ -23,29 +65,24 @@ export function loadGoogleMaps(): Promise<void> {
     return mapsPromise;
   }
 
-  mapsPromise = new Promise<void>((resolve, reject) => {
-    const SCRIPT_ID = "google-maps-js-sdk";
-    const existing = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
-    if (existing) {
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener("error", reject, { once: true });
-      return;
+  // Retry con backoff: il fallimento più comune è transiente (rete, hiccup
+  // Google, blocco temporaneo di un'estensione). Tre tentativi prima di arrendersi.
+  mapsPromise = (async () => {
+    let lastErr: unknown;
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      try {
+        await injectMapsScript();
+        return;
+      } catch (err) {
+        lastErr = err;
+        if (attempt < MAX_ATTEMPTS) {
+          await new Promise((r) => setTimeout(r, 600 * attempt));
+        }
+      }
     }
-    const libs = LIBRARIES.join(",");
-    const script = document.createElement("script");
-    script.id = SCRIPT_ID;
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(
-      GOOGLE_MAPS_API_KEY,
-    )}&libraries=${libs}&v=weekly&loading=async`;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => resolve();
-    script.onerror = () => {
-      mapsPromise = null; // permetti un retry futuro su crash
-      reject(new Error("Failed to load Google Maps JS SDK"));
-    };
-    document.head.appendChild(script);
-  });
+    mapsPromise = null; // crash definitivo: consenti un retry futuro (es. rete tornata)
+    throw lastErr instanceof Error ? lastErr : new Error("Failed to load Google Maps JS SDK");
+  })();
 
   return mapsPromise;
 }
