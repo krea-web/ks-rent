@@ -2,7 +2,7 @@
 
 import googleSnapshot from "@/data/google-rating-snapshot.json";
 
-// Rating reale del business da Google Places API (snapshot 2026-05-27: 5,0/42).
+// Rating reale del business da Google Places API (snapshot 2026-05-29: 5,0/44).
 // Riusato come aggregateRating sui Motorcycle/Vehicle in makesOffer per soddisfare
 // GSC ("Devi specificare offers, review o aggregateRating") senza inventare prezzi.
 // Pratica comune nei noleggio auto: la reputazione del business riflette anche
