@@ -11,6 +11,8 @@
  */
 
 export type GuideLang = "en" | "de" | "fr";
+// Tipo separato per gli Event: anche IT (la guida sagre/eventi esiste in 4 lingue).
+export type EventLang = "it" | "en" | "de" | "fr";
 export type DurationKey = "3" | "5" | "7" | "10" | "14" | "30";
 
 interface Step { name: string; text: string }
@@ -274,7 +276,15 @@ export function buildDurationHowTo(key: DurationKey, lang: GuideLang, pageUrl: s
 
 interface EventContent { name: string; startDate: string; endDate?: string; placeName: string; locality: string; description: string; free?: boolean }
 
-const EVENTS: Record<GuideLang, EventContent[]> = {
+const EVENTS: Record<EventLang, EventContent[]> = {
+  it: [
+    { name: "Festa di San Simplicio", startDate: "2026-05-15", placeName: "Olbia", locality: "Olbia", free: true, description: "Festa patronale di Olbia: 7 giorni di mercatini, processione, concerto serale gratuito in piazza e fuochi d'artificio sul porto." },
+    { name: "Festa di Sant'Antonio Abate", startDate: "2026-06-13", placeName: "Borghi della Gallura", locality: "Olbia", free: true, description: "Falò notturni, balli tradizionali e salsiccia arrostita in diversi borghi della Gallura." },
+    { name: "Sant'Antonio Abate — Tempio Pausania", startDate: "2026-07-16", placeName: "Tempio Pausania", locality: "Tempio Pausania", free: true, description: "Festa patronale di Tempio Pausania con processione, balli e festa popolare nel centro storico in pietra." },
+    { name: "Time in Jazz", startDate: "2026-08-01", endDate: "2026-08-15", placeName: "Berchidda e borghi della Gallura", locality: "Berchidda", description: "Festival jazz fondato da Paolo Fresu, tra i più importanti d'Europa: concerti gratuiti in piazze, chiese e vigne, oltre ai concerti principali a pagamento." },
+    { name: "Festa di Stella Maris", startDate: "2026-08-15", placeName: "Porto San Paolo", locality: "Loiri Porto San Paolo", free: true, description: "Processione di barche, fuochi sul mare e cena in trattoria a Porto San Paolo, di fronte a Tavolara." },
+    { name: "Festa della Beata Vergine di Bonaria", startDate: "2026-09-08", placeName: "Olbia", locality: "Olbia", free: true, description: "Festa della patrona della Sardegna a Olbia e in vari borghi: processioni, messa solenne e festa popolare." },
+  ],
   en: [
     { name: "Festa di San Simplicio", startDate: "2026-05-15", placeName: "Olbia", locality: "Olbia", free: true, description: "Olbia's patron saint festival: 7 days of markets, a procession, a free evening concert in the square and fireworks over the port." },
     { name: "Festa di Sant'Antonio Abate", startDate: "2026-06-13", placeName: "Gallura villages", locality: "Olbia", free: true, description: "Night bonfires, traditional dances and grilled sausage in several Gallura villages." },
@@ -301,13 +311,15 @@ const EVENTS: Record<GuideLang, EventContent[]> = {
   ],
 };
 
-export function buildGalluraEvents(lang: GuideLang, heroImage: string) {
+export function buildGalluraEvents(lang: EventLang, heroImage: string, pageUrl: string) {
   return EVENTS[lang].map((e) => ({
     "@context": "https://schema.org",
     "@type": "Event",
     name: e.name,
     startDate: e.startDate,
-    ...(e.endDate ? { endDate: e.endDate } : {}),
+    // GSC richiede endDate. Per gli eventi di un solo giorno, endDate = startDate
+    // è la dichiarazione corretta (Schema.org: "stessa data" significa 1 giorno).
+    endDate: e.endDate || e.startDate,
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
@@ -317,6 +329,21 @@ export function buildGalluraEvents(lang: GuideLang, heroImage: string) {
     },
     image: heroImage,
     ...(e.free ? { isAccessibleForFree: true } : {}),
+    // Solo per eventi esplicitamente gratuiti: offerta con prezzo 0 (GSC chiede "offers").
+    // Per eventi misti (es. Time in Jazz) NON emettiamo offers per non dichiarare un prezzo
+    // che non conosciamo. Resta il warning non-critico, page valida lo stesso.
+    ...(e.free
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+            url: pageUrl,
+            validFrom: e.startDate,
+          },
+        }
+      : {}),
     description: e.description,
   }));
 }

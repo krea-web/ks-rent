@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import GuideArticleLayout from "@/components/GuideArticleLayout.astro";
 import { findArticle } from "@/data/guide-articles";
+import { buildGalluraEvents } from "@/data/guide-schema";
 
 const meta = findArticle("sagre-eventi-gallura-2026-calendario")!;
 const pageUrl = `https://www.ksrentsardinia.com/guide/${meta.slug}`;
@@ -28,64 +29,10 @@ const articleJsonLd = {
   },
 };
 
-// G3 (SEO Master Plan): Event schema per gli eventi con data 2026 esplicita
-// nel contenuto (le date approssimative restano solo nel testo, non asserite
-// come dati strutturati). Migliora la citabilità su AI/eventi locali.
-const place = (name: string, locality: string) => ({
-  "@type": "Place",
-  name,
-  address: { "@type": "PostalAddress", addressLocality: locality, addressRegion: "SS", addressCountry: "IT" },
-});
-const eventsJsonLd = [
-  {
-    "@context": "https://schema.org", "@type": "Event",
-    name: "Festa di San Simplicio", startDate: "2026-05-15",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    location: place("Olbia", "Olbia"), image: meta.heroImage, isAccessibleForFree: true,
-    description: "Festa patronale di Olbia: 7 giorni di mercatini, processione, concerto serale gratuito in piazza e fuochi d'artificio sul porto.",
-  },
-  {
-    "@context": "https://schema.org", "@type": "Event",
-    name: "Festa di Sant'Antonio Abate", startDate: "2026-06-13",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    location: place("Borghi della Gallura", "Olbia"), image: meta.heroImage, isAccessibleForFree: true,
-    description: "Falò notturni, balli tradizionali e salsiccia arrostita in diversi borghi della Gallura.",
-  },
-  {
-    "@context": "https://schema.org", "@type": "Event",
-    name: "Sant'Antonio Abate — Tempio Pausania", startDate: "2026-07-16",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    location: place("Tempio Pausania", "Tempio Pausania"), image: meta.heroImage, isAccessibleForFree: true,
-    description: "Festa patronale di Tempio Pausania con processione, balli e festa popolare nel centro storico in pietra.",
-  },
-  {
-    "@context": "https://schema.org", "@type": "Event",
-    name: "Time in Jazz", startDate: "2026-08-01", endDate: "2026-08-15",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    location: place("Berchidda e borghi della Gallura", "Berchidda"), image: meta.heroImage,
-    description: "Festival jazz fondato da Paolo Fresu, tra i più importanti d'Europa: concerti gratuiti in piazze, chiese e vigne, oltre ai concerti principali a pagamento.",
-  },
-  {
-    "@context": "https://schema.org", "@type": "Event",
-    name: "Festa di Stella Maris", startDate: "2026-08-15",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    location: place("Porto San Paolo", "Loiri Porto San Paolo"), image: meta.heroImage, isAccessibleForFree: true,
-    description: "Processione di barche, fuochi sul mare e cena in trattoria a Porto San Paolo, di fronte a Tavolara.",
-  },
-  {
-    "@context": "https://schema.org", "@type": "Event",
-    name: "Festa della Beata Vergine di Bonaria", startDate: "2026-09-08",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    location: place("Olbia", "Olbia"), image: meta.heroImage, isAccessibleForFree: true,
-    description: "Festa della patrona della Sardegna a Olbia e in vari borghi: processioni, messa solenne e festa popolare.",
-  },
-];
+// G3 (SEO Master Plan): Event schema per gli eventi con data 2026 esplicita.
+// Builder condiviso con EN/DE/FR in guide-schema.ts → unica sorgente di verità,
+// e fix GSC "endDate"/"offers" applicato in un solo posto.
+const eventsJsonLd = buildGalluraEvents("it", meta.heroImage, pageUrl);
 ---
 <BaseLayout
   title={`${meta.title} | Guide KS Rent Sardinia`}

@@ -31,7 +31,7 @@ const articleJsonLd = {
   description={meta.excerpt}
   canonical={pageUrl}
   ogImage={meta.heroImage}
-  jsonLd={[articleJsonLd, ...buildGalluraEvents("fr", meta.heroImage)]}
+  jsonLd={[articleJsonLd, ...buildGalluraEvents("fr", meta.heroImage, pageUrl)]}
   breadcrumbs={[
     { name: "Guides", path: "/fr/guide" },
     { name: "Festivals evenements Gallura 2026", path: `/fr/guide/${meta.slug}` },

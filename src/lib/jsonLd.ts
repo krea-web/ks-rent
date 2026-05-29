@@ -1,5 +1,20 @@
 /* ── Main Local Business JSON-LD (Unified & AI Optimized) ── */
 
+import googleSnapshot from "@/data/google-rating-snapshot.json";
+
+// Rating reale del business da Google Places API (snapshot 2026-05-27: 5,0/42).
+// Riusato come aggregateRating sui Motorcycle/Vehicle in makesOffer per soddisfare
+// GSC ("Devi specificare offers, review o aggregateRating") senza inventare prezzi.
+// Pratica comune nei noleggio auto: la reputazione del business riflette anche
+// l'esperienza del veicolo noleggiato.
+const VEHICLE_AGG_RATING = {
+  "@type": "AggregateRating",
+  ratingValue: googleSnapshot.ratingValue.toFixed(1),
+  reviewCount: googleSnapshot.reviewCount,
+  bestRating: "5",
+  worstRating: "1",
+};
+
 const SAME_AS = [
   "https://www.instagram.com/ksrentsardinia",
   "https://www.tiktok.com/@ksrentsardinia",
@@ -829,6 +844,7 @@ export const motoScooterRentalJsonLd = {
         vehicleConfiguration: "Scooter 125 cc",
         fuelType: "Gasoline",
         url: "https://www.ksrentsardinia.com/flotta/honda-sh",
+        aggregateRating: VEHICLE_AGG_RATING,
       },
     },
     {
@@ -843,6 +859,7 @@ export const motoScooterRentalJsonLd = {
         vehicleConfiguration: "Scooter 350 cc",
         fuelType: "Gasoline",
         url: "https://www.ksrentsardinia.com/flotta/honda-sh",
+        aggregateRating: VEHICLE_AGG_RATING,
       },
     },
     {
@@ -857,6 +874,7 @@ export const motoScooterRentalJsonLd = {
         vehicleConfiguration: "Quad / ATV",
         fuelType: "Gasoline",
         url: "https://www.ksrentsardinia.com/flotta/yamaha-quad-raptor",
+        aggregateRating: VEHICLE_AGG_RATING,
       },
     },
   ],
