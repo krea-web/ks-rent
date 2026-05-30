@@ -36,6 +36,7 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
     make: string;
     model: string;
     category: string;
+    group_slug?: string;
     daily_rate: number;
     rate_june?: number;
     rate_july?: number;
@@ -216,7 +217,7 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
                     )}
 
                     <Link
-                      to={bookHref}
+                      to={v.group_slug ? `${bookHref}?vehicle=${v.group_slug}` : bookHref}
                       className="flex items-center justify-center gap-3 w-full bg-gold/10 hover:bg-gold text-gold hover:text-black py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 group/btn min-h-[48px] relative z-10"
                     >
                       {t.fleetShowcase.rentNow}

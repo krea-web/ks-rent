@@ -35,21 +35,18 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import SEOHead from "@/components/SEOHead";
-import SuccessModal from "@/components/SuccessModal";
-import { trackBookingLead, trackBookingSuccess } from "@/lib/analytics";
+import { trackBookingLead } from "@/lib/analytics";
 import { buildVehicleJsonLd, buildBreadcrumb } from "@/lib/jsonLd";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getVehicleAlt } from "@/lib/imageUtils";
 import { Skeleton } from "@/components/ui/skeleton";
 import LocationStep from "@/components/LocationStep";
 import { loadGoogleMaps } from "@/lib/googleMaps";
+import { buildWhatsAppRequest } from "@/lib/whatsappRequest";
 import type { Locale } from "@/lib/i18n";
 
 // Code splitting: lazy load heavy components
 const Calendar = lazy(() => import("@/components/ui/calendar").then((m) => ({ default: m.Calendar })));
-const SignatureModal = lazy(() => import("@/components/SignatureModal"));
-
-const N8N_BASE = "https://n8n.kreareweb.com/webhook/ksrent";
 
 const TRANSPARENT_IMAGES: Record<string, string> = {
   "Audi__RS3 (Verde)":
@@ -119,7 +116,15 @@ const TRANSLATIONS = {
       titlePart2: "Ora.",
       back: "Indietro",
     },
-    stepLabels: ["Veicolo", "Date", "Guidatore", "Secondo Guidatore", "Ritiro & Consegna"],
+    stepLabels: ["Veicolo", "Date", "Ritiro"],
+    request: {
+      whatsappCta: "Invia richiesta su WhatsApp",
+      estimateNote: "Invierai un messaggio precompilato: ti confermiamo noi disponibilità, kasko/franchigia ed eventuali costi di consegna.",
+      pickupSede: "Ritiro in sede (Porto Isola Bianca)",
+      pickupDelivery: "Consegna a",
+      pickupTBD: "Ritiro / consegna da concordare",
+      continueToPickup: "Continua",
+    },
     step1: {
       heading: "Scegli il Veicolo",
       categoryAll: "Tutti",
@@ -250,7 +255,15 @@ const TRANSLATIONS = {
       titlePart2: "Now.",
       back: "Back",
     },
-    stepLabels: ["Vehicle", "Dates", "Driver", "Second Driver", "Pickup & Drop-off"],
+    stepLabels: ["Vehicle", "Dates", "Pickup"],
+    request: {
+      whatsappCta: "Send request on WhatsApp",
+      estimateNote: "You'll send a pre-filled message: we'll confirm availability, insurance/excess and any delivery costs.",
+      pickupSede: "Pickup at our office (Isola Bianca Port)",
+      pickupDelivery: "Delivery to",
+      pickupTBD: "Pickup / delivery to be arranged",
+      continueToPickup: "Continue",
+    },
     step1: {
       heading: "Choose your vehicle",
       categoryAll: "All",
@@ -381,7 +394,15 @@ const TRANSLATIONS = {
       titlePart2: "buchen.",
       back: "Zurück",
     },
-    stepLabels: ["Fahrzeug", "Daten", "Fahrer", "Zweiter Fahrer", "Abholung & Rückgabe"],
+    stepLabels: ["Fahrzeug", "Daten", "Abholung"],
+    request: {
+      whatsappCta: "Anfrage über WhatsApp senden",
+      estimateNote: "Sie senden eine vorausgefüllte Nachricht: wir bestätigen Verfügbarkeit, Kasko/Selbstbeteiligung und mögliche Lieferkosten.",
+      pickupSede: "Abholung im Büro (Hafen Isola Bianca)",
+      pickupDelivery: "Lieferung an",
+      pickupTBD: "Abholung / Lieferung nach Vereinbarung",
+      continueToPickup: "Weiter",
+    },
     step1: {
       heading: "Wählen Sie Ihr Fahrzeug",
       categoryAll: "Alle",
@@ -512,7 +533,15 @@ const TRANSLATIONS = {
       titlePart2: "maintenant.",
       back: "Retour",
     },
-    stepLabels: ["Véhicule", "Dates", "Conducteur", "Second conducteur", "Prise & Restitution"],
+    stepLabels: ["Véhicule", "Dates", "Prise en charge"],
+    request: {
+      whatsappCta: "Envoyer la demande sur WhatsApp",
+      estimateNote: "Vous enverrez un message pré-rempli : nous confirmons la disponibilité, l'assurance/franchise et d'éventuels frais de livraison.",
+      pickupSede: "Prise en charge au bureau (Port Isola Bianca)",
+      pickupDelivery: "Livraison à",
+      pickupTBD: "Prise en charge / livraison à convenir",
+      continueToPickup: "Continuer",
+    },
     step1: {
       heading: "Choisissez votre véhicule",
       categoryAll: "Tous",
@@ -694,23 +723,6 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
 
-  const [mainDriver, setMainDriver] = useState({ ...initialDriverState });
-  const [hasSecondDriver, setHasSecondDriver] = useState<boolean | null>(null);
-  const [secondDriver, setSecondDriver] = useState({ ...initialDriverState });
-  const [loading, setLoading] = useState(false);
-
-  const [checkingAvailability, setCheckingAvailability] = useState(false);
-  const [availabilityResult, setAvailabilityResult] = useState<{
-    available: boolean;
-    estimated_price?: number;
-    days?: number;
-    price_per_day?: number;
-  } | null>(null);
-
-  const [signatureOpen, setSignatureOpen] = useState(false);
-  const [bookingId, setBookingId] = useState<string>("");
-  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-
   const [pickupType, setPickupType] = useState<"sede" | "custom" | null>(null);
   const [pickupLocation, setPickupLocation] = useState("");
   const [pickupTime, setPickupTime] = useState("");
@@ -785,44 +797,6 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     return Object.values(groups);
   }, [vehicles]);
 
-  // Reset availability when dates change so user must re-verify
-  useEffect(() => {
-    setAvailabilityResult(null);
-  }, [startDate, endDate]);
-
-  // Check availability when dates are confirmed
-  const checkAvailability = useCallback(async () => {
-    if (!selectedVehicle || !startDate || !endDate) {
-      setAvailabilityResult(null);
-      return;
-    }
-    setCheckingAvailability(true);
-    try {
-      // Verifica disponibilità lato backend (Supabase RPC SECURITY DEFINER):
-      // controlla l'overlap di date sulle prenotazioni non cancellate per la
-      // RIGA veicolo selezionata (ogni card = make+model = pool a sé: es. SH125
-      // separato da SH350), rispetto a vehicles.units. Overlap esclusivo: stesso
-      // giorno rientro/ritiro non è conflitto. Non espone righe di prenotazione.
-      // Prezzo/giorni restano calcolati lato client.
-      const { data, error } = await supabase.rpc("check_vehicle_availability", {
-        p_vehicle_id: selectedVehicle.id,
-        p_start: format(startDate, "yyyy-MM-dd"),
-        p_end: format(endDate, "yyyy-MM-dd"),
-      });
-      if (error) throw error;
-      const available = !!(data as { available?: boolean } | null)?.available;
-      setAvailabilityResult({ available });
-      if (!available) {
-        toast.error(t.validation.vehicleNotAvailable);
-      }
-    } catch {
-      setAvailabilityResult(null);
-      toast.error(t.errors.availabilityFallback);
-    } finally {
-      setCheckingAvailability(false);
-    }
-  }, [selectedVehicle, startDate, endDate, t]);
-
   const categories = useMemo(() => {
     const cats = new Set(groupedVehicles.map((g) => g.representative.category));
     return [t.step1.categoryAll, ...Array.from(cats)];
@@ -855,22 +829,9 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     return Math.max(sum, 0);
   }, []);
 
-  const days =
-    availabilityResult?.days ?? (startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0);
+  const days = startDate && endDate ? Math.max(differenceInDays(endDate, startDate), 1) : 0;
   const total =
-    availabilityResult?.estimated_price ??
-    (selectedVehicle && startDate && endDate ? calculateDynamicPrice(selectedVehicle, startDate, endDate) : 0);
-  const isAvailable = availabilityResult === null ? true : availabilityResult.available;
-
-  const uploadFile = async (file: File | null, path: string) => {
-    if (!file) return null;
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${path}-${Math.random()}.${fileExt}`;
-    const { error } = await supabase.storage.from("licenses").upload(fileName, file);
-    if (error) throw error;
-    const { data: publicUrl } = supabase.storage.from("licenses").getPublicUrl(fileName);
-    return publicUrl.publicUrl;
-  };
+    selectedVehicle && startDate && endDate ? calculateDynamicPrice(selectedVehicle, startDate, endDate) : 0;
 
   const goToStep = (step: number) => {
     setDirection(step > currentStep ? 1 : -1);
@@ -886,126 +847,34 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     setTimeout(() => goToStep(2), 300);
   };
 
-  const handleDatesConfirm = async () => {
+  const handleDatesConfirm = () => {
     if (!startDate || !endDate) {
       toast.error(t.validation.selectBothDates);
       return;
     }
-    await checkAvailability();
+    goToStep(3);
   };
 
-  // After availability check, allow user to continue
-  useEffect(() => {
-    // This effect handles the UI state after availability check completes
-  }, [availabilityResult]);
+  // Etichetta ritiro/consegna per il messaggio WhatsApp (e il riepilogo).
+  const pickupSummaryLabel = (): string | undefined => {
+    if (pickupType === "sede") return t.request.pickupSede;
+    if (pickupType === "custom" && pickupLocation) return `${t.request.pickupDelivery}: ${pickupLocation}`;
+    return undefined;
+  };
 
-  const handleSubmit = async () => {
+  // Costruisce il messaggio WhatsApp precompilato e apre la chat.
+  const handleSendWhatsApp = () => {
     if (!selectedVehicle || !startDate || !endDate) return;
-    if (!isAvailable) {
-      toast.error(t.validation.vehicleNotAvailable);
-      return;
-    }
-    if (!mainDriver.licenseFront || !mainDriver.licenseBack) {
-      toast.error(t.validation.mainLicenseMissing);
-      return;
-    }
-    if (hasSecondDriver && (!secondDriver.licenseFront || !secondDriver.licenseBack)) {
-      toast.error(t.validation.secondLicenseMissing);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const uid = mainDriver.cf || mainDriver.email.replace(/[^a-zA-Z0-9]/g, '');
-      const mainFrontUrl = await uploadFile(mainDriver.licenseFront, `front-${uid}`);
-      const mainBackUrl = await uploadFile(mainDriver.licenseBack, `back-${uid}`);
-
-      let secondFrontUrl = null;
-      let secondBackUrl = null;
-      if (hasSecondDriver) {
-        const uid2 = secondDriver.cf || secondDriver.email.replace(/[^a-zA-Z0-9]/g, '');
-        secondFrontUrl = await uploadFile(secondDriver.licenseFront, `front-${uid2}`);
-        secondBackUrl = await uploadFile(secondDriver.licenseBack, `back-${uid2}`);
-      }
-
-      const bookingPayload = {
-        customer: {
-          email: mainDriver.email,
-          phone: mainDriver.phone,
-          tax_code: mainDriver.cf || undefined,
-        },
-        vehicle_id: selectedVehicle.id,
-        dates: {
-          start_date: format(startDate, "yyyy-MM-dd"),
-          end_date: format(endDate, "yyyy-MM-dd"),
-        },
-        license_urls: { front: mainFrontUrl, back: mainBackUrl },
-        total_price: total,
-        pickup_location: pickupLocation,
-        pickup_time: pickupTime,
-        dropoff_location: dropoffLocation,
-        dropoff_time: dropoffTime,
-        has_second_driver: !!hasSecondDriver,
-        second_driver: hasSecondDriver
-          ? {
-              email: secondDriver.email,
-              phone: secondDriver.phone,
-              tax_code: secondDriver.cf || undefined,
-              license_urls: { front: secondFrontUrl, back: secondBackUrl },
-            }
-          : null,
-      };
-
-      const res = await fetch(`${N8N_BASE}/create-booking`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingPayload),
-      });
-
-      if (!res.ok) throw new Error(t.errors.bookingCreate);
-      const result = await res.json();
-      const newBookingId = result.booking_id;
-
-      if (newBookingId) {
-        setBookingId(newBookingId);
-        setSignatureOpen(true);
-      } else {
-        setIsSuccessOpen(true);
-        trackBookingLead();
-        trackBookingSuccess(result.booking_id || "", selectedVehicle, total, days);
-        resetForm();
-      }
-    } catch {
-      toast.error(t.errors.bookingGeneric);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const resetForm = () => {
-    setMainDriver({ ...initialDriverState });
-    setSecondDriver({ ...initialDriverState });
-    setHasSecondDriver(null);
-    setStartDate(undefined);
-    setEndDate(undefined);
-    setSelectedVehicle(null);
-    setAvailabilityResult(null);
-    setBookingId("");
-    setPickupType(null);
-    setPickupLocation("");
-    setPickupTime("");
-    setDropoffType(null);
-    setDropoffLocation("");
-    setDropoffTime("");
-    setCurrentStep(1);
-  };
-
-  const handleSignatureSuccess = () => {
-    setSignatureOpen(false);
-    setIsSuccessOpen(true);
+    const url = buildWhatsAppRequest(lang, {
+      vehicleName: `${selectedVehicle.make} ${selectedVehicle.model}`,
+      startLabel: format(startDate, "dd/MM/yyyy", { locale: dateLocale }),
+      endLabel: format(endDate, "dd/MM/yyyy", { locale: dateLocale }),
+      days,
+      priceEstimate: total > 0 ? total : undefined,
+      pickupLabel: pickupSummaryLabel() || t.request.pickupTBD,
+    });
     trackBookingLead();
-    trackBookingSuccess(bookingId, selectedVehicle, total, days);
-    resetForm();
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   const getCategoryIcon = (category: string) => {
@@ -1015,206 +884,22 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     return <Car className="w-4 h-4" />;
   };
 
-  // Progress percentage
-  const progress =
-    currentStep === 1
-      ? 0
-      : currentStep === 2
-        ? 20
-        : currentStep === 3
-          ? 40
-          : currentStep === 4
-            ? 60
-            : currentStep === 5
-              ? 100
-              : 0;
-
-  // Driver validation helper
-  const getDriverMissingFields = (driver: typeof initialDriverState): string[] => {
-    const missing: string[] = [];
-    if (!driver.email.includes("@") || !driver.email.includes(".")) missing.push(t.validation.fieldEmail);
-    if (driver.phone.length < 8) missing.push(t.validation.fieldPhone);
-    if (!driver.licenseFront) missing.push(t.validation.fieldLicenseFront);
-    if (!driver.licenseBack) missing.push(t.validation.fieldLicenseBack);
-    return missing;
-  };
-
-  const isDriverComplete = (driver: typeof initialDriverState): boolean => {
-    return getDriverMissingFields(driver).length === 0;
-  };
-
-  // Driver form fields helper
-  const renderDriverFormFields = (
-    driver: typeof initialDriverState,
-    setDriver: (d: typeof initialDriverState) => void,
-  ) => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.driver.taxCode} <span className="text-gray-400 dark:text-white/30 normal-case tracking-normal">{t.driver.optional}</span></Label>
-          <div className="relative">
-            <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
-            <Input
-              maxLength={16}
-              value={driver.cf}
-              onChange={(e) => setDriver({ ...driver, cf: e.target.value.toUpperCase() })}
-              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white uppercase"
-            />
-            <FieldCheck show={driver.cf.length === 16} />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.driver.email}</Label>
-          <div className="relative">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
-            <Input
-              required
-              type="email"
-              value={driver.email}
-              onChange={(e) => setDriver({ ...driver, email: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white"
-            />
-            <FieldCheck show={driver.email.includes("@") && driver.email.includes(".")} />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50">{t.driver.phone}</Label>
-          <div className="relative">
-            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-white/30" />
-            <Input
-              required
-              type="tel"
-              value={driver.phone}
-              onChange={(e) => setDriver({ ...driver, phone: e.target.value })}
-              className="pl-12 pr-12 h-14 bg-white dark:bg-[#111] border-gray-200 dark:border-white/10 focus:border-gold focus:ring-1 focus:ring-gold rounded-xl text-gray-900 dark:text-white"
-            />
-            <FieldCheck show={driver.phone.length >= 8} />
-          </div>
-        </div>
-      </div>
-
-      <div className="pt-4 border-t border-gray-200 dark:border-white/5">
-        <h3 className="text-sm font-bold text-gold mb-2 flex items-center gap-2">
-          <ShieldCheck size={16} /> {t.driver.documentsTitle}
-        </h3>
-        <p className="text-gray-500 dark:text-white/40 text-xs mb-4 italic">
-          {t.driver.ocrHint}
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">{t.driver.photoFront}</Label>
-            <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
-              onDragOver={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const file = e.dataTransfer.files?.[0];
-                if (file) setDriver({ ...driver, licenseFront: file });
-              }}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => setDriver({ ...driver, licenseFront: e.target.files?.[0] || null })}
-              />
-              {driver.licenseFront ? (
-                <div className="text-center text-gold">
-                  <CheckCircle2 className="mx-auto mb-2" size={24} />
-                  <span className="text-xs font-bold">{driver.licenseFront.name}</span>
-                </div>
-              ) : (
-                <div className="text-center text-gray-400 dark:text-white/40">
-                  <UploadCloud className="mx-auto mb-2" size={24} />
-                  <span className="text-xs uppercase font-semibold tracking-wider">{t.driver.uploadFront}</span>
-                </div>
-              )}
-            </label>
-          </div>
-          <div>
-            <Label className="text-xs uppercase tracking-widest text-gray-500 dark:text-white/50 mb-2 block">{t.driver.photoBack}</Label>
-            <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-gold hover:bg-gold/5 rounded-xl cursor-pointer transition-colors relative overflow-hidden"
-              onDragOver={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const file = e.dataTransfer.files?.[0];
-                if (file) setDriver({ ...driver, licenseBack: file });
-              }}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => setDriver({ ...driver, licenseBack: e.target.files?.[0] || null })}
-              />
-              {driver.licenseBack ? (
-                <div className="text-center text-gold">
-                  <CheckCircle2 className="mx-auto mb-2" size={24} />
-                  <span className="text-xs font-bold">{driver.licenseBack.name}</span>
-                </div>
-              ) : (
-                <div className="text-center text-gray-400 dark:text-white/40">
-                  <UploadCloud className="mx-auto mb-2" size={24} />
-                  <span className="text-xs uppercase font-semibold tracking-wider">{t.driver.uploadBack}</span>
-                </div>
-              )}
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  // Progress percentage (3 step: Veicolo → Date → Ritiro)
+  const progress = currentStep === 1 ? 0 : currentStep === 2 ? 50 : 100;
 
   // Mobile sticky bar action text
   const mobileActionLabel = () => {
     if (currentStep === 1) return t.mobileBar.actionPickVehicle;
     if (currentStep === 2)
-      return startDate && endDate
-        ? availabilityResult?.available
-          ? t.mobileBar.actionContinue
-          : t.mobileBar.actionVerify
-        : t.mobileBar.actionPickDates;
-    if (currentStep === 3) return t.mobileBar.actionContinue;
-    if (currentStep === 4 && hasSecondDriver === null) return t.mobileBar.actionChoose;
-    if (currentStep === 4) return t.mobileBar.actionContinue;
-    if (currentStep === 5) return t.mobileBar.actionConfirm;
-    return t.mobileBar.actionConfirm;
+      return startDate && endDate ? t.mobileBar.actionContinue : t.mobileBar.actionPickDates;
+    return t.request.whatsappCta;
   };
 
   const handleMobileAction = () => {
-    if (currentStep === 2 && startDate && endDate && !availabilityResult) {
+    if (currentStep === 2 && startDate && endDate) {
       handleDatesConfirm();
-    } else if (currentStep === 2 && availabilityResult?.available) {
-      goToStep(3);
     } else if (currentStep === 3) {
-      const missing = getDriverMissingFields(mainDriver);
-      if (missing.length > 0) {
-        toast.error(t.validation.fillFields(missing.join(", ")));
-        return;
-      }
-      goToStep(4);
-    } else if (currentStep === 4) {
-      if (hasSecondDriver === false) {
-        goToStep(5);
-      } else if (hasSecondDriver === true) {
-        const missing = getDriverMissingFields(secondDriver);
-        if (missing.length > 0) {
-          toast.error(t.validation.fillFieldsSecond(missing.join(", ")));
-          return;
-        }
-        goToStep(5);
-      }
-    } else if (currentStep === 5) {
-      handleSubmit();
+      handleSendWhatsApp();
     }
   };
 
@@ -1586,108 +1271,40 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                     </div>
                   </div>
 
-                  {/* Availability result */}
+                  {/* Stima prezzo + Continua (nessun blocco disponibilità: gestione umana via WhatsApp) */}
                   {startDate && endDate && (
                     <div className="mt-6 space-y-4">
-                      {!availabilityResult && !checkingAvailability && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-gold/5 border border-gold/20 rounded-2xl p-6 space-y-4"
+                      >
+                        <div className="flex items-end justify-between">
+                          <div>
+                            <p className="text-gray-500 dark:text-white/50 text-xs">{t.step2.totalPrice}</p>
+                            <p className="text-3xl font-black font-display text-gold">€{total}</p>
+                          </div>
+                          <p className="text-gray-500 dark:text-white/40 text-sm">
+                            {t.step2.days(days)}
+                          </p>
+                        </div>
+                        <p className="text-xs text-gray-500 dark:text-white/50 leading-relaxed">
+                          {t.request.estimateNote}
+                        </p>
                         <Button
                           type="button"
                           onClick={handleDatesConfirm}
                           className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
                         >
-                          {t.step2.verifyButton} <ArrowRight size={16} className="ml-2" />
+                          {t.step2.continue} <ArrowRight size={16} className="ml-2" />
                         </Button>
-                      )}
-
-                      {checkingAvailability && (
-                        <div className="flex items-center justify-center gap-3 py-6 text-gray-500 dark:text-white/50">
-                          <Loader2 size={20} className="animate-spin text-gold" />
-                          <span>{t.step2.checking}</span>
-                        </div>
-                      )}
-
-                      {availabilityResult && !availabilityResult.available && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="bg-red-500/5 border border-red-500/20 rounded-2xl p-6 text-center space-y-4"
-                        >
-                          <AlertCircle size={32} className="text-red-400 mx-auto" />
-                          <p className="text-gray-700 dark:text-white/80">
-                            {t.step2.unavailableMsg}
-                          </p>
-                          <div className="flex gap-3 justify-center">
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={() => {
-                                setAvailabilityResult(null);
-                                goToStep(1);
-                              }}
-                              className="border-gray-200 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl"
-                            >
-                              <Car size={14} className="mr-2" /> {t.step2.changeCar}
-                            </Button>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={() => {
-                                setAvailabilityResult(null);
-                                setStartDate(undefined);
-                                setEndDate(undefined);
-                              }}
-                              className="border-gray-200 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl"
-                            >
-                              <CalendarIcon size={14} className="mr-2" /> {t.step2.changeDates}
-                            </Button>
-                          </div>
-                        </motion.div>
-                      )}
-
-                      {availabilityResult?.available && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="bg-green-500/5 border border-green-500/20 rounded-2xl p-6 space-y-4"
-                        >
-                          <div className="flex items-center gap-3">
-                            <motion.div
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                              className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center"
-                            >
-                              <CheckCircle2 size={20} className="text-green-400" />
-                            </motion.div>
-                            <div>
-                              <p className="text-green-400 font-bold">{t.step2.availableTitle}</p>
-                              <p className="text-gray-500 dark:text-white/50 text-xs">{t.step2.realTimeRate}</p>
-                            </div>
-                          </div>
-                          <div className="flex items-end justify-between pt-2 border-t border-gray-200 dark:border-white/5">
-                            <div>
-                              <p className="text-gray-500 dark:text-white/50 text-xs">{t.step2.totalPrice}</p>
-                              <p className="text-3xl font-black font-display text-gold">€{total}</p>
-                            </div>
-                            <p className="text-gray-500 dark:text-white/40 text-sm">
-                              {t.step2.days(days)}
-                            </p>
-                          </div>
-                          <Button
-                            type="button"
-                            onClick={() => goToStep(3)}
-                            className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
-                          >
-                            {t.step2.continue} <ArrowRight size={16} className="ml-2" />
-                          </Button>
-                        </motion.div>
-                      )}
+                      </motion.div>
                     </div>
                   )}
                 </motion.div>
               )}
 
-              {/* STEP 3: GUIDATORE PRINCIPALE */}
+              {/* STEP 3: RITIRO / CONSEGNA + RICHIESTA WHATSAPP */}
               {currentStep === 3 && (
                 <motion.div
                   key="step3"
@@ -1702,139 +1319,6 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                   <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
                     <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
                       3
-                    </span>
-                    {t.step3.heading}
-                  </h2>
-                  {renderDriverFormFields(mainDriver, setMainDriver)}
-
-                  <div className="mt-8">
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        const missing = getDriverMissingFields(mainDriver);
-                        if (missing.length > 0) {
-                          toast.error(t.validation.fillFields(missing.join(", ")));
-                          return;
-                        }
-                        goToStep(4);
-                      }}
-                      className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
-                    >
-                      {t.step3.continue} <ArrowRight size={16} className="ml-2" />
-                    </Button>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* STEP 4: SECONDO GUIDATORE + CONFERMA */}
-              {currentStep === 4 && (
-                <motion.div
-                  key="step4"
-                  custom={direction}
-                  variants={stepVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="space-y-6"
-                >
-                  {/* Ask about second driver */}
-                  {(hasSecondDriver === null || hasSecondDriver === false) && (
-                    <div className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 text-center space-y-6 shadow-md dark:shadow-none">
-                      <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto">
-                        <Users size={28} className="text-gold" />
-                      </div>
-                      <h2 className="text-xl md:text-2xl font-display font-bold">
-                        {t.step4.askTitle}
-                      </h2>
-                      <p className="text-gray-500 dark:text-white/50 max-w-md mx-auto">
-                        {t.step4.askDesc}
-                      </p>
-                      <div className="flex gap-4 justify-center">
-                        <Button
-                          type="button"
-                          onClick={() => setHasSecondDriver(true)}
-                          className="h-14 px-8 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
-                        >
-                          {t.step4.yes}
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => {
-                            setHasSecondDriver(false);
-                            goToStep(5);
-                          }}
-                          className="h-14 px-8 border-gray-300 dark:border-white/10 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl font-bold uppercase tracking-wider"
-                        >
-                          {t.step4.no}
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Second driver form */}
-                  {hasSecondDriver === true && (
-                    <div className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 shadow-md dark:shadow-none">
-                      <div className="flex items-center justify-between mb-5 md:mb-6">
-                        <h2 className="text-xl md:text-2xl font-display font-bold flex items-center gap-3">
-                          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
-                            4
-                          </span>
-                          {t.step4.heading}
-                        </h2>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="text-gray-500 dark:text-white/50 hover:text-red-400 hover:bg-red-400/10 gap-1.5"
-                          onClick={() => {
-                            setHasSecondDriver(null);
-                            setSecondDriver({ ...initialDriverState });
-                          }}
-                        >
-                          <X className="w-4 h-4" />
-                          {t.step4.cancel}
-                        </Button>
-                      </div>
-                      {renderDriverFormFields(secondDriver, setSecondDriver)}
-
-                      <div className="mt-8">
-                        <Button
-                          type="button"
-                          onClick={() => {
-                            const missing = getDriverMissingFields(secondDriver);
-                            if (missing.length > 0) {
-                              toast.error(t.validation.fillFieldsSecond(missing.join(", ")));
-                              return;
-                            }
-                            goToStep(5);
-                          }}
-                          className="w-full h-14 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-xl"
-                        >
-                          {t.step4.continue} <ArrowRight size={16} className="ml-2" />
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              )}
-
-              {/* STEP 5: RITIRO & CONSEGNA */}
-              {currentStep === 5 && (
-                <motion.div
-                  key="step5"
-                  custom={direction}
-                  variants={stepVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/10 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-2xl md:rounded-[2rem] p-5 sm:p-6 md:p-10 relative overflow-hidden shadow-md dark:shadow-none"
-                >
-                  <h2 className="text-xl md:text-2xl font-display font-bold mb-5 md:mb-6 flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gold/10 text-sm border border-gold/30 text-gold">
-                      5
                     </span>
                     {t.step5.heading}
                   </h2>
@@ -1855,50 +1339,6 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                     isMapLoaded={isMapLoaded}
                     dropoffSedeOnly
                   />
-
-                  {/* Validation warnings for incomplete driver data */}
-                  {!isDriverComplete(mainDriver) && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-6 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4"
-                    >
-                      <div className="flex items-center gap-3">
-                        <AlertCircle size={20} className="text-red-400 shrink-0" />
-                        <p className="text-sm text-gray-600 dark:text-white/70">{t.step5.mainIncomplete}</p>
-                      </div>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => goToStep(3)}
-                        className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0"
-                      >
-                        {t.step5.completeData}
-                      </Button>
-                    </motion.div>
-                  )}
-                  {hasSecondDriver && !isDriverComplete(secondDriver) && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-4 bg-red-500/5 border border-red-500/20 rounded-2xl p-5 flex items-center justify-between gap-4"
-                    >
-                      <div className="flex items-center gap-3">
-                        <AlertCircle size={20} className="text-red-400 shrink-0" />
-                        <p className="text-sm text-gray-600 dark:text-white/70">{t.step5.secondIncomplete}</p>
-                      </div>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => goToStep(4)}
-                        className="border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl shrink-0"
-                      >
-                        {t.step5.completeData}
-                      </Button>
-                    </motion.div>
-                  )}
 
                   {/* Riepilogo Finale */}
                   <div className="mt-8 bg-gray-50 dark:bg-white/5 border border-gold/20 rounded-2xl p-5 sm:p-6 md:p-8 space-y-4">
@@ -1922,7 +1362,7 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                        <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
                         <p className="text-gray-500 dark:text-white/50 text-xs uppercase tracking-wider mb-1">{t.step5.summaryPickup}</p>
                         <p className="font-bold truncate">
-                          {pickupLocation || <span className="text-gray-400 dark:text-white/30 italic">{t.step5.toBeSet}</span>}
+                          {pickupSummaryLabel() || <span className="text-gray-400 dark:text-white/30 italic">{t.step5.toBeSet}</span>}
                         </p>
                       </div>
                        <div className="bg-gray-100 dark:bg-white/5 rounded-xl p-4 min-w-0">
@@ -1930,32 +1370,21 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                         <p className="font-bold text-gold text-lg sm:text-xl">€{total}</p>
                       </div>
                     </div>
+                    <p className="text-xs text-gray-500 dark:text-white/50 leading-relaxed pt-1">
+                      {t.request.estimateNote}
+                    </p>
                   </div>
 
                   <div className="mt-6">
                     <Button
                       type="button"
-                      onClick={handleSubmit}
-                      disabled={
-                        loading ||
-                        !pickupLocation ||
-                        !pickupTime ||
-                        !dropoffLocation ||
-                        !dropoffTime ||
-                        !isDriverComplete(mainDriver) ||
-                        (hasSecondDriver === true && !isDriverComplete(secondDriver))
-                      }
-                      className="w-full h-16 bg-gold text-white hover:bg-yellow-500 font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+                      onClick={handleSendWhatsApp}
+                      disabled={!selectedVehicle || !startDate || !endDate}
+                      className="w-full h-16 bg-[#25D366] text-white hover:bg-[#1ebe5b] font-black uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(37,211,102,0.35)]"
                     >
-                      {loading ? (
-                        <span className="flex items-center gap-2">
-                          <Loader2 size={16} className="animate-spin" /> {t.step5.loading}
-                        </span>
-                      ) : (
-                        <span className="flex items-center">
-                          {t.step5.confirmBooking} <ArrowRight size={18} className="ml-3" />
-                        </span>
-                      )}
+                      <span className="flex items-center gap-3">
+                        {t.request.whatsappCta} <ArrowRight size={18} />
+                      </span>
                     </Button>
                   </div>
                 </motion.div>
@@ -2016,34 +1445,6 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                     </div>
                   </div>
 
-                  {checkingAvailability && (
-                    <div className="flex items-center justify-center gap-2 py-2 text-gray-500 dark:text-white/40 text-sm">
-                      <Loader2 size={14} className="animate-spin" /> {t.summary.updatingPrice}
-                    </div>
-                  )}
-
-                  {availabilityResult?.available && (
-                    <div className="flex items-center gap-2 text-xs text-green-400/70 bg-green-500/5 rounded-lg px-3 py-2">
-                      <Zap size={12} /> {t.summary.realTimeRate}
-                    </div>
-                  )}
-
-                  <div className="space-y-3 py-2">
-                    <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
-                      <CheckCircle2 className="text-gold shrink-0" size={16} /> {t.summary.mainDriver}
-                      {mainDriver.name && (
-                        <span className="text-gray-400 dark:text-white/40 text-xs ml-auto">
-                          {mainDriver.name} {mainDriver.surname}
-                        </span>
-                      )}
-                    </div>
-                    {hasSecondDriver && (
-                      <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-white/70">
-                        <Users className="text-gold shrink-0" size={16} /> {t.summary.secondIncluded}
-                      </div>
-                    )}
-                  </div>
-
                   <div className="pt-6 border-t border-gray-200 dark:border-white/5 flex flex-wrap justify-between items-center gap-2">
                     <span className="text-lg text-gray-600 dark:text-white/70">{t.summary.totalEstimated}</span>
                     <span className="text-2xl sm:text-3xl md:text-4xl font-black font-display text-gold min-w-0 break-words">
@@ -2054,10 +1455,10 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                   {/* Step indicator in summary */}
                   <div className="pt-4 border-t border-gray-200 dark:border-white/5">
                     <p className="text-xs text-gray-500 dark:text-white/50 leading-relaxed mb-3">
-                      {t.summary.depositNote}
+                      {t.request.estimateNote}
                     </p>
                     <div className="flex items-center justify-between text-xs text-gray-400 dark:text-white/40">
-                      <span>{t.summary.stepOf(currentStep, 5)}</span>
+                      <span>{t.summary.stepOf(currentStep, 3)}</span>
                       <span className="text-gold">{STEP_LABELS[currentStep - 1]}</span>
                     </div>
                   </div>
@@ -2103,34 +1504,17 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                 <Button
                   type="button"
                   onClick={handleMobileAction}
-                  disabled={loading || (currentStep === 2 && checkingAvailability)}
                   className="h-11 px-6 bg-gold text-white hover:bg-yellow-500 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs shrink-0 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
                 >
-                  {loading || (currentStep === 2 && checkingAvailability) ? (
-                    <Loader2 size={14} className="animate-spin" />
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      {mobileActionLabel()} <ArrowRight size={14} />
-                    </span>
-                  )}
+                  <span className="flex items-center gap-2">
+                    {mobileActionLabel()} <ArrowRight size={14} />
+                  </span>
                 </Button>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-
-      {/* SIGNATURE MODAL */}
-      <Suspense fallback={null}>
-        <SignatureModal
-          open={signatureOpen}
-          bookingId={bookingId}
-          onClose={() => setSignatureOpen(false)}
-          onSuccess={handleSignatureSuccess}
-        />
-      </Suspense>
-
-      <SuccessModal open={isSuccessOpen} onClose={() => setIsSuccessOpen(false)} />
     </div>
   );
 };
