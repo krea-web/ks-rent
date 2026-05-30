@@ -316,31 +316,47 @@ const EVENTS: Record<EventLang, EventContent[]> = {
 // resi identici nelle 4 lingue. Usato per soddisfare GSC che pretende organizer +
 // performer anche per i warning non-critici (altrimenti blocca la "Convalida correzione").
 type Principal = { "@type": "Organization" | "Person"; name: string; url?: string };
+// URL ufficiali verificati (HTTP 200, 2026-05-30) — niente link inventati.
+const URL_COMUNE_OLBIA = "https://www.comune.olbia.ot.it";
+const URL_COMUNE_TEMPIO = "https://comune.tempiopausania.ss.it";
+const URL_COMUNE_LOIRI = "https://www.comune.loiriportosanpaolo.ss.it";
+const URL_DIOCESI = "https://www.diocesitempioampurias.it";
+const URL_SARDEGNA_TURISMO = "https://www.sardegnaturismo.it";
+const URL_TIME_IN_JAZZ = "https://timeinjazz.eu/";
+
 const EVENT_PRINCIPALS: Record<string, { organizer: Principal; performer: Principal }> = {
   "Festa di San Simplicio": {
-    organizer: { "@type": "Organization", name: "Comune di Olbia" },
-    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+    organizer: { "@type": "Organization", name: "Comune di Olbia", url: URL_COMUNE_OLBIA },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias", url: URL_DIOCESI },
   },
   "Festa di Sant'Antonio Abate": {
-    organizer: { "@type": "Organization", name: "Comuni e Pro Loco della Gallura" },
-    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+    organizer: { "@type": "Organization", name: "Comuni e Pro Loco della Gallura", url: URL_SARDEGNA_TURISMO },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias", url: URL_DIOCESI },
   },
   "Sant'Antonio Abate — Tempio Pausania": {
-    organizer: { "@type": "Organization", name: "Comune di Tempio Pausania" },
-    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+    organizer: { "@type": "Organization", name: "Comune di Tempio Pausania", url: URL_COMUNE_TEMPIO },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias", url: URL_DIOCESI },
   },
   "Time in Jazz": {
-    organizer: { "@type": "Organization", name: "Associazione Culturale Time in Jazz", url: "https://timeinjazz.eu/" },
+    organizer: { "@type": "Organization", name: "Associazione Culturale Time in Jazz", url: URL_TIME_IN_JAZZ },
     performer: { "@type": "Person", name: "Paolo Fresu" },
   },
   "Festa di Stella Maris": {
-    organizer: { "@type": "Organization", name: "Comune di Loiri Porto San Paolo" },
-    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+    organizer: { "@type": "Organization", name: "Comune di Loiri Porto San Paolo", url: URL_COMUNE_LOIRI },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias", url: URL_DIOCESI },
   },
   "Festa della Beata Vergine di Bonaria": {
-    organizer: { "@type": "Organization", name: "Comune di Olbia" },
-    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias" },
+    organizer: { "@type": "Organization", name: "Comune di Olbia", url: URL_COMUNE_OLBIA },
+    performer: { "@type": "Organization", name: "Diocesi di Tempio-Ampurias", url: URL_DIOCESI },
   },
+};
+
+// Eventi con almeno una componente gratuita reale → emettono offers price 0.
+// Time in Jazz NON ha `free:true` (ha anche concerti a pagamento) ma offre
+// concerti gratuiti in piazze, chiese e vigne: l'offerta gratuita è veritiera
+// e soddisfa GSC ("Campo mancante offers") senza inventare un prezzo dei ticket.
+const EVENT_OFFER_URL: Record<string, string> = {
+  "Time in Jazz": URL_TIME_IN_JAZZ,
 };
 
 export function buildGalluraEvents(lang: EventLang, heroImage: string, pageUrl: string) {
@@ -364,17 +380,17 @@ export function buildGalluraEvents(lang: EventLang, heroImage: string, pageUrl: 
     image: heroImage,
     ...(principals ? { organizer: principals.organizer, performer: principals.performer } : {}),
     ...(e.free ? { isAccessibleForFree: true } : {}),
-    // Solo per eventi esplicitamente gratuiti: offerta con prezzo 0 (GSC chiede "offers").
-    // Per eventi misti (es. Time in Jazz) NON emettiamo offers per non dichiarare un prezzo
-    // che non conosciamo. Resta il warning non-critico, page valida lo stesso.
-    ...(e.free
+    // Offers price 0 per gli eventi gratuiti E per Time in Jazz (concerti gratuiti
+    // reali). Per Time in Jazz l'url punta al sito ufficiale del festival; per gli
+    // altri al guide page. Soddisfa GSC ("Campo mancante offers") senza inventare prezzi.
+    ...(e.free || EVENT_OFFER_URL[e.name]
       ? {
           offers: {
             "@type": "Offer",
             price: "0",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
-            url: pageUrl,
+            url: EVENT_OFFER_URL[e.name] || pageUrl,
             validFrom: e.startDate,
           },
         }
