@@ -474,7 +474,7 @@ export const it = {
 
     ctaSection: {
       heading: "Scegli la tua Auto",
-      subtitle: "Prenota in meno di 2 minuti",
+      subtitle: "Richiedi in meno di 2 minuti",
       button: "Scopri la Flotta",
       prevAria: "Scorri a sinistra",
       nextAria: "Scorri a destra",

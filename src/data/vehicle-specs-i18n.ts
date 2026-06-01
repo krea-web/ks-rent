@@ -284,8 +284,8 @@ const TRANSLATIONS: Record<string, Record<"en" | "de" | "fr", TranslatedFields>>
       category: "City car",
       transmission: "5-speed manual, front-wheel drive (12V mild-hybrid)",
       fuel: "Hybrid petrol 1.0 FireFly",
-      prezziBassa: "€40/day",
-      prezziAlta: "€70/day",
+      prezziBassa: "€55/day",
+      prezziAlta: "€90/day",
       prezziNote: "The lowest rate of the fleet. Ideal for long stays.",
       ideale: [
         "Low-budget holidays prioritising savings",
@@ -305,8 +305,8 @@ const TRANSLATIONS: Record<string, Record<"en" | "de" | "fr", TranslatedFields>>
       category: "Kleinwagen",
       transmission: "5-Gang Schaltgetriebe, Frontantrieb (12V Mild-Hybrid)",
       fuel: "Hybrid-Benzin 1.0 FireFly",
-      prezziBassa: "40 €/Tag",
-      prezziAlta: "70 €/Tag",
+      prezziBassa: "55 €/Tag",
+      prezziAlta: "90 €/Tag",
       prezziNote: "Der guenstigste Tarif der Flotte. Ideal fuer lange Aufenthalte.",
       ideale: [
         "Sparbewusste Ferien mit Fokus aufs Sparen",
@@ -326,8 +326,8 @@ const TRANSLATIONS: Record<string, Record<"en" | "de" | "fr", TranslatedFields>>
       category: "Citadine",
       transmission: "Boite manuelle 5 vitesses, traction avant (mild-hybrid 12V)",
       fuel: "Essence hybride 1.0 FireFly",
-      prezziBassa: "40 €/jour",
-      prezziAlta: "70 €/jour",
+      prezziBassa: "55 €/jour",
+      prezziAlta: "90 €/jour",
       prezziNote: "Le tarif le plus bas de la flotte. Ideal pour les longs sejours.",
       ideale: [
         "Vacances petit budget axees sur l'economie",

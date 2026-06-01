@@ -473,7 +473,7 @@ export const en: typeof it = {
 
     ctaSection: {
       heading: "Choose Your Car",
-      subtitle: "Book in less than 2 minutes",
+      subtitle: "Request in under 2 minutes",
       button: "Discover the Fleet",
       prevAria: "Scroll left",
       nextAria: "Scroll right",

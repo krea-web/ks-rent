@@ -473,7 +473,7 @@ export const fr: typeof it = {
 
     ctaSection: {
       heading: "Choisissez votre Voiture",
-      subtitle: "Réservez en moins de 2 minutes",
+      subtitle: "Demandez en moins de 2 minutes",
       button: "Découvrir la Flotte",
       prevAria: "Faire défiler à gauche",
       nextAria: "Faire défiler à droite",

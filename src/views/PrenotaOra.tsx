@@ -105,7 +105,7 @@ const TRANSLATIONS = {
       titleDefault: "Prenota Noleggio Auto Olbia Aeroporto | KS Rent Costa Smeralda",
       titleVehicle: (make: string, model: string) => `Noleggia ${make} ${model} a Olbia — KS Rent`,
       descDefault:
-        "Prenota in 2 minuti il tuo veicolo luxury a Olbia. Consegna in aeroporto o hotel. Deposito cauzionale trasparente e copertura assicurativa completa.",
+        "Richiedi in 2 minuti il tuo veicolo a Olbia. Consegna in aeroporto o hotel. Deposito cauzionale trasparente e copertura assicurativa completa.",
       descVehicle: (make: string, model: string, rate: number) =>
         `Noleggia ${make} ${model} in Costa Smeralda con protezione completa. Da €${rate}/giorno con KS Rent Olbia.`,
       breadcrumb: "Prenota Ora",
@@ -244,7 +244,7 @@ const TRANSLATIONS = {
       titleDefault: "Book Car Hire Olbia Airport | KS Rent Costa Smeralda",
       titleVehicle: (make: string, model: string) => `Hire ${make} ${model} in Olbia — KS Rent`,
       descDefault:
-        "Book your luxury vehicle in Olbia in 2 minutes. Delivery to airport or hotel. Transparent security deposit and full insurance cover.",
+        "Request your vehicle in Olbia in under 2 minutes. Delivery to airport or hotel. Transparent security deposit and full insurance cover.",
       descVehicle: (make: string, model: string, rate: number) =>
         `Hire ${make} ${model} in Costa Smeralda with full protection. From €${rate}/day with KS Rent Olbia.`,
       breadcrumb: "Book Now",
@@ -383,7 +383,7 @@ const TRANSLATIONS = {
       titleDefault: "Autovermietung Olbia Flughafen buchen | KS Rent Costa Smeralda",
       titleVehicle: (make: string, model: string) => `${make} ${model} in Olbia mieten — KS Rent`,
       descDefault:
-        "Buchen Sie Ihr Premium-Fahrzeug in Olbia in 2 Minuten. Lieferung zum Flughafen oder Hotel. Transparente Kaution und umfassender Versicherungsschutz.",
+        "Fragen Sie Ihr Fahrzeug in Olbia in 2 Minuten an. Lieferung zum Flughafen oder Hotel. Transparente Kaution und umfassender Versicherungsschutz.",
       descVehicle: (make: string, model: string, rate: number) =>
         `Mieten Sie ${make} ${model} an der Costa Smeralda mit vollem Schutz. Ab €${rate}/Tag bei KS Rent Olbia.`,
       breadcrumb: "Jetzt buchen",
@@ -522,7 +522,7 @@ const TRANSLATIONS = {
       titleDefault: "Réserver Location Voiture Aéroport Olbia | KS Rent Costa Smeralda",
       titleVehicle: (make: string, model: string) => `Louer ${make} ${model} à Olbia — KS Rent`,
       descDefault:
-        "Réservez votre véhicule de luxe à Olbia en 2 minutes. Livraison à l'aéroport ou à l'hôtel. Caution transparente et couverture d'assurance complète.",
+        "Demandez votre véhicule à Olbia en 2 minutes. Livraison à l'aéroport ou à l'hôtel. Caution transparente et couverture d'assurance complète.",
       descVehicle: (make: string, model: string, rate: number) =>
         `Louez ${make} ${model} en Costa Smeralda avec protection complète. À partir de €${rate}/jour chez KS Rent Olbia.`,
       breadcrumb: "Réserver",

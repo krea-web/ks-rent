@@ -188,8 +188,8 @@ export const VEHICLE_SPECS: Record<string, VehicleSpec> = {
       velocitaMax: "155 km/h",
     },
     prezzi: {
-      bassaStagione: "40 €/giorno",
-      altaStagione: "70 €/giorno",
+      bassaStagione: "55 €/giorno",
+      altaStagione: "90 €/giorno",
       note: "La tariffa piu' bassa della flotta. Ideale per soggiorni lunghi.",
     },
     ideale: [
