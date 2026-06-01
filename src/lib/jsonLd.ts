@@ -315,10 +315,10 @@ export const faqPageJsonLd = {
     },
     {
       "@type": "Question",
-      name: "Come si prenota un'auto con KS Rent Sardinia?",
+      name: "Come si richiede un'auto con KS Rent Sardinia?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Vai alla pagina /prenotaora su ksrentsardinia.com e completa la prenotazione in pochi minuti. Scegli il veicolo, il periodo di noleggio, inserisci email e numero di telefono, carica la foto fronte e retro della patente (e quella di un eventuale secondo guidatore), scegli il luogo e l'orario di consegna — KS Rent Sardinia copre da San Teodoro a Porto Cervo fino a Palau — e firma il contratto direttamente dal tuo smartphone. Riceverai immediatamente una email di conferma con il contratto allegato.",
+        text: "Vai alla pagina /prenotaora su ksrentsardinia.com: scegli il veicolo, il periodo di noleggio e il punto di ritiro o consegna — KS Rent Sardinia copre da San Teodoro a Porto Cervo fino a Palau — poi invii la richiesta su WhatsApp con un messaggio già precompilato. Ti rispondiamo di persona per confermare la disponibilità, le coperture (kasko/franchigia) ed eventuali costi di consegna, e organizziamo insieme ritiro e contratto. Nessun pagamento anticipato online e nessun obbligo di carta di credito.",
       },
     },
   ],
@@ -397,10 +397,10 @@ export const portoFaqJsonLd = {
     },
     {
       "@type": "Question",
-      name: "Posso prenotare online in autonomia con KS Rent Sardinia?",
+      name: "Come richiedo un veicolo con KS Rent Sardinia al porto di Olbia?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sì. La piattaforma di KS Rent Sardinia è progettata per il self-booking 100% online. Scegli il veicolo, seleziona le date e conferma in pochi minuti. Riceverai subito la conferma e le istruzioni per il ritiro al porto.",
+        text: "Dalla pagina di prenotazione scegli il veicolo, le date e il punto di ritiro o consegna, poi invii la richiesta su WhatsApp con un messaggio già pronto. Un operatore ti risponde di persona per confermare la disponibilità, le coperture e i dettagli del ritiro al Porto Isola Bianca. Così evitiamo sovrapposizioni di date e gestiamo ogni richiesta su misura.",
       },
     },
     {

@@ -99,8 +99,8 @@ const TRANSLATIONS = {
           gold: false,
         },
         {
-          q: "Come funziona la prenotazione online?",
-          a: "Il nostro sistema di booking è progettato per essere autonomo e immediato. Scegli la tua supercar, seleziona date e location di consegna, e ricevi la conferma istantanea senza bisogno di telefonate.",
+          q: "Come funziona la richiesta di noleggio?",
+          a: "Scegli la sportiva, le date e il luogo di ritiro o consegna, poi invii la richiesta su WhatsApp con un messaggio già pronto. Ti rispondiamo di persona per confermare disponibilità, coperture e dettagli: nessun pagamento anticipato online, nessun obbligo di carta di credito.",
           gold: false,
         },
       ],
@@ -220,8 +220,8 @@ const TRANSLATIONS = {
           gold: false,
         },
         {
-          q: "How does online booking work?",
-          a: "Our booking system is designed to be autonomous and immediate. Choose your supercar, select dates and delivery location and receive instant confirmation, with no need for phone calls.",
+          q: "How does the rental request work?",
+          a: "Choose the sports car, the dates and the pickup or delivery point, then send your request on WhatsApp with a ready-made message. We reply personally to confirm availability, cover and details: no online prepayment, no mandatory credit card.",
           gold: false,
         },
       ],
@@ -341,8 +341,8 @@ const TRANSLATIONS = {
           gold: false,
         },
         {
-          q: "Wie funktioniert die Online-Buchung?",
-          a: "Unser Buchungssystem ist eigenständig und sofort einsatzbereit. Wählen Sie Ihren Supersportwagen, die Daten und den Lieferort und erhalten Sie sofort die Bestätigung — ganz ohne Telefonate.",
+          q: "Wie funktioniert die Mietanfrage?",
+          a: "Wählen Sie den Sportwagen, die Daten und den Abhol- oder Lieferort und senden Sie dann Ihre Anfrage über WhatsApp mit einer fertigen Nachricht. Wir antworten persönlich, um Verfügbarkeit, Schutz und Details zu bestätigen: keine Online-Vorauszahlung, keine obligatorische Kreditkarte.",
           gold: false,
         },
       ],
@@ -462,8 +462,8 @@ const TRANSLATIONS = {
           gold: false,
         },
         {
-          q: "Comment fonctionne la réservation en ligne ?",
-          a: "Notre système de réservation est conçu pour être autonome et immédiat. Choisissez votre supercar, sélectionnez les dates et le lieu de livraison et recevez la confirmation instantanée, sans appel téléphonique.",
+          q: "Comment fonctionne la demande de location ?",
+          a: "Choisissez la sportive, les dates et le lieu de prise en charge ou de livraison, puis envoyez votre demande sur WhatsApp avec un message prêt à l'emploi. Nous répondons en personne pour confirmer la disponibilité, les garanties et les détails : aucun prépaiement en ligne, aucune carte de crédit obligatoire.",
           gold: false,
         },
       ],

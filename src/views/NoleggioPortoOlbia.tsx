@@ -87,8 +87,8 @@ const TRANSLATIONS = {
           gold: true,
         },
         {
-          q: "Posso prenotare online in totale autonomia?",
-          a: "Assolutamente sì. La nostra piattaforma è concepita per il Self-Booking 100% online. Scegli il veicolo, seleziona le date e conferma in pochi minuti. Riceverai subito la conferma e le istruzioni per il ritiro.",
+          q: "Come invio la richiesta di noleggio?",
+          a: "Dalla pagina di prenotazione scegli il veicolo, le date e il punto di ritiro o consegna, poi invii la richiesta su WhatsApp con un messaggio già pronto. Ti rispondiamo di persona per confermare disponibilità, coperture e dettagli del ritiro al porto. Niente pagamenti anticipati online.",
           gold: false,
         },
         {
@@ -201,8 +201,8 @@ const TRANSLATIONS = {
           gold: true,
         },
         {
-          q: "Can I book online in full autonomy?",
-          a: "Absolutely. Our platform is designed for 100% self-booking online. Choose the vehicle, select the dates and confirm in a few minutes. You'll receive the confirmation and pick-up instructions immediately.",
+          q: "How do I send my rental request?",
+          a: "On the booking page choose the vehicle, the dates and the pickup or delivery point, then send your request on WhatsApp with a ready-made message. We reply personally to confirm availability, cover and the details of pick-up at the port. No online prepayment.",
           gold: false,
         },
         {
@@ -315,8 +315,8 @@ const TRANSLATIONS = {
           gold: true,
         },
         {
-          q: "Kann ich vollständig online buchen?",
-          a: "Selbstverständlich. Unsere Plattform ist auf 100% Self-Booking ausgelegt. Wählen Sie das Fahrzeug, die Daten und bestätigen Sie in wenigen Minuten. Sie erhalten sofort die Bestätigung und die Abholanweisungen.",
+          q: "Wie sende ich meine Mietanfrage?",
+          a: "Auf der Buchungsseite wählen Sie das Fahrzeug, die Daten und den Abhol- oder Lieferort und senden dann Ihre Anfrage über WhatsApp mit einer fertigen Nachricht. Wir antworten persönlich, um Verfügbarkeit, Schutz und die Details der Abholung am Hafen zu bestätigen. Keine Online-Vorauszahlung.",
           gold: false,
         },
         {
@@ -429,8 +429,8 @@ const TRANSLATIONS = {
           gold: true,
         },
         {
-          q: "Puis-je réserver en ligne en toute autonomie ?",
-          a: "Bien sûr. Notre plateforme est conçue pour le Self-Booking 100% en ligne. Choisissez le véhicule, sélectionnez les dates et confirmez en quelques minutes. Vous recevez la confirmation et les instructions de retrait immédiatement.",
+          q: "Comment envoyer ma demande de location ?",
+          a: "Sur la page de réservation, choisissez le véhicule, les dates et le lieu de prise en charge ou de livraison, puis envoyez votre demande sur WhatsApp avec un message prêt à l'emploi. Nous répondons en personne pour confirmer la disponibilité, les garanties et les détails du retrait au port. Aucun prépaiement en ligne.",
           gold: false,
         },
         {
