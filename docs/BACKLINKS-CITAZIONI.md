@@ -54,10 +54,11 @@ P.IVA IT03028900904 — REA SS-224046
 - **Yelp** — in approvazione (https://biz.yelp.com)
 - **GoWork** — in approvazione
 - **Opendi** — verifica entro 24h
-- **Europages** — registrazione inviata, in revisione (descrizione 3865 char, disambiguazione vs KS Rent SRLS Roma inclusa)
 - **paradisola.it** — scheda inviata, in revisione (portale turismo Sardegna)
 
 ## ❌ Scartati (con motivo)
+- **Europages** — registrazione REVOCATA da loro (2026-06-02): non ci considerano
+  un'attività B2B (siamo B2C/noleggio al consumatore). Niente backlink. Non reiscrivere.
 - **2findlocal** — la loro verifica obbliga a mettere in home un link verso un sito
   estraneo (`coffeehow.co`/"pikadil"): è un **link scheme**, danneggia la SEO della
   home. Rinunciato al backlink (basso valore). Decisione utente 2026-05-28.
