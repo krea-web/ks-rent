@@ -48,13 +48,16 @@ P.IVA IT03028900904 — REA SS-224046
 | **reportaziende.it** | reportaziende.it/ks-rent-srl_ss_it20906983 (verificato P.IVA/REA) | ✅ |
 | **wogha.com** | wogha.com/.../ks-rent-srl-vle-aldo-moro-367-...ss224046 | ✅ |
 | **ufficiocamerale.it** | ufficiocamerale.it/7811/ks-rent-srl (confermato visivamente) | ✅ |
+| **Opendi** | olbia.opendi.it/1981987.html (verificato: scheda KS Rent, Aldo Moro 367) | ✅ |
 
 ## ⏳ In attesa di approvazione/verifica
 - **TomTom** — in verifica
-- **Yelp** — in approvazione (https://biz.yelp.com)
 - **GoWork** — in approvazione
-- **Opendi** — verifica entro 24h
 - **paradisola.it** — scheda inviata, in revisione (portale turismo Sardegna)
+- **Yelp** — ⚠️ scheda creata ma NON pubblica sul web: l'URL `yelp.it/biz/ks-rent-sardinia-olbia`
+  redirige a una pagina di ricerca generica (visibile solo nell'app mobile). NON aggiunta a
+  `sameAs` (sarebbe un link rotto). Da ricontrollare più avanti: se la pagina web diventa
+  pubblica (status 200 con la scheda), aggiungerla. Verificato 2026-06-02.
 
 ## ❌ Scartati (con motivo)
 - **Europages** — registrazione REVOCATA da loro (2026-06-02): non ci considerano
