@@ -9,6 +9,7 @@ import {
   TrendingUp,
   Users,
   Loader2,
+  MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,8 @@ interface DashboardData {
   recentBookings: any[];
   occupancyByMonth: { month: string; count: number }[];
   funnel: { requests: number; bookings: number; confirmed: number; cancelled: number };
+  requestsByMonth: { month: string; count: number }[];
+  topVehicles: { label: string; count: number }[];
 }
 
 const DashboardSection = () => {
@@ -59,18 +62,40 @@ const DashboardSection = () => {
       supabase.from("bookings")
         .select("start_date")
         .gte("start_date", new Date(now.getFullYear(), 0, 1).toISOString().slice(0, 10)),
-      supabase.from("whatsapp_requests").select("id"),
+      supabase.from("whatsapp_requests").select("created_at, group_slug, vehicle_make, vehicle_model"),
       supabase.from("bookings").select("status"),
     ]);
 
     // Funnel conversione: richieste WhatsApp → prenotazioni → confermate/firmate
+    const allReq = wrAll.data || [];
     const allB = bAll.data || [];
     const funnel = {
-      requests: wrAll.data?.length || 0,
+      requests: allReq.length,
       bookings: allB.length,
       confirmed: allB.filter((b: any) => ["signed", "active", "completed"].includes(b.status)).length,
       cancelled: allB.filter((b: any) => b.status === "cancelled").length,
     };
+
+    // Richieste per mese (anno corrente)
+    const reqMap: Record<string, number> = {};
+    for (const r of allReq) {
+      const m = (r.created_at || "").slice(0, 7); // YYYY-MM
+      if (m) reqMap[m] = (reqMap[m] || 0) + 1;
+    }
+    const requestsByMonth = Object.entries(reqMap)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([month, count]) => ({ month, count }));
+
+    // Veicoli più richiesti (top 6)
+    const vehMap: Record<string, number> = {};
+    for (const r of allReq) {
+      const label = `${r.vehicle_make || ""} ${r.vehicle_model || ""}`.trim() || r.group_slug || "—";
+      vehMap[label] = (vehMap[label] || 0) + 1;
+    }
+    const topVehicles = Object.entries(vehMap)
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 6);
 
     const activeVehicles = (vehicles.data || []).filter((v) => !v.is_archived);
 
@@ -95,6 +120,8 @@ const DashboardSection = () => {
       recentBookings: recent.data || [],
       occupancyByMonth,
       funnel,
+      requestsByMonth,
+      topVehicles,
     });
     setLoading(false);
   }
@@ -262,6 +289,50 @@ const DashboardSection = () => {
         ) : (
           <BarChart data={data.occupancyByMonth} />
         )}
+      </div>
+
+      {/* Richieste WhatsApp + Veicoli più richiesti */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <MessageCircle size={18} className="text-[#25D366]" />
+            <h3 className="font-bold uppercase tracking-wider text-sm">Andamento richieste WhatsApp</h3>
+          </div>
+          {data.requestsByMonth.length === 0 ? (
+            <p className="text-white/40 text-sm py-4">Ancora nessuna richiesta.</p>
+          ) : (
+            <BarChart data={data.requestsByMonth} />
+          )}
+        </div>
+
+        <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Car size={18} className="text-[#C8A135]" />
+            <h3 className="font-bold uppercase tracking-wider text-sm">Veicoli più richiesti</h3>
+          </div>
+          {data.topVehicles.length === 0 ? (
+            <p className="text-white/40 text-sm py-4">Ancora nessun dato.</p>
+          ) : (
+            <div className="space-y-2.5">
+              {(() => {
+                const max = Math.max(...data.topVehicles.map((v) => v.count), 1);
+                return data.topVehicles.map((v) => (
+                  <div key={v.label} className="flex items-center gap-3">
+                    <span className="w-32 text-xs text-white/70 truncate shrink-0">{v.label}</span>
+                    <div className="flex-1 bg-white/5 rounded-full h-5 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#C8A135] flex items-center justify-end pr-2"
+                        style={{ width: `${Math.max((v.count / max) * 100, 10)}%` }}
+                      >
+                        <span className="text-[10px] font-black text-black">{v.count}</span>
+                      </div>
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

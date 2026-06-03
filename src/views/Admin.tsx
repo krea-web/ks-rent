@@ -18,6 +18,7 @@ import {
   LayoutDashboard,
   MessageSquare,
   MessageCircle,
+  Image,
   Globe,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -30,8 +31,9 @@ import DashboardSection from "@/components/admin/sections/DashboardSection";
 import ReviewsSection from "@/components/admin/sections/ReviewsSection";
 import SEOEditorSection from "@/components/admin/sections/SEOEditorSection";
 import WhatsAppRequestsSection from "@/components/admin/sections/WhatsAppRequestsSection";
+import OgImagesSection from "@/components/admin/sections/OgImagesSection";
 
-type Section = "dashboard" | "flotta" | "manutenzione" | "contratti" | "richieste" | "seo" | "recensioni";
+type Section = "dashboard" | "flotta" | "manutenzione" | "contratti" | "richieste" | "seo" | "recensioni" | "social";
 
 const sidebarItems: { title: string; icon: typeof Car; section: Section }[] = [
   { title: "Dashboard", icon: LayoutDashboard, section: "dashboard" },
@@ -40,6 +42,7 @@ const sidebarItems: { title: string; icon: typeof Car; section: Section }[] = [
   { title: "Noleggi & Contratti", icon: FileText, section: "contratti" },
   { title: "Richieste WhatsApp", icon: MessageCircle, section: "richieste" },
   { title: "SEO Editor", icon: Globe, section: "seo" },
+  { title: "Anteprime Social", icon: Image, section: "social" },
   { title: "Recensioni", icon: MessageSquare, section: "recensioni" },
 ];
 
@@ -299,6 +302,9 @@ const Admin = () => {
 
           {/* RICHIESTE WHATSAPP */}
           {section === "richieste" && <WhatsAppRequestsSection />}
+
+          {/* ANTEPRIME SOCIAL (OG) */}
+          {section === "social" && <OgImagesSection />}
 
           {/* SEO EDITOR */}
           {section === "seo" && <SEOEditorSection />}

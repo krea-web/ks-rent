@@ -2,8 +2,15 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { logAdminAction } from "@/lib/audit";
-import { Star, Pin, Eye, EyeOff, Plus, Trash2, Loader2, RefreshCw } from "lucide-react";
+import { Star, Pin, Eye, EyeOff, Plus, Trash2, Loader2, RefreshCw, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import googleSnapshot from "@/data/google-rating-snapshot.json";
+
+// Link diretto per lasciare una recensione Google (Place ID KS Rent Sardinia).
+const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJP6b_YdBL2RIRkp3GdDzDwYU";
+const REVIEW_WHATSAPP_MSG =
+  "Ciao! 👋 Grazie per aver scelto KS Rent Sardinia 🚗 Se ti sei trovato bene, ci aiuteresti con una recensione su Google? Bastano 30 secondi: " +
+  GOOGLE_REVIEW_URL;
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -81,9 +88,18 @@ const ReviewsSection = () => {
 
   const stats = {
     total: reviews.length,
-    google: reviews.filter((r) => r.source === "google").length,
-    manual: reviews.filter((r) => r.source === "manual").length,
-    avgRating: reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0,
+    published: reviews.filter((r) => r.is_published).length,
+    googleTotal: googleSnapshot.reviewCount, // totale reale GBP (snapshot)
+    avgRating: googleSnapshot.ratingValue,
+  };
+
+  const copyInvite = async () => {
+    try {
+      await navigator.clipboard.writeText(REVIEW_WHATSAPP_MSG);
+      toast.success("Messaggio invito copiato — incollalo in WhatsApp al cliente");
+    } catch {
+      toast.error("Copia non riuscita");
+    }
   };
 
   if (loading) {
@@ -98,11 +114,15 @@ const ReviewsSection = () => {
     <div className="space-y-6">
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="Totale" value={stats.total} />
-        <StatCard label="Google" value={stats.google} />
-        <StatCard label="Manuali" value={stats.manual} />
+        <StatCard label="Totale Google" value={stats.googleTotal} accent />
+        <StatCard label="Caricate (con testo)" value={stats.total} />
+        <StatCard label="Pubblicate sul sito" value={stats.published} />
         <StatCard label="Media stelle" value={stats.avgRating.toFixed(1)} accent />
       </div>
+      <p className="text-xs text-white/40 -mt-2">
+        "Totale Google" è il conteggio reale del profilo (snapshot: {stats.googleTotal} @ {stats.avgRating.toFixed(1)}★),
+        usato sul sito. Google espone solo le recensioni con testo, quindi qui ne gestisci {stats.total}.
+      </p>
 
       {/* Toolbar */}
       <div className="flex flex-wrap gap-2 items-center justify-between">
@@ -130,6 +150,22 @@ const ReviewsSection = () => {
           >
             <RefreshCw size={16} className="text-[#C8A135]" />
           </button>
+          <button
+            onClick={copyInvite}
+            className="flex items-center gap-2 bg-white/5 border border-white/10 text-white/80 px-3 py-2 rounded-full font-bold text-xs uppercase tracking-wider hover:bg-white/10 transition"
+            title="Copia un messaggio WhatsApp con il link recensione Google da inviare al cliente"
+          >
+            <Share2 size={14} /> Chiedi recensione
+          </button>
+          <a
+            href={GOOGLE_REVIEW_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-2 bg-white/5 border border-white/10 text-white/80 px-3 py-2 rounded-full font-bold text-xs uppercase tracking-wider hover:bg-white/10 transition"
+            title="Apri la pagina recensione Google"
+          >
+            <Star size={14} /> Link Google
+          </a>
           <button
             onClick={() => { setEditing(null); setModalOpen(true); }}
             className="flex items-center gap-2 bg-[#C8A135] text-black px-3 py-2 rounded-full font-bold text-xs uppercase tracking-wider hover:scale-105 transition"
