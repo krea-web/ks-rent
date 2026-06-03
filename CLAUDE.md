@@ -77,7 +77,7 @@ docs/PAGES-CHECKLIST.md                   # tracker UX/SEO per rotta
 | **Orari** | 10:00–13:00 + 15:00–22:30, 7 giorni su 7 |
 | **Place ID (Google Maps)** | `ChIJP6b_YdBL2RIRkp3GdDzDwYU` — CID `9638199341974199698` |
 | **Categoria GBP** | Agenzia di noleggio auto (`car_rental`) |
-| **Recensioni Google** | **5,0 / 5 su 41 recensioni** (snapshot in `src/data/google-rating-snapshot.json`) |
+| **Recensioni Google** | **5,0 / 5 su 46 recensioni** (snapshot in `src/data/google-rating-snapshot.json`) |
 | **⚠️ Entità DISTINTA da** | KS Rent S.r.l. (Roma) — sito `ksrent.it` — **NON siamo loro** |
 
 ### Social & directory (usate come `sameAs` in JSON-LD)
@@ -174,9 +174,41 @@ Auto-iniettati in `<head>` da [BaseLayout.astro](src/layouts/BaseLayout.astro) v
 
 ---
 
-## STATO SVILUPPO — DOVE SIAMO ARRIVATI (agg. 2026-05-26)
+## STATO SVILUPPO — DOVE SIAMO ARRIVATI (agg. 2026-06-03)
 
-### Sito pubblico: ~370 pagine generate, 4 lingue. Stato **production-ready**.
+### Sito pubblico: ~378 pagine generate, 4 lingue. Stato **production-ready**.
+
+#### 🆕 MILESTONE GIUGNO 2026 — Funnel WhatsApp + WF Telegram + Hardening sicurezza
+- **🔄 PRENOTAZIONE → FUNNEL RICHIESTA WHATSAPP** (cambio strutturale, deciso dal proprietario:
+  6 prenotazioni → 5 annullate ⇒ basta self-booking, gestione umana via WhatsApp).
+  - `src/views/PrenotaOra.tsx` ridotto da **5 step a 3**: **Veicolo → Date (stima prezzo, NIENTE
+    check disponibilità) → Ritiro/Consegna** → bottone verde **"Invia richiesta su WhatsApp"**.
+  - Nuovo helper `src/lib/whatsappRequest.ts`: `WHATSAPP_NUMBER` + `buildWhatsAppRequest(lang, {...})`
+    → `wa.me` con messaggio precompilato (veicolo, periodo, giorni, **stima** prezzo, ritiro) in 4 lingue.
+    Mostra solo la tariffa di noleggio, mai franchigia (Nota #13).
+  - **RIMOSSI dal sito**: form guidatore/secondo guidatore, upload patente (bucket `licenses`),
+    check disponibilità (RPC `check_vehicle_availability`), submit a n8n `/create-booking`, modali
+    firma/successo (`SignatureModal.tsx`/`SuccessModal.tsx` **eliminati**). Card `FleetShowcase`
+    → `?vehicle=<group_slug>` (pre-seleziona nel wizard).
+  - **Coerenza contenuti**: tutte le FAQ/guide/HowTo/meta/schema in 4 lingue riscritte sul nuovo
+    flusso ("invii richiesta WhatsApp → ti rispondiamo di persona"); zero claim "self-booking/
+    conferma istantanea/carica patente/firma dal telefono". Verificato anche sui `content_html` Supabase (0 occorrenze).
+- **📄 WF TELEGRAM GENERATORE CONTRATTI** — nuovo workflow n8n **`KS RENT - Contratto via Telegram`**
+  (id `lKPZb13jcW5pT5C8`, **ATTIVO**). Il proprietario manda al bot **foto patente + didascalia**
+  (dati prenotazione) **oppure** un **vocale + foto** → OCR patente (riuso `gpt-4o`) + GPT estrae i
+  campi + Whisper trascrive il vocale → genera **PDF contratto** → lo rispedisce in chat **e** salva
+  su Supabase (bucket privato `contracts`, path `<booking_id>/...`) + riga `bookings`. Tabella di
+  correlazione `telegram_pending_contracts`. ⚠️ **NON ancora testato end-to-end** (vedi checklist).
+  Il vecchio WF `d5dWGrmTzNHrSwnc` (`/create-booking` + `/sign`) resta **dormiente** (sito non lo chiama più).
+- **🔐 HARDENING SICUREZZA** (audit + advisor Supabase, vedi sezione "CHECKLIST AUTONOMIA & SICUREZZA"):
+  `franchise_amount` (+ damage_policy, license_plate, km_current, next_revision_date) **bloccate al
+  ruolo anon** via column-grant + tutte le query `vehicles` portate a colonne esplicite; `seo_beaches`/
+  `seo_locations` scrittura solo-admin; rimosse policy INSERT pubbliche su `bookings`; `search_path`
+  funzioni fissato; revocato EXECUTE su `check_vehicle_availability`/`handle_new_user`.
+- **Dati**: recensioni **46** @ 5,0; Panda giugno **75** / luglio **80** / agosto **90**; backlink
+  +Opendi (Europages revocato non-B2B; Yelp non pubblica sul web). Tracker: `docs/BACKLINKS-CITAZIONI.md`.
+
+
 
 #### ✅ Fasi fondative (0→5) — completate
 - **Fase 0 — Admin redesign**: 6 sezioni (Dashboard, Flotta & Prezzi, Manutenzione, Noleggi & Contratti, SEO Editor 4-lingue, Reviews Manager). Migrazione `sql/08-phase-0-admin-redesign-schema.sql`. Helper `audit.ts`, `adminStorage.ts`. VehicleModal + BookingModal estesi (gallery, immagine trasparente, archiviazione, upload contratto firmato).
@@ -223,7 +255,7 @@ Vedi [SEO-MASTER-PLAN.md](SEO-MASTER-PLAN.md) §1. Indirizzo principale (NAP) **
 - **Broken internal links**: audit (`audit-buttons.mjs`) + fix 22 link verso slug localizzati corretti.
 - **Backlink/directory**: `sameAs` esteso (carmappa, empresite, aziendeeasy).
 - **Email reminder ritiro**: workflow **N8N + Gmail** (vedi Nota Critica #14).
-- **Reviews**: 41 @ 5,0 in tutto il codebase + snapshot JSON.
+- **Reviews**: 46 @ 5,0 in tutto il codebase + snapshot JSON (aggiornamento manuale dello snapshot).
 
 ### ⏸️ In sospeso / decisioni aperte (NON ancora fatte)
 | # | Item | Stato / motivo |
@@ -260,7 +292,7 @@ Vedi [SEO-MASTER-PLAN.md](SEO-MASTER-PLAN.md) §1. Indirizzo principale (NAP) **
 npm run sync-reviews     # one-shot (richiede env keys — vedi sotto)
 # automatico ad ogni: npm run build (prebuild hook)
 ```
-> ⚠️ Le key Places API vivono su **Vercel** (env del deploy), non in locale. In locale lo snapshot resta `src/data/google-rating-snapshot.json` (mantenuto a mano: 41 @ 5,0). Env per attivare il sync: `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, `SUPABASE_SERVICE_ROLE_KEY`.
+> ⚠️ Le key Places API vivono su **Vercel** (env del deploy), non in locale. In locale lo snapshot resta `src/data/google-rating-snapshot.json` (mantenuto a mano: 46 @ 5,0). Env per attivare il sync: `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, `SUPABASE_SERVICE_ROLE_KEY`.
 
 ### Build locale senza side-effect
 ```bash
@@ -294,12 +326,66 @@ npm run indexnow                               # ping IndexNow ai motori
 9. **301 redirect in `vercel.json`**: NON rimuovere `/localita/:slug`→`/:slug`, `/spiagge/:slug`→`/:slug`, né i redirect `/porto-cervo`→`/noleggio-auto-porto-cervo` ecc. Servono per link equity.
 10. **Auth admin**: Supabase Auth + flag `profiles.is_admin`. RLS richiede `is_admin=true` per scrittura su reviews / audit_log / maintenance_log.
 11. **Storage buckets** (`vehicles`, `contracts`, `reviews`) vanno creati MANUALMENTE in Supabase UI.
-12. **🔒 FREEZE FLUSSO BOOKING — `src/views/PrenotaOra.tsx`**: il **submit della prenotazione (→ webhook N8N `/create-booking`) NON si tocca**. Il submit (`format(startDate,"yyyy-MM-dd")` → N8N) resta identico. Congelati finché non sbloccati: B2 checkbox consenso, B3 età ≥21, M1 documenti, L3 Stripe. **⚠️ SBLOCCATO (2026-05-27)**: la **verifica disponibilità** è stata spostata da N8N a **Supabase RPC `check_vehicle_availability`** (per riga veicolo/card vs `vehicles.units`, overlap esclusivo; vedi schema DB sopra). `checkAvailability()` ora chiama `supabase.rpc("check_vehicle_availability", { p_vehicle_id, p_start, p_end })`, non più `fetch(N8N/check-availability)`. Il submit (→ N8N `/create-booking`) e il resto del flusso restano congelati.
+12. **🔄 FLUSSO BOOKING = FUNNEL WHATSAPP (riscritto giugno 2026)** — `src/views/PrenotaOra.tsx`.
+    Il vecchio "freeze" sul submit N8N `/create-booking` **NON vale più**: il wizard NON crea più
+    prenotazioni. Ora è a **3 step** (veicolo → date+stima → ritiro/consegna) e termina con
+    **"Invia richiesta su WhatsApp"** (`handleSendWhatsApp()` → `buildWhatsAppRequest()` in
+    `src/lib/whatsappRequest.ts`). **Rimossi**: check disponibilità (RPC `check_vehicle_availability`,
+    ora inutilizzata/revocata), form guidatore, upload patente, submit N8N, modali firma/successo.
+    Il ramo n8n `/create-booking` (`d5dWGrmTzNHrSwnc`) è **dormiente**. La generazione contratti è
+    passata al WF Telegram `lKPZb13jcW5pT5C8`. Se si modifica il wizard: non reintrodurre patente/
+    firma/availability; l'unico "submit" è l'apertura di `wa.me` col messaggio precompilato.
 13. **💶 FRANCHIGIA / DEPOSITO — MAI pubblicare i prezzi sul sito.** Esiste `vehicles.franchise_amount` nel DB ma **non va mostrato** in `/tariffe` né altrove. Sempre **CTA WhatsApp** per il preventivo personalizzato. (memory: `feedback_franchigia_no_prezzi.md`)
 14. **📧 EMAIL = N8N + Gmail.** Le email transazionali/reminder passano dal workflow **N8N + Gmail** già configurato dall'utente. **NON** introdurre Resend / SendGrid / trigger Supabase. (memory: `reference_email_n8n_gmail.md`)
 15. **react-day-picker è v9** — l'API `classNames` differisce da v8 (`month_caption`, `weekdays/weekday`, `week`, `day/day_button`, `selected`, `range_start/middle/end`, `button_previous/next`, `components.Chevron`). Vedi `src/components/ui/calendar.tsx`.
 16. **`framer-motion` è shimmato** — non aspettarti animazioni reali da `<motion.X>`; sono render statici (scelta di bundle size).
 17. **SEO "non appaio su Google"**: vedi tabella "In sospeso" — è maturazione dominio, non un bug. Niente fix di codice.
+18. **🔐 COLONNE VEICOLI RISERVATE — mai `select('*')` su `vehicles` lato anon.** Le colonne
+    `franchise_amount`, `damage_policy`, `license_plate`, `km_current`, `next_revision_date` sono
+    bloccate al ruolo anon via **column-grant** Supabase: un `select('*')` da build/client darebbe
+    *"permission denied for table vehicles"*. Usa SEMPRE l'elenco colonne pubbliche esplicito
+    (vedi le query in `tariffe.astro`/`PrenotaOra.tsx`/`FleetShowcase.tsx`). L'admin (authenticated)
+    legge tutto. Questo protegge la regola Nota #13 anche a livello DB.
+
+---
+
+## CHECKLIST AUTONOMIA & SICUREZZA (per il "100% funzionante e autonomo")
+
+### ✅ Sicurezza — già a posto (audit + advisor Supabase, giugno 2026)
+- **Secret**: `.env`/`.env.local`/`.env.production` **gitignorati e NON in git**; in git solo la
+  **anon key** (pubblica per design, protetta da RLS). **Nessun service_role** nel repo/bundle.
+  → I segreti NON sono rubabili da GitHub. **NON eliminare i `.env` locali** (servono a build e
+  script `scripts/*`); i secret di produzione vivono solo su **Vercel** (env del deploy).
+- **Client**: usa solo `PUBLIC_SUPABASE_ANON_KEY`; nessun secret hardcoded nei componenti.
+- **RLS/grant**: `bookings` leggibile solo da admin (PII al sicuro); `vehicles` con column-grant
+  (franchigia bloccata); `seo_*` scrittura solo-admin; `bookings` INSERT pubblico rimosso;
+  `telegram_pending_contracts` accessibile solo da service_role; `search_path` funzioni fissato.
+- **Header**: CSP/HSTS/X-Frame-Options/Referrer-Policy in `vercel.json`. Admin protetto da
+  `profiles.is_admin` (sessione + flag).
+
+### ⏳ Da fare per il 100% (manuali / fuori repo)
+- [ ] **Restringere la Google Maps key** (`PUBLIC_GOOGLE_MAPS_API_KEY`, unica chiave pubblica nel
+      bundle) ai **referrer del dominio** in Google Cloud Console → impedisce abusi/consumo quota da altri.
+- [ ] **Supabase Auth**: abilitare *Leaked Password Protection* (HaveIBeenPwned) — toggle dashboard.
+- [ ] **Test end-to-end WF Telegram contratti** (`lKPZb13jcW5pT5C8`): inviare al bot foto patente +
+      didascalia → verificare PDF in chat + riga `bookings` + file in `contracts/<booking_id>/`. Poi
+      provare il path vocale+foto. (Se un nodo fallisce, leggere l'esecuzione su n8n e correggere.)
+- [ ] **GSC**: "Convalida correzione" sui report Eventi + "Richiedi indicizzazione" della pagina
+      `/guide/sagre-eventi-gallura-2026-calendario` (lo schema è già corretto live).
+- [ ] **Verifica funnel WhatsApp live** nelle 4 lingue (`/prenotaora`, `/en/book-now`,
+      `/de/jetzt-buchen`, `/fr/reserver`): veicolo→date→ritiro→messaggio precompilato corretto.
+- [ ] **Meta Pixel / Instagram ads**: rinviato (servono Pixel ID + codice verifica dominio).
+
+### 🟡 Bassa priorità (opzionali)
+- Storage bucket pubblici (`asset`/`reviews`/`vehicle_images`/`vehicles`) consentono il *listing*
+  dei file (solo nomi, i file sono già pubblici): hardening opzionale, rischio nullo.
+- Le 2 chiavi **anon** hardcoded in `scripts/audit-supabase-seo.mjs` e `scripts/seo-similarity.mjs`
+  potrebbero leggere da env per pulizia (sono pubbliche, non è un problema di sicurezza).
+- `is_admin_user()` resta eseguibile da anon (ritorna `false`): è usata nelle RLS di storage, lasciata com'è.
+
+### 📁 Igiene repo
+- ✅ Niente file temporanei/backup tracciati; `dist/` e `node_modules/` gitignorati; 0 TODO/FIXME in `src/`.
+- ✅ Dead code rimosso (`SignatureModal.tsx`, `SuccessModal.tsx`). `generateBlankContract.ts` resta (usato da Admin).
 
 ---
 
