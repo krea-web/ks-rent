@@ -49,7 +49,12 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
 
   useEffect(() => {
     const fetchFleet = async () => {
-      const { data, error } = await supabase.from("vehicles").select("*").order("category");
+      const { data, error } = await supabase
+        .from("vehicles")
+        // Colonne pubbliche esplicite (esclude franchise_amount, damage_policy, license_plate,
+        // km_current, next_revision_date, units — riservate, vedi RLS column grants).
+        .select("id, make, model, year, fuel_type, characteristics, color, daily_rate, image_url, logo_url, available, category, rate_april, rate_may, rate_june, rate_july, rate_august, rate_september, rate_october, group_slug, is_primary_variant, gallery_urls, transparent_image_url, is_archived")
+        .order("category");
       if (data) setFleet(data);
     };
     fetchFleet();
