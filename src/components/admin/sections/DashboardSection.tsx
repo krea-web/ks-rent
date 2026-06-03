@@ -21,6 +21,7 @@ interface DashboardData {
   upcomingRevisions: { id: string; make: string; model: string; license_plate: string | null; next_revision_date: string }[];
   recentBookings: any[];
   occupancyByMonth: { month: string; count: number }[];
+  funnel: { requests: number; bookings: number; confirmed: number; cancelled: number };
 }
 
 const DashboardSection = () => {
@@ -39,7 +40,7 @@ const DashboardSection = () => {
     const in30Days = new Date(now);
     in30Days.setDate(now.getDate() + 30);
 
-    const [bookingsMonth, vehicles, reviews, revisions, recent, allBookings] = await Promise.all([
+    const [bookingsMonth, vehicles, reviews, revisions, recent, allBookings, wrAll, bAll] = await Promise.all([
       supabase.from("bookings")
         .select("total_price")
         .gte("start_date", startOfMonth.toISOString().slice(0, 10))
@@ -58,7 +59,18 @@ const DashboardSection = () => {
       supabase.from("bookings")
         .select("start_date")
         .gte("start_date", new Date(now.getFullYear(), 0, 1).toISOString().slice(0, 10)),
+      supabase.from("whatsapp_requests").select("id"),
+      supabase.from("bookings").select("status"),
     ]);
+
+    // Funnel conversione: richieste WhatsApp → prenotazioni → confermate/firmate
+    const allB = bAll.data || [];
+    const funnel = {
+      requests: wrAll.data?.length || 0,
+      bookings: allB.length,
+      confirmed: allB.filter((b: any) => ["signed", "active", "completed"].includes(b.status)).length,
+      cancelled: allB.filter((b: any) => b.status === "cancelled").length,
+    };
 
     const activeVehicles = (vehicles.data || []).filter((v) => !v.is_archived);
 
@@ -82,6 +94,7 @@ const DashboardSection = () => {
       upcomingRevisions: (revisions.data as any) || [],
       recentBookings: recent.data || [],
       occupancyByMonth,
+      funnel,
     });
     setLoading(false);
   }
@@ -123,6 +136,54 @@ const DashboardSection = () => {
           value={data.unpublishedReviews.toString()}
           danger={data.unpublishedReviews > 0}
         />
+      </div>
+
+      {/* Funnel conversione: Richieste WhatsApp → Prenotazioni → Confermate */}
+      <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-1">
+          <TrendingUp size={16} className="text-[#C8A135]" />
+          <h3 className="font-bold text-sm uppercase tracking-wider">Funnel di conversione</h3>
+        </div>
+        <p className="text-[11px] text-white/40 mb-4">
+          Quante richieste WhatsApp (lead) si trasformano in prenotazioni firmate. Totali storici.
+        </p>
+        {(() => {
+          const f = data.funnel;
+          const max = Math.max(f.requests, f.bookings, 1);
+          const stages = [
+            { label: "Richieste WhatsApp", value: f.requests, color: "#25D366" },
+            { label: "Prenotazioni create", value: f.bookings, color: "#C8A135" },
+            { label: "Confermate / firmate", value: f.confirmed, color: "#3b82f6" },
+          ];
+          const convRate = f.requests > 0 ? Math.round((f.confirmed / f.requests) * 100) : null;
+          return (
+            <div className="space-y-3">
+              {stages.map((s) => (
+                <div key={s.label} className="flex items-center gap-3">
+                  <span className="w-40 text-xs text-white/70 shrink-0">{s.label}</span>
+                  <div className="flex-1 bg-white/5 rounded-full h-6 overflow-hidden">
+                    <div
+                      className="h-full rounded-full flex items-center justify-end pr-2 transition-all"
+                      style={{ width: `${Math.max((s.value / max) * 100, 8)}%`, backgroundColor: s.color }}
+                    >
+                      <span className="text-[11px] font-black text-black">{s.value}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className="flex items-center gap-4 pt-2 border-t border-white/5 text-xs">
+                {convRate != null && (
+                  <span className="text-white/70">
+                    Conversione richiesta→firmata: <strong className="text-[#C8A135]">{convRate}%</strong>
+                  </span>
+                )}
+                {f.cancelled > 0 && (
+                  <span className="text-red-400/80">{f.cancelled} annullate</span>
+                )}
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

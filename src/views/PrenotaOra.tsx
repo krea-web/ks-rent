@@ -878,6 +878,21 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
       priceEstimate: total > 0 ? total : undefined,
       pickupLabel: pickupSummaryLabel() || t.request.pickupTBD,
     });
+    // Registra la richiesta (lead) per il resoconto in admin. Fire-and-forget:
+    // non blocca l'apertura di WhatsApp anche se l'insert fallisce. NO PII.
+    void supabase.from("whatsapp_requests").insert({
+      lang,
+      vehicle_make: selectedVehicle.make,
+      vehicle_model: selectedVehicle.model,
+      group_slug: selectedVehicle.group_slug ?? null,
+      vehicle_id: selectedVehicle.id ?? null,
+      start_date: format(startDate, "yyyy-MM-dd"),
+      end_date: format(endDate, "yyyy-MM-dd"),
+      days,
+      price_estimate: total > 0 ? total : null,
+      pickup_type: pickupType,
+      pickup_location: pickupType === "custom" ? pickupLocation || null : null,
+    });
     trackBookingLead();
     window.open(url, "_blank", "noopener,noreferrer");
   };

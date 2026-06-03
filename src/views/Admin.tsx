@@ -17,6 +17,7 @@ import {
   Folder,
   LayoutDashboard,
   MessageSquare,
+  MessageCircle,
   Globe,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -28,14 +29,16 @@ import BookingModal from "@/components/admin/BookingModal";
 import DashboardSection from "@/components/admin/sections/DashboardSection";
 import ReviewsSection from "@/components/admin/sections/ReviewsSection";
 import SEOEditorSection from "@/components/admin/sections/SEOEditorSection";
+import WhatsAppRequestsSection from "@/components/admin/sections/WhatsAppRequestsSection";
 
-type Section = "dashboard" | "flotta" | "manutenzione" | "contratti" | "seo" | "recensioni";
+type Section = "dashboard" | "flotta" | "manutenzione" | "contratti" | "richieste" | "seo" | "recensioni";
 
 const sidebarItems: { title: string; icon: typeof Car; section: Section }[] = [
   { title: "Dashboard", icon: LayoutDashboard, section: "dashboard" },
   { title: "Flotta & Prezzi", icon: Car, section: "flotta" },
   { title: "Manutenzione", icon: Wrench, section: "manutenzione" },
   { title: "Noleggi & Contratti", icon: FileText, section: "contratti" },
+  { title: "Richieste WhatsApp", icon: MessageCircle, section: "richieste" },
   { title: "SEO Editor", icon: Globe, section: "seo" },
   { title: "Recensioni", icon: MessageSquare, section: "recensioni" },
 ];
@@ -293,6 +296,9 @@ const Admin = () => {
         <div className="flex-1 overflow-y-auto p-4 lg:p-8 custom-scrollbar">
           {/* DASHBOARD */}
           {section === "dashboard" && <DashboardSection />}
+
+          {/* RICHIESTE WHATSAPP */}
+          {section === "richieste" && <WhatsAppRequestsSection />}
 
           {/* SEO EDITOR */}
           {section === "seo" && <SEOEditorSection />}
