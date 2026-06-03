@@ -58,7 +58,7 @@ interface Vehicle {
 export async function getStaticPaths() {
   const [seoRes, vehRes] = await Promise.all([
     supabase.from("seo_vehicles").select("*"),
-    supabase.from("vehicles").select("*").or("is_archived.is.null,is_archived.eq.false"),
+    supabase.from("vehicles").select("id, make, model, year, fuel_type, characteristics, color, daily_rate, image_url, logo_url, available, created_at, category, rate_april, rate_may, rate_june, rate_july, rate_august, rate_september, rate_october, group_slug, is_primary_variant, gallery_urls, transparent_image_url, is_archived, units").or("is_archived.is.null,is_archived.eq.false"),
   ]);
 
   if (seoRes.error) console.warn("[getStaticPaths flotta] seo_vehicles:", seoRes.error.message);

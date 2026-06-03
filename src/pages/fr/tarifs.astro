@@ -31,7 +31,7 @@ interface SeoVehicleRow {
 const [vehRes, seoRes] = await Promise.all([
   supabase
     .from("vehicles")
-    .select("*")
+    .select("id, make, model, year, fuel_type, characteristics, color, daily_rate, image_url, logo_url, available, created_at, category, rate_april, rate_may, rate_june, rate_july, rate_august, rate_september, rate_october, group_slug, is_primary_variant, gallery_urls, transparent_image_url, is_archived, units")
     .or("is_archived.is.null,is_archived.eq.false")
     .order("category"),
   supabase.from("seo_vehicles").select("group_slug, title"),
