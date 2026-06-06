@@ -877,22 +877,34 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
       days,
       priceEstimate: total > 0 ? total : undefined,
       pickupLabel: pickupSummaryLabel() || t.request.pickupTBD,
+      pickupTime: pickupTime || undefined,
     });
-    // Registra la richiesta (lead) per il resoconto in admin. Fire-and-forget:
-    // non blocca l'apertura di WhatsApp anche se l'insert fallisce. NO PII.
-    void supabase.from("whatsapp_requests").insert({
-      lang,
-      vehicle_make: selectedVehicle.make,
-      vehicle_model: selectedVehicle.model,
-      group_slug: selectedVehicle.group_slug ?? null,
-      vehicle_id: selectedVehicle.id ?? null,
-      start_date: format(startDate, "yyyy-MM-dd"),
-      end_date: format(endDate, "yyyy-MM-dd"),
-      days,
-      price_estimate: total > 0 ? total : null,
-      pickup_type: pickupType,
-      pickup_location: pickupType === "custom" ? pickupLocation || null : null,
-    });
+    // Registra la richiesta (lead) per il resoconto in admin. NO PII.
+    // IMPORTANTE: il query builder di postgrest-js è "lazy" — la richiesta HTTP parte
+    // SOLO quando si chiama .then()/await. Un semplice `void ...insert()` NON la invia
+    // (bug che lasciava la tabella a 0 righe). Chiamiamo .then() per farla partire,
+    // ignorando l'esito così da non bloccare l'apertura di WhatsApp.
+    supabase
+      .from("whatsapp_requests")
+      .insert({
+        lang,
+        vehicle_make: selectedVehicle.make,
+        vehicle_model: selectedVehicle.model,
+        group_slug: selectedVehicle.group_slug ?? null,
+        vehicle_id: selectedVehicle.id ?? null,
+        start_date: format(startDate, "yyyy-MM-dd"),
+        end_date: format(endDate, "yyyy-MM-dd"),
+        days,
+        price_estimate: total > 0 ? total : null,
+        pickup_type: pickupType,
+        pickup_location: pickupType === "custom" ? pickupLocation || null : null,
+        pickup_time: pickupTime || null,
+        dropoff_time: dropoffTime || null,
+      })
+      .then(
+        () => {},
+        () => {},
+      );
     trackBookingLead();
     window.open(url, "_blank", "noopener,noreferrer");
   };

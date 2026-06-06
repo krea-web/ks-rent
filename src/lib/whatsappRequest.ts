@@ -19,6 +19,8 @@ export interface WhatsAppRequestParams {
   priceEstimate?: number;
   /** Es. "Ritiro in sede (Porto Isola Bianca)" oppure "Consegna a: Hotel Cala di Volpe" */
   pickupLabel?: string;
+  /** Orario di ritiro/riconsegna (slot, es. "10:30"). Vuoto → riga omessa */
+  pickupTime?: string;
 }
 
 type Template = (p: WhatsAppRequestParams) => string;
@@ -32,6 +34,7 @@ const TEMPLATES: Record<Locale, Template> = {
     `📅 ${p.startLabel} → ${p.endLabel} (${p.days} ${p.days === 1 ? "giorno" : "giorni"})\n` +
     (p.priceEstimate ? `💰 Stima indicativa: ~€${p.priceEstimate} (da confermare)\n` : "") +
     (p.pickupLabel ? `📍 ${p.pickupLabel}\n` : "") +
+    (p.pickupTime ? `🕐 Orario ritiro/riconsegna: ${p.pickupTime}\n` : "") +
     `\nPotete confermarmi disponibilità, kasko/franchigia ed eventuale costo di consegna? Grazie!`,
   en: (p) =>
     `Hello KS Rent! 👋 I'd like to request a vehicle:\n` +
@@ -39,6 +42,7 @@ const TEMPLATES: Record<Locale, Template> = {
     `📅 ${p.startLabel} → ${p.endLabel} (${p.days} ${p.days === 1 ? "day" : "days"})\n` +
     (p.priceEstimate ? `💰 Rough estimate: ~€${p.priceEstimate} (to be confirmed)\n` : "") +
     (p.pickupLabel ? `📍 ${p.pickupLabel}\n` : "") +
+    (p.pickupTime ? `🕐 Pick-up/return time: ${p.pickupTime}\n` : "") +
     `\nCould you confirm availability, insurance/excess and any delivery cost? Thank you!`,
   de: (p) =>
     `Hallo KS Rent! 👋 Ich möchte ein Fahrzeug anfragen:\n` +
@@ -46,6 +50,7 @@ const TEMPLATES: Record<Locale, Template> = {
     `📅 ${p.startLabel} → ${p.endLabel} (${p.days} ${p.days === 1 ? "Tag" : "Tage"})\n` +
     (p.priceEstimate ? `💰 Ungefähre Schätzung: ~€${p.priceEstimate} (zu bestätigen)\n` : "") +
     (p.pickupLabel ? `📍 ${p.pickupLabel}\n` : "") +
+    (p.pickupTime ? `🕐 Abhol-/Rückgabezeit: ${p.pickupTime}\n` : "") +
     `\nKönnen Sie Verfügbarkeit, Kasko/Selbstbeteiligung und mögliche Lieferkosten bestätigen? Danke!`,
   fr: (p) =>
     `Bonjour KS Rent ! 👋 Je souhaiterais demander un véhicule :\n` +
@@ -53,6 +58,7 @@ const TEMPLATES: Record<Locale, Template> = {
     `📅 ${p.startLabel} → ${p.endLabel} (${p.days} ${p.days === 1 ? "jour" : "jours"})\n` +
     (p.priceEstimate ? `💰 Estimation indicative : ~€${p.priceEstimate} (à confirmer)\n` : "") +
     (p.pickupLabel ? `📍 ${p.pickupLabel}\n` : "") +
+    (p.pickupTime ? `🕐 Heure de prise en charge/retour : ${p.pickupTime}\n` : "") +
     `\nPouvez-vous confirmer la disponibilité, l'assurance/franchise et un éventuel coût de livraison ? Merci !`,
 };
 

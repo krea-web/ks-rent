@@ -29,6 +29,8 @@ interface WhatsAppRequest {
   price_estimate: number | null;
   pickup_type: string | null;
   pickup_location: string | null;
+  pickup_time: string | null;
+  dropoff_time: string | null;
   status: "nuova" | "gestita" | "archiviata";
 }
 
@@ -210,6 +212,7 @@ const WhatsAppRequestsSection = () => {
                       : r.pickup_type === "sede"
                         ? "Ritiro in sede"
                         : "Da concordare"}
+                    {r.pickup_time ? ` · ${r.pickup_time}` : ""}
                   </span>
                 </div>
                 <div className="col-span-2 flex items-center gap-2">
