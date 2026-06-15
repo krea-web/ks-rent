@@ -6,6 +6,33 @@
 import { it } from "./it";
 
 export const fr: typeof it = {
+  // ───── COOKIE CONSENT ─────
+  cookie: {
+    bannerTitle: "Nous respectons votre vie privée",
+    bannerText:
+      "Nous utilisons des cookies techniques nécessaires et, avec votre consentement, des cookies analytiques et marketing pour améliorer le site et mesurer les campagnes. Vous pouvez accepter, refuser ou choisir lesquels activer.",
+    acceptAll: "Tout accepter",
+    rejectAll: "Tout refuser",
+    customize: "Personnaliser",
+    save: "Enregistrer les préférences",
+    prefTitle: "Préférences cookies",
+    prefIntro:
+      "Gérez vos préférences par catégorie. Les cookies nécessaires sont toujours actifs car indispensables au fonctionnement du site.",
+    necessaryTitle: "Nécessaires",
+    necessaryDesc:
+      "Indispensables au fonctionnement du site (mémoire du consentement, préférences d'interface). Ils ne requièrent pas de consentement.",
+    alwaysOn: "Toujours actifs",
+    analyticsTitle: "Analytiques",
+    analyticsDesc:
+      "Google Analytics 4 : nous aide à comprendre comment le site est utilisé, sous forme agrégée, pour l'améliorer.",
+    marketingTitle: "Marketing",
+    marketingDesc:
+      "Google Ads : mesure l'efficacité des campagnes publicitaires et les conversions.",
+    morePrivacy: "Politique de Confidentialité",
+    moreCookie: "Politique des Cookies",
+    close: "Fermer",
+  },
+
   // ───── NAVBAR ─────
   nav: {
     home: "Accueil",
@@ -65,6 +92,7 @@ export const fr: typeof it = {
     legalAddress: "Viale Isola Bianca 38, 07026 Olbia (SS), Italie",
     privacyPolicy: "Politique de Confidentialité",
     cookiePolicy: "Politique des Cookies",
+    cookiePreferences: "Préférences cookies",
     termsConditions: "Conditions Générales",
     withdrawalRights: "Droit de Rétractation",
     supplierInfo: "Informations Fournisseur",

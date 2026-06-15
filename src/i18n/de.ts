@@ -6,6 +6,33 @@
 import { it } from "./it";
 
 export const de: typeof it = {
+  // ───── COOKIE CONSENT ─────
+  cookie: {
+    bannerTitle: "Wir respektieren Ihre Privatsphäre",
+    bannerText:
+      "Wir verwenden notwendige technische Cookies und – mit Ihrer Einwilligung – Analyse- und Marketing-Cookies, um die Website zu verbessern und Kampagnen zu messen. Sie können akzeptieren, ablehnen oder auswählen, welche aktiviert werden.",
+    acceptAll: "Alle akzeptieren",
+    rejectAll: "Alle ablehnen",
+    customize: "Anpassen",
+    save: "Einstellungen speichern",
+    prefTitle: "Cookie-Einstellungen",
+    prefIntro:
+      "Verwalten Sie Ihre Einstellungen nach Kategorie. Notwendige Cookies sind immer aktiv, da sie für den Betrieb der Website unerlässlich sind.",
+    necessaryTitle: "Notwendig",
+    necessaryDesc:
+      "Unerlässlich für den Betrieb der Website (Einwilligungsspeicher, Oberflächeneinstellungen). Sie erfordern keine Einwilligung.",
+    alwaysOn: "Immer aktiv",
+    analyticsTitle: "Analyse",
+    analyticsDesc:
+      "Google Analytics 4: hilft uns zu verstehen, wie die Website in aggregierter Form genutzt wird, um sie zu verbessern.",
+    marketingTitle: "Marketing",
+    marketingDesc:
+      "Google Ads: misst die Wirksamkeit von Werbekampagnen und Conversions.",
+    morePrivacy: "Datenschutzerklärung",
+    moreCookie: "Cookie-Richtlinie",
+    close: "Schließen",
+  },
+
   // ───── NAVBAR ─────
   nav: {
     home: "Startseite",
@@ -65,6 +92,7 @@ export const de: typeof it = {
     legalAddress: "Viale Isola Bianca 38, 07026 Olbia (SS)",
     privacyPolicy: "Datenschutzerklärung",
     cookiePolicy: "Cookie-Richtlinie",
+    cookiePreferences: "Cookie-Einstellungen",
     termsConditions: "AGB",
     withdrawalRights: "Widerrufsrecht",
     supplierInfo: "Anbieterinformationen",

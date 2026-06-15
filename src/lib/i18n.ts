@@ -61,6 +61,8 @@ const PATH_MAP_FULL: Record<string, Record<Locale, string>> = {
   "/termini-e-condizioni":                         { it: "/termini-e-condizioni",                            en: "/terms-conditions",                       de: "/agb",                                    fr: "/conditions-generales" },
   "/diritto-recesso":                              { it: "/diritto-recesso",                                 en: "/withdrawal-rights",                      de: "/widerrufsrecht",                         fr: "/droit-de-retractation" },
   "/informativa-fornitore":                        { it: "/informativa-fornitore",                           en: "/supplier-info",                          de: "/anbieterinformationen",                  fr: "/informations-fournisseur" },
+  "/privacy-policy":                               { it: "/privacy-policy",                                  en: "/privacy-policy",                         de: "/datenschutz",                            fr: "/politique-de-confidentialite" },
+  "/cookie-policy":                                { it: "/cookie-policy",                                   en: "/cookie-policy",                          de: "/cookie-richtlinie",                      fr: "/politique-cookies" },
 };
 
 /** Path-prefix per `/flotta/[slug]` -> `/en/fleet/[slug]`, ecc. */

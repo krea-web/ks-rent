@@ -114,7 +114,7 @@ docs/PAGES-CHECKLIST.md                   # tracker UX/SEO per rotta
 | **Maps** | `@react-google-maps/api` (island `client:visible`) |
 | **Deploy** | Vercel (static + redirect 301 + security headers + CSP in `vercel.json`) |
 | **Analytics** | GA4 `G-1JL353W8QW` + Google Ads tag `AW-18006357660` |
-| **Privacy** | iubenda (Privacy + Cookie) |
+| **Privacy** | **Self-hosted** (iubenda RIMOSSO, giugno 2026): cookie banner proprio `src/components/CookieConsent.tsx` + **Google Consent Mode v2** (denied default); Privacy Policy + Cookie Policy interne via `LegalPageContent.astro` (`pageType` `privacy`/`cookie`, 4 lingue). Mappa Google in click-to-load. |
 
 ### Componenti SEO chiave (da ESTENDERE, non riscrivere)
 - [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) — hub unico `<title>`, meta, canonical, **hreflang auto**, OG/Twitter, JSON-LD (LocalBusiness statico + `aggregateRating` dinamico + `breadcrumbs` auto-`BreadcrumbList` + FAQ globale opzionale + array custom). Skip-nav a11y.
@@ -251,7 +251,7 @@ Vedi [SEO-MASTER-PLAN.md](SEO-MASTER-PLAN.md) §1. Indirizzo principale (NAP) **
 - **Footer**: link Tripadvisor + WhatsApp + 3 link legali.
 - **Calendario prenotazione (2026-05-26)**: migrato `ui/calendar.tsx` da API react-day-picker v8 → v9; convertito a **range picker singolo inline** (data inizio + fine nella stessa finestra) con celle 44px touch. Flusso submit invariato.
 - **Fix hydration** (#418/#423/#425): `GoogleReviews` date formattate in modo deterministico (no `toLocaleDateString`).
-- **CSP refinement** (`vercel.json`): `connect-src` con iubenda + Google Ads/doubleclick/googlesyndication.
+- **CSP refinement** (`vercel.json`): `connect-src`/`script-src`/`frame-src` con Google Ads/doubleclick/googlesyndication. (Domini iubenda RIMOSSI dal CSP a giugno 2026 con la dismissione di iubenda.)
 - **Broken internal links**: audit (`audit-buttons.mjs`) + fix 22 link verso slug localizzati corretti.
 - **Backlink/directory**: `sameAs` esteso (carmappa, empresite, aziendeeasy).
 - **Email reminder ritiro**: workflow **N8N + Gmail** (vedi Nota Critica #14).

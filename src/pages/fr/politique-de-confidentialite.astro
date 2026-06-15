@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Politique de Confidentialité | KS Rent Sardinia"
+  description="Politique de confidentialité de KS Rent S.R.L. Olbia : responsable, données traitées, finalités et bases juridiques, sous-traitants, transferts hors UE, conservation et droits RGPD."
+  canonical="https://www.ksrentsardinia.com/fr/politique-de-confidentialite"
+  jsonLd={[buildBreadcrumb("Politique de Confidentialité", "/fr/politique-de-confidentialite")]}
+>
+  <LegalPageContent pageType="privacy" lang="fr" />
+</BaseLayout>

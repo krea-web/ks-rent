@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Cookie Policy | KS Rent Sardinia"
+  description="KS Rent S.R.L. Olbia cookie policy: necessary, analytics (GA4) and marketing (Google Ads) cookies, full list and durations, Google Consent Mode v2 and how to manage preferences."
+  canonical="https://www.ksrentsardinia.com/en/cookie-policy"
+  jsonLd={[buildBreadcrumb("Cookie Policy", "/en/cookie-policy")]}
+>
+  <LegalPageContent pageType="cookie" lang="en" />
+</BaseLayout>

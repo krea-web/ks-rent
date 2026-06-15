@@ -52,6 +52,8 @@ const Footer = ({ lang = "it" }: FooterProps) => {
   const termsHref = localizePath("/termini-e-condizioni", lang);
   const withdrawalHref = localizePath("/diritto-recesso", lang);
   const supplierInfoHref = localizePath("/informativa-fornitore", lang);
+  const privacyHref = localizePath("/privacy-policy", lang);
+  const cookieHref = localizePath("/cookie-policy", lang);
 
   const eastDestinations = [
     { label: "San Teodoro", slug: "noleggio-auto-san-teodoro" },
@@ -428,20 +430,29 @@ const Footer = ({ lang = "it" }: FooterProps) => {
               <p>© {new Date().getFullYear()} KS Rent S.R.L.</p>
               <span className="hidden sm:inline opacity-30">•</span>
               <a
-                href="https://www.iubenda.com/privacy-policy/36489583"
-                className="iubenda-nostyle iubenda-noiframe iubenda-embed hover:text-gold transition-colors relative z-20"
+                href={privacyHref}
+                className="hover:text-gold transition-colors relative z-20"
                 title={t.footer.privacyPolicy}
               >
                 {t.footer.privacyPolicy}
               </a>
               <span className="hidden sm:inline opacity-30">•</span>
               <a
-                href="https://www.iubenda.com/privacy-policy/36489583/cookie-policy"
-                className="iubenda-nostyle iubenda-noiframe iubenda-embed hover:text-gold transition-colors relative z-20"
+                href={cookieHref}
+                className="hover:text-gold transition-colors relative z-20"
                 title={t.footer.cookiePolicy}
               >
                 {t.footer.cookiePolicy}
               </a>
+              <span className="hidden sm:inline opacity-30">•</span>
+              <button
+                type="button"
+                data-cookie-preferences
+                className="hover:text-gold transition-colors relative z-20 uppercase tracking-wider cursor-pointer"
+                title={t.footer.cookiePreferences}
+              >
+                {t.footer.cookiePreferences}
+              </button>
               <span className="hidden sm:inline opacity-30">•</span>
               <a
                 href={termsHref}

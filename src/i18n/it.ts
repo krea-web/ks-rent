@@ -7,6 +7,33 @@
  */
 
 export const it = {
+  // ───── COOKIE CONSENT ─────
+  cookie: {
+    bannerTitle: "Rispettiamo la tua privacy",
+    bannerText:
+      "Usiamo cookie tecnici necessari e, previo consenso, cookie analitici e di marketing per migliorare il sito e misurare le campagne. Puoi accettare, rifiutare o scegliere quali attivare.",
+    acceptAll: "Accetta tutto",
+    rejectAll: "Rifiuta tutto",
+    customize: "Personalizza",
+    save: "Salva preferenze",
+    prefTitle: "Preferenze cookie",
+    prefIntro:
+      "Gestisci le tue preferenze per categoria. I cookie necessari sono sempre attivi perché indispensabili al funzionamento del sito.",
+    necessaryTitle: "Necessari",
+    necessaryDesc:
+      "Indispensabili al funzionamento del sito (memoria del consenso, preferenze di interfaccia). Non richiedono consenso.",
+    alwaysOn: "Sempre attivi",
+    analyticsTitle: "Analitici",
+    analyticsDesc:
+      "Google Analytics 4: ci aiutano a capire come viene usato il sito in forma aggregata, per migliorarlo.",
+    marketingTitle: "Marketing",
+    marketingDesc:
+      "Google Ads: misurano l'efficacia delle campagne pubblicitarie e le conversioni.",
+    morePrivacy: "Privacy Policy",
+    moreCookie: "Cookie Policy",
+    close: "Chiudi",
+  },
+
   // ───── NAVBAR ─────
   nav: {
     home: "Home",
@@ -66,6 +93,7 @@ export const it = {
     legalAddress: "Viale Isola Bianca 38, 07026 Olbia (SS)",
     privacyPolicy: "Privacy Policy",
     cookiePolicy: "Cookie Policy",
+    cookiePreferences: "Preferenze cookie",
     termsConditions: "Termini e Condizioni",
     withdrawalRights: "Diritto di Recesso",
     supplierInfo: "Informativa Fornitore",

@@ -3,10 +3,20 @@ import { motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SEDE_OPERATIVA, SEDE_LEGALE, SEDE_LEGALE_MAPS_URL } from "@/lib/googleMaps";
+import type { Locale } from "@/lib/i18n";
 
 interface CompanyMapProps {
   targetLocation?: string;
+  lang?: Locale;
 }
+
+// Etichette click-to-load (la mappa NON carica cookie Google finche l'utente non clicca).
+const MAP_T: Record<Locale, { load: string; note: string }> = {
+  it: { load: "Carica la mappa", note: "Cliccando carichi Google Maps e accetti i relativi cookie." },
+  en: { load: "Load the map", note: "By clicking you load Google Maps and accept its cookies." },
+  de: { load: "Karte laden", note: "Durch Klicken laden Sie Google Maps und akzeptieren dessen Cookies." },
+  fr: { load: "Charger la carte", note: "En cliquant, vous chargez Google Maps et acceptez ses cookies." },
+};
 
 type SedeKey = "operativa" | "legale";
 
@@ -85,8 +95,10 @@ function buildDirectionsUrl(sede: SedeKey, targetLocation?: string): string {
   return `https://maps.google.com/maps?daddr=${s.lat},${s.lng}`;
 }
 
-const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
+const CompanyMap = ({ targetLocation, lang = "it" }: CompanyMapProps) => {
   const [activeSede, setActiveSede] = useState<SedeKey>("operativa");
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const mt = MAP_T[lang] ?? MAP_T.it;
 
   const embedUrl = buildEmbedUrl(activeSede, targetLocation);
   const directionsUrl = buildDirectionsUrl(activeSede, targetLocation);
@@ -121,14 +133,30 @@ const CompanyMap = ({ targetLocation }: CompanyMapProps) => {
       </div>
 
       <div className="relative rounded-[1.5rem] overflow-hidden border border-gray-200 dark:border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.05)]">
-        <iframe
-          title={displayLocation ? `Percorso da ${displayLocation}` : `Mappa ${SEDI[activeSede].label}`}
-          src={embedUrl}
-          className="w-full h-[400px]"
-          style={{ border: 0, borderRadius: "1.5rem", filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
-          loading="lazy"
-          allowFullScreen
-        />
+        {mapLoaded ? (
+          <iframe
+            title={displayLocation ? `Percorso da ${displayLocation}` : `Mappa ${SEDI[activeSede].label}`}
+            src={embedUrl}
+            className="w-full h-[400px]"
+            style={{ border: 0, borderRadius: "1.5rem", filter: "invert(90%) hue-rotate(180deg) contrast(0.9)" }}
+            loading="lazy"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setMapLoaded(true)}
+            className="w-full h-[400px] flex flex-col items-center justify-center gap-3 bg-gray-100 dark:bg-white/[0.03] hover:bg-gray-200/70 dark:hover:bg-white/[0.06] transition-colors text-center px-6"
+            aria-label={mt.load}
+          >
+            <MapPin size={32} className="text-gold" />
+            <span className="font-bold text-foreground">{SEDI[activeSede].label}</span>
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gold text-background font-bold text-sm">
+              {mt.load}
+            </span>
+            <span className="text-[11px] text-muted-foreground max-w-xs leading-relaxed">{mt.note}</span>
+          </button>
+        )}
 
         <div className="absolute bottom-4 left-4 right-4 flex flex-col sm:flex-row gap-2 z-20">
           <a

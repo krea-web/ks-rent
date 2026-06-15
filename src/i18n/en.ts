@@ -6,6 +6,33 @@
 import { it } from "./it";
 
 export const en: typeof it = {
+  // ───── COOKIE CONSENT ─────
+  cookie: {
+    bannerTitle: "We respect your privacy",
+    bannerText:
+      "We use necessary technical cookies and, with your consent, analytics and marketing cookies to improve the site and measure campaigns. You can accept, reject or choose which ones to enable.",
+    acceptAll: "Accept all",
+    rejectAll: "Reject all",
+    customize: "Customize",
+    save: "Save preferences",
+    prefTitle: "Cookie preferences",
+    prefIntro:
+      "Manage your preferences by category. Necessary cookies are always on as they are essential for the site to work.",
+    necessaryTitle: "Necessary",
+    necessaryDesc:
+      "Essential for the site to function (consent memory, interface preferences). They do not require consent.",
+    alwaysOn: "Always on",
+    analyticsTitle: "Analytics",
+    analyticsDesc:
+      "Google Analytics 4: helps us understand how the site is used in aggregate form, to improve it.",
+    marketingTitle: "Marketing",
+    marketingDesc:
+      "Google Ads: measures the effectiveness of advertising campaigns and conversions.",
+    morePrivacy: "Privacy Policy",
+    moreCookie: "Cookie Policy",
+    close: "Close",
+  },
+
   // ───── NAVBAR ─────
   nav: {
     home: "Home",
@@ -65,6 +92,7 @@ export const en: typeof it = {
     legalAddress: "Viale Isola Bianca 38, 07026 Olbia (SS), Italy",
     privacyPolicy: "Privacy Policy",
     cookiePolicy: "Cookie Policy",
+    cookiePreferences: "Cookie preferences",
     termsConditions: "Terms & Conditions",
     withdrawalRights: "Right of Withdrawal",
     supplierInfo: "Supplier Information",

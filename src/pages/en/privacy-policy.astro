@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Privacy Policy | KS Rent Sardinia"
+  description="KS Rent S.R.L. Olbia privacy policy: data controller, data collected, purposes and legal bases, processors, transfers outside the EU, retention and your GDPR rights."
+  canonical="https://www.ksrentsardinia.com/en/privacy-policy"
+  jsonLd={[buildBreadcrumb("Privacy Policy", "/en/privacy-policy")]}
+>
+  <LegalPageContent pageType="privacy" lang="en" />
+</BaseLayout>

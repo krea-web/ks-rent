@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import MobileStickyCTA from "@/components/MobileStickyCTA";
+import CookieConsent from "@/components/CookieConsent";
 
 interface Props {
   title: string;
@@ -173,17 +174,14 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     <meta name="msapplication-config" content="/browserconfig.xml" />
 
     <!-- Preconnect: solo le origini critiche per il primo render
-         (Supabase asset + Google Fonts). I preconnect Maps/iubenda sono
-         dns-prefetch perche caricati on-demand (CompanyMap client:visible
-         + iubenda widget defer). Riduce concorrenza preconnect a 4 max. -->
+         (Supabase asset + Google Fonts). Maps e dns-prefetch perche
+         caricato on-demand (CompanyMap click-to-load). Riduce concorrenza
+         preconnect a 4 max. -->
     <link rel="preconnect" href="https://zgytnkimjpoosvshfopz.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://maps.googleapis.com" />
     <link rel="dns-prefetch" href="https://maps.gstatic.com" />
-    <link rel="dns-prefetch" href="https://embeds.iubenda.com" />
-    <link rel="dns-prefetch" href="https://cdn.iubenda.com" />
-    <link rel="dns-prefetch" href="https://idb.iubenda.com" />
 
     <!-- Logo preload -->
     <link rel="preload" as="image" href={LOGO} fetchpriority="high" />
@@ -239,20 +237,33 @@ const customJsonLdList: Record<string, any>[] = jsonLd
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
 
-    <!-- Iubenda: defer per non bloccare LCP. Il widget si attiva
-         dopo il caricamento iniziale, l'utente non perde nulla a livello
-         compliance perche lo script aggiunge il banner dinamicamente. -->
-    <script
-      type="text/javascript"
-      src="https://embeds.iubenda.com/widgets/0ba8fa23-7357-47fd-827e-809c2c13c61f.js"
-      defer
-    ></script>
-
-    <!-- GA4 + Google Ads -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1JL353W8QW"></script>
+    <!-- Google Consent Mode v2: default = DENIED (UE) finche l'utente non sceglie
+         nel banner cookie self-hosted (src/components/CookieConsent.tsx). Deve girare
+         PRIMA di gtag.js. Se l'utente ha gia consentito (localStorage) parte gia granted. -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
+      (function () {
+        var analytics = false, marketing = false;
+        try {
+          var raw = localStorage.getItem("ksr-cookie-consent-v1");
+          if (raw) { var p = JSON.parse(raw); analytics = !!p.analytics; marketing = !!p.marketing; }
+        } catch (e) {}
+        gtag("consent", "default", {
+          ad_storage: marketing ? "granted" : "denied",
+          ad_user_data: marketing ? "granted" : "denied",
+          ad_personalization: marketing ? "granted" : "denied",
+          analytics_storage: analytics ? "granted" : "denied",
+          functionality_storage: "granted",
+          security_storage: "granted",
+          wait_for_update: 500
+        });
+      })();
+    </script>
+
+    <!-- GA4 + Google Ads (rispettano il Consent Mode impostato sopra) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1JL353W8QW"></script>
+    <script is:inline>
       gtag("js", new Date());
       gtag("config", "G-1JL353W8QW");
       gtag("config", "AW-18006357660");
@@ -281,7 +292,7 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     {showChrome && <WhatsAppCTA lang={currentLocale} client:idle />}
     {showChrome && !hideMobileSticky && <MobileStickyCTA lang={currentLocale} client:idle />}
 
-    <script type="text/javascript" src="https://cdn.iubenda.com/iubenda.js" defer></script>
+    <CookieConsent lang={currentLocale} client:load />
 
     {/* Auto-wrapping tabelle editoriali in container scrollabile orizzontale.
         Risolve il taglio dati su mobile/tablet per le tabelle inline di

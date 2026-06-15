@@ -417,7 +417,7 @@ const ChiSiamo = ({ lang = "it" }: ChiSiamoProps) => {
             <span className="block text-gold font-semibold tracking-[0.3em] uppercase text-xs mb-4">{t.about.locations.eyebrow}</span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold">{t.about.locations.heading}</h2>
           </motion.div>
-          <CompanyMap />
+          <CompanyMap lang={lang} />
         </div>
       </section>
 

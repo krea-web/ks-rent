@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Cookie-Richtlinie | KS Rent Sardinia"
+  description="Cookie-Richtlinie von KS Rent S.R.L. Olbia: notwendige, Analyse- (GA4) und Marketing-Cookies (Google Ads), Liste und Laufzeiten, Google Consent Mode v2 und Verwaltung der Einstellungen."
+  canonical="https://www.ksrentsardinia.com/de/cookie-richtlinie"
+  jsonLd={[buildBreadcrumb("Cookie-Richtlinie", "/de/cookie-richtlinie")]}
+>
+  <LegalPageContent pageType="cookie" lang="de" />
+</BaseLayout>

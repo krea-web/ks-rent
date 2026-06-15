@@ -281,7 +281,7 @@ const canonicalUrl = `https://www.ksrentsardinia.com/${lang}/${localized.slug}`;
           </h2>
           <p class="text-foreground/60 font-light mt-4 max-w-xl mx-auto leading-relaxed">{mapIntro}</p>
         </div>
-        <CompanyMap client:visible targetLocation={localized.title} />
+        <CompanyMap client:visible targetLocation={localized.title} lang={lang} />
       </div>
     </section>
 

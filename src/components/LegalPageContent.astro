@@ -15,7 +15,7 @@
  */
 
 type Lang = "it" | "en" | "de" | "fr";
-type PageType = "terms" | "withdrawal" | "supplier-info";
+type PageType = "terms" | "withdrawal" | "supplier-info" | "privacy" | "cookie";
 
 interface Props {
   pageType: PageType;
@@ -88,7 +88,7 @@ const TRANSLATIONS: Record<PageType, Record<Lang, { title: string; html: string 
   <li>Sede legale: Viale Aldo Moro 367, 07026 Olbia (SS)</li>
 </ul>
 
-<p><em>Per la Privacy Policy e la Cookie Policy fare riferimento ai documenti pubblicati su Iubenda, accessibili dal footer del sito.</em></p>
+<p><em>Per la Privacy Policy e la Cookie Policy consultare le rispettive pagine: <a href="/privacy-policy">Privacy Policy</a> e <a href="/cookie-policy">Cookie Policy</a>.</em></p>
       `,
     },
     en: {
@@ -152,7 +152,7 @@ const TRANSLATIONS: Record<PageType, Record<Lang, { title: string; html: string 
   <li>Registered office: Viale Aldo Moro 367, 07026 Olbia (SS), Italy</li>
 </ul>
 
-<p><em>For Privacy Policy and Cookie Policy please refer to the documents published on Iubenda, accessible from the site footer.</em></p>
+<p><em>For the Privacy Policy and Cookie Policy see the respective pages: <a href="/en/privacy-policy">Privacy Policy</a> and <a href="/en/cookie-policy">Cookie Policy</a>.</em></p>
       `,
     },
     de: {
@@ -216,7 +216,7 @@ const TRANSLATIONS: Record<PageType, Record<Lang, { title: string; html: string 
   <li>Sitz: Viale Aldo Moro 367, 07026 Olbia (SS), Italien</li>
 </ul>
 
-<p><em>Fuer die Datenschutzrichtlinie und die Cookie-Richtlinie verweisen wir auf die bei Iubenda veroeffentlichten Dokumente, zugaenglich ueber die Fusszeile der Website.</em></p>
+<p><em>Fuer die Datenschutzerklaerung und die Cookie-Richtlinie siehe die jeweiligen Seiten: <a href="/de/datenschutz">Datenschutzerklaerung</a> und <a href="/de/cookie-richtlinie">Cookie-Richtlinie</a>.</em></p>
       `,
     },
     fr: {
@@ -280,7 +280,7 @@ const TRANSLATIONS: Record<PageType, Record<Lang, { title: string; html: string 
   <li>Siège social : Viale Aldo Moro 367, 07026 Olbia (SS), Italie</li>
 </ul>
 
-<p><em>Pour la Politique de Confidentialité et la Politique des Cookies, veuillez vous référer aux documents publiés sur Iubenda, accessibles depuis le pied de page du site.</em></p>
+<p><em>Pour la Politique de Confidentialité et la Politique des Cookies, consultez les pages respectives : <a href="/fr/politique-de-confidentialite">Politique de Confidentialité</a> et <a href="/fr/politique-cookies">Politique des Cookies</a>.</em></p>
       `,
     },
   },
@@ -612,7 +612,7 @@ Signature (uniquement si envoyé sur papier) : __________</p>
 <p>L'intera flotta è coperta da polizza RCA obbligatoria. Le polizze includono inoltre garanzie kasko, furto e incendio, assistenza stradale 24/7 e copertura per atti vandalici. I dati delle compagnie assicuratrici sono disponibili su richiesta scritta.</p>
 
 <h2>8. Trattamento dei dati personali</h2>
-<p>Il trattamento dei dati personali è regolato dalla nostra <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Privacy Policy</a> pubblicata su Iubenda, conforme al Regolamento UE 2016/679 (GDPR) e al D.Lgs. 196/2003 e successive modifiche. Per esercitare i diritti GDPR (accesso, rettifica, cancellazione, opposizione) contattare il titolare del trattamento ai recapiti indicati al punto 2.</p>
+<p>Il trattamento dei dati personali è regolato dalla nostra <a href="/privacy-policy">Privacy Policy</a>, conforme al Regolamento UE 2016/679 (GDPR) e al D.Lgs. 196/2003 e successive modifiche. Per esercitare i diritti GDPR (accesso, rettifica, cancellazione, opposizione) contattare il titolare del trattamento ai recapiti indicati al punto 2.</p>
 
 <h2>9. Foro competente</h2>
 <p>Per le controversie con consumatori si applica il <strong>Foro del consumatore</strong> ai sensi dell'art. 33 D.Lgs. 206/2005. Per controversie con clienti business è competente in via esclusiva il Foro di Sassari.</p>
@@ -671,7 +671,7 @@ Signature (uniquement si envoyé sur papier) : __________</p>
 <p>The entire fleet is covered by compulsory third-party liability insurance. Policies also include kasko (collision damage waiver), theft and fire cover, 24/7 roadside assistance and vandalism coverage. Insurer details are available on written request.</p>
 
 <h2>8. Personal data processing</h2>
-<p>Personal data processing is regulated by our <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Privacy Policy</a> published on Iubenda, compliant with EU Regulation 2016/679 (GDPR) and Italian Legislative Decree 196/2003 and subsequent amendments. To exercise GDPR rights (access, rectification, erasure, objection) contact the data controller at the contacts indicated in point 2.</p>
+<p>Personal data processing is regulated by our <a href="/en/privacy-policy">Privacy Policy</a>, compliant with EU Regulation 2016/679 (GDPR) and Italian Legislative Decree 196/2003 and subsequent amendments. To exercise GDPR rights (access, rectification, erasure, objection) contact the data controller at the contacts indicated in point 2.</p>
 
 <h2>9. Competent court</h2>
 <p>For consumer disputes, the <strong>Consumer's Forum</strong> applies under Italian Article 33 of Legislative Decree 206/2005. For business client disputes, the Court of Sassari has exclusive jurisdiction.</p>
@@ -730,7 +730,7 @@ Signature (uniquement si envoyé sur papier) : __________</p>
 <p>Die gesamte Flotte ist durch obligatorische Haftpflichtversicherung abgedeckt. Die Policen enthalten zudem Kasko, Diebstahl- und Brandschutz, 24/7-Pannenhilfe und Vandalismus-Abdeckung. Versichererdaten sind auf schriftliche Anfrage verfuegbar.</p>
 
 <h2>8. Verarbeitung personenbezogener Daten</h2>
-<p>Die Verarbeitung personenbezogener Daten ist durch unsere <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Datenschutzrichtlinie</a> auf Iubenda geregelt, in Uebereinstimmung mit der EU-Verordnung 2016/679 (DSGVO) und dem italienischen Gesetzesdekret 196/2003. Zur Ausuebung der DSGVO-Rechte (Zugang, Berichtigung, Loeschung, Widerspruch) kontaktieren Sie den Datenverarbeitungsverantwortlichen unter den in Punkt 2 angegebenen Kontakten.</p>
+<p>Die Verarbeitung personenbezogener Daten ist durch unsere <a href="/de/datenschutz">Datenschutzerklaerung</a> geregelt, in Uebereinstimmung mit der EU-Verordnung 2016/679 (DSGVO) und dem italienischen Gesetzesdekret 196/2003. Zur Ausuebung der DSGVO-Rechte (Zugang, Berichtigung, Loeschung, Widerspruch) kontaktieren Sie den Datenverarbeitungsverantwortlichen unter den in Punkt 2 angegebenen Kontakten.</p>
 
 <h2>9. Zustaendiges Gericht</h2>
 <p>Fuer Verbraucherstreitigkeiten gilt das <strong>Verbraucherforum</strong> gemaess Art. 33 italienisches Gesetzesdekret 206/2005. Fuer Streitigkeiten mit Geschaeftskunden ist ausschliesslich das Gericht von Sassari zustaendig.</p>
@@ -789,10 +789,458 @@ Signature (uniquement si envoyé sur papier) : __________</p>
 <p>Toute la flotte est couverte par une assurance responsabilité civile obligatoire. Les polices incluent également kasko, vol et incendie, assistance routière 24/7 et couverture vandalisme. Les données des compagnies d'assurance sont disponibles sur demande écrite.</p>
 
 <h2>8. Traitement des données personnelles</h2>
-<p>Le traitement des données personnelles est régi par notre <a href="https://www.iubenda.com/privacy-policy/36489583" target="_blank" rel="noopener">Politique de Confidentialité</a> publiée sur Iubenda, conforme au Règlement UE 2016/679 (RGPD) et au Décret législatif italien 196/2003. Pour exercer les droits RGPD (accès, rectification, effacement, opposition), contactez le responsable du traitement aux coordonnées indiquées au point 2.</p>
+<p>Le traitement des données personnelles est régi par notre <a href="/fr/politique-de-confidentialite">Politique de Confidentialité</a>, conforme au Règlement UE 2016/679 (RGPD) et au Décret législatif italien 196/2003. Pour exercer les droits RGPD (accès, rectification, effacement, opposition), contactez le responsable du traitement aux coordonnées indiquées au point 2.</p>
 
 <h2>9. Tribunal compétent</h2>
 <p>Pour les litiges avec consommateurs, le <strong>Forum du consommateur</strong> s'applique conformément à l'art. 33 du Décret législatif italien 206/2005. Pour les litiges avec clients business, le Tribunal de Sassari a compétence exclusive.</p>
+      `,
+    },
+  },
+
+  // ─── PRIVACY POLICY ───
+  privacy: {
+    it: {
+      title: "Privacy Policy",
+      html: `
+<p><strong>Ultimo aggiornamento:</strong> 15 giugno 2026</p>
+<p>La presente informativa descrive come <strong>KS Rent S.R.L.</strong> tratta i dati personali degli utenti del sito <strong>www.ksrentsardinia.com</strong>, ai sensi del Regolamento UE 2016/679 ("GDPR") e del D.Lgs. 196/2003 e s.m.i. ("Codice Privacy").</p>
+
+<h2>1. Titolare del trattamento</h2>
+<p><strong>KS Rent S.R.L.</strong> — Viale Aldo Moro 367, 07026 Olbia (SS), Italia. P.IVA IT03028900904 — REA SS-224046.<br>Email: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> — PEC: <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> — Tel./WhatsApp: <a href="tel:+393446107071">+39 344 6107071</a>.</p>
+
+<h2>2. Quali dati raccogliamo</h2>
+<ul>
+  <li><strong>Dati di richiesta noleggio</strong>: quando usi il modulo di richiesta, il sito prepara un messaggio WhatsApp con il veicolo, le date e il luogo di ritiro scelti, che invii tu stesso al nostro numero. La conversazione (nome, recapito, eventuali dettagli) avviene quindi su WhatsApp. Sul nostro sistema registriamo, in forma non identificativa, solo i dati tecnici della richiesta (veicolo, periodo, luogo, orario) a fini statistici.</li>
+  <li><strong>Dati di contatto</strong>: se ci scrivi via WhatsApp, email o ci chiami, trattiamo i dati che ci fornisci per risponderti.</li>
+  <li><strong>Newsletter</strong>: se ti iscrivi, trattiamo il tuo indirizzo email.</li>
+  <li><strong>Dati del contratto di noleggio</strong>: in fase di stipula (in sede o da remoto) raccogliamo i dati anagrafici, della patente e del documento d'identità necessari a concludere ed eseguire il contratto.</li>
+  <li><strong>Dati di navigazione e cookie</strong>: vedi la <a href="/cookie-policy">Cookie Policy</a>.</li>
+</ul>
+
+<h2>3. Finalità e basi giuridiche</h2>
+<table>
+<thead><tr><th>Finalità</th><th>Base giuridica</th></tr></thead>
+<tbody>
+<tr><td>Riscontro alle richieste di noleggio e di contatto</td><td>Misure precontrattuali ed esecuzione del contratto (art. 6.1.b GDPR)</td></tr>
+<tr><td>Conclusione ed esecuzione del contratto di noleggio</td><td>Esecuzione del contratto (art. 6.1.b) e obblighi di legge (art. 6.1.c)</td></tr>
+<tr><td>Invio newsletter</td><td>Consenso (art. 6.1.a), revocabile in ogni momento</td></tr>
+<tr><td>Cookie analitici e di marketing</td><td>Consenso (art. 6.1.a), tramite banner</td></tr>
+<tr><td>Adempimenti fiscali, contabili e di legge</td><td>Obbligo legale (art. 6.1.c)</td></tr>
+<tr><td>Accertamento, esercizio o difesa di un diritto in giudizio</td><td>Legittimo interesse (art. 6.1.f)</td></tr>
+</tbody>
+</table>
+
+<h2>4. Modalità del trattamento</h2>
+<p>I dati sono trattati con strumenti elettronici e, ove necessario, cartacei, adottando misure tecniche e organizzative adeguate a garantirne sicurezza e riservatezza, e sono accessibili solo a personale autorizzato e ai responsabili esterni indicati al punto 5.</p>
+
+<h2>5. Destinatari e responsabili del trattamento</h2>
+<p>Per erogare i servizi ci avvaliamo di fornitori che trattano dati per nostro conto come responsabili (art. 28 GDPR) o come autonomi titolari per i propri servizi:</p>
+<ul>
+  <li><strong>Supabase</strong> (hosting database e archiviazione dati del sito);</li>
+  <li><strong>Vercel</strong> (hosting e distribuzione del sito);</li>
+  <li><strong>Google</strong> (Google Analytics, Google Ads, Google Maps, Google Fonts — vedi Cookie Policy);</li>
+  <li><strong>Meta Platforms</strong> (comunicazioni via WhatsApp);</li>
+  <li><strong>n8n</strong> (automazioni interne, es. email di promemoria);</li>
+  <li><strong>Telegram</strong> (strumento interno per la generazione dei contratti).</li>
+</ul>
+<p>I dati non sono diffusi né venduti a terzi.</p>
+
+<h2>6. Trasferimenti extra-UE</h2>
+<p>Alcuni fornitori (es. Google, Vercel, Meta) possono trattare dati anche al di fuori dello Spazio Economico Europeo, in particolare negli Stati Uniti. In tali casi il trasferimento avviene sulla base di decisioni di adeguatezza o di Clausole Contrattuali Standard approvate dalla Commissione Europea, con garanzie adeguate ai sensi degli artt. 44 ss. GDPR.</p>
+
+<h2>7. Periodo di conservazione</h2>
+<p>I dati sono conservati per il tempo necessario alle finalità per cui sono raccolti: i dati contrattuali e fiscali per il termine di legge (di norma 10 anni); i dati di contatto e di richiesta per il tempo necessario a gestire la relazione; l'email della newsletter fino alla revoca del consenso; i dati dei cookie secondo le durate indicate nella Cookie Policy.</p>
+
+<h2>8. I tuoi diritti</h2>
+<p>In qualità di interessato puoi esercitare in ogni momento i diritti previsti dagli artt. 15-22 GDPR: accesso, rettifica, cancellazione ("diritto all'oblio"), limitazione, portabilità, opposizione, nonché revoca del consenso (senza pregiudicare la liceità del trattamento basato sul consenso prestato prima della revoca). Hai inoltre diritto di proporre reclamo al <strong>Garante per la protezione dei dati personali</strong> (www.garanteprivacy.it).</p>
+
+<h2>9. Come esercitare i diritti</h2>
+<p>Per esercitare i tuoi diritti scrivi a <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> o a <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a>. Risponderemo senza ingiustificato ritardo e comunque entro i termini di legge.</p>
+
+<h2>10. Cookie</h2>
+<p>Il sito utilizza cookie e tecnologie simili descritti in dettaglio nella <a href="/cookie-policy">Cookie Policy</a>, dove puoi anche gestire le tue preferenze.</p>
+
+<h2>11. Modifiche</h2>
+<p>Possiamo aggiornare la presente informativa; la versione aggiornata sarà pubblicata su questa pagina con la relativa data.</p>
+      `,
+    },
+    en: {
+      title: "Privacy Policy",
+      html: `
+<p><strong>Last updated:</strong> 15 June 2026</p>
+<p>This policy describes how <strong>KS Rent S.R.L.</strong> processes the personal data of users of <strong>www.ksrentsardinia.com</strong>, pursuant to EU Regulation 2016/679 ("GDPR") and Italian Legislative Decree 196/2003 as amended.</p>
+
+<h2>1. Data controller</h2>
+<p><strong>KS Rent S.R.L.</strong> — Viale Aldo Moro 367, 07026 Olbia (SS), Italy. VAT IT03028900904 — REA SS-224046.<br>Email: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> — PEC: <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> — Phone/WhatsApp: <a href="tel:+393446107071">+39 344 6107071</a>.</p>
+
+<h2>2. What data we collect</h2>
+<ul>
+  <li><strong>Rental request data</strong>: when you use the request form, the site prepares a WhatsApp message with the chosen vehicle, dates and pick-up location, which you send to our number yourself. The conversation (name, contact, any details) therefore takes place on WhatsApp. On our system we only store, in non-identifying form, the technical data of the request (vehicle, period, location, time) for statistical purposes.</li>
+  <li><strong>Contact data</strong>: if you write to us via WhatsApp, email or call us, we process the data you provide in order to reply.</li>
+  <li><strong>Newsletter</strong>: if you subscribe, we process your email address.</li>
+  <li><strong>Rental contract data</strong>: at the time of signing (on site or remotely) we collect the personal, driving licence and ID data needed to conclude and perform the contract.</li>
+  <li><strong>Browsing data and cookies</strong>: see the <a href="/en/cookie-policy">Cookie Policy</a>.</li>
+</ul>
+
+<h2>3. Purposes and legal bases</h2>
+<table>
+<thead><tr><th>Purpose</th><th>Legal basis</th></tr></thead>
+<tbody>
+<tr><td>Replying to rental and contact requests</td><td>Pre-contractual measures and performance of the contract (Art. 6.1.b GDPR)</td></tr>
+<tr><td>Conclusion and performance of the rental contract</td><td>Performance of the contract (Art. 6.1.b) and legal obligations (Art. 6.1.c)</td></tr>
+<tr><td>Sending the newsletter</td><td>Consent (Art. 6.1.a), revocable at any time</td></tr>
+<tr><td>Analytics and marketing cookies</td><td>Consent (Art. 6.1.a), via banner</td></tr>
+<tr><td>Tax, accounting and legal compliance</td><td>Legal obligation (Art. 6.1.c)</td></tr>
+<tr><td>Establishing, exercising or defending a legal claim</td><td>Legitimate interest (Art. 6.1.f)</td></tr>
+</tbody>
+</table>
+
+<h2>4. Processing methods</h2>
+<p>Data is processed using electronic and, where necessary, paper tools, adopting appropriate technical and organisational measures to ensure security and confidentiality, and is accessible only to authorised staff and the external processors listed in point 5.</p>
+
+<h2>5. Recipients and processors</h2>
+<p>To provide our services we rely on suppliers that process data on our behalf as processors (Art. 28 GDPR) or as independent controllers for their own services:</p>
+<ul>
+  <li><strong>Supabase</strong> (database hosting and site data storage);</li>
+  <li><strong>Vercel</strong> (site hosting and delivery);</li>
+  <li><strong>Google</strong> (Google Analytics, Google Ads, Google Maps, Google Fonts — see Cookie Policy);</li>
+  <li><strong>Meta Platforms</strong> (communications via WhatsApp);</li>
+  <li><strong>n8n</strong> (internal automations, e.g. reminder emails);</li>
+  <li><strong>Telegram</strong> (internal tool for contract generation).</li>
+</ul>
+<p>Data is neither disclosed nor sold to third parties.</p>
+
+<h2>6. Transfers outside the EU</h2>
+<p>Some providers (e.g. Google, Vercel, Meta) may also process data outside the European Economic Area, in particular in the United States. In such cases the transfer takes place on the basis of adequacy decisions or Standard Contractual Clauses approved by the European Commission, with appropriate safeguards pursuant to Art. 44 ff. GDPR.</p>
+
+<h2>7. Retention period</h2>
+<p>Data is kept for as long as necessary for the purposes for which it was collected: contractual and tax data for the legal term (generally 10 years); contact and request data for as long as needed to manage the relationship; the newsletter email until consent is withdrawn; cookie data according to the durations indicated in the Cookie Policy.</p>
+
+<h2>8. Your rights</h2>
+<p>As a data subject you may exercise at any time the rights under Art. 15-22 GDPR: access, rectification, erasure ("right to be forgotten"), restriction, portability, objection, as well as withdrawal of consent (without affecting the lawfulness of processing based on consent given before withdrawal). You also have the right to lodge a complaint with the Italian Data Protection Authority (<strong>Garante per la protezione dei dati personali</strong>, www.garanteprivacy.it).</p>
+
+<h2>9. How to exercise your rights</h2>
+<p>To exercise your rights write to <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> or <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a>. We will reply without undue delay and in any case within the legal terms.</p>
+
+<h2>10. Cookies</h2>
+<p>The site uses cookies and similar technologies described in detail in the <a href="/en/cookie-policy">Cookie Policy</a>, where you can also manage your preferences.</p>
+
+<h2>11. Changes</h2>
+<p>We may update this policy; the updated version will be published on this page with the relevant date.</p>
+      `,
+    },
+    de: {
+      title: "Datenschutzerklärung",
+      html: `
+<p><strong>Letzte Aktualisierung:</strong> 15. Juni 2026</p>
+<p>Diese Erklärung beschreibt, wie <strong>KS Rent S.R.L.</strong> die personenbezogenen Daten der Nutzer der Website <strong>www.ksrentsardinia.com</strong> verarbeitet, gemäß der EU-Verordnung 2016/679 ("DSGVO") und dem italienischen Gesetzesdekret 196/2003 in der jeweils geltenden Fassung.</p>
+
+<h2>1. Verantwortlicher</h2>
+<p><strong>KS Rent S.R.L.</strong> — Viale Aldo Moro 367, 07026 Olbia (SS), Italien. USt-IdNr. IT03028900904 — REA SS-224046.<br>E-Mail: <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> — PEC: <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> — Tel./WhatsApp: <a href="tel:+393446107071">+39 344 6107071</a>.</p>
+
+<h2>2. Welche Daten wir erheben</h2>
+<ul>
+  <li><strong>Daten der Mietanfrage</strong>: Wenn Sie das Anfrageformular verwenden, erstellt die Website eine WhatsApp-Nachricht mit dem gewählten Fahrzeug, den Daten und dem Abholort, die Sie selbst an unsere Nummer senden. Die Konversation (Name, Kontakt, eventuelle Details) findet somit über WhatsApp statt. In unserem System speichern wir nur in nicht identifizierender Form die technischen Daten der Anfrage (Fahrzeug, Zeitraum, Ort, Uhrzeit) zu statistischen Zwecken.</li>
+  <li><strong>Kontaktdaten</strong>: Wenn Sie uns über WhatsApp, E-Mail oder telefonisch kontaktieren, verarbeiten wir die von Ihnen angegebenen Daten, um zu antworten.</li>
+  <li><strong>Newsletter</strong>: Wenn Sie sich anmelden, verarbeiten wir Ihre E-Mail-Adresse.</li>
+  <li><strong>Daten des Mietvertrags</strong>: Bei Vertragsabschluss (vor Ort oder aus der Ferne) erheben wir die für Abschluss und Durchführung des Vertrags erforderlichen Personen-, Führerschein- und Ausweisdaten.</li>
+  <li><strong>Navigations- und Cookie-Daten</strong>: siehe <a href="/de/cookie-richtlinie">Cookie-Richtlinie</a>.</li>
+</ul>
+
+<h2>3. Zwecke und Rechtsgrundlagen</h2>
+<table>
+<thead><tr><th>Zweck</th><th>Rechtsgrundlage</th></tr></thead>
+<tbody>
+<tr><td>Beantwortung von Miet- und Kontaktanfragen</td><td>Vorvertragliche Maßnahmen und Vertragserfüllung (Art. 6.1.b DSGVO)</td></tr>
+<tr><td>Abschluss und Durchführung des Mietvertrags</td><td>Vertragserfüllung (Art. 6.1.b) und gesetzliche Pflichten (Art. 6.1.c)</td></tr>
+<tr><td>Versand des Newsletters</td><td>Einwilligung (Art. 6.1.a), jederzeit widerrufbar</td></tr>
+<tr><td>Analyse- und Marketing-Cookies</td><td>Einwilligung (Art. 6.1.a), über Banner</td></tr>
+<tr><td>Steuerliche, buchhalterische und gesetzliche Pflichten</td><td>Rechtliche Verpflichtung (Art. 6.1.c)</td></tr>
+<tr><td>Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen</td><td>Berechtigtes Interesse (Art. 6.1.f)</td></tr>
+</tbody>
+</table>
+
+<h2>4. Art der Verarbeitung</h2>
+<p>Die Daten werden mit elektronischen und, soweit erforderlich, papiergebundenen Mitteln verarbeitet, unter Einsatz angemessener technischer und organisatorischer Maßnahmen zur Gewährleistung von Sicherheit und Vertraulichkeit, und sind nur autorisiertem Personal sowie den unter Punkt 5 genannten Auftragsverarbeitern zugänglich.</p>
+
+<h2>5. Empfänger und Auftragsverarbeiter</h2>
+<p>Zur Erbringung unserer Dienste setzen wir Anbieter ein, die Daten in unserem Auftrag als Auftragsverarbeiter (Art. 28 DSGVO) oder als eigenständige Verantwortliche für ihre eigenen Dienste verarbeiten:</p>
+<ul>
+  <li><strong>Supabase</strong> (Datenbank-Hosting und Speicherung der Website-Daten);</li>
+  <li><strong>Vercel</strong> (Hosting und Auslieferung der Website);</li>
+  <li><strong>Google</strong> (Google Analytics, Google Ads, Google Maps, Google Fonts — siehe Cookie-Richtlinie);</li>
+  <li><strong>Meta Platforms</strong> (Kommunikation über WhatsApp);</li>
+  <li><strong>n8n</strong> (interne Automatisierungen, z. B. Erinnerungs-E-Mails);</li>
+  <li><strong>Telegram</strong> (internes Tool zur Vertragserstellung).</li>
+</ul>
+<p>Die Daten werden weder verbreitet noch an Dritte verkauft.</p>
+
+<h2>6. Übermittlungen außerhalb der EU</h2>
+<p>Einige Anbieter (z. B. Google, Vercel, Meta) können Daten auch außerhalb des Europäischen Wirtschaftsraums verarbeiten, insbesondere in den USA. In diesen Fällen erfolgt die Übermittlung auf Grundlage von Angemessenheitsbeschlüssen oder von der Europäischen Kommission genehmigten Standardvertragsklauseln, mit geeigneten Garantien gemäß Art. 44 ff. DSGVO.</p>
+
+<h2>7. Speicherdauer</h2>
+<p>Die Daten werden so lange aufbewahrt, wie es für die Zwecke erforderlich ist, für die sie erhoben wurden: Vertrags- und Steuerdaten für die gesetzliche Frist (in der Regel 10 Jahre); Kontakt- und Anfragedaten für die zur Verwaltung der Beziehung erforderliche Zeit; die Newsletter-E-Mail bis zum Widerruf der Einwilligung; Cookie-Daten gemäß den in der Cookie-Richtlinie angegebenen Fristen.</p>
+
+<h2>8. Ihre Rechte</h2>
+<p>Als betroffene Person können Sie jederzeit die Rechte gemäß Art. 15-22 DSGVO ausüben: Auskunft, Berichtigung, Löschung ("Recht auf Vergessenwerden"), Einschränkung, Datenübertragbarkeit, Widerspruch sowie Widerruf der Einwilligung (ohne die Rechtmäßigkeit der vor dem Widerruf erfolgten Verarbeitung zu berühren). Sie haben außerdem das Recht, Beschwerde bei der italienischen Datenschutzbehörde (<strong>Garante per la protezione dei dati personali</strong>, www.garanteprivacy.it) einzulegen.</p>
+
+<h2>9. Ausübung der Rechte</h2>
+<p>Zur Ausübung Ihrer Rechte schreiben Sie an <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> oder <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a>. Wir antworten ohne unangemessene Verzögerung und in jedem Fall innerhalb der gesetzlichen Fristen.</p>
+
+<h2>10. Cookies</h2>
+<p>Die Website verwendet Cookies und ähnliche Technologien, die in der <a href="/de/cookie-richtlinie">Cookie-Richtlinie</a> ausführlich beschrieben sind, wo Sie auch Ihre Einstellungen verwalten können.</p>
+
+<h2>11. Änderungen</h2>
+<p>Wir können diese Erklärung aktualisieren; die aktualisierte Version wird mit dem entsprechenden Datum auf dieser Seite veröffentlicht.</p>
+      `,
+    },
+    fr: {
+      title: "Politique de Confidentialité",
+      html: `
+<p><strong>Dernière mise à jour :</strong> 15 juin 2026</p>
+<p>La présente politique décrit comment <strong>KS Rent S.R.L.</strong> traite les données personnelles des utilisateurs du site <strong>www.ksrentsardinia.com</strong>, conformément au Règlement UE 2016/679 (« RGPD ») et au Décret législatif italien 196/2003 tel que modifié.</p>
+
+<h2>1. Responsable du traitement</h2>
+<p><strong>KS Rent S.R.L.</strong> — Viale Aldo Moro 367, 07026 Olbia (SS), Italie. TVA IT03028900904 — REA SS-224046.<br>E-mail : <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> — PEC : <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a> — Tél./WhatsApp : <a href="tel:+393446107071">+39 344 6107071</a>.</p>
+
+<h2>2. Quelles données nous collectons</h2>
+<ul>
+  <li><strong>Données de demande de location</strong> : lorsque vous utilisez le formulaire de demande, le site prépare un message WhatsApp avec le véhicule, les dates et le lieu de prise en charge choisis, que vous envoyez vous-même à notre numéro. La conversation (nom, contact, éventuels détails) a donc lieu sur WhatsApp. Sur notre système, nous enregistrons uniquement, sous forme non identifiante, les données techniques de la demande (véhicule, période, lieu, horaire) à des fins statistiques.</li>
+  <li><strong>Données de contact</strong> : si vous nous écrivez via WhatsApp, e-mail ou nous appelez, nous traitons les données que vous fournissez afin de vous répondre.</li>
+  <li><strong>Newsletter</strong> : si vous vous inscrivez, nous traitons votre adresse e-mail.</li>
+  <li><strong>Données du contrat de location</strong> : lors de la signature (sur place ou à distance), nous collectons les données d'identité, de permis de conduire et de pièce d'identité nécessaires à la conclusion et à l'exécution du contrat.</li>
+  <li><strong>Données de navigation et cookies</strong> : voir la <a href="/fr/politique-cookies">Politique des Cookies</a>.</li>
+</ul>
+
+<h2>3. Finalités et bases juridiques</h2>
+<table>
+<thead><tr><th>Finalité</th><th>Base juridique</th></tr></thead>
+<tbody>
+<tr><td>Réponse aux demandes de location et de contact</td><td>Mesures précontractuelles et exécution du contrat (art. 6.1.b RGPD)</td></tr>
+<tr><td>Conclusion et exécution du contrat de location</td><td>Exécution du contrat (art. 6.1.b) et obligations légales (art. 6.1.c)</td></tr>
+<tr><td>Envoi de la newsletter</td><td>Consentement (art. 6.1.a), révocable à tout moment</td></tr>
+<tr><td>Cookies analytiques et marketing</td><td>Consentement (art. 6.1.a), via la bannière</td></tr>
+<tr><td>Obligations fiscales, comptables et légales</td><td>Obligation légale (art. 6.1.c)</td></tr>
+<tr><td>Constatation, exercice ou défense d'un droit en justice</td><td>Intérêt légitime (art. 6.1.f)</td></tr>
+</tbody>
+</table>
+
+<h2>4. Modalités du traitement</h2>
+<p>Les données sont traitées au moyen d'outils électroniques et, si nécessaire, papier, en adoptant des mesures techniques et organisationnelles appropriées pour garantir leur sécurité et leur confidentialité, et ne sont accessibles qu'au personnel autorisé et aux sous-traitants indiqués au point 5.</p>
+
+<h2>5. Destinataires et sous-traitants</h2>
+<p>Pour fournir nos services, nous faisons appel à des prestataires qui traitent les données pour notre compte en tant que sous-traitants (art. 28 RGPD) ou en tant que responsables autonomes pour leurs propres services :</p>
+<ul>
+  <li><strong>Supabase</strong> (hébergement de la base de données et stockage des données du site) ;</li>
+  <li><strong>Vercel</strong> (hébergement et diffusion du site) ;</li>
+  <li><strong>Google</strong> (Google Analytics, Google Ads, Google Maps, Google Fonts — voir la Politique des Cookies) ;</li>
+  <li><strong>Meta Platforms</strong> (communications via WhatsApp) ;</li>
+  <li><strong>n8n</strong> (automatisations internes, ex. e-mails de rappel) ;</li>
+  <li><strong>Telegram</strong> (outil interne de génération des contrats).</li>
+</ul>
+<p>Les données ne sont ni diffusées ni vendues à des tiers.</p>
+
+<h2>6. Transferts hors UE</h2>
+<p>Certains prestataires (ex. Google, Vercel, Meta) peuvent également traiter des données en dehors de l'Espace économique européen, notamment aux États-Unis. Dans ces cas, le transfert s'effectue sur la base de décisions d'adéquation ou de Clauses Contractuelles Types approuvées par la Commission européenne, avec des garanties appropriées au sens des art. 44 et s. RGPD.</p>
+
+<h2>7. Durée de conservation</h2>
+<p>Les données sont conservées le temps nécessaire aux finalités pour lesquelles elles ont été collectées : les données contractuelles et fiscales pour le délai légal (en règle générale 10 ans) ; les données de contact et de demande le temps nécessaire à la gestion de la relation ; l'e-mail de la newsletter jusqu'au retrait du consentement ; les données des cookies selon les durées indiquées dans la Politique des Cookies.</p>
+
+<h2>8. Vos droits</h2>
+<p>En tant que personne concernée, vous pouvez à tout moment exercer les droits prévus aux art. 15-22 RGPD : accès, rectification, effacement (« droit à l'oubli »), limitation, portabilité, opposition, ainsi que le retrait du consentement (sans porter atteinte à la licéité du traitement fondé sur le consentement donné avant le retrait). Vous avez également le droit d'introduire une réclamation auprès de l'autorité italienne de protection des données (<strong>Garante per la protezione dei dati personali</strong>, www.garanteprivacy.it).</p>
+
+<h2>9. Comment exercer vos droits</h2>
+<p>Pour exercer vos droits, écrivez à <a href="mailto:ksrentsrl@gmail.com">ksrentsrl@gmail.com</a> ou à <a href="mailto:ks.rent.srl@pec.it">ks.rent.srl@pec.it</a>. Nous répondrons sans retard injustifié et en tout cas dans les délais légaux.</p>
+
+<h2>10. Cookies</h2>
+<p>Le site utilise des cookies et des technologies similaires décrits en détail dans la <a href="/fr/politique-cookies">Politique des Cookies</a>, où vous pouvez également gérer vos préférences.</p>
+
+<h2>11. Modifications</h2>
+<p>Nous pouvons mettre à jour la présente politique ; la version mise à jour sera publiée sur cette page avec la date correspondante.</p>
+      `,
+    },
+  },
+
+  // ─── COOKIE POLICY ───
+  cookie: {
+    it: {
+      title: "Cookie Policy",
+      html: `
+<p><strong>Ultimo aggiornamento:</strong> 15 giugno 2026</p>
+<p>La presente Cookie Policy spiega cosa sono i cookie, quali utilizza il sito <strong>www.ksrentsardinia.com</strong> e come gestire le preferenze. Per il trattamento dei dati personali vedi la <a href="/privacy-policy">Privacy Policy</a>.</p>
+
+<h2>1. Cosa sono i cookie</h2>
+<p>I cookie sono piccoli file di testo che i siti salvano sul dispositivo dell'utente per memorizzare informazioni (es. preferenze, statistiche). Si distinguono in cookie tecnici/necessari (non richiedono consenso) e cookie non necessari — analitici e di marketing — che richiedono il consenso dell'utente.</p>
+
+<h2>2. Categorie di cookie utilizzati</h2>
+<ul>
+  <li><strong>Necessari</strong> — indispensabili al funzionamento del sito. Includono la memoria della scelta sui cookie e le preferenze d'interfaccia. Attivi sempre, non richiedono consenso.</li>
+  <li><strong>Analitici</strong> — Google Analytics 4: ci aiutano a capire in forma aggregata come viene usato il sito. Attivati solo con il consenso.</li>
+  <li><strong>Marketing</strong> — Google Ads: misurano l'efficacia delle campagne pubblicitarie e le conversioni. Attivati solo con il consenso.</li>
+  <li><strong>Funzionali di terze parti</strong> — Google Maps (caricata solo quando l'utente clicca per visualizzare la mappa) e Google Fonts (caricamento dei font).</li>
+</ul>
+<p>Per Google Analytics e Google Ads adottiamo <strong>Google Consent Mode v2</strong>: in assenza di consenso questi strumenti operano in modalità "negata", senza salvare cookie di profilazione.</p>
+
+<h2>3. Elenco dei cookie</h2>
+<table>
+<thead><tr><th>Cookie</th><th>Fornitore</th><th>Finalità</th><th>Durata</th><th>Categoria</th></tr></thead>
+<tbody>
+<tr><td>ksr-cookie-consent-v1</td><td>ksrentsardinia.com</td><td>Memorizza la scelta sui cookie</td><td>Persistente (localStorage)</td><td>Necessario</td></tr>
+<tr><td>sidebar:state</td><td>ksrentsardinia.com</td><td>Stato apertura interfaccia</td><td>7 giorni</td><td>Necessario</td></tr>
+<tr><td>_ga, _ga_*</td><td>Google</td><td>Statistiche di utilizzo (GA4)</td><td>fino a 24 mesi</td><td>Analitico</td></tr>
+<tr><td>_gid</td><td>Google</td><td>Statistiche di utilizzo</td><td>24 ore</td><td>Analitico</td></tr>
+<tr><td>_gcl_*</td><td>Google</td><td>Misurazione conversioni (Ads)</td><td>fino a 90 giorni</td><td>Marketing</td></tr>
+<tr><td>NID e cookie Google Maps</td><td>Google</td><td>Funzionamento mappe (solo su interazione)</td><td>variabile</td><td>Funzionale di terzi</td></tr>
+</tbody>
+</table>
+<p>Le durate sono indicative e possono variare in base alle policy di Google.</p>
+
+<h2>4. Come gestire il consenso</h2>
+<p>Al primo accesso un banner ti permette di <strong>accettare</strong>, <strong>rifiutare</strong> o <strong>personalizzare</strong> i cookie non necessari. Puoi modificare la scelta in qualsiasi momento cliccando su <strong>"Preferenze cookie"</strong> nel footer del sito. Puoi inoltre gestire o eliminare i cookie dalle impostazioni del tuo browser.</p>
+
+<h2>5. Cookie di terze parti</h2>
+<p>I cookie di terze parti sono gestiti dai rispettivi fornitori secondo le loro informative:</p>
+<ul>
+  <li>Google (Analytics, Ads, Maps, Fonts): <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+</ul>
+
+<h2>6. Modifiche</h2>
+<p>Questa Cookie Policy può essere aggiornata; la versione corrente è sempre disponibile su questa pagina.</p>
+      `,
+    },
+    en: {
+      title: "Cookie Policy",
+      html: `
+<p><strong>Last updated:</strong> 15 June 2026</p>
+<p>This Cookie Policy explains what cookies are, which ones <strong>www.ksrentsardinia.com</strong> uses and how to manage your preferences. For the processing of personal data see the <a href="/en/privacy-policy">Privacy Policy</a>.</p>
+
+<h2>1. What cookies are</h2>
+<p>Cookies are small text files that websites save on the user's device to store information (e.g. preferences, statistics). They are divided into technical/necessary cookies (no consent required) and non-necessary cookies — analytics and marketing — which require the user's consent.</p>
+
+<h2>2. Categories of cookies used</h2>
+<ul>
+  <li><strong>Necessary</strong> — essential for the site to work. They include the memory of your cookie choice and interface preferences. Always on, no consent required.</li>
+  <li><strong>Analytics</strong> — Google Analytics 4: helps us understand, in aggregate form, how the site is used. Enabled only with consent.</li>
+  <li><strong>Marketing</strong> — Google Ads: measures the effectiveness of advertising campaigns and conversions. Enabled only with consent.</li>
+  <li><strong>Third-party functional</strong> — Google Maps (loaded only when the user clicks to view the map) and Google Fonts (font loading).</li>
+</ul>
+<p>For Google Analytics and Google Ads we use <strong>Google Consent Mode v2</strong>: without consent these tools operate in "denied" mode, without storing profiling cookies.</p>
+
+<h2>3. List of cookies</h2>
+<table>
+<thead><tr><th>Cookie</th><th>Provider</th><th>Purpose</th><th>Duration</th><th>Category</th></tr></thead>
+<tbody>
+<tr><td>ksr-cookie-consent-v1</td><td>ksrentsardinia.com</td><td>Stores the cookie choice</td><td>Persistent (localStorage)</td><td>Necessary</td></tr>
+<tr><td>sidebar:state</td><td>ksrentsardinia.com</td><td>Interface open/closed state</td><td>7 days</td><td>Necessary</td></tr>
+<tr><td>_ga, _ga_*</td><td>Google</td><td>Usage statistics (GA4)</td><td>up to 24 months</td><td>Analytics</td></tr>
+<tr><td>_gid</td><td>Google</td><td>Usage statistics</td><td>24 hours</td><td>Analytics</td></tr>
+<tr><td>_gcl_*</td><td>Google</td><td>Conversion measurement (Ads)</td><td>up to 90 days</td><td>Marketing</td></tr>
+<tr><td>NID and Google Maps cookies</td><td>Google</td><td>Map functionality (only on interaction)</td><td>variable</td><td>Third-party functional</td></tr>
+</tbody>
+</table>
+<p>Durations are indicative and may vary according to Google's policies.</p>
+
+<h2>4. How to manage consent</h2>
+<p>On your first visit a banner lets you <strong>accept</strong>, <strong>reject</strong> or <strong>customise</strong> non-necessary cookies. You can change your choice at any time by clicking <strong>"Cookie preferences"</strong> in the site footer. You can also manage or delete cookies from your browser settings.</p>
+
+<h2>5. Third-party cookies</h2>
+<p>Third-party cookies are managed by the respective providers according to their policies:</p>
+<ul>
+  <li>Google (Analytics, Ads, Maps, Fonts): <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+</ul>
+
+<h2>6. Changes</h2>
+<p>This Cookie Policy may be updated; the current version is always available on this page.</p>
+      `,
+    },
+    de: {
+      title: "Cookie-Richtlinie",
+      html: `
+<p><strong>Letzte Aktualisierung:</strong> 15. Juni 2026</p>
+<p>Diese Cookie-Richtlinie erklärt, was Cookies sind, welche die Website <strong>www.ksrentsardinia.com</strong> verwendet und wie Sie Ihre Einstellungen verwalten. Zur Verarbeitung personenbezogener Daten siehe die <a href="/de/datenschutz">Datenschutzerklärung</a>.</p>
+
+<h2>1. Was Cookies sind</h2>
+<p>Cookies sind kleine Textdateien, die Websites auf dem Gerät des Nutzers speichern, um Informationen abzulegen (z. B. Einstellungen, Statistiken). Man unterscheidet technische/notwendige Cookies (keine Einwilligung erforderlich) und nicht notwendige Cookies — Analyse und Marketing —, die die Einwilligung des Nutzers erfordern.</p>
+
+<h2>2. Verwendete Cookie-Kategorien</h2>
+<ul>
+  <li><strong>Notwendig</strong> — unerlässlich für den Betrieb der Website. Dazu gehören die Speicherung Ihrer Cookie-Wahl und die Oberflächeneinstellungen. Immer aktiv, keine Einwilligung erforderlich.</li>
+  <li><strong>Analyse</strong> — Google Analytics 4: hilft uns, in aggregierter Form zu verstehen, wie die Website genutzt wird. Nur mit Einwilligung aktiviert.</li>
+  <li><strong>Marketing</strong> — Google Ads: misst die Wirksamkeit von Werbekampagnen und Conversions. Nur mit Einwilligung aktiviert.</li>
+  <li><strong>Funktionale Dritter</strong> — Google Maps (wird nur geladen, wenn der Nutzer auf die Karte klickt) und Google Fonts (Laden der Schriftarten).</li>
+</ul>
+<p>Für Google Analytics und Google Ads verwenden wir <strong>Google Consent Mode v2</strong>: ohne Einwilligung arbeiten diese Tools im Modus "abgelehnt", ohne Profiling-Cookies zu speichern.</p>
+
+<h2>3. Liste der Cookies</h2>
+<table>
+<thead><tr><th>Cookie</th><th>Anbieter</th><th>Zweck</th><th>Dauer</th><th>Kategorie</th></tr></thead>
+<tbody>
+<tr><td>ksr-cookie-consent-v1</td><td>ksrentsardinia.com</td><td>Speichert die Cookie-Wahl</td><td>Dauerhaft (localStorage)</td><td>Notwendig</td></tr>
+<tr><td>sidebar:state</td><td>ksrentsardinia.com</td><td>Status der Oberfläche</td><td>7 Tage</td><td>Notwendig</td></tr>
+<tr><td>_ga, _ga_*</td><td>Google</td><td>Nutzungsstatistiken (GA4)</td><td>bis zu 24 Monate</td><td>Analyse</td></tr>
+<tr><td>_gid</td><td>Google</td><td>Nutzungsstatistiken</td><td>24 Stunden</td><td>Analyse</td></tr>
+<tr><td>_gcl_*</td><td>Google</td><td>Conversion-Messung (Ads)</td><td>bis zu 90 Tage</td><td>Marketing</td></tr>
+<tr><td>NID und Google-Maps-Cookies</td><td>Google</td><td>Kartenfunktion (nur bei Interaktion)</td><td>variabel</td><td>Funktional Dritter</td></tr>
+</tbody>
+</table>
+<p>Die Laufzeiten sind Richtwerte und können je nach den Richtlinien von Google variieren.</p>
+
+<h2>4. Verwaltung der Einwilligung</h2>
+<p>Bei Ihrem ersten Besuch können Sie über ein Banner nicht notwendige Cookies <strong>akzeptieren</strong>, <strong>ablehnen</strong> oder <strong>anpassen</strong>. Sie können Ihre Wahl jederzeit über <strong>"Cookie-Einstellungen"</strong> in der Fußzeile der Website ändern. Sie können Cookies auch in den Einstellungen Ihres Browsers verwalten oder löschen.</p>
+
+<h2>5. Cookies von Drittanbietern</h2>
+<p>Cookies von Drittanbietern werden von den jeweiligen Anbietern gemäß ihren Richtlinien verwaltet:</p>
+<ul>
+  <li>Google (Analytics, Ads, Maps, Fonts): <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+</ul>
+
+<h2>6. Änderungen</h2>
+<p>Diese Cookie-Richtlinie kann aktualisiert werden; die aktuelle Version ist stets auf dieser Seite verfügbar.</p>
+      `,
+    },
+    fr: {
+      title: "Politique des Cookies",
+      html: `
+<p><strong>Dernière mise à jour :</strong> 15 juin 2026</p>
+<p>La présente Politique des Cookies explique ce que sont les cookies, lesquels le site <strong>www.ksrentsardinia.com</strong> utilise et comment gérer vos préférences. Pour le traitement des données personnelles, voir la <a href="/fr/politique-de-confidentialite">Politique de Confidentialité</a>.</p>
+
+<h2>1. Qu'est-ce qu'un cookie</h2>
+<p>Les cookies sont de petits fichiers texte que les sites enregistrent sur l'appareil de l'utilisateur pour stocker des informations (ex. préférences, statistiques). On distingue les cookies techniques/nécessaires (sans consentement) et les cookies non nécessaires — analytiques et marketing — qui requièrent le consentement de l'utilisateur.</p>
+
+<h2>2. Catégories de cookies utilisés</h2>
+<ul>
+  <li><strong>Nécessaires</strong> — indispensables au fonctionnement du site. Ils incluent la mémoire de votre choix sur les cookies et les préférences d'interface. Toujours actifs, sans consentement.</li>
+  <li><strong>Analytiques</strong> — Google Analytics 4 : nous aide à comprendre, sous forme agrégée, comment le site est utilisé. Activés uniquement avec consentement.</li>
+  <li><strong>Marketing</strong> — Google Ads : mesure l'efficacité des campagnes publicitaires et les conversions. Activés uniquement avec consentement.</li>
+  <li><strong>Fonctionnels de tiers</strong> — Google Maps (chargée uniquement lorsque l'utilisateur clique pour afficher la carte) et Google Fonts (chargement des polices).</li>
+</ul>
+<p>Pour Google Analytics et Google Ads, nous utilisons le <strong>Google Consent Mode v2</strong> : sans consentement, ces outils fonctionnent en mode « refusé », sans enregistrer de cookies de profilage.</p>
+
+<h2>3. Liste des cookies</h2>
+<table>
+<thead><tr><th>Cookie</th><th>Fournisseur</th><th>Finalité</th><th>Durée</th><th>Catégorie</th></tr></thead>
+<tbody>
+<tr><td>ksr-cookie-consent-v1</td><td>ksrentsardinia.com</td><td>Mémorise le choix sur les cookies</td><td>Persistant (localStorage)</td><td>Nécessaire</td></tr>
+<tr><td>sidebar:state</td><td>ksrentsardinia.com</td><td>État de l'interface</td><td>7 jours</td><td>Nécessaire</td></tr>
+<tr><td>_ga, _ga_*</td><td>Google</td><td>Statistiques d'utilisation (GA4)</td><td>jusqu'à 24 mois</td><td>Analytique</td></tr>
+<tr><td>_gid</td><td>Google</td><td>Statistiques d'utilisation</td><td>24 heures</td><td>Analytique</td></tr>
+<tr><td>_gcl_*</td><td>Google</td><td>Mesure des conversions (Ads)</td><td>jusqu'à 90 jours</td><td>Marketing</td></tr>
+<tr><td>NID et cookies Google Maps</td><td>Google</td><td>Fonctionnement des cartes (uniquement sur interaction)</td><td>variable</td><td>Fonctionnel de tiers</td></tr>
+</tbody>
+</table>
+<p>Les durées sont indicatives et peuvent varier selon les politiques de Google.</p>
+
+<h2>4. Comment gérer le consentement</h2>
+<p>Lors de votre première visite, une bannière vous permet d'<strong>accepter</strong>, de <strong>refuser</strong> ou de <strong>personnaliser</strong> les cookies non nécessaires. Vous pouvez modifier votre choix à tout moment en cliquant sur <strong>« Préférences cookies »</strong> dans le pied de page du site. Vous pouvez également gérer ou supprimer les cookies depuis les paramètres de votre navigateur.</p>
+
+<h2>5. Cookies de tiers</h2>
+<p>Les cookies de tiers sont gérés par les fournisseurs respectifs selon leurs politiques :</p>
+<ul>
+  <li>Google (Analytics, Ads, Maps, Fonts) : <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+</ul>
+
+<h2>6. Modifications</h2>
+<p>La présente Politique des Cookies peut être mise à jour ; la version actuelle est toujours disponible sur cette page.</p>
       `,
     },
   },
@@ -805,13 +1253,22 @@ const lastUpdatedLabels: Record<Lang, string> = {
   de: "Veroeffentlicht am 17. Mai 2026 — KS Rent S.R.L.",
   fr: "Publié le 17 mai 2026 — KS Rent S.R.L.",
 };
+// Privacy/Cookie pubblicate piu tardi: data aggiornata accurata.
+const privacyCookieLabels: Record<Lang, string> = {
+  it: "Ultimo aggiornamento: 15 giugno 2026 — KS Rent S.R.L.",
+  en: "Last updated 15 June 2026 — KS Rent S.R.L.",
+  de: "Zuletzt aktualisiert am 15. Juni 2026 — KS Rent S.R.L.",
+  fr: "Dernière mise à jour le 15 juin 2026 — KS Rent S.R.L.",
+};
+const headerLabel =
+  pageType === "privacy" || pageType === "cookie" ? privacyCookieLabels[lang] : lastUpdatedLabels[lang];
 ---
 
 <main class="bg-background min-h-screen pt-28 md:pt-36 pb-20">
   <div class="container mx-auto px-4 max-w-4xl">
     <header class="mb-10 md:mb-14 text-center">
       <span class="inline-block text-gold font-semibold tracking-[0.3em] uppercase text-[11px] md:text-xs mb-4">
-        {lastUpdatedLabels[lang]}
+        {headerLabel}
       </span>
       <h1 class="font-serif text-3xl md:text-5xl text-foreground font-medium leading-tight">
         {T.title}

@@ -492,12 +492,3 @@
 .nav-mega-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(212, 175, 55, 0.6);
 }
-
-/* Iubenda widget: push above mobile sticky CTA */
-@media (max-width: 1023px) {
-  #iubenda-cs-banner,
-  .iubenda-cs-container,
-  [id^="iubenda"] {
-    bottom: calc(5rem + env(safe-area-inset-bottom)) !important;
-  }
-}

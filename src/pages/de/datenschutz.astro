@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LegalPageContent from "@/components/LegalPageContent.astro";
+import { buildBreadcrumb } from "@/lib/jsonLd";
+---
+<BaseLayout
+  title="Datenschutzerklärung | KS Rent Sardinia"
+  description="Datenschutzerklärung von KS Rent S.R.L. Olbia: Verantwortlicher, erhobene Daten, Zwecke und Rechtsgrundlagen, Auftragsverarbeiter, Drittlandübermittlungen, Speicherdauer und DSGVO-Rechte."
+  canonical="https://www.ksrentsardinia.com/de/datenschutz"
+  jsonLd={[buildBreadcrumb("Datenschutzerklärung", "/de/datenschutz")]}
+>
+  <LegalPageContent pageType="privacy" lang="de" />
+</BaseLayout>
