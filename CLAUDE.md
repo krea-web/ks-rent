@@ -113,7 +113,7 @@ docs/PAGES-CHECKLIST.md                   # tracker UX/SEO per rotta
 | **UI** | shadcn/ui (Radix) + `sonner` (toast) + `vaul` (drawer) + `embla-carousel` + `cmdk` |
 | **Maps** | `@react-google-maps/api` (island `client:visible`) |
 | **Deploy** | Vercel (static + redirect 301 + security headers + CSP in `vercel.json`) |
-| **Analytics** | GA4 `G-1JL353W8QW` + Google Ads tag `AW-18006357660` |
+| **Analytics** | GA4 `G-1JL353W8QW` + **2 account Google Ads** `AW-18006357660` + `AW-18233044880` (convivono — entrambi `gtag("config", ...)` nello stesso blocco in `BaseLayout.astro`, una sola libreria `gtag.js`). Aggiungere un nuovo account = una riga `config` in più, **NON** un secondo `<script src>`. Tutti rispettano il Consent Mode v2. |
 | **Privacy** | **Self-hosted** (iubenda RIMOSSO, giugno 2026): cookie banner proprio `src/components/CookieConsent.tsx` + **Google Consent Mode v2** (denied default); Privacy Policy + Cookie Policy interne via `LegalPageContent.astro` (`pageType` `privacy`/`cookie`, 4 lingue). Mappa Google in click-to-load. |
 
 ### Componenti SEO chiave (da ESTENDERE, non riscrivere)
