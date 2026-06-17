@@ -546,6 +546,8 @@ function localizeHref(itPath: string, lang: Locale): string {
 }
 
 /** Sostituisce placeholder {link:key:label} negli HTML body con anchor. */
+import DOMPurify from "isomorphic-dompurify";
+
 function renderHtml(html: string, lang: Locale): string {
   const linkMap: Record<string, string> = {
     porto: "/noleggio-auto-porto-olbia",
@@ -555,11 +557,12 @@ function renderHtml(html: string, lang: Locale): string {
     "baja-sardinia": "/noleggio-auto-baja-sardinia",
     "san-teodoro": "/noleggio-auto-san-teodoro",
   };
-  return html.replace(/\{link:([^:]+):([^}]+)\}/g, (_m, key: string, label: string) => {
+  const out = html.replace(/\{link:([^:]+):([^}]+)\}/g, (_m, key: string, label: string) => {
     const itPath = linkMap[key] ?? `/${key}`;
     const href = localizeHref(itPath, lang);
     return `<a href="${href}" class="text-gold underline hover:text-gray-900 dark:hover:text-white transition-colors">${label}</a>`;
   });
+  return DOMPurify.sanitize(out, { ADD_ATTR: ["target", "rel"] });
 }
 
 const NoleggioAeroportoOlbia = ({ lang = "it" }: Props) => {

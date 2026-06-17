@@ -312,11 +312,14 @@ function localityHref(slug: string, lang: Locale): string {
 }
 
 /** Sostituisce placeholder {link:slug:label} con anchor HTML.  */
+import DOMPurify from "isomorphic-dompurify";
+
 function renderBody(html: string, lang: Locale): string {
-  return html.replace(/\{link:([^:]+):([^}]+)\}/g, (_m, slug, label) => {
+  const out = html.replace(/\{link:([^:]+):([^}]+)\}/g, (_m, slug, label) => {
     const href = localityHref(slug, lang);
     return `<a href="${href}" class="text-gold underline hover:text-gold/80">${label}</a>`;
   });
+  return DOMPurify.sanitize(out, { ADD_ATTR: ["target", "rel"] });
 }
 
 const flottaFaqsIt = TRANSLATIONS.it.faqs;

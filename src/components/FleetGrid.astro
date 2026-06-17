@@ -51,7 +51,9 @@ interface VehicleRow {
 }
 
 const [seoRes, vehRes] = await Promise.all([
-  supabase.from("seo_vehicles").select("*"),
+  supabase
+    .from("seo_vehicles")
+    .select("group_slug, title, hero_image_url, title_en, title_de, title_fr, slug_en, slug_de, slug_fr"),
   supabase.from("vehicles").select("id, make, model, year, fuel_type, characteristics, color, daily_rate, image_url, logo_url, available, created_at, category, rate_april, rate_may, rate_june, rate_july, rate_august, rate_september, rate_october, group_slug, is_primary_variant, gallery_urls, transparent_image_url, is_archived, units").or("is_archived.is.null,is_archived.eq.false"),
 ]);
 
@@ -123,6 +125,11 @@ const groups = seoRows
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/10 transition-colors pointer-events-none"></div>
 
             <div class="relative aspect-[3/2] flex items-center justify-center mb-4">
+              {g.variantCount > 1 && (
+                <span class="absolute top-0 right-0 z-10 bg-gold/90 text-black text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-full">
+                  {g.variantCount} {t.fleet.variantsAvailable}
+                </span>
+              )}
               {g.image ? (
                 <img
                   src={g.image}

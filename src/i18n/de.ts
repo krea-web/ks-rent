@@ -294,6 +294,8 @@ export const de: typeof it = {
     monthlyPrices: "Monatspreise",
     monthlyPricesIntro: "Preise in € pro Tag. Richtwerte: die endgültigen Tarife werden bei der Buchung bestätigt.",
     variant: "Variante",
+    selectVariant: "Variante wählen",
+    changeColor: "Farbe wechseln",
     variantsAvailable: "Varianten verfügbar",
     gallery: "Galerie",
     allVariants: "Alle Varianten",

@@ -3,10 +3,17 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
-import OptimizedImage from "@/components/OptimizedImage";
+import VariantCarousel from "@/components/VariantCarousel";
 import { getVehicleAlt } from "@/lib/imageUtils";
 import { getDict } from "@/i18n";
 import { localizePath, type Locale } from "@/lib/i18n";
+import {
+  groupByVariant,
+  variantLabel,
+  variantImage,
+  type VehicleGroup,
+  type VehicleLike,
+} from "@/lib/vehicleVariants";
 
 // Immagini di fallback per modello
 const VEHICLE_IMAGES: Record<string, string> = {
@@ -31,56 +38,37 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
   const t = getDict(lang);
   const bookHref = localizePath("/prenotaora", lang);
 
-  interface Vehicle {
-    id: string;
-    make: string;
-    model: string;
-    category: string;
-    group_slug?: string;
-    daily_rate: number;
-    rate_june?: number;
-    rate_july?: number;
-    rate_august?: number;
-    image_url?: string;
-    available: boolean;
-  }
-
-  const [fleet, setFleet] = useState<Vehicle[]>([]);
+  const [fleet, setFleet] = useState<VehicleLike[]>([]);
+  // variante selezionata per gruppo (group.key -> vehicle.id)
+  const [selectedByGroup, setSelectedByGroup] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const fetchFleet = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("vehicles")
         // Colonne pubbliche esplicite (esclude franchise_amount, damage_policy, license_plate,
         // km_current, next_revision_date, units — riservate, vedi RLS column grants).
         .select("id, make, model, year, fuel_type, characteristics, color, daily_rate, image_url, logo_url, available, category, rate_april, rate_may, rate_june, rate_july, rate_august, rate_september, rate_october, group_slug, is_primary_variant, gallery_urls, transparent_image_url, is_archived")
         .order("category");
-      if (data) setFleet(data);
+      if (data) setFleet(data as VehicleLike[]);
     };
     fetchFleet();
   }, []);
 
-  const groupedFleet = useMemo(() => {
-    const groups: Record<string, { representative: Vehicle; isAvailable: boolean }> = {};
-    for (const v of fleet) {
-      const key = `${v.make}__${v.model}`;
-      if (!groups[key]) {
-        groups[key] = { representative: v, isAvailable: false };
-      }
-      if (v.available) {
-        groups[key].isAvailable = true;
-        if (!groups[key].representative.available) {
-          groups[key].representative = v;
-        }
-      }
-    }
-    return Object.values(groups).filter((g) => g.isAvailable);
-  }, [fleet]);
+  const groupedFleet = useMemo(
+    () => groupByVariant(fleet, { onlyAvailable: true }),
+    [fleet],
+  );
 
-  const getImage = (v: Vehicle) =>
-    v.image_url ||
-    VEHICLE_IMAGES[v.model] ||
+  const getImage = (v: VehicleLike) =>
+    variantImage(v) ||
+    VEHICLE_IMAGES[String(v.model ?? "")] ||
     "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80";
+
+  const currentOf = (g: VehicleGroup): VehicleLike => {
+    const id = selectedByGroup[g.key];
+    return (id && g.variants.find((v) => v.id === id)) || g.representative;
+  };
 
   return (
     <section className="py-16 md:py-32 bg-background relative overflow-hidden">
@@ -126,14 +114,14 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
             {groupedFleet.map((group, i) => {
-              const v = group.representative;
-              const isM2 = v.model?.includes("M2");
-              const isRS3 = v.model?.includes("RS3");
+              const v = currentOf(group);
+              const isM2 = String(v.model ?? "").includes("M2");
+              const isRS3 = String(v.model ?? "").includes("RS3");
               const isSupercar = isM2 || isRS3;
 
               return (
                 <motion.div
-                  key={`${v.make}__${v.model}`}
+                  key={group.key}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -141,24 +129,33 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
                   style={{ borderRadius: "1.5rem", overflow: "hidden" }}
                   className="group flex flex-col bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-white/5 border-b-[3px] border-b-gold/40 dark:border-b-transparent rounded-3xl overflow-hidden hover:border-gold/30 transition-colors duration-500 shadow-[0_8px_30px_rgba(212,175,55,0.08)] dark:shadow-2xl"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                    <div className="absolute top-4 left-4 z-20">
+                  <div className="relative overflow-hidden bg-muted">
+                    <div className="absolute top-4 left-4 z-30">
                       <span className="bg-black/60 backdrop-blur-md text-white text-xs uppercase tracking-wider font-semibold py-2 px-4 rounded-full border border-white/10">
                         {v.category}
                       </span>
                     </div>
-                    <OptimizedImage
-                      src={getImage(v)}
-                      alt={getVehicleAlt(v.make, v.model)}
-                      width={800}
-                      imgWidth={800}
-                      imgHeight={500}
-                      responsive
-                      showSkeleton
-                      skeletonClassName="rounded-none"
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    {group.hasVariants && (
+                      <div className="absolute top-4 right-4 z-30">
+                        <span className="bg-gold/90 text-black text-xs uppercase tracking-wider font-bold py-2 px-4 rounded-full">
+                          {group.variants.length} {t.fleet.variantsAvailable}
+                        </span>
+                      </div>
+                    )}
+                    <VariantCarousel
+                      variants={group.variants}
+                      selectedId={v.id}
+                      onVariantChange={(nv) =>
+                        setSelectedByGroup((s) => ({ ...s, [group.key]: nv.id }))
+                      }
+                      getImage={getImage}
+                      getAlt={(nv) => getVehicleAlt(String(nv.make ?? ""), String(nv.model ?? ""))}
+                      getLabel={(nv) => variantLabel(nv, group.variants)}
+                      switchLabel={t.fleet.changeColor}
+                      showButtons={group.hasVariants}
+                      autoPlay={group.hasVariants}
+                      aspectClassName="aspect-[16/10]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-100 dark:from-[#0a0a0a] via-transparent to-transparent opacity-80 pointer-events-none" />
                   </div>
 
                   <div className="p-5 md:p-8 flex-1 flex flex-col">
@@ -222,7 +219,7 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
                     )}
 
                     <Link
-                      to={v.group_slug ? `${bookHref}?vehicle=${v.group_slug}` : bookHref}
+                      to={`${bookHref}?vehicle=${group.groupSlug}&variant=${v.id}`}
                       className="flex items-center justify-center gap-3 w-full bg-gold/10 hover:bg-gold text-gold hover:text-black py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 group/btn min-h-[48px] relative z-10"
                     >
                       {t.fleetShowcase.rentNow}

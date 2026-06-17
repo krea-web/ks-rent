@@ -17,6 +17,7 @@ import {
   Car,
 } from "lucide-react";
 import DOMPurify from "isomorphic-dompurify";
+import VehicleHeroGallery from "@/components/VehicleHeroGallery";
 import { supabase } from "@/lib/supabase";
 import { getRelatedServices, getCrossSellVehicles, INTERNAL_LINK_LABELS, pickLabelVariant } from "@/lib/internal-links";
 import { buildSrcset, buildSrcsetCard, SIZES_HERO_FULL, SIZES_CARD_GRID_3, SIZES_CARD_GRID_4 } from "@/lib/imageSrcset";
@@ -42,6 +43,19 @@ const primary = variants.find((v) => v.is_primary_variant) || variants[0] || nul
 const backgroundImage = primary?.image_url || seo.hero_image_url || null;
 const foregroundImage = primary?.transparent_image_url || primary?.image_url || seo.hero_image_url || null;
 const heroImage = foregroundImage;
+
+// Hero interattivo se ci sono piu varianti (switch colore/variante). Dati serializzabili.
+const hasMultipleVariants = variants.length > 1;
+const heroVariants = variants.map((v) => ({
+  id: v.id,
+  make: v.make,
+  model: v.model,
+  color: v.color,
+  available: v.available,
+  transparent_image_url: v.transparent_image_url,
+  image_url: v.image_url,
+}));
+const changeColorLabel = { en: "Change colour", de: "Farbe wechseln", fr: "Changer de couleur" }[lang];
 
 const MONTHS = [
   { key: "rate_april", label_en: "April", label_de: "April", label_fr: "Avril" },
@@ -257,20 +271,29 @@ const faqs = (Array.isArray(seo.faqs) ? seo.faqs : []).map((f: any) => ({
 
         {foregroundImage && (
           <div class="relative">
-            <div class="relative aspect-[4/3] flex items-center justify-center">
-              <img
-                src={foregroundImage}
-                srcset={buildSrcset(foregroundImage)}
-                sizes="(min-width: 1024px) 720px, 100vw"
-                alt={localized.title}
-                width="1200"
-                height="900"
-                class="w-full h-full object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
+            {hasMultipleVariants ? (
+              <VehicleHeroGallery
+                client:visible
+                variants={heroVariants}
+                switchLabel={changeColorLabel}
+                altBase={localized.title}
               />
-            </div>
+            ) : (
+              <div class="relative aspect-[4/3] flex items-center justify-center">
+                <img
+                  src={foregroundImage}
+                  srcset={buildSrcset(foregroundImage)}
+                  sizes="(min-width: 1024px) 720px, 100vw"
+                  alt={localized.title}
+                  width="1200"
+                  height="900"
+                  class="w-full h-full object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -278,7 +278,7 @@ const customJsonLdList: Record<string, any>[] = jsonLd
     >
       {currentLocale === "en" ? "Skip to main content" : currentLocale === "de" ? "Zum Hauptinhalt springen" : currentLocale === "fr" ? "Aller au contenu principal" : "Vai al contenuto principale"}
     </a>
-    {showChrome && <Navbar lang={currentLocale} client:load />}
+    {showChrome && <Navbar lang={currentLocale} client:idle />}
     <main id="main-content" tabindex="-1">
       <slot />
     </main>

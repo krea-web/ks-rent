@@ -294,6 +294,8 @@ export const en: typeof it = {
     monthlyPrices: "Monthly prices",
     monthlyPricesIntro: "Rates in € per day. Indicative prices: final quotes are confirmed at booking.",
     variant: "Variant",
+    selectVariant: "Select variant",
+    changeColor: "Change colour",
     variantsAvailable: "variants available",
     gallery: "Gallery",
     allVariants: "All variants",

@@ -43,6 +43,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import LocationStep from "@/components/LocationStep";
 import { loadGoogleMaps } from "@/lib/googleMaps";
 import { buildWhatsAppRequest } from "@/lib/whatsappRequest";
+import { getDict } from "@/i18n";
+import {
+  groupByVariant,
+  variantLabel,
+  variantFullName,
+  variantImage,
+  type VehicleGroup,
+} from "@/lib/vehicleVariants";
 import type { Locale } from "@/lib/i18n";
 
 // Code splitting: lazy load heavy components
@@ -710,6 +718,7 @@ const stepVariants = {
 
 const PrenotaOra = ({ lang = "it" }: Props) => {
   const t = TRANSLATIONS[lang];
+  const dict = getDict(lang); // dizionario condiviso (etichette varianti i18n)
   const dateLocale = DATE_FNS_LOCALES[lang];
   const numberLocale = NUMBER_LOCALES[lang];
   const STEP_LABELS = t.stepLabels;
@@ -720,6 +729,8 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(t.step1.categoryAll);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
+  // variante selezionata per gruppo (group.key -> vehicle.id) per lo switch colore/variante
+  const [variantByGroup, setVariantByGroup] = useState<Record<string, string>>({});
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
 
@@ -766,41 +777,39 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     fetchVehicles();
   }, []);
 
-  // Pre-seleziona il veicolo se l'URL contiene ?vehicle=group_slug
-  // (link in arrivo dalle pagine /flotta/[slug])
+  // Raggruppa i veicoli per group_slug (1 card per gruppo: es. SH125+SH350, RS3 Verde+Grigio)
+  const groupedVehicles = useMemo(() => groupByVariant(vehicles), [vehicles]);
+
+  // Pre-seleziona il veicolo se l'URL contiene ?vehicle=group_slug (&variant=<id>)
+  // (link in arrivo dalle card flotta / pagine /flotta/[slug])
   useEffect(() => {
     if (vehicles.length === 0 || selectedVehicle) return;
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const groupSlug = params.get("vehicle");
-    if (!groupSlug) return;
-    // Trova il primary variant del gruppo, oppure il primo disponibile
+    const variantId = params.get("variant");
+    if (!groupSlug && !variantId) return;
+    // Variante specifica richiesta dall'URL, altrimenti primary/disponibile del gruppo
     const match =
+      (variantId && vehicles.find((v) => v.id === variantId)) ||
       vehicles.find((v) => v.group_slug === groupSlug && v.is_primary_variant && v.available) ||
       vehicles.find((v) => v.group_slug === groupSlug && v.available) ||
       vehicles.find((v) => v.group_slug === groupSlug);
-    if (match) setSelectedVehicle(match);
-  }, [vehicles, selectedVehicle]);
-
-  // Group vehicles by make+model for display (1 card per model)
-  const groupedVehicles = useMemo(() => {
-    const groups: Record<string, { representative: any; allVehicles: any[]; isAvailable: boolean }> = {};
-    for (const v of vehicles) {
-      const key = `${v.make}__${v.model}`;
-      if (!groups[key]) {
-        groups[key] = { representative: v, allVehicles: [], isAvailable: false };
-      }
-      groups[key].allVehicles.push(v);
-      if (v.available) {
-        groups[key].isAvailable = true;
-        // Prefer an available vehicle as representative (for pricing)
-        if (!groups[key].representative.available) {
-          groups[key].representative = v;
-        }
-      }
+    if (!match) return;
+    setSelectedVehicle(match);
+    // Porta il carosello sul gruppo giusto e pre-seleziona la variante mostrata
+    const gIdx = groupedVehicles.findIndex((g) => g.variants.some((x) => x.id === match.id));
+    if (gIdx >= 0) {
+      setCarouselIndex(gIdx);
+      setVariantByGroup((s) => ({ ...s, [groupedVehicles[gIdx].key]: match.id }));
     }
-    return Object.values(groups);
-  }, [vehicles]);
+  }, [vehicles, selectedVehicle, groupedVehicles]);
+
+  // Variante attualmente mostrata per un gruppo (fallback: rappresentativa)
+  const currentVariantOf = (g: VehicleGroup): any => {
+    const id = variantByGroup[g.key];
+    return (id && g.variants.find((x) => x.id === id)) || g.representative;
+  };
 
   const categories = useMemo(() => {
     const cats = new Set(groupedVehicles.map((g) => g.representative.category));
@@ -844,11 +853,12 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleVehicleSelect = (group: { representative: any; allVehicles: any[]; isAvailable: boolean }) => {
+  const handleVehicleSelect = (group: VehicleGroup) => {
     if (!group.isAvailable) return;
-    // Pick the first available physical vehicle from the group
-    const physicalVehicle = group.allVehicles.find((v) => v.available) || group.representative;
-    setSelectedVehicle(physicalVehicle);
+    // Seleziona la variante mostrata se disponibile, altrimenti la prima disponibile del gruppo
+    const shown = currentVariantOf(group);
+    const chosen = (shown?.available && shown) || group.variants.find((v) => v.available) || group.representative;
+    setSelectedVehicle(chosen);
     setTimeout(() => goToStep(2), 300);
   };
 
@@ -870,8 +880,13 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
   // Costruisce il messaggio WhatsApp precompilato e apre la chat.
   const handleSendWhatsApp = () => {
     if (!selectedVehicle || !startDate || !endDate) return;
+    // Nome con variante/colore, es. "Honda SH 350" / "Audi RS3 (Grigio)"
+    const svGroup = groupedVehicles.find((g) => g.variants.some((x) => x.id === selectedVehicle.id));
+    const vehicleName = svGroup
+      ? variantFullName(selectedVehicle, svGroup.variants)
+      : `${selectedVehicle.make} ${selectedVehicle.model}`;
     const url = buildWhatsAppRequest(lang, {
-      vehicleName: `${selectedVehicle.make} ${selectedVehicle.model}`,
+      vehicleName,
       startLabel: format(startDate, "dd/MM/yyyy", { locale: dateLocale }),
       endLabel: format(endDate, "dd/MM/yyyy", { locale: dateLocale }),
       days,
@@ -1092,9 +1107,9 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                     (() => {
                       const safeIdx = Math.min(carouselIndex, filteredGrouped.length - 1);
                       const currentGroup = filteredGrouped[safeIdx];
-                      const v = currentGroup.representative;
+                      const v = currentVariantOf(currentGroup);
                       const soldOut = !currentGroup.isAvailable;
-                      const imgSrc = getTransparentImage(v.make, v.model) || v.image_url;
+                      const imgSrc = variantImage(v) || getTransparentImage(v.make, v.model) || v.image_url;
 
                       return (
                         <div className="relative">
@@ -1125,7 +1140,7 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                           {/* Floating vehicle image */}
                           <AnimatePresence mode="wait">
                             <motion.div
-                              key={`car-${safeIdx}`}
+                              key={`car-${safeIdx}-${v.id}`}
                               initial={{ opacity: 0, scale: 0.9 }}
                               animate={{ opacity: 1, scale: 1 }}
                               exit={{ opacity: 0, scale: 0.9 }}
@@ -1147,6 +1162,40 @@ const PrenotaOra = ({ lang = "it" }: Props) => {
                               )}
                             </motion.div>
                           </AnimatePresence>
+
+                          {/* Switch variante / colore (es. Verde/Grigio, SH 125/SH 350) */}
+                          {currentGroup.hasVariants && (
+                            <div
+                              className="flex flex-wrap items-center justify-center gap-2 mt-1 mb-3"
+                              role="group"
+                              aria-label={dict.fleet.changeColor}
+                            >
+                              {currentGroup.variants.map((variant: any) => {
+                                const active = variant.id === v.id;
+                                const unavailable = !variant.available;
+                                return (
+                                  <button
+                                    key={variant.id}
+                                    type="button"
+                                    onClick={() =>
+                                      setVariantByGroup((s) => ({ ...s, [currentGroup.key]: variant.id }))
+                                    }
+                                    aria-pressed={active}
+                                    aria-label={`${dict.fleet.changeColor}: ${variantLabel(variant, currentGroup.variants)}`}
+                                    className={cn(
+                                      "px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all min-h-[40px] border",
+                                      active
+                                        ? "bg-gold text-white border-gold"
+                                        : "bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-white/60 border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/10",
+                                      unavailable && "opacity-50",
+                                    )}
+                                  >
+                                    {variantLabel(variant, currentGroup.variants)}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
 
                           {/* Pagination dots */}
                           {filteredGrouped.length > 1 && (
