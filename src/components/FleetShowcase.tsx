@@ -10,7 +10,6 @@ import { localizePath, type Locale } from "@/lib/i18n";
 import {
   groupByVariant,
   variantLabel,
-  variantImage,
   type VehicleGroup,
   type VehicleLike,
 } from "@/lib/vehicleVariants";
@@ -60,8 +59,9 @@ const FleetShowcase = ({ lang = "it" }: FleetShowcaseProps) => {
     [fleet],
   );
 
+  // Card home: foto REALI ambientate (image_url), non i PNG in trasparenza.
   const getImage = (v: VehicleLike) =>
-    variantImage(v) ||
+    String(v.image_url ?? "") ||
     VEHICLE_IMAGES[String(v.model ?? "")] ||
     "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80";
 
