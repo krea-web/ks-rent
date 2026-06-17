@@ -6,8 +6,15 @@
 >
 > ⚠️ **Già esistenti** (NON ricreare — alcuni doc cluster datati li segnalavano come gap):
 > landing **moto/scooter** 4 lingue (`/noleggio-moto-scooter-olbia` + EN/DE/FR), landing
-> **sportive** (`/noleggio-auto-sportive-olbia`), guida **sagre/eventi Gallura 2026**, guida
-> **deposito/franchigia** (IT — verificare traduzioni EN/DE/FR).
+> **sportive** (`/noleggio-auto-sportive-olbia`), guida **sagre/eventi Gallura 2026** (4 lingue),
+> guida **deposito/franchigia in tutte e 4 le lingue** (IT+EN+DE+FR complete, registrate in
+> `guide-articles.ts` con hreflang `itEquivalent` — verificato giu 2026, **nessun lavoro residuo**).
+>
+> 🧭 **Decisioni owner (giu 2026)** — vincolanti su questo piano:
+> 1. **Nessuna etichetta "lusso"** da nessuna parte (no landing "lusso Olbia"/"lusso Porto Cervo").
+> 2. **Nuovi contenuti = Guide (blog)** per intenti long-tail.
+> 3. **Pagine non-guida** (località, service landing) **solo dopo approvazione esplicita**, una alla volta.
+> Niente è in produzione: le voci sotto sono analisi/shortlist da approvare, non lavoro avviato.
 
 ---
 
@@ -29,10 +36,12 @@ Priorità su impatto × fattibilità. Per ogni pagina: aggiornare `PATH_MAP_FULL
 schema dedicato, link interni dal pillar `/noleggio-auto-olbia` e verso flotta/tariffe.
 **Regola #1**: meta_description unica. **Regola #13**: mai prezzi franchigia.
 
+> ❌ **Rimosse per decisione owner**: `/noleggio-auto-lusso-olbia` e qualsiasi pagina con
+> etichetta "lusso" (incl. "lusso Porto Cervo"); `/noleggio-auto-matrimonio-sardegna` (nicchia +
+> vicina al tema lusso). Non verranno create.
+
 | # | Pagina | Keyword / intento | Vol. stimato | Tipo | Priorità |
 |---|--------|-------------------|--------------|------|----------|
-| G1 | `/noleggio-auto-lusso-olbia` (4 lingue) | noleggio auto lusso Olbia / luxury car rental Sardinia — *status/lifestyle/consegna villa* (distinta da "sportive") | 1.400–3.000/m IT + 800–2.000 EN | Service landing | **CRITICA** |
-| G2 | `/noleggio-auto-matrimonio-sardegna` (4 lingue, focus EN/DE) | auto matrimonio/wedding car Costa Smeralda — ticket alto, **zero concorrenza** | 600–1.400/m EN | Service landing | **CRITICA** |
 | G3 | `noleggio-auto-gallura` (record Supabase `seo_locations`) | keyword ombrello geografica — **0 codice**, solo Admin SEO Editor | 500–1.000/m | Location dinamica | **ALTA** |
 | G4 | `/guide/noleggio-auto-olbia-under-25-neopatentati` (4 lingue) | requisiti età — alta conversione, USP se nessuna restrizione young-driver | 300–600/m IT + 400–900 EN | Guida (Article+FAQ) | **ALTA** |
 | G5 | `/transfer-aeroporto-olbia-costa-smeralda` (focus EN/DE) | consegna auto a hotel/villa (NON NCC) — **conferma operativa owner** | 700–1.500/m EN | Service landing | **ALTA** |
@@ -97,12 +106,15 @@ da "KS Rent S.R.L." → "KS Rent Sardinia" in [BaseLayout.astro](../src/layouts/
 
 ---
 
-## 4. Roadmap consigliata
+## 4. Roadmap consigliata (rivista — owner giu 2026)
 
-- **Sprint 1 (codice)**: G1 landing lusso (4 lingue) + schema §2.1 (`email`/`hasMap`/`contactPoint`/`makesOffer`). Alto impatto, infra pronta.
-- **Sprint 2 (codice)**: G4 guida under-25 + G3/G7 location Supabase (quasi 0 codice) + traduzioni guida deposito/franchigia.
-- **Sprint 3 (codice)**: G2 matrimonio + G5 transfer (dopo conferma operativa) + estensione HowTo/Trip/Event.
-- **Parallelo (owner, no codice)**: blocco Local SEO §3 — categorie GBP, foto, recensioni, NAP, backlink. È il fattore con ROI più rapido.
+Nessuna pagina parte senza ok esplicito; le guide si fanno **una alla volta**.
+- **Schema GEO/AEO §2.1** (`email`/`hasMap`/`contactPoint`/`makesOffer`): solo codice, nessuna nuova pagina, alto valore entity → candidato n°1.
+- **Guide (blog)**, se approvate: G4 under-25 → G5 "come arrivare in Costa Smeralda" (in formato **guida**, non service landing) → G6 itinerario Nord.
+- **Cluster località** (G3/G7) via Admin/Supabase: solo se sblocchi il "decidiamo dopo".
+- **Parallelo (owner, no codice)**: blocco Local SEO §3 — categorie GBP, foto, recensioni, NAP, backlink. ROI più rapido.
+
+> ✅ **Già fatto**: traduzioni EN/DE/FR della guida deposito/franchigia (esistenti, verificate giu 2026 — nessun lavoro residuo).
 
 ## 5. Limitazioni dati
 Senza tool a pagamento (DataForSEO/BrightLocal/GSC live) i volumi keyword sono ordini di grandezza e il
