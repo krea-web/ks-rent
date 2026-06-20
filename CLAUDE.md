@@ -77,7 +77,7 @@ docs/PAGES-CHECKLIST.md                   # tracker UX/SEO per rotta
 | **Orari** | 10:00–13:00 + 15:00–22:30, 7 giorni su 7 |
 | **Place ID (Google Maps)** | `ChIJP6b_YdBL2RIRkp3GdDzDwYU` — CID `9638199341974199698` |
 | **Categoria GBP** | Agenzia di noleggio auto (`car_rental`) |
-| **Recensioni Google** | **5,0 / 5 su 46 recensioni** (snapshot in `src/data/google-rating-snapshot.json`) |
+| **Recensioni Google** | **5,0 / 5 su 63 recensioni** (snapshot in `src/data/google-rating-snapshot.json`) |
 | **⚠️ Entità DISTINTA da** | KS Rent S.r.l. (Roma) — sito `ksrent.it` — **NON siamo loro** |
 
 ### Social & directory (usate come `sameAs` in JSON-LD)
@@ -205,7 +205,7 @@ Auto-iniettati in `<head>` da [BaseLayout.astro](src/layouts/BaseLayout.astro) v
   ruolo anon** via column-grant + tutte le query `vehicles` portate a colonne esplicite; `seo_beaches`/
   `seo_locations` scrittura solo-admin; rimosse policy INSERT pubbliche su `bookings`; `search_path`
   funzioni fissato; revocato EXECUTE su `check_vehicle_availability`/`handle_new_user`.
-- **Dati**: recensioni **46** @ 5,0; Panda giugno **75** / luglio **80** / agosto **90**; backlink
+- **Dati**: recensioni **63** @ 5,0; Panda giugno **75** / luglio **80** / agosto **90**; backlink
   +Opendi (Europages revocato non-B2B; Yelp non pubblica sul web). Tracker: `docs/BACKLINKS-CITAZIONI.md`.
 
 
@@ -255,7 +255,7 @@ Vedi [SEO-MASTER-PLAN.md](SEO-MASTER-PLAN.md) §1. Indirizzo principale (NAP) **
 - **Broken internal links**: audit (`audit-buttons.mjs`) + fix 22 link verso slug localizzati corretti.
 - **Backlink/directory**: `sameAs` esteso (carmappa, empresite, aziendeeasy).
 - **Email reminder ritiro**: workflow **N8N + Gmail** (vedi Nota Critica #14).
-- **Reviews**: 46 @ 5,0 in tutto il codebase + snapshot JSON (aggiornamento manuale dello snapshot).
+- **Reviews**: 63 @ 5,0 in tutto il codebase + snapshot JSON (aggiornamento manuale dello snapshot).
 
 ### ⏸️ In sospeso / decisioni aperte (NON ancora fatte)
 | # | Item | Stato / motivo |
@@ -292,7 +292,7 @@ Vedi [SEO-MASTER-PLAN.md](SEO-MASTER-PLAN.md) §1. Indirizzo principale (NAP) **
 npm run sync-reviews     # one-shot (richiede env keys — vedi sotto)
 # automatico ad ogni: npm run build (prebuild hook)
 ```
-> ⚠️ Le key Places API vivono su **Vercel** (env del deploy), non in locale. In locale lo snapshot resta `src/data/google-rating-snapshot.json` (mantenuto a mano: 46 @ 5,0). Env per attivare il sync: `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, `SUPABASE_SERVICE_ROLE_KEY`.
+> ⚠️ Le key Places API vivono su **Vercel** (env del deploy), non in locale. In locale lo snapshot resta `src/data/google-rating-snapshot.json` (mantenuto a mano: 63 @ 5,0). Env per attivare il sync: `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, `SUPABASE_SERVICE_ROLE_KEY`.
 
 ### Build locale senza side-effect
 ```bash
