@@ -422,6 +422,12 @@ const Footer = ({ lang = "it" }: FooterProps) => {
                 <a href="mailto:ks.rent.srl@pec.it" className="hover:text-gold transition-colors relative z-20">
                   ks.rent.srl@pec.it
                 </a>
+                <span className="hidden md:inline"> | </span>
+                <br className="md:hidden" />
+                Email:{" "}
+                <a href="mailto:ksrentsrl@gmail.com" className="hover:text-gold transition-colors relative z-20">
+                  ksrentsrl@gmail.com
+                </a>
               </p>
               <p className="text-muted-foreground/70 italic pt-2">{t.footer.disclaimer}</p>
             </div>
