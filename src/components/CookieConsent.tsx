@@ -40,6 +40,12 @@ function applyConsent(analytics: boolean, marketing: boolean) {
       ad_personalization: marketing ? "granted" : "denied",
     });
   }
+  // round 10 Kreare: chi ascolta (PostHog nel BaseLayout) segue lo stesso consenso
+  try {
+    window.dispatchEvent(new CustomEvent("ksr-consent", { detail: { analytics, marketing } }));
+  } catch {
+    /* browser senza CustomEvent: pazienza */
+  }
 }
 
 const CookieConsent = ({ lang }: { lang: Locale }) => {

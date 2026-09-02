@@ -47,3 +47,4 @@ tmpks-*.xml
 *.njsproj
 *.sln
 *.sw?
+.vercel
